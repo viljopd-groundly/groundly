@@ -66,6 +66,12 @@ const head = `<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Groundly – planera och logga dina fotbollsresor. Matcher, arenor, serietabeller, forum och reportage.">
 <meta name="theme-color" content="#1d6b3b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Groundly">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <script>
 // Appens kod frågar window.claude.use(...) direkt vid start; runtime.js (Firebase) svarar när den är klar.
 (function(){var ready,p=new Promise(function(r){ready=r});window.__groundlyReady=ready;
