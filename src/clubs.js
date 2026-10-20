@@ -222,3 +222,4 @@ module.exports.push(...require("./nationals.js").u21);
 module.exports.push(...require("./nationals_world.js"));
 module.exports.push(...require("./clubs_cult.js"));
 module.exports.push(...require("./clubs_more3.js"));
+module.exports.push(...require("./clubs_women.js"));

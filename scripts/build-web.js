@@ -16,7 +16,8 @@ let html = fs.readFileSync(path.join(SRC, "template.html"), "utf8")
   .replace("/*COLORS*/{}", JSON.stringify(R("colors.js")))
   .replace("/*CUPS*/[]", JSON.stringify(R("cups.js")))
   .replace("/*SEASONS*/{}", JSON.stringify(R("seasons.js")))
-  .replace("/*WEB*/{}", JSON.stringify(R("web.js")));
+  .replace("/*WEB*/{}", JSON.stringify(R("web.js")))
+  .replace("/*WLEAGUES*/[]", JSON.stringify(R("clubs_women.js").leagues));
 
 // ---- AI på/av: på bara om firebase-config.js har en aiEndpoint ----
 const cfg = fs.readFileSync(path.join(SITE, "js", "firebase-config.js"), "utf8");

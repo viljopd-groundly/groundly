@@ -78,6 +78,9 @@ const API=[
  ["Ekstraklasa","Polen","Poland",1,"pl.1",/^ekstraklasa$/],["I liga","Polen","Poland",2,"pl.2",/^i liga$/],
  ["MLS","USA","USA",1,"us.1",/^major league soccer$/],
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
+// damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
+let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}
+for(const l of WOMEN.leagues)API.push([l[0],l[1],l[2],l[3],l[4],new RegExp(l[5],"i"),true]);
 const apiStat={};const extra={standings:{},players:{},squads:{},events:{}};
 if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();const BASE=(process.env.API_FOOTBALL_BASE||"https://v3.football.api-sports.io").replace(/\/$/,"");
   const local=/^http:\/\/(127\.0\.0\.1|localhost)/.test(BASE);let calls=0,gap=220;const sleep=ms=>{try{execSync(`sleep ${ms/1000}`);}catch(e){}};
@@ -89,8 +92,8 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
   const get=q=>raw(q).response||[];
   const findAny=(nm,country)=>country==="*"?(find(nm,"England")||find(nm,"Spanien")||find(nm,"Italien")||find(nm,"Tyskland")||find(nm,"Frankrike")||find(nm,"Nederländerna")||find(nm,"Portugal")||find(nm,"Skottland")||find(nm,"Belgien")||find(nm,"Sverige")||find(nm,"Norge")||find(nm,"Danmark")||find(nm,"Polen")||findOther(nm)):find(nm,country);
   function findOther(nm){const seen=new Set(["England","Spanien","Italien","Tyskland","Frankrike","Nederländerna","Portugal","Skottland","Belgien","Sverige","Norge","Danmark","Polen"]);for(const c of new Set(clubs.map(x=>x[3]))){if(seen.has(c))continue;const r=find(nm,c);if(r)return r;}return null;}
-  const teamMap={};// API-lag-id -> vårt id
-  const tid=(t,country)=>{if(!t)return null;if(t.id in teamMap)return teamMap[t.id];const c=findAny(t.name,country);teamMap[t.id]=c?c[0]:null;return teamMap[t.id];};
+  const teamMap=Object.assign({},WOMEN.teams);// API-lag-id -> vårt id
+  const tid=(t,country)=>{if(!t)return null;if(t.id in teamMap)return teamMap[t.id];if(/\sW$/.test(t.name||"")){teamMap[t.id]=null;return null;}const c=findAny(t.name,country);teamMap[t.id]=c?c[0]:null;return teamMap[t.id];};
   const unmatched={};
   try{
     // 0) vilken plan har kontot (visas i sammanfattningen, aldrig nyckeln)
@@ -102,15 +105,15 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
     const done=[];// [lname, apiLeagueId, season, country, tier]
     // 2) matcher och resultat
     const now=Date.now();const finished=[];
-    for(const[lname,country,ac,tier,code,re] of API){const key=Object.keys(lg).find(k=>k.startsWith(ac+"|")&&re.test(k.split("|")[1]));if(!key){apiStat[lname]="saknas i API";continue;}
+    for(const[lname,country,ac,tier,code,re,isW] of API){const key=Object.keys(lg).find(k=>k.startsWith(ac+"|")&&re.test(k.split("|")[1]));if(!key){apiStat[lname]="saknas i API";continue;}
       const L=lg[key];let fx;try{fx=get(`fixtures?league=${L.id}&season=${L.season}&timezone=UTC`);}catch(e){apiStat[lname]=String(e.message).slice(0,120);continue;}
       if(!fx.length){apiStat[lname]=0;continue;}
       for(let i=rows.length-1;i>=0;i--)if(rows[i][5]===lname)rows.splice(i,1);// API ersätter openfootball för samma serie
-      const teams=[],tix={};const T=nm=>{if(nm in tix)return tix[nm];const c=findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};const arc=[];let n=0;const have=new Set();
+      const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const wid=isW?tid(tm,country):null;const c=isW?(wid?[wid]:null):findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};const arc=[];let n=0;const have=new Set();
       for(const f of fx){const st=f.fixture.status&&f.fixture.status.short;if(["PST","CANC","ABD","AWD","WO"].includes(st))continue;
         const hn=f.teams.home.name,an=f.teams.away.name,iso8=f.fixture.date,date=iso8.slice(0,10);const fin=["FT","AET","PEN"].includes(st);const gh=fin?f.goals.home:null,ga=fin?f.goals.away:null;const tbd=st==="TBD"||/T00:00:00/.test(iso8);
         const pen=f.score&&f.score.penalty&&f.score.penalty.home!=null?`${f.score.penalty.home}-${f.score.penalty.away}`:"";
-        arc.push([T(hn),T(an),date,tbd?"":iso8.slice(11,16),gh,ga,pen,tier==="CUP"?(f.league.round||""):""]);
+        arc.push([T(hn,f.teams.home),T(an,f.teams.away),date,tbd?"":iso8.slice(11,16),gh,ga,pen,tier==="CUP"?(f.league.round||""):""]);
         const H=tid(f.teams.home,country),A=tid(f.teams.away,country);if(!H){unmatched[hn]=(unmatched[hn]||0)+1;}if(!A){unmatched[an]=(unmatched[an]||0)+1;}if(!H||!A)continue;
         const k=H+"|"+A+"|"+date;if(have.has(k))continue;have.add(k);
         rows.push([H,A,tbd?null:new Date(iso8).toISOString(),date,fin?`${gh}–${ga}`:"",lname,String(tier)]);n++;
