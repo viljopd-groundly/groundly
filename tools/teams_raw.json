@@ -1,0 +1,785 @@
+{
+ "country": "Sweden",
+ "fetched": "2026-10-20T21:37:02.248Z",
+ "all": [
+  "113 | Allsvenskan | League",
+  "114 | Superettan | League",
+  "563 | Ettan - Norra | League",
+  "564 | Ettan - Södra | League",
+  "592 | Division 2 - Norra Götaland | League",
+  "593 | Division 2 - Norra Svealand | League",
+  "594 | Division 2 - Norrland | League",
+  "595 | Division 2 - Södra Svealand | League",
+  "596 | Division 2 - Västra Götaland | League",
+  "597 | Division 2 - Södra Götaland | League",
+  "115 | Svenska Cupen | Cup",
+  "549 | Damallsvenskan | League",
+  "737 | Svenska Cupen - Women | Cup",
+  "736 | Elitettan | League",
+  "1053 | Division 2 - Play-offs | League",
+  "1055 | Ettan - Relegation Round | League"
+ ],
+ "leagues": [
+  {
+   "id": 114,
+   "name": "Superettan",
+   "season": 2026,
+   "teams": [
+    {
+     "id": 365,
+     "name": "Orebro SK",
+     "founded": 1908,
+     "venue": {
+      "name": "Behrn Arena",
+      "city": "Örebro",
+      "capacity": 14500,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 373,
+     "name": "GIF Sundsvall",
+     "founded": 1903,
+     "venue": {
+      "name": "NP3 Arena",
+      "city": "Sundsvall",
+      "capacity": 8034,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 376,
+     "name": "Ostersunds FK",
+     "founded": 1996,
+     "venue": {
+      "name": "Jämtkraft Arena",
+      "city": "Östersund",
+      "capacity": 8466,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 378,
+     "name": "IFK Norrkoping",
+     "founded": 1897,
+     "venue": {
+      "name": "PlatinumCars Arena",
+      "city": "Norrköping",
+      "capacity": 17234,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 811,
+     "name": "Helsingborg",
+     "founded": 1907,
+     "venue": {
+      "name": "Olympia",
+      "city": "Helsingborg",
+      "capacity": 16673,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 812,
+     "name": "Falkenbergs FF",
+     "founded": 1928,
+     "venue": {
+      "name": "Falcon Alkoholfri Arena",
+      "city": "Falkenberg",
+      "capacity": 6214,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 2163,
+     "name": "IFK Varnamo",
+     "founded": 1912,
+     "venue": {
+      "name": "Finnvedsvallen",
+      "city": "Värnamo",
+      "capacity": 5070,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 2165,
+     "name": "Ljungskile SK",
+     "founded": 1926,
+     "venue": {
+      "name": "Uddevalla Arena",
+      "city": "Ljungskile",
+      "capacity": 8000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 2171,
+     "name": "Varbergs BoIS FC",
+     "founded": 1925,
+     "venue": {
+      "name": "Varberg Energi Arena",
+      "city": "Varberg",
+      "capacity": 5000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 2173,
+     "name": "Norrby IF",
+     "founded": 1927,
+     "venue": {
+      "name": "Borås Arena",
+      "city": "Borås",
+      "capacity": 16899,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 2174,
+     "name": "Osters IF",
+     "founded": 1930,
+     "venue": {
+      "name": "Visma Arena",
+      "city": "Växjö",
+      "capacity": 12173,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 2175,
+     "name": "IK brage",
+     "founded": 1925,
+     "venue": {
+      "name": "Borlänge Energi Arena Domnarvsvallen",
+      "city": "Borlänge",
+      "capacity": 6500,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 2176,
+     "name": "Landskrona BoIS",
+     "founded": 1915,
+     "venue": {
+      "name": "Landskrona Idrottsplats",
+      "city": "Landskrona",
+      "capacity": 11500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6697,
+     "name": "Sandviken",
+     "founded": 1918,
+     "venue": {
+      "name": "Arena Jernvallen",
+      "city": "Sandviken",
+      "capacity": 4783,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 11674,
+     "name": "Oddevold",
+     "founded": 1932,
+     "venue": {
+      "name": "Fridhemsvallen",
+      "city": "Uddevalla",
+      "capacity": 2500,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16601,
+     "name": "United Nordic",
+     "founded": 2020,
+     "venue": {
+      "name": "Södertälje Fotbollsarena",
+      "city": "Södertälje",
+      "capacity": 6710,
+      "surface": "artificial turf"
+     }
+    }
+   ]
+  },
+  {
+   "id": 563,
+   "name": "Ettan - Norra",
+   "season": 2026,
+   "teams": [
+    {
+     "id": 765,
+     "name": "AFC Eskilstuna",
+     "founded": 2005,
+     "venue": {
+      "name": "Tunavallen",
+      "city": "Eskilstuna",
+      "capacity": 7800,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 813,
+     "name": "Gefle IF",
+     "founded": 1882,
+     "venue": {
+      "name": "Gavlevallen",
+      "city": "Gävle",
+      "capacity": 6432,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 2169,
+     "name": "Assyriska FF",
+     "founded": 1974,
+     "venue": {
+      "name": "Södertälje Fotbollsarena",
+      "city": "Södertälje",
+      "capacity": 6710,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 6682,
+     "name": "Karlberg",
+     "founded": 1912,
+     "venue": {
+      "name": "Kristinebergs IP",
+      "city": "Stockholm",
+      "capacity": 2145,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6699,
+     "name": "Sollentuna",
+     "founded": 2007,
+     "venue": {
+      "name": "Sollentunavallen",
+      "city": "Sollentuna",
+      "capacity": 4500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6700,
+     "name": "Stocksund",
+     "founded": null,
+     "venue": {
+      "name": "Danderyds Gymnasium",
+      "city": "Danderyd",
+      "capacity": 1000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6705,
+     "name": "Umeå FC",
+     "founded": 1987,
+     "venue": {
+      "name": "Umeå Energi Arena SOL",
+      "city": "Umeå",
+      "capacity": 14000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 6708,
+     "name": "Vasalund",
+     "founded": 1934,
+     "venue": {
+      "name": "Skytteholms IP",
+      "city": "Solna",
+      "capacity": 5026,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 11659,
+     "name": "IF Karlstad",
+     "founded": 2020,
+     "venue": {
+      "name": "Sola Arena 1",
+      "city": "Karlstad",
+      "capacity": 3000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 11671,
+     "name": "Piteå",
+     "founded": null,
+     "venue": {
+      "name": "LF Arena",
+      "city": "Piteå",
+      "capacity": 6000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 12578,
+     "name": "Enköping",
+     "founded": 1914,
+     "venue": {
+      "name": "Enavallen",
+      "city": "Enköping",
+      "capacity": 4500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 12585,
+     "name": "Stockholm Internazionale",
+     "founded": null,
+     "venue": {
+      "name": "Hammarby IP",
+      "city": "Stockholm",
+      "capacity": 3700,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 12622,
+     "name": "FBK Karlstad",
+     "founded": 1971,
+     "venue": {
+      "name": "Örsholmens IP Konstgräs",
+      "city": "Karlstad",
+      "capacity": 1000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16596,
+     "name": "Hammarby Talang",
+     "founded": 2021,
+     "venue": {
+      "name": "Hammarby IP",
+      "city": "Stockholm",
+      "capacity": 3700,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16597,
+     "name": "Arlanda",
+     "founded": null,
+     "venue": {
+      "name": "Midgårdsvallen Konstgräs",
+      "city": "Märsta",
+      "capacity": 1000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16598,
+     "name": "Järfälla",
+     "founded": null,
+     "venue": {
+      "name": "Järfällavallen",
+      "city": "Järfälla",
+      "capacity": 1500,
+      "surface": "artificial turf"
+     }
+    }
+   ]
+  },
+  {
+   "id": 564,
+   "name": "Ettan - Södra",
+   "season": 2026,
+   "teams": [
+    {
+     "id": 369,
+     "name": "Trelleborg",
+     "founded": 1926,
+     "venue": {
+      "name": "Vångavallen",
+      "city": "Trelleborg",
+      "capacity": 10500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 764,
+     "name": "Jonkopings Sodra",
+     "founded": 1922,
+     "venue": {
+      "name": "Stadsparksvallen",
+      "city": "Jönköping",
+      "capacity": 6321,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 2162,
+     "name": "Atvidabergs FF",
+     "founded": 1907,
+     "venue": {
+      "name": "Kopparvallen",
+      "city": "Åtvidaberg",
+      "capacity": 8600,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 2168,
+     "name": "Angelholms FF",
+     "founded": 1976,
+     "venue": {
+      "name": "Änglavallen",
+      "city": "Ängelholm",
+      "capacity": 5000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6663,
+     "name": "Eskilsminne",
+     "founded": 1928,
+     "venue": {
+      "name": "Harlyckans IP",
+      "city": "Helsingborg",
+      "capacity": 3500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6676,
+     "name": "Hässleholms IF",
+     "founded": 1922,
+     "venue": {
+      "name": "Österås IP",
+      "city": "Hässleholm",
+      "capacity": 5500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6687,
+     "name": "Lund",
+     "founded": 1919,
+     "venue": {
+      "name": "Klostergårdens IP",
+      "city": "Lund",
+      "capacity": 8560,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 6694,
+     "name": "Rosengård",
+     "founded": 1917,
+     "venue": {
+      "name": "Rosengårds IP (Södra)",
+      "city": "Malmö",
+      "capacity": 5000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6698,
+     "name": "Skövde AIK",
+     "founded": 1919,
+     "venue": {
+      "name": "Södermalms IP",
+      "city": "Skövde",
+      "capacity": 4646,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6702,
+     "name": "Trollhättan",
+     "founded": 2001,
+     "venue": {
+      "name": "Edsborgs IP",
+      "city": "Trollhättan",
+      "capacity": 5100,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6703,
+     "name": "Tvååker",
+     "founded": 1920,
+     "venue": {
+      "name": "Övrevi",
+      "city": "Tvååker",
+      "capacity": 2000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6706,
+     "name": "Utsikten",
+     "founded": 1935,
+     "venue": {
+      "name": "Ruddalens IP 1",
+      "city": "Västra Frölunda",
+      "capacity": 5000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 11675,
+     "name": "Kristianstad",
+     "founded": 1990,
+     "venue": {
+      "name": "Kristianstads Fotbollsarena",
+      "city": "Kristianstad",
+      "capacity": 6000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 12601,
+     "name": "Olympic",
+     "founded": 1920,
+     "venue": {
+      "name": "Lindängens IP",
+      "city": "Malmö",
+      "capacity": 2000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 12657,
+     "name": "Laholm",
+     "founded": 1957,
+     "venue": {
+      "name": "Glänninge IP",
+      "city": "Laholm",
+      "capacity": 2000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 27669,
+     "name": "AFC Malmo",
+     "founded": null,
+     "venue": {
+      "name": null,
+      "city": null,
+      "capacity": null,
+      "surface": null
+     }
+    }
+   ]
+  },
+  {
+   "id": 736,
+   "name": "Elitettan",
+   "season": 2026,
+   "teams": [
+    {
+     "id": 10893,
+     "name": "Göteborg W",
+     "founded": 0,
+     "venue": {
+      "name": null,
+      "city": null,
+      "capacity": null,
+      "surface": null
+     }
+    },
+    {
+     "id": 11078,
+     "name": "KIF Örebro W",
+     "founded": 1971,
+     "venue": {
+      "name": "Behrn Arena",
+      "city": "Örebro",
+      "capacity": 14500,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 11080,
+     "name": "Linköping W",
+     "founded": 2003,
+     "venue": {
+      "name": "Bilbörsen Arena",
+      "city": "Linköping",
+      "capacity": 7805,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 11081,
+     "name": "Umeå W",
+     "founded": 1917,
+     "venue": {
+      "name": "Umeå Energi Arena SOL",
+      "city": "Umeå",
+      "capacity": 14000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 15957,
+     "name": "Sandviken W",
+     "founded": null,
+     "venue": {
+      "name": null,
+      "city": null,
+      "capacity": null,
+      "surface": null
+     }
+    },
+    {
+     "id": 16001,
+     "name": "Alingsås W",
+     "founded": 2017,
+     "venue": {
+      "name": "Mjörnvallen Idrottsplats",
+      "city": "Alingsås",
+      "capacity": 1500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 16005,
+     "name": "Jitex W",
+     "founded": 1971,
+     "venue": {
+      "name": "Åbyvallen 1 Konstgräs",
+      "city": "Mölndal",
+      "capacity": 3000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16028,
+     "name": "Örebro SK W",
+     "founded": 1908,
+     "venue": {
+      "name": "Behrn Arena",
+      "city": "Örebro",
+      "capacity": 14500,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16030,
+     "name": "Enskede W",
+     "founded": 0,
+     "venue": {
+      "name": "Enskede IP 1",
+      "city": "Stockholm",
+      "capacity": 4000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 16032,
+     "name": "Gamla Upsala W",
+     "founded": 1947,
+     "venue": {
+      "name": "Studenternas IP",
+      "city": "Uppsala",
+      "capacity": 10522,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16033,
+     "name": "Husqvarna W",
+     "founded": 0,
+     "venue": {
+      "name": "Vapenvallen",
+      "city": "Huskvarna",
+      "capacity": 4000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 17639,
+     "name": "Trelleborg W",
+     "founded": 1926,
+     "venue": {
+      "name": "Vångavallen",
+      "city": "Trelleborg",
+      "capacity": 10500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 20820,
+     "name": "Häcken II W",
+     "founded": 1940,
+     "venue": {
+      "name": "Bravida Arena",
+      "city": "Göteborg",
+      "capacity": 7000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 21693,
+     "name": "Elfsborg W",
+     "founded": 1904,
+     "venue": {
+      "name": "Borås Arena",
+      "city": "Borås",
+      "capacity": 16899,
+      "surface": "artificial turf"
+     }
+    }
+   ]
+  },
+  {
+   "id": 1055,
+   "name": "Ettan - Relegation Round",
+   "season": 2025,
+   "teams": [
+    {
+     "id": 813,
+     "name": "Gefle IF",
+     "founded": 1882,
+     "venue": {
+      "name": "Gavlevallen",
+      "city": "Gävle",
+      "capacity": 6432,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 6692,
+     "name": "Oskarshamns AIK",
+     "founded": null,
+     "venue": {
+      "name": "Arena Oskarshamn",
+      "city": "Oskarshamn",
+      "capacity": 2500,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 6703,
+     "name": "Tvååker",
+     "founded": 1920,
+     "venue": {
+      "name": "Övrevi",
+      "city": "Tvååker",
+      "capacity": 2000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 22932,
+     "name": "Falu BS",
+     "founded": null,
+     "venue": {
+      "name": "Kopparvallen",
+      "city": "Falun",
+      "capacity": 3000,
+      "surface": "grass"
+     }
+    }
+   ]
+  }
+ ]
+}
