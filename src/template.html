@@ -529,6 +529,9 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 :root[data-style="flat"] .hero,:root[data-style="flat"] .onboard{border:0;border-radius:var(--r);padding:14px;background:linear-gradient(160deg,var(--accent-soft),var(--surface) 70%)}
 :root[data-style="flat"] .favcard{border-width:0 0 0 0;border-radius:var(--r)}
 :root[data-style="flat"] .favcard:not(.tone){background:var(--accent-soft)}
+.backpill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:58;font:600 14px var(--f-body);padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--fg);color:var(--bg);box-shadow:0 4px 18px rgba(0,0,0,.18);cursor:pointer;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
+.backpill[hidden]{display:none}
+@media (min-width:900px){.backpill{bottom:24px}}
 </style>
 
 <div class="wrap">
@@ -765,10 +768,24 @@ const TAGLINES={sv:"Planera & logga dina fotbollsresor",en:"Plan & log your foot
 (()=>{try{const langs=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"en"]).map(l=>String(l).toLowerCase().split("-")[0]);
   const l=langs.find(x=>TAGLINES[x])||"en";const el=document.getElementById("tagline");if(el){el.textContent=TAGLINES[l];el.lang=l;}}catch(e){}})();
 // ---------- mode ----------
-function setMode(m){mode=m;store.set("fk-mode",m);
+// Tillbaka: hoppar man från en vy till en annan (t.ex. arena → landslag) sparas varifrån man kom,
+// så att mobilens bakåt-gest och knappen "Tillbaka till …" leder rätt.
+const VIEW_SV={hem:"Hem",klubbar:"Klubbar",landslag:"Landslag",arenor:"Arenor",matcher:"Matcher",tabell:"Tabeller",tips:"Tips",quiz:"Quiz",reportage:"Reportage",forum:"Forum",mine:"Min fotboll"};
+let navPop=false,pendingJump=null,jumpFrom=null;
+function syncBack(){let b=document.getElementById("backPill");
+  if(!b){document.body.insertAdjacentHTML("beforeend",`<button id="backPill" class="backpill" hidden></button>`);b=document.getElementById("backPill");b.onclick=()=>{if(history.state&&history.state.jump)history.back();else if(jumpFrom)setMode(jumpFrom);};}
+  const on=!!(jumpFrom&&jumpFrom!==mode);b.hidden=!on;if(on)b.innerHTML=`<span aria-hidden="true">←</span> Tillbaka till ${esc(VIEW_SV[jumpFrom]||"förra sidan")}`;}
+window.addEventListener("popstate",e=>{const st=e.state;if(!st||!st.m||!VIEW_SV[st.m])return;navPop=true;jumpFrom=st.from||null;try{setMode(st.m);}finally{navPop=false;}
+  const y=st.y||0;requestAnimationFrame(()=>window.scrollTo({top:y}));});
+function setMode(m){const prev=mode,y0=window.scrollY;
+  if(!navPop){jumpFrom=pendingJump&&pendingJump!==m?pendingJump:null;
+    if(prev!==m){try{history.replaceState({...(history.state||{}),m:prev,y:y0},"");history.pushState({m,from:jumpFrom,jump:!!jumpFrom},"");}catch(e){}}}
+  pendingJump=null;
+  mode=m;store.set("fk-mode",m);
   document.querySelectorAll(".mode").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===m)));
   ["hem","klubbar","landslag","arenor","matcher","tabell","tips","quiz","reportage","forum","mine"].forEach(v=>{const s=document.getElementById("v-"+v);s.hidden=m!==v;s.style.display=m===v?"contents":"none";});
-  if(typeof syncNav==="function")syncNav();render();}
+  if(typeof syncNav==="function")syncNav();render();syncBack();}
+try{history.replaceState({m:mode,y:0},"");}catch(e){}
 document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 // bottenmenyn
 const MORE_MODES=["tabell","klubbar","landslag","arenor","tips","quiz","reportage","forum"];
@@ -2334,7 +2351,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.ntview){ntView=t.dataset.ntview;openClub=null;renderNat();return;}
   if(t.dataset.ntconf){ntConf=t.dataset.ntconf;store.set("fk-ntconf",ntConf);openClub=null;renderNat();return;}
   if(t.dataset.teampick){pickTeam(t.dataset.teampick);return;}
-  if(t.dataset.teamview){teamId=t.dataset.teamview;store.set("fk-team",teamId);matchView="team";store.set("fk-mview","team");setMode("matcher");const inp=document.getElementById("teamIn");if(inp)inp.value=C[teamId].n;window.scrollTo({top:0});return;}
+  if(t.dataset.teamview){pendingJump=mode;teamId=t.dataset.teamview;store.set("fk-team",teamId);matchView="team";store.set("fk-mview","team");setMode("matcher");const inp=document.getElementById("teamIn");if(inp)inp.value=C[teamId].n;window.scrollTo({top:0});return;}
   if(isArenaBtn(t)){arenaClick(t);return;}
   if(t.dataset.editatt){fillVenueList();editAtt=editAtt===t.dataset.editatt?null:t.dataset.editatt;myErr="";renderMine();return;}
   if(t.dataset.exportcsv){exportCsv();return;}
@@ -2356,7 +2373,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.id==="newPost"||t.id==="cancelPost"||t.dataset.fkind||t.dataset.thread||t.dataset.delpost||t.dataset.hide){forumClick(t);return;}
   if(t.dataset.country){country=t.dataset.country;league="";openClub=null;renderClubs();return;}
   if(t.dataset.league!==undefined){league=t.dataset.league;openClub=null;renderClubs();return;}
-  if(t.dataset.tbl!==undefined){tblLeague=t.dataset.tbl;tblHL=t.dataset.tblhl||null;store.set("fk-tbl",tblLeague);setMode("tabell");window.scrollTo({top:0});return;}
+  if(t.dataset.tbl!==undefined){pendingJump=mode;tblLeague=t.dataset.tbl;tblHL=t.dataset.tblhl||null;store.set("fk-tbl",tblLeague);setMode("tabell");window.scrollTo({top:0});return;}
   if(t.dataset.tblc!==undefined){const ls=tblLeagues().filter(x=>x.c===t.dataset.tblc);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();return;}
   if(t.dataset.tbll!==undefined){tblLeague=t.dataset.tbll;tblHL=null;store.set("fk-tbl",tblLeague);renderTable();return;}
   if(t.id==="askAi"){askClaude();return;}
@@ -2367,7 +2384,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.from){dFrom=t.dataset.from;dTo=t.dataset.to;renderMatches();return;}
   if(t.dataset.radius!==undefined&&!t.disabled){radius=+t.dataset.radius;store.set("fk-radius",String(radius));renderMatches();return;}
   if(t.dataset.tier){const k=t.dataset.tier;if(k==="all")tiers.clear();else if(tiers.has(k))tiers.delete(k);else tiers.add(k);renderMatches();return;}
-  if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");window.scrollTo({top:0});return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");window.scrollTo({top:0});return;}
+  if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");window.scrollTo({top:0});return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");window.scrollTo({top:0});return;}
   if(t.dataset.club){openClub=openClub===t.dataset.club?null:t.dataset.club;renderClubs();}});
 document.addEventListener("change",e=>{const id=e.target.id;
   if(id==="dFrom"&&e.target.value){dFrom=e.target.value;if(dTo<dFrom)dTo=dFrom;renderMatches();}
