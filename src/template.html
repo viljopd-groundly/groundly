@@ -616,6 +616,8 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
     </label>
     <datalist id="cities"></datalist>
     <div class="sugg" id="citySug" hidden></div>
+    <div class="lbl">Matcher</div>
+    <div class="chips wrapchips" role="group" aria-label="Typ av matcher" id="gMatch"></div>
     <div class="lbl">Datum</div>
     <div class="chips" role="group" aria-label="Snabbval datum" id="datePresets"></div>
     <div class="range">
@@ -627,7 +629,6 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
     <div class="place" id="placeRow" hidden></div>
     <div class="lbl">Serie eller cup</div>
     <div class="chips" role="group" aria-label="Serie eller cup" id="tierChips"></div>
-    <div class="chips" role="group" aria-label="Herr eller dam" id="gMatch"></div>
     <div id="doubleOpts" class="dopts" hidden></div>
     <div class="toolbar"><div class="count" id="matchCount"></div></div>
     <div class="list" id="matchList"></div>
@@ -729,7 +730,11 @@ const isNat=c=>!!c&&(c.l==="Landslag"||c.l==="U21-landslag");
 const WLEAGUES=new Set(/*WLEAGUES*/[]);const isW=c=>!!c&&WLEAGUES.has(c.l);
 let gender="alla";try{const g=localStorage.getItem("fk-gender");if(g==="herr"||g==="dam")gender=g;}catch(e){}
 const gOk=c=>gender==="alla"||(gender==="dam")===isW(c);
-const gOkM=m=>gender==="alla"||(gender==="dam")===isW(C[m.home]);
+let mKind="alla";try{const k=localStorage.getItem("fk-mkind");if(["herr","dam","landslag"].includes(k))mKind=k;}catch(e){}
+const mKindOf=m=>{const h=C[m.home];return isNat(h)||isNat(C[m.away])?"landslag":isW(h)?"dam":"herr";};
+const gOkM=m=>mKind==="alla"||mKindOf(m)===mKind;
+function matchKindChips(){const el=document.getElementById("gMatch");if(!el)return;
+  el.innerHTML=[["alla","Alla matcher"],["herr","Herr"],["dam","Dam"],["landslag","Landslag"]].map(([k,l])=>`<button class="chip" data-mkind="${k}" aria-pressed="${mKind===k}">${l}</button>`).join("");}
 function genderChips(id){const el=document.getElementById(id);if(!el)return;el.innerHTML=WLEAGUES.size?[["alla","Alla"],["herr","Herr"],["dam","Dam"]].map(([k,l])=>`<button class="chip" data-gender="${k}" aria-pressed="${gender===k}">${l}</button>`).join(""):"";}
 const C={};CLUBS.forEach(r=>{const[id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf]=r;C[id]={id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf:conf||(l==="Landslag"?"UEFA":null)};});
 const CONFS=[["UEFA","Europa"],["CONMEBOL","Sydamerika"],["CONCACAF","Nord- och Centralamerika"],["CAF","Afrika"],["AFC","Asien"],["OFC","Oceanien"]];
@@ -955,7 +960,7 @@ function placeDist(m,place){const nq=norm(cityQ);if(!nq)return -1;
   if(!place||!place.ll)return null;const ll=GEO[m.city];if(!ll)return null;const km=haversine(place.ll,ll);return km<=radius*10+0.01?km:null;}
 
 let citiesFor=null;
-function renderMatches(){genderChips("gMatch");
+function renderMatches(){matchKindChips();
   document.getElementById("matchViewChips").innerHTML=[["list","Alla matcher"],["team","Lag"],["double","Dubbelmatcher"],...(AI_ON?[["plan","Planera med Claude"]]:[])].map(([k,l])=>`<button class="chip" data-mview="${k}" aria-pressed="${matchView===k}">${l}</button>`).join("");
   document.getElementById("doubleOpts").hidden=matchView!=="double";
   document.getElementById("v-matcher").classList.toggle("planmode",matchView==="plan"||matchView==="team");if(matchView==="plan"){renderPlanner();return;}if(matchView==="team"){renderTeamView();return;}renderMatchList();if(matchView==="double")renderDouble();}
@@ -2394,6 +2399,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.near){cityEl.value=t.dataset.near;cityQ=t.dataset.near;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),29);radius=5;store.set("fk-radius","5");setMode("matcher");window.scrollTo({top:0});return;}
   if(t.dataset.from){dFrom=t.dataset.from;dTo=t.dataset.to;renderMatches();return;}
   if(t.dataset.radius!==undefined&&!t.disabled){radius=+t.dataset.radius;store.set("fk-radius",String(radius));renderMatches();return;}
+  if(t.dataset.mkind){mKind=t.dataset.mkind;store.set("fk-mkind",mKind);renderMatches();return;}
   if(t.dataset.gender){gender=t.dataset.gender;store.set("fk-gender",gender);render();return;}
   if(t.dataset.tier){const k=t.dataset.tier;if(k==="all")tiers.clear();else if(tiers.has(k))tiers.delete(k);else tiers.add(k);renderMatches();return;}
   if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");window.scrollTo({top:0});return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");window.scrollTo({top:0});return;}

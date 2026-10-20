@@ -81,6 +81,12 @@ const API=[
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}
 for(const l of WOMEN.leagues)API.push([l[0],l[1],l[2],l[3],l[4],new RegExp(l[5],"i"),true]);
+// landskamper (herr): API-lagnamn på engelska matchas mot landslagens söknamn (tools/nationals.json)
+let NATS=[];try{NATS=JSON.parse(fs.readFileSync(path.join(TOOLS,"nationals.json"),"utf8"));}catch(e){}
+const nn=x=>String(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
+const NATALIAS={"usa":"usa","united states":"usa","korea republic":"south korea","korea dpr":"north korea","czech republic":"czechia","turkiye":"turkey","ivory coast":"cote d ivoire","cape verde islands":"cape verde","china pr":"china","ir iran":"iran","bosnia and herzegovina":"bosnia","congo dr":"dr congo"};
+const natFind=name=>{if(/\sW$|\bU\d\d\b/.test(name||""))return null;let n=nn(name);n=NATALIAS[n]||n;const r=NATS.find(([id,h])=>(nn(h)+" ").startsWith(n+" "))||NATS.find(([id,h])=>(" "+nn(h)+" ").includes(" "+n+" "));return r?r[0]:null;};
+if(NATS.length)API.push(["Nations League","*","World","CUP","uefa.nl",/^uefa nations league$/,false,true],["VM-kval","*","World","CUP","wc.q",/^world cup - qualification europe$/,false,true],["EM-kval","*","World","CUP","ec.q",/^euro championship - qualification$/,false,true],["Landskamper","*","World","CUP","int.fr",/^friendlies$/,false,true]);
 const apiStat={};const extra={standings:{},players:{},squads:{},events:{}};
 if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();const BASE=(process.env.API_FOOTBALL_BASE||"https://v3.football.api-sports.io").replace(/\/$/,"");
   const local=/^http:\/\/(127\.0\.0\.1|localhost)/.test(BASE);let calls=0,gap=220;const sleep=ms=>{try{execSync(`sleep ${ms/1000}`);}catch(e){}};
@@ -105,22 +111,22 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
     const done=[];// [lname, apiLeagueId, season, country, tier]
     // 2) matcher och resultat
     const now=Date.now();const finished=[];
-    for(const[lname,country,ac,tier,code,re,isW] of API){const key=Object.keys(lg).find(k=>k.startsWith(ac+"|")&&re.test(k.split("|")[1]));if(!key){apiStat[lname]="saknas i API";continue;}
+    for(const[lname,country,ac,tier,code,re,isW,isN] of API){const key=Object.keys(lg).find(k=>k.startsWith(ac+"|")&&re.test(k.split("|")[1]));if(!key){apiStat[lname]="saknas i API";continue;}
       const L=lg[key];let fx;try{fx=get(`fixtures?league=${L.id}&season=${L.season}&timezone=UTC`);}catch(e){apiStat[lname]=String(e.message).slice(0,120);continue;}
       if(!fx.length){apiStat[lname]=0;continue;}
       for(let i=rows.length-1;i>=0;i--)if(rows[i][5]===lname)rows.splice(i,1);// API ersätter openfootball för samma serie
-      const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const wid=isW?tid(tm,country):null;const c=isW?(wid?[wid]:null):findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};const arc=[];let n=0;const have=new Set();
+      const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const wid=isW?tid(tm,country):isN?natFind(nm):null;const c=isW||isN?(wid?[wid]:null):findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};const arc=[];let n=0;const have=new Set();
       for(const f of fx){const st=f.fixture.status&&f.fixture.status.short;if(["PST","CANC","ABD","AWD","WO"].includes(st))continue;
         const hn=f.teams.home.name,an=f.teams.away.name,iso8=f.fixture.date,date=iso8.slice(0,10);const fin=["FT","AET","PEN"].includes(st);const gh=fin?f.goals.home:null,ga=fin?f.goals.away:null;const tbd=st==="TBD"||/T00:00:00/.test(iso8);
         const pen=f.score&&f.score.penalty&&f.score.penalty.home!=null?`${f.score.penalty.home}-${f.score.penalty.away}`:"";
         arc.push([T(hn,f.teams.home),T(an,f.teams.away),date,tbd?"":iso8.slice(11,16),gh,ga,pen,tier==="CUP"?(f.league.round||""):""]);
-        const H=tid(f.teams.home,country),A=tid(f.teams.away,country);if(!H){unmatched[hn]=(unmatched[hn]||0)+1;}if(!A){unmatched[an]=(unmatched[an]||0)+1;}if(!H||!A)continue;
+        const H=isN?natFind(hn):tid(f.teams.home,country),A=isN?natFind(an):tid(f.teams.away,country);if(isN&&(!H||!A))continue;if(!H){unmatched[hn]=(unmatched[hn]||0)+1;}if(!A){unmatched[an]=(unmatched[an]||0)+1;}if(!H||!A)continue;
         const k=H+"|"+A+"|"+date;if(have.has(k))continue;have.add(k);
         rows.push([H,A,tbd?null:new Date(iso8).toISOString(),date,fin?`${gh}–${ga}`:"",lname,String(tier)]);n++;
         if(fin)finished.push({id:f.fixture.id,key:k,date,home:f.teams.home.id});}
       fs.mkdirSync(path.join(OUT,"archive",code),{recursive:true});
       fs.writeFileSync(path.join(OUT,"archive",code,SEASON+".json"),JSON.stringify({l:lname,s:SEASON.replace("-","/"),c:country==="*"?"Europa":country,tier,t:teams,m:arc}));
-      stat[lname]=n;apiStat[lname]=n;done.push([lname,L.id,L.season,country,tier,L.cov]);}
+      stat[lname]=n;apiStat[lname]=n;if(!isN)done.push([lname,L.id,L.season,country,tier,L.cov]);}
     // 3) officiella tabeller
     for(const[lname,lid,season,country,tier] of done){if(tier==="CUP")continue;try{const r=get(`standings?league=${lid}&season=${season}`);const groups=(r[0]&&r[0].league&&r[0].league.standings)||[];
       extra.standings[lname]={season,groups:groups.map(g=>({name:(g[0]&&g[0].group)||"",rows:g.map(x=>[tid(x.team,country),x.team.name,x.rank,x.all.played,x.all.win,x.all.draw,x.all.lose,x.all.goals.for,x.all.goals.against,x.points,x.form||"",x.description||""])}))};}catch(e){apiStat["tabell "+lname]=String(e.message).slice(0,80);}}
