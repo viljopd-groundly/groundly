@@ -769,7 +769,7 @@ let MATCHES=[],dbState="loading",META=null;
 let FIXTURES=[],FX_UPDATED=null,DBM=null,dbFailed=false;
 // säsongsdatan ligger i en egen fil som uppdateras varje natt
 function remergeMatches(){if(DBM===null&&!dbFailed&&!FIXTURES.length)return;MATCHES=mergeFixtures(DBM||[]);dbState=MATCHES.length?"ready":(dbFailed?"none":"empty");render();}
-fetch("data/flags.json").then(r=>r.ok?r.json():null).then(j=>{if(!j)return;Object.assign(FLAGS,j);Object.keys(j).forEach(k=>{if(k.startsWith("nt-"))FLAGS["u21-"+k.slice(3)]=j[k];});try{render();}catch(e){}}).catch(()=>{});
+(window.requestIdleCallback||(f=>setTimeout(f,300)))(()=>fetch("data/flags.json").then(r=>r.ok?r.json():null).then(j=>{if(!j)return;Object.assign(FLAGS,j);Object.keys(j).forEach(k=>{if(k.startsWith("nt-"))FLAGS["u21-"+k.slice(3)]=j[k];});try{render();}catch(e){}}).catch(()=>{}));
 let mapsP=null;function loadMaps(){return mapsP||(mapsP=fetch("data/maps.json").then(r=>r.json()).then(j=>{for(const k in j)if(MAPS[k]){MAPS[k].path=j[k].path;if(j[k].path2)MAPS[k].path2=j[k].path2;}}).catch(()=>{mapsP=null;}));}
 fetch("data/fixtures.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&Array.isArray(j.rows)){FIXTURES=j.rows;FX_UPDATED=j.updated||null;remergeMatches();}}).catch(()=>{});
 function fixtureMatches(){return FIXTURES.map(([h,a,ko,date,sc,comp,tier])=>{const H=C[h],A=C[a];if(!H||!A)return null;
@@ -808,11 +808,11 @@ function setMode(m){const prev=mode,y0=window.scrollY;
   if(!navPop){jumpFrom=pendingJump&&pendingJump!==m?pendingJump:null;
     if(prev!==m){try{history.replaceState({...(history.state||{}),m:prev,y:y0},"");history.pushState({m,from:jumpFrom,jump:!!jumpFrom},"");}catch(e){}}}
   pendingJump=null;
-  mode=m;store.set("fk-mode",m);
+  mode=m;store.set("fk-mode",m);window.__gmode=m;try{window.dispatchEvent(new CustomEvent("gmode",{detail:m}));}catch(e){}
   document.querySelectorAll(".mode").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===m)));
   ["hem","klubbar","landslag","arenor","matcher","tabell","tips","quiz","reportage","forum","mine"].forEach(v=>{const s=document.getElementById("v-"+v);s.hidden=m!==v;s.style.display=m===v?"contents":"none";});
   if(typeof syncNav==="function")syncNav();render();syncBack();}
-try{history.replaceState({m:mode,y:0},"");}catch(e){}
+try{history.replaceState({m:mode,y:0},"");}catch(e){}window.__gmode=mode;
 document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 // bottenmenyn
 const MORE_MODES=["tabell","klubbar","landslag","arenor","tips","quiz","reportage","forum"];

@@ -36,7 +36,10 @@ async function boot() {
   const fbApp = app.initializeApp(CONFIG);
   const auth = A.getAuth(fbApp);
   try { auth.languageCode = "sv"; } catch (e) {}
-  const fs = F.initializeFirestore ? F.initializeFirestore(fbApp, { ignoreUndefinedProperties: true }) : F.getFirestore(fbApp);
+  // lokal cache i webbläsaren: sparad data visas direkt vid återbesök, ändringar hämtas sedan
+  let fs;
+  try { fs = F.initializeFirestore(fbApp, { ignoreUndefinedProperties: true, localCache: F.persistentLocalCache && F.persistentMultipleTabManager ? F.persistentLocalCache({ tabManager: F.persistentMultipleTabManager() }) : undefined }); }
+  catch (e) { try { fs = F.initializeFirestore(fbApp, { ignoreUndefinedProperties: true }); } catch (e2) { fs = F.getFirestore(fbApp); } }
   const st = S ? S.getStorage(fbApp) : null;
 
   // vänta på första inloggningsbeskedet
@@ -71,6 +74,7 @@ async function boot() {
   }
 
   // ---------- db ----------
+  const LAZY = { forum: ["forum", "tips"], pubs: ["klubbar", "arenor", "landslag", "matcher", "tips"], tipnotes: ["tips", "mine"], fixes: ["mine"] };
   const docSnap = s => ({ id: s.id, exists: s.exists(), data: () => s.data() });
   const db = {
     doc(path) {
@@ -89,7 +93,16 @@ async function boot() {
       const wrap = s => ({ size: s.size, empty: s.empty, docs: s.docs.map(d => ({ id: d.id, exists: true, data: () => d.data() })) });
       return {
         async get() { try { return wrap(await F.getDocs(ref)); } catch (e) { throw mapErr(e); } },
-        onSnapshot(next, onErr) { return F.onSnapshot(ref, s => next(wrap(s)), e => onErr && onErr(mapErr(e))); }
+        onSnapshot(next, onErr) {
+          const sub = () => F.onSnapshot(ref, s => next(wrap(s)), e => onErr && onErr(mapErr(e)));
+          // samlingar som bara behövs i vissa vyer hämtas först när man öppnar vyn (sparar läsningar)
+          const need = LAZY[name];
+          if (!need || need.includes(window.__gmode)) return sub();
+          let off = null, dead = false;
+          const h = ev => { if (!off && !dead && need.includes(ev.detail)) { off = sub(); window.removeEventListener("gmode", h); } };
+          window.addEventListener("gmode", h);
+          return () => { dead = true; window.removeEventListener("gmode", h); if (off) off(); };
+        }
       };
     }
   };

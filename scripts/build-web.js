@@ -87,7 +87,8 @@ const head = `<!doctype html>
 setTimeout(function(){ready({use:function(){return Promise.resolve(null)}})},15000);
 window.claude={use:function(n){return p.then(function(rt){return rt.use(n)})}};})();
 </script>
-<script type="module" src="js/runtime.js"></script>
+<script type="module" src="js/runtime.js?v=${require("crypto").createHash("md5").update(fs.readFileSync(path.join(SITE, "js", "runtime.js"))).digest("hex").slice(0, 8)}"></script>
+<script>if("serviceWorker" in navigator)addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});</script>
 `;
 html = head + html.replace('<meta name="claude:viewport-fit-sides" content="cover">\n', "") + "\n</html>\n";
 
