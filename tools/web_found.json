@@ -1,0 +1,969 @@
+{
+ "nat": {
+  "Spanien": [
+   {
+    "label": "Aragon national football team",
+    "site": "www.futbolaragon.com"
+   }
+  ],
+  "Aragonien": [
+   {
+    "label": "Aragon national football team",
+    "site": "www.futbolaragon.com"
+   }
+  ],
+  "USA": [
+   {
+    "label": "Guam men's national football team",
+    "site": "guamfa.com/national-teams"
+   }
+  ],
+  "Malaysia": [
+   {
+    "label": "Malaysia League XI",
+    "site": "www.fam.org.my"
+   },
+   {
+    "label": "Malaysia Pahang Sports School",
+    "site": "www.fam.org.my"
+   }
+  ]
+ },
+ "club": {
+  "aft": {
+   "qid": "Q923238",
+   "label": "Ungmennafélagið Afturelding",
+   "desc": "association football club",
+   "site": "www.afturelding.is",
+   "ours": "Afturelding",
+   "country": "Island",
+   "league": "Lengjudeild"
+  },
+  "ves": {
+   "qid": "Q113407279",
+   "label": "Vestri",
+   "desc": "football club",
+   "site": "www.vestri.is/knattspyrna",
+   "ours": "Vestri",
+   "country": "Island",
+   "league": "Lengjudeild"
+  },
+  "gdc": {
+   "qid": "Q543467",
+   "label": "G.D. Chaves",
+   "desc": "professional association football club based in Chaves, Portugal",
+   "site": "www.gdchaves.pt",
+   "ours": "GD Chaves",
+   "country": "Portugal",
+   "league": "Liga Portugal 2"
+  },
+  "fbo": {
+   "qid": "Q18001655",
+   "label": "Francs Borains",
+   "desc": "football club from Boussu, Belgium",
+   "site": "www.francsborains.be",
+   "ours": "Francs Borains",
+   "country": "Belgien",
+   "league": "Challenger Pro League"
+  },
+  "pat": {
+   "qid": "Q2308515",
+   "label": "K. Patro Eisden Maasmechelen",
+   "desc": "Belgian football club",
+   "site": "patroeisden.com",
+   "ours": "Patro Eisden Maasmechelen",
+   "country": "Belgien",
+   "league": "Challenger Pro League"
+  },
+  "chg": {
+   "qid": "Q5113698",
+   "label": "Chrobry Głogów",
+   "desc": "Polish association football club",
+   "site": "www.chrobry-glogow.pl",
+   "ours": "Chrobry Głogów",
+   "country": "Polen",
+   "league": "I liga"
+  },
+  "pus": {
+   "qid": "Q4384885",
+   "label": "Puszcza Niepołomice",
+   "desc": "Polish football club located in Niepołomice, Polan",
+   "site": "www.puszcza-niepolomice.pl",
+   "ours": "Puszcza Niepołomice",
+   "country": "Polen",
+   "league": "I liga"
+  },
+  "csl": {
+   "qid": "Q125101791",
+   "label": "CS Lebowski",
+   "desc": "Italian football club",
+   "site": "cslebowski.it",
+   "ours": "Centro Storico Lebowski",
+   "country": "Italien",
+   "league": "Amatörserie"
+  },
+  "telfo": {
+   "qid": "Q18505",
+   "label": "AFC Telford United",
+   "desc": "association football club in Wellington, England",
+   "site": "www.telfordunited.com",
+   "ours": "AFC Telford United",
+   "country": "England",
+   "league": "National League North"
+  },
+  "bedfo": {
+   "qid": "Q1909532",
+   "label": "Bedford Town F.C.",
+   "desc": "association football club in England",
+   "site": "www.bedfordeagles.net",
+   "ours": "Bedford Town",
+   "country": "England",
+   "league": "National League North"
+  },
+  "brack": {
+   "qid": "Q1953914",
+   "label": "Brackley Town F.C.",
+   "desc": "association football club in Brackley, England",
+   "site": "www.brackleytownfc.com",
+   "ours": "Brackley Town",
+   "country": "England",
+   "league": "National League North"
+  },
+  "buxto": {
+   "qid": "Q18286",
+   "label": "Buxton F.C.",
+   "desc": "association football club in Buxton, England",
+   "site": "www.buxtonfc.co.uk",
+   "ours": "Buxton",
+   "country": "England",
+   "league": "National League North"
+  },
+  "chest2": {
+   "qid": "Q1070732",
+   "label": "Chester City F.C.",
+   "desc": "defunct association football club in Chester, England",
+   "site": "chester-city.co.uk",
+   "ours": "Chester",
+   "country": "England",
+   "league": "National League North"
+  },
+  "chorl": {
+   "qid": "Q18287",
+   "label": "Chorley F.C.",
+   "desc": "association football club in Chorley, England",
+   "site": "www.chorleyfc.com",
+   "ours": "Chorley",
+   "country": "England",
+   "league": "National League North"
+  },
+  "darli": {
+   "qid": "Q909189",
+   "label": "Darlington F.C.",
+   "desc": "association football club in Darlington, England",
+   "site": "darlingtonfc.co.uk",
+   "ours": "Darlington",
+   "country": "England",
+   "league": "National League North"
+  },
+  "harbo": {
+   "qid": "Q5330628",
+   "label": "Harborough Town F.C.",
+   "desc": "English football team",
+   "site": "www.harboroughtownfc.org",
+   "ours": "Harborough Town",
+   "country": "England",
+   "league": "National League North"
+  },
+  "hedne": {
+   "qid": "Q18293",
+   "label": "Hednesford Town F.C.",
+   "desc": "association football club in Hednesford, England",
+   "site": "www.hednesfordtownfc.com",
+   "ours": "Hednesford Town",
+   "country": "England",
+   "league": "National League North"
+  },
+  "kings": {
+   "qid": "Q18477",
+   "label": "King's Lynn Town F.C.",
+   "desc": "association football club",
+   "site": "www.kltown.co.uk",
+   "ours": "King's Lynn Town",
+   "country": "England",
+   "league": "National League North"
+  },
+  "maccl": {
+   "qid": "Q18521",
+   "label": "Macclesfield Town F.C.",
+   "desc": "defunct association football club in Macclesfield, England",
+   "site": "www.mtfc.co.uk",
+   "ours": "Macclesfield",
+   "country": "England",
+   "league": "National League North"
+  },
+  "merth": {
+   "qid": "Q3264440",
+   "label": "Merthyr Town F.C.",
+   "desc": "association football club in Wales",
+   "site": "www.pitchero.com/clubs/merthyrtown",
+   "ours": "Merthyr Town",
+   "country": "Wales",
+   "league": "National League North"
+  },
+  "morec": {
+   "qid": "Q48944",
+   "label": "Morecambe F.C.",
+   "desc": "association football club in Morecambe, England",
+   "site": "www.morecambefc.com",
+   "ours": "Morecambe",
+   "country": "England",
+   "league": "National League North"
+  },
+  "oxfor2": {
+   "qid": "Q5213276",
+   "label": "Oxford City F.C.",
+   "desc": "association football club in Marston, England",
+   "site": "www.oxfordcityfc.co.uk",
+   "ours": "Oxford City",
+   "country": "England",
+   "league": "National League North"
+  },
+  "radcl": {
+   "qid": "Q18330",
+   "label": "Radcliffe F.C.",
+   "desc": "association football club",
+   "site": "www.rbfc.co.uk",
+   "ours": "Radcliffe",
+   "country": "England",
+   "league": "National League North"
+  },
+  "scarb": {
+   "qid": "Q7430259",
+   "label": "Scarborough Athletic F.C.",
+   "desc": "association football club in Scarborough, England",
+   "site": "www.scarboroughathletic.com",
+   "ours": "Scarborough Athletic",
+   "country": "England",
+   "league": "National League North"
+  },
+  "south2": {
+   "qid": "Q17021739",
+   "label": "South Shields F.C.",
+   "desc": "football club founded in 1974",
+   "site": "southshieldsfc.co.uk",
+   "ours": "South Shields",
+   "country": "England",
+   "league": "National League North"
+  },
+  "south3": {
+   "qid": "Q18525",
+   "label": "Southport F.C.",
+   "desc": "association football club in Southport, England",
+   "site": "southportfc.net",
+   "ours": "Southport",
+   "country": "England",
+   "league": "National League North"
+  },
+  "spald": {
+   "qid": "Q5330540",
+   "label": "Spalding United F.C.",
+   "desc": "English football team",
+   "site": "www.pitchero.com/clubs/spaldingunited",
+   "ours": "Spalding United",
+   "country": "England",
+   "league": "National League North"
+  },
+  "spenn": {
+   "qid": "Q7576302",
+   "label": "Spennymoor Town F.C.",
+   "desc": "association football club in Spennymoor, England",
+   "site": "www.spennymoortownfc.co.uk",
+   "ours": "Spennymoor Town",
+   "country": "England",
+   "league": "National League North"
+  },
+  "works": {
+   "qid": "Q18308",
+   "label": "Worksop Town F.C.",
+   "desc": "association football club in Worksop, England",
+   "site": "www.worksoptownfc.co.uk",
+   "ours": "Worksop Town",
+   "country": "England",
+   "league": "National League North"
+  },
+  "totto": {
+   "qid": "Q4390395",
+   "label": "A.F.C. Totton",
+   "desc": "English football club",
+   "site": "www.afctotton.com",
+   "ours": "AFC Totton",
+   "country": "England",
+   "league": "National League South"
+  },
+  "bille": {
+   "qid": "Q4086727",
+   "label": "Billericay Town F.C.",
+   "desc": "football club based in England",
+   "site": "www.billericaytownfc.co.uk",
+   "ours": "Billericay Town",
+   "country": "England",
+   "league": "National League South"
+  },
+  "brain": {
+   "qid": "Q18508",
+   "label": "Braintree Town F.C.",
+   "desc": "association football club in Braintree, England",
+   "site": "www.braintreetownfc.org.uk",
+   "ours": "Braintree Town",
+   "country": "England",
+   "league": "National League South"
+  },
+  "chelm": {
+   "qid": "Q2305609",
+   "label": "Chelmsford City F.C.",
+   "desc": "association football club in Chelmsford, England",
+   "site": "chelmsfordcityfc.com",
+   "ours": "Chelmsford City",
+   "country": "England",
+   "league": "National League South"
+  },
+  "chesh": {
+   "qid": "Q5092930",
+   "label": "Chesham United F.C.",
+   "desc": "association football club in England",
+   "site": "www.cheshamunited.co.uk",
+   "ours": "Chesham United",
+   "country": "England",
+   "league": "National League South"
+  },
+  "dagen": {
+   "qid": "Q48938",
+   "label": "Dagenham & Redbridge F.C.",
+   "desc": "association football club in Dagenham, England",
+   "site": "www.daggers.co.uk",
+   "ours": "Dagenham & Redbridge",
+   "country": "England",
+   "league": "National League South"
+  },
+  "dorki": {
+   "qid": "Q5298045",
+   "label": "Dorking Wanderers F.C.",
+   "desc": "association football club in Dorking, England",
+   "site": "www.dorkingwanderers.com",
+   "ours": "Dorking Wanderers",
+   "country": "England",
+   "league": "National League South"
+  },
+  "dover": {
+   "qid": "Q2658370",
+   "label": "Dover Athletic F.C.",
+   "desc": "association football club in Dover, England",
+   "site": "doverathletic.com",
+   "ours": "Dover Athletic",
+   "country": "England",
+   "league": "National League South"
+  },
+  "ebbsf": {
+   "qid": "Q18511",
+   "label": "Ebbsfleet United F.C.",
+   "desc": "association football club in Northfleet, England",
+   "site": "ebbsfleetunited.co.uk",
+   "ours": "Ebbsfleet United",
+   "country": "England",
+   "league": "National League South"
+  },
+  "farnb": {
+   "qid": "Q2978308",
+   "label": "Farnborough F.C.",
+   "desc": "association football club in England",
+   "site": "www.farnboroughfc.co.uk",
+   "ours": "Farnborough",
+   "country": "England",
+   "league": "National League South"
+  },
+  "farnh": {
+   "qid": "Q5327741",
+   "label": "Farnham Town F.C.",
+   "desc": "English football team",
+   "site": "www.farnhamtownfc.co.uk",
+   "ours": "Farnham Town",
+   "country": "England",
+   "league": "National League South"
+  },
+  "folke": {
+   "qid": "Q5212680",
+   "label": "Folkestone Invicta F.C.",
+   "desc": "association football club in England",
+   "site": "www.folkestoneinvictafc.co.uk",
+   "ours": "Folkestone Invicta",
+   "country": "England",
+   "league": "National League South"
+  },
+  "hampt": {
+   "qid": "Q2307965",
+   "label": "Hampton & Richmond Borough F.C.",
+   "desc": "association football club in London, England",
+   "site": "www.hamptonfc.net",
+   "ours": "Hampton & Richmond Borough",
+   "country": "England",
+   "league": "National League South"
+  },
+  "hemel": {
+   "qid": "Q5212629",
+   "label": "Hemel Hempstead Town F.C.",
+   "desc": "association football club in Hemel Hempstead, England",
+   "site": "www.hemelfc.com",
+   "ours": "Hemel Hempstead Town",
+   "country": "England",
+   "league": "National League South"
+  },
+  "maide": {
+   "qid": "Q1131109",
+   "label": "Maidenhead United F.C.",
+   "desc": "association football club in Maidenhead, England",
+   "site": "www.maidenheadunitedfc.org",
+   "ours": "Maidenhead United",
+   "country": "England",
+   "league": "National League South"
+  },
+  "maids": {
+   "qid": "Q1764590",
+   "label": "Maidstone United F.C.",
+   "desc": "association football club in Maidstone, England",
+   "site": "www.maidstoneunited.co.uk",
+   "ours": "Maidstone United",
+   "country": "England",
+   "league": "National League South"
+  },
+  "sloug": {
+   "qid": "Q2306118",
+   "label": "Slough Town F.C.",
+   "desc": "English association football club based in Slough",
+   "site": "www.sloughtownfc.net",
+   "ours": "Slough Town",
+   "country": "England",
+   "league": "National League South"
+  },
+  "tonbr": {
+   "qid": "Q2564389",
+   "label": "Tonbridge Angels F.C.",
+   "desc": "Association Football club",
+   "site": "www.tonbridgeangelsonline.co.uk",
+   "ours": "Tonbridge Angels",
+   "country": "England",
+   "league": "National League South"
+  },
+  "torqu": {
+   "qid": "Q47965",
+   "label": "Torquay United F.C.",
+   "desc": "association football club in Torquay, England",
+   "site": "torquayunited.com",
+   "ours": "Torquay United",
+   "country": "England",
+   "league": "National League South"
+  },
+  "truro": {
+   "qid": "Q4392059",
+   "label": "Truro City F.C.",
+   "desc": "Association football club in Truro, England",
+   "site": "trurocity.co.uk",
+   "ours": "Truro City",
+   "country": "England",
+   "league": "National League South"
+  },
+  "walto": {
+   "qid": "Q5213670",
+   "label": "Walton & Hersham F.C.",
+   "desc": "association football club in England",
+   "site": "www.waltonandhershamfc.org.uk",
+   "ours": "Walton & Hersham",
+   "country": "England",
+   "league": "National League South"
+  },
+  "westo": {
+   "qid": "Q2343389",
+   "label": "Weston-super-Mare A.F.C.",
+   "desc": "association football club in Weston-super-Mare, England",
+   "site": "www.westonsmareafc.co.uk",
+   "ours": "Weston-super-Mare",
+   "country": "England",
+   "league": "National League South"
+  },
+  "eimsb": {
+   "qid": "Q468738",
+   "label": "Eimsbütteler TV",
+   "desc": "sports club in Germany",
+   "site": "etv-hamburg.de",
+   "ours": "Eimsbütteler TV",
+   "country": "Tyskland",
+   "league": "Regionalliga Nord"
+  },
+  "todes": {
+   "qid": "Q1585026",
+   "label": "SV Todesfelde",
+   "desc": "German association football club",
+   "site": "www.svtodesfelde.de",
+   "ours": "SV Todesfelde",
+   "country": "Tyskland",
+   "league": "Regionalliga Nord"
+  },
+  "eintr2": {
+   "qid": "Q18058509",
+   "desc": "",
+   "site": "eintracht-kiel.de",
+   "ours": "RSV Eintracht",
+   "country": "Tyskland",
+   "league": "Regionalliga Nordost"
+  },
+  "tasma": {
+   "qid": "Q1565781",
+   "label": "SV Tasmania Berlin",
+   "desc": "German football club",
+   "site": "www.tasmania-berlin.de",
+   "ours": "Tasmania Berlin",
+   "country": "Tyskland",
+   "league": "Regionalliga Nordost"
+  },
+  "preus": {
+   "qid": "Q666155",
+   "label": "BFC Preussen",
+   "desc": "German association football club",
+   "site": "www.bfc-preussen-fussball.de",
+   "ours": "BFC Preussen",
+   "country": "Tyskland",
+   "league": "Regionalliga Nordost"
+  },
+  "bonne": {
+   "qid": "Q568276",
+   "label": "Bonner SC",
+   "desc": "association football club",
+   "site": "www.bonner-sc.de",
+   "ours": "Bonner SC",
+   "country": "Tyskland",
+   "league": "Regionalliga West"
+  },
+  "hilde": {
+   "qid": "Q2521440",
+   "label": "VfB 03 Hilden",
+   "desc": "",
+   "site": "www.vfb-hilden.de",
+   "ours": "VfB Hilden",
+   "country": "Tyskland",
+   "league": "Regionalliga West"
+  },
+  "pitw": {
+   "qid": "Q7198914",
+   "label": "Piteå IF",
+   "desc": "Piteå IF's women's association football section",
+   "site": "www.piteaifdff.se/start",
+   "ours": "Piteå IF",
+   "country": "Sverige",
+   "league": "Damallsvenskan"
+  },
+  "fcrw": {
+   "qid": "Q1807026",
+   "label": "FC Rosengård",
+   "desc": "women's association football club in Malmö, Sweden",
+   "site": "fcrmalmo.se",
+   "ours": "FC Rosengård",
+   "country": "Sverige",
+   "league": "Damallsvenskan"
+  },
+  "esuw": {
+   "qid": "Q10489087",
+   "label": "Eskilstuna United DFF",
+   "desc": "women's association football club in Eskilstuna, Schweden",
+   "site": "eskilstunaunited.se",
+   "ours": "Eskilstuna United",
+   "country": "Sverige",
+   "league": "Damallsvenskan"
+  },
+  "kdffw": {
+   "qid": "Q1267220",
+   "label": "Kristianstads DFF",
+   "desc": "women's association football club in Kristianstad, Sweden¨",
+   "site": "www.svenskalag.se/kdff",
+   "ours": "Kristianstads DFF",
+   "country": "Sverige",
+   "league": "Damallsvenskan"
+  },
+  "iksuw": {
+   "qid": "Q56300810",
+   "label": "IK Uppsala Fotboll",
+   "desc": "Swedish women's association football club",
+   "site": "www.uppsalafotboll.se",
+   "ours": "IK Uppsala",
+   "country": "Sverige",
+   "league": "Damallsvenskan"
+  },
+  "vxdw": {
+   "qid": "Q33024869",
+   "label": "Växjö DFF",
+   "desc": "women's association football club in Växjö, Sweden",
+   "site": "www.vaxjodff.se",
+   "ours": "Växjö DFF",
+   "country": "Sverige",
+   "league": "Damallsvenskan"
+  },
+  "kifw": {
+   "qid": "Q1389112",
+   "label": "KIF Örebro DFF",
+   "desc": "association football club",
+   "site": "www.kiforebro.se",
+   "ours": "KIF Örebro DFF",
+   "country": "Sverige",
+   "league": "Elitettan"
+  },
+  "lkpw": {
+   "qid": "Q1826908",
+   "label": "Linköpings FC",
+   "desc": "association football club in Linköping, Sweden",
+   "site": "www.linkopingfc.com",
+   "ours": "Linköping FC",
+   "country": "Sverige",
+   "league": "Elitettan"
+  },
+  "umeåw": {
+   "qid": "Q20792292",
+   "label": "Umeå IK",
+   "desc": "Swedish women's association football club",
+   "site": "www.umeaik.se",
+   "ours": "Umeå IK",
+   "country": "Sverige",
+   "league": "Elitettan"
+  },
+  "ensw": {
+   "qid": "Q5380023",
+   "label": "Enskede IK",
+   "desc": "Swedish football club",
+   "site": "www.enskedeik.nu",
+   "ours": "Enskede IK",
+   "country": "Sverige",
+   "league": "Elitettan"
+  },
+  "gusw": {
+   "qid": "Q5520240",
+   "label": "Gamla Upsala SK",
+   "desc": "sports club in Uppsala, Sweden",
+   "site": "www.gusk.nu",
+   "ours": "Gamla Upsala SK",
+   "country": "Sverige",
+   "league": "Elitettan"
+  },
+  "lskw": {
+   "qid": "Q634434",
+   "label": "LSK Kvinner FK",
+   "desc": "association football club",
+   "site": "www.lsk-kvinner.no",
+   "ours": "LSK Kvinner",
+   "country": "Norge",
+   "league": "Toppserien"
+  },
+  "røaw": {
+   "qid": "Q10659202",
+   "label": "Røa Fotball Elite",
+   "desc": "women's football team in Oslo, Norway",
+   "site": "dynamitegirls.no",
+   "ours": "Røa IL",
+   "country": "Norge",
+   "league": "Toppserien"
+  },
+  "forsw": {
+   "qid": "Q5472804",
+   "label": "AaFK Fortuna",
+   "desc": "Norwegian women's football club",
+   "site": "www.aafkfortuna.no",
+   "ours": "Fortuna Ålesund",
+   "country": "Norge",
+   "league": "Toppserien"
+  },
+  "hønw": {
+   "qid": "Q304060",
+   "label": "Hønefoss BK",
+   "desc": "association football club in Ringerike, Norway",
+   "site": "www.honefossbk.no",
+   "ours": "Hønefoss BK",
+   "country": "Norge",
+   "league": "Toppserien"
+  },
+  "klepw": {
+   "qid": "Q19377438",
+   "label": "Klepp Kvinner Elite",
+   "desc": "women's association football team in Klepp, Norway",
+   "site": "kleppelite.no",
+   "ours": "Klepp IL",
+   "country": "Norge",
+   "league": "1. divisjon kvinner"
+  },
+  "kolbw": {
+   "qid": "Q3289333",
+   "label": "Kolbotn Fotball",
+   "desc": "football club",
+   "site": "kolbotnkvinnefotball.no",
+   "ours": "Kolbotn IL",
+   "country": "Norge",
+   "league": "1. divisjon kvinner"
+  },
+  "arnaw": {
+   "qid": "Q690088",
+   "label": "Arna-Bjørnar",
+   "desc": "association football club in Bergen, Norway",
+   "site": "www.arna-bjornar.no",
+   "ours": "Arna-Bjørnar",
+   "country": "Norge",
+   "league": "1. divisjon kvinner"
+  },
+  "tilw": {
+   "qid": "Q116264747",
+   "label": "Tromsø IL Kvinner",
+   "desc": "women's football club based in Tromsø, Norway",
+   "site": "til2020.no",
+   "ours": "TIL 2020",
+   "country": "Norge",
+   "league": "1. divisjon kvinner"
+  },
+  "friggw": {
+   "qid": "Q1464858",
+   "label": "Frigg Oslo FK",
+   "desc": "association football club in Oslo, Norway",
+   "site": "www.frigg.no",
+   "ours": "Frigg Oslo FK",
+   "country": "Norge",
+   "league": "1. divisjon kvinner"
+  },
+  "forhw": {
+   "qid": "Q1439076",
+   "label": "Fortuna Hjørring",
+   "desc": "women's association football team",
+   "site": "www.fortunahjorring.dk/index.php/dk",
+   "ours": "Fortuna Hjørring",
+   "country": "Danmark",
+   "league": "Kvindeligaen"
+  },
+  "thyw": {
+   "qid": "Q66794269",
+   "label": "FC Thy-Thisted Q",
+   "desc": "women's association football team",
+   "site": "www.fcthy-thistedq.dk",
+   "ours": "Thy-Thisted Q",
+   "country": "Danmark",
+   "league": "B-Liga (damer)"
+  },
+  "b93w": {
+   "qid": "Q795173",
+   "label": "Boldklubben af 1893",
+   "desc": "association football club in Copenhagen, Denmark",
+   "site": "b93.dk",
+   "ours": "B 93",
+   "country": "Danmark",
+   "league": "B-Liga (damer)"
+  },
+  "sundw": {
+   "qid": "Q12337686",
+   "label": "Sundby Boldklub",
+   "desc": "Danish football club",
+   "site": "www.sundbyboldklub.dk",
+   "ours": "Sundby BK",
+   "country": "Danmark",
+   "league": "B-Liga (damer)"
+  },
+  "østw": {
+   "qid": "Q12342115",
+   "label": "Østerbro Idræts-Forening",
+   "desc": "Danish football club",
+   "site": "www.osterbro-if.dk",
+   "ours": "Østerbro IF",
+   "country": "Danmark",
+   "league": "B-Liga (damer)"
+  },
+  "næsw": {
+   "qid": "Q924353",
+   "label": "Næstved BK",
+   "desc": "Danish football club",
+   "site": "www.naestvedboldklub.dk",
+   "ours": "Næstved",
+   "country": "Danmark",
+   "league": "B-Liga (damer)"
+  },
+  "pk35w": {
+   "qid": "Q3052343",
+   "label": "Pallokerho-35",
+   "desc": "association football club in Helsinki, Finland",
+   "site": "www.pk-35.fi",
+   "ours": "PK-35",
+   "country": "Finland",
+   "league": "Kansallinen Liiga"
+  },
+  "ålaw": {
+   "qid": "Q270972",
+   "label": "Åland United",
+   "desc": "association football club",
+   "site": "www.alandunited.com",
+   "ours": "Åland United",
+   "country": "Finland",
+   "league": "Kansallinen Liiga"
+  },
+  "honw": {
+   "qid": "Q385042",
+   "label": "FC Honka",
+   "desc": "association football club in Espoo, Finland",
+   "site": "fchonka.fi",
+   "ours": "FC Honka",
+   "country": "Finland",
+   "league": "Kansallinen Liiga"
+  },
+  "hpsw": {
+   "qid": "Q670817",
+   "label": "Helsingin Palloseura",
+   "desc": "Finnish association football club",
+   "site": "www.hps.fi",
+   "ours": "HPS",
+   "country": "Finland",
+   "league": "Kansallinen Liiga"
+  },
+  "hjsw": {
+   "qid": "Q97207014",
+   "label": "HJS Akatemia",
+   "desc": "Finnish football club",
+   "site": "hjs.fi/hjs-miehet",
+   "ours": "HJS Akatemia",
+   "country": "Finland",
+   "league": "Kansallinen Liiga"
+  },
+  "thkaw": {
+   "qid": "Q48836275",
+   "label": "Þór/KA",
+   "desc": "Icelandic women's football club",
+   "site": "www.thorsport.is",
+   "ours": "Þór/KA",
+   "country": "Island",
+   "league": "Besta deild kvenna"
+  },
+  "tindw": {
+   "qid": "Q28225797",
+   "label": "Tindastóll men's football",
+   "desc": "men's football team in Sauðárkrókur, Iceland",
+   "site": "www.tindastoll.is",
+   "ours": "Tindastóll",
+   "country": "Island",
+   "league": "Besta deild kvenna"
+  },
+  "lclw": {
+   "qid": "Q65070115",
+   "label": "London City Lionesses",
+   "desc": "women association football club based in London, England",
+   "site": "www.londoncitylionesses.com",
+   "ours": "London City Lionesses",
+   "country": "England",
+   "league": "Women's Super League"
+  },
+  "durw": {
+   "qid": "Q16838508",
+   "label": "Durham Women's F.C.",
+   "desc": "football club",
+   "site": "durham.fawsl.com/index.html",
+   "ours": "Durham",
+   "country": "England",
+   "league": "Women's Super League 2"
+  },
+  "tenw": {
+   "qid": "Q64841123",
+   "label": "Club Deportivo Tenerife Femenino",
+   "desc": "Spanish women's football club",
+   "site": "udtenerife.com",
+   "ours": "Costa Adeje Tenerife",
+   "country": "Spanien",
+   "league": "Liga F"
+  },
+  "mcffw": {
+   "qid": "Q16596739",
+   "label": "Madrid C.F.F.",
+   "desc": "a Spanish women's football club based in San Sebastían de los Reyes",
+   "site": "madridcff.com",
+   "ours": "Madrid CFF",
+   "country": "Spanien",
+   "league": "Liga F"
+  },
+  "badw": {
+   "qid": "Q5425034",
+   "label": "FC Badalona Women",
+   "desc": "Association football club in Spain",
+   "site": "www.fclevantelasplanas.com",
+   "ours": "FC Badalona",
+   "country": "Spanien",
+   "league": "Liga F"
+  },
+  "sgsw": {
+   "qid": "Q121968",
+   "label": "SGS Essen",
+   "desc": "association football club",
+   "site": "www.sgs-essen.de",
+   "ours": "SGS Essen",
+   "country": "Tyskland",
+   "league": "2. Frauen-Bundesliga"
+  },
+  "turw": {
+   "qid": "Q162450",
+   "label": "1. FFC Turbine Potsdam",
+   "desc": "German women's association football club",
+   "site": "www.ffc-turbine.de",
+   "ours": "Turbine Potsdam",
+   "country": "Tyskland",
+   "league": "2. Frauen-Bundesliga"
+  },
+  "andw": {
+   "qid": "Q319089",
+   "label": "SG Andernach",
+   "desc": "association football club",
+   "site": "www.sg99andernach.net",
+   "ours": "SG 99 Andernach",
+   "country": "Tyskland",
+   "league": "2. Frauen-Bundesliga"
+  },
+  "vikbw": {
+   "qid": "Q13426883",
+   "label": "FC Viktoria 1889 Berlin",
+   "desc": "association football club in Berlin, Germany",
+   "site": "viktoria.berlin",
+   "ours": "Viktoria Berlin",
+   "country": "Tyskland",
+   "league": "2. Frauen-Bundesliga"
+  },
+  "comw": {
+   "qid": "Q3747648",
+   "label": "FC Como Women",
+   "desc": "Italian women's football club from Como",
+   "site": "comowomen.it",
+   "ours": "Como Women",
+   "country": "Italien",
+   "league": "Serie A Femminile"
+  },
+  "terw": {
+   "qid": "Q8623",
+   "label": "Ternana Calcio",
+   "desc": "Italian association football club",
+   "site": "www.tc1925.it",
+   "ours": "Ternana",
+   "country": "Italien",
+   "league": "Serie A Femminile"
+  },
+  "fleuw": {
+   "qid": "Q18214766",
+   "label": "FC Fleury 91",
+   "desc": "French men's and women's association football team",
+   "site": "www.fcf91.fr",
+   "ours": "FC Fleury 91",
+   "country": "Frankrike",
+   "league": "Première Ligue"
+  },
+  "smaw": {
+   "qid": "Q948538",
+   "label": "US Saint-Malo",
+   "desc": "association football club",
+   "site": "www.ussm.fr",
+   "ours": "US Saint-Malo",
+   "country": "Frankrike",
+   "league": "Première Ligue"
+  }
+ }
+}
