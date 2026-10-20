@@ -2710,7 +2710,7 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   return`${dd} ${dd===1?"dag":"dagar"}`;}
 function derbyHtml(){const list=derbyNext();if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">Nästa derby</div><p class="meta">Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.</p></article>`:"";
   return`<article class="tip"><div class="lbl">Nästa derby i varje land</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc(land)}</span></div>
-    <div class="mmain"><b>${esc(d[1])}</b>${teamsVs(m)}<span class="meta">${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div>${hypeBtn(m)}</div>`).join("")}</div></article>`;}
+    <div class="mmain"><b>${esc(d[1])}</b><span class="meta">${esc(m.homeName)} – ${esc(m.awayName)} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div>${hypeBtn(m)}</div>`).join("")}</div></article>`;}
 // helgens matcher nära hemorten
 function homeLL(){if(!homeTown)return null;const nq=norm(homeTown);const al=CITY_ALIAS[nq];if(al&&GEO[al])return{name:al,ll:GEO[al]};if(GEO_N[nq])return{name:GEO_N[nq][0],ll:GEO_N[nq][1]};
   const ai=geoAi[nq]||loadGeoAi(nq);return ai&&ai.state==="done"?{name:ai.name,ll:ai.ll}:null;}
@@ -2727,7 +2727,7 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?"i da
   return`<article class="tip"><div class="sechead"><div class="lbl">Tips för helgen · nära ${esc(p.name)}</div><button class="link" data-homeedit="1">Byt hemort</button></div><div class="chips" role="group" aria-label="Avstånd">${chips}</div>
     ${!list.length?`<p class="meta">Inga matcher i det inlagda schemat ${label}.</p>`:!near.length?`<p class="meta">Inget inom ${wkRadius} mil ${label}. Närmaste matcherna:</p>`:""}
     <div class="dlist">${show.map(({m,km})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${km<5?"i stan":esc(milTxt(km))}</b><span>${m.kickoff?esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])+" "+timeOf(m.kickoff):"datum ej klart"}</span></div>
-      <div class="mmain"><b>${teamsVs(m)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div></article>`;}
+      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div></article>`;}
 // veckans fråga
 const POLLS=[
  ["Bästa ståplatsläktaren?",["Gula väggen, Dortmund","Millerntor, St. Pauli","Ostseestadion, Rostock","Celtic Park, Glasgow","Någon i Sverige"]],
