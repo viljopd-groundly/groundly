@@ -533,15 +533,10 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .backpill[hidden]{display:none}
 @media (min-width:900px){.backpill{bottom:24px}}
 /* Hem: färgtoner per sektion och lagfärger på matchrader */
-.tip[data-tone]{border-top:4px solid var(--tone);background:linear-gradient(180deg,color-mix(in srgb,var(--tone) 10%,var(--surface)) 0,var(--surface) 140px)}
-.tip[data-tone]>.lbl:first-child,.tip[data-tone] .lbl:first-of-type{color:var(--tone)}
-.drow[style*="--c1"],.hrow[style*="--c1"]{position:relative;padding-left:16px;background:linear-gradient(90deg,color-mix(in srgb,var(--c1) 20%,var(--bg)) 0,color-mix(in srgb,var(--c2) 10%,var(--bg)) 40%,var(--bg) 75%)}
-.drow[style*="--c1"]::before,.hrow[style*="--c1"]::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:4px;border-radius:4px;background:linear-gradient(var(--c1),var(--c2))}
-.hrow[style*="--c1"]{border-radius:10px;padding-top:8px;padding-bottom:8px}
-.cpair{display:inline-flex;margin-right:6px;vertical-align:-4px}.cpair .crest+.crest{margin-left:-6px}
-.pill.dam{background:color-mix(in srgb,#a21caf 14%,var(--surface));color:#a21caf}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill.dam{color:#e879f9}}
-:root[data-theme="dark"] .pill.dam{color:#e879f9}
+.tip[data-tone]{background:linear-gradient(170deg,color-mix(in srgb,var(--accent) 6%,var(--surface)) 0,var(--surface) 160px)}
+.tip[data-tone] .lbl:first-of-type{color:var(--accent)}
+.cpair{display:flex;margin:0 0 4px}.cpair .crest+.crest{margin-left:-6px}
+.pill.dam{background:var(--accent-soft);color:var(--accent)}
 </style>
 
 <div class="wrap">
@@ -1115,7 +1110,7 @@ function goalsHtml(m){const E=XD.events&&XD.events.m&&XD.events.m[evKey(m)];if(!
 // ---------- matchsida: biljetter, resa och arena för en match ----------
 // lagets färg för toning: huvudfärgen, eller andrafärgen om huvudfärgen är nästan vit
 function teamTone(id){const c=COLORS[id];if(!c||!c[0])return null;const lum=h=>{const x=parseInt(String(h).slice(1),16);if(isNaN(x))return 0;return(((x>>16)&255)*.299+((x>>8)&255)*.587+(x&255)*.114)/255;};return lum(c[0])>.86&&c[1]&&lum(c[1])<=.86?c[1]:lum(c[0])>.86?null:c[0];}
-const mrowAttr=m=>{if(!m||!m._id)return"";const a=teamTone(m.home),b=teamTone(m.away);return` data-mrow="${esc(m._id)}"${a||b?` style="--c1:${esc(a||b)};--c2:${esc(b||a)}"`:""}`;};
+const mrowAttr=m=>m&&m._id?` data-mrow="${esc(m._id)}"`:"";
 const wPill=m=>isW(C[m.home])?` <span class="pill dam">Dam</span>`:"";
 const crestPair=m=>`<span class="cpair">${crest(m.home,m.homeName,20)}${crest(m.away,m.awayName,20)}</span>`;
 const tixMini=(m,cls)=>m&&m._id&&!(m.kickoff&&Date.parse(m.kickoff)<Date.now()-2*36e5)?`<button class="${cls||"mini"} mopen" data-mopen="${esc(m._id)}">${ic("ticket")} Biljetter</button>`:"";
@@ -2661,8 +2656,7 @@ function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().t
   return`<article class="tip"><div class="lbl">Månadens arena</div><h2 class="name">${esc(x.s)}</h2><p class="meta">${esc(x.city)}, ${esc(x.c)} · ${best[1]} ${best[1]===1?"nytt betyg":"nya betyg"} i ${new Date().toLocaleDateString("sv-SE",{month:"long"})}</p><div class="actions"><button class="btn small" data-open="${esc(x.clubs[0].id)}">Visa arenan</button></div></article>`;}
 function quizLeadHtml(){if(quizState!=="ready")return"";const rows=Object.entries(QSCORES).filter(([,d])=>d&&+d.best>=0).sort((a,b)=>(+b[1].best)-(+a[1].best))[0];if(!rows)return"";
   const[uid,d]=rows;return`<article class="tip"><div class="sechead"><div><div class="lbl">Quizledare</div><h2 class="name">${esc(uid===myId?"Du":(QNAMES[uid]||NAMES[uid]||"Medlem"))} · ${+d.best}/10</h2></div><button class="btn small primary" data-goquiz="1">Utmana</button></div></article>`;}
-const HOME_TONES=[[/helgen|nära dig/i,"#2563eb"],[/derby/i,"#d7263d"],[/communityn|reportage/i,"#7c3aed"],[/veckans fråga/i,"#0d9488"],[/topplistor/i,"#d97706"],[/groundhopper/i,"#16a34a"],[/nytt i appen/i,"#4f46e5"],[/quiz/i,"#db2777"],[/favorit|mitt landslag/i,"#0891b2"]];
-function toneHome(el){el.querySelectorAll(":scope > article, :scope > .tip").forEach(a=>{if(a.classList.contains("hero"))return;const t=(a.querySelector(".lbl,h2")||{}).textContent||"";const hit=HOME_TONES.find(([re])=>re.test(t));if(hit){a.dataset.tone="1";a.style.setProperty("--tone",hit[1]);}});}
+function toneHome(el){el.querySelectorAll(":scope > article, :scope > .tip").forEach(a=>{if(!a.classList.contains("hero"))a.dataset.tone="1";});}
 function renderHome(){const el=document.getElementById("homeBody");if(!el)return;try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
   const ids=Object.keys(STATS).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="hem")renderHome();}).catch(()=>{});
   el.innerHTML=onboardHtml()+heroHtml()+mineSnap()+friendsHtml()+weekendHtml()+derbyHtml()+latestHtml()+pollHtml()+boardHtml()+hopperHtml()+topArenaHtml()+quizLeadHtml()+newsHtml();}
