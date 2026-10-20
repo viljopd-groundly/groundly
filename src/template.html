@@ -1123,10 +1123,10 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
   const when=m.kickoff?`${dayLong(dayKey(new Date(m.kickoff))).replace(/^./,x=>x.toUpperCase())} · ${timeOf(m.kickoff)}${localTimeTxt(m)?` (${localTimeTxt(m)})`:""}`:`${esc(rangeTxt(m))} · ${m.dateFrom&&m.dateFrom===m.dateTo?"tiden är inte klar":"dagen är inte klar"}`;
   const team=(id,n)=>C[id]?`<button class="link strong" data-msopen="${esc(id)}">${crest(id,n,28)} ${esc(n)}</button>`:`<b>${esc(n)}</b>`;
   const comp=tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||"Cup")}</span>`:tierPill(m.tier,m.comp);
-  const E=encodeURIComponent,srch=c=>`https://www.google.com/search?q=${E(c.n+" biljetter officiell")}`;
+  const E=encodeURIComponent;
   const hu=H&&webUrl(H);const atHome=H&&!isNat(H)&&H.s===m.venue;const tp=atHome?travelRows(H,true):{tr:"",tk:""};
-  const tix=past||!H?"":`<div class="actions">${H.tix?`<a class="btn small primary" href="${esc(H.tix)}" target="_blank" rel="noopener">${ic("ticket")} Köp biljetter hos ${esc(H.n)}</a>`:hu?`<a class="btn small primary" href="${esc(hu)}" target="_blank" rel="noopener">${ic("ticket")} Biljetter på ${esc(/[sxz]$/i.test(H.n)?H.n:H.n+"s")} hemsida</a>`:""}<a class="${H.tix||hu?"link":"btn small primary"}" href="${esc(srch(H))}" target="_blank" rel="noopener">Sök biljettsidan</a></div><p class="meta">Köp via klubben, inte andrahandssajter.</p>${tp.tk?`<div class="mstk">${tp.tk}</div>`:""}`;
-  const awayTix=!past&&A&&!isNat(A)&&!(H&&isNat(H))?`<p class="meta">Håller du på ${esc(A.n)}? Bortabiljetter säljs ofta via bortaklubben: <a class="link" href="${esc(A.tix||webUrl(A)||srch(A))}" target="_blank" rel="noopener">${A.tix?"köp hos":"gå till"} ${esc(A.n)}</a>.</p>`:"";
+  const tix=past||!H?"":`<div class="actions">${H.tix?`<a class="btn small primary" href="${esc(H.tix)}" target="_blank" rel="noopener">${ic("ticket")} Köp biljetter hos ${esc(H.n)}</a>`:hu?`<a class="btn small primary" href="${esc(hu)}" target="_blank" rel="noopener">${ic("ticket")} Biljetter på ${esc(/[sxz]$/i.test(H.n)?H.n:H.n+"s")} hemsida</a>`:""}${H.tix||hu?"":`<span class="meta">Biljettlänk saknas.</span> ${suggestBtn(H,"tix","Föreslå biljettlänk")}`}</div><p class="meta">Köp via klubben, inte andrahandssajter.</p>${tp.tk?`<div class="mstk">${tp.tk}</div>`:""}`;
+  const awayTix=!past&&A&&(A.tix||webUrl(A))&&!isNat(A)&&!(H&&isNat(H))?`<p class="meta">Håller du på ${esc(A.n)}? Bortabiljetter säljs ofta via bortaklubben: <a class="link" href="${esc(A.tix||webUrl(A))}" target="_blank" rel="noopener">${A.tix?"köp hos":"gå till"} ${esc(A.n)}</a>.</p>`:"";
   const det=H?`<dl class="detail">${tp.tr}${webRow(H)}</dl>`:"";
   const cap=H&&H.s===m.venue&&H.cap?` · ${fmtCap(H.cap)} platser`:"";
   return`<div id="msOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="msT"><div class="compose askbox pvbox msbox">
@@ -1832,10 +1832,11 @@ function travelRows(c,parts){if(!c.s)return parts?{tr:"",tk:""}:"";const a=trave
   return`<dt>Resa hit</dt><dd>${tr}${st||walk||trChips?by:""}</dd><dt>Biljetter</dt><dd>${ticketLink(c)}${tk}${tkHas?by:""}</dd>`;}
 function webUrl(c){const w=c&&(c.web||WEB[c.id]);if(!w||typeof w!=="string")return null;const u=/^https?:\/\//.test(w)?w.replace(/^http:/,"https:"):"https://"+w;return/^https:\/\/[^\s"'<>]+$/.test(u)?u:null;}
 function webRow(c){if(isNat(c))return"";const u=webUrl(c);const host=u&&u.replace(/^https:\/\/(www\.)?/,"").replace(/\/$/,"");
-  return`<dt>Hemsida</dt><dd>${u?`<a class="link strong" href="${esc(u)}" target="_blank" rel="noopener">${esc(host)}</a>`:`<a class="link" href="https://www.google.com/search?q=${encodeURIComponent(c.n+" officiell hemsida")}" target="_blank" rel="noopener">Sök klubbens hemsida</a>`}</dd>`;}
+  return`<dt>Hemsida</dt><dd>${u?`<a class="link strong" href="${esc(u)}" target="_blank" rel="noopener">${esc(host)}</a>`:`<span class="meta">Saknas.</span> ${suggestBtn(c,"web","Föreslå hemsida")}`}</dd>`;}
 function ticketLink(c,cls){if(!c||isNat(c)&&!c.tix)return"";const E=encodeURIComponent;
   return c.tix?`<div><a class="${cls||"btn small primary"}" href="${esc(c.tix)}" target="_blank" rel="noopener">${ic("ticket")} Köp biljetter hos klubben</a></div>`
-   :`<div><a class="${cls||"link strong"}" href="https://www.google.com/search?q=${E(c.n+" biljetter officiell")}" target="_blank" rel="noopener">Sök klubbens biljettsida</a><div class="meta">Köp via klubben, inte andrahandssajter.</div></div>`;}
+   :webUrl(c)?`<div><a class="${cls||"link strong"}" href="${esc(webUrl(c))}" target="_blank" rel="noopener">${ic("ticket")} Biljetter via klubbens hemsida</a><div class="meta">Köp via klubben, inte andrahandssajter.</div></div>`
+   :`<div><span class="meta">Biljettlänk saknas.</span> ${suggestBtn(c,"tix","Föreslå biljettlänk")}</div>`;}
 
 // tillgänglighet i forumet
 function accForum(c){if(forumState!=="ready")return"";const n=allPosts().filter(p=>!p.parent&&p.kind==="tillg"&&p.club===c.id).length;
@@ -2878,6 +2879,9 @@ const FIX_FIELDS=[["f","Grundår"],["s","Hemmaarena"],["cap","Kapacitet"],["l","
 const FIX_L=Object.fromEntries(FIX_FIELDS);const FIX_APPLY=new Set(["f","s","cap","l","city","nick","tix","web"]);
 let FIXES={},fixState="loading",fixOpen=null,fixBusy=false,fixMsg="",OVERRIDES={},FIXDONE=[];
 function fixAll(){const out=[];Object.entries(FIXES).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(x=>{if(x&&x.id&&x.club&&x.value)out.push({...x,uid,key:uid+":"+x.id});});});return out;}
+// "saknas – föreslå": öppnar rättelseformuläret med fältet förvalt (eller ber om inloggning)
+function suggestBtn(c,field,label){return dbNs&&myId?`<button class="link" data-fixopen="${esc(c.id)}" data-fixfield="${field}">${label}</button>`:`<button class="link" data-glogin>Logga in och föreslå</button>`;}
+let fixField=null;
 function fixButton(c){return dbNs&&myId?`<button class="btn small" data-fixopen="${esc(c.id)}" aria-expanded="${fixOpen===c.id}">${ic("pencil")} Föreslå rättelse</button>`:"";}
 function fixForm(c){if(fixOpen!==c.id)return"";
   return`<form class="compose fixform" data-fixclub="${esc(c.id)}" data-noclose="1"><h2>Föreslå rättelse för ${esc(c.n)}</h2>
@@ -2907,7 +2911,7 @@ function fixReviewHtml(){if(!isMod||fixState!=="ready")return"";const open=fixAl
     :`<p class="hint">Inga nya förslag.</p>`}${FIX_APPLY.size?`<p class="hint">Grundår, arena, kapacitet, serie, stad, smeknamn, hemsida och biljettlänk ändras direkt när du godkänner. Färger och meriter skickar du till mig, så lägger jag in dem.</p>`:""}`;}
 const isFixBtn=t=>t.dataset.fixopen||t.dataset.fixok||t.dataset.fixdone;
 async function fixClick(t){
-  if(t.dataset.fixopen){fixOpen=fixOpen===t.dataset.fixopen?null:t.dataset.fixopen;fixMsg="";render();if(fixOpen)setTimeout(()=>document.getElementById("fxV")?.focus(),30);return;}
+  if(t.dataset.fixopen){const pre=t.dataset.fixfield||null;fixOpen=fixOpen===t.dataset.fixopen&&!pre?null:t.dataset.fixopen;fixField=pre;fixMsg="";render();if(fixOpen)setTimeout(()=>{const f=document.getElementById("fxF");if(f&&fixField)f.value=fixField;const v=document.getElementById("fxV");if(v){v.focus();v.scrollIntoView({block:"center"});}},30);return;}
   const key=t.dataset.fixok||t.dataset.fixdone;const x=fixAll().find(y=>y.key===key);if(!x||!isMod||!dbNs)return;
   try{if(t.dataset.fixok){let v=x.value;if(x.field==="f"||x.field==="cap"){v=parseInt(String(v).replace(/[^\d]/g,""),10);if(!(v>0)){toast("Förslaget är inget tal, ändra för hand.");return;}}
       if(x.field==="tix"||x.field==="web"){v=String(v).trim();if(x.field==="web"&&!/^https?:\/\//.test(v))v="https://"+v;if(!/^https:\/\/[^\s"'<>]+$/.test(v)){toast("Länken måste börja med https://");return;}}
