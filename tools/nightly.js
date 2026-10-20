@@ -80,12 +80,12 @@ const API=[
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
 const apiStat={};const extra={standings:{},players:{},squads:{},events:{}};
 if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();const BASE=(process.env.API_FOOTBALL_BASE||"https://v3.football.api-sports.io").replace(/\/$/,"");
-  const local=/^http:\/\/(127\.0\.0\.1|localhost)/.test(BASE);let calls=0;const sleep=ms=>{try{execSync(`sleep ${ms/1000}`);}catch(e){}};
+  const local=/^http:\/\/(127\.0\.0\.1|localhost)/.test(BASE);let calls=0,gap=220;const sleep=ms=>{try{execSync(`sleep ${ms/1000}`);}catch(e){}};
   const raw=q=>{for(let i=0;i<4;i++){calls++;let out;try{out=execSync(`curl -sS -m 60 ${local?"--noproxy '*'":""} -H "x-apisports-key: ${KEY}" "${BASE}/${q}"`,{encoding:"utf8",maxBuffer:256<<20});}catch(e){sleep(5000);continue;}
       let j;try{j=JSON.parse(out);}catch(e){sleep(5000);continue;}
       const errs=j.errors&&(Array.isArray(j.errors)?j.errors:Object.values(j.errors));
-      if(errs&&errs.length){const msg=JSON.stringify(j.errors);if(/rate|too many|limit/i.test(msg)&&!/day|plan|subscription/i.test(msg)){sleep(61000);continue;}throw new Error(msg);}
-      if(!local)sleep(220);return j;}throw new Error("API-Football svarar inte: "+q);};
+      if(errs&&errs.length){const msg=JSON.stringify(j.errors);if(!Array.isArray(j.errors)&&j.errors.rateLimit){gap=Math.max(gap,6500);sleep(61000);continue;}throw new Error(msg);}
+      if(!local)sleep(gap);return j;}throw new Error("API-Football svarar inte: "+q);};
   const get=q=>raw(q).response||[];
   const findAny=(nm,country)=>country==="*"?(find(nm,"England")||find(nm,"Spanien")||find(nm,"Italien")||find(nm,"Tyskland")||find(nm,"Frankrike")||find(nm,"Nederländerna")||find(nm,"Portugal")||find(nm,"Skottland")||find(nm,"Belgien")||find(nm,"Sverige")||find(nm,"Norge")||find(nm,"Danmark")||find(nm,"Polen")||findOther(nm)):find(nm,country);
   function findOther(nm){const seen=new Set(["England","Spanien","Italien","Tyskland","Frankrike","Nederländerna","Portugal","Skottland","Belgien","Sverige","Norge","Danmark","Polen"]);for(const c of new Set(clubs.map(x=>x[3]))){if(seen.has(c))continue;const r=find(nm,c);if(r)return r;}return null;}
@@ -93,6 +93,8 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
   const tid=(t,country)=>{if(!t)return null;if(t.id in teamMap)return teamMap[t.id];const c=findAny(t.name,country);teamMap[t.id]=c?c[0]:null;return teamMap[t.id];};
   const unmatched={};
   try{
+    // 0) vilken plan har kontot (visas i sammanfattningen, aldrig nyckeln)
+    try{const st=raw("status").response||{};apiStat.plan=st.subscription&&st.subscription.plan;apiStat.anropIdag=st.requests&&`${st.requests.current}/${st.requests.limit_day}`;}catch(e){apiStat.plan="okänd";}
     // 1) vilka serier finns, och vilken säsong pågår
     const lg={};for(const ac of [...new Set(API.map(x=>x[2]))]){for(const x of get(`leagues?country=${encodeURIComponent(ac)}`)){const cur=(x.seasons||[]).find(s=>s.current)||(x.seasons||[]).slice(-1)[0];
       lg[ac+"|"+String(x.league.name).toLowerCase().replace(/\s+/g," ").trim()]={id:x.league.id,season:cur&&cur.year,cov:cur&&cur.coverage||{}};}}
