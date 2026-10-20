@@ -535,6 +535,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 /* Hem: färgtoner per sektion och lagfärger på matchrader */
 .tip[data-tone]{background:linear-gradient(170deg,color-mix(in srgb,var(--accent) 6%,var(--surface)) 0,var(--surface) 160px)}
 .tip[data-tone] .lbl:first-of-type{color:var(--accent)}
+.lbl.lbl-lg{font-size:14px;margin-bottom:-4px}
 .tvs{display:grid;grid-template-columns:minmax(0,170px) auto minmax(0,170px);justify-content:start;align-items:start;gap:6px;margin:4px 0 2px;font-weight:700}
 .tvs .tm{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;min-width:0;font-size:14px;line-height:1.25;overflow-wrap:anywhere}
 .tvs .tm .crest{margin:0;top:0}
@@ -2660,7 +2661,7 @@ function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().t
   return`<article class="tip"><div class="lbl">Månadens arena</div><h2 class="name">${esc(x.s)}</h2><p class="meta">${esc(x.city)}, ${esc(x.c)} · ${best[1]} ${best[1]===1?"nytt betyg":"nya betyg"} i ${new Date().toLocaleDateString("sv-SE",{month:"long"})}</p><div class="actions"><button class="btn small" data-open="${esc(x.clubs[0].id)}">Visa arenan</button></div></article>`;}
 function quizLeadHtml(){if(quizState!=="ready")return"";const rows=Object.entries(QSCORES).filter(([,d])=>d&&+d.best>=0).sort((a,b)=>(+b[1].best)-(+a[1].best))[0];if(!rows)return"";
   const[uid,d]=rows;return`<article class="tip"><div class="sechead"><div><div class="lbl">Quizledare</div><h2 class="name">${esc(uid===myId?"Du":(QNAMES[uid]||NAMES[uid]||"Medlem"))} · ${+d.best}/10</h2></div><button class="btn small primary" data-goquiz="1">Utmana</button></div></article>`;}
-function toneHome(el){el.querySelectorAll(":scope > article, :scope > .tip").forEach(a=>{if(!a.classList.contains("hero"))a.dataset.tone="1";});}
+function toneHome(el){el.querySelectorAll(":scope > article, :scope > .tip").forEach(a=>{if(a.classList.contains("hero"))return;a.dataset.tone="1";const l=a.querySelector(".lbl");if(l&&/tips för helgen|nästa derby/i.test(l.textContent))l.classList.add("lbl-lg");});}
 function renderHome(){const el=document.getElementById("homeBody");if(!el)return;try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
   const ids=Object.keys(STATS).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="hem")renderHome();}).catch(()=>{});
   el.innerHTML=onboardHtml()+heroHtml()+mineSnap()+friendsHtml()+weekendHtml()+derbyHtml()+latestHtml()+pollHtml()+boardHtml()+hopperHtml()+topArenaHtml()+quizLeadHtml()+newsHtml();}
