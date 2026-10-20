@@ -1041,7 +1041,7 @@ const TBL_HEAD=`<thead><tr><th>#</th><th class="tl">Lag</th><th title="Spelade">
 function statBoardHtml(L){const P=XD.players&&XD.players.leagues&&XD.players.leagues[L];if(!P)return"";
   const tabs=[["goals","Mål"],["assists","Assist"],["yellow","Gula kort"],["red","Röda kort"]].filter(([k])=>P[k]&&P[k].length);if(!tabs.length)return"";if(!tabs.some(([k])=>k===tblStat))tblStat=tabs[0][0];
   const list=P[tblStat];
-  return`<article class="tip tblcard"><div class="tblhead"><h2 class="name">Spelarligor</h2><span class="meta">${esc(L)} · topp ${list.length}</span></div>
+  return`<article class="tip tblcard" id="statBoard"><div class="tblhead"><h2 class="name">Spelarligor</h2><span class="meta">${esc(L)} · topp ${list.length}</span></div>
    <div class="chips">${tabs.map(([k,l])=>`<button class="chip" data-tblstat="${k}" aria-pressed="${k===tblStat}">${l}</button>`).join("")}</div>
    <div class="tblwrap"><table class="ltbl"><thead><tr><th>#</th><th class="tl">Spelare</th><th class="tl">Lag</th><th title="Matcher">M</th><th>${esc(tabs.find(t=>t[0]===tblStat)[1])}</th></tr></thead><tbody>
    ${list.map((r,i)=>{const[nm,team,val,apps]=r;const c=team&&C[team];return`<tr><td class="n">${i+1}</td><td class="tl">${esc(nm)}</td><td class="tl">${c?`<button class="tteam" data-open="${esc(team)}">${crest(team,c.n,18)}<span>${esc(c.n)}</span></button>`:esc(team||"")}</td><td class="n">${apps||""}</td><td class="n"><b>${val}</b></td></tr>`;}).join("")}</tbody></table></div></article>`;}
@@ -1075,7 +1075,9 @@ function squadHtml(id){const c=C[id];const S=XD.squads&&XD.squads.clubs&&XD.squa
 function openSquad(id){if(!C[id])return;const o=document.getElementById("sqOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",squadHtml(id));
   if(!XD.squads)loadXD("squads").then(()=>{const o2=document.getElementById("sqOv");if(o2){o2.outerHTML=squadHtml(id);}});}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-squad],#sqClose,#sqOv,[data-tblstat]");if(!t)return;
-  if(t.dataset.tblstat){tblStat=t.dataset.tblstat;renderTable();return;}
+  if(t.dataset.tblstat){tblStat=t.dataset.tblstat;const y=window.scrollY,old=document.getElementById("statBoard");
+    // byt bara ut spelarligan, så att sidan står still
+    if(old){old.outerHTML=statBoardHtml(tblLeague);window.scrollTo({top:y});const nb=document.querySelector(`#statBoard [data-tblstat="${tblStat}"]`);if(nb)nb.focus({preventScroll:true});}else renderTable();return;}
   if(t.dataset.squad){openSquad(t.dataset.squad);return;}
   if(t.id==="sqClose"||(t.id==="sqOv"&&e.target===t))document.getElementById("sqOv").remove();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){const o=document.getElementById("sqOv");if(o)o.remove();}});
