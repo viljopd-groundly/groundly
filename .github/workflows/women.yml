@@ -1,0 +1,25 @@
+# Engångsjobb: hämtar damserier och damlag från API-Football till tools/women_raw.json
+name: Hämta damlag
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Hämta
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: node scripts/gen-women.js
+      - name: Spara
+        run: |
+          git config user.name "groundly-bot"
+          git config user.email "groundly-bot@users.noreply.github.com"
+          git add tools/women_raw.json
+          git diff --cached --quiet || git commit -m "Damlag från API-Football"
+          git push
