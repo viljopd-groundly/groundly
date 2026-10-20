@@ -1,0 +1,7 @@
+# byggs av scripts/build-web.js
+site/index.html
+site/data/flags.json
+site/data/maps.json
+tools/prev_events.json
+node_modules/
+of_src/
