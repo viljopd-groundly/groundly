@@ -24,7 +24,7 @@ for aid, (cid, name, parent, city, stadium, cap, col) in T.items():
     founded = f if isinstance(f, int) and f > 1850 else None
     hay = " ".join(x for x in [nm.lower(), (P[1].lower() if P else ""), "dam damlag women", city.lower()] if x)
     rows.append([cid, nm, hay, country, city, founded, lname, tier, stadium, cap, None, [], 1])
-    if city not in G: geo[city] = EXTRA_GEO[city]
+    geo[city] = EXTRA_GEO.get(city) or G[city]
     if col: colors[cid] = col
     elif P and COL.get(parent): colors[cid] = COL[parent]
     ids[aid] = cid
@@ -33,6 +33,7 @@ out += "// Genereras av scripts/build-women.py från scripts/women_map.py och to
 out += "module.exports=" + json.dumps(rows, ensure_ascii=False) + ";\n"
 out += "module.exports.geo=" + json.dumps(geo, ensure_ascii=False) + ";\n"
 out += "module.exports.colors=" + json.dumps(colors, ensure_ascii=False) + ";\n"
+out += "module.exports.parents=" + json.dumps({v[0]: v[2] for v in T.values() if v[2]}, ensure_ascii=False) + ";\n"
 out += "module.exports.leagues=" + json.dumps([v[0] for v in LEAGUES.values()], ensure_ascii=False) + ";\n"
 open(os.path.join(ROOT, "src", "clubs_women.js"), "w").write(out)
 json.dump({"teams": {str(k): v for k, v in ids.items()},

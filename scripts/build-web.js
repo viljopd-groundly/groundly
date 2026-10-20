@@ -7,6 +7,14 @@ const ROOT = path.resolve(__dirname, ".."), SRC = path.join(ROOT, "src"), SITE =
 const R = f => require(path.join(SRC, f));
 
 const maps = R("maps.js");
+// webbplatser: klubbarnas egna + damlag utan egen sida får moderklubbens + landslag/U21 får förbundets
+function webAll() {
+  const W = Object.assign({}, R("web.js"));
+  const par = R("clubs_women.js").parents;
+  for (const [w, p] of Object.entries(par)) if (!W[w] && W[p]) W[w] = W[p];
+  for (const r of R("clubs.js")) if (r[6] === "U21-landslag" && !W[r[0]]) { const a = "nt-" + r[0].replace(/^u21-/, ""); if (W[a]) W[r[0]] = W[a]; }
+  return W;
+}
 let html = fs.readFileSync(path.join(SRC, "template.html"), "utf8")
   .replace("/*CLUBS*/[]", JSON.stringify(R("clubs.js")))
   .replace("/*GEO*/{}", JSON.stringify(R("geo.js")))
@@ -16,7 +24,7 @@ let html = fs.readFileSync(path.join(SRC, "template.html"), "utf8")
   .replace("/*COLORS*/{}", JSON.stringify(R("colors.js")))
   .replace("/*CUPS*/[]", JSON.stringify(R("cups.js")))
   .replace("/*SEASONS*/{}", JSON.stringify(R("seasons.js")))
-  .replace("/*WEB*/{}", JSON.stringify(R("web.js")))
+  .replace("/*WEB*/{}", JSON.stringify(webAll()))
   .replace("/*WLEAGUES*/[]", JSON.stringify(R("clubs_women.js").leagues));
 
 // ---- AI på/av: på bara om firebase-config.js har en aiEndpoint ----
