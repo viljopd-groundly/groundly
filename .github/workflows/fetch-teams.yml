@@ -1,0 +1,27 @@
+# Engångsjobb: hämtar lag och arenor för en serie från API-Football till tools/teams_raw.json
+name: Hämta lag
+on:
+  workflow_dispatch:
+    inputs:
+      country: { description: "Land (engelska, som i API-Football)", default: "Sweden" }
+      match: { description: "Regex på serienamn", default: "ettan" }
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          COUNTRY: ${{ inputs.country }}
+          MATCH: ${{ inputs.match }}
+        run: node scripts/fetch-teams.js
+      - run: |
+          git config user.name "groundly-bot"
+          git config user.email "groundly-bot@users.noreply.github.com"
+          git add tools/teams_raw.json
+          git diff --cached --quiet || git commit -m "Lag från API-Football"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push && break; sleep 5; done
