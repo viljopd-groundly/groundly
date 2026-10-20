@@ -1,16 +1,17 @@
-// Klistra in värdena från Firebase-konsolen: Projektinställningar → Your apps → Web → firebaseConfig.
-// Uppgifterna här är publika (de skyddas av reglerna i firebase/firestore.rules), så filen kan ligga i repot.
+// Firebase-projektets publika inställningar (Projektinställningar → Your apps → Web).
+// Uppgifterna är publika; datan skyddas av reglerna i firebase/firestore.rules.
 export default {
-  apiKey: "DIN_API_KEY",
-  authDomain: "DITT-PROJEKT.firebaseapp.com",
-  projectId: "DITT-PROJEKT",
-  storageBucket: "DITT-PROJEKT.firebasestorage.app",
-  messagingSenderId: "",
-  appId: "",
+  apiKey: "AIzaSyAVmr2lHnq25McH0IZvhGVsg14pUy8yFPY",
+  authDomain: "groundly-d81f0.firebaseapp.com",
+  projectId: "groundly-d81f0",
+  storageBucket: "groundly-d81f0.firebasestorage.app",
+  messagingSenderId: "8335055376",
+  appId: "1:8335055376:web:45c50b6219ed086bf4c895",
 
-  // Sätt till false om du inte har Blaze-planen – då stängs bilduppladdning av.
-  photos: true,
+  // Spark-planen: ingen Firebase Storage, så bilduppladdning är avstängd.
+  // Sätt till true efter byte till Blaze och när Storage är aktiverat.
+  photos: false,
 
-  // Valfritt: adress till en egen AI-funktion (se README). Tomt = AI-funktionerna döljs.
+  // Valfritt: adress till en egen AI-funktion. Tomt = AI-funktionerna döljs.
   aiEndpoint: ""
 };

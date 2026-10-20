@@ -26,6 +26,12 @@ const aiOn = /aiEndpoint\s*:\s*"[^"\s]+"/.test(cfg);
 const LOGIN = `<button class="btn primary" data-glogin>Logga in eller skapa konto</button>`;
 const swaps = [
   ["const AI_ON=true;", `const AI_ON=${aiOn};`],
+  // matchschemat från claude.ai-databasen ligger som fil i stället (sparar läsningar i Firestore)
+  [`if(!db){dbFailed=true;DBM=[];remergeMatches();return;}
+  db.collection("matches").onSnapshot(snap=>{DBM=snap.docs.map(d=>({...d.data(),_id:d.id})).filter(m=>m&&m.homeName&&m.city);remergeMatches();},
+    ()=>{dbFailed=true;DBM=[];remergeMatches();});
+  db.doc("meta/info").onSnapshot(s=>{META=s.exists?s.data():null;render();},()=>{});})();`,
+   `fetch("data/dbmatches.json").then(r=>r.json()).then(j=>{DBM=(j.docs||[]).map(d=>({...d.data,_id:d.id})).filter(m=>m&&m.homeName&&m.city);META={updated:j.updated||null,count:DBM.length};remergeMatches();render();}).catch(()=>{dbFailed=true;DBM=[];remergeMatches();});})();`],
   [`blobUrl=id=>"/_blob/"+id`, `blobUrl=id=>(window.GROUNDLY_BLOB||(i=>"/_blob/"+i))(id)`],
   [`<b>Matchschemat kan inte visas här.</b><div>Öppna sidan inloggad på claude.ai för att se matcher. Klubbsöket fungerar ändå.</div>`,
    `<b>Matchschemat kunde inte hämtas.</b><div>Kontrollera anslutningen och ladda om sidan. Klubbsöket fungerar ändå.</div>`],
