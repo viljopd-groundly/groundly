@@ -95,6 +95,7 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
   try{
     // 0) vilken plan har kontot (visas i sammanfattningen, aldrig nyckeln)
     try{const st=raw("status").response||{};apiStat.plan=st.subscription&&st.subscription.plan;apiStat.anropIdag=st.requests&&`${st.requests.current}/${st.requests.limit_day}`;}catch(e){apiStat.plan="okänd";}
+    if(apiStat.plan==="Free")throw new Error("Gratisplanen ger inte innevarande säsong – uppgradera till Pro på dashboard.api-football.com. Hoppar över API-Football.");
     // 1) vilka serier finns, och vilken säsong pågår
     const lg={};for(const ac of [...new Set(API.map(x=>x[2]))]){for(const x of get(`leagues?country=${encodeURIComponent(ac)}`)){const cur=(x.seasons||[]).find(s=>s.current)||(x.seasons||[]).slice(-1)[0];
       lg[ac+"|"+String(x.league.name).toLowerCase().replace(/\s+/g," ").trim()]={id:x.league.id,season:cur&&cur.year,cov:cur&&cur.coverage||{}};}}
