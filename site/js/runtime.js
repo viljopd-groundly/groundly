@@ -164,7 +164,7 @@ async function boot() {
 function installAccountUi({ A, auth, getUser, ensureProfile, profileName }) {
   const css = `
   .topbar{grid-template-columns:auto 1fr auto auto}
-  .gacc{position:relative}
+  .gacc{position:relative;justify-self:end}
   .gacc-btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:18px;font:600 13px var(--f-body,system-ui);background:var(--soft,#eee);color:var(--fg,#111)}
   .gacc-btn{white-space:nowrap}
   .gacc-btn svg{flex:none}
