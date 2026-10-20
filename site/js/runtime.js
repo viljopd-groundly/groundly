@@ -154,14 +154,15 @@ async function boot() {
   }
 
   // ---------- konto-UI ----------
-  installAccountUi({ A, auth, getUser: () => user, ensureProfile, profileName: async () => user ? (await userNs.profiles([user.uid]))[user.uid].name : "" });
+  installAccountUi({ A, auth, getUser: () => user, ensureProfile, isAdmin, profileName: async () => user ? (await userNs.profiles([user.uid]))[user.uid].name : "" });
 
   const caps = { db, user: userNs, assets, downloads, sample };
   done({ use: async n => (n in caps ? caps[n] : null) });
 }
 
 // ================= inloggning =================
-function installAccountUi({ A, auth, getUser, ensureProfile, profileName }) {
+const SHIELD = `<svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5z" fill="currentColor"/></svg>`;
+function installAccountUi({ A, auth, getUser, ensureProfile, profileName, isAdmin }) {
   const css = `
   .topbar{grid-template-columns:auto 1fr auto auto}
   .gacc{position:relative;justify-self:end}
@@ -169,6 +170,9 @@ function installAccountUi({ A, auth, getUser, ensureProfile, profileName }) {
   .gacc-btn{white-space:nowrap}
   .gacc-btn svg{flex:none}
   @media (max-width:480px){.topbar .tbtitle{display:none}.gacc-btn .gl{display:none}.gacc-btn[data-glogin]{width:36px;padding:0;justify-content:center}}
+  .gacc-btn .mod{position:absolute;right:-2px;bottom:-2px;width:16px;height:16px;border-radius:50%;background:#c58b00;color:#fff;display:grid;place-items:center;border:2px solid var(--surface,#fff)}
+  .gacc-btn{position:relative}
+  .gdlg-card .role{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13px;padding:4px 10px;border-radius:999px;background:#fff3cc;color:#6b4b00;margin:0 0 12px}
   .gacc-btn .dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--accent,#1d6b3b);color:#fff;font-size:12px}
   .gdlg{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(0,0,0,.45);padding:16px}
   .gdlg[hidden]{display:none}
@@ -251,9 +255,10 @@ function installAccountUi({ A, auth, getUser, ensureProfile, profileName }) {
   }
 
   async function openAccount() {
-    const u = getUser(); const name = await profileName();
+    const u = getUser(); const name = await profileName(); const mod = await isAdmin();
     dlg.innerHTML = `<div class="gdlg-card"><button class="btn small x" data-gx>Stäng</button>
       <h2>Ditt konto</h2><p>Inloggad som ${esc(u.email || "Google-konto")}.</p>
+      ${mod ? `<div class="role">${SHIELD} Moderator – du kan dölja inlägg och reportage, sköta rättelser och läsa feedback</div>` : ""}
       <form data-gname><label for="gNm">Visningsnamn (syns i forum och topplistor)</label><input id="gNm" maxlength="40" value="${esc(name)}" required>
       <div class="row"><button class="btn" type="submit">Spara namn</button></div></form>
       <div class="msg" aria-live="polite"></div>
@@ -272,6 +277,7 @@ function installAccountUi({ A, auth, getUser, ensureProfile, profileName }) {
   const u = getUser();
   btn.innerHTML = u ? `<button class="gacc-btn" data-gacct aria-label="Ditt konto"><span class="dot">${esc(((u.displayName || u.email || "?")[0] || "?").toUpperCase())}</span></button>`
     : `<button class="gacc-btn" data-glogin aria-label="Logga in" title="Logga in"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="gl">Logga in</span></button>`;
+  if (u) isAdmin().then(m => { if (m) { const b = btn.querySelector(".gacc-btn"); if (b) { b.insertAdjacentHTML("beforeend", `<span class="mod" title="Moderator">${SHIELD}</span>`); b.setAttribute("aria-label", "Ditt konto (moderator)"); } } });
   const place = () => { const tb = document.querySelector(".topbar"); const th = document.getElementById("themeBtn"); if (tb && th) tb.insertBefore(btn, th); else if (tb) tb.appendChild(btn); else document.body.prepend(btn); };
   place();
 
