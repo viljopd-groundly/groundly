@@ -544,9 +544,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .hpills{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .pill.sm{font-size:11px;padding:2px 8px;align-self:center}
 .dlist .mp{flex-wrap:wrap;align-items:center}
-.drow:has(.vleague){position:relative;padding-right:34px}
-.vleague{position:absolute;top:6px;right:6px;bottom:6px;width:20px;border-radius:6px;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vleague.t1{background:var(--pitch-soft);color:var(--pitch)}.vleague.t2{background:var(--two-soft);color:var(--two)}.vleague.t3{background:var(--three-soft);color:var(--three)}.vleague.ec{background:var(--flood-soft);color:var(--flood)}
+
 </style>
 
 <div class="wrap">
@@ -1122,9 +1120,6 @@ function goalsHtml(m){const E=XD.events&&XD.events.m&&XD.events.m[evKey(m)];if(!
 function teamTone(id){const c=COLORS[id];if(!c||!c[0])return null;const lum=h=>{const x=parseInt(String(h).slice(1),16);if(isNaN(x))return 0;return(((x>>16)&255)*.299+((x>>8)&255)*.587+(x&255)*.114)/255;};return lum(c[0])>.86&&c[1]&&lum(c[1])<=.86?c[1]:lum(c[0])>.86?null:c[0];}
 const mrowAttr=m=>m&&m._id?` data-mrow="${esc(m._id)}"`:"";
 const wPill=m=>isW(C[m.home])?` <span class="pill dam">Dam</span>`:"";
-// serie/cup som smal lodrät remsa längst till höger i raden
-const vLeague=m=>{const cup=tierOf(m)==="CUP";const t=String(m.tier||"");const cls=cup||t==="EC"?"ec":t==="1"?"t1":t==="2"?"t2":"t3";const nm=(m.comp||(cup?"Cup":""))+(isW(C[m.home])?" · Dam":"");return nm?`<span class="vleague ${cls}" title="${esc(nm)}">${esc(nm)}</span>`:"";};
-const compPill=m=>{const cup=tierOf(m)==="CUP";const t=String(m.tier||"");const cls=cup||t==="EC"?"ec":t==="1"?"t1":t==="2"?"t2":"t3";const nm=m.comp||(cup?"Cup":"");return`${nm?`<span class="pill sm ${cls}">${esc(nm)}</span>`:""}${isW(C[m.home])?`<span class="pill sm dam">Dam</span>`:""}`;};
 // lagen bredvid varandra med klubbmärket centrerat ovanför respektive lag
 const teamsVs=(m,extra)=>`<span class="tvs"><span class="tm">${crest(m.home,m.homeName,32)}<span>${esc(m.homeName)}${favStar(m.home)}</span></span><span class="dash">–</span><span class="tm">${crest(m.away,m.awayName,32)}<span>${esc(m.awayName)}${favStar(m.away)}</span></span></span>${extra||""}`;
 const tixMini=(m,cls)=>m&&m._id&&!(m.kickoff&&Date.parse(m.kickoff)<Date.now()-2*36e5)?`<button class="${cls||"mini"} mopen" data-mopen="${esc(m._id)}">${ic("ticket")} Biljetter</button>`:"";
@@ -2720,7 +2715,7 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   return`${dd} ${dd===1?"dag":"dagar"}`;}
 function derbyHtml(){const list=derbyNext();if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">Nästa derby</div><p class="meta">Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.</p></article>`:"";
   return`<article class="tip"><div class="lbl">Nästa derby i varje land</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc(land)}</span></div>
-    <div class="mmain"><b>${esc(d[1])}</b><span class="meta">${esc(m.homeName)} – ${esc(m.awayName)} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div>${hypeBtn(m)}${vLeague(m)}</div>`).join("")}</div></article>`;}
+    <div class="mmain"><b>${esc(d[1])}</b><span class="meta">${esc(m.homeName)} – ${esc(m.awayName)} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div>${hypeBtn(m)}</div>`).join("")}</div></article>`;}
 // helgens matcher nära hemorten
 function homeLL(){if(!homeTown)return null;const nq=norm(homeTown);const al=CITY_ALIAS[nq];if(al&&GEO[al])return{name:al,ll:GEO[al]};if(GEO_N[nq])return{name:GEO_N[nq][0],ll:GEO_N[nq][1]};
   const ai=geoAi[nq]||loadGeoAi(nq);return ai&&ai.state==="done"?{name:ai.name,ll:ai.ll}:null;}
@@ -2737,7 +2732,7 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?"i da
   return`<article class="tip"><div class="sechead"><div class="lbl">Tips för helgen · nära ${esc(p.name)}</div><button class="link" data-homeedit="1">Byt hemort</button></div><div class="chips" role="group" aria-label="Avstånd">${chips}</div>
     ${!list.length?`<p class="meta">Inga matcher i det inlagda schemat ${label}.</p>`:!near.length?`<p class="meta">Inget inom ${wkRadius} mil ${label}. Närmaste matcherna:</p>`:""}
     <div class="dlist">${show.map(({m,km})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${km<5?"i stan":esc(milTxt(km))}</b><span>${m.kickoff?esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])+" "+timeOf(m.kickoff):"datum ej klart"}</span></div>
-      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span>${vLeague(m)}</div>`).join("")}</div></article>`;}
+      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div></article>`;}
 // veckans fråga
 const POLLS=[
  ["Bästa ståplatsläktaren?",["Gula väggen, Dortmund","Millerntor, St. Pauli","Ostseestadion, Rostock","Celtic Park, Glasgow","Någon i Sverige"]],
