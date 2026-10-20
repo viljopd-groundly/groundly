@@ -545,6 +545,12 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .pill.sm{font-size:11px;padding:2px 8px;align-self:center}
 .dlist .mp{flex-wrap:wrap;align-items:center}
 
+.rcomments{border-top:1px solid var(--line);margin-top:12px;padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.rcomments .sec{margin:0;font-size:14px}
+.rcom{background:var(--bg);border-radius:10px;padding:8px 10px}
+.rcomh{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap;font-size:13px}.rcomh .link{margin-left:auto;font-size:12px}
+.rcomb{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;margin-top:2px}
+.rcform{display:flex;gap:8px;align-items:flex-end}.rcform textarea{flex:1;font:inherit;font-size:14px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);resize:vertical;min-height:40px}
 </style>
 
 <div class="wrap">
@@ -2430,11 +2436,26 @@ document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="rCust
 document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches(".card[data-club]")){e.preventDefault();e.target.click();}});
 
 // ---------- reportage ----------
-let REP={},LIKES={},repState="loading",assetsNs=null,canRep=null,repSort="nya",repClub=null,repOpen=null,repDraft=null,repBusy=false,likeBusy=false,repMsg="",repTopSig="",repUp=0;
+let COMM={},commBusy=false,REP={},LIKES={},repState="loading",assetsNs=null,canRep=null,repSort="nya",repClub=null,repOpen=null,repDraft=null,repBusy=false,likeBusy=false,repMsg="",repTopSig="",repUp=0;
 const REP_MAXPH=8,PHID=/^[0-9a-f]{32}$/;
 const blobUrl=id=>"/_blob/"+id;
 function allReps(){const out=[];Object.entries(REP).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(r=>{if(r&&r.id&&r.title&&r.body)out.push({...r,uid,key:uid+":"+r.id,photos:(Array.isArray(r.photos)?r.photos:[]).filter(p=>typeof p==="string"&&PHID.test(p)).slice(0,REP_MAXPH)});});});
   return out.filter(r=>!HIDDEN.includes("rep:"+r.key)&&(!r.draft||r.uid===myId));}
+// kommentarer: var och en sparar sina egna i comments/{uid}.items = [{id, rep:"ägare:reportageId", body, at}]
+function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&c.id&&c.rep===key&&c.body&&!HIDDEN.includes("com:"+uid+":"+c.id))out.push({...c,uid});});});return out.sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
+function commentsHtml(r){const cs=commentsFor(r.key);
+  return`<div class="rcomments"><h3 class="sec">Kommentarer${cs.length?` (${cs.length})`:""}</h3>
+    ${cs.map(c=>`<div class="rcom"><div class="rcomh"><b>${esc(who(c.uid))}</b> <span class="meta">· ${esc(ago(c.at))}</span>${c.uid===myId?`<button class="link" data-rcdel="${esc(c.id)}">Ta bort</button>`:isMod?`<button class="link" data-rchide="${esc(c.uid+":"+c.id)}">Dölj</button>`:""}</div><div class="rcomb">${esc(c.body)}</div></div>`).join("")||`<p class="meta">Inga kommentarer än.</p>`}
+    ${canWriteRep()?`<form class="rcform" data-rcform="${esc(r.key)}"><textarea name="b" maxlength="600" rows="2" placeholder="Skriv en kommentar…" aria-label="Skriv en kommentar" required></textarea><button class="btn small primary" type="submit"${commBusy?" disabled":""}>Skicka</button></form>`:`<button class="btn small" data-glogin>Logga in för att kommentera</button>`}</div>`;}
+async function writeComments(fn){if(!dbNs||!myId||commBusy)return false;commBusy=true;
+  const cur=COMM[myId]&&Array.isArray(COMM[myId].items)?COMM[myId].items:[];const next=fn(cur.slice()).slice(-300);
+  try{await dbNs.doc("comments/"+myId).set({items:next});COMM={...COMM,[myId]:{items:next}};return true;}
+  catch(e){toast(e&&e.code==="invalid_argument"?"Du har inte behörighet att kommentera.":"Kunde inte spara kommentaren.");return false;}
+  finally{commBusy=false;}}
+addEventListener("submit",async e=>{const f=e.target.closest&&e.target.closest("[data-rcform]");if(!f)return;e.preventDefault();
+  const key=f.dataset.rcform;const ta=f.querySelector("textarea");const body=(ta.value||"").trim().slice(0,600);if(!body)return;
+  const ok=await writeComments(cs=>[...cs,{id:Math.random().toString(36).slice(2,10),rep:key,body,at:new Date().toISOString()}]);
+  if(ok){ta.value="";renderReports(true);}});
 function likeCount(key){let n=0;Object.values(LIKES).forEach(d=>{if(d&&Array.isArray(d.keys)&&d.keys.includes(key))n++;});return n;}
 function iLike(key){const d=LIKES[myId];return!!(d&&Array.isArray(d.keys)&&d.keys.includes(key));}
 function repsFor(id){return repState==="ready"?allReps().filter(r=>r.club===id).length:0;}
@@ -2480,6 +2501,9 @@ function matchBox(r){const m=String(r.match||"").slice(0,100),res=String(r.resul
   if(!m&&!res&&!cr)return"";
   return`<div class="rmatch">${m?`<div><span>Match</span><b>${esc(m)}</b></div>`:""}${res?`<div><span>Resultat</span><b class="num">${esc(res)}</b></div>`:""}${cr?`<div><span>Publik</span><b class="num">ca ${cr.toLocaleString("sv-SE")}</b></div>`:""}</div>`;}
 function renderReports(namesOnly){
+  // behåll påbörjade kommentarer om listan ritas om (t.ex. när någon annan kommenterar)
+  const ae=document.activeElement,cf=ae&&ae.closest&&ae.closest("[data-rcform]"),keep=cf?{k:cf.dataset.rcform,s:ae.selectionStart}:null;
+  const keepAll=[...document.querySelectorAll("[data-rcform] textarea")].map(t=>[t.closest("[data-rcform]").dataset.rcform,t.value]).filter(x=>x[1]);
   const el=document.getElementById("repList"),top=document.getElementById("repTop");
   document.getElementById("repChips").innerHTML=[["nya","Senaste"],["pop","Populärast"],["mina","Mina reportage"]].map(([k,l])=>`<button class="chip" data-repsort="${k}" aria-pressed="${repSort===k}">${l}</button>`).join("")
     +(repClub&&C[repClub]?`<button class="chip" data-repclubclear="1" aria-pressed="true" aria-label="Sluta filtrera på ${esc(C[repClub].n)}">${esc(C[repClub].n)} ${NO}</button>`:"");
@@ -2492,7 +2516,7 @@ function renderReports(namesOnly){
     else{top.innerHTML=composeHtml();renderRepPhotos();}}
   else if(repDraft){const er=document.getElementById("repErr");if(er)er.textContent=repMsg;renderRepPhotos();}
   else if(canWriteRep())top.innerHTML=`<button class="btn primary" id="repNew">+ Skriv reportage</button>${repMsg?`<p class="err">${esc(repMsg)}</p>`:""}`;
-  let reps=allReps();const ids=[...new Set(reps.map(r=>r.uid))];if(!namesOnly)resolveRepNames(ids);
+  let reps=allReps();const ids=[...new Set([...reps.map(r=>r.uid),...Object.keys(COMM)])];if(!namesOnly)resolveRepNames(ids);
   if(repSort==="mina")reps=reps.filter(r=>r.uid===myId);
   if(repClub)reps=reps.filter(r=>r.club===repClub);
   reps.sort(repSort==="pop"?(a,b)=>likeCount(b.key)-likeCount(a.key)||b.at.localeCompare(a.at):(a,b)=>String(b.at).localeCompare(String(a.at)));
@@ -2504,7 +2528,7 @@ function renderReports(namesOnly){
         ${r.photos.length&&!open?`<span class="rcover">${phImg(r.photos[0])}${r.photos.length>1?`<span class="rcount">${r.photos.length} bilder</span>`:""}</span>`:""}
         <span class="rtxt">${r.draft?`<span class="pill ec draftpill">Utkast · syns bara för dig</span>`:""}<span class="rtitle">${esc(r.title)}</span>
         ${meta?`<span class="rmeta">${c?crest(c.id,c.n,20):""}${esc(meta)}</span>`:""}
-        <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}${n?` · ${ic("heart")} ${n}`:""}</span>
+        <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}${n?` · ${ic("heart")} ${n}`:""}${(()=>{const k=commentsFor(r.key).length;return k?` · ${k} ${k===1?"kommentar":"kommentarer"}`:"";})()}</span>
         ${open?"":`<span class="rex">${esc(String(r.body).slice(0,160))}${String(r.body).length>160?"…":""}</span>`}</span>
       </button>
       ${open?`<div class="rbody">
@@ -2516,8 +2540,11 @@ function renderReports(namesOnly){
           ${c?`<button class="btn small" data-open="${esc(c.id)}">Visa ${esc(c.n)}</button>`:""}
           ${c&&c.city&&!isNat(c)?`<button class="btn small" data-teamview="${esc(c.id)}">Lagets matcher</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} Tabell</button>`:""}${!isNat(c)&&c.l?`<button class="btn small" data-squad="${esc(c.id)}">Spelare</button>`:""}</div>
         ${mine||isMod?`<div class="pactions">${mine?`<button class="link" data-repedit="${esc(r.id)}">Redigera</button><button class="link" data-repdel="${esc(r.id)}">Ta bort</button>`:""}${isMod&&!mine?`<button class="link" data-rephide="${esc(r.key)}">Dölj</button>`:""}</div>`:""}
+        ${commentsHtml(r)}
       </div>`:""}
-    </article>`;}).join("");}
+    </article>`;}).join("");
+  keepAll.forEach(([key,v])=>{const t=el.querySelector(`[data-rcform="${CSS.escape(key)}"] textarea`);if(t)t.value=v;});
+  if(keep){const t=el.querySelector(`[data-rcform="${CSS.escape(keep.k)}"] textarea`);if(t){t.focus({preventScroll:true});try{t.setSelectionRange(keep.s,keep.s);}catch(e){}}}}
 
 async function writeReps(fn){if(!dbNs||!myId||repBusy)return false;repBusy=true;repMsg="";
   try{const cur=REP[myId]&&Array.isArray(REP[myId].items)?REP[myId].items:[];const next=fn(cur.slice());
@@ -2572,6 +2599,9 @@ async function repClick(t){
   if(t.dataset.repdel){const id=t.dataset.repdel;if(!confirmRepDel[id]){confirmRepDel[id]=1;t.textContent="Tryck igen för att ta bort";setTimeout(()=>{delete confirmRepDel[id];},4000);return;}
     delete confirmRepDel[id];const r=(REP[myId]&&REP[myId].items||[]).find(x=>x.id===id);const ok=await writeReps(rs=>rs.filter(x=>x.id!==id));
     if(ok&&r)dropAssets((r.photos||[]).filter(p=>PHID.test(p)));repOpen=null;renderReports();return;}
+  if(t.dataset.rcdel){const id=t.dataset.rcdel;if(!confirmRepDel["c"+id]){confirmRepDel["c"+id]=1;t.textContent="Tryck igen för att ta bort";setTimeout(()=>{delete confirmRepDel["c"+id];},4000);return;}
+    delete confirmRepDel["c"+id];if(await writeComments(cs=>cs.filter(x=>x.id!==id)))renderReports(true);return;}
+  if(t.dataset.rchide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"com:"+t.dataset.rchide])]});}catch(e){toast("Kunde inte dölja kommentaren.");}renderReports(true);return;}
   if(t.dataset.rephide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"rep:"+t.dataset.rephide])]});}catch(e){toast("Kunde inte dölja reportaget.");}renderReports();return;}}
 
 function openPhoto(id){if(!PHID.test(id))return;let ov=document.getElementById("phView");
@@ -2599,7 +2629,8 @@ async function startReports(db){
   try{assetsNs=await window.claude?.use?.("assets")??null;}catch(e){assetsNs=null;}
   if(!db){repState="none";if(mode==="reportage")renderReports();return;}
   db.collection("reports").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});REP=o;repState="ready";if(mode==="reportage")renderReports();else if(mode==="hem")renderHome();else if(mode==="klubbar"&&openClub)renderClubs();},()=>{repState="none";if(mode==="reportage")renderReports();});
-  db.collection("likes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});LIKES=o;if(mode==="reportage")renderReports(true);else if(mode==="hem")renderHome();},()=>{});}
+  db.collection("likes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});LIKES=o;if(mode==="reportage")renderReports(true);else if(mode==="hem")renderHome();},()=>{});
+  db.collection("comments").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});COMM=o;if(mode==="reportage")renderReports();},()=>{});}
 
 // ---------- hem ----------
 let STATS={},statsState="loading",HYPE={},boardTab="matches",statsSig="",statsBusy=false,hypeBusy=false;

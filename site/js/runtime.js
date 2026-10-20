@@ -74,7 +74,7 @@ async function boot() {
   }
 
   // ---------- db ----------
-  const LAZY = { forum: ["forum", "tips"], pubs: ["klubbar", "arenor", "landslag", "matcher", "tips"], tipnotes: ["tips", "mine"], fixes: ["mine"] };
+  const LAZY = { forum: ["forum", "tips"], pubs: ["klubbar", "arenor", "landslag", "matcher", "tips"], tipnotes: ["tips", "mine"], fixes: ["mine"], comments: ["reportage"] };
   const docSnap = s => ({ id: s.id, exists: s.exists(), data: () => s.data() });
   const db = {
     doc(path) {

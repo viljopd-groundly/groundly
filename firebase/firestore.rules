@@ -17,9 +17,9 @@ service cloud.firestore {
     // Ett dokument per användare, läsbart för alla
     match /{coll}/{uid} {
       allow read: if coll in ['forum','ratings','pubs','quiz','reports','likes','stats','hype','votes',
-                              'tipnotes','fixes','public','cheers','profiles','legacy'];
+                              'tipnotes','fixes','public','cheers','comments','profiles','legacy'];
       allow write: if coll in ['forum','ratings','pubs','quiz','reports','likes','stats','hype','votes',
-                               'tipnotes','fixes','public','cheers'] && (isSelf(uid) || isAdmin());
+                               'tipnotes','fixes','public','cheers','comments'] && (isSelf(uid) || isAdmin());
     }
     match /profiles/{uid} {
       allow write: if isSelf(uid) && request.resource.data.name is string
