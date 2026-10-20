@@ -541,6 +541,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .tvs .tm .crest{margin:0;top:0}
 .tvs .dash{padding-top:6px;color:var(--muted)}
 .pill.dam{background:var(--accent-soft);color:var(--accent)}
+.hpills{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 </style>
 
 <div class="wrap">
@@ -1116,6 +1117,7 @@ function goalsHtml(m){const E=XD.events&&XD.events.m&&XD.events.m[evKey(m)];if(!
 function teamTone(id){const c=COLORS[id];if(!c||!c[0])return null;const lum=h=>{const x=parseInt(String(h).slice(1),16);if(isNaN(x))return 0;return(((x>>16)&255)*.299+((x>>8)&255)*.587+(x&255)*.114)/255;};return lum(c[0])>.86&&c[1]&&lum(c[1])<=.86?c[1]:lum(c[0])>.86?null:c[0];}
 const mrowAttr=m=>m&&m._id?` data-mrow="${esc(m._id)}"`:"";
 const wPill=m=>isW(C[m.home])?` <span class="pill dam">Dam</span>`:"";
+const compPill=m=>`<span class="hpills">${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||"Cup")}</span>`:tierPill(m.tier,m.comp)}${wPill(m)}</span>`;
 // lagen bredvid varandra med klubbmärket centrerat ovanför respektive lag
 const teamsVs=(m,extra)=>`<span class="tvs"><span class="tm">${crest(m.home,m.homeName,32)}<span>${esc(m.homeName)}${favStar(m.home)}</span></span><span class="dash">–</span><span class="tm">${crest(m.away,m.awayName,32)}<span>${esc(m.awayName)}${favStar(m.away)}</span></span></span>${extra||""}`;
 const tixMini=(m,cls)=>m&&m._id&&!(m.kickoff&&Date.parse(m.kickoff)<Date.now()-2*36e5)?`<button class="${cls||"mini"} mopen" data-mopen="${esc(m._id)}">${ic("ticket")} Biljetter</button>`:"";
@@ -1123,10 +1125,10 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
   const when=m.kickoff?`${dayLong(dayKey(new Date(m.kickoff))).replace(/^./,x=>x.toUpperCase())} · ${timeOf(m.kickoff)}${localTimeTxt(m)?` (${localTimeTxt(m)})`:""}`:`${esc(rangeTxt(m))} · ${m.dateFrom&&m.dateFrom===m.dateTo?"tiden är inte klar":"dagen är inte klar"}`;
   const team=(id,n)=>C[id]?`<button class="link strong" data-msopen="${esc(id)}">${crest(id,n,28)} ${esc(n)}</button>`:`<b>${esc(n)}</b>`;
   const comp=tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||"Cup")}</span>`:tierPill(m.tier,m.comp);
-  const E=encodeURIComponent;
+  const E=encodeURIComponent,srch=c=>`https://www.google.com/search?q=${E(c.n+" biljetter officiell")}`;
   const hu=H&&webUrl(H);const atHome=H&&!isNat(H)&&H.s===m.venue;const tp=atHome?travelRows(H,true):{tr:"",tk:""};
-  const tix=past||!H?"":`<div class="actions">${H.tix?`<a class="btn small primary" href="${esc(H.tix)}" target="_blank" rel="noopener">${ic("ticket")} Köp biljetter hos ${esc(H.n)}</a>`:hu?`<a class="btn small primary" href="${esc(hu)}" target="_blank" rel="noopener">${ic("ticket")} Biljetter på ${esc(/[sxz]$/i.test(H.n)?H.n:H.n+"s")} hemsida</a>`:""}${H.tix||hu?"":`<span class="meta">Biljettlänk saknas.</span> ${suggestBtn(H,"tix","Föreslå biljettlänk")}`}</div><p class="meta">Köp via klubben, inte andrahandssajter.</p>${tp.tk?`<div class="mstk">${tp.tk}</div>`:""}`;
-  const awayTix=!past&&A&&(A.tix||webUrl(A))&&!isNat(A)&&!(H&&isNat(H))?`<p class="meta">Håller du på ${esc(A.n)}? Bortabiljetter säljs ofta via bortaklubben: <a class="link" href="${esc(A.tix||webUrl(A))}" target="_blank" rel="noopener">${A.tix?"köp hos":"gå till"} ${esc(A.n)}</a>.</p>`:"";
+  const tix=past||!H?"":`<div class="actions">${H.tix?`<a class="btn small primary" href="${esc(H.tix)}" target="_blank" rel="noopener">${ic("ticket")} Köp biljetter hos ${esc(H.n)}</a>`:hu?`<a class="btn small primary" href="${esc(hu)}" target="_blank" rel="noopener">${ic("ticket")} Biljetter på ${esc(/[sxz]$/i.test(H.n)?H.n:H.n+"s")} hemsida</a>`:""}<a class="${H.tix||hu?"link":"btn small primary"}" href="${esc(srch(H))}" target="_blank" rel="noopener">Sök biljettsidan</a></div><p class="meta">Köp via klubben, inte andrahandssajter.</p>${tp.tk?`<div class="mstk">${tp.tk}</div>`:""}`;
+  const awayTix=!past&&A&&!isNat(A)&&!(H&&isNat(H))?`<p class="meta">Håller du på ${esc(A.n)}? Bortabiljetter säljs ofta via bortaklubben: <a class="link" href="${esc(A.tix||webUrl(A)||srch(A))}" target="_blank" rel="noopener">${A.tix?"köp hos":"gå till"} ${esc(A.n)}</a>.</p>`:"";
   const det=H?`<dl class="detail">${tp.tr}${webRow(H)}</dl>`:"";
   const cap=H&&H.s===m.venue&&H.cap?` · ${fmtCap(H.cap)} platser`:"";
   return`<div id="msOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="msT"><div class="compose askbox pvbox msbox">
@@ -1832,11 +1834,10 @@ function travelRows(c,parts){if(!c.s)return parts?{tr:"",tk:""}:"";const a=trave
   return`<dt>Resa hit</dt><dd>${tr}${st||walk||trChips?by:""}</dd><dt>Biljetter</dt><dd>${ticketLink(c)}${tk}${tkHas?by:""}</dd>`;}
 function webUrl(c){const w=c&&(c.web||WEB[c.id]);if(!w||typeof w!=="string")return null;const u=/^https?:\/\//.test(w)?w.replace(/^http:/,"https:"):"https://"+w;return/^https:\/\/[^\s"'<>]+$/.test(u)?u:null;}
 function webRow(c){if(isNat(c))return"";const u=webUrl(c);const host=u&&u.replace(/^https:\/\/(www\.)?/,"").replace(/\/$/,"");
-  return`<dt>Hemsida</dt><dd>${u?`<a class="link strong" href="${esc(u)}" target="_blank" rel="noopener">${esc(host)}</a>`:`<span class="meta">Saknas.</span> ${suggestBtn(c,"web","Föreslå hemsida")}`}</dd>`;}
+  return`<dt>Hemsida</dt><dd>${u?`<a class="link strong" href="${esc(u)}" target="_blank" rel="noopener">${esc(host)}</a>`:`<a class="link" href="https://www.google.com/search?q=${encodeURIComponent(c.n+" officiell hemsida")}" target="_blank" rel="noopener">Sök klubbens hemsida</a>`}</dd>`;}
 function ticketLink(c,cls){if(!c||isNat(c)&&!c.tix)return"";const E=encodeURIComponent;
   return c.tix?`<div><a class="${cls||"btn small primary"}" href="${esc(c.tix)}" target="_blank" rel="noopener">${ic("ticket")} Köp biljetter hos klubben</a></div>`
-   :webUrl(c)?`<div><a class="${cls||"link strong"}" href="${esc(webUrl(c))}" target="_blank" rel="noopener">${ic("ticket")} Biljetter via klubbens hemsida</a><div class="meta">Köp via klubben, inte andrahandssajter.</div></div>`
-   :`<div><span class="meta">Biljettlänk saknas.</span> ${suggestBtn(c,"tix","Föreslå biljettlänk")}</div>`;}
+   :`<div><a class="${cls||"link strong"}" href="https://www.google.com/search?q=${E(c.n+" biljetter officiell")}" target="_blank" rel="noopener">Sök klubbens biljettsida</a><div class="meta">Köp via klubben, inte andrahandssajter.</div></div>`;}
 
 // tillgänglighet i forumet
 function accForum(c){if(forumState!=="ready")return"";const n=allPosts().filter(p=>!p.parent&&p.kind==="tillg"&&p.club===c.id).length;
@@ -2712,7 +2713,7 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   return`${dd} ${dd===1?"dag":"dagar"}`;}
 function derbyHtml(){const list=derbyNext();if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">Nästa derby</div><p class="meta">Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.</p></article>`:"";
   return`<article class="tip"><div class="lbl">Nästa derby i varje land</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc(land)}</span></div>
-    <div class="mmain"><b>${esc(d[1])}</b><span class="meta">${esc(m.homeName)} – ${esc(m.awayName)} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div>${hypeBtn(m)}</div>`).join("")}</div></article>`;}
+    <div class="mmain"><b>${esc(d[1])}</b><span class="meta">${esc(m.homeName)} – ${esc(m.awayName)} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span>${compPill(m)}</div>${hypeBtn(m)}</div>`).join("")}</div></article>`;}
 // helgens matcher nära hemorten
 function homeLL(){if(!homeTown)return null;const nq=norm(homeTown);const al=CITY_ALIAS[nq];if(al&&GEO[al])return{name:al,ll:GEO[al]};if(GEO_N[nq])return{name:GEO_N[nq][0],ll:GEO_N[nq][1]};
   const ai=geoAi[nq]||loadGeoAi(nq);return ai&&ai.state==="done"?{name:ai.name,ll:ai.ll}:null;}
@@ -2729,7 +2730,7 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?"i da
   return`<article class="tip"><div class="sechead"><div class="lbl">Tips för helgen · nära ${esc(p.name)}</div><button class="link" data-homeedit="1">Byt hemort</button></div><div class="chips" role="group" aria-label="Avstånd">${chips}</div>
     ${!list.length?`<p class="meta">Inga matcher i det inlagda schemat ${label}.</p>`:!near.length?`<p class="meta">Inget inom ${wkRadius} mil ${label}. Närmaste matcherna:</p>`:""}
     <div class="dlist">${show.map(({m,km})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${km<5?"i stan":esc(milTxt(km))}</b><span>${m.kickoff?esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])+" "+timeOf(m.kickoff):"datum ej klart"}</span></div>
-      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div></article>`;}
+      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}</span>${compPill(m)}</div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div></article>`;}
 // veckans fråga
 const POLLS=[
  ["Bästa ståplatsläktaren?",["Gula väggen, Dortmund","Millerntor, St. Pauli","Ostseestadion, Rostock","Celtic Park, Glasgow","Någon i Sverige"]],
