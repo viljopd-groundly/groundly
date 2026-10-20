@@ -42,6 +42,8 @@ jobs:
           mkdir -p "$RUNNER_TEMP/work"
           cd "$RUNNER_TEMP/work"
           node "$GITHUB_WORKSPACE/tools/nightly.js" "$GITHUB_WORKSPACE/tools" "$GITHUB_WORKSPACE/site" | tee "$RUNNER_TEMP/summary.json"
+          # senaste körningens sammanfattning (utan nyckel) sparas i repot så att den kan läsas i efterhand
+          tail -n 1 "$RUNNER_TEMP/summary.json" > "$GITHUB_WORKSPACE/tools/last-run.json"
           echo '### Nattuppdatering' >> "$GITHUB_STEP_SUMMARY"
           echo '```json' >> "$GITHUB_STEP_SUMMARY"
           cat "$RUNNER_TEMP/summary.json" >> "$GITHUB_STEP_SUMMARY"
@@ -53,7 +55,7 @@ jobs:
           rm -f tools/prev_events.json
           git config user.name "groundly-bot"
           git config user.email "groundly-bot@users.noreply.github.com"
-          git add site/data site/archive
+          git add site/data site/archive tools/last-run.json
           git diff --cached --quiet || git commit -m "Nattuppdatering $(date -u +%F)"
           git push
 
