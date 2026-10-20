@@ -70,7 +70,7 @@ const API=[
  ["Primeira Liga","Portugal","Portugal",1,"pt.1",/^(primeira liga|liga portugal)$/],["Liga Portugal 2","Portugal","Portugal",2,"pt.2",/^(segunda liga|liga portugal 2)$/],["Taça de Portugal","Portugal","Portugal","CUP","pt.cup",/^ta(c|ç)a de portugal$/],
  ["Scottish Premiership","Skottland","Scotland",1,"sco.1",/^premiership$/],["Scottish Championship","Skottland","Scotland",2,"sco.2",/^championship$/],["Skotska cupen","Skottland","Scotland","CUP","sco.cup",/^(fa cup|scottish cup)$/],
  ["Pro League","Belgien","Belgium",1,"be.1",/^(jupiler )?pro league$/],["Challenger Pro League","Belgien","Belgium",2,"be.2",/^challenger pro league$/],["Belgiska cupen","Belgien","Belgium","CUP","be.cup",/^(cup|croky cup|beker van belgie)$/],
- ["Allsvenskan","Sverige","Sweden",1,"se.1",/^allsvenskan$/],["Superettan","Sverige","Sweden",2,"se.2",/^superettan$/],["Svenska cupen","Sverige","Sweden","CUP","se.cup",/^svenska cupen$/],
+ ["Allsvenskan","Sverige","Sweden",1,"se.1",/^allsvenskan$/],["Superettan","Sverige","Sweden",2,"se.2",/^superettan$/],["Svenska cupen","Sverige","Sweden","CUP","se.cup",/^svenska cupen$/],["Ettan Norra","Sverige","Sweden",3,"se.3n",/^ettan - norra$/],["Ettan Södra","Sverige","Sweden",3,"se.3s",/^ettan - s[öo]dra$/],
  ["Eliteserien","Norge","Norway",1,"no.1",/^eliteserien$/],["OBOS-ligaen","Norge","Norway",2,"no.2",/^(1\. division|obos-ligaen)$/],["NM-cupen","Norge","Norway","CUP","no.cup",/^nm cupen$/],
  ["Superligaen","Danmark","Denmark",1,"dk.1",/^superliga$/],["1. division (Danmark)","Danmark","Denmark",2,"dk.2",/^1\. division$/],["DBU Pokalen","Danmark","Denmark","CUP","dk.cup",/^dbu pokalen$/],
  ["Veikkausliiga","Finland","Finland",1,"fi.1",/^veikkausliiga$/],["Ykkösliiga","Finland","Finland",2,"fi.2",/^(ykk(o|ö)sliiga|ykk(o|ö)nen)$/],
@@ -98,7 +98,8 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
   const get=q=>raw(q).response||[];
   const findAny=(nm,country)=>country==="*"?(find(nm,"England")||find(nm,"Spanien")||find(nm,"Italien")||find(nm,"Tyskland")||find(nm,"Frankrike")||find(nm,"Nederländerna")||find(nm,"Portugal")||find(nm,"Skottland")||find(nm,"Belgien")||find(nm,"Sverige")||find(nm,"Norge")||find(nm,"Danmark")||find(nm,"Polen")||findOther(nm)):find(nm,country);
   function findOther(nm){const seen=new Set(["England","Spanien","Italien","Tyskland","Frankrike","Nederländerna","Portugal","Skottland","Belgien","Sverige","Norge","Danmark","Polen"]);for(const c of new Set(clubs.map(x=>x[3]))){if(seen.has(c))continue;const r=find(nm,c);if(r)return r;}return null;}
-  const teamMap=Object.assign({},WOMEN.teams);// API-lag-id -> vårt id
+  let EXTRA={teams:{}};try{EXTRA=JSON.parse(fs.readFileSync(path.join(TOOLS,"extra_ids.json"),"utf8"));}catch(e){}
+  const teamMap=Object.assign({},WOMEN.teams,EXTRA.teams);// API-lag-id -> vårt id
   const tid=(t,country)=>{if(!t)return null;if(t.id in teamMap)return teamMap[t.id];if(/\sW$/.test(t.name||"")){teamMap[t.id]=null;return null;}const c=findAny(t.name,country);teamMap[t.id]=c?c[0]:null;return teamMap[t.id];};
   const unmatched={};
   try{
@@ -115,7 +116,7 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
       const L=lg[key];let fx;try{fx=get(`fixtures?league=${L.id}&season=${L.season}&timezone=UTC`);}catch(e){apiStat[lname]=String(e.message).slice(0,120);continue;}
       if(!fx.length){apiStat[lname]=0;continue;}
       for(let i=rows.length-1;i>=0;i--)if(rows[i][5]===lname)rows.splice(i,1);// API ersätter openfootball för samma serie
-      const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const wid=isW?tid(tm,country):isN?natFind(nm):null;const c=isW||isN?(wid?[wid]:null):findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};const arc=[];let n=0;const have=new Set();
+      const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const pre=tm&&teamMap[tm.id];const wid=pre||(isW?tid(tm,country):isN?natFind(nm):null);const c=pre||isW||isN?(wid?[wid]:null):findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};const arc=[];let n=0;const have=new Set();
       for(const f of fx){const st=f.fixture.status&&f.fixture.status.short;if(["PST","CANC","ABD","AWD","WO"].includes(st))continue;
         const hn=f.teams.home.name,an=f.teams.away.name,iso8=f.fixture.date,date=iso8.slice(0,10);const fin=["FT","AET","PEN"].includes(st);const gh=fin?f.goals.home:null,ga=fin?f.goals.away:null;const tbd=st==="TBD"||/T00:00:00/.test(iso8);
         const pen=f.score&&f.score.penalty&&f.score.penalty.home!=null?`${f.score.penalty.home}-${f.score.penalty.away}`:"";

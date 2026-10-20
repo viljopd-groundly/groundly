@@ -47,3 +47,4 @@ Object.assign(module.exports,require("./colors_more2.js"));
 Object.assign(module.exports,require("./nationals.js").colors);
 Object.assign(module.exports,require("./clubs_cult.js").colors);
 Object.assign(module.exports,require("./clubs_women.js").colors);
+Object.assign(module.exports,require("./clubs_ettan.js").colors);

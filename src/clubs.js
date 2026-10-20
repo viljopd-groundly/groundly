@@ -223,3 +223,4 @@ module.exports.push(...require("./nationals_world.js"));
 module.exports.push(...require("./clubs_cult.js"));
 module.exports.push(...require("./clubs_more3.js"));
 module.exports.push(...require("./clubs_women.js"));
+module.exports.push(...require("./clubs_ettan.js"));

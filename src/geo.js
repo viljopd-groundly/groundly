@@ -49,3 +49,4 @@ Object.assign(module.exports,require("./nationals_world.js").geo);
 Object.assign(module.exports,require("./clubs_cult.js").geo);
 Object.assign(module.exports,require("./clubs_more3.js").geo);
 Object.assign(module.exports,require("./clubs_women.js").geo);
+Object.assign(module.exports,require("./clubs_ettan.js").geo);
