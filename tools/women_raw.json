@@ -1,0 +1,2802 @@
+{
+ "fetched": "2026-10-20T19:25:15.706Z",
+ "countries": {
+  "Sweden": [
+   {
+    "id": 549,
+    "name": "Damallsvenskan",
+    "season": 2026,
+    "start": "2026-03-28",
+    "end": "2026-11-15",
+    "teams": [
+     {
+      "id": 10900,
+      "name": "Piteå W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/10900.png",
+      "venue": {
+       "name": "LF Arena",
+       "city": "Piteå",
+       "address": "Hembygdsvägen",
+       "capacity": 6000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 11075,
+      "name": "Rosengård W",
+      "code": null,
+      "founded": 1970,
+      "logo": "https://media.api-sports.io/football/teams/11075.png",
+      "venue": {
+       "name": "Malmö IP",
+       "city": "Malmö",
+       "address": "Pildammsvägen 10",
+       "capacity": 7600,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 11076,
+      "name": "Djurgården W",
+      "code": null,
+      "founded": 2003,
+      "logo": "https://media.api-sports.io/football/teams/11076.png",
+      "venue": {
+       "name": "Stockholms Olympiastadion",
+       "city": "Stockholm",
+       "address": "Valhallavägen, Norra Djurgården",
+       "capacity": 14417,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 11077,
+      "name": "Eskilstuna United W",
+      "code": null,
+      "founded": 2002,
+      "logo": "https://media.api-sports.io/football/teams/11077.png",
+      "venue": {
+       "name": "Tunavallen",
+       "city": "Eskilstuna",
+       "address": "Tunavallsgränden 2",
+       "capacity": 7800,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 11079,
+      "name": "Kristianstad W",
+      "code": null,
+      "founded": 1998,
+      "logo": "https://media.api-sports.io/football/teams/11079.png",
+      "venue": {
+       "name": "Kristianstads Fotbollsarena",
+       "city": "Kristianstad",
+       "address": "Arenavägen 8",
+       "capacity": 6000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 11082,
+      "name": "Uppsala W",
+      "code": null,
+      "founded": 2016,
+      "logo": "https://media.api-sports.io/football/teams/11082.png",
+      "venue": {
+       "name": "Studenternas IP",
+       "city": "Uppsala",
+       "address": "Ulleråkersvägen 6",
+       "capacity": 10522,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 11083,
+      "name": "Vittsjö W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/11083.png",
+      "venue": {
+       "name": "Vittsjö IP",
+       "city": "Vittsjö",
+       "address": "Västanvägen 22, Västermark",
+       "capacity": 2500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 11084,
+      "name": "Växjö W",
+      "code": null,
+      "founded": 2014,
+      "logo": "https://media.api-sports.io/football/teams/11084.png",
+      "venue": {
+       "name": "Spiris Arena",
+       "city": "Växjö",
+       "address": "Bollgatan 1",
+       "capacity": 12173,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15629,
+      "name": "AIK W",
+      "code": null,
+      "founded": 1891,
+      "logo": "https://media.api-sports.io/football/teams/15629.png",
+      "venue": {
+       "name": "Skytteholms IP",
+       "city": "Solna",
+       "address": "Huvudstagatan 2, Skytteholm",
+       "capacity": 5026,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 15630,
+      "name": "Hammarby W",
+      "code": null,
+      "founded": 1970,
+      "logo": "https://media.api-sports.io/football/teams/15630.png",
+      "venue": {
+       "name": "Hammarby IP",
+       "city": "Stockholm",
+       "address": "Södermannagatan 61",
+       "capacity": 3700,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 16004,
+      "name": "Brommapojkarna W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/16004.png",
+      "venue": {
+       "name": "Grimsta IP",
+       "city": "Stockholm",
+       "address": "Gulddragargränd 100, Hässelby-Vällingby",
+       "capacity": 7350,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 16008,
+      "name": "Norrköping W",
+      "code": null,
+      "founded": 2009,
+      "logo": "https://media.api-sports.io/football/teams/16008.png",
+      "venue": {
+       "name": "PlatinumCars Arena",
+       "city": "Norrköping",
+       "address": "Ektorpsgatan 1",
+       "capacity": 17234,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 16483,
+      "name": "Häcken W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/16483.png",
+      "venue": {
+       "name": "Bravida Arena",
+       "city": "Göteborg",
+       "address": "Inlandsgatan 48",
+       "capacity": 7000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 21698,
+      "name": "Malmö FF W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/21698.png",
+      "venue": {
+       "name": "Malmö Stadion",
+       "city": "Malmö",
+       "address": "Eric Persson Väg 7",
+       "capacity": 27500,
+       "surface": "grass"
+      }
+     }
+    ]
+   },
+   {
+    "id": 736,
+    "name": "Elitettan",
+    "season": 2026,
+    "start": "2026-03-29",
+    "end": "2026-11-14",
+    "teams": [
+     {
+      "id": 10893,
+      "name": "Göteborg W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/10893.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 11078,
+      "name": "KIF Örebro W",
+      "code": null,
+      "founded": 1971,
+      "logo": "https://media.api-sports.io/football/teams/11078.png",
+      "venue": {
+       "name": "Behrn Arena",
+       "city": "Örebro",
+       "address": "Rudbecksgatan 52 G",
+       "capacity": 14500,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 11080,
+      "name": "Linköping W",
+      "code": null,
+      "founded": 2003,
+      "logo": "https://media.api-sports.io/football/teams/11080.png",
+      "venue": {
+       "name": "Bilbörsen Arena",
+       "city": "Linköping",
+       "address": "Kallerstads Allé 1A, Kallerstad",
+       "capacity": 7805,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 11081,
+      "name": "Umeå W",
+      "code": null,
+      "founded": 1917,
+      "logo": "https://media.api-sports.io/football/teams/11081.png",
+      "venue": {
+       "name": "Umeå Energi Arena SOL",
+       "city": "Umeå",
+       "address": "Gammliavägen 5, Haga",
+       "capacity": 14000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 15957,
+      "name": "Sandviken W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/15957.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 16001,
+      "name": "Alingsås W",
+      "code": null,
+      "founded": 2017,
+      "logo": "https://media.api-sports.io/football/teams/16001.png",
+      "venue": {
+       "name": "Mjörnvallen Idrottsplats",
+       "city": "Alingsås",
+       "address": "Lövekullev",
+       "capacity": 1500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 16005,
+      "name": "Jitex W",
+      "code": null,
+      "founded": 1971,
+      "logo": "https://media.api-sports.io/football/teams/16005.png",
+      "venue": {
+       "name": "Åbyvallen 1 Konstgräs",
+       "city": "Mölndal",
+       "address": "Idrottsvägen",
+       "capacity": 3000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 16028,
+      "name": "Örebro SK W",
+      "code": null,
+      "founded": 1908,
+      "logo": "https://media.api-sports.io/football/teams/16028.png",
+      "venue": {
+       "name": "Behrn Arena",
+       "city": "Örebro",
+       "address": "Rudbecksgatan 52 G",
+       "capacity": 14500,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 16030,
+      "name": "Enskede W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/16030.png",
+      "venue": {
+       "name": "Enskede IP 1",
+       "city": "Stockholm",
+       "address": "Enskedevägen 91-93, Gamla Enskede",
+       "capacity": 4000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 16032,
+      "name": "Gamla Upsala W",
+      "code": null,
+      "founded": 1947,
+      "logo": "https://media.api-sports.io/football/teams/16032.png",
+      "venue": {
+       "name": "Studenternas IP",
+       "city": "Uppsala",
+       "address": "Ulleråkersvägen 6",
+       "capacity": 10522,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 16033,
+      "name": "Husqvarna W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/16033.png",
+      "venue": {
+       "name": "Vapenvallen",
+       "city": "Huskvarna",
+       "address": "Faktorigatan 59",
+       "capacity": 4000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 17639,
+      "name": "Trelleborg W",
+      "code": null,
+      "founded": 1926,
+      "logo": "https://media.api-sports.io/football/teams/17639.png",
+      "venue": {
+       "name": "Vångavallen",
+       "city": "Trelleborg",
+       "address": "Östervångsvägen",
+       "capacity": 10500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 20820,
+      "name": "Häcken II W",
+      "code": null,
+      "founded": 1940,
+      "logo": "https://media.api-sports.io/football/teams/20820.png",
+      "venue": {
+       "name": "Bravida Arena",
+       "city": "Göteborg",
+       "address": "Inlandsgatan 48",
+       "capacity": 7000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 21693,
+      "name": "Elfsborg W",
+      "code": null,
+      "founded": 1904,
+      "logo": "https://media.api-sports.io/football/teams/21693.png",
+      "venue": {
+       "name": "Borås Arena",
+       "city": "Borås",
+       "address": "Ălgårdsvägen 32",
+       "capacity": 16899,
+       "surface": "artificial turf"
+      }
+     }
+    ]
+   }
+  ],
+  "Norway": [
+   {
+    "id": 725,
+    "name": "Toppserien",
+    "season": 2026,
+    "start": "2026-03-20",
+    "end": "2026-11-07",
+    "teams": [
+     {
+      "id": 10894,
+      "name": "LSK Kvinner W",
+      "code": null,
+      "founded": 1989,
+      "logo": "https://media.api-sports.io/football/teams/10894.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 15535,
+      "name": "Vålerenga W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/15535.png",
+      "venue": {
+       "name": "Intility Arena",
+       "city": "Oslo",
+       "address": "Innspurten 1",
+       "capacity": 18000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 15953,
+      "name": "Stabæk W",
+      "code": null,
+      "founded": 1912,
+      "logo": "https://media.api-sports.io/football/teams/15953.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 15955,
+      "name": "Lyn W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/15955.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 15956,
+      "name": "Rosenborg W",
+      "code": null,
+      "founded": 1972,
+      "logo": "https://media.api-sports.io/football/teams/15956.png",
+      "venue": {
+       "name": "Koteng Arena",
+       "city": "Trondheim",
+       "address": "Haakon VII gt 4",
+       "capacity": 1000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 18379,
+      "name": "Røa W",
+      "code": null,
+      "founded": 1993,
+      "logo": "https://media.api-sports.io/football/teams/18379.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 18380,
+      "name": "Brann W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/18380.png",
+      "venue": {
+       "name": "Brann Stadion",
+       "city": "Bergen",
+       "address": "Kniksens plass 1",
+       "capacity": 17686,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 18985,
+      "name": "Fortuna Ålesund W",
+      "code": null,
+      "founded": 1991,
+      "logo": "https://media.api-sports.io/football/teams/18985.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 18991,
+      "name": "Hønefoss W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/18991.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 22858,
+      "name": "Bodø / Glimt W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/22858.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 25760,
+      "name": "Haugesund W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/25760.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 25761,
+      "name": "Molde W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/25761.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     }
+    ]
+   },
+   {
+    "id": 915,
+    "name": "1. Division Women",
+    "season": 2026,
+    "start": "2026-03-21",
+    "end": "2026-10-25",
+    "teams": [
+     {
+      "id": 15951,
+      "name": "Klepp W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/15951.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 15952,
+      "name": "Kolbotn W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/15952.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 15954,
+      "name": "Arna-Bjørnar W",
+      "code": null,
+      "founded": 2000,
+      "logo": "https://media.api-sports.io/football/teams/15954.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 18989,
+      "name": "TIL 2020 W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/18989.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 18992,
+      "name": "Åsane W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/18992.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 20884,
+      "name": "Grei W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/20884.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 20885,
+      "name": "Fyllingsdalen W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/20885.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 22859,
+      "name": "Odd W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/22859.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 22860,
+      "name": "Viking FK W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/22860.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 25762,
+      "name": "Start W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/25762.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 27218,
+      "name": "Bryne W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27218.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 27637,
+      "name": "Frigg Oslo FK W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27637.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     }
+    ]
+   }
+  ],
+  "Denmark": [
+   {
+    "id": 638,
+    "name": "Kvindeliga",
+    "season": 2026,
+    "start": "2026-07-26",
+    "end": "2026-12-13",
+    "teams": [
+     {
+      "id": 10883,
+      "name": "Brøndby W",
+      "code": null,
+      "founded": 1964,
+      "logo": "https://media.api-sports.io/football/teams/10883.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 10890,
+      "name": "Fortuna Hjørring W",
+      "code": null,
+      "founded": 1966,
+      "logo": "https://media.api-sports.io/football/teams/10890.png",
+      "venue": {
+       "name": "Nord Energi Arena",
+       "city": "Hjørring",
+       "address": "Femhøje 5A",
+       "capacity": 7500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 13981,
+      "name": "KoldingQ W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/13981.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 13982,
+      "name": "Køge W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/13982.png",
+      "venue": {
+       "name": "Capelli Sport Stadion",
+       "city": "Køge",
+       "address": "Ringvejen 4-6",
+       "capacity": 10000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 13983,
+      "name": "Nordsjælland W",
+      "code": null,
+      "founded": 1992,
+      "logo": "https://media.api-sports.io/football/teams/13983.png",
+      "venue": {
+       "name": "Right to Dream Park",
+       "city": "Farum",
+       "address": "Idrætsvænget 2",
+       "capacity": 10300,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 13984,
+      "name": "Odense Q W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/13984.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 14243,
+      "name": "AGF W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/14243.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 26101,
+      "name": "Midtjylland W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/26101.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 27630,
+      "name": "ASA Aarhus W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27630.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 27632,
+      "name": "FC Copenhagen W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27632.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     }
+    ]
+   },
+   {
+    "id": 1244,
+    "name": "B-Liga Women",
+    "season": 2026,
+    "start": "2026-08-15",
+    "end": "2026-11-21",
+    "teams": [
+     {
+      "id": 13980,
+      "name": "AaB W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/13980.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 13985,
+      "name": "Thy ThistedQ W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/13985.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 13987,
+      "name": "B 93 W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/13987.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 19135,
+      "name": "Sundby W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/19135.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 27631,
+      "name": "Osterbro W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27631.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 28371,
+      "name": "Esbjerg W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/28371.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 28372,
+      "name": "Naestved W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/28372.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 28373,
+      "name": "Viborg W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/28373.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     }
+    ]
+   }
+  ],
+  "Finland": [
+   {
+    "id": 640,
+    "name": "Kansallinen Liiga",
+    "season": 2026,
+    "start": "2026-03-28",
+    "end": "2026-10-24",
+    "teams": [
+     {
+      "id": 10920,
+      "name": "PK-35 Vantaa W",
+      "code": null,
+      "founded": 1935,
+      "logo": "https://media.api-sports.io/football/teams/10920.png",
+      "venue": {
+       "name": "Myyrmäen jalkapallostadion",
+       "city": "Vantaa",
+       "address": "Raappavuorentie 6, Myyrmäki",
+       "capacity": 4700,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 13990,
+      "name": "HJK W",
+      "code": null,
+      "founded": 1971,
+      "logo": "https://media.api-sports.io/football/teams/13990.png",
+      "venue": {
+       "name": "Bolt Arena",
+       "city": "Helsinki",
+       "address": "Urheilukatu 1",
+       "capacity": 10770,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 13991,
+      "name": "Ilves W",
+      "code": null,
+      "founded": 1931,
+      "logo": "https://media.api-sports.io/football/teams/13991.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 13992,
+      "name": "JyPK W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/13992.png",
+      "venue": {
+       "name": "Harjun stadion",
+       "city": "Jyväskylä",
+       "address": "Ihantolantie 1",
+       "capacity": 5576,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 13995,
+      "name": "Åland United W",
+      "code": null,
+      "founded": 2004,
+      "logo": "https://media.api-sports.io/football/teams/13995.png",
+      "venue": {
+       "name": "Wiklöf Holding Arena",
+       "city": "Maarianhamina (Mariehamn), Ahvenanmaa (Åland)",
+       "address": "Idrottsgatan",
+       "capacity": 5637,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 13996,
+      "name": "Honka W",
+      "code": null,
+      "founded": 1975,
+      "logo": "https://media.api-sports.io/football/teams/13996.png",
+      "venue": {
+       "name": "Tapiolan Urheilupuisto",
+       "city": "Espoo (Esbo)",
+       "address": "Urheilupuistontie 2",
+       "capacity": 5500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 13997,
+      "name": "KuPS W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/13997.png",
+      "venue": {
+       "name": "Väre Areena",
+       "city": "Kuopio",
+       "address": "Kaartokatu 6",
+       "capacity": 8543,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 16383,
+      "name": "HPS W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/16383.png",
+      "venue": {
+       "name": "Briotech Arena",
+       "city": "Helsinki",
+       "address": "Pakilantie 86",
+       "capacity": 1000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 25564,
+      "name": "VIFK W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/25564.png",
+      "venue": {
+       "name": "Lemonsoft Stadion",
+       "city": "Vaasa",
+       "address": "Rantamaantie",
+       "capacity": 6000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 27397,
+      "name": "EBK W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27397.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 27659,
+      "name": "IF Gnistan",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27659.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 28085,
+      "name": "HJS Akatemia W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/28085.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     }
+    ]
+   }
+  ],
+  "Iceland": [
+   {
+    "id": 671,
+    "name": "Úrvalsdeild Women",
+    "season": 2025,
+    "start": "2025-04-15",
+    "end": "2025-10-18",
+    "teams": [
+     {
+      "id": 10914,
+      "name": "Breidablik W",
+      "code": null,
+      "founded": 1950,
+      "logo": "https://media.api-sports.io/football/teams/10914.png",
+      "venue": {
+       "name": "Kópavogsvöllur",
+       "city": "Kópavogur",
+       "address": "Dalsmára 5",
+       "capacity": 5501,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 14848,
+      "name": "FH W",
+      "code": null,
+      "founded": 1929,
+      "logo": "https://media.api-sports.io/football/teams/14848.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 14850,
+      "name": "Thór / KA W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/14850.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 14851,
+      "name": "Valur W",
+      "code": null,
+      "founded": 1911,
+      "logo": "https://media.api-sports.io/football/teams/14851.png",
+      "venue": {
+       "name": "N1-völlurinn Hlíðarenda",
+       "city": "Reykjavík",
+       "address": "Bústaðavegur, Hlíðarendi",
+       "capacity": 2489,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 14855,
+      "name": "Stjarnan W",
+      "code": null,
+      "founded": 1960,
+      "logo": "https://media.api-sports.io/football/teams/14855.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 14856,
+      "name": "Thróttur Reykjavík W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/14856.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 16441,
+      "name": "Tindastóll W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/16441.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 22857,
+      "name": "Víkingur Reykjavík W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/22857.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 25517,
+      "name": "Fjard / Hött / Leiknir W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/25517.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 25518,
+      "name": "Fram W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/25518.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     }
+    ]
+   }
+  ],
+  "England": [
+   {
+    "id": 44,
+    "name": "FA WSL",
+    "season": 2026,
+    "start": "2026-09-04",
+    "end": "2027-05-22",
+    "teams": [
+     {
+      "id": 1845,
+      "name": "Birmingham City W",
+      "code": null,
+      "founded": 1968,
+      "logo": "https://media.api-sports.io/football/teams/1845.png",
+      "venue": {
+       "name": "St. Andrew's @ Knighthead Park",
+       "city": "Birmingham",
+       "address": "St. Andrew&apos;s Road",
+       "capacity": 30009,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1847,
+      "name": "Liverpool W",
+      "code": null,
+      "founded": 1989,
+      "logo": "https://media.api-sports.io/football/teams/1847.png",
+      "venue": {
+       "name": "St Helens Stadium",
+       "city": "St Helens, Merseyside",
+       "address": "McManus Drive, Peasley Cross",
+       "capacity": 17980,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1850,
+      "name": "Arsenal W",
+      "code": null,
+      "founded": 1987,
+      "logo": "https://media.api-sports.io/football/teams/1850.png",
+      "venue": {
+       "name": "Emirates Stadium",
+       "city": "London",
+       "address": "Hornsey Road",
+       "capacity": 60383,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1853,
+      "name": "Chelsea W",
+      "code": null,
+      "founded": 1992,
+      "logo": "https://media.api-sports.io/football/teams/1853.png",
+      "venue": {
+       "name": "Kingsmeadow",
+       "city": "Kingston upon Thames, Surrey",
+       "address": "Jack Goodchild Way",
+       "capacity": 5339,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1854,
+      "name": "Manchester City W",
+      "code": "MCI",
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/1854.png",
+      "venue": {
+       "name": "Joie Stadium",
+       "city": "Manchester",
+       "address": "400 Ashton New Road",
+       "capacity": 7000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1855,
+      "name": "Everton W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/1855.png",
+      "venue": {
+       "name": "Goodison Park",
+       "city": "Liverpool",
+       "address": "Goodison Road",
+       "capacity": 40569,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1856,
+      "name": "West Ham W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/1856.png",
+      "venue": {
+       "name": "Chigwell Construction Stadium",
+       "city": "Dagenham, Essex",
+       "address": "Victoria Road",
+       "capacity": 6078,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1857,
+      "name": "Brighton W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/1857.png",
+      "venue": {
+       "name": "Broadfield Stadium",
+       "city": "Crawley, West Sussex",
+       "address": "Brighton Road",
+       "capacity": 6134,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 4898,
+      "name": "Manchester United W",
+      "code": "MUN",
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/4898.png",
+      "venue": {
+       "name": "Leigh Sports Village Stadium",
+       "city": "Leigh, Greater Manchester",
+       "address": "Sale Way",
+       "capacity": 11000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 4899,
+      "name": "Tottenham Hotspur W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/4899.png",
+      "venue": {
+       "name": "BetWright Stadium",
+       "city": "London",
+       "address": "Brisbane Road, Leyton",
+       "capacity": 9271,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 14219,
+      "name": "Aston Villa W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/14219.png",
+      "venue": {
+       "name": "Villa Park",
+       "city": "Birmingham",
+       "address": "Trinity Road",
+       "capacity": 42824,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15402,
+      "name": "Charlton Athletic W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15402.png",
+      "venue": {
+       "name": "The Valley",
+       "city": "London",
+       "address": "Floyd Road, Charlton",
+       "capacity": 27111,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15406,
+      "name": "London City Lionesses W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15406.png",
+      "venue": {
+       "name": "Copperjax Community Stadium",
+       "city": "London",
+       "address": "Hayes Lane, Bromley",
+       "capacity": 5150,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15409,
+      "name": "Crystal Palace W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15409.png",
+      "venue": {
+       "name": "VBS Community Stadium",
+       "city": "Sutton, Surrey",
+       "address": "Gander Green Lane",
+       "capacity": 7032,
+       "surface": "artificial turf"
+      }
+     }
+    ]
+   },
+   {
+    "id": 699,
+    "name": "Women's Championship",
+    "season": 2026,
+    "start": "2026-09-04",
+    "end": "2027-05-08",
+    "teams": [
+     {
+      "id": 1846,
+      "name": "Bristol City W",
+      "code": null,
+      "founded": 1998,
+      "logo": "https://media.api-sports.io/football/teams/1846.png",
+      "venue": {
+       "name": "Ashton Gate Stadium",
+       "city": "Bristol",
+       "address": "Ashton Road",
+       "capacity": 27000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1848,
+      "name": "Sunderland W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/1848.png",
+      "venue": {
+       "name": "Eppleton Colliery Football Ground",
+       "city": "Hetton-le-Hole, Tyne and Wear",
+       "address": "Park View / Welfare Road",
+       "capacity": 2000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15403,
+      "name": "Durham W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15403.png",
+      "venue": {
+       "name": "Maiden Castle Sports Park",
+       "city": "Durham, County Durham",
+       "address": "Stockton Road, Maiden Castle",
+       "capacity": 2381,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 15404,
+      "name": "Leicester City FC W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15404.png",
+      "venue": {
+       "name": "King Power Stadium",
+       "city": "Leicester, Leicestershire",
+       "address": "Filbert Way",
+       "capacity": 34310,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15407,
+      "name": "Sheffield United W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15407.png",
+      "venue": {
+       "name": "Bramall Lane",
+       "city": "Sheffield",
+       "address": "Bramall Lane",
+       "capacity": 32702,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15422,
+      "name": "Ipswich Town W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15422.png",
+      "venue": {
+       "name": "The Martello Ground",
+       "city": "Felixstowe, Suffolk",
+       "address": "Dellwood Avenue",
+       "capacity": 2000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15433,
+      "name": "Wolverhampton W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/15433.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 15439,
+      "name": "Burnley W",
+      "code": null,
+      "founded": 1995,
+      "logo": "https://media.api-sports.io/football/teams/15439.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 15450,
+      "name": "Nottingham Forest W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15450.png",
+      "venue": {
+       "name": "The City Ground",
+       "city": "Nottingham, Nottinghamshire",
+       "address": "Pavilion Road",
+       "capacity": 30576,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15454,
+      "name": "Southampton W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15454.png",
+      "venue": {
+       "name": "St. Mary's Stadium",
+       "city": "Southampton, Hampshire",
+       "address": "Britannia Road",
+       "capacity": 32689,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15457,
+      "name": "Watford W",
+      "code": null,
+      "founded": 1970,
+      "logo": "https://media.api-sports.io/football/teams/15457.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 15515,
+      "name": "Newcastle United W",
+      "code": null,
+      "founded": 0,
+      "logo": "https://media.api-sports.io/football/teams/15515.png",
+      "venue": {
+       "name": "Gateshead International Stadium",
+       "city": "Gateshead, Tyne and Wear",
+       "address": "Neilson Road",
+       "capacity": 11750,
+       "surface": "grass"
+      }
+     }
+    ]
+   }
+  ],
+  "Spain": [
+   {
+    "id": 142,
+    "name": "Primera División Femenina",
+    "season": 2026,
+    "start": "2026-08-29",
+    "end": "2027-05-23",
+    "teams": [
+     {
+      "id": 1905,
+      "name": "Athletic Club W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1905.png",
+      "venue": {
+       "name": "Instalaciones de Lezama Campo 2",
+       "city": "Lezama",
+       "address": "Calle Garaioltza Auzoa 147",
+       "capacity": 2925,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1909,
+      "name": "Valencia W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1909.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 1910,
+      "name": "Atletico Madrid W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1910.png",
+      "venue": {
+       "name": "Centro Deportivo Wanda Alcalá de Henares",
+       "city": "Alcalá de Henares",
+       "address": "Avenida Gustavo Adolfo Bécquer 64",
+       "capacity": 2700,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1912,
+      "name": "Real Sociedad W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1912.png",
+      "venue": {
+       "name": "Campo José Luis Orbegozo",
+       "city": "Donostia-San Sebastián",
+       "address": "Paseo del Hipodromo, Zubieta",
+       "capacity": 2500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1913,
+      "name": "Granad. Tenerife W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1913.png",
+      "venue": {
+       "name": "Estadio Heliodoro Rodríguez Lopéz",
+       "city": "Santa Cruz de Tenerife (Tenerife)",
+       "address": "Avenida de San Sebastián",
+       "capacity": 23660,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1918,
+      "name": "Barcelona W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1918.png",
+      "venue": {
+       "name": "Estadi Johan Cruyff",
+       "city": "Sant Joan Despí",
+       "address": "B-23",
+       "capacity": 6000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1919,
+      "name": "Espanyol W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1919.png",
+      "venue": {
+       "name": "Ciutat Esportiva Dani Jarque",
+       "city": "Sant Adrià de Besòs (San Adrián de Besós)",
+       "address": "Carretera de Mataró",
+       "capacity": 6000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1920,
+      "name": "Sevilla W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1920.png",
+      "venue": {
+       "name": "Estadio Jesús Navas",
+       "city": "Sevilla",
+       "address": "Carretera de Utrera",
+       "capacity": 7000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1921,
+      "name": "Madrid CFF W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1921.png",
+      "venue": {
+       "name": "Estadio Municipal Nuevo Matapiñonera",
+       "city": "San Sebastián de los Reyes",
+       "address": "Avenida Matapiñonera",
+       "capacity": 3000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 1923,
+      "name": "Edf Logrono W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1923.png",
+      "venue": {
+       "name": "Estadio La Isla",
+       "city": "Logroño",
+       "address": "Calle El Cortijo",
+       "capacity": 2000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 6376,
+      "name": "Deportivo de La Coruña W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/6376.png",
+      "venue": {
+       "name": "Ciudad Deportiva de Abegondo",
+       "city": "A Coruña (La Coruña)",
+       "address": "Agra de Marces, San Tirso de Mabegondo, Abegondo",
+       "capacity": 2000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 15224,
+      "name": "Real Madrid W",
+      "code": null,
+      "founded": 2020,
+      "logo": "https://media.api-sports.io/football/teams/15224.png",
+      "venue": {
+       "name": "Ciudad Deportiva Real Madrid Campo 11",
+       "city": "Madrid",
+       "address": "Parque de Valdebebas, 402",
+       "capacity": 3000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 15225,
+      "name": "Eibar W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/15225.png",
+      "venue": {
+       "name": "Estadio Municipal de Ipurúa",
+       "city": "Eibar",
+       "address": "Calle de Ipurúa",
+       "capacity": 8050,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 17168,
+      "name": "Deportivo Alavés W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/17168.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 19896,
+      "name": "FC Levante Badalona W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/19896.png",
+      "venue": {
+       "name": "Estadi Municipal de Badalona",
+       "city": "Badalona",
+       "address": "Avenida dels Vents 7, Barrio de Montigalà",
+       "capacity": 4384,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 22018,
+      "name": "Granada",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/22018.png",
+      "venue": {
+       "name": "Ciudad Deportiva del Granada CF",
+       "city": "Granada",
+       "address": "Crta. de Alfacar",
+       "capacity": 1000,
+       "surface": "grass"
+      }
+     }
+    ]
+   }
+  ],
+  "Germany": [
+   {
+    "id": 82,
+    "name": "Frauen Bundesliga",
+    "season": 2026,
+    "start": "2026-08-21",
+    "end": "2027-05-23",
+    "teams": [
+     {
+      "id": 1858,
+      "name": "1899 Hoffenheim W",
+      "code": null,
+      "founded": 2007,
+      "logo": "https://media.api-sports.io/football/teams/1858.png",
+      "venue": {
+       "name": "Dietmar-Hopp-Stadion",
+       "city": "Sinsheim",
+       "address": "Silbergasse 45, Hoffenheim",
+       "capacity": 6350,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1859,
+      "name": "Bayer Leverkusen W",
+      "code": null,
+      "founded": 2008,
+      "logo": "https://media.api-sports.io/football/teams/1859.png",
+      "venue": {
+       "name": "Ulrich-Haberland-Stadion",
+       "city": "Leverkusen",
+       "address": "Bismarckstraße 122-124",
+       "capacity": 3200,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1860,
+      "name": "Bayern Munich W",
+      "code": null,
+      "founded": 1970,
+      "logo": "https://media.api-sports.io/football/teams/1860.png",
+      "venue": {
+       "name": "FC Bayern Campus Platz 1",
+       "city": "München",
+       "address": "Ingolstädter Str. 272",
+       "capacity": 4347,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1863,
+      "name": "VfL Wolfsburg W",
+      "code": null,
+      "founded": 2003,
+      "logo": "https://media.api-sports.io/football/teams/1863.png",
+      "venue": {
+       "name": "AOK Stadion",
+       "city": "Wolfsburg",
+       "address": "Allerpark 2",
+       "capacity": 5200,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1867,
+      "name": "SC Freiburg W",
+      "code": null,
+      "founded": 1975,
+      "logo": "https://media.api-sports.io/football/teams/1867.png",
+      "venue": {
+       "name": "Dreisamstadion",
+       "city": "Freiburg im Breisgau",
+       "address": "Schwarzwaldstraße 193",
+       "capacity": 25000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1870,
+      "name": "Werder Bremen W",
+      "code": null,
+      "founded": 2007,
+      "logo": "https://media.api-sports.io/football/teams/1870.png",
+      "venue": {
+       "name": "Weserstadion Platz 11",
+       "city": "Bremen",
+       "address": "Franz-Böhmert-Straße 1c",
+       "capacity": 5500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1871,
+      "name": "FC Koln W",
+      "code": null,
+      "founded": 2009,
+      "logo": "https://media.api-sports.io/football/teams/1871.png",
+      "venue": {
+       "name": "Franz-Kremer-Stadion",
+       "city": "Köln",
+       "address": "Franz-Kremer-Allee 1-3",
+       "capacity": 5457,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 14014,
+      "name": "Eintracht Frankfurt W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/14014.png",
+      "venue": {
+       "name": "Stadion am Brentanobad",
+       "city": "Frankfurt am Main",
+       "address": "Rödelheimer Parkweg 39",
+       "capacity": 5750,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 20487,
+      "name": "Nürnberg W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/20487.png",
+      "venue": {
+       "name": "Max-Morlock-Stadion",
+       "city": "Nürnberg",
+       "address": "Max-Morlock-Platz 1",
+       "capacity": 50000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 20498,
+      "name": "Hamburger SV W",
+      "code": null,
+      "founded": 1970,
+      "logo": "https://media.api-sports.io/football/teams/20498.png",
+      "venue": {
+       "name": "Paul-Hauenschild-Plätze 6",
+       "city": "Norderstedt",
+       "address": "Ulzburger Str. 94",
+       "capacity": 1000,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 20501,
+      "name": "RB Leipzig W",
+      "code": null,
+      "founded": 2013,
+      "logo": "https://media.api-sports.io/football/teams/20501.png",
+      "venue": {
+       "name": "Trainingszentrum RB Leipzig Platz 1",
+       "city": "Leipzig",
+       "address": "Cottaweg",
+       "capacity": 2015,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 21564,
+      "name": "Mainz 05 W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/21564.png",
+      "venue": {
+       "name": "Stadion am Bruchweg",
+       "city": "Mainz",
+       "address": "Dr.-Martin-Luther-King-Weg 20",
+       "capacity": 13508,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 24130,
+      "name": "Stuttgart W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/24130.png",
+      "venue": {
+       "name": "Bezirkssportanlage NeckarPark PSV-Stadion",
+       "city": "Stuttgart",
+       "address": "Fritz-Walter-Weg 10",
+       "capacity": 4000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 24133,
+      "name": "Union Berlin W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/24133.png",
+      "venue": {
+       "name": "Fritz-Lesch-Sportplatz",
+       "city": "Berlin",
+       "address": "Dörpfeldstr. 89",
+       "capacity": 3000,
+       "surface": "grass"
+      }
+     }
+    ]
+   },
+   {
+    "id": 1034,
+    "name": "2. Frauen Bundesliga",
+    "season": 2026,
+    "start": "2026-08-02",
+    "end": "2027-05-09",
+    "teams": [
+     {
+      "id": 1862,
+      "name": "SC Sand W",
+      "code": null,
+      "founded": 1946,
+      "logo": "https://media.api-sports.io/football/teams/1862.png",
+      "venue": {
+       "name": "Rasenplatz Sand",
+       "city": "Willstätt",
+       "address": "Kühnmatt 3, Sand",
+       "capacity": 2500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1864,
+      "name": "Borussia Monchengladbach W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1864.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 1868,
+      "name": "SGS Essen W",
+      "code": null,
+      "founded": 2000,
+      "logo": "https://media.api-sports.io/football/teams/1868.png",
+      "venue": {
+       "name": "Stadion an der Hafenstraße",
+       "city": "Essen",
+       "address": "Hafenstraße 97a, Bergeborbeck",
+       "capacity": 20650,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1869,
+      "name": "Turbine Potsdam W",
+      "code": null,
+      "founded": 1971,
+      "logo": "https://media.api-sports.io/football/teams/1869.png",
+      "venue": {
+       "name": "Karl-Liebknecht-Stadion",
+       "city": "Potsdam",
+       "address": "Karl-Liebknecht-Straße 90, Babelsberg",
+       "capacity": 10787,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 14013,
+      "name": "Meppen W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/14013.png",
+      "venue": {
+       "name": "Hänsch-Arena",
+       "city": "Meppen",
+       "address": "Lathener Str. 15, Neustadt",
+       "capacity": 16500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 16849,
+      "name": "Carl Zeiss Jena  W",
+      "code": null,
+      "founded": 2017,
+      "logo": "https://media.api-sports.io/football/teams/16849.png",
+      "venue": {
+       "name": "Ernst-Abbe-Sportfeld",
+       "city": "Jena",
+       "address": "Roland-Ducke-Weg 1",
+       "capacity": 15500,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 20473,
+      "name": "Bochum W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/20473.png",
+      "venue": {
+       "name": "Nebenplatz Ruhrstadion",
+       "city": "Bochum",
+       "address": "Castroper Str. 145",
+       "capacity": 3000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 20483,
+      "name": "Ingolstadt W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/20483.png",
+      "venue": {
+       "name": "Bezirkssportanlage Mitte Platz 1",
+       "city": "Ingolstadt",
+       "address": "Friedhofstr. 10",
+       "capacity": 8000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 20495,
+      "name": "Andernach W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/20495.png",
+      "venue": {
+       "name": "Andernach Stadion",
+       "city": "Andernach",
+       "address": "Stadionstraße",
+       "capacity": 10000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 20504,
+      "name": "Viktoria Berlin W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/20504.png",
+      "venue": {
+       "name": "Stadion Lichterfelde",
+       "city": "Berlin",
+       "address": "Ostpreußendamm 3-17",
+       "capacity": 4300,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 22293,
+      "name": "Eintracht Frankfurt II W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/22293.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 22296,
+      "name": "Hoffenheim II W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/22296.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 27444,
+      "name": "Hertha Berlin W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27444.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 28045,
+      "name": "FC Koln II W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/28045.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     }
+    ]
+   },
+   {
+    "id": 1137,
+    "name": "Supercup der Frauen",
+    "season": 2026,
+    "start": "2026-08-15",
+    "end": "2026-08-15",
+    "teams": [
+     {
+      "id": 1860,
+      "name": "Bayern Munich W",
+      "code": null,
+      "founded": 1970,
+      "logo": "https://media.api-sports.io/football/teams/1860.png",
+      "venue": {
+       "name": "FC Bayern Campus Platz 1",
+       "city": "München",
+       "address": "Ingolstädter Str. 272",
+       "capacity": 4347,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1863,
+      "name": "VfL Wolfsburg W",
+      "code": null,
+      "founded": 2003,
+      "logo": "https://media.api-sports.io/football/teams/1863.png",
+      "venue": {
+       "name": "AOK Stadion",
+       "city": "Wolfsburg",
+       "address": "Allerpark 2",
+       "capacity": 5200,
+       "surface": "grass"
+      }
+     }
+    ]
+   }
+  ],
+  "Italy": [
+   {
+    "id": 139,
+    "name": "Serie A Women",
+    "season": 2026,
+    "start": "2026-09-26",
+    "end": "2027-05-15",
+    "teams": [
+     {
+      "id": 1880,
+      "name": "Fiorentina W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1880.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 1886,
+      "name": "Juventus W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1886.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 1889,
+      "name": "Sassuolo W",
+      "code": null,
+      "founded": 1976,
+      "logo": "https://media.api-sports.io/football/teams/1889.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 1892,
+      "name": "Roma W",
+      "code": null,
+      "founded": 2018,
+      "logo": "https://media.api-sports.io/football/teams/1892.png",
+      "venue": {
+       "name": "Stadio Tre Fontane",
+       "city": "Roma",
+       "address": "Via delle Tre Fontane 5",
+       "capacity": 4000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1893,
+      "name": "AC Milan W",
+      "code": null,
+      "founded": 2018,
+      "logo": "https://media.api-sports.io/football/teams/1893.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 7533,
+      "name": "Inter Milano W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/7533.png",
+      "venue": {
+       "name": "Arena Civica Gianni Brera",
+       "city": "Milano",
+       "address": "Via Giorgio Byron 2, Parco Sempione",
+       "capacity": 18000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 14432,
+      "name": "Napoli W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/14432.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 17369,
+      "name": "Lazio W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/17369.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 19747,
+      "name": "Como W",
+      "code": null,
+      "founded": 2020,
+      "logo": "https://media.api-sports.io/football/teams/19747.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 19748,
+      "name": "Parma W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/19748.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 23669,
+      "name": "Ternana W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/23669.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 27960,
+      "name": "Como 1907 W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27960.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     }
+    ]
+   }
+  ],
+  "France": [
+   {
+    "id": 64,
+    "name": "Feminine Division 1",
+    "season": 2026,
+    "start": "2026-09-04",
+    "end": "2027-05-04",
+    "teams": [
+     {
+      "id": 1667,
+      "name": "Paris Saint Germain W",
+      "code": null,
+      "founded": 1991,
+      "logo": "https://media.api-sports.io/football/teams/1667.png",
+      "venue": {
+       "name": "Campus PSG",
+       "city": "Poissy",
+       "address": "Rue Guy Crescent",
+       "capacity": 5000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1673,
+      "name": "Marseille W",
+      "code": null,
+      "founded": 1920,
+      "logo": "https://media.api-sports.io/football/teams/1673.png",
+      "venue": {
+       "name": "Stade Paul Le Cesne",
+       "city": "Marseille",
+       "address": "94, rue Jules Isaac",
+       "capacity": 1900,
+       "surface": "artificial turf"
+      }
+     },
+     {
+      "id": 1674,
+      "name": "Lyon W",
+      "code": null,
+      "founded": 1970,
+      "logo": "https://media.api-sports.io/football/teams/1674.png",
+      "venue": {
+       "name": "Terrain d'honneur Gérard Houllier",
+       "city": "Décines-Charpieu",
+       "address": "10 Avenue Simone Veil",
+       "capacity": 3000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1675,
+      "name": "Montpellier W",
+      "code": null,
+      "founded": 1919,
+      "logo": "https://media.api-sports.io/football/teams/1675.png",
+      "venue": {
+       "name": "Stade Bernard Gasset Terrain n°7",
+       "city": "Montpellier",
+       "address": "7, avenue Albert-Einstein",
+       "capacity": 2000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1676,
+      "name": "Paris FC W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1676.png",
+      "venue": {
+       "name": "Stade Charléty",
+       "city": "Paris",
+       "address": "99 Boulevard Kellermann",
+       "capacity": 20000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 1677,
+      "name": "FC Fleury 91 W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/1677.png",
+      "venue": {
+       "name": "Stade Robert Bobin",
+       "city": "Bondoufle",
+       "address": "Rue du Stade",
+       "capacity": 18850,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 14006,
+      "name": "Le Havre W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/14006.png",
+      "venue": {
+       "name": "Stade Océane",
+       "city": "Le Havre",
+       "address": "Boulevard de Léningrad",
+       "capacity": 25178,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 24513,
+      "name": "Nantes W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/24513.png",
+      "venue": {
+       "name": "Stade Marcel-Saupin",
+       "city": "Nantes",
+       "address": "31, quai Malakoff",
+       "capacity": 1921,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 24514,
+      "name": "Strasbourg W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/24514.png",
+      "venue": {
+       "name": "Stade Jean-Nicolas Muller",
+       "city": "Strasbourg",
+       "address": "36, rue du Languedoc",
+       "capacity": 1000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 26234,
+      "name": "Lens W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/26234.png",
+      "venue": {
+       "name": "Stade Degouve Brabant",
+       "city": "Arras",
+       "address": "5, boulevard du Général de Gaulle",
+       "capacity": 3000,
+       "surface": "grass"
+      }
+     },
+     {
+      "id": 27932,
+      "name": "Saint-Malo W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27932.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     },
+     {
+      "id": 27933,
+      "name": "Toulouse W",
+      "code": null,
+      "founded": null,
+      "logo": "https://media.api-sports.io/football/teams/27933.png",
+      "venue": {
+       "name": null,
+       "city": null,
+       "address": null,
+       "capacity": null,
+       "surface": null
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "calls": 26
+}
