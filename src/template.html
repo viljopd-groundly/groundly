@@ -730,7 +730,7 @@ function surfaceOf(c){if(!c||!c.s)return null;const k=arenaKey(c.s);
   const top=Object.entries(crowd).sort((a,b)=>b[1]-a[1])[0];if(top)return{v:top[0],crowd:top[1]};
   if(sharers.some(o=>NO_ART_LEAGUES.has(o.l)))return{v:"nh",rule:true};return null;}
 function surfaceRow(c){const x=surfaceOf(c);if(!c.s)return"";
-  return`<dt>Underlag</dt><dd>${x?`${esc(SURF_LBL[x.v])}${x.src?` <span class="meta">(<a href="${esc(x.src[1])}" target="_blank" rel="noopener">${esc(x.src[0])}</a>)</span>`:x.crowd?` <span class="meta">(enligt ${x.crowd} ${x.crowd===1?"besökare":"besökare"})</span>`:x.rule?` <span class="meta">(konstgräs är inte tillåtet i ligan)</span>`:""}`:`<span class="meta">Ingen uppgift än. Har du varit här kan du rapportera underlaget.</span>`}</dd>`;}
+  return`<dt>Underlag</dt><dd>${x?`${esc(SURF_LBL[x.v])}${x.src?"":x.crowd?` <span class="meta">(enligt ${x.crowd} ${x.crowd===1?"besökare":"besökare"})</span>`:x.rule?` <span class="meta">(konstgräs är inte tillåtet i ligan)</span>`:""}`:`<span class="meta">Ingen uppgift än.</span> ${typeof suggestBtn==="function"&&c?suggestBtn(c,"surf","Föreslå underlag"):""}`}</dd>`;}
 const seasTxt=n=>`${n} ${n===1?"säsong":"säsonger"}`;
 function seasonRows(c){const x=SEASONS[c.id];if(!x)return"";return`<dt>Högsta ligan</dt><dd>${x.top?`<span class="num">${seasTxt(x.top)}</span> i ${esc(x.topL)}`:`Aldrig spelat i ${esc(x.topL)}`}</dd><dt>Näst högsta</dt><dd>${x.sec?`<span class="num">${seasTxt(x.sec)}</span> i ${esc(x.secL)}`:`Ingen säsong i ${esc(x.secL)}`} <span class="meta">(${esc(x.secNote)})</span></dd>`;}
 Object.keys(COLORS).filter(k=>k.startsWith("nt-")).forEach(k=>{COLORS["u21-"+k.slice(3)]=COLORS[k];});
@@ -2875,7 +2875,7 @@ function startTipNotes(db){if(!db){tnState="none";return;}
     if(mode==="tips")rerenderQuizHost();},()=>{tnState="none";});}
 
 // ---------- föreslå rättelse ----------
-const FIX_FIELDS=[["f","Grundår"],["s","Hemmaarena"],["cap","Kapacitet"],["l","Serie"],["city","Stad"],["nick","Smeknamn"],["tix","Biljettlänk"],["web","Hemsida"],["h","Meriter"],["colors","Färger"],["other","Annat"]];
+const FIX_FIELDS=[["f","Grundår"],["s","Hemmaarena"],["cap","Kapacitet"],["l","Serie"],["city","Stad"],["nick","Smeknamn"],["tix","Biljettlänk"],["web","Hemsida"],["surf","Underlag (gräs, hybrid, konstgräs)"],["h","Meriter"],["colors","Färger"],["other","Annat"]];
 const FIX_L=Object.fromEntries(FIX_FIELDS);const FIX_APPLY=new Set(["f","s","cap","l","city","nick","tix","web"]);
 let FIXES={},fixState="loading",fixOpen=null,fixBusy=false,fixMsg="",OVERRIDES={},FIXDONE=[];
 function fixAll(){const out=[];Object.entries(FIXES).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(x=>{if(x&&x.id&&x.club&&x.value)out.push({...x,uid,key:uid+":"+x.id});});});return out;}
