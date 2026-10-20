@@ -532,6 +532,16 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .backpill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:58;font:600 14px var(--f-body);padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--fg);color:var(--bg);box-shadow:0 4px 18px rgba(0,0,0,.18);cursor:pointer;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
 .backpill[hidden]{display:none}
 @media (min-width:900px){.backpill{bottom:24px}}
+/* Hem: färgtoner per sektion och lagfärger på matchrader */
+.tip[data-tone]{border-top:4px solid var(--tone);background:linear-gradient(180deg,color-mix(in srgb,var(--tone) 10%,var(--surface)) 0,var(--surface) 140px)}
+.tip[data-tone]>.lbl:first-child,.tip[data-tone] .lbl:first-of-type{color:var(--tone)}
+.drow[style*="--c1"],.hrow[style*="--c1"]{position:relative;padding-left:16px;background:linear-gradient(90deg,color-mix(in srgb,var(--c1) 20%,var(--bg)) 0,color-mix(in srgb,var(--c2) 10%,var(--bg)) 40%,var(--bg) 75%)}
+.drow[style*="--c1"]::before,.hrow[style*="--c1"]::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:4px;border-radius:4px;background:linear-gradient(var(--c1),var(--c2))}
+.hrow[style*="--c1"]{border-radius:10px;padding-top:8px;padding-bottom:8px}
+.cpair{display:inline-flex;margin-right:6px;vertical-align:-4px}.cpair .crest+.crest{margin-left:-6px}
+.pill.dam{background:color-mix(in srgb,#a21caf 14%,var(--surface));color:#a21caf}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill.dam{color:#e879f9}}
+:root[data-theme="dark"] .pill.dam{color:#e879f9}
 </style>
 
 <div class="wrap">
@@ -1027,7 +1037,7 @@ function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36
    ${m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
    <div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(m.awayName)}${favStar(m.away)}</button></div>
    <div class="venue">${esc(m.venue||"Arena ej angiven")} · ${esc(m.city)}, ${esc(m.country)}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>
-   <div class="mp">${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||"Cup")}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?"I orten":milTxt(km)+" bort"}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?"Matchinfo":`${ic("ticket")} Biljetter och info`}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
+   <div class="mp">${isW(C[m.home])?`<span class="pill dam">Dam</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||"Cup")}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?"I orten":milTxt(km)+" bort"}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?"Matchinfo":`${ic("ticket")} Biljetter och info`}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
   </div>`;}
 // ---------- serietabeller ----------
 let tblLeague=null,tblHL=null;try{tblLeague=store.get("fk-tbl")||null;}catch(e){}
@@ -1103,7 +1113,11 @@ function goalsHtml(m){const E=XD.events&&XD.events.m&&XD.events.m[evKey(m)];if(!
 
 
 // ---------- matchsida: biljetter, resa och arena för en match ----------
-const mrowAttr=m=>m&&m._id?` data-mrow="${esc(m._id)}"`:"";
+// lagets färg för toning: huvudfärgen, eller andrafärgen om huvudfärgen är nästan vit
+function teamTone(id){const c=COLORS[id];if(!c||!c[0])return null;const lum=h=>{const x=parseInt(String(h).slice(1),16);if(isNaN(x))return 0;return(((x>>16)&255)*.299+((x>>8)&255)*.587+(x&255)*.114)/255;};return lum(c[0])>.86&&c[1]&&lum(c[1])<=.86?c[1]:lum(c[0])>.86?null:c[0];}
+const mrowAttr=m=>{if(!m||!m._id)return"";const a=teamTone(m.home),b=teamTone(m.away);return` data-mrow="${esc(m._id)}"${a||b?` style="--c1:${esc(a||b)};--c2:${esc(b||a)}"`:""}`;};
+const wPill=m=>isW(C[m.home])?` <span class="pill dam">Dam</span>`:"";
+const crestPair=m=>`<span class="cpair">${crest(m.home,m.homeName,20)}${crest(m.away,m.awayName,20)}</span>`;
 const tixMini=(m,cls)=>m&&m._id&&!(m.kickoff&&Date.parse(m.kickoff)<Date.now()-2*36e5)?`<button class="${cls||"mini"} mopen" data-mopen="${esc(m._id)}">${ic("ticket")} Biljetter</button>`:"";
 function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();const past=!!m.score||(m.kickoff&&Date.parse(m.kickoff)<now-2*36e5);
   const when=m.kickoff?`${dayLong(dayKey(new Date(m.kickoff))).replace(/^./,x=>x.toUpperCase())} · ${timeOf(m.kickoff)}${localTimeTxt(m)?` (${localTimeTxt(m)})`:""}`:`${esc(rangeTxt(m))} · ${m.dateFrom&&m.dateFrom===m.dateTo?"tiden är inte klar":"dagen är inte klar"}`;
@@ -2623,7 +2637,7 @@ function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==
     <div class="cd">${esc(dayLabel(dayKey(new Date(m.kickoff))))} kl ${timeOf(m.kickoff)} · <b>${countdown(m.kickoff)}</b></div>
     <div class="venue">${esc([m.venue,m.city].filter(Boolean).join(" · "))}</div><p>${why}</p>
     <div class="actions">${tixMini(m,"btn small primary")}${hypeBtn(m)}${myBtns(m).replace(/class="mini"/g,'class="btn small"')}${hotelLink(m)}</div>
-    ${more.length?`<div class="hmore"><div class="lbl">Fler heta matcher</div>${more.map(x=>`<div class="hrow mrow"${mrowAttr(x)}><span class="num">${esc(dayLabel(dayKey(new Date(x.kickoff))))} ${timeOf(x.kickoff)}</span><span>${esc(x.homeName)} – ${esc(x.awayName)}${derbyOf(x)?` <span class="pill ec">Derby</span>`:""}</span>${hypeBtn(x)}</div>`).join("")}</div>`:""}</article>`;}
+    ${more.length?`<div class="hmore"><div class="lbl">Fler heta matcher</div>${more.map(x=>`<div class="hrow mrow"${mrowAttr(x)}><span class="num">${esc(dayLabel(dayKey(new Date(x.kickoff))))} ${timeOf(x.kickoff)}</span><span>${esc(x.homeName)} – ${esc(x.awayName)}${derbyOf(x)?` <span class="pill ec">Derby</span>`:""}${wPill(x)}</span>${hypeBtn(x)}</div>`).join("")}</div>`:""}</article>`;}
 function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl=favList();
   const nx=dbState==="ready"&&fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
   return`<article class="tip"><div class="sechead"><h2 class="name">Din säsong ${YEAR}</h2><button class="link strong" data-gomine="1">Min fotboll</button></div>
@@ -2647,7 +2661,9 @@ function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().t
   return`<article class="tip"><div class="lbl">Månadens arena</div><h2 class="name">${esc(x.s)}</h2><p class="meta">${esc(x.city)}, ${esc(x.c)} · ${best[1]} ${best[1]===1?"nytt betyg":"nya betyg"} i ${new Date().toLocaleDateString("sv-SE",{month:"long"})}</p><div class="actions"><button class="btn small" data-open="${esc(x.clubs[0].id)}">Visa arenan</button></div></article>`;}
 function quizLeadHtml(){if(quizState!=="ready")return"";const rows=Object.entries(QSCORES).filter(([,d])=>d&&+d.best>=0).sort((a,b)=>(+b[1].best)-(+a[1].best))[0];if(!rows)return"";
   const[uid,d]=rows;return`<article class="tip"><div class="sechead"><div><div class="lbl">Quizledare</div><h2 class="name">${esc(uid===myId?"Du":(QNAMES[uid]||NAMES[uid]||"Medlem"))} · ${+d.best}/10</h2></div><button class="btn small primary" data-goquiz="1">Utmana</button></div></article>`;}
-function renderHome(){const el=document.getElementById("homeBody");if(!el)return;
+const HOME_TONES=[[/helgen|nära dig/i,"#2563eb"],[/derby/i,"#d7263d"],[/communityn|reportage/i,"#7c3aed"],[/veckans fråga/i,"#0d9488"],[/topplistor/i,"#d97706"],[/groundhopper/i,"#16a34a"],[/nytt i appen/i,"#4f46e5"],[/quiz/i,"#db2777"],[/favorit|mitt landslag/i,"#0891b2"]];
+function toneHome(el){el.querySelectorAll(":scope > article, :scope > .tip").forEach(a=>{if(a.classList.contains("hero"))return;const t=(a.querySelector(".lbl,h2")||{}).textContent||"";const hit=HOME_TONES.find(([re])=>re.test(t));if(hit){a.dataset.tone="1";a.style.setProperty("--tone",hit[1]);}});}
+function renderHome(){const el=document.getElementById("homeBody");if(!el)return;try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
   const ids=Object.keys(STATS).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="hem")renderHome();}).catch(()=>{});
   el.innerHTML=onboardHtml()+heroHtml()+mineSnap()+friendsHtml()+weekendHtml()+derbyHtml()+latestHtml()+pollHtml()+boardHtml()+hopperHtml()+topArenaHtml()+quizLeadHtml()+newsHtml();}
 const isHomeBtn=t=>t.dataset.vote!==undefined||t.dataset.wkr||t.dataset.gomode||(t.dataset.homeedit&&mode==="hem")||t.dataset.board||t.dataset.pub!==undefined||t.dataset.hype||t.dataset.homerep||t.dataset.homethread||t.dataset.gomine||t.dataset.goquiz||t.dataset.gorep;
@@ -2696,7 +2712,7 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   return`${dd} ${dd===1?"dag":"dagar"}`;}
 function derbyHtml(){const list=derbyNext();if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">Nästa derby</div><p class="meta">Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.</p></article>`:"";
   return`<article class="tip"><div class="lbl">Nästa derby i varje land</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc(land)}</span></div>
-    <div class="mmain"><b>${esc(d[1])}</b><span class="meta">${esc(m.homeName)} – ${esc(m.awayName)} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div>${hypeBtn(m)}</div>`).join("")}</div></article>`;}
+    <div class="mmain"><b>${crestPair(m)}${esc(d[1])}</b><span class="meta">${esc(m.homeName)} – ${esc(m.awayName)} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div>${hypeBtn(m)}</div>`).join("")}</div></article>`;}
 // helgens matcher nära hemorten
 function homeLL(){if(!homeTown)return null;const nq=norm(homeTown);const al=CITY_ALIAS[nq];if(al&&GEO[al])return{name:al,ll:GEO[al]};if(GEO_N[nq])return{name:GEO_N[nq][0],ll:GEO_N[nq][1]};
   const ai=geoAi[nq]||loadGeoAi(nq);return ai&&ai.state==="done"?{name:ai.name,ll:ai.ll}:null;}
@@ -2713,7 +2729,7 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?"i da
   return`<article class="tip"><div class="sechead"><div class="lbl">Tips för helgen · nära ${esc(p.name)}</div><button class="link" data-homeedit="1">Byt hemort</button></div><div class="chips" role="group" aria-label="Avstånd">${chips}</div>
     ${!list.length?`<p class="meta">Inga matcher i det inlagda schemat ${label}.</p>`:!near.length?`<p class="meta">Inget inom ${wkRadius} mil ${label}. Närmaste matcherna:</p>`:""}
     <div class="dlist">${show.map(({m,km})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${km<5?"i stan":esc(milTxt(km))}</b><span>${m.kickoff?esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])+" "+timeOf(m.kickoff):"datum ej klart"}</span></div>
-      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div></article>`;}
+      <div class="mmain"><b>${crestPair(m)}${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div></article>`;}
 // veckans fråga
 const POLLS=[
  ["Bästa ståplatsläktaren?",["Gula väggen, Dortmund","Millerntor, St. Pauli","Ostseestadion, Rostock","Celtic Park, Glasgow","Någon i Sverige"]],
