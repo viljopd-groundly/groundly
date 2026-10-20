@@ -166,6 +166,9 @@ function installAccountUi({ A, auth, getUser, ensureProfile, profileName }) {
   .topbar{grid-template-columns:auto 1fr auto auto}
   .gacc{position:relative}
   .gacc-btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:18px;font:600 13px var(--f-body,system-ui);background:var(--soft,#eee);color:var(--fg,#111)}
+  .gacc-btn{white-space:nowrap}
+  .gacc-btn svg{flex:none}
+  @media (max-width:480px){.topbar .tbtitle{display:none}.gacc-btn .gl{display:none}.gacc-btn[data-glogin]{width:36px;padding:0;justify-content:center}}
   .gacc-btn .dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--accent,#1d6b3b);color:#fff;font-size:12px}
   .gdlg{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(0,0,0,.45);padding:16px}
   .gdlg[hidden]{display:none}
@@ -268,7 +271,7 @@ function installAccountUi({ A, auth, getUser, ensureProfile, profileName }) {
   const btn = document.createElement("div"); btn.className = "gacc";
   const u = getUser();
   btn.innerHTML = u ? `<button class="gacc-btn" data-gacct aria-label="Ditt konto"><span class="dot">${esc(((u.displayName || u.email || "?")[0] || "?").toUpperCase())}</span></button>`
-    : `<button class="gacc-btn" data-glogin>Logga in</button>`;
+    : `<button class="gacc-btn" data-glogin aria-label="Logga in" title="Logga in"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="gl">Logga in</span></button>`;
   const place = () => { const tb = document.querySelector(".topbar"); const th = document.getElementById("themeBtn"); if (tb && th) tb.insertBefore(btn, th); else if (tb) tb.appendChild(btn); else document.body.prepend(btn); };
   place();
 

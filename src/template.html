@@ -567,7 +567,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <input id="q" type="search" placeholder="Sök klubb, stad eller land" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="qClear" hidden>Rensa</button>
     </label>
-    <div class="chips" role="group" aria-label="Land" id="countryChips"></div>
+    <div class="chips wrapchips" role="group" aria-label="Land" id="countryChips"></div>
     <div class="chips" role="group" aria-label="Serie" id="leagueChips" hidden></div>
     <div class="toolbar"><div class="count" id="clubCount"></div></div>
     <div class="list" id="clubList"></div>
@@ -593,11 +593,11 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <input id="aq" type="search" placeholder="Sök arena, stad eller klubb" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="aqClear" hidden>Rensa</button>
     </label>
-    <div class="chips" role="group" aria-label="Land" id="aCountryChips"></div>
+    <div class="chips wrapchips" role="group" aria-label="Land" id="aCountryChips"></div>
     <div class="lbl">Sortera</div>
-    <div class="chips" role="group" aria-label="Sortera" id="aSortChips"></div>
+    <div class="chips wrapchips" role="group" aria-label="Sortera" id="aSortChips"></div>
     <div class="lbl">Visa bara</div>
-    <div class="chips" role="group" aria-label="Filter" id="aFiltChips"></div>
+    <div class="chips wrapchips" role="group" aria-label="Filter" id="aFiltChips"></div>
     <div class="toolbar"><div class="count" id="arenaCount"></div></div>
     <div class="list" id="arenaList"></div>
   </section>
@@ -636,7 +636,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 
   <!-- Tabeller -->
   <section id="v-tabell" hidden style="display:contents">
-    <div class="chips" role="group" aria-label="Land" id="tblCountries"></div>
+    <div class="chips wrapchips" role="group" aria-label="Land" id="tblCountries"></div>
     <div class="chips" role="group" aria-label="Serie" id="tblLeagues"></div>
     <div id="tblBox"></div>
   </section>
