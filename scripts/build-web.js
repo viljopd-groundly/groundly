@@ -75,6 +75,18 @@ const head = `<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Groundly – planera och logga dina fotbollsresor. Matcher, arenor, serietabeller, forum och reportage.">
 <meta name="theme-color" content="#1d6b3b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Groundly">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:title" content="Groundly – planera och logga dina fotbollsresor">
+<meta property="og:description" content="Matcher, arenor, serietabeller, forum och reportage – för dig som åker på fotboll.">
+<meta property="og:url" content="https://viljopd-groundly.github.io/groundly/">
+<meta property="og:image" content="https://viljopd-groundly.github.io/groundly/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Groundly – planera och logga dina fotbollsresor">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://viljopd-groundly.github.io/groundly/">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
