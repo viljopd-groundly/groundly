@@ -563,6 +563,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 /* rita bara kort som syns på skärmen (snabbare långa listor) */
 #tipsList>.tip,#arenaList>.tip,#clubList>.card,#repList>.rep{content-visibility:auto;contain-intrinsic-size:auto 280px}
 .link.more{align-self:flex-start;margin-top:2px;font-weight:600;color:var(--accent)}
+.scorein{display:flex;align-items:center;gap:8px}.scorein .scnum{width:3.2em;text-align:center;font-size:18px;font-weight:700}.scdash{font-weight:700;color:var(--muted)}
 </style>
 
 <div class="wrap">
@@ -757,6 +758,15 @@ const seasTxt=n=>`${n} ${n===1?"säsong":"säsonger"}`;
 function seasonRows(c){const x=SEASONS[c.id];if(!x)return"";return`<dt>Högsta ligan</dt><dd>${x.top?`<span class="num">${seasTxt(x.top)}</span> i ${esc(x.topL)}`:`Aldrig spelat i ${esc(x.topL)}`}</dd><dt>Näst högsta</dt><dd>${x.sec?`<span class="num">${seasTxt(x.sec)}</span> i ${esc(x.secL)}`:`Ingen säsong i ${esc(x.secL)}`} <span class="meta">(${esc(x.secNote)})</span></dd>`;}
 Object.keys(COLORS).filter(k=>k.startsWith("nt-")).forEach(k=>{COLORS["u21-"+k.slice(3)]=COLORS[k];});
 const isNat=c=>!!c&&(c.l==="Landslag"||c.l==="U21-landslag");
+// resultat som två sifferrutor (hemma – borta); värdet samlas i ett dolt fält med samma id som förut
+function scoreFields(id,val,req){const m=/(\d{1,2})\s*[-–—:]\s*(\d{1,2})/.exec(val||"");const q=req?" required":"";
+  const f=(suf,lab,v)=>`<input id="${id}${suf}" class="scnum" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" aria-label="${lab}" data-scorefor="${id}" value="${v}"${q}>`;
+  return`<span class="scorein">${f("H","Hemmalagets mål",m?m[1]:"")}<span class="scdash">–</span>${f("A","Bortalagets mål",m?m[2]:"")}</span><input type="hidden" id="${id}" value="${m?m[1]+"–"+m[2]:""}">`;}
+document.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.scorefor)return;const id=t.dataset.scorefor;
+  const clean=t.value.replace(/\D/g,"").slice(0,2);if(clean!==t.value)t.value=clean;
+  const h=document.getElementById(id+"H"),a=document.getElementById(id+"A"),out=document.getElementById(id);
+  if(out)out.value=h&&a&&h.value!==""&&a.value!==""?`${+h.value}–${+a.value}`:"";
+  if(t===h&&clean.length>=1&&a&&a.value==="")a.focus();});
 // damfotboll: klubbar i damserierna har egna klubbkort; filtret Alla/Herr/Dam gäller klubbar, matcher och tabeller
 const WLEAGUES=new Set(/*WLEAGUES*/[]);const isW=c=>!!c&&WLEAGUES.has(c.l);
 let gender="alla";try{const g=localStorage.getItem("fk-gender");if(g==="herr"||g==="dam")gender=g;}catch(e){}
@@ -1452,7 +1462,7 @@ function renderMine(){
       <div class="row2"><label class="fld" for="amHome">Hemmalag<input id="amHome" list="allClubs" required maxlength="80" placeholder="t.ex. Jönköpings Södra IF"></label>
       <label class="fld" for="amAway">Bortalag<input id="amAway" list="allClubs" required maxlength="80" placeholder="t.ex. Trelleborgs FF"></label></div>
       <div class="row2"><label class="fld" for="amDate">Datum<input id="amDate" type="date" required max="${today()}" value="${today()}"></label>
-      <label class="fld" for="amScore">Resultat (hemma–borta)<input id="amScore" required maxlength="12" inputmode="numeric" placeholder="2–1"></label></div>
+      <label class="fld" for="amScoreH">Resultat (hemma–borta)${scoreFields("amScore","",true)}</label></div>
       <fieldset class="matchfs"><legend>Arena och serie</legend>
       <label class="fld" for="amVenue">Arena<input id="amVenue" list="allVenues" maxlength="80" placeholder="t.ex. Vapenvallen eller Bergshamra IP"></label>
       <div class="row2"><label class="fld" for="amCity">Ort<input id="amCity" maxlength="60" placeholder="t.ex. Huskvarna"></label>
@@ -1535,7 +1545,7 @@ const isMyBtn=t=>t.dataset.stcountry!==undefined||t.dataset.stleague!==undefined
 document.addEventListener("submit",e=>{
   if(e.target.id==="addMatchForm"){e.preventDefault();const g=id=>document.getElementById(id).value.trim();
     const hn=g("amHome"),an=g("amAway"),date=g("amDate");if(!hn||!an||!date){myErr="Fyll i hemmalag, bortalag och datum.";renderMine();return;}
-    const scm=g("amScore").match(/^(\d{1,2})\s*[-–—:]\s*(\d{1,2})$/);if(!scm){myErr="Fyll i resultatet, till exempel 2–1.";toast(myErr);document.getElementById("amScore").focus();return;}const amSc=`${+scm[1]}–${+scm[2]}`;
+    const scm=(document.getElementById("amScore").value||"").match(/^(\d{1,2})\s*[-–—:]\s*(\d{1,2})$/);if(!scm){myErr="Fyll i resultatet, till exempel 2–1.";toast(myErr);document.getElementById("amScoreH").focus();return;}const amSc=`${+scm[1]}–${+scm[2]}`;
     const hid=clubIdFromName(hn),aid=clubIdFromName(an);const hc=hid&&C[hid];
     const nid=newId();shareMatchId=nid;mutate(d=>{d.attended.push({id:nid,mid:null,home:hid,away:aid,homeName:hc?hc.n:hn.slice(0,80),awayName:aid?C[aid].n:an.slice(0,80),date,score:amSc,note:g("amNote").slice(0,500),venue:g("amVenue").slice(0,80)||(hc?hc.s:null),city:g("amCity").slice(0,60)||(hc?hc.city:null),country:g("amCountry").slice(0,40)||(hc?hc.c:null),comp:g("amComp").slice(0,60)||null});});
     addingMatch=false;renderMine();{const dd=derbyOfAtt({home:hid,away:aid});if(dd)toast(`Derby loggat: ${dd[1]}`,"flame");}return;}
@@ -2101,14 +2111,14 @@ function smartClick(t){
 function askScore(attId){const a=MY.attended.find(x=>x.id===attId);if(!a)return;let ov=document.getElementById("scoreAsk");if(ov)ov.remove();
   document.body.insertAdjacentHTML("beforeend",`<div id="scoreAsk" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="saT"><form class="compose askbox" id="scoreAskForm">
     <h2 id="saT">Vilket blev resultatet?</h2><p class="meta">${esc(a.homeName)} – ${esc(a.awayName)} · ${esc(fmtDate(a.date))}</p>
-    <label class="fld" for="saIn">Resultat (hemma–borta)<input id="saIn" required maxlength="7" inputmode="numeric" placeholder="2–1" autocomplete="off"></label>
+    <label class="fld" for="saInH">Resultat (hemma–borta)${scoreFields("saIn","",true)}</label>
     <p class="err" id="saErr"></p>
     <div class="actions"><button class="btn primary" type="submit">Spara matchen</button><button class="btn" type="button" id="saCancel">Ångra</button></div></form></div>`);
-  ov=document.getElementById("scoreAsk");const inp=document.getElementById("saIn");setTimeout(()=>inp.focus(),30);
+  ov=document.getElementById("scoreAsk");const inp=document.getElementById("saIn");setTimeout(()=>document.getElementById("saInH").focus(),30);
   const close=()=>ov.remove();
   document.getElementById("saCancel").onclick=()=>{close();mutate(d=>{d.attended=d.attended.filter(x=>x.id!==attId);});toast("Matchen sparades inte.");};
   document.getElementById("scoreAskForm").onsubmit=e=>{e.preventDefault();const m=inp.value.trim().match(/^(\d{1,2})\s*[-–—:]\s*(\d{1,2})$/);
-    if(!m){document.getElementById("saErr").textContent="Skriv resultatet som till exempel 2–1.";inp.focus();return;}
+    if(!m){document.getElementById("saErr").textContent="Fyll i båda lagens mål.";document.getElementById("saInH").focus();return;}
     close();mutate(d=>{const x=d.attended.find(y=>y.id===attId);if(x)x.score=`${+m[1]}–${+m[2]}`;});toast("Matchen är sparad med resultat.");};}
 
 // ---------- lag jag sett ----------
@@ -2405,7 +2415,7 @@ document.addEventListener("submit",e=>{if(e.target.id!=="qCodeForm")return;e.pre
 let editAtt=null;
 function editAttForm(a){return`<form class="compose" id="editAttForm" data-att="${esc(a.id)}"><h2>Redigera matchen</h2>
   <div class="row2"><label class="fld" for="eaDate">Datum<input id="eaDate" type="date" required max="${today()}" value="${esc(a.date)}"></label>
-  <label class="fld" for="eaScore">Resultat (hemma–borta)<input id="eaScore" maxlength="12" placeholder="2–1" value="${esc(a.score||"")}"></label></div>
+  <label class="fld" for="eaScoreH">Resultat (hemma–borta)${scoreFields("eaScore",a.score||"",false)}</label></div>
       <fieldset class="matchfs"><legend>Arena och serie</legend>
       <label class="fld" for="eaVenue">Arena<input id="eaVenue" list="allVenues" maxlength="80" placeholder="t.ex. Vapenvallen eller Bergshamra IP" value="${esc(a.venue||"")}"></label>
       <div class="row2"><label class="fld" for="eaCity">Ort<input id="eaCity" maxlength="60" placeholder="t.ex. Huskvarna" value="${esc(a.city||"")}"></label>
