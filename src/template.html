@@ -796,14 +796,18 @@ function mergeFixtures(list){const fx=fixtureMatches();const by=new Map(fx.map(m
 const ai={}; // q-norm -> {state, data}
 
 // ---------- dates ----------
-const dayKey=d=>d.toLocaleDateString("sv-SE");
+// snabba datumhjälpare (toLocale… skapar en ny formaterare vid varje anrop och var flaskhalsen)
+const p2=n=>(n<10?"0":"")+n;
+const dayKey=d=>d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate());
+const _dk=new Map();const koDay=iso=>{let v=_dk.get(iso);if(v===undefined){v=dayKey(new Date(iso));_dk.set(iso,v);}return v;};
 const today=()=>dayKey(new Date());
 function nextDays(n){const out=[];const d=new Date();d.setHours(12,0,0,0);for(let i=0;i<n;i++){out.push(new Date(d));d.setDate(d.getDate()+1);}return out;}
 const WD=["sön","mån","tis","ons","tor","fre","lör"];
 function dayLabel(k){const d=new Date(k+"T12:00:00");const t=today();const tm=dayKey(new Date(Date.now()+864e5));
   const base=`${WD[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`;return k===t?"Idag":k===tm?"Imorgon":base;}
-function dayLong(k){const d=new Date(k+"T12:00:00");return d.toLocaleDateString("sv-SE",{weekday:"long",day:"numeric",month:"long"});}
-const timeOf=iso=>new Date(iso).toLocaleTimeString("sv-SE",{hour:"2-digit",minute:"2-digit"});
+const _dl=new Map(),_dlF=new Intl.DateTimeFormat("sv-SE",{weekday:"long",day:"numeric",month:"long"});
+function dayLong(k){let v=_dl.get(k);if(v===undefined){v=_dlF.format(new Date(k+"T12:00:00"));_dl.set(k,v);}return v;}
+const _tm=new Map();const timeOf=iso=>{let v=_tm.get(iso);if(v===undefined){const d=new Date(iso);v=p2(d.getHours())+":"+p2(d.getMinutes());_tm.set(iso,v);}return v;};
 
 // ---------- undertitel efter telefonens språk ----------
 const TAGLINES={sv:"Planera & logga dina fotbollsresor",en:"Plan & log your football trips",nb:"Planlegg & logg fotballturer",no:"Planlegg & logg fotballturer",nn:"Planlegg & logg fotballturer",da:"Planlæg & log fodboldture",fi:"Suunnittele & tallenna futisreissut",de:"Fußballreisen planen & loggen",nl:"Plan & log je voetbaltrips",fr:"Planifie & note tes virées foot",es:"Planea y guarda viajes de fútbol",it:"Pianifica & registra trasferte",pt:"Planeia & regista viagens de futebol",pl:"Planuj i zapisuj wyjazdy na mecze"};
@@ -984,7 +988,7 @@ async function locateWithClaude(){const nq=norm(cityQ);if(!sampleFn||!nq)return;
     else{geoAi[nq]={state:"done",name:String(d.name||cityQ),ll:[lat,lon]};store.set("fk-geo-"+nq,JSON.stringify({name:geoAi[nq].name,ll:geoAi[nq].ll}));}
   }catch(e){geoAi[nq]={state:"err",msg:e&&e.code==="rate_limited"?"För många frågor just nu. Försök igen om en stund.":e&&(e.code==="not_granted"||e.code==="sampling_disabled")?"Claude får inte användas här.":"Kunde inte hitta orten. Försök igen."};}
   renderMatches();}
-function inDates(m){return m.kickoff?(()=>{const k=dayKey(new Date(m.kickoff));return k>=dFrom&&k<=dTo;})():(m.dateFrom<=dTo&&m.dateTo>=dFrom);}
+function inDates(m){if(m.kickoff){const k=koDay(m.kickoff);return k>=dFrom&&k<=dTo;}return m.dateFrom<=dTo&&m.dateTo>=dFrom;}
 // returnerar null om matchen inte är med, annars avstånd i km (eller -1 när avstånd inte används)
 function placeDist(m,place){const nq=norm(cityQ);if(!nq)return -1;
   if(radius===0){const target=CITY_ALIAS[nq]?norm(CITY_ALIAS[nq]):nq;return(norm(m.city).includes(target)||norm(m.venue).includes(nq))?-1:null;}
@@ -1230,8 +1234,8 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElement
 // ---------- tips ----------
 const TIPS=/*TIPS*/{derbies:[],cult:[]};
 let tipsTab="derby";try{const tt=store.get("fk-tips");if(tt==="cult"||tt==="top"||tt==="arenas")tipsTab=tt;}catch(e){}
-function nextMeeting(ids){const set=new Set(ids);const now=Date.now()-2*36e5;
-  return MATCHES.filter(m=>set.has(m.home)&&set.has(m.away)&&(m.kickoff?Date.parse(m.kickoff)>now:m.dateTo>=today())).sort(sortM)[0]||null;}
+function nextMeeting(ids){const set=new Set(ids);const I=upIndex();const out=[];
+  set.forEach(h=>{(I.allHome.get(h)||[]).forEach(m=>{if(set.has(m.away))out.push(m);});});return out.sort(sortM)[0]||null;}
 const teamBtn=id=>C[id]?`<button data-open="${esc(id)}">${esc(C[id].n)}</button>`:"";
 function renderTips(){
   document.getElementById("tipsChips").innerHTML=[["derby",`Heta derbyn<small>${TIPS.derbies.length}</small>`],["cult",`Kultklubbar<small>${TIPS.cult.length}</small>`],["arenas",`Speciella arenor<small>${(TIPS.arenas||[]).length}</small>`],["top","Bäst betyg"]]
@@ -1824,8 +1828,10 @@ const TZ_COUNTRY={"Albanien":"Europe/Tirane","Armenien":"Asia/Yerevan","Belarus"
 const TZ_CITY={"Saint Paul":"America/Chicago","St. Louis":"America/Chicago","Austin":"America/Chicago","Houston":"America/Chicago","Dallas":"America/Chicago","Kansas City":"America/Chicago","Chicago":"America/Chicago","Salt Lake City":"America/Denver","Los Angeles":"America/Los_Angeles","Seattle":"America/Los_Angeles","Vancouver":"America/Vancouver"};
 const tzOf=m=>TZ_CITY[m.city]||TZ_COUNTRY[m.country]||null;
 const VIEWER_TZ=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone}catch(e){return null}})();
-function localParts(m){const tz=tzOf(m);if(!tz||!m.kickoff)return null;try{const d=new Date(m.kickoff);
-  return{date:new Intl.DateTimeFormat("sv-SE",{timeZone:tz,year:"numeric",month:"2-digit",day:"2-digit"}).format(d),time:new Intl.DateTimeFormat("sv-SE",{timeZone:tz,hour:"2-digit",minute:"2-digit"}).format(d),tz};}catch(e){return null;}}
+const _fmt=new Map(),_lp=new Map();
+const fmtFor=(tz,kind)=>{const k=tz+"|"+kind;let f=_fmt.get(k);if(!f){f=new Intl.DateTimeFormat("sv-SE",kind==="d"?{timeZone:tz,year:"numeric",month:"2-digit",day:"2-digit"}:{timeZone:tz,hour:"2-digit",minute:"2-digit"});_fmt.set(k,f);}return f;};
+function localParts(m){const tz=tzOf(m);if(!tz||!m.kickoff)return null;const key=m.kickoff+"|"+tz;if(_lp.has(key))return _lp.get(key);let r=null;
+  try{const d=new Date(m.kickoff);r={date:fmtFor(tz,"d").format(d),time:fmtFor(tz,"t").format(d),tz};}catch(e){r=null;}_lp.set(key,r);return r;}
 const localTimeTxt=m=>{const lp=localParts(m);if(!lp)return"";const own=timeOf(m.kickoff);return lp.time!==own?`lokal tid ${lp.time}`:"";};
 const matchDate=m=>{if(!m.kickoff)return m.dateFrom||null;const lp=localParts(m);if(lp)return lp.date;const ll=GEO[m.city];return new Date(Date.parse(m.kickoff)+(ll?ll[1]/15*36e5:0)).toISOString().slice(0,10);};
 const gcalStamp=d=>d.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
@@ -2424,12 +2430,12 @@ function arenas(){if(ARENAS)return ARENAS;const map=new Map();
   Object.values(C).forEach(c=>{if(!c.s)return;const k=arenaKey(c.s);if(!map.has(k))map.set(k,{k,s:c.s,city:c.city,c:c.c,cap:c.cap||null,clubs:[]});const x=map.get(k);x.clubs.push(c);if(c.cap&&(!x.cap||c.cap>x.cap))x.cap=c.cap;});
   ARENAS=[...map.values()];ARENAS.forEach(x=>{x.hay=norm([x.s,x.city,x.c,...x.clubs.map(c=>c.n+" "+(c.a||""))].join(" "));});return ARENAS;}
 // kommande matcher per arena: index som byggs en gång per matchschema (i stället för att gå igenom alla matcher för varje arena)
-let UPIDX=null;
+var UPIDX=null;
 function upIndex(){const now=Date.now()-2*36e5;const day=today();
   if(UPIDX&&UPIDX.m===MATCHES&&UPIDX.day===day&&now-UPIDX.at<36e5)return UPIDX;
-  const byKey=new Map(),byHome=new Map();const push=(mp,k,m)=>{let a=mp.get(k);if(!a)mp.set(k,a=[]);a.push(m);};
-  for(const m of MATCHES){if(!(m.kickoff?Date.parse(m.kickoff)>now:m.dateTo>=day))continue;if(m.venue)push(byKey,arenaKey(m.venue),m);else push(byHome,m.home,m);}
-  return UPIDX={m:MATCHES,day,at:Date.now(),byKey,byHome};}
+  const byKey=new Map(),byHome=new Map(),allHome=new Map();const push=(mp,k,m)=>{let a=mp.get(k);if(!a)mp.set(k,a=[]);a.push(m);};
+  for(const m of MATCHES){if(!(m.kickoff?Date.parse(m.kickoff)>now:m.dateTo>=day))continue;push(allHome,m.home,m);if(m.venue)push(byKey,arenaKey(m.venue),m);else push(byHome,m.home,m);}
+  return UPIDX={m:MATCHES,day,at:Date.now(),byKey,byHome,allHome};}
 function arenaUpcoming(x){if(dbState!=="ready")return[];const I=upIndex();const out=[...(I.byKey.get(x.k)||[])];x.clubs.forEach(c=>{const h=I.byHome.get(c.id);if(h)out.push(...h);});return out.sort(sortM);}
 const arenaVisited=x=>myState==="ready"&&visitedStadiums().has(x.s);
 const arenaHasAcc=a=>ACC.some(([k])=>a.acc[k].y||a.acc[k].n);
