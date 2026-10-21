@@ -22,8 +22,9 @@ service cloud.firestore {
                                'tipnotes','fixes','public','cheers','comments','legends','legvotes'] && (isSelf(uid) || isAdmin());
     }
     match /profiles/{uid} {
-      allow write: if isSelf(uid) && request.resource.data.name is string
+      allow create, update: if isSelf(uid) && request.resource.data.name is string
                    && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 40;
+      allow delete: if isSelf(uid);
     }
     match /feedback/{uid} {
       allow read, write: if isSelf(uid) || isAdmin();

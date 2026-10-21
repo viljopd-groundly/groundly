@@ -170,7 +170,7 @@ async function boot() {
   }
 
   // ---------- konto-UI ----------
-  installAccountUi({ A, auth, getUser: () => user, ensureProfile, isAdmin, profileName: async () => user ? (await userNs.profiles([user.uid]))[user.uid].name : "" });
+  installAccountUi({ A, F, fs, auth, getUser: () => user, ensureProfile, isAdmin, profileName: async () => user ? (await userNs.profiles([user.uid]))[user.uid].name : "" });
 
   const caps = { db, user: userNs, assets, downloads, sample };
   done({ use: async n => (n in caps ? caps[n] : null) });
@@ -178,7 +178,7 @@ async function boot() {
 
 // ================= inloggning =================
 const SHIELD = `<svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5z" fill="currentColor"/></svg>`;
-function installAccountUi({ A, auth, getUser, ensureProfile, profileName, isAdmin }) {
+function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName, isAdmin }) {
   const css = `
   .topbar{grid-template-columns:auto 1fr auto auto}
   .gacc{position:relative;justify-self:end}
@@ -204,7 +204,9 @@ function installAccountUi({ A, auth, getUser, ensureProfile, profileName, isAdmi
   .gdlg-card .msg{min-height:1.2em;margin-top:10px;font-size:14px}
   .gdlg-card .msg.err{color:#b3261e}
   .gdlg-card .link{all:unset;cursor:pointer;color:var(--accent,#1d6b3b);font-weight:600;font-size:14px}
-  .gdlg-card .x{float:right}`;
+  .gdlg-card .x{float:right}
+  .gdlg-card .gdel{margin-top:18px;padding-top:12px;border-top:1px solid var(--line,#ddd)}.gdlg-card .gdel .link{color:#b3261e}
+  .gdlg-card .btn.danger{background:#b3261e;border-color:#b3261e;color:#fff}.gdlg-card .btn.danger:disabled{opacity:.45}`;
   document.head.insertAdjacentHTML("beforeend", `<style>${css}</style>`);
   const dlg = document.createElement("div"); dlg.className = "gdlg"; dlg.hidden = true; dlg.setAttribute("role", "dialog"); dlg.setAttribute("aria-modal", "true");
   document.body.appendChild(dlg);
@@ -278,14 +280,52 @@ function installAccountUi({ A, auth, getUser, ensureProfile, profileName, isAdmi
       <form data-gname><label for="gNm">Visningsnamn (syns i forum och topplistor)</label><input id="gNm" maxlength="40" value="${esc(name)}" required>
       <div class="row"><button class="btn" type="submit">Spara namn</button></div></form>
       <div class="msg" aria-live="polite"></div>
-      <div class="row"><button class="btn" data-gout>Logga ut</button></div></div>`;
+      <div class="row"><button class="btn" data-gout>Logga ut</button></div>
+      <div class="gdel"><button class="link" data-gdel>Radera mitt konto</button></div></div>`;
     dlg.hidden = false;
     dlg.querySelector("[data-gx]").onclick = close;
     dlg.querySelector("[data-gout]").onclick = () => A.signOut(auth);
+    dlg.querySelector("[data-gdel]").onclick = () => confirmDelete(u);
     dlg.querySelector("[data-gname]").onsubmit = async ev => {
       ev.preventDefault(); const v = dlg.querySelector("#gNm").value.trim(); if (!v) return;
       await ensureProfile(u, v); say("Namnet är sparat. Det syns efter omladdning."); setTimeout(() => location.reload(), 900);
     };
+  }
+
+  // radera kontot: allt användaren sparat eller skrivit, sedan själva kontot
+  const OWN = ["forum", "ratings", "pubs", "quiz", "reports", "likes", "stats", "hype", "votes", "tipnotes", "fixes", "public", "cheers", "comments", "legends", "legvotes", "feedback", "profiles"];
+  function confirmDelete(u) {
+    dlg.innerHTML = `<div class="gdlg-card"><h2>Radera mitt konto?</h2>
+      <p>Det här tar bort ditt konto och allt du har sparat eller skrivit: dina loggade matcher, favoriter, foruminlägg, reportage, kommentarer, legender, betyg och topplisteplatser. <b>Det går inte att ångra.</b></p>
+      <p>Vill du behålla dina matcher, spara först en säkerhetskopia under Min fotboll.</p>
+      <label for="gDelOk">Skriv <b>RADERA</b> för att bekräfta</label><input id="gDelOk" autocomplete="off">
+      <div class="msg" aria-live="polite"></div>
+      <div class="row"><button class="btn" data-gx>Avbryt</button><button class="btn danger" data-gdelgo disabled>Radera kontot</button></div></div>`;
+    const inp = dlg.querySelector("#gDelOk"), go = dlg.querySelector("[data-gdelgo]");
+    dlg.querySelector("[data-gx]").onclick = () => openAccount();
+    inp.oninput = () => { go.disabled = inp.value.trim().toUpperCase() !== "RADERA"; };
+    go.onclick = async () => {
+      go.disabled = true; say("Raderar…");
+      try {
+        // Firebase kräver en färsk inloggning för att ta bort ett konto – be om den först, innan något raderas
+        const cu = auth.currentUser; if (!cu) throw new Error("utloggad");
+        const fresh = Date.now() - Date.parse(cu.metadata.lastSignInTime || 0) < 4 * 60 * 1000;
+        if (!fresh) {
+          const google = (cu.providerData || []).some(p => p.providerId === "google.com");
+          if (google) await A.reauthenticateWithPopup(cu, new A.GoogleAuthProvider());
+          else { const pw = window.prompt("Skriv ditt lösenord för att bekräfta"); if (!pw) { say("Avbrutet.", true); go.disabled = false; return; }
+            await A.reauthenticateWithCredential(cu, A.EmailAuthProvider.credential(cu.email, pw)); }
+        }
+        const uid = cu.uid;
+        for (const c of OWN) { try { await F.deleteDoc(F.doc(fs, c, uid)); } catch (e) {} }
+        try { await F.deleteDoc(F.doc(fs, "users", uid, "data", "logg")); } catch (e) {}
+        await A.deleteUser(cu);
+        try { localStorage.removeItem("fk-pending-logg"); } catch (e) {}
+        say("Ditt konto är raderat.");
+        setTimeout(() => location.reload(), 1200);
+      } catch (e) { say(e && e.code === "auth/popup-closed-by-user" ? "Avbrutet." : "Det gick inte att radera kontot. Logga ut och in igen och försök på nytt.", true); go.disabled = false; }
+    };
+    setTimeout(() => inp.focus(), 30);
   }
 
   // kontoknapp i toppfältet
