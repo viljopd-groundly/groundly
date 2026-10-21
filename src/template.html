@@ -758,8 +758,8 @@ function surfaceRow(c){const x=surfaceOf(c);if(!c.s)return"";
   return`<dt>Underlag</dt><dd>${x?`${esc(SURF_LBL[x.v])}${x.src?"":x.crowd?` <span class="meta">(enligt ${x.crowd} ${x.crowd===1?"besökare":"besökare"})</span>`:x.rule?` <span class="meta">(konstgräs är inte tillåtet i ligan)</span>`:""}`:`<span class="meta">Ingen uppgift än.</span> ${typeof suggestBtn==="function"&&c?suggestBtn(c,"surf","Föreslå underlag"):""}`}</dd>`;}
 const seasTxt=n=>`${n} ${n===1?"säsong":"säsonger"}`;
 function seasonRows(c){const x=SEASONS[c.id];if(!x)return"";return`<dt>Högsta ligan</dt><dd>${x.top?`<span class="num">${seasTxt(x.top)}</span> i ${esc(x.topL)}`:`Aldrig spelat i ${esc(x.topL)}`}</dd><dt>Näst högsta</dt><dd>${x.sec?`<span class="num">${seasTxt(x.sec)}</span> i ${esc(x.secL)}`:`Ingen säsong i ${esc(x.secL)}`} <span class="meta">(${esc(x.secNote)})</span></dd>`;}
-Object.keys(COLORS).filter(k=>k.startsWith("nt-")).forEach(k=>{COLORS["u21-"+k.slice(3)]=COLORS[k];});
-const isNat=c=>!!c&&(c.l==="Landslag"||c.l==="U21-landslag");
+Object.keys(COLORS).filter(k=>k.startsWith("nt-")).forEach(k=>{COLORS["u21-"+k.slice(3)]=COLORS[k];COLORS["w"+k]=COLORS[k];});
+const isNat=c=>!!c&&(c.l==="Landslag"||c.l==="U21-landslag"||c.l==="Damlandslag");
 // resultat som två sifferrutor (hemma – borta); värdet samlas i ett dolt fält med samma id som förut
 function scoreFields(id,val,req){const m=/(\d{1,2})\s*[-–—:]\s*(\d{1,2})/.exec(val||"");const q=req?" required":"";
   const f=(suf,lab,v)=>`<input id="${id}${suf}" class="scnum" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" aria-label="${lab}" data-scorefor="${id}" value="${v}"${q}>`;
@@ -770,7 +770,7 @@ document.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset
   if(out)out.value=h&&a&&h.value!==""&&a.value!==""?`${+h.value}–${+a.value}`:"";
   if(t===h&&clean.length>=1&&a&&a.value==="")a.focus();});
 // damfotboll: klubbar i damserierna har egna klubbkort; filtret Alla/Herr/Dam gäller klubbar, matcher och tabeller
-const WLEAGUES=new Set(/*WLEAGUES*/[]);const isW=c=>!!c&&WLEAGUES.has(c.l);
+const WLEAGUES=new Set([.../*WLEAGUES*/[],"Damlandslag"]);const isW=c=>!!c&&WLEAGUES.has(c.l);
 let gender="alla";try{const g=localStorage.getItem("fk-gender");if(g==="herr"||g==="dam")gender=g;}catch(e){}
 const gOk=c=>gender==="alla"||(gender==="dam")===isW(c);
 let mKind="alla";try{const k=localStorage.getItem("fk-mkind");if(["herr","dam","landslag"].includes(k))mKind=k;}catch(e){}
@@ -779,7 +779,7 @@ const gOkM=m=>mKind==="alla"||mKindOf(m)===mKind;
 function matchKindChips(){const el=document.getElementById("gMatch");if(!el)return;
   el.innerHTML=[["alla","Alla matcher"],["herr","Herr"],["dam","Dam"],["landslag","Landslag"]].map(([k,l])=>`<button class="chip" data-mkind="${k}" aria-pressed="${mKind===k}">${l}</button>`).join("");}
 function genderChips(id){const el=document.getElementById(id);if(!el)return;el.innerHTML=WLEAGUES.size?[["alla","Alla"],["herr","Herr"],["dam","Dam"]].map(([k,l])=>`<button class="chip" data-gender="${k}" aria-pressed="${gender===k}">${l}</button>`).join(""):"";}
-const C={};CLUBS.forEach(r=>{const[id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf]=r;C[id]={id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf:conf||(l==="Landslag"?"UEFA":null)};});
+const C={};CLUBS.forEach(r=>{const[id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf]=r;C[id]={id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf:conf||(l==="Landslag"||l==="Damlandslag"?"UEFA":null)};});
 const CONFS=[["UEFA","Europa"],["CONMEBOL","Sydamerika"],["CONCACAF","Nord- och Centralamerika"],["CAF","Afrika"],["AFC","Asien"],["OFC","Oceanien"]];
 const CONF_L=Object.fromEntries(CONFS);
 const esc=s=>String(s??"").replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
@@ -799,7 +799,7 @@ let MATCHES=[],dbState="loading",META=null;
 let FIXTURES=[],FX_UPDATED=null,DBM=null,dbFailed=false;
 // säsongsdatan ligger i en egen fil som uppdateras varje natt
 function remergeMatches(){setTimeout(()=>{try{(window.requestIdleCallback||(f=>f()))(()=>{try{upIndex();}catch(e){}});}catch(e){}},50);if(DBM===null&&!dbFailed&&!FIXTURES.length)return;MATCHES=mergeFixtures(DBM||[]);dbState=MATCHES.length?"ready":(dbFailed?"none":"empty");render();}
-(window.requestIdleCallback||(f=>setTimeout(f,300)))(()=>fetch("data/flags.json").then(r=>r.ok?r.json():null).then(j=>{if(!j)return;Object.assign(FLAGS,j);Object.keys(j).forEach(k=>{if(k.startsWith("nt-"))FLAGS["u21-"+k.slice(3)]=j[k];});try{render();}catch(e){}}).catch(()=>{}));
+(window.requestIdleCallback||(f=>setTimeout(f,300)))(()=>fetch("data/flags.json").then(r=>r.ok?r.json():null).then(j=>{if(!j)return;Object.assign(FLAGS,j);Object.keys(j).forEach(k=>{if(k.startsWith("nt-")){FLAGS["u21-"+k.slice(3)]=j[k];FLAGS["w"+k]=j[k];}});try{render();}catch(e){}}).catch(()=>{}));
 let mapsP=null;function loadMaps(){return mapsP||(mapsP=fetch("data/maps.json").then(r=>r.json()).then(j=>{for(const k in j)if(MAPS[k]){MAPS[k].path=j[k].path;if(j[k].path2)MAPS[k].path2=j[k].path2;}}).catch(()=>{mapsP=null;}));}
 fetch("data/fixtures.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&Array.isArray(j.rows)){FIXTURES=j.rows;FX_UPDATED=j.updated||null;remergeMatches();}}).catch(()=>{});
 function fixtureMatches(){return FIXTURES.map(([h,a,ko,date,sc,comp,tier])=>{const H=C[h],A=C[a];if(!H||!A)return null;
@@ -921,12 +921,12 @@ function renderCups(toks){const list=CUPS.filter(x=>toks.every(t=>norm([x[1],x[3
     <div class="actions">${extLink(src,"Läs mer","btn small")}</div></article>`).join("")||`<div class="empty"><b>Inget mästerskap matchar.</b></div>`;}
 let ntConf="UEFA";try{const v=store.get("fk-ntconf");if(v==="alla"||["UEFA","CONMEBOL","CONCACAF","CAF","AFC","OFC"].includes(v))ntConf=v;}catch(e){}
 function renderNat(){const nq=norm(ntQ);const toks=nq?nq.split(" "):[];
-  document.getElementById("ntChips").innerHTML=[["a","A-landslag"],["u21","U21"],["cups","Mästerskap"]].map(([k,l])=>`<button class="chip" data-ntview="${k}" aria-pressed="${ntView===k}">${l}</button>`).join("");
+  document.getElementById("ntChips").innerHTML=[["a","A-landslag"],["w","Damlandslag"],["u21","U21"],["cups","Mästerskap"]].map(([k,l])=>`<button class="chip" data-ntview="${k}" aria-pressed="${ntView===k}">${l}</button>`).join("");
   if(ntView==="cups"){renderCups(toks);return;}
-  const lg=ntView==="u21"?"U21-landslag":"Landslag";const sid=ntView==="u21"?"u21-se":"nt-se";
-  const confRow=document.getElementById("ntConfChips");if(confRow){confRow.hidden=ntView!=="a";confRow.innerHTML=ntView==="a"?[["alla","Hela världen"],...CONFS].map(([k,l])=>`<button class="chip" data-ntconf="${k}" aria-pressed="${ntConf===k}">${l} <small>${Object.values(C).filter(c=>c.l==="Landslag"&&(k==="alla"||c.conf===k)).length}</small></button>`).join(""):"";}
-  const list=Object.values(C).filter(c=>c.l===lg&&(ntView!=="a"||ntConf==="alla"||c.conf===ntConf)&&toks.every(t=>clubHay(c).includes(t))).sort((a,b)=>(a.id===sid?-1:b.id===sid?1:0)||a.n.localeCompare(b.n,"sv"));
-  document.getElementById("ntCount").innerHTML=`<b>${list.length}</b> ${ntView==="u21"?"U21-landslag":"landslag"}${ntQ?` för ”${esc(ntQ)}”`:""}`;
+  const lg=ntView==="u21"?"U21-landslag":ntView==="w"?"Damlandslag":"Landslag";const sid=ntView==="u21"?"u21-se":ntView==="w"?"wnt-se":"nt-se";const confOn=ntView==="a"||ntView==="w";
+  const confRow=document.getElementById("ntConfChips");if(confRow){confRow.hidden=!confOn;confRow.innerHTML=confOn?[["alla","Hela världen"],...CONFS].map(([k,l])=>`<button class="chip" data-ntconf="${k}" aria-pressed="${ntConf===k}">${l} <small>${Object.values(C).filter(c=>c.l===lg&&(k==="alla"||c.conf===k)).length}</small></button>`).join(""):"";}
+  const list=Object.values(C).filter(c=>c.l===lg&&(!confOn||ntConf==="alla"||c.conf===ntConf)&&toks.every(t=>clubHay(c).includes(t))).sort((a,b)=>(a.id===sid?-1:b.id===sid?1:0)||a.n.localeCompare(b.n,"sv"));
+  document.getElementById("ntCount").innerHTML=`<b>${list.length}</b> ${ntView==="u21"?"U21-landslag":ntView==="w"?"damlandslag":"landslag"}${ntQ?` för ”${esc(ntQ)}”`:""}`;
   document.getElementById("ntList").innerHTML=list.length?list.map(c=>clubCard(c,false)).join(""):`<div class="empty"><b>Inget landslag matchar.</b></div>`;}
 {const el=document.getElementById("ntq");let t;el.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{ntQ=el.value.trim();document.getElementById("ntqClear").hidden=!ntQ;renderNat();},150);});
  document.getElementById("ntqClear").onclick=()=>{el.value="";ntQ="";document.getElementById("ntqClear").hidden=true;renderNat();el.focus();};}

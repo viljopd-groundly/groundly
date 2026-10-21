@@ -86,6 +86,10 @@ let NATS=[];try{NATS=JSON.parse(fs.readFileSync(path.join(TOOLS,"nationals.json"
 const nn=x=>String(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
 const NATALIAS={"usa":"usa","united states":"usa","korea republic":"south korea","korea dpr":"north korea","czech republic":"czechia","turkiye":"turkey","ivory coast":"cote d ivoire","cape verde islands":"cape verde","china pr":"china","ir iran":"iran","bosnia and herzegovina":"bosnia","congo dr":"dr congo"};
 const natFind=name=>{if(/\sW$|\bU\d\d\b/.test(name||""))return null;let n=nn(name);n=NATALIAS[n]||n;const r=NATS.find(([id,h])=>(nn(h)+" ").startsWith(n+" "))||NATS.find(([id,h])=>(" "+nn(h)+" ").includes(" "+n+" "));return r?r[0]:null;};
+// damlandslag: "Sweden W" -> wnt-se (bara de som finns i appen)
+let NATW=new Set();try{NATW=new Set(JSON.parse(fs.readFileSync(path.join(TOOLS,"nationals_w.json"),"utf8")));}catch(e){}
+const natFindW=name=>{if(!/\sW$/.test(name||"")||/\bU\d\d\b/.test(name))return null;const id=natFind(String(name).replace(/\s+W$/,""));return id&&NATW.has("w"+id)?"w"+id:null;};
+if(NATW.size)API.push(["Damlandskamper","*","World","CUP","int.wfr",/^friendlies women$/,true,"w"],["VM-kval dam","*","World","CUP","wc.wq",/^world cup - women - qualification europe$/,true,"w"],["Nations League dam","*","World","CUP","uefa.wnl",/^uefa nations league - women$/,true,"w"]);
 if(NATS.length)API.push(["Nations League","*","World","CUP","uefa.nl",/^uefa nations league$/,false,true],["VM-kval","*","World","CUP","wc.q",/^world cup - qualification europe$/,false,true],["EM-kval","*","World","CUP","ec.q",/^euro championship - qualification$/,false,true],["Landskamper","*","World","CUP","int.fr",/^friendlies$/,false,true]);
 const apiStat={};const extra={standings:{},players:{},squads:{},events:{}};
 if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();const BASE=(process.env.API_FOOTBALL_BASE||"https://v3.football.api-sports.io").replace(/\/$/,"");
@@ -116,12 +120,12 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
       const L=lg[key];let fx;try{fx=get(`fixtures?league=${L.id}&season=${L.season}&timezone=UTC`);}catch(e){apiStat[lname]=String(e.message).slice(0,120);continue;}
       if(!fx.length){apiStat[lname]=0;continue;}
       for(let i=rows.length-1;i>=0;i--)if(rows[i][5]===lname)rows.splice(i,1);// API ersätter openfootball för samma serie
-      const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const pre=tm&&teamMap[tm.id];const wid=pre||(isW?tid(tm,country):isN?natFind(nm):null);const c=pre||isW||isN?(wid?[wid]:null):findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};const arc=[];let n=0;const have=new Set();
+      const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const pre=tm&&teamMap[tm.id];const wid=pre||(isN==="w"?natFindW(nm):isW?tid(tm,country):isN?natFind(nm):null);const c=pre||isW||isN?(wid?[wid]:null):findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};const arc=[];let n=0;const have=new Set();
       for(const f of fx){const st=f.fixture.status&&f.fixture.status.short;if(["PST","CANC","ABD","AWD","WO"].includes(st))continue;
         const hn=f.teams.home.name,an=f.teams.away.name,iso8=f.fixture.date,date=iso8.slice(0,10);const fin=["FT","AET","PEN"].includes(st);const gh=fin?f.goals.home:null,ga=fin?f.goals.away:null;const tbd=st==="TBD"||/T00:00:00/.test(iso8);
         const pen=f.score&&f.score.penalty&&f.score.penalty.home!=null?`${f.score.penalty.home}-${f.score.penalty.away}`:"";
         arc.push([T(hn,f.teams.home),T(an,f.teams.away),date,tbd?"":iso8.slice(11,16),gh,ga,pen,tier==="CUP"?(f.league.round||""):""]);
-        const H=isN?natFind(hn):tid(f.teams.home,country),A=isN?natFind(an):tid(f.teams.away,country);if(isN&&(!H||!A))continue;if(!H){unmatched[hn]=(unmatched[hn]||0)+1;}if(!A){unmatched[an]=(unmatched[an]||0)+1;}if(!H||!A)continue;
+        const NF=isN==="w"?natFindW:natFind;const H=isN?NF(hn):tid(f.teams.home,country),A=isN?NF(an):tid(f.teams.away,country);if(isN&&(!H||!A))continue;if(!H){unmatched[hn]=(unmatched[hn]||0)+1;}if(!A){unmatched[an]=(unmatched[an]||0)+1;}if(!H||!A)continue;
         const k=H+"|"+A+"|"+date;if(have.has(k))continue;have.add(k);
         rows.push([H,A,tbd?null:new Date(iso8).toISOString(),date,fin?`${gh}–${ga}`:"",lname,String(tier)]);n++;
         if(fin)finished.push({id:f.fixture.id,key:k,date,home:f.teams.home.id});}
