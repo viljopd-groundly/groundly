@@ -99,8 +99,11 @@ async function boot() {
           const need = LAZY[name];
           if (!need || need.includes(window.__gmode)) return sub();
           let off = null, dead = false;
-          const h = ev => { if (!off && !dead && need.includes(ev.detail)) { off = sub(); window.removeEventListener("gmode", h); } };
+          const go = () => { if (!off && !dead) { off = sub(); window.removeEventListener("gmode", h); } };
+          const h = ev => { if (need.includes(ev.detail)) go(); };
           window.addEventListener("gmode", h);
+          // hämtas ändå i bakgrunden en stund efter start, så att vyn är klar när man öppnar den
+          setTimeout(() => (window.requestIdleCallback || (f => f()))(go), 6000);
           return () => { dead = true; window.removeEventListener("gmode", h); if (off) off(); };
         }
       };
