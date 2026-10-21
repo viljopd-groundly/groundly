@@ -1801,12 +1801,16 @@ function featClick(t){
     mutate(d=>{d.wishMatches=all?d.wishMatches.filter(w=>!ms.some(m=>m._id===w.id)):[...d.wishMatches,...ms.filter(m=>!isWishM(m._id)).map(slim)];});return;}
   if(t.dataset.rate){const id=t.dataset.rate;const c=C[id];if(!c)return;const mine=myRating(c);rateDraft=mine?JSON.parse(JSON.stringify({...mine,acc:mine.acc||{},tr:mine.tr||{},tk:mine.tk||{}})):{acc:{},tr:{},tk:{}};rateOpen=id;rateMsg="";rateDelConfirm=false;
     openClubCard(id);if(mode!=="klubbar"){setMode("klubbar");window.scrollTo({top:0});}else renderClubs();return;}
-  if(t.dataset.rstar){const[k,n]=t.dataset.rstar.split(":");rateDraft[k]=rateDraft[k]===+n?null:+n;renderClubs();return;}
-  if(t.dataset.racc){const[k,v]=t.dataset.racc.split(":");if(v)rateDraft.acc[k]=v;else delete rateDraft.acc[k];renderClubs();return;}
+  if(t.dataset.rstar){const[k,n]=t.dataset.rstar.split(":");rateDraft[k]=rateDraft[k]===+n?null:+n;
+    // uppdatera bara knapparna – att rita om hela listan fick sidan att hoppa upp
+    t.parentElement.querySelectorAll("[data-rstar]").forEach(b=>{const m=+b.dataset.rstar.split(":")[1];b.setAttribute("aria-checked",String(rateDraft[k]===m));b.innerHTML=STAR(m<=(rateDraft[k]||0));});return;}
+  if(t.dataset.racc){const[k,v]=t.dataset.racc.split(":");if(v)rateDraft.acc[k]=v;else delete rateDraft.acc[k];
+    t.parentElement.querySelectorAll("[data-racc]").forEach(b=>b.setAttribute("aria-pressed",String((rateDraft.acc[k]||"")===b.dataset.racc.split(":")[1])));return;}
   if(t.dataset.rsave){saveRating(t.dataset.rsave);return;}
   if(t.dataset.rcancel){rateOpen=null;rateDraft=null;rateMsg="";renderClubs();return;}
   if(t.dataset.rdel){if(!rateDelConfirm){rateDelConfirm=true;renderClubs();return;}const c=C[t.dataset.rdel];const mine={...((RATINGS[myId]&&RATINGS[myId].r)||{})};delete mine[arenaKey(c.s)];writeRatings(mine);return;}
-  if(t.dataset.ryn){const[g,k,v]=t.dataset.ryn.split(":");rateDraft[g]=rateDraft[g]||{};if(v)rateDraft[g][k]=v;else delete rateDraft[g][k];renderClubs();return;}
+  if(t.dataset.ryn){const[g,k,v]=t.dataset.ryn.split(":");rateDraft[g]=rateDraft[g]||{};if(v)rateDraft[g][k]=v;else delete rateDraft[g][k];
+    t.parentElement.querySelectorAll("[data-ryn]").forEach(b=>{const p=b.dataset.ryn.split(":");b.setAttribute("aria-pressed",String((rateDraft[p[0]]&&rateDraft[p[0]][p[1]]||"")===p[2]));});return;}
   if(t.dataset.homeedit){homeEdit=true;render();setTimeout(()=>document.getElementById("homeIn")?.focus(),0);return;}
   if(t.dataset.homecancel){homeEdit=false;render();return;}
   if(t.dataset.year){seasonYear=+t.dataset.year;renderMine();return;}
