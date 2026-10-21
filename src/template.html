@@ -1134,8 +1134,8 @@ function legHtml(id){const c=C[id];const list=legAll(id).map(x=>({...x,v:legVote
   const form=can?`<form class="legform" id="legForm" data-legfor="${esc(id)}"><h3 class="sec">Lägg till en legend</h3>
       <label class="fld">Namn<input name="n" maxlength="60" required placeholder="t.ex. ${isNat(c)?"Zlatan Ibrahimović":"spelarens eller tränarens namn"}"></label>
       <div class="legrow"><label class="fld">Roll<select name="r"><option value="p">Spelare</option><option value="t">Tränare</option><option value="b">Spelare och tränare</option></select></label>
-      <label class="fld">År i klubben<input name="y" maxlength="20" placeholder="t.ex. 1985–1994"></label></div>
-      <label class="fld">Varför en legend?<textarea name="t" maxlength="300" rows="2" placeholder="Mål, titlar, en oförglömlig match…"></textarea></label>
+      <label class="fld">${isNat(c)?"År i landslaget":"År i klubben"}<input name="y" maxlength="20" placeholder="t.ex. 1985–1994"></label></div>
+      <label class="fld">Varför en legend?<textarea name="t" maxlength="300" rows="2" placeholder="${isNat(c)?"Landskamper, mästerskap, ett oförglömligt mål…":"Mål, titlar, en oförglömlig match…"}"></textarea></label>
       ${legMsg?`<p class="err">${esc(legMsg)}</p>`:""}<div class="actions"><button class="btn small primary" type="submit"${legBusy?" disabled":""}>Lägg till</button></div></form>`
     :`<p class="meta">Logga in för att lägga till legender.</p><button class="btn small" data-glogin>Logga in</button>`;
   const sq=!isNat(c)&&c.l?`<p><button class="link" data-squad="${esc(id)}">Nuvarande trupp och statistik</button></p>`:"";
