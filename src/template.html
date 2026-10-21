@@ -1569,11 +1569,20 @@ const myRating=c=>{const k=arenaKey(c.s);return k&&myId&&RATINGS[myId]&&RATINGS[
 const canRate=c=>!!c.s&&!!myId&&ratingsState==="ready"&&visitedStadiums().has(c.s);
 function ratingSummary(a){
   const bars=a.n&&a.total!=null?`<div class="rgrid">${RCATS.map(([k,l])=>`<span>${l}</span><span class="rbar"><i style="width:${a.avg[k]?a.avg[k]/5*100:0}%"></i></span><b>${a.avg[k]!=null?dec(a.avg[k]):"–"}</b>`).join("")}</div>`:"";
-  const acc=ACC.map(([k,l])=>{const x=a.acc[k];if(!x.y&&!x.n)return null;const yes=x.y>=x.n;return`<span class="acc ${yes?"y":"n"}">${yes?OK:NO} ${l}<small>${yes?x.y:x.n}</small></span>`;}).filter(Boolean);
-  return{bars,acc:acc.join(""),n:a.n};}
+  const chip=([k,l])=>{const x=a.acc[k];if(!x.y&&!x.n)return null;const yes=x.y>=x.n;return`<span class="acc ${yes?"y":"n"}">${yes?OK:NO} ${l}<small>${yes?x.y:x.n}</small></span>`;};
+  const acc=ACC.map(chip).filter(Boolean);
+  return{bars,acc:acc.join(""),wc:chip(ACC[0])||"",n:a.n};}
+// all tillgänglighetsinfo i en egen ruta
+function accHtml(id){const c=C[id];const s=ratingSummary(arenaAgg(c.s));
+  return`<div id="accOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="accT"><div class="compose askbox pvbox msbox"><div class="mshead"><h2 id="accT" class="msteams">Tillgänglighet · ${esc(c.s)}</h2><button class="btn small" id="accClose">Stäng</button></div>
+    ${s.acc?`<div class="accs">${s.acc}</div><p class="meta">Rapporterat av besökare, siffran visar hur många. Stäm av med klubben inför besöket.</p>`:`<p class="meta">Ingen information än. Fråga klubbens biljettkontor eller tillgänglighetsansvarig inför besöket, och rapportera gärna här efteråt.</p>`}
+    ${accForum(c)}</div></div>`;}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-accmore],#accClose,#accOv");if(!t)return;if(t.id==="accOv"&&e.target!==t)return;
+  if(t.dataset.accmore){const o=document.getElementById("accOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",accHtml(t.dataset.accmore));return;}
+  const o=document.getElementById("accOv");if(o)o.remove();});
 function ratingRow(c){if(!c.s)return"";const a=arenaAgg(c.s);const s=ratingSummary(a);
   return`<dt>Arenabetyg</dt><dd>${s.bars?`${s.bars}<div class="meta">${a.n} ${a.n===1?"besökare har":"besökare har"} betygsatt ${esc(c.s)}</div>`:`<span class="meta">Inga betyg än.${canRate(c)?"":" Har du loggat en match här kan du betygsätta arenan."}</span>`}</dd>
-  <dt>Tillgänglighet</dt><dd>${s.acc?`<div class="accs">${s.acc}</div><div class="meta">Rapporterat av besökare, siffran visar hur många. Stäm av med klubben inför besöket.</div>`:`<span class="meta">Ingen information än. Fråga klubbens biljettkontor eller tillgänglighetsansvarig inför besöket, och rapportera gärna här efteråt.</span>`}${accForum(c)}</dd>`;}
+  <dt>Tillgänglighet</dt><dd><div class="accs">${s.wc||`<span class="acc">Rullstolsplatser<small>ingen uppgift</small></span>`}<button class="mini" data-accmore="${esc(c.id)}">Mer tillgänglighetsinfo</button></div></dd>`;}
 function ratingPill(c){if(!c.s||ratingsState!=="ready")return"";const a=arenaAgg(c.s);return a.total!=null?`<span class="pill ec">${STAR(1)} ${dec(a.total)}</span>`:"";}
 function rateButton(c){if(!canRate(c))return"";return`<button class="btn small" data-rate="${esc(c.id)}">${myRating(c)?"Ändra betyg och fakta":"Betygsätt och lägg till fakta"}</button>`;}
 function rateEditor(c){if(rateOpen!==c.id||!rateDraft)return"";const d=rateDraft;
