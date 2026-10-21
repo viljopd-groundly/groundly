@@ -1904,7 +1904,9 @@ const ynChip=(a,k,l)=>{const x=a.yn[k];if(!x)return"";const yes=x.y>=x.n;return`
 const uniq=arr=>[...new Set(arr)];
 function travelRows(c,parts){if(!c.s)return parts?{tr:"",tk:""}:"";const a=travelAgg(c.s);
   const st=Object.entries(a.st).sort((x,y)=>y[1]-x[1])[0];const walk=a.walks.length?a.walks.slice().sort((x,y)=>x-y)[Math.floor(a.walks.length/2)]:null;
-  const trChips=ynChip(a,"kombi","Lokaltrafik ingår i biljetten")+ynChip(a,"extra","Extratåg och extrabussar");
+  // visas bara när svaret är ja (lokaltrafik ingår / extratrafik brukar finnas)
+  const yesOnly=(k,l)=>{const x=a.yn[k];return x&&x.y>x.n?ynChip(a,k,l):"";};
+  const trChips=yesOnly("kombi","Lokaltrafik ingår i biljetten")+yesOnly("extra","Extratåg och extrabussar brukar finnas");
   const de=c.c==="Tyskland"||c.c==="Österrike"?" I Tyskland och Österrike ingår ofta lokaltrafiken i matchbiljetten, så läs på biljetten.":"";
   const tr=st||walk||trChips?`${st?`<div><b>${esc(st[0])}</b>${walk?` · ca ${walk} min promenad`:""}</div>`:walk?`<div>ca ${walk} min promenad från närmaste station</div>`:""}${trChips?`<div class="accs">${trChips}</div>`:""}`:`<span class="meta">Ingen information än.${de}</span>`;
   // medlemskap visas bara när det faktiskt krävs (de flesta klubbar säljer till alla)
