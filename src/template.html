@@ -1645,7 +1645,7 @@ function renderDouble(){
 // ---------- utmaningar, karta och delningsbilder ----------
 const MAPS=/*MAPS*/{};
 const LEAGUES=["Allsvenskan","Superettan","Premier League","Championship","Scottish Premiership","Bundesliga","La Liga","Serie A","Ligue 1","Eliteserien","Superligaen","Veikkausliiga","Besta deild","Eredivisie","Pro League","Primeira Liga","Ekstraklasa","MLS"];
-let arSelOpen=false,seasonYear=new Date().getFullYear(),dlNs,shareFmt="post",mapRegion=null,shareMatchId=null;
+let arSelOpen=false,arDraft=null,seasonYear=new Date().getFullYear(),dlNs,shareFmt="post",mapRegion=null,shareMatchId=null;
 try{if(store.get("fk-fmt")==="story")shareFmt="story";const mr=store.get("fk-mapr");if(mr==="se"||mr==="eu"||mr==="world")mapRegion=mr;}catch(e){}
 (async()=>{try{dlNs=await window.claude?.use?.("downloads")??null;}catch(e){dlNs=null}if(mode==="mine")renderMine();})();
 function leagueArenas(l){const m=new Map();Object.values(C).forEach(c=>{if(c.l===l&&c.v&&c.s&&!m.has(c.s))m.set(c.s,c);});return m;}
@@ -1754,8 +1754,8 @@ function renderChallenges(){const vs=visitedStadiums();
    ${miss.length?`<details><summary>Kvar att se (${miss.length})</summary><div class="miss">${miss.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.n)}</button> <span class="meta">${esc(c.s||"")}</span>`).join("<br>")}</div></details>`:`<small class="meta">Alla 55 landslag sedda!</small>`}</div>`;}
   h+=`<h3 class="sec">Arenor per serie</h3><p class="hint">Som "The 92" i England: besök alla arenor i en serie. Arenor som delas av flera klubbar räknas en gång.</p>
    <details class="arsel"${arSelOpen?" open":""}><summary>Välj serier (${sel.length} valda)</summary>
-   ${[...new Set(allL.map(x=>x.c))].map(cn=>`<div class="lbl">${esc(cn)}</div><div class="chips wrapchips">${allL.filter(x=>x.c===cn).map(x=>`<button class="chip" data-arsel="${esc(x.l)}" aria-pressed="${sel.includes(x.l)}">${esc(x.l)}</button>`).join("")}</div>`).join("")}
-   <div class="actions"><button class="btn small" data-arsel-reset="1">Standardurval</button></div></details>
+   ${(()=>{const dr=arDraft||sel;return[...new Set(allL.map(x=>x.c))].map(cn=>`<div class="lbl">${esc(cn)}</div><div class="chips wrapchips">${allL.filter(x=>x.c===cn).map(x=>`<button class="chip" data-arsel="${esc(x.l)}" aria-pressed="${dr.includes(x.l)}">${esc(x.l)}</button>`).join("")}</div>`).join("");})()}
+   <div class="actions"><button class="btn small primary" data-arsel-save="1">Spara</button><button class="btn small" data-arsel-reset="1">Standardurval</button></div></details>
    ${!lg.length?`<p class="meta">Inga serier valda.</p>`:""}`;
   h+=lg.map(x=>`<div class="prog"><div class="ptop"><b>${esc(x.l)}</b><span>${x.done}/${x.total}</span></div><span class="rbar"><i style="width:${x.done/x.total*100}%"></i></span><div class="pdets">${x.miss.length?`<details><summary>Kvar att besöka (${x.miss.length})</summary><div class="miss">${x.miss.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.s)}</button> <span class="meta">${esc(c.n)}</span>`).join("<br>")}</div></details>`:`<small class="meta">Alla arenor besökta!</small>`}${x.seen.length?`<details class="pseen"><summary>Besökta (${x.seen.length})</summary><div class="miss">${x.seen.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.s)}</button> <span class="meta">${esc(c.n)}</span>`).join("<br>")}</div></details>`:""}</div></div>`).join("");
   const years=[...new Set([new Date().getFullYear(),...MY.attended.map(a=>+a.date.slice(0,4))])].filter(Boolean).sort((a,b)=>b-a);
@@ -1766,7 +1766,7 @@ function renderChallenges(){const vs=visitedStadiums();
 function afterMine(){if(mySub==="been")drawLiveMap();if(mySub==="pass"){drawPass();}else if(mySub==="challenges"){drawMap();drawSeason();}else if(mySub==="been"&&shareMatchId){const a=MY.attended.find(z=>z.id===shareMatchId);if(a)drawMatch(a);}}
 
 // ---------- klick för de nya funktionerna ----------
-const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard;
+const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard;
 function openClubCard(id){if(!C[id])return;qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;}
 function featClick(t){
   if(t.dataset.mview){matchView=t.dataset.mview;store.set("fk-mview",matchView);if(matchView==="double"&&dTo<addDays(dFrom,6))dTo=addDays(dFrom,13);renderMatches();return;}
@@ -1786,9 +1786,10 @@ function featClick(t){
   if(t.dataset.homecancel){homeEdit=false;render();return;}
   if(t.dataset.year){seasonYear=+t.dataset.year;renderMine();return;}
   if(t.dataset.fmt){shareFmt=t.dataset.fmt;store.set("fk-fmt",shareFmt);renderMine();return;}
-  if(t.dataset.arsel){const allL=tblLeagues().map(x=>x.l);const cur=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.includes(l)):LEAGUES.slice();const l=t.dataset.arsel;arSelOpen=true;
-    mutate(d=>{d.arSel=cur.includes(l)?cur.filter(x=>x!==l):[...cur,l];});return;}
-  if(t.dataset.arselReset){arSelOpen=true;mutate(d=>{delete d.arSel;});return;}
+  if(t.dataset.arsel){const allL=tblLeagues().map(x=>x.l);if(!arDraft)arDraft=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.includes(l)):LEAGUES.slice();
+    const l=t.dataset.arsel;arDraft=arDraft.includes(l)?arDraft.filter(x=>x!==l):[...arDraft,l];t.setAttribute("aria-pressed",String(arDraft.includes(l)));return;}
+  if(t.dataset.arselReset){arDraft=LEAGUES.slice();document.querySelectorAll(".arsel [data-arsel]").forEach(b=>b.setAttribute("aria-pressed",String(arDraft.includes(b.dataset.arsel))));return;}
+  if(t.dataset.arselSave){const d=arDraft;arDraft=null;arSelOpen=false;if(d){const same=d.length===LEAGUES.length&&d.every(l=>LEAGUES.includes(l));mutate(x=>{if(same)delete x.arSel;else x.arSel=d;});}else renderMine();toast("Urvalet är sparat.");return;}
   if(t.dataset.mapr){mapRegion=t.dataset.mapr;store.set("fk-mapr",mapRegion);renderMine();return;}
   if(t.dataset.sharematch){shareMatchId=shareMatchId===t.dataset.sharematch?null:t.dataset.sharematch;renderMine();return;}
   if(t.dataset.copycard){const id=t.dataset.copycard,S=STUDIO[id];if(!S)return;navigator.clipboard.writeText(S.text).then(()=>studioMsg(id,"Texten är kopierad.")).catch(()=>studioMsg(id,"Kunde inte kopiera här. "+S.text));return;}
