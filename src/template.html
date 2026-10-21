@@ -1101,7 +1101,7 @@ function renderTable(){genderChips("gTbl");const ls=tblLeagues();if(!ls.length)r
 // trupp och spelarstatistik per klubb
 const POS_SV={Goalkeeper:"MV",Defender:"B",Midfielder:"MF",Attacker:"A"};
 function squadHtml(id){const c=C[id];const S=XD.squads&&XD.squads.clubs&&XD.squads.clubs[id];
-  const body=!XD.squads?`<p class="meta">Hämtar spelarna…</p>`:!S||!S.players.length?`<p class="meta">Det finns ingen spelarstatistik för ${esc(c.n)} än. Den hämtas varje natt från API-Football när nyckeln är inlagd.</p>`
+  const body=!XD.squads?`<p class="meta">Hämtar spelarna…</p>`:!S||!S.players.length?`<p class="meta">Det finns ingen spelarstatistik för ${esc(c.n)}. API-Football har inte spelardata för alla serier, till exempel inte för Ettan.</p>`
    :`<p class="meta">Säsongen ${S.season}${String(S.season).length===4&&c.c!=="Sverige"&&c.c!=="Norge"&&c.c!=="Finland"&&c.c!=="Island"&&c.c!=="USA"?"/"+String((+S.season+1)%100).padStart(2,"0"):""}, alla tävlingar. Sorterat på speltid.</p><div class="tblwrap"><table class="ltbl sq"><thead><tr><th class="tl">Spelare</th><th title="Position">Pos</th><th title="Matcher">M</th><th title="Minuter">Min</th><th title="Mål">Mål</th><th title="Assist">Ass</th><th title="Gula kort">G</th><th title="Röda kort">R</th></tr></thead><tbody>
      ${S.players.map(p=>`<tr><td class="tl">${esc(p[0])}${p[2]?` <span class="meta">${p[2]} år</span>`:""}</td><td class="n">${esc(POS_SV[p[1]]||"")}</td><td class="n">${p[3]}</td><td class="n">${p[4]}</td><td class="n"><b>${p[5]}</b></td><td class="n">${p[6]}</td><td class="n">${p[7]}</td><td class="n">${p[8]}</td></tr>`).join("")}</tbody></table></div>`;
   return`<div id="sqOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="sqT"><div class="compose askbox pvbox msbox"><div class="mshead"><h2 id="sqT" class="msteams">${crest(id,c.n,28)} ${esc(c.n)}</h2><button class="btn small" id="sqClose">Stäng</button></div>${body}</div></div>`;}
@@ -1362,6 +1362,7 @@ function delBtn(kind,id,label){const k=kind+":"+id;return`<button class="link" d
 const MON3=["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
 const fmtDate=k=>{if(!k)return"";const[y,m,d]=String(k).split("-").map(Number);return y&&m&&d?`${d} ${MON3[m-1]} ${y}`:"";};
 
+let myYear="all";
 function renderMine(){
   const el=document.getElementById("mineBody");
   if(myState==="loading"){el.innerHTML=`<div class="empty">Hämtar dina sparade matcher…</div>`;return;}
@@ -1392,10 +1393,15 @@ function renderMine(){
       <div class="actions"><button class="btn primary" type="submit">Spara matchen</button><button class="btn" type="button" id="amCancel">Avbryt</button></div></form>`
      :`<div class="actions"><button class="btn primary" id="amOpen">+ Lägg till match</button><button class="btn" id="arcOpen">Hitta i arkivet</button></div>`;
     h+=arcHtml();
-    const att=MY.attended.slice().sort((a,b)=>b.date.localeCompare(a.date));
+    const attAll=MY.attended.slice().sort((a,b)=>b.date.localeCompare(a.date));
+    const yCount={};attAll.forEach(a=>{const y=(a.date||"").slice(0,4);if(/^\d{4}$/.test(y))yCount[y]=(yCount[y]||0)+1;});
+    const yList=Object.keys(yCount).sort().reverse();const yTop=yList.slice(0,5);const oldN=attAll.filter(a=>!yTop.includes((a.date||"").slice(0,4))).length;
+    if(myYear!=="all"&&myYear!=="old"&&!yCount[myYear])myYear="all";if(myYear==="old"&&!oldN)myYear="all";
+    const att=myYear==="all"?attAll:myYear==="old"?attAll.filter(a=>!yTop.includes((a.date||"").slice(0,4))):attAll.filter(a=>(a.date||"").startsWith(myYear));
+    const yearChips=attAll.length?`<div class="chips" role="group" aria-label="Visa år">${[["all","Alla",attAll.length],...yTop.map(y=>[y,y,yCount[y]]),...(oldN?[["old","Tidigare",oldN]]:[])].map(([k,l,n])=>`<button class="chip" data-myyear="${k}" aria-pressed="${myYear===k}">${l}<small>${n}</small></button>`).join("")}</div>`:"";
     if(MY.attended.length){const pins=visitedPins();const reg=mapRegion||autoRegion(pins);
       h+=`<div class="sechead"><h3 class="sec">Mina arenor på kartan</h3></div><div class="lmap"><div class="chips" role="group" aria-label="Karta">${[["se","Sverige"],["eu","Europa"],["world","Världen"]].map(([k,l])=>`<button class="chip" data-mapr="${k}" aria-pressed="${reg===k}">${l}</button>`).join("")}</div><div id="liveMap" class="lmapbox"><p class="hint">Laddar kartan…</p></div><p class="hint" id="lmapInfo">Tryck på en nål för att se arenan.</p></div>`;}
-    h+=`<div class="sechead"><h3 class="sec">Matcher jag varit på</h3>${MY.attended.length?`<div class="actions"><button class="btn small" data-exportcsv="1">${ic("download")} Excel (CSV)</button><button class="btn small" data-backup="1">${ic("download")} Säkerhetskopia</button><label class="btn small" for="restoreIn">${ic("upload")} Läs in<input id="restoreIn" type="file" accept=".json,application/json" hidden></label></div>`:`<label class="btn small" for="restoreIn">${ic("upload")} Läs in säkerhetskopia<input id="restoreIn" type="file" accept=".json,application/json" hidden></label>`}</div><p class="hint" id="csvMsg"></p>`;
+    h+=`<div class="sechead"><h3 class="sec">Matcher jag varit på</h3>${MY.attended.length?`<div class="actions"><button class="btn small" data-exportcsv="1">${ic("download")} Excel (CSV)</button><button class="btn small" data-backup="1">${ic("download")} Säkerhetskopia</button><label class="btn small" for="restoreIn">${ic("upload")} Läs in<input id="restoreIn" type="file" accept=".json,application/json" hidden></label></div>`:`<label class="btn small" for="restoreIn">${ic("upload")} Läs in säkerhetskopia<input id="restoreIn" type="file" accept=".json,application/json" hidden></label>`}</div><p class="hint" id="csvMsg"></p>`+yearChips;
     h+=att.length?att.map(a=>`<div class="mrow">
       <div class="mdate">${esc(fmtDate(a.date))}</div>
       <div class="mmain"><div class="teams">${a.home&&C[a.home]?`<button data-open="${esc(a.home)}">${esc(a.homeName)}</button>`:esc(a.homeName)}<span class="vs">${a.score?esc(a.score):"–"}</span>${a.away&&C[a.away]?`<button data-open="${esc(a.away)}">${esc(a.awayName)}</button>`:esc(a.awayName)}</div>
@@ -1438,6 +1444,7 @@ function myClick(t){
   if(t.dataset.visopen){visOpen=visOpen===t.dataset.visopen?null:t.dataset.visopen;renderMine();return;}
   if(t.dataset.stkind){stKind=t.dataset.stkind;store.set("fk-stkind",stKind);renderMine();return;}
   if(t.dataset.stsort){stSort=t.dataset.stsort;store.set("fk-stsort",stSort);renderMine();return;}
+  if(t.dataset.myyear){myYear=t.dataset.myyear;renderMine();return;}
   if(t.dataset.mysub){mySub=t.dataset.mysub;store.set("fk-mysub",mySub);renderMine();return;}
   if(t.id==="amOpen"){addingMatch=true;fillVenueList();renderMine();setTimeout(()=>document.getElementById("amHome")?.focus(),0);return;}
   if(t.id==="amCancel"){addingMatch=false;renderMine();return;}
@@ -1451,7 +1458,7 @@ function myClick(t){
     delete myConfirm[k];const[kind,...rest]=k.split(":");const id=rest.join(":");
     mutate(d=>{if(kind==="att")d.attended=d.attended.filter(a=>a.id!==id);if(kind==="vis")delete d.visited[id];if(kind==="wm")d.wishMatches=d.wishMatches.filter(w=>w.id!==id);if(kind==="wc")d.wishClubs=d.wishClubs.filter(x=>x!==id);});return;}
 }
-const isMyBtn=t=>t.dataset.mysub||t.dataset.stteam||t.dataset.visopen||t.dataset.stkind||t.dataset.stsort||t.id==="amOpen"||t.id==="amCancel"||t.dataset.wishm||t.dataset.attend||t.dataset.wmdone||t.dataset.visit||t.dataset.wishc||t.dataset.mydel;
+const isMyBtn=t=>t.dataset.myyear||t.dataset.mysub||t.dataset.stteam||t.dataset.visopen||t.dataset.stkind||t.dataset.stsort||t.id==="amOpen"||t.id==="amCancel"||t.dataset.wishm||t.dataset.attend||t.dataset.wmdone||t.dataset.visit||t.dataset.wishc||t.dataset.mydel;
 document.addEventListener("submit",e=>{
   if(e.target.id==="addMatchForm"){e.preventDefault();const g=id=>document.getElementById(id).value.trim();
     const hn=g("amHome"),an=g("amAway"),date=g("amDate");if(!hn||!an||!date){myErr="Fyll i hemmalag, bortalag och datum.";renderMine();return;}
@@ -2798,7 +2805,7 @@ function newsHtml(){return`<article class="tip"><div class="lbl">Nytt i appen</d
 
 // ---------- matcharkiv (äldre säsonger från openfootball, hämtas vid behov) ----------
 const ARC_ORDER=["se.1","se.2","se.3s","en.1","en.2","en.3","en.4","en.5","de.1","de.2","de.3","es.1","es.2","it.1","it.2","fr.1","fr.2","nl.1","pt.1","sco.1","no.1","no.2","dk.1","dk.2","fi.1","uefa.cl","en.fa","en.lc","de.cup","no.cup","dk.cup"];
-const ARC_LAND={se:"Sverige",en:"England",de:"Tyskland",es:"Spanien",it:"Italien",fr:"Frankrike",nl:"Nederländerna",pt:"Portugal",sco:"Skottland",no:"Norge",dk:"Danmark",fi:"Finland",uefa:"Europa"};
+const ARC_LAND={se:"Sverige",en:"England",de:"Tyskland",es:"Spanien",it:"Italien",fr:"Frankrike",nl:"Nederländerna",pt:"Portugal",sco:"Skottland",no:"Norge",dk:"Danmark",fi:"Finland",is:"Island",be:"Belgien",pl:"Polen",at:"Österrike",ch:"Schweiz",tr:"Turkiet",gr:"Grekland",cz:"Tjeckien",hr:"Kroatien",rs:"Serbien",ro:"Rumänien",hu:"Ungern",ua:"Ukraina",ru:"Ryssland",bg:"Bulgarien",sk:"Slovakien",si:"Slovenien",cy:"Cypern",ie:"Irland",nir:"Nordirland",wal:"Wales",al:"Albanien",ad:"Andorra",am:"Armenien",az:"Azerbajdzjan",by:"Belarus",ba:"Bosnien och Hercegovina",ee:"Estland",fo:"Färöarna",ge:"Georgien",gi:"Gibraltar",kos:"Kosovo",lv:"Lettland",li:"Liechtenstein",lt:"Litauen",lu:"Luxemburg",mt:"Malta",md:"Moldavien",me:"Montenegro",mk:"Nordmakedonien",sm:"San Marino",us:"USA",uefa:"Europacuper",int:"Landslag",wc:"Landslag",ec:"Landslag"};
 let ARC={open:false,index:null,code:"se.1",season:"",team:"",data:null,loading:false,err:""};const ARC_CACHE={};
 // arenor som klubbar lämnat; datum = sista dagen på den gamla arenan
 const VENUE_HIST={tot:[["2017-05-15","White Hart Lane"],["2019-04-02","Wembley Stadium"]],whu:[["2016-05-11","Boleyn Ground (Upton Park)"]],eve:[["2025-05-19","Goodison Park"]],
@@ -2815,7 +2822,7 @@ function arcNeutral(code,season,r){const rd=r[7]||"";if(CUP_FINAL[code]&&(/^fina
   if(code!=="uefa.cl")return null;if(/^final$/i.test(rd))return CL_FINALS[season]||null;
   if(season==="2019-20"&&r[2]>="2020-08-01")return["Neutral arena i Lissabon (slutspel 2020)","Lissabon","Portugal"];return null;}
 function venueAt(id,date){const c=C[id];if(!c)return null;const h=VENUE_HIST[id];if(h)for(const[until,name]of h)if(date<=until)return name;return c.s||null;}
-async function arcLoad(url){if(ARC_CACHE[url])return ARC_CACHE[url];const r=await fetch(url);if(!r.ok)throw new Error("http "+r.status);const j=await r.json();ARC_CACHE[url]=j;return j;}
+async function arcLoad(url){if(ARC_CACHE[url])return ARC_CACHE[url];const r=await fetch(url,{cache:"no-cache"});if(!r.ok)throw new Error("http "+r.status);const j=await r.json();ARC_CACHE[url]=j;return j;}
 async function arcIndex(){if(ARC.index)return;ARC.loading=true;renderMine();
   try{ARC.index=await arcLoad("archive/index.json");const seasons=ARC.index.filter(x=>x[0]===ARC.code).map(x=>x[2]).sort().reverse();ARC.season=seasons[0]||"";ARC.err="";await arcSeason();}
   catch(e){ARC.err="Arkivet kunde inte laddas. Försök igen om en stund.";}finally{ARC.loading=false;renderMine();}}
@@ -2824,13 +2831,17 @@ async function arcSeason(){ARC.data=null;if(!ARC.season)return;ARC.loading=true;
   catch(e){ARC.err="Säsongen kunde inte laddas.";}finally{ARC.loading=false;renderMine();}}
 const arcMid=(i)=>`arc:${ARC.code}:${ARC.season}:${i}`;
 function arcHtml(){if(!ARC.open)return"";const ix=ARC.index||[];
-  const codes=ARC_ORDER.filter(c=>ix.some(x=>x[0]===c));const lname=c=>`${ARC_LAND[c.split(".")[0]]||""} – ${(ix.find(x=>x[0]===c)||[])[1]||c}`;
+  const ARC_FIRST=["se","en","de","es","it","fr","nl","pt","sco","no","dk","fi","is"],ARC_LAST=["uefa","int","wc","ec"];
+  const arcLand=c=>ARC_LAND[c.split(".")[0]]||c.split(".")[0];
+  const arcRank=c=>{const p=c.split(".")[0],t=c.split(".")[1]||"";const lr=ARC_FIRST.includes(p)?ARC_FIRST.indexOf(p):ARC_LAST.includes(p)?900+ARC_LAST.indexOf(p):100;
+    const tr=/^w/.test(t)?50+(parseInt(t.slice(1))||1):/cup|fa|lc|trophy/.test(t)?40:(parseInt(t)||1)+(t.replace(/^\d+/,"")?.01:0);const oi=ARC_ORDER.indexOf(c);return[lr,tr,oi<0?999:oi];};
+  const codes=[...new Set(ix.map(x=>x[0]))].sort((a,b)=>{const A=arcRank(a),B=arcRank(b);return A[0]-B[0]||(A[0]===100?arcLand(a).localeCompare(arcLand(b),"sv"):0)||A[1]-B[1]||A[2]-B[2]||a.localeCompare(b);});const lname=c=>`${ARC_LAND[c.split(".")[0]]||""} – ${(ix.find(x=>x[0]===c)||[])[1]||c}`;
   const seasons=ix.filter(x=>x[0]===ARC.code).map(x=>[x[2],x[3]]).sort((a,b)=>b[0].localeCompare(a[0]));
   const d=ARC.data;const teams=d?d.t.map((t,i)=>[t[0],i,t[1]&&C[t[1]]?C[t[1]].n:t[0]]).sort((a,b)=>a[2].localeCompare(b[2],"sv")):[];
   let h=`<div class="compose arc" id="arcBox"><div class="sechead"><h2>Hitta match i arkivet</h2><button class="link" id="arcClose">Stäng</button></div>
-    <p class="hint">Äldre säsonger från öppen data (openfootball): England och Tyskland från 2004–2014, övriga stora ligor från 2012–2018, Allsvenskan och Norden från 2023 samt flera cuper. Saknas din match lägger du till den med "+ Lägg till match".</p>`;
+    <p class="hint">Säsonger från öppen data (openfootball) och API-Football: Premier League från 1992, övriga engelska divisioner från 1998, de stora ligorna och deras andraserier från 2010–2014, cuper, Europacuperna, högstaligor i nästan alla europeiska länder samt innevarande säsong i alla serier appen följer, även Allsvenskan, Superettan och Ettan. Saknas din match lägger du till den med "+ Lägg till match".</p>`;
   if(!ARC.index){return h+`<p class="meta">${ARC.loading?"Laddar arkivet…":esc(ARC.err||"")}</p></div>`;}
-  h+=`<div class="row2"><label class="fld" for="arcCode">Liga<select id="arcCode">${codes.map(c=>`<option value="${c}"${c===ARC.code?" selected":""}>${esc(lname(c))}</option>`).join("")}</select></label>
+  h+=`<div class="row2"><label class="fld" for="arcCode">Liga<select id="arcCode">${[...new Set(codes.map(arcLand))].map(L=>`<optgroup label="${esc(L)}">${codes.filter(c=>arcLand(c)===L).map(c=>`<option value="${c}"${c===ARC.code?" selected":""}>${esc((ix.find(x=>x[0]===c)||[])[1]||c)}</option>`).join("")}</optgroup>`).join("")}</select></label>
     <label class="fld" for="arcSeason">Säsong<select id="arcSeason">${seasons.map(([k,l])=>`<option value="${k}"${k===ARC.season?" selected":""}>${esc(l)}</option>`).join("")}</select></label></div>
     <label class="fld" for="arcTeam">Lag<select id="arcTeam"${d?"":" disabled"}><option value="">Välj lag…</option>${teams.map(([n,,lbl])=>`<option value="${esc(n)}"${n===ARC.team?" selected":""}>${esc(lbl)}</option>`).join("")}</select></label>`;
   if(ARC.err)h+=`<p class="err">${esc(ARC.err)}</p>`;

@@ -5,7 +5,7 @@ function parse(txt){const lines=txt.split(/\r?\n/);let year=null,lastMon=null,da
   for(let raw of lines){const L=raw.replace(/\s+$/,"");const t=L.trim();if(!t||t.startsWith("#")||t.startsWith("=")||t.startsWith("(")||/^\d+-\d+\s/.test(t))continue;
     if(t.startsWith("▪")){round=t.replace(/^▪\s*/,"");continue;}
     let m=t.match(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+([A-Z][a-z]{2})\s+(\d{1,2})(?:\s+(\d{4}))?$/);
-    if(m){const mo=MON[m[2]];if(m[4])year=+m[4];else if(lastMon!==null&&mo<lastMon)year++;lastMon=mo;date=`${year}-${String(mo+1).padStart(2,"0")}-${String(+m[3]).padStart(2,"0")}`;time="";continue;}
+    if(m){const mo=MON[m[2]];if(m[4])year=+m[4];else if(lastMon!==null){const df=mo-lastMon;if(df<-5)year++;else if(df>6)year--;}lastMon=mo;date=`${year}-${String(mo+1).padStart(2,"0")}-${String(+m[3]).padStart(2,"0")}`;time="";continue;}
     if(!date)continue;let rest=t;const tm=rest.match(/^(\d{1,2})[:.](\d{2})\s+(.*)$/);if(tm){time=`${tm[1].padStart(2,"0")}:${tm[2]}`;rest=tm[3];}
     rest=rest.replace(/\s+@\s+.*$/,"");const parts=rest.split(/\s{2,}/);let t1,t2,sc="";
     if(parts.length>=2&&/^v\s/.test(parts[1])){t1=parts[0];t2=parts[1].replace(/^v\s+/,"");sc=parts.slice(2).join(" ");}
