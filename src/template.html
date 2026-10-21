@@ -560,6 +560,8 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .legform{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:12px}.legform .fld input,.legform .fld select,.legform .fld textarea{background:var(--bg)}
 .arsel{margin:4px 0 10px}.arsel summary{cursor:pointer;font-weight:600;color:var(--accent)}.arsel .lbl{margin:8px 0 2px}
 .pdets{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:flex-start}.pdets{flex-wrap:nowrap}.pdets details{flex:1 1 0;min-width:0}.pdets .pseen summary{text-align:right}.pdets .pseen[open] summary{text-align:left}
+/* rita bara kort som syns på skärmen (snabbare långa listor) */
+#tipsList>.tip,#arenaList>.tip,#clubList>.card,#repList>.rep{content-visibility:auto;contain-intrinsic-size:auto 280px}
 </style>
 
 <div class="wrap">
@@ -783,7 +785,7 @@ let MATCHES=[],dbState="loading",META=null;
 // säsongen 2026/27 i de stora ligorna, från öppen data (openfootball, CC0): [hemma, borta, avspark|null, datum, resultat, serie, nivå]
 let FIXTURES=[],FX_UPDATED=null,DBM=null,dbFailed=false;
 // säsongsdatan ligger i en egen fil som uppdateras varje natt
-function remergeMatches(){if(DBM===null&&!dbFailed&&!FIXTURES.length)return;MATCHES=mergeFixtures(DBM||[]);dbState=MATCHES.length?"ready":(dbFailed?"none":"empty");render();}
+function remergeMatches(){setTimeout(()=>{try{(window.requestIdleCallback||(f=>f()))(()=>{try{upIndex();}catch(e){}});}catch(e){}},50);if(DBM===null&&!dbFailed&&!FIXTURES.length)return;MATCHES=mergeFixtures(DBM||[]);dbState=MATCHES.length?"ready":(dbFailed?"none":"empty");render();}
 (window.requestIdleCallback||(f=>setTimeout(f,300)))(()=>fetch("data/flags.json").then(r=>r.ok?r.json():null).then(j=>{if(!j)return;Object.assign(FLAGS,j);Object.keys(j).forEach(k=>{if(k.startsWith("nt-"))FLAGS["u21-"+k.slice(3)]=j[k];});try{render();}catch(e){}}).catch(()=>{}));
 let mapsP=null;function loadMaps(){return mapsP||(mapsP=fetch("data/maps.json").then(r=>r.json()).then(j=>{for(const k in j)if(MAPS[k]){MAPS[k].path=j[k].path;if(j[k].path2)MAPS[k].path2=j[k].path2;}}).catch(()=>{mapsP=null;}));}
 fetch("data/fixtures.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&Array.isArray(j.rows)){FIXTURES=j.rows;FX_UPDATED=j.updated||null;remergeMatches();}}).catch(()=>{});
@@ -1237,7 +1239,8 @@ let tipsTab="derby";try{const tt=store.get("fk-tips");if(tt==="cult"||tt==="top"
 function nextMeeting(ids){const set=new Set(ids);const I=upIndex();const out=[];
   set.forEach(h=>{(I.allHome.get(h)||[]).forEach(m=>{if(set.has(m.away))out.push(m);});});return out.sort(sortM)[0]||null;}
 const teamBtn=id=>C[id]?`<button data-open="${esc(id)}">${esc(C[id].n)}</button>`:"";
-function renderTips(){
+function renderTips(){TIPC=tipCache();try{renderTips0();}finally{TIPC=null;}}
+function renderTips0(){
   document.getElementById("tipsChips").innerHTML=[["derby",`Heta derbyn<small>${TIPS.derbies.length}</small>`],["cult",`Kultklubbar<small>${TIPS.cult.length}</small>`],["arenas",`Speciella arenor<small>${(TIPS.arenas||[]).length}</small>`],["top","Bäst betyg"]]
     .map(([k,l])=>`<button class="chip" data-tips="${k}" aria-pressed="${tipsTab===k}">${l}</button>`).join("");
   const el=document.getElementById("tipsList");
@@ -1252,7 +1255,7 @@ function renderTips(){
         ${tipFeedback("derby",id,null)}
       </article>`;}).join("");
   }else if(tipsTab==="arenas"){
-    el.innerHTML=(TIPS.arenas||[]).map(([id,why])=>{const c=C[id];if(!c||!c.s)return"";const k=arenaKey(c.s);const sharers=Object.values(C).filter(o=>o.s&&arenaKey(o.s)===k);const sf=surfaceOf(c);const visited=myState==="ready"&&visitedStadiums().has(c.s);
+    el.innerHTML=(TIPS.arenas||[]).map(([id,why])=>{const c=C[id];if(!c||!c.s)return"";const k=arenaKey(c.s);const ax=arenas().find(x=>x.k===k);const sharers=ax?ax.clubs:[c];const sf=surfaceOf(c);const visited=myState==="ready"&&visitedStadiums().has(c.s);
       return`<article class="tip"><div class="tip-head"><h2 class="name">${esc(c.s)}</h2><span class="meta">${esc([c.city,c.c].join(", "))}</span></div>
         <div class="teams">${sharers.map(o=>`<button data-open="${esc(o.id)}">${crest(o.id,o.n,22)}${esc(o.n)}${favStar(o.id)}</button>`).join('<span class="vs">·</span>')}</div>
         <div class="mp">${c.cap?`<span class="pill">${fmtCap(c.cap)} platser</span>`:""}${sf?`<span class="pill">${esc(SURF_LBL[sf.v])}</span>`:""}${visited?`<span class="pill t1">Besökt ${OK}</span>`:""}</div>
@@ -1550,7 +1553,7 @@ async function startMine(db,uid){
 const RCATS=[["s","Stämning"],["f","Mat och dryck"],["v","Utsikt"],["p","Prisvärt"]];
 const ACC=[["wc","Rullstolsplatser"],["step","Stegfri väg in"],["toilet","Tillgänglig toalett"],["comp","Ledsagare går gratis"],["park","Parkering för rörelsehindrade"],["loop","Hörslinga"],["audio","Syntolkning"],["quiet","Lugnt rum"]];
 let RATINGS={},ratingsState="loading",ratingsNs=null,rateOpen=null,rateDraft=null,rateBusy=false,rateMsg="",rateDelConfirm=false;
-const arenaKey=s=>{const k=norm(s||"").replace(/ /g,"-").slice(0,80);return k||null;};
+const _ak=new Map();const arenaKey=s=>{if(_ak.has(s))return _ak.get(s);const k=norm(s||"").replace(/ /g,"-").slice(0,80)||null;_ak.set(s,k);return k;};
 const dec=x=>x.toFixed(1).replace(".",",");
 function arenaAgg(stadium){const k=arenaKey(stadium);const out={n:0,avg:{},cnt:{},acc:{},total:null};
   RCATS.forEach(([c])=>{out.avg[c]=0;out.cnt[c]=0;});ACC.forEach(([a])=>out.acc[a]={y:0,n:0});if(!k)return out;
@@ -2981,12 +2984,16 @@ document.addEventListener("change",e=>{const id=e.target.id;
 let TIPNOTES={},tnState="loading",tnOpen=null,tnBusy=false,tnMsg="",tnDraft={};
 function tnAll(){const out=[];Object.entries(TIPNOTES).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(n=>{if(n&&n.id&&n.key&&n.text)out.push({...n,uid,nkey:uid+":"+n.id});});});
   return out.filter(n=>!HIDDEN.includes("tn:"+n.nkey));}
-function tnFor(key){return tnAll().filter(n=>n.key===key).sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
+// per ritning: anteckningar grupperade per tips och antal sedda derbyn räknas en gång (inte en gång per kort)
+let TIPC=null;
+function tipCache(){const tn=new Map();tnAll().forEach(n=>{let a=tn.get(n.key);if(!a)tn.set(n.key,a=[]);a.push(n);});tn.forEach(a=>a.sort((x,y)=>String(x.at).localeCompare(String(y.at))));
+  const dc=new Map();if(myState==="ready")MY.attended.forEach(a=>{const x=derbyOfAtt(a);if(x)dc.set(x[0],(dc.get(x[0])||0)+1);});return{tn,dc};}
+function tnFor(key){if(TIPC)return TIPC.tn.get(key)||[];return tnAll().filter(n=>n.key===key).sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
 const derbySeen=id=>myState==="ready"&&Array.isArray(MY.derbies)&&MY.derbies.includes(id);
 function tipFeedback(type,id,club){const key=type+":"+id;const notes=tnState==="ready"?tnFor(key):[];const open=tnOpen===key;
   let mine="";
   if(myState==="ready"){
-    if(type==="derby"){const d=TIPS.derbies.find(x=>x[0]===id);const n=d?MY.attended.filter(a=>{const x=derbyOfAtt(a);return x&&x[0]===d[0];}).length:0;
+    if(type==="derby"){const d=TIPS.derbies.find(x=>x[0]===id);const n=!d?0:TIPC?(TIPC.dc.get(d[0])||0):MY.attended.filter(a=>{const x=derbyOfAtt(a);return x&&x[0]===d[0];}).length;
       mine=`<button class="btn small" data-logderby="${esc(id)}"${n?' aria-pressed="true"':""}>${n?`Sett ${n} ${n===1?"gång":"gånger"} · logga fler`:"Jag har sett derbyt – logga matchen"}</button>`;}
     else if(club&&C[club]){const n=type==="arena"?MY.attended.filter(a=>a.home===club||(C[club].s&&a.venue&&arenaKey(a.venue)===arenaKey(C[club].s))).length:MY.attended.filter(a=>a.home===club||a.away===club).length;
       mine=`<button class="btn small" data-logmatch="${esc(club)}"${n?' aria-pressed="true"':""}>${n?`${type==="arena"?"Varit här":"Sett"} ${n} ${n===1?"gång":"gånger"} · logga fler`:type==="arena"?"Jag har varit här – logga matchen":"Jag har sett klubben – logga matchen"}</button>`;}}
