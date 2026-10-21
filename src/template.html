@@ -1503,6 +1503,8 @@ function renderMine(){
 function addClubRow(id,label){return`<form class="addclub" data-addclub="${id}"><label class="fld" for="${id}-in">Lägg till klubb eller landslag<input id="${id}-in" list="allClubs" maxlength="80" placeholder="Sök klubb eller landslag"></label><button class="btn small" type="submit">${label}</button></form>`;}
 
 function myClick(t){
+  if(t.dataset.stcountry!==undefined){stCountry=t.dataset.stcountry;stLeague="";stOpen=null;renderMine();return;}
+  if(t.dataset.stleague!==undefined){stLeague=t.dataset.stleague;stOpen=null;renderMine();return;}
   if(t.dataset.stteam){stOpen=stOpen===t.dataset.stteam?null:t.dataset.stteam;renderMine();return;}
   if(t.dataset.visopen){visOpen=visOpen===t.dataset.visopen?null:t.dataset.visopen;renderMine();return;}
   if(t.dataset.stkind){stKind=t.dataset.stkind;store.set("fk-stkind",stKind);renderMine();return;}
@@ -1521,7 +1523,7 @@ function myClick(t){
     delete myConfirm[k];const[kind,...rest]=k.split(":");const id=rest.join(":");
     mutate(d=>{if(kind==="att")d.attended=d.attended.filter(a=>a.id!==id);if(kind==="vis")delete d.visited[id];if(kind==="wm")d.wishMatches=d.wishMatches.filter(w=>w.id!==id);if(kind==="wc")d.wishClubs=d.wishClubs.filter(x=>x!==id);});return;}
 }
-const isMyBtn=t=>t.dataset.myyear||t.dataset.mysub||t.dataset.stteam||t.dataset.visopen||t.dataset.stkind||t.dataset.stsort||t.id==="amOpen"||t.id==="amCancel"||t.dataset.wishm||t.dataset.attend||t.dataset.wmdone||t.dataset.visit||t.dataset.wishc||t.dataset.mydel;
+const isMyBtn=t=>t.dataset.stcountry!==undefined||t.dataset.stleague!==undefined||t.dataset.myyear||t.dataset.mysub||t.dataset.stteam||t.dataset.visopen||t.dataset.stkind||t.dataset.stsort||t.id==="amOpen"||t.id==="amCancel"||t.dataset.wishm||t.dataset.attend||t.dataset.wmdone||t.dataset.visit||t.dataset.wishc||t.dataset.mydel;
 document.addEventListener("submit",e=>{
   if(e.target.id==="addMatchForm"){e.preventDefault();const g=id=>document.getElementById(id).value.trim();
     const hn=g("amHome"),an=g("amAway"),date=g("amDate");if(!hn||!an||!date){myErr="Fyll i hemmalag, bortalag och datum.";renderMine();return;}
@@ -2102,7 +2104,7 @@ function askScore(attId){const a=MY.attended.find(x=>x.id===attId);if(!a)return;
 // ---------- lag jag sett ----------
 let stOpen=null,visOpen=null;
 function seenRowsHtml(list){return`<div class="seenlist">${list.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(a=>`<div class="seenrow"><span class="num">${esc(fmtDate(a.date))}</span><span><b>${esc(a.homeName)} ${a.score?`<span class="num">${esc(a.score)}</span>`:"–"} ${esc(a.awayName)}</b><span class="meta">${esc([a.venue,a.city].filter(Boolean).join(" · ")||"Arena ej angiven")}${a.comp?" · "+esc(a.comp):""}${derbyOfAtt(a)?` · ${ic("flame")} ${esc(derbyOfAtt(a)[1])}`:""}</span></span></div>`).join("")}</div>`;}
-let stKind="alla",stSort="n";
+let stKind="alla",stSort="n",stCountry="",stLeague="";
 try{const a=store.get("fk-stkind"),b=store.get("fk-stsort");if(["alla","klubb","landslag"].includes(a))stKind=a;if(["n","az","last"].includes(b))stSort=b;}catch(e){}
 function seenTeams(){const m=new Map();
   MY.attended.forEach(a=>{[[a.home,a.homeName,"h"],[a.away,a.awayName,"a"]].forEach(([id,name,side])=>{const c=id&&C[id];const nm=c?c.n:String(name||"").trim();if(!nm)return;
@@ -2112,9 +2114,18 @@ function seenTeams(){const m=new Map();
   return[...m.values()];}
 function renderSeenTeams(){const all=seenTeams();const nClub=all.filter(t=>!t.nat).length,nNat=all.length-nClub;
   let list=all.filter(t=>stKind==="alla"||(stKind==="landslag"?t.nat:!t.nat));
+  // land och serie: bara de man faktiskt sett lag från
+  const cOf=t=>t.nat?"Landslag":t.id&&C[t.id]?C[t.id].c:"Övrigt",lOf=t=>t.id&&C[t.id]&&!t.nat?C[t.id].l||"":"";
+  const cnt=(arr,f)=>{const m=new Map();arr.forEach(t=>{const k=f(t);if(k)m.set(k,(m.get(k)||0)+1);});return[...m.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"sv"));};
+  const cs=cnt(list,cOf);if(stCountry&&!cs.some(([k])=>k===stCountry))stCountry="";
+  if(stCountry)list=list.filter(t=>cOf(t)===stCountry);
+  const ls=stCountry&&stCountry!=="Landslag"?cnt(list,lOf):[];if(stLeague&&!ls.some(([k])=>k===stLeague))stLeague="";
+  if(stLeague)list=list.filter(t=>lOf(t)===stLeague);
+  const filt=cs.length>1?`<div class="lbl">Land</div><div class="chips wrapchips" role="group" aria-label="Land"><button class="chip" data-stcountry="" aria-pressed="${!stCountry}">Alla</button>${cs.map(([k,n])=>`<button class="chip" data-stcountry="${esc(k)}" aria-pressed="${stCountry===k}">${esc(k)} <small>${n}</small></button>`).join("")}</div>`:"";
+  const lfilt=ls.length>1?`<div class="lbl">Serie</div><div class="chips wrapchips" role="group" aria-label="Serie"><button class="chip" data-stleague="" aria-pressed="${!stLeague}">Alla serier</button>${ls.map(([k,n])=>`<button class="chip" data-stleague="${esc(k)}" aria-pressed="${stLeague===k}">${esc(k)} <small>${n}</small></button>`).join("")}</div>`:"";
   list.sort(stSort==="az"?(a,b)=>a.name.localeCompare(b.name,"sv"):stSort==="last"?(a,b)=>b.last.localeCompare(a.last)||b.n-a.n:(a,b)=>b.n-a.n||b.last.localeCompare(a.last)||a.name.localeCompare(b.name,"sv"));
   let h=`<div class="chips" role="group" aria-label="Typ av lag">${[["alla",`Alla <small>${all.length}</small>`],["klubb",`Klubblag <small>${nClub}</small>`],["landslag",`Landslag <small>${nNat}</small>`]].map(([k,l])=>`<button class="chip" data-stkind="${k}" aria-pressed="${stKind===k}">${l}</button>`).join("")}</div>
-    <div class="lbl">Sortera</div><div class="chips" role="group" aria-label="Sortera">${[["n","Flest matcher"],["last","Senast sedda"],["az","A–Ö"]].map(([k,l])=>`<button class="chip" data-stsort="${k}" aria-pressed="${stSort===k}">${l}</button>`).join("")}</div>`;
+    ${filt}${lfilt}<div class="lbl">Sortera</div><div class="chips" role="group" aria-label="Sortera">${[["n","Flest matcher"],["last","Senast sedda"],["az","A–Ö"]].map(([k,l])=>`<button class="chip" data-stsort="${k}" aria-pressed="${stSort===k}">${l}</button>`).join("")}</div>`;
   if(!all.length)return h+`<div class="empty">Här samlas alla lag du sett, både hemma- och bortalag. Lägg till matcher under <b>Varit på</b> så fylls listan på.</div>`;
   if(!list.length)return h+`<div class="empty">${stKind==="landslag"?"Du har inte sparat någon landskamp än.":"Inga klubblag sparade än."}</div>`;
   return h+`<p class="hint">${list.length} lag. Tryck på ett lag för att se matcherna du sett. V–O–F = vinster, oavgjorda och förluster i matcher där du fyllt i resultat.</p><div class="clist">${list.map(t=>{const open=stOpen===t.k;return`<div class="citem steam${open?" open":""}"><button class="sthead" data-stteam="${esc(t.k)}" aria-expanded="${open}"><span class="crow">${t.id?crest(t.id,t.name,32):`<span class="crest" style="--c1:var(--bg);--c2:var(--line);width:32px;height:32px;font-size:11px;color:var(--muted)">${esc(crestInitials(t.name))}</span>`}<span class="mmain">
