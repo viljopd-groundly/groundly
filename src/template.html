@@ -551,6 +551,13 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 .rcomh{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap;font-size:13px}.rcomh .link{margin-left:auto;font-size:12px}
 .rcomb{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;margin-top:2px}
 .rcform{display:flex;gap:8px;align-items:flex-end}.rcform textarea{flex:1;font:inherit;font-size:14px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);resize:vertical;min-height:40px}
+.leglist{display:flex;flex-direction:column;gap:8px;margin:6px 0 12px}
+.lgd{background:var(--bg);border-radius:10px;padding:10px 12px}
+.lgdh{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.lgdt{margin-top:4px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.lgdf{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:13px}.lgdf .mini[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.lgdf .link{margin-left:auto}
+.legrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.legform{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:12px}.legform .fld input,.legform .fld select,.legform .fld textarea{background:var(--bg)}
 </style>
 
 <div class="wrap">
@@ -878,7 +885,7 @@ function clubCard(c,isAi){const sel=openClub===c.id;
     ${isAi?"":`<dt>Nästa match</dt><dd>${up.length?up.map(m=>`<div>${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"Spelas "+rangeTxt(m))} · ${esc(m.homeName)} – ${esc(m.awayName)}</div>`).join(""):dbState==="ready"?"Inga matcher i schemat":"Laddar schema…"}</dd>`}
    </dl>
    ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">Matcher i ${esc(c.city)}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">Matcher i ${esc(c.city)}</button>`:"")+wishBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
-     return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">Lagets matcher</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} Tabell</button>`:""}${!isNat(c)&&c.l?`<button class="btn small" data-squad="${esc(c.id)}">Spelare</button>`:""}${favBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="Fler val">${more?"Färre":"⋯ Mer"}</button>`:""}</div>${more&&extra?`<div class="cmore">${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
+     return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">Lagets matcher</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} Tabell</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} Legender${legCount(c.id)?` (${legCount(c.id)})`:""}</button>${favBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="Fler val">${more?"Färre":"⋯ Mer"}</button>`:""}</div>${more&&extra?`<div class="cmore">${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
   return h+`</div>`;}
 let ntQ="",ntView="a";
 function cupArenaClub(name){const k=arenaKey(name);return Object.values(C).find(c=>c.s&&arenaKey(c.s)===k)||null;}
@@ -1105,9 +1112,59 @@ function squadHtml(id){const c=C[id];const S=XD.squads&&XD.squads.clubs&&XD.squa
    :`<p class="meta">Säsongen ${S.season}${String(S.season).length===4&&c.c!=="Sverige"&&c.c!=="Norge"&&c.c!=="Finland"&&c.c!=="Island"&&c.c!=="USA"?"/"+String((+S.season+1)%100).padStart(2,"0"):""}, alla tävlingar. Sorterat på speltid.</p><div class="tblwrap"><table class="ltbl sq"><thead><tr><th class="tl">Spelare</th><th title="Position">Pos</th><th title="Matcher">M</th><th title="Minuter">Min</th><th title="Mål">Mål</th><th title="Assist">Ass</th><th title="Gula kort">G</th><th title="Röda kort">R</th></tr></thead><tbody>
      ${S.players.map(p=>`<tr><td class="tl">${esc(p[0])}${p[2]?` <span class="meta">${p[2]} år</span>`:""}</td><td class="n">${esc(POS_SV[p[1]]||"")}</td><td class="n">${p[3]}</td><td class="n">${p[4]}</td><td class="n"><b>${p[5]}</b></td><td class="n">${p[6]}</td><td class="n">${p[7]}</td><td class="n">${p[8]}</td></tr>`).join("")}</tbody></table></div>`;
   return`<div id="sqOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="sqT"><div class="compose askbox pvbox msbox"><div class="mshead"><h2 id="sqT" class="msteams">${crest(id,c.n,28)} ${esc(c.n)}</h2><button class="btn small" id="sqClose">Stäng</button></div>${body}</div></div>`;}
+// ---------- klubblegender (användarnas egna) ----------
+// legends/{uid}.items=[{id,club,name,role,years,text,at}], legvotes/{uid}.keys=["uid:id",…]
+let LEG={},LEGV={},legState="idle",legOpen=null,legMsg="",legBusy=false;
+const LEG_ROLE={p:"Spelare",t:"Tränare",b:"Spelare och tränare"};
+const legNorm=x=>norm(String(x||"")).replace(/\s+/g," ").trim();
+function legAll(club){const out=[];Object.entries(LEG).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(x=>{if(x&&x.id&&x.name&&(!club||x.club===club)&&!HIDDEN.includes("leg:"+uid+":"+x.id))out.push({...x,uid,key:uid+":"+x.id});});});return out;}
+function legVotes(key){let n=0;Object.values(LEGV).forEach(d=>{if(d&&Array.isArray(d.keys)&&d.keys.includes(key))n++;});return n;}
+function legCount(id){return legState==="ready"?legAll(id).length:0;}
+function legStart(){if(legState!=="idle"||!dbNs)return;legState="loading";
+  dbNs.collection("legends").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});LEG=o;legState="ready";resolveNames&&resolveNames(Object.keys(o).filter(id=>id!==myId&&!(id in NAMES))).then(()=>legRender());legRender();if(mode==="klubbar"||mode==="landslag")render();},()=>{legState="none";legRender();});
+  dbNs.collection("legvotes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});LEGV=o;legRender();},()=>{});}
+function legHtml(id){const c=C[id];const list=legAll(id).map(x=>({...x,v:legVotes(x.key)})).sort((a,b)=>b.v-a.v||String(a.at).localeCompare(String(b.at)));
+  const mine=LEGV[myId]&&Array.isArray(LEGV[myId].keys)?LEGV[myId].keys:[];const can=!!(dbNs&&myId);
+  const items=legState!=="ready"?`<p class="meta">${legState==="none"?"Legenderna kunde inte hämtas.":"Hämtar legender…"}</p>`:!list.length?`<p class="meta">Inga legender för ${esc(c.n)} än. Vem borde stå här? Lägg till den första!</p>`
+   :list.map(x=>`<div class="lgd"><div class="lgdh"><b>${esc(x.name)}</b><span class="pill sm">${esc(LEG_ROLE[x.role]||"Spelare")}</span>${x.years?`<span class="meta">${esc(x.years)}</span>`:""}</div>
+      ${x.text?`<div class="lgdt">${esc(x.text)}</div>`:""}
+      <div class="lgdf"><span class="meta">Tillagd av ${esc(who(x.uid))}</span>
+        ${can?`<button class="mini" data-legvote="${esc(x.key)}" aria-pressed="${mine.includes(x.key)}">${ic("heart",mine.includes(x.key)?"on":"")} ${mine.includes(x.key)?"Håller med":"Håller med"}${x.v?` (${x.v})`:""}</button>`:x.v?`<span class="meta">${ic("heart")} ${x.v}</span>`:""}
+        ${x.uid===myId?`<button class="link" data-legdel="${esc(x.id)}">Ta bort</button>`:isMod?`<button class="link" data-leghide="${esc(x.key)}">Dölj</button>`:""}</div></div>`).join("");
+  const form=can?`<form class="legform" id="legForm" data-legfor="${esc(id)}"><h3 class="sec">Lägg till en legend</h3>
+      <label class="fld">Namn<input name="n" maxlength="60" required placeholder="t.ex. ${isNat(c)?"Zlatan Ibrahimović":"spelarens eller tränarens namn"}"></label>
+      <div class="legrow"><label class="fld">Roll<select name="r"><option value="p">Spelare</option><option value="t">Tränare</option><option value="b">Spelare och tränare</option></select></label>
+      <label class="fld">År i klubben<input name="y" maxlength="20" placeholder="t.ex. 1985–1994"></label></div>
+      <label class="fld">Varför en legend?<textarea name="t" maxlength="300" rows="2" placeholder="Mål, titlar, en oförglömlig match…"></textarea></label>
+      ${legMsg?`<p class="err">${esc(legMsg)}</p>`:""}<div class="actions"><button class="btn small primary" type="submit"${legBusy?" disabled":""}>Lägg till</button></div></form>`
+    :`<p class="meta">Logga in för att lägga till legender.</p><button class="btn small" data-glogin>Logga in</button>`;
+  const sq=!isNat(c)&&c.l?`<p><button class="link" data-squad="${esc(id)}">Nuvarande trupp och statistik</button></p>`:"";
+  return`<div id="lgOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="lgT"><div class="compose askbox pvbox msbox"><div class="mshead"><h2 id="lgT" class="msteams">${crest(id,c.n,28)} ${esc(c.n)} – legender</h2><button class="btn small" id="lgClose">Stäng</button></div>
+    <div class="leglist">${items}</div>${form}${sq}</div></div>`;}
+function legRender(){const o=document.getElementById("lgOv");if(!o||!legOpen)return;
+  const f=document.getElementById("legForm");const keep=f?{n:f.n.value,r:f.r.value,y:f.y.value,t:f.t.value}:null;const ae=document.activeElement&&document.activeElement.name;
+  const sc=o.querySelector(".msbox")?o.querySelector(".msbox").scrollTop:0;o.outerHTML=legHtml(legOpen);
+  const o2=document.getElementById("lgOv");if(o2&&o2.querySelector(".msbox"))o2.querySelector(".msbox").scrollTop=sc;
+  const f2=document.getElementById("legForm");if(f2&&keep){f2.n.value=keep.n;f2.r.value=keep.r;f2.y.value=keep.y;f2.t.value=keep.t;if(ae&&f2[ae])f2[ae].focus({preventScroll:true});}}
+function openLegends(id){if(!C[id])return;legOpen=id;legMsg="";legStart();const o=document.getElementById("lgOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",legHtml(id));}
+async function legWrite(fn){if(!dbNs||!myId||legBusy)return false;legBusy=true;const cur=LEG[myId]&&Array.isArray(LEG[myId].items)?LEG[myId].items:[];const next=fn(cur.slice()).slice(-200);
+  try{await dbNs.doc("legends/"+myId).set({items:next});LEG={...LEG,[myId]:{items:next}};return true;}catch(e){legMsg=e&&e.code==="invalid_argument"?"Du har inte behörighet att spara.":"Kunde inte spara. Försök igen.";return false;}finally{legBusy=false;}}
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-legends],#lgClose,#lgOv,[data-legvote],[data-legdel],[data-leghide]");if(!t)return;
+  if(t.id==="lgOv"&&e.target!==t)return;
+  if(t.dataset.legends){openLegends(t.dataset.legends);return;}
+  if(t.id==="lgClose"||t.id==="lgOv"){const o=document.getElementById("lgOv");if(o)o.remove();legOpen=null;return;}
+  if(t.dataset.legvote){if(!dbNs||!myId)return;const k=t.dataset.legvote;const cur=LEGV[myId]&&Array.isArray(LEGV[myId].keys)?LEGV[myId].keys:[];const next=cur.includes(k)?cur.filter(x=>x!==k):[...cur,k].slice(-500);
+    LEGV={...LEGV,[myId]:{keys:next}};legRender();try{await dbNs.doc("legvotes/"+myId).set({keys:next});}catch(err){toast("Kunde inte spara.");}return;}
+  if(t.dataset.legdel){const id=t.dataset.legdel;if(t.dataset.sure!=="1"){t.dataset.sure="1";t.textContent="Tryck igen för att ta bort";return;}if(await legWrite(xs=>xs.filter(x=>x.id!==id)))legRender();return;}
+  if(t.dataset.leghide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"leg:"+t.dataset.leghide])]});}catch(err){toast("Kunde inte dölja.");}legRender();return;}});
+document.addEventListener("submit",async e=>{if(e.target.id!=="legForm")return;e.preventDefault();const f=e.target;const club=f.dataset.legfor;
+  const name=f.n.value.trim().slice(0,60),role=["p","t","b"].includes(f.r.value)?f.r.value:"p",years=f.y.value.trim().slice(0,20),text=f.t.value.trim().slice(0,300);if(!name)return;
+  const dup=legAll(club).find(x=>legNorm(x.name)===legNorm(name));if(dup){legMsg=`${dup.name} finns redan – tryck på Håller med i stället.`;legRender();return;}
+  legMsg="";const ok=await legWrite(xs=>[...xs,{id:Math.random().toString(36).slice(2,10),club,name,role,years,text,at:new Date().toISOString()}]);
+  if(ok){f.reset();}legRender();});
 function openSquad(id){if(!C[id])return;const o=document.getElementById("sqOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",squadHtml(id));
   if(!XD.squads)loadXD("squads").then(()=>{const o2=document.getElementById("sqOv");if(o2){o2.outerHTML=squadHtml(id);}});}
-document.addEventListener("click",e=>{const t=e.target.closest("[data-squad],#sqClose,#sqOv,[data-tblstat]");if(!t)return;
+document.addEventListener("click",e=>{const t=e.target.closest("[data-squad],#sqClose,#sqOv,[data-tblstat]");if(!t)return;if(t.dataset.squad){const lo=document.getElementById("lgOv");if(lo)lo.remove();}
   if(t.dataset.tblstat){tblStat=t.dataset.tblstat;const y=window.scrollY,old=document.getElementById("statBoard");
     // byt bara ut spelarligan, så att sidan står still
     if(old){old.outerHTML=statBoardHtml(tblLeague);window.scrollTo({top:y});const nb=document.querySelector(`#statBoard [data-tblstat="${tblStat}"]`);if(nb)nb.focus({preventScroll:true});}else renderTable();return;}
