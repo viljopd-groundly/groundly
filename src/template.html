@@ -1898,7 +1898,8 @@ function travelRows(c,parts){if(!c.s)return parts?{tr:"",tk:""}:"";const a=trave
   const trChips=ynChip(a,"kombi","Lokaltrafik ingår i biljetten")+ynChip(a,"extra","Extratåg och extrabussar");
   const de=c.c==="Tyskland"||c.c==="Österrike"?" I Tyskland och Österrike ingår ofta lokaltrafiken i matchbiljetten, så läs på biljetten.":"";
   const tr=st||walk||trChips?`${st?`<div><b>${esc(st[0])}</b>${walk?` · ca ${walk} min promenad`:""}</div>`:walk?`<div>ca ${walk} min promenad från närmaste station</div>`:""}${trChips?`<div class="accs">${trChips}</div>`:""}`:`<span class="meta">Ingen information än.${de}</span>`;
-  const tkChips=ynChip(a,"member","Medlemskap krävs");
+  // medlemskap visas bara när det faktiskt krävs (de flesta klubbar säljer till alla)
+  const mem=a.yn.member;const tkChips=mem&&mem.y>mem.n?ynChip(a,"member","Medlemskap krävs"):"";
   const tk=a.where.length||a.price.length||a.away.length||tkChips?`${a.where.length?`<div>${esc(a.where[0])}</div>`:""}${a.price.length?`<div class="meta">Rapporterade priser: ${uniq(a.price).slice(0,3).map(esc).join(", ")}</div>`:""}${a.away.length?`<div class="meta">Bortasektion: ${esc(a.away[0])}</div>`:""}${tkChips?`<div class="accs">${tkChips}</div>`:""}`:`<span class="meta">Ingen information än.</span>`;
   const by=a.n?`<div class="meta">Från ${a.n} ${a.n===1?"besökare":"besökare"}.</div>`:"";
   const tkHas=a.where.length||a.price.length||a.away.length||tkChips;
