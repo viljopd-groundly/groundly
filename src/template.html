@@ -826,7 +826,10 @@ function setMode(m){const prev=mode,y0=window.scrollY;
   mode=m;store.set("fk-mode",m);window.__gmode=m;try{window.dispatchEvent(new CustomEvent("gmode",{detail:m}));}catch(e){}
   document.querySelectorAll(".mode").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===m)));
   ["hem","klubbar","landslag","arenor","matcher","tabell","tips","quiz","reportage","forum","mine"].forEach(v=>{const s=document.getElementById("v-"+v);s.hidden=m!==v;s.style.display=m===v?"contents":"none";});
-  if(typeof syncNav==="function")syncNav();render();syncBack();}
+  if(typeof syncNav==="function")syncNav();
+  // ett fel i en vy får aldrig låsa menyn
+  try{render();}catch(e){console.error("[groundly] render",e);try{toast("Något gick fel i vyn. Prova att ladda om sidan.");}catch(_){}}
+  syncBack();}
 try{history.replaceState({m:mode,y:0},"");}catch(e){}window.__gmode=mode;
 document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 // bottenmenyn
@@ -1007,7 +1010,7 @@ function renderMatchList(){
   else if(hasQ&&radius>0&&place&&place.ai){pr.hidden=false;pr.innerHTML=`<span>Mäter från <b>${esc(place.name)}</b> (position från Claude).</span>`;}
   else pr.hidden=true;
   document.getElementById("tierChips").innerHTML=`<button class="chip" data-tier="all" aria-pressed="${tiers.size===0}">Alla</button>`+TIERS.map(([k,l])=>`<button class="chip" data-tier="${k}" aria-pressed="${tiers.has(k)}">${l}</button>`).join("")+(favList().length?`<button class="chip" data-favonly="1" aria-pressed="${favOnly}">${STAR(1)} ${favList().length===1?esc(C[favList()[0]].n):"Mina lag"}</button>`:"");
-  if(citiesFor!==MATCHES){citiesFor=MATCHES;const cities=[...new Set([...MATCHES.map(m=>m.city),...Object.keys(GEO)])].sort((a,b)=>a.localeCompare(b,"sv"));
+  if(citiesFor!==MATCHES){citiesFor=MATCHES;const cities=[...new Set([...MATCHES.map(m=>m.city),...Object.keys(GEO)])].filter(Boolean).sort((a,b)=>a.localeCompare(b,"sv"));
     const html=cities.map(c=>`<option value="${esc(c)}">`).join("");const dl=document.getElementById("cities");if(dl.innerHTML!==html)dl.innerHTML=html;}
   const el=document.getElementById("matchList"),cn=document.getElementById("matchCount");
   if(dbState!=="ready"){cn.textContent="";
@@ -2409,8 +2412,14 @@ let ARENAS=null;
 function arenas(){if(ARENAS)return ARENAS;const map=new Map();
   Object.values(C).forEach(c=>{if(!c.s)return;const k=arenaKey(c.s);if(!map.has(k))map.set(k,{k,s:c.s,city:c.city,c:c.c,cap:c.cap||null,clubs:[]});const x=map.get(k);x.clubs.push(c);if(c.cap&&(!x.cap||c.cap>x.cap))x.cap=c.cap;});
   ARENAS=[...map.values()];ARENAS.forEach(x=>{x.hay=norm([x.s,x.city,x.c,...x.clubs.map(c=>c.n+" "+(c.a||""))].join(" "));});return ARENAS;}
-function arenaUpcoming(x){if(dbState!=="ready")return[];const now=Date.now()-2*36e5;const ids=new Set(x.clubs.map(c=>c.id));
-  return MATCHES.filter(m=>(m.venue?arenaKey(m.venue)===x.k:ids.has(m.home))&&(m.kickoff?Date.parse(m.kickoff)>now:m.dateTo>=today())).sort(sortM);}
+// kommande matcher per arena: index som byggs en gång per matchschema (i stället för att gå igenom alla matcher för varje arena)
+let UPIDX=null;
+function upIndex(){const now=Date.now()-2*36e5;const day=today();
+  if(UPIDX&&UPIDX.m===MATCHES&&UPIDX.day===day&&now-UPIDX.at<36e5)return UPIDX;
+  const byKey=new Map(),byHome=new Map();const push=(mp,k,m)=>{let a=mp.get(k);if(!a)mp.set(k,a=[]);a.push(m);};
+  for(const m of MATCHES){if(!(m.kickoff?Date.parse(m.kickoff)>now:m.dateTo>=day))continue;if(m.venue)push(byKey,arenaKey(m.venue),m);else push(byHome,m.home,m);}
+  return UPIDX={m:MATCHES,day,at:Date.now(),byKey,byHome};}
+function arenaUpcoming(x){if(dbState!=="ready")return[];const I=upIndex();const out=[...(I.byKey.get(x.k)||[])];x.clubs.forEach(c=>{const h=I.byHome.get(c.id);if(h)out.push(...h);});return out.sort(sortM);}
 const arenaVisited=x=>myState==="ready"&&visitedStadiums().has(x.s);
 const arenaHasAcc=a=>ACC.some(([k])=>a.acc[k].y||a.acc[k].n);
 const AFILT=[["up","Kommande matcher"],["acc","Tillgänglighetsinfo"],["rated","Har betyg"],["notv","Inte besökta"]];
