@@ -2795,7 +2795,7 @@ function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl
   const nx=dbState==="ready"&&fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
   return`<article class="tip"><div class="sechead"><h2 class="name">Din säsong ${YEAR}</h2><button class="link strong" data-gomine="1">Min fotboll</button></div>
     <div class="stats"><div><b>${s.matches}</b><span>matcher</span></div><div><b>${s.arenas}</b><span>arenor</span></div><div><b>${s.countries}</b><span>länder</span></div><div><b>${s.nat}</b><span>landskamper</span></div></div>
-    ${nx?`<div class="anext"><b>Nästa för dina lag:</b> ${esc(dayLabel(dayKey(new Date(nx.kickoff))))} ${timeOf(nx.kickoff)} · ${esc(nx.homeName)} – ${esc(nx.awayName)}</div>`:fl.length?"":`<p class="hint">Välj favoritlag under Min fotboll så visas deras nästa match här.</p>`}</article>`;}
+    ${nx?`<div class="anext"><b>Nästa för dina lag:</b> ${esc(dayLabel(dayKey(new Date(nx.kickoff))))} ${timeOf(nx.kickoff)}<br>${esc(nx.homeName)} – ${esc(nx.awayName)}</div>`:fl.length?"":`<p class="hint">Välj favoritlag under Min fotboll så visas deras nästa match här.</p>`}</article>`;}
 function latestHtml(){const parts=[];
   if(repState==="ready"){const reps=allReps().filter(r=>!r.draft);const last=reps.slice().sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0];
     const ym=new Date().toISOString().slice(0,7);const pop=reps.filter(r=>String(r.at).startsWith(ym)).map(r=>({r,n:likeCount(r.key)})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
