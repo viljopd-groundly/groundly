@@ -203,6 +203,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .star{all:unset;cursor:pointer;font-size:26px;line-height:1;color:var(--flood);padding:2px 3px}
 .star:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:4px}
 .yn{display:flex;gap:4px}
+.mlmore{display:flex;justify-content:center;padding:8px 0 4px}
 .dopts{display:flex;flex-direction:column;gap:10px}.dopts[hidden]{display:none}
 .combo{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
 .combo-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:14px}
@@ -1022,10 +1023,10 @@ function placeDist(m,place){const nq=norm(cityQ);if(!nq)return -1;
   if(!place||!place.ll)return null;const ll=GEO[m.city];if(!ll)return null;const km=haversine(place.ll,ll);return km<=radius*10+0.01?km:null;}
 
 let citiesFor=null;
-function renderMatches(){matchKindChips();
+function renderMatches(){matchKindChips();MLQ=null;
   document.getElementById("matchViewChips").innerHTML=[["list","Matcher"],["team","Lag"],["double","Dubbelmatcher"],...(AI_ON?[["plan","Planera med Claude"]]:[])].map(([k,l])=>`<button class="chip" data-mview="${k}" aria-pressed="${matchView===k}">${l}</button>`).join("");
   document.getElementById("doubleOpts").hidden=matchView!=="double";
-  document.getElementById("v-matcher").classList.toggle("planmode",matchView==="plan"||matchView==="team");if(matchView==="plan"){renderPlanner();return;}if(matchView==="team"){renderTeamView();return;}renderMatchList();if(matchView==="double")renderDouble();}
+  document.getElementById("v-matcher").classList.toggle("planmode",matchView==="plan"||matchView==="team");if(matchView==="plan"){renderPlanner();return;}if(matchView==="team"){renderTeamView();return;}renderMatchList();if(matchView==="double"){MLQ=null;renderDouble();}}
 function renderMatchList(){
   if(dTo<dFrom)dTo=dFrom;
   document.getElementById("dFrom").value=dFrom;document.getElementById("dTo").value=dTo;
@@ -1061,9 +1062,18 @@ function renderMatchList(){
     else if(hasQ&&radius>0&&place&&!place.ll)why="Hitta orten först, så kan avståndet räknas ut.";
     el.innerHTML=`<div class="empty"><b>Inga matcher hittades.</b><div>${why}</div></div>`;return;}
   const now=Date.now();const showKm=hasQ&&radius>0;
-  let h=[...byDay.entries()].map(([k,g])=>`<div class="day">${esc(dayLong(k).replace(/^./,s=>s.toUpperCase()))}<span>${g.length} ${g.length===1?"match":"matcher"}</span></div>`+g.map(([m,d])=>matchRow(m,now,showKm?d:-1)).join("")).join("");
-  if(tbd.length)h+=`<div class="day">Datum ej spikat<span>${tbd.length} ${tbd.length===1?"match":"matcher"}</span></div>`+tbd.map(([m,d])=>matchRow(m,now,showKm?d:-1)).join("");
-  el.innerHTML=h;}
+  // visa i omgångar: de första direkt, resten när man scrollar nedåt (stora listor blev sega)
+  const items=[];
+  for(const[k,g]of byDay){items.push(`<div class="day">${esc(dayLong(k).replace(/^./,s=>s.toUpperCase()))}<span>${g.length} ${g.length===1?"match":"matcher"}</span></div>`);g.forEach(x=>items.push(x));}
+  if(tbd.length){items.push(`<div class="day">Datum ej spikat<span>${tbd.length} ${tbd.length===1?"match":"matcher"}</span></div>`);tbd.forEach(x=>items.push(x));}
+  el.innerHTML="";MLQ={items,i:0,now,km:showKm,el,left:sel.length};mlMore(30);}
+let MLQ=null,mlIO=null;
+function mlMore(n){const q=MLQ;if(!q||!q.el.isConnected)return;const old=document.getElementById("mlMore");if(old)old.remove();
+  let h="",c=0;while(q.i<q.items.length&&c<n){const it=q.items[q.i++];if(typeof it==="string")h+=it;else{h+=matchRow(it[0],q.now,q.km?it[1]:-1);c++;q.left--;}}
+  if(q.i<q.items.length)h+=`<div id="mlMore" class="mlmore"><button class="btn small" data-mlmore="1">Visa fler matcher (${q.left} till)</button></div>`;
+  q.el.insertAdjacentHTML("beforeend",h);
+  const sen=document.getElementById("mlMore");if(sen&&"IntersectionObserver"in window){if(!mlIO)mlIO=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))requestAnimationFrame(()=>mlMore(60));},{rootMargin:"900px 0px"});mlIO.disconnect();mlIO.observe(sen);}}
+document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[data-mlmore]"))mlMore(100);});
 let teamId=null;try{const t=store.get("fk-team");if(t)teamId=t;}catch(e){}
 function renderTeamView(){document.getElementById("matchCount").innerHTML="";const el=document.getElementById("matchList");
   if(!document.getElementById("teamIn")){el.innerHTML=`<label class="search" for="teamIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="teamIn" type="search" placeholder="Sök lag, t.ex. Hammarby eller Arsenal" autocomplete="off" enterkeyhint="search"></label><div class="sugg" id="teamSug" hidden></div><div id="teamRes" class="list"></div>`;
