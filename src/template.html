@@ -135,7 +135,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .tip p{margin:0;max-width:62ch}
 .tip .teams{font-size:15px}
 .tipx{position:relative;overflow:hidden;padding-top:17px}
-.tipx[style]:before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--band)}
+.tipx:before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 45%,var(--surface)))}
 .tteams{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-weight:600}
 .tteams button{display:inline-flex;align-items:center;gap:7px}
 .tiph-c{flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:12px}.tiph-c .meta{display:block}
@@ -1301,7 +1301,7 @@ function nextMeeting(ids){const set=new Set(ids);const I=upIndex();const out=[];
 const teamBtn=id=>C[id]?`<button data-open="${esc(id)}">${esc(C[id].n)}</button>`:"";
 const teamBtnC=id=>C[id]?`<button data-open="${esc(id)}">${crest(id,C[id].n,26)}${esc(C[id].n)}${favStar(id)}</button>`:"";
 // tunn färgrand överst på tipskort med klubbarnas färger
-function tipBand(ids){const cs=ids.map(id=>COLORS[id]&&COLORS[id][0]).filter(Boolean);if(!cs.length)return"";const n=cs.length;
+function tipBand(ids){return"";const cs=ids.map(id=>COLORS[id]&&COLORS[id][0]).filter(Boolean);if(!cs.length)return"";const n=cs.length;
   return` style="--band:linear-gradient(90deg,${cs.map((c,i)=>`${c} ${i*100/n}%,${c} ${(i+1)*100/n}%`).join(",")})"`;}
 function nextBox(lbl,m,teams){const when=m.kickoff?dayLong(dayKey(new Date(m.kickoff))).replace(/^./,x=>x.toUpperCase())+" · "+timeOf(m.kickoff):"Spelas "+rangeTxt(m);
   return`<div class="nextbox mrowx"${mrowAttr(m)}><div class="nbt"><span class="nbl">${lbl}</span><b>${esc(when)}</b><span>${teams}${m.venue||m.city?` · ${esc(m.venue||m.city)}`:""}</span></div>${tixMini(m,"btn small")}</div>`;}
