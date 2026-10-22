@@ -14,6 +14,10 @@ on:
         description: "Kör nattuppdateringen först"
         type: boolean
         default: true
+      backfill:
+        description: "Äldre säsonger till arkivet, t.ex. se.1:2010-2025,se.3n:2016-2025"
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -37,6 +41,7 @@ jobs:
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.nightly)
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          BACKFILL: ${{ inputs.backfill }}
         run: |
           [ -f site/data/events.json ] && cp site/data/events.json tools/prev_events.json || true
           mkdir -p "$RUNNER_TEMP/work"
