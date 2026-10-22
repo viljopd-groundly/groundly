@@ -134,6 +134,16 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .tip h2.name{font-size:21px}
 .tip p{margin:0;max-width:62ch}
 .tip .teams{font-size:15px}
+.tipx{position:relative;overflow:hidden;padding-top:17px}
+.tipx[style]:before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--band)}
+.tteams{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-weight:600}
+.tteams button{display:inline-flex;align-items:center;gap:7px}
+.tiph-c{flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:12px}.tiph-c .meta{display:block}
+.nextbox{display:flex;align-items:center;justify-content:space-between;gap:10px 12px;flex-wrap:wrap;background:var(--accent-soft);border-radius:12px;padding:10px 12px;cursor:pointer}
+.nbt{display:flex;flex-direction:column;gap:1px;min-width:0;font-size:14px}
+.nbt .nbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--accent)}
+.nbt b{font-size:15px}.nbt span:last-child{color:var(--muted)}
+.tipfb>.actions{gap:8px}
 .next{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
 .next.on{color:var(--fg)}
 .next b{color:var(--accent)}
@@ -686,7 +696,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 
   <!-- Tips -->
   <section id="v-tips" hidden style="display:contents">
-    <div class="chips" role="group" aria-label="Typ av tips" id="tipsChips"></div>
+    <div class="chips wrapchips" role="group" aria-label="Typ av tips" id="tipsChips"></div>
     <div class="list" id="tipsList"></div>
   </section>
 
@@ -1289,6 +1299,12 @@ let tipsTab="derby";try{const tt=store.get("fk-tips");if(tt==="cult"||tt==="top"
 function nextMeeting(ids){const set=new Set(ids);const I=upIndex();const out=[];
   set.forEach(h=>{(I.allHome.get(h)||[]).forEach(m=>{if(set.has(m.away))out.push(m);});});return out.sort(sortM)[0]||null;}
 const teamBtn=id=>C[id]?`<button data-open="${esc(id)}">${esc(C[id].n)}</button>`:"";
+const teamBtnC=id=>C[id]?`<button data-open="${esc(id)}">${crest(id,C[id].n,26)}${esc(C[id].n)}${favStar(id)}</button>`:"";
+// tunn färgrand överst på tipskort med klubbarnas färger
+function tipBand(ids){const cs=ids.map(id=>COLORS[id]&&COLORS[id][0]).filter(Boolean);if(!cs.length)return"";const n=cs.length;
+  return` style="--band:linear-gradient(90deg,${cs.map((c,i)=>`${c} ${i*100/n}%,${c} ${(i+1)*100/n}%`).join(",")})"`;}
+function nextBox(lbl,m,teams){const when=m.kickoff?dayLong(dayKey(new Date(m.kickoff))).replace(/^./,x=>x.toUpperCase())+" · "+timeOf(m.kickoff):"Spelas "+rangeTxt(m);
+  return`<div class="nextbox mrowx"${mrowAttr(m)}><div class="nbt"><span class="nbl">${lbl}</span><b>${esc(when)}</b><span>${teams}${m.venue||m.city?` · ${esc(m.venue||m.city)}`:""}</span></div>${tixMini(m,"btn small")}</div>`;}
 function renderTips(){TIPC=tipCache();try{renderTips0();}finally{TIPC=null;}}
 function renderTips0(){
   document.getElementById("tipsChips").innerHTML=[["derby",`Heta derbyn<small>${TIPS.derbies.length}</small>`],["cult",`Kultklubbar<small>${TIPS.cult.length}</small>`],["arenas",`Speciella arenor<small>${(TIPS.arenas||[]).length}</small>`],["top","Bäst betyg"]]
@@ -1297,16 +1313,16 @@ function renderTips0(){
   if(tipsTab==="derby"){
     el.innerHTML=TIPS.derbies.map(([id,name,ids,where,why])=>{const nm=dbState==="ready"?nextMeeting(ids):null;
       const sep=ids.length===2?`<span class="vs">mot</span>`:`<span class="vs">·</span>`;
-      return`<article class="tip">
+      return`<article class="tip tipx"${tipBand(ids)}>
         <div class="tip-head"><h2 class="name">${esc(name)}</h2><span class="meta">${esc(where)}</span></div>
-        <div class="teams">${ids.map(teamBtn).join(sep)}</div>
+        <div class="teams tteams">${ids.map(teamBtnC).join(sep)}</div>
         <p>${esc(why)}</p>
-        <div class="next${nm?" on mrow":""}"${mrowAttr(nm)}>${nm?`<b>Nästa i schemat:</b> ${esc(nm.kickoff?dayLong(dayKey(new Date(nm.kickoff)))+" kl "+timeOf(nm.kickoff):"spelas "+rangeTxt(nm))} · ${esc(nm.homeName)} – ${esc(nm.awayName)}, ${esc(nm.venue||nm.city)} ${tixMini(nm)}`:dbState==="ready"?"Inget möte i det inlagda schemat just nu.":"Laddar schema…"}</div>
+        ${nm?nextBox("Nästa möte",nm,`${esc(nm.homeName)} – ${esc(nm.awayName)}`):`<div class="next">${dbState==="ready"?"Inget möte i det inlagda schemat just nu.":"Laddar schema…"}</div>`}
         ${tipFeedback("derby",id,null)}
       </article>`;}).join("");
   }else if(tipsTab==="arenas"){
     el.innerHTML=(TIPS.arenas||[]).map(([id,why])=>{const c=C[id];if(!c||!c.s)return"";const k=arenaKey(c.s);const ax=arenas().find(x=>x.k===k);const sharers=ax?ax.clubs:[c];const sf=surfaceOf(c);const visited=myState==="ready"&&visitedStadiums().has(c.s);
-      return`<article class="tip"><div class="tip-head"><h2 class="name">${esc(c.s)}</h2><span class="meta">${esc([c.city,c.c].join(", "))}</span></div>
+      return`<article class="tip tipx"${tipBand(sharers.map(o=>o.id))}><div class="tip-head"><h2 class="name">${esc(c.s)}</h2><span class="meta">${esc([c.city,c.c].join(", "))}</span></div>
         <div class="teams">${sharers.map(o=>`<button data-open="${esc(o.id)}">${crest(o.id,o.n,22)}${esc(o.n)}${favStar(o.id)}</button>`).join('<span class="vs">·</span>')}</div>
         <div class="mp">${c.cap?`<span class="pill">${fmtCap(c.cap)} platser</span>`:""}${sf?`<span class="pill">${esc(SURF_LBL[sf.v])}</span>`:""}${visited?`<span class="pill t1">Besökt ${OK}</span>`:""}</div>
         <p>${esc(why)}</p>
@@ -1315,11 +1331,11 @@ function renderTips0(){
   }else if(tipsTab==="top"){el.innerHTML=renderTopRated();
   }else{
     el.innerHTML=TIPS.cult.map(([id,why])=>{const c=C[id];if(!c)return"";const up=dbState==="ready"?upcomingFor(id)[0]:null;
-      return`<article class="tip">
-        <div class="tip-head"><h2 class="name">${esc(c.n)}</h2><span class="meta">${esc([c.city,c.c].join(", "))}${c.f?` · grundad ${c.f}`:""}</span></div>
+      return`<article class="tip tipx"${tipBand([id])}>
+        <div class="tip-head tiph-c">${crest(id,c.n,40)}<div><h2 class="name">${esc(c.n)}</h2><span class="meta">${esc([c.city,c.c].join(", "))}${c.f?` · grundad ${c.f}`:""}</span></div></div>
         <div class="mp">${c.l?tierPill(c.t,c.l):""}${c.s?`<span class="pill">${esc(c.s)}</span>`:""}</div>
         <p>${esc(why)}</p>
-        ${up?`<div class="next on"><b>Nästa match:</b> ${esc(up.kickoff?dayLong(dayKey(new Date(up.kickoff)))+" kl "+timeOf(up.kickoff):"spelas "+rangeTxt(up))} · ${esc(up.homeName)} – ${esc(up.awayName)}</div>`:""}
+        ${up?nextBox("Nästa match",up,`${esc(up.homeName)} – ${esc(up.awayName)}`):""}
         <div class="actions"><button class="btn small" data-open="${esc(id)}">Visa klubbfakta</button>${GEO[c.city]?`<button class="btn small primary" data-near="${esc(c.city)}">Matcher inom 5 mil</button>`:""}</div>
         ${tipFeedback("cult",id,id)}
       </article>`;}).join("");}
@@ -3052,9 +3068,9 @@ function tipFeedback(type,id,club){const key=type+":"+id;const notes=tnState==="
   let mine="";
   if(myState==="ready"){
     if(type==="derby"){const d=TIPS.derbies.find(x=>x[0]===id);const n=!d?0:TIPC?(TIPC.dc.get(d[0])||0):MY.attended.filter(a=>{const x=derbyOfAtt(a);return x&&x[0]===d[0];}).length;
-      mine=`<button class="btn small" data-logderby="${esc(id)}"${n?' aria-pressed="true"':""}>${n?`Sett ${n} ${n===1?"gång":"gånger"} · logga fler`:"Jag har sett derbyt – logga matchen"}</button>`;}
+      mine=`<button class="btn small" data-logderby="${esc(id)}"${n?' aria-pressed="true"':""}>${n?`${OK} Sett ${n} ${n===1?"gång":"gånger"}`:`${ic("plus")} Logga derbyt`}</button>`;}
     else if(club&&C[club]){const n=type==="arena"?MY.attended.filter(a=>a.home===club||(C[club].s&&a.venue&&arenaKey(a.venue)===arenaKey(C[club].s))).length:MY.attended.filter(a=>a.home===club||a.away===club).length;
-      mine=`<button class="btn small" data-logmatch="${esc(club)}"${n?' aria-pressed="true"':""}>${n?`${type==="arena"?"Varit här":"Sett"} ${n} ${n===1?"gång":"gånger"} · logga fler`:type==="arena"?"Jag har varit här – logga matchen":"Jag har sett klubben – logga matchen"}</button>`;}}
+      mine=`<button class="btn small" data-logmatch="${esc(club)}"${n?' aria-pressed="true"':""}>${n?`${OK} ${type==="arena"?"Varit här":"Sett"} ${n} ${n===1?"gång":"gånger"}`:`${ic("plus")} Logga match`}</button>`;}}
   const cnt=notes.length;
   let h=`<div class="tipfb"><div class="actions">${mine}${tnState==="ready"?`<button class="btn small" data-tnopen="${esc(key)}" aria-expanded="${open}">${ic("chat")} ${cnt?`${cnt} ${cnt===1?"kommentar":"kommentarer"}`:"Kommentera"}</button>`:""}</div>`;
   if(open){
