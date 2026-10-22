@@ -138,7 +138,9 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .tip:not(.hero):not(.onboard),.card,.rep,.combo,.match{position:relative;overflow:hidden}
 .tip:not(.hero):not(.onboard),.card,.combo,.match{padding-top:17px}
 .tip:not(.hero):not(.onboard):before,.card:before,.rep:before,.combo:before,.match:before{content:"";position:absolute;left:0;right:0;top:0;height:5px;z-index:1;pointer-events:none;background:var(--band)}
-:root{--band:linear-gradient(90deg,#e8ad00,#ffd84a)}
+:root{--band:linear-gradient(90deg,rgba(232,173,0,.42),rgba(255,216,74,.3))}
+[data-theme="dark"]{--band:linear-gradient(90deg,rgba(255,200,40,.55),rgba(255,224,110,.4))}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--band:linear-gradient(90deg,rgba(255,200,40,.55),rgba(255,224,110,.4))}}
 .tteams{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-weight:600}
 .tteams button{display:inline-flex;align-items:center;gap:7px}
 .tiph-c{flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:12px}.tiph-c .meta{display:block}
