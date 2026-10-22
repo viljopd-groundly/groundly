@@ -693,8 +693,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   <!-- Tabeller -->
   <section id="v-tabell" hidden style="display:contents">
     <div class="chips" role="group" aria-label="Herr eller dam" id="gTbl"></div>
-    <div class="chips wrapchips" role="group" aria-label="Land" id="tblCountries"></div>
-    <div class="chips" role="group" aria-label="Serie" id="tblLeagues"></div>
+    <div class="selrow"><label class="selw"><span class="vh">Land</span><select id="tblCSel" class="sel"></select></label><label class="selw"><span class="vh">Serie</span><select id="tblLSel" class="sel"></select></label></div>
     <div id="tblBox"></div>
   </section>
 
@@ -954,6 +953,8 @@ document.addEventListener("change",e=>{const t=e.target;
   if(t.id==="countrySel"){country=t.value;league="";openClub=null;renderClubs();}
   else if(t.id==="leagueSel"){league=t.value;openClub=null;renderClubs();}
   else if(t.id==="aCountrySel"){aCountry=t.value;aLimit=40;renderArenas();}
+  else if(t.id==="tblCSel"){const ls=tblLeagues().filter(x=>x.c===t.value);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();}
+  else if(t.id==="tblLSel"){tblLeague=t.value;tblHL=null;store.set("fk-tbl",tblLeague);renderTable();}
   else if(t.id==="aSortSel"){aSort=t.value;store.set("fk-asort",aSort);aLimit=40;renderArenas();}});
 function renderClubs(){if(mode==="landslag")return renderNat();genderChips("gClubs");
   setSel("countrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?"Alla länder":l]),country);
@@ -1149,8 +1150,8 @@ function renderTable(){genderChips("gTbl");const ls=tblLeagues();if(!ls.length)r
   if(!XD.standings){loadXD("standings").then(()=>{if(mode==="tabell")renderTable();});loadXD("players").then(()=>{if(mode==="tabell")renderTable();});}
   if(!tblLeague||!ls.some(x=>x.l===tblLeague)){const fl=favList().map(id=>C[id]).filter(Boolean);const f=fl.find(c=>ls.some(x=>x.l===c.l));tblLeague=f?f.l:(ls.find(x=>x.l==="Allsvenskan")||ls[0]).l;}
   const cur=ls.find(x=>x.l===tblLeague);const countries=[...new Set(ls.map(x=>x.c))];
-  document.getElementById("tblCountries").innerHTML=countries.map(c=>`<button class="chip" data-tblc="${esc(c)}" aria-pressed="${cur.c===c}">${esc(c)}</button>`).join("");
-  document.getElementById("tblLeagues").innerHTML=ls.filter(x=>x.c===cur.c).map(x=>`<button class="chip" data-tbll="${esc(x.l)}" aria-pressed="${x.l===tblLeague}">${esc(x.l)} (nivå ${x.t})</button>`).join("");
+  setSel("tblCSel",countries.map(c=>[c,c]),cur.c);setSel("tblLSel",ls.filter(x=>x.c===cur.c).map(x=>[x.l,x.l]),tblLeague);
+  document.getElementById("tblCSel").classList.remove("on");document.getElementById("tblLSel").classList.remove("on");
   const box=document.getElementById("tblBox");const fav=new Set(favList());
   const off=XD.standings&&XD.standings.leagues&&XD.standings.leagues[tblLeague];
   if(off&&off.groups&&off.groups.some(g=>g.rows.length)){const up=XD.standings.updated;
