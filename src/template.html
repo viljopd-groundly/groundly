@@ -370,6 +370,12 @@ button{touch-action:manipulation}
 .fld select{font:500 15px var(--f-body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;min-width:0}
 .arc .drow .mini{white-space:nowrap}
 .chips.wrapchips{flex-wrap:wrap;overflow:visible}
+.selrow{display:flex;gap:8px}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.sel{width:100%}.selw[hidden]{display:none}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
+.selw:after{content:"";position:absolute;right:15px;top:50%;width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none;color:var(--muted)}
+.sel.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.selw:has(.sel.on):after{color:var(--bg)}
 .steam{flex-direction:column;align-items:stretch}
 .sthead{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%}
 .sthead:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -614,8 +620,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <button class="clear" id="qClear" hidden>Rensa</button>
     </label>
     <div class="chips" role="group" aria-label="Herr eller dam" id="gClubs"></div>
-    <div class="chips wrapchips" role="group" aria-label="Land" id="countryChips"></div>
-    <div class="chips" role="group" aria-label="Serie" id="leagueChips" hidden></div>
+    <div class="selrow"><label class="selw" id="countryW"><span class="vh">Land</span><select id="countrySel" class="sel"></select></label><label class="selw" id="leagueW" hidden><span class="vh">Serie</span><select id="leagueSel" class="sel"></select></label></div>
     <div class="toolbar"><div class="count" id="clubCount"></div></div>
     <div class="list" id="clubList"></div>
   </section>
@@ -640,9 +645,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <input id="aq" type="search" placeholder="Sök arena, stad eller klubb" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="aqClear" hidden>Rensa</button>
     </label>
-    <div class="chips wrapchips" role="group" aria-label="Land" id="aCountryChips"></div>
-    <div class="lbl">Sortera</div>
-    <div class="chips wrapchips" role="group" aria-label="Sortera" id="aSortChips"></div>
+    <div class="selrow"><label class="selw"><span class="vh">Land</span><select id="aCountrySel" class="sel"></select></label><label class="selw"><span class="vh">Sortera</span><select id="aSortSel" class="sel"></select></label></div>
     <div class="lbl">Visa bara</div>
     <div class="chips wrapchips" role="group" aria-label="Filter" id="aFiltChips"></div>
     <div class="toolbar"><div class="count" id="arenaCount"></div></div>
@@ -944,11 +947,19 @@ function renderNat(){const nq=norm(ntQ);const toks=nq?nq.split(" "):[];
 {const el=document.getElementById("ntq");let t;el.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{ntQ=el.value.trim();document.getElementById("ntqClear").hidden=!ntQ;renderNat();},150);});
  document.getElementById("ntqClear").onclick=()=>{el.value="";ntQ="";document.getElementById("ntqClear").hidden=true;renderNat();el.focus();};}
 let clubLimit=60,clubLimitKey="";
+// rullgardin som ser ut som en knapp; mörk när något annat än "alla" är valt
+function setSel(id,opts,val){const el=document.getElementById(id);if(!el)return;const h=opts.map(([k,l])=>`<option value="${esc(k)}">${esc(l)}</option>`).join("");
+  if(el.dataset.h!==h){el.innerHTML=h;el.dataset.h=h;}el.value=val;el.classList.toggle("on",!!val&&val!=="alla");}
+document.addEventListener("change",e=>{const t=e.target;
+  if(t.id==="countrySel"){country=t.value;league="";openClub=null;renderClubs();}
+  else if(t.id==="leagueSel"){league=t.value;openClub=null;renderClubs();}
+  else if(t.id==="aCountrySel"){aCountry=t.value;aLimit=40;renderArenas();}
+  else if(t.id==="aSortSel"){aSort=t.value;store.set("fk-asort",aSort);aLimit=40;renderArenas();}});
 function renderClubs(){if(mode==="landslag")return renderNat();genderChips("gClubs");
-  document.getElementById("countryChips").innerHTML=COUNTRIES.map(([k,l])=>`<button class="chip" data-country="${k}" aria-pressed="${country===k}">${l}</button>`).join("");
+  setSel("countrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?"Alla länder":l]),country);
   const lc=leagueCountry();const lgs=lc?leaguesIn(lc):[];if(league&&!lgs.some(x=>x[0]===league))league="";
-  const lcEl=document.getElementById("leagueChips");lcEl.hidden=lgs.length<2;
-  lcEl.innerHTML=lgs.length<2?"":`<button class="chip" data-league="" aria-pressed="${!league}">Alla serier</button>`+lgs.map(([l,t])=>`<button class="chip" data-league="${esc(l)}" aria-pressed="${league===l}">${esc(l)}${t?` (nivå ${t})`:""}</button>`).join("");
+  document.getElementById("leagueW").hidden=lgs.length<2;
+  if(lgs.length>=2)setSel("leagueSel",[["","Alla serier"],...lgs.map(([l,t])=>[l,l+(t?` (nivå ${t})`:"")])],league);
   const list=clubMatches();
   document.getElementById("clubCount").innerHTML=`<b>${list.length}</b> ${country==="landslag"?"landslag":"klubbar"}${league?` i ${esc(league)}`:q?` för ”${esc(q)}”`:""}${league&&hasTable(league)?` <button class="btn small" data-tbl="${esc(league)}">${ic("table")} Visa tabell</button>`:""}`;
   const lk=q+"|"+country+"|"+league+"|"+gender;if(lk!==clubLimitKey){clubLimitKey=lk;clubLimit=60;}
@@ -2507,8 +2518,8 @@ function arenaCard(x){const s=ratingSummary(x.a);const up=arenaUpcoming(x);const
    <div class="actions"><button class="btn small" data-open="${esc(c0.id)}">${shared?"Visa "+esc(c0.n):"Visa klubb och arenafakta"}</button>${extLink(mapsDir(x.s,x.city),"Hitta hit","btn small")}${extLink(transitUrl(homeTown||"",placeStr(x.s,x.city)),"Kollektivt","btn small")}${extLink(bookingUrl(x.s,x.city,up[0]?matchDate(up[0]):null),adLabel("Hotell"),"btn small")}${pubs?`<button class="btn small" data-open="${esc(c0.id)}">${pubs} pubtips</button>`:""}</div>
   </article>`;}
 function renderArenas(){
-  document.getElementById("aCountryChips").innerHTML=COUNTRIES.map(([k,l])=>`<button class="chip" data-acountry="${k}" aria-pressed="${aCountry===k}">${l}</button>`).join("");
-  document.getElementById("aSortChips").innerHTML=ASORT.map(([k,l])=>`<button class="chip" data-asort="${k}" aria-pressed="${aSort===k}">${l}</button>`).join("");
+  setSel("aCountrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?"Alla länder":l]),aCountry);
+  setSel("aSortSel",ASORT,aSort);document.getElementById("aSortSel").classList.remove("on");
   document.getElementById("aFiltChips").innerHTML=AFILT.filter(([k])=>k!=="notv"||myState==="ready").map(([k,l])=>`<button class="chip" data-afilt="${k}" aria-pressed="${aFilt.has(k)}">${l}</button>`).join("");
   const sv=country;country=aCountry;let list;try{list=arenaList();}finally{country=sv;}
   const totalCap=list.reduce((s,x)=>s+(x.cap||0),0);
