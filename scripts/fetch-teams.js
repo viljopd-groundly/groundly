@@ -10,7 +10,7 @@ const all = get(`leagues?country=${encodeURIComponent(country)}`);
 const out = { country, fetched: new Date().toISOString(), all: all.map(x => `${x.league.id} | ${x.league.name} | ${x.league.type}`), leagues: [] };
 for (const x of all.filter(x => re.test(x.league.name))) {
   const cur = (x.seasons || []).find(s => s.current) || (x.seasons || []).slice(-1)[0];
-  const L = { id: x.league.id, name: x.league.name, season: cur && cur.year, teams: [] };
+  const L = { id: x.league.id, name: x.league.name, season: cur && cur.year, seasons: (x.seasons || []).map(s => [s.year, s.start, s.end, !!(s.coverage && s.coverage.standings), !!(s.coverage && s.coverage.fixtures && s.coverage.fixtures.events)]), teams: [] };
   try { L.teams = get(`teams?league=${L.id}&season=${L.season}`).map(t => ({ id: t.team.id, name: t.team.name, founded: t.team.founded, venue: t.venue && { name: t.venue.name, city: t.venue.city, capacity: t.venue.capacity, surface: t.venue.surface } })); } catch (e) { L.error = String(e.message).slice(0, 200); }
   out.leagues.push(L);
 }
