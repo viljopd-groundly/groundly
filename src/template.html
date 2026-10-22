@@ -882,7 +882,7 @@ function syncBack(){let b=document.getElementById("backPill");
   const on=!!(jumpFrom&&jumpFrom!==mode);b.hidden=!on;if(on)b.innerHTML=`<span aria-hidden="true">←</span> Tillbaka till ${esc(VIEW_SV[jumpFrom]||"förra sidan")}`;}
 window.addEventListener("popstate",e=>{const st=e.state;if(!st||!st.m||!VIEW_SV[st.m])return;navPop=true;jumpFrom=st.from||null;try{setMode(st.m);}finally{navPop=false;}
   const y=st.y||0;requestAnimationFrame(()=>window.scrollTo({top:y}));});
-function setMode(m){const prev=mode,y0=window.scrollY;
+function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)repPopOrder=null;
   if(!navPop){jumpFrom=pendingJump&&pendingJump!==m?pendingJump:null;
     if(prev!==m){try{history.replaceState({...(history.state||{}),m:prev,y:y0},"");history.pushState({m,from:jumpFrom,jump:!!jumpFrom},"");}catch(e){}}}
   pendingJump=null;
@@ -1119,6 +1119,17 @@ function mlMore(n){const q=MLQ;if(!q||!q.el.isConnected)return;const old=documen
   q.el.insertAdjacentHTML("beforeend",h);
   const sen=document.getElementById("mlMore");if(sen&&"IntersectionObserver"in window){if(!mlIO)mlIO=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))requestAnimationFrame(()=>mlMore(60));},{rootMargin:"900px 0px"});mlIO.disconnect();mlIO.observe(sen);}}
 document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[data-mlmore]"))mlMore(100);});
+// ---------- håll kvar det man tryckte på (inget hopp när listan ritas om) ----------
+// När ett klick ritar om en lista (gilla, betyg, spara, sortering …) ersätts knappen av en ny kopia. Vi letar upp kopian
+// och scrollar så att den hamnar exakt där den gamla var. Avbryts om man själv scrollar eller byter sida.
+{let A=null;const SKIP=/^(bn|mode|open|teamview|tbl|near|mview|mysub|tips)$/;
+ const selFor=el=>{if(el.id)return"#"+CSS.escape(el.id);for(const at of el.attributes){if(at.name.startsWith("data-")&&at.value!==""){const k=at.name.slice(5).replace(/-./g,x=>x[1].toUpperCase());if(SKIP.test(k))return null;return`[${at.name}="${CSS.escape(at.value)}"]`;}}return null;};
+ const fix=()=>{if(!A)return;if(mode!==A.mode||Date.now()>A.until){A=null;return;}if(A.el.isConnected)return;
+   const n=document.querySelector(A.sel);if(!n){return;}const top=n.getBoundingClientRect().top;const d=top-A.top;if(Math.abs(d)>1)window.scrollBy(0,d);A.el=n;A.top=n.getBoundingClientRect().top;};
+ const mo=new MutationObserver(()=>{if(A)requestAnimationFrame(fix);});mo.observe(document.getElementById("app")||document.body,{childList:true,subtree:true});
+ document.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("button,[role=button],a,label,.chip");if(!el||el.closest("nav,.bnav,#fkUndo,#fkToast,.msheet"))return;
+   const sel=selFor(el);if(!sel)return;A={el,sel,top:el.getBoundingClientRect().top,mode,until:Date.now()+2500};},true);
+ const cancel=()=>{A=null;};["wheel","touchmove","keydown"].forEach(ev=>window.addEventListener(ev,cancel,{passive:true}));}
 let teamId=null;try{const t=store.get("fk-team");if(t)teamId=t;}catch(e){}
 function renderTeamView(){document.getElementById("matchCount").innerHTML="";const el=document.getElementById("matchList");
   if(!document.getElementById("teamIn")){el.innerHTML=`<label class="search" for="teamIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="teamIn" type="search" placeholder="Sök lag, t.ex. Hammarby eller Arsenal" autocomplete="off" enterkeyhint="search"></label><div class="sugg" id="teamSug" hidden></div><div id="teamRes" class="list"></div>`;
@@ -2663,7 +2674,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="rCust
 document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches(".card[data-club]")){e.preventDefault();e.target.click();}});
 
 // ---------- reportage ----------
-let COMM={},commBusy=false,REP={},LIKES={},repState="loading",assetsNs=null,canRep=null,repSort="nya",repClub=null,repOpen=null,repDraft=null,repBusy=false,likeBusy=false,repMsg="",repTopSig="",repUp=0;
+let COMM={},commBusy=false,REP={},LIKES={},repState="loading",assetsNs=null,canRep=null,repSort="nya",repClub=null,repOpen=null,repDraft=null,repBusy=false,likeBusy=false,repMsg="",repTopSig="",repUp=0;var repPopOrder=null;
 const REP_MAXPH=8,PHID=/^[0-9a-f]{32}$/;
 const blobUrl=id=>"/_blob/"+id;
 function allReps(){const out=[];Object.entries(REP).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(r=>{if(r&&r.id&&r.title&&r.body)out.push({...r,uid,key:uid+":"+r.id,photos:(Array.isArray(r.photos)?r.photos:[]).filter(p=>typeof p==="string"&&PHID.test(p)).slice(0,REP_MAXPH)});});});
@@ -2746,7 +2757,10 @@ function renderReports(namesOnly){
   let reps=allReps();const ids=[...new Set([...reps.map(r=>r.uid),...Object.keys(COMM)])];if(!namesOnly)resolveRepNames(ids);
   if(repSort==="mina")reps=reps.filter(r=>r.uid===myId);
   if(repClub)reps=reps.filter(r=>r.club===repClub);
-  reps.sort(repSort==="pop"?(a,b)=>likeCount(b.key)-likeCount(a.key)||b.at.localeCompare(a.at):(a,b)=>String(b.at).localeCompare(String(a.at)));
+  // "Populärast": ordningen låses när fliken väljs, så att ett kort inte flyger iväg när man gillar det
+  if(repSort==="pop"){if(!repPopOrder){const o=[...reps].sort((a,b)=>likeCount(b.key)-likeCount(a.key)||b.at.localeCompare(a.at));repPopOrder=new Map(o.map((r,i)=>[r.key,i]));}
+    reps.sort((a,b)=>(repPopOrder.get(a.key)??-1)-(repPopOrder.get(b.key)??-1)||b.at.localeCompare(a.at));}
+  else reps.sort((a,b)=>String(b.at).localeCompare(String(a.at)));
   if(!reps.length){el.innerHTML=`<div class="empty"><b>${repSort==="mina"?"Du har inte skrivit något reportage än.":repClub?"Inga reportage om den här klubben än.":"Inga reportage än."}</b><div>Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna. Lägg gärna till bilder.</div></div>`;return;}
   el.innerHTML=reps.map(r=>{const c=r.club&&C[r.club];const open=repOpen===r.key;const n=likeCount(r.key);const mine=r.uid===myId;
     const meta=[r.match&&r.result?`${String(r.match).slice(0,100)} ${String(r.result).slice(0,12)}`:c?c.n:"",r.city,repDateTxt(r.date)].filter(Boolean).join(" · ");
@@ -2808,7 +2822,7 @@ const isRepBtn=t=>t.id==="repNew"||t.id==="repCancel"||t.dataset.repsort||t.data
 async function repClick(t){
   if(t.id==="repNew"){startRepDraft();return;}
   if(t.id==="repCancel"){const d=repDraft;repDraft=null;repMsg="";renderReports();if(d)dropAssets(d.added);return;}
-  if(t.dataset.repsort){repSort=t.dataset.repsort;renderReports();return;}
+  if(t.dataset.repsort){repSort=t.dataset.repsort;repPopOrder=null;renderReports();return;}
   if(t.dataset.repclubclear){repClub=null;renderReports();return;}
   if(t.dataset.repclub){repClub=t.dataset.repclub;repSort="nya";repOpen=null;setMode("reportage");window.scrollTo({top:0});return;}
   if(t.dataset.repfrom){draftFromAtt(t.dataset.repfrom);return;}
