@@ -1,358 +1,619 @@
 {
- "country": "USA",
- "fetched": "2026-10-21T21:03:27.647Z",
+ "country": "Sweden",
+ "fetched": "2026-10-22T21:16:20.852Z",
  "all": [
-  "253 | Major League Soccer | League",
-  "257 | US Open Cup | Cup",
-  "255 | USL Championship | League",
-  "256 | USL League Two | League",
-  "254 | NWSL Women | League",
-  "489 | USL League One | League",
-  "523 | NISA | League",
-  "641 | NWSL Women - Challenge Cup | Cup",
-  "866 | MLS All-Star | Cup",
-  "909 | MLS Next Pro | League",
-  "1095 | USL League One Cup | League",
-  "1116 | WPSL | League",
-  "1117 | USL W League | League",
-  "1118 | NPSL | League",
-  "1119 | NWSL - Liga MXF Summer Cup | League",
-  "1130 | USL Super League | League"
+  "113 | Allsvenskan | League",
+  "114 | Superettan | League",
+  "563 | Ettan - Norra | League",
+  "564 | Ettan - Södra | League",
+  "592 | Division 2 - Norra Götaland | League",
+  "593 | Division 2 - Norra Svealand | League",
+  "594 | Division 2 - Norrland | League",
+  "595 | Division 2 - Södra Svealand | League",
+  "596 | Division 2 - Västra Götaland | League",
+  "597 | Division 2 - Södra Götaland | League",
+  "115 | Svenska Cupen | Cup",
+  "549 | Damallsvenskan | League",
+  "737 | Svenska Cupen - Women | Cup",
+  "736 | Elitettan | League",
+  "1053 | Division 2 - Play-offs | League",
+  "1055 | Ettan - Relegation Round | League"
  ],
  "leagues": [
   {
-   "id": 253,
-   "name": "Major League Soccer",
+   "id": 563,
+   "name": "Ettan - Norra",
    "season": 2026,
+   "seasons": [
+    [
+     2016,
+     "2016-04-16",
+     "2016-11-06",
+     false,
+     true
+    ],
+    [
+     2017,
+     "2017-04-13",
+     "2017-11-04",
+     false,
+     true
+    ],
+    [
+     2018,
+     "2018-04-07",
+     "2018-11-10",
+     false,
+     true
+    ],
+    [
+     2019,
+     "2019-04-06",
+     "2019-11-02",
+     false,
+     true
+    ],
+    [
+     2020,
+     "2020-06-14",
+     "2020-11-29",
+     true,
+     true
+    ],
+    [
+     2021,
+     "2021-04-02",
+     "2021-11-21",
+     true,
+     true
+    ],
+    [
+     2022,
+     "2022-04-02",
+     "2022-11-06",
+     true,
+     true
+    ],
+    [
+     2023,
+     "2023-04-01",
+     "2023-11-12",
+     true,
+     true
+    ],
+    [
+     2024,
+     "2024-03-29",
+     "2024-11-09",
+     true,
+     true
+    ],
+    [
+     2025,
+     "2025-03-28",
+     "2025-11-09",
+     true,
+     true
+    ],
+    [
+     2026,
+     "2026-04-05",
+     "2026-11-08",
+     true,
+     true
+    ]
+   ],
    "teams": [
     {
-     "id": 1595,
-     "name": "Seattle Sounders",
-     "founded": 2007,
-     "venue": {
-      "name": "Lumen Field",
-      "city": "Seattle, Washington",
-      "capacity": 72000,
-      "surface": "artificial turf"
-     }
-    },
-    {
-     "id": 1596,
-     "name": "San Jose Earthquakes",
-     "founded": 1995,
-     "venue": {
-      "name": "PayPal Park",
-      "city": "San Jose, California",
-      "capacity": 18000,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1597,
-     "name": "FC Dallas",
-     "founded": 1996,
-     "venue": {
-      "name": "Toyota Stadium",
-      "city": "Frisco, Texas",
-      "capacity": 22565,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1598,
-     "name": "Orlando City SC",
-     "founded": 2008,
-     "venue": {
-      "name": "Inter&Co Stadium",
-      "city": "Orlando, Florida",
-      "capacity": 25527,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1599,
-     "name": "Philadelphia Union",
-     "founded": 2008,
-     "venue": {
-      "name": "Subaru Park",
-      "city": "Chester, Pennsylvania",
-      "capacity": 19778,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1600,
-     "name": "Houston Dynamo",
+     "id": 765,
+     "name": "AFC Eskilstuna",
      "founded": 2005,
      "venue": {
-      "name": "Shell Energy Stadium",
-      "city": "Houston, Texas",
-      "capacity": 22661,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1601,
-     "name": "Toronto FC",
-     "founded": 2006,
-     "venue": {
-      "name": "BMO Field",
-      "city": "Toronto, Ontario",
-      "capacity": 36045,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1602,
-     "name": "New York Red Bulls",
-     "founded": 1995,
-     "venue": {
-      "name": "Sports Illustrated Stadium",
-      "city": "Harrison, New Jersey",
-      "capacity": 26765,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1603,
-     "name": "Vancouver Whitecaps",
-     "founded": 1986,
-     "venue": {
-      "name": "BC Place",
-      "city": "Vancouver, British Columbia",
-      "capacity": 54405,
+      "name": "Tunavallen",
+      "city": "Eskilstuna",
+      "capacity": 7800,
       "surface": "artificial turf"
      }
     },
     {
-     "id": 1604,
-     "name": "New York City FC",
-     "founded": 2013,
+     "id": 813,
+     "name": "Gefle IF",
+     "founded": 1882,
      "venue": {
-      "name": "Yankee Stadium",
-      "city": "New York City",
-      "capacity": 54251,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1605,
-     "name": "Los Angeles Galaxy",
-     "founded": 1995,
-     "venue": {
-      "name": "Dignity Health Sports Park",
-      "city": "Carson, California",
-      "capacity": 30510,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1606,
-     "name": "Real Salt Lake",
-     "founded": 2004,
-     "venue": {
-      "name": "America First Field",
-      "city": "Sandy, Utah",
-      "capacity": 21810,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1607,
-     "name": "Chicago Fire",
-     "founded": 1997,
-     "venue": {
-      "name": "Soldier Field",
-      "city": "Chicago, Illinois",
-      "capacity": 62493,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1608,
-     "name": "Atlanta United FC",
-     "founded": 2014,
-     "venue": {
-      "name": "Mercedes-Benz Stadium",
-      "city": "Atlanta, Georgia",
-      "capacity": 73019,
+      "name": "Gavlevallen",
+      "city": "Gävle",
+      "capacity": 6432,
       "surface": "artificial turf"
      }
     },
     {
-     "id": 1609,
-     "name": "New England Revolution",
-     "founded": 1995,
+     "id": 2169,
+     "name": "Assyriska FF",
+     "founded": 1974,
      "venue": {
-      "name": "Gillette Stadium",
-      "city": "Foxborough, Massachusetts",
-      "capacity": 68756,
+      "name": "Södertälje Fotbollsarena",
+      "city": "Södertälje",
+      "capacity": 6710,
       "surface": "artificial turf"
      }
     },
     {
-     "id": 1610,
-     "name": "Colorado Rapids",
-     "founded": 1996,
+     "id": 6682,
+     "name": "Karlberg",
+     "founded": 1912,
      "venue": {
-      "name": "Dick's Sporting Goods Park",
-      "city": "Commerce City, Colorado",
-      "capacity": 19734,
+      "name": "Kristinebergs IP",
+      "city": "Stockholm",
+      "capacity": 2145,
       "surface": "grass"
      }
     },
     {
-     "id": 1611,
-     "name": "Sporting Kansas City",
-     "founded": 1995,
+     "id": 6699,
+     "name": "Sollentuna",
+     "founded": 2007,
      "venue": {
-      "name": "Children's Mercy Park",
-      "city": "Kansas City, Kansas",
-      "capacity": 21650,
+      "name": "Sollentunavallen",
+      "city": "Sollentuna",
+      "capacity": 4500,
       "surface": "grass"
      }
     },
     {
-     "id": 1612,
-     "name": "Minnesota United FC",
-     "founded": 2010,
-     "venue": {
-      "name": "Allianz Field",
-      "city": "Saint Paul, Minnesota",
-      "capacity": 19954,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1613,
-     "name": "Columbus Crew",
-     "founded": 1996,
-     "venue": {
-      "name": "Lower.com Field",
-      "city": "Columbus, Ohio",
-      "capacity": 20931,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1614,
-     "name": "CF Montreal",
-     "founded": 2010,
-     "venue": {
-      "name": "Stade Saputo",
-      "city": "Montreal, Quebec",
-      "capacity": 20801,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1615,
-     "name": "DC United",
-     "founded": 1996,
-     "venue": {
-      "name": "Audi Field",
-      "city": "Washington, District of Columbia",
-      "capacity": 20621,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1616,
-     "name": "Los Angeles FC",
-     "founded": 2014,
-     "venue": {
-      "name": "BMO Stadium",
-      "city": "Los Angeles, California",
-      "capacity": 22921,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 1617,
-     "name": "Portland Timbers",
-     "founded": 2009,
-     "venue": {
-      "name": "Providence Park",
-      "city": "Portland, Oregon",
-      "capacity": 25518,
-      "surface": "artificial turf"
-     }
-    },
-    {
-     "id": 2242,
-     "name": "FC Cincinnati",
+     "id": 6700,
+     "name": "Stocksund",
      "founded": null,
      "venue": {
-      "name": "TQL Stadium",
-      "city": "Cincinnati, Ohio",
-      "capacity": 26000,
+      "name": "Danderyds Gymnasium",
+      "city": "Danderyd",
+      "capacity": 1000,
       "surface": "grass"
      }
     },
     {
-     "id": 9568,
-     "name": "Inter Miami",
-     "founded": 2018,
+     "id": 6705,
+     "name": "Umeå FC",
+     "founded": 1987,
      "venue": {
-      "name": "Chase Stadium",
-      "city": "Fort Lauderdale, Florida",
-      "capacity": 21550,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 9569,
-     "name": "Nashville SC",
-     "founded": 2020,
-     "venue": {
-      "name": "GEODIS Park",
-      "city": "Nashville, Tennessee",
-      "capacity": 30109,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 16489,
-     "name": "Austin",
-     "founded": 2021,
-     "venue": {
-      "name": "Q2 Stadium",
-      "city": "Austin, Texas",
-      "capacity": 20738,
-      "surface": "grass"
-     }
-    },
-    {
-     "id": 18310,
-     "name": "Charlotte",
-     "founded": 2019,
-     "venue": {
-      "name": "Bank of America Stadium",
-      "city": "Charlotte, North Carolina",
-      "capacity": 75412,
+      "name": "Umeå Energi Arena SOL",
+      "city": "Umeå",
+      "capacity": 14000,
       "surface": "artificial turf"
      }
     },
     {
-     "id": 20787,
-     "name": "St. Louis City",
-     "founded": 2023,
+     "id": 6708,
+     "name": "Vasalund",
+     "founded": 1934,
      "venue": {
-      "name": "CITYPARK",
-      "city": "St. Louis, Missouri",
-      "capacity": 22500,
+      "name": "Skytteholms IP",
+      "city": "Solna",
+      "capacity": 5026,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 11659,
+     "name": "IF Karlstad",
+     "founded": 2020,
+     "venue": {
+      "name": "Sola Arena 1",
+      "city": "Karlstad",
+      "capacity": 3000,
       "surface": "grass"
      }
     },
     {
-     "id": 25484,
-     "name": "San Diego",
+     "id": 11671,
+     "name": "Piteå",
+     "founded": null,
+     "venue": {
+      "name": "LF Arena",
+      "city": "Piteå",
+      "capacity": 6000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 12578,
+     "name": "Enköping",
+     "founded": 1914,
+     "venue": {
+      "name": "Enavallen",
+      "city": "Enköping",
+      "capacity": 4500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 12585,
+     "name": "Stockholm Internazionale",
+     "founded": null,
+     "venue": {
+      "name": "Hammarby IP",
+      "city": "Stockholm",
+      "capacity": 3700,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 12622,
+     "name": "FBK Karlstad",
+     "founded": 1971,
+     "venue": {
+      "name": "Örsholmens IP Konstgräs",
+      "city": "Karlstad",
+      "capacity": 1000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16596,
+     "name": "Hammarby Talang",
+     "founded": 2021,
+     "venue": {
+      "name": "Hammarby IP",
+      "city": "Stockholm",
+      "capacity": 3700,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16597,
+     "name": "Arlanda",
+     "founded": null,
+     "venue": {
+      "name": "Midgårdsvallen Konstgräs",
+      "city": "Märsta",
+      "capacity": 1000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 16598,
+     "name": "Järfälla",
+     "founded": null,
+     "venue": {
+      "name": "Järfällavallen",
+      "city": "Järfälla",
+      "capacity": 1500,
+      "surface": "artificial turf"
+     }
+    }
+   ]
+  },
+  {
+   "id": 564,
+   "name": "Ettan - Södra",
+   "season": 2026,
+   "seasons": [
+    [
+     2016,
+     "2016-04-16",
+     "2016-11-05",
+     false,
+     true
+    ],
+    [
+     2017,
+     "2017-04-14",
+     "2017-11-04",
+     false,
+     true
+    ],
+    [
+     2018,
+     "2018-04-07",
+     "2018-11-10",
+     false,
+     true
+    ],
+    [
+     2019,
+     "2019-04-06",
+     "2019-11-02",
+     false,
+     true
+    ],
+    [
+     2020,
+     "2020-06-14",
+     "2020-11-28",
+     true,
+     true
+    ],
+    [
+     2021,
+     "2021-04-02",
+     "2021-11-20",
+     true,
+     true
+    ],
+    [
+     2022,
+     "2022-04-02",
+     "2022-11-05",
+     true,
+     true
+    ],
+    [
+     2023,
+     "2023-03-31",
+     "2023-11-11",
+     true,
+     true
+    ],
+    [
+     2024,
+     "2024-03-29",
+     "2024-11-10",
+     true,
+     true
+    ],
+    [
+     2025,
+     "2025-03-28",
+     "2025-11-08",
+     true,
+     true
+    ],
+    [
+     2026,
+     "2026-04-05",
+     "2026-11-08",
+     true,
+     true
+    ]
+   ],
+   "teams": [
+    {
+     "id": 369,
+     "name": "Trelleborg",
+     "founded": 1926,
+     "venue": {
+      "name": "Vångavallen",
+      "city": "Trelleborg",
+      "capacity": 10500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 764,
+     "name": "Jonkopings Sodra",
+     "founded": 1922,
+     "venue": {
+      "name": "Stadsparksvallen",
+      "city": "Jönköping",
+      "capacity": 6321,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 2162,
+     "name": "Atvidabergs FF",
+     "founded": 1907,
+     "venue": {
+      "name": "Kopparvallen",
+      "city": "Åtvidaberg",
+      "capacity": 8600,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 2168,
+     "name": "Angelholms FF",
+     "founded": 1976,
+     "venue": {
+      "name": "Änglavallen",
+      "city": "Ängelholm",
+      "capacity": 5000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6663,
+     "name": "Eskilsminne",
+     "founded": 1928,
+     "venue": {
+      "name": "Harlyckans IP",
+      "city": "Helsingborg",
+      "capacity": 3500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6676,
+     "name": "Hässleholms IF",
+     "founded": 1922,
+     "venue": {
+      "name": "Österås IP",
+      "city": "Hässleholm",
+      "capacity": 5500,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6687,
+     "name": "Lund",
+     "founded": 1919,
+     "venue": {
+      "name": "Klostergårdens IP",
+      "city": "Lund",
+      "capacity": 8560,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 6694,
+     "name": "Rosengård",
+     "founded": 1917,
+     "venue": {
+      "name": "Rosengårds IP (Södra)",
+      "city": "Malmö",
+      "capacity": 5000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6698,
+     "name": "Skövde AIK",
+     "founded": 1919,
+     "venue": {
+      "name": "Södermalms IP",
+      "city": "Skövde",
+      "capacity": 4646,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6702,
+     "name": "Trollhättan",
+     "founded": 2001,
+     "venue": {
+      "name": "Edsborgs IP",
+      "city": "Trollhättan",
+      "capacity": 5100,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6703,
+     "name": "Tvååker",
+     "founded": 1920,
+     "venue": {
+      "name": "Övrevi",
+      "city": "Tvååker",
+      "capacity": 2000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 6706,
+     "name": "Utsikten",
+     "founded": 1935,
+     "venue": {
+      "name": "Ruddalens IP 1",
+      "city": "Västra Frölunda",
+      "capacity": 5000,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 11675,
+     "name": "Kristianstad",
+     "founded": 1990,
+     "venue": {
+      "name": "Kristianstads Fotbollsarena",
+      "city": "Kristianstad",
+      "capacity": 6000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 12601,
+     "name": "Olympic",
+     "founded": 1920,
+     "venue": {
+      "name": "Lindängens IP",
+      "city": "Malmö",
+      "capacity": 2000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 12657,
+     "name": "Laholm",
+     "founded": 1957,
+     "venue": {
+      "name": "Glänninge IP",
+      "city": "Laholm",
+      "capacity": 2000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 27669,
+     "name": "AFC Malmo",
      "founded": null,
      "venue": {
       "name": null,
       "city": null,
       "capacity": null,
       "surface": null
+     }
+    }
+   ]
+  },
+  {
+   "id": 1055,
+   "name": "Ettan - Relegation Round",
+   "season": 2025,
+   "seasons": [
+    [
+     2023,
+     "2023-11-18",
+     "2023-11-25",
+     false,
+     true
+    ],
+    [
+     2024,
+     "2024-11-16",
+     "2024-11-23",
+     false,
+     true
+    ],
+    [
+     2025,
+     "2025-11-15",
+     "2025-11-22",
+     false,
+     true
+    ]
+   ],
+   "teams": [
+    {
+     "id": 813,
+     "name": "Gefle IF",
+     "founded": 1882,
+     "venue": {
+      "name": "Gavlevallen",
+      "city": "Gävle",
+      "capacity": 6432,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 6692,
+     "name": "Oskarshamns AIK",
+     "founded": null,
+     "venue": {
+      "name": "Arena Oskarshamn",
+      "city": "Oskarshamn",
+      "capacity": 2500,
+      "surface": "artificial turf"
+     }
+    },
+    {
+     "id": 6703,
+     "name": "Tvååker",
+     "founded": 1920,
+     "venue": {
+      "name": "Övrevi",
+      "city": "Tvååker",
+      "capacity": 2000,
+      "surface": "grass"
+     }
+    },
+    {
+     "id": 22932,
+     "name": "Falu BS",
+     "founded": null,
+     "venue": {
+      "name": "Kopparvallen",
+      "city": "Falun",
+      "capacity": 3000,
+      "surface": "grass"
      }
     }
    ]
