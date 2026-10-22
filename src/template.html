@@ -121,6 +121,14 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .rin[aria-pressed="true"] input{background:var(--surface);color:var(--fg);border-color:var(--surface)}
 .place{font-size:13px;color:var(--muted);background:var(--accent-soft);border-radius:10px;padding:9px 12px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 .place b{color:var(--fg)}
+.place[hidden],.lbl[hidden],.chips[hidden]{display:none}
+.mfilt{border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.mfilt>summary{cursor:pointer;list-style:none;padding:11px 14px;font-weight:600;font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mfilt>summary::-webkit-details-marker{display:none}
+.mfilt>summary:after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:-4px 4px 0 0;transition:transform .15s}
+.mfilt[open]>summary:after{transform:rotate(-135deg);margin-top:4px}
+.mfilt>summary .mfn{margin-left:auto;font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 9px}
+.mfbody{display:flex;flex-direction:column;gap:14px;padding:2px 14px 14px}
 .tip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:8px}
 .tip-head{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap}
 .tip h2.name{font-size:21px}
@@ -195,7 +203,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .star{all:unset;cursor:pointer;font-size:26px;line-height:1;color:var(--flood);padding:2px 3px}
 .star:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:4px}
 .yn{display:flex;gap:4px}
-.dopts{display:flex;flex-direction:column;gap:10px}
+.dopts{display:flex;flex-direction:column;gap:10px}.dopts[hidden]{display:none}
 .combo{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
 .combo-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:14px}
 .combo-head b{font-family:var(--f-display);font-size:17px}
@@ -650,20 +658,24 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
     </label>
     <datalist id="cities"></datalist>
     <div class="sugg" id="citySug" hidden></div>
-    <div class="lbl">Matcher</div>
-    <div class="chips wrapchips" role="group" aria-label="Typ av matcher" id="gMatch"></div>
-    <div class="lbl">Datum</div>
-    <div class="chips" role="group" aria-label="Snabbval datum" id="datePresets"></div>
-    <div class="range">
-      <label class="fld" for="dFrom">Från<input id="dFrom" type="date"></label>
-      <label class="fld" for="dTo">Till<input id="dTo" type="date"></label>
-    </div>
-    <div class="lbl" id="radiusLbl">Avstånd</div>
-    <div class="chips" role="group" aria-label="Avstånd" id="radiusChips"></div>
+    <div class="lbl" id="radiusLbl" hidden>Avstånd</div>
+    <div class="chips" role="group" aria-label="Avstånd" id="radiusChips" hidden></div>
     <div class="place" id="placeRow" hidden></div>
-    <div class="lbl">Serie eller cup</div>
-    <div class="chips" role="group" aria-label="Serie eller cup" id="tierChips"></div>
-    <div id="doubleOpts" class="dopts" hidden></div>
+    <div class="chips wrapchips" role="group" aria-label="Typ av matcher" id="gMatch"></div>
+    <div class="chips" role="group" aria-label="Snabbval datum" id="datePresets"></div>
+    <details class="mfilt" id="mFilt">
+      <summary id="mFiltSum">Fler filter</summary>
+      <div class="mfbody">
+        <div class="lbl">Egna datum</div>
+        <div class="range">
+          <label class="fld" for="dFrom">Från<input id="dFrom" type="date"></label>
+          <label class="fld" for="dTo">Till<input id="dTo" type="date"></label>
+        </div>
+        <div class="lbl">Serie eller cup</div>
+        <div class="chips" role="group" aria-label="Serie eller cup" id="tierChips"></div>
+        <div id="doubleOpts" class="dopts" hidden></div>
+      </div>
+    </details>
     <div class="toolbar"><div class="count" id="matchCount"></div></div>
     <div class="list" id="matchList"></div>
   </section>
@@ -777,7 +789,7 @@ let mKind="alla";try{const k=localStorage.getItem("fk-mkind");if(["herr","dam","
 const mKindOf=m=>{const h=C[m.home];return isNat(h)||isNat(C[m.away])?"landslag":isW(h)?"dam":"herr";};
 const gOkM=m=>mKind==="alla"||mKindOf(m)===mKind;
 function matchKindChips(){const el=document.getElementById("gMatch");if(!el)return;
-  el.innerHTML=[["alla","Alla matcher"],["herr","Herr"],["dam","Dam"],["landslag","Landslag"]].map(([k,l])=>`<button class="chip" data-mkind="${k}" aria-pressed="${mKind===k}">${l}</button>`).join("");}
+  el.innerHTML=[["alla","Alla"],["herr","Herr"],["dam","Dam"],["landslag","Landslag"]].map(([k,l])=>`<button class="chip" data-mkind="${k}" aria-pressed="${mKind===k}">${l}</button>`).join("");}
 function genderChips(id){const el=document.getElementById(id);if(!el)return;el.innerHTML=WLEAGUES.size?[["alla","Alla"],["herr","Herr"],["dam","Dam"]].map(([k,l])=>`<button class="chip" data-gender="${k}" aria-pressed="${gender===k}">${l}</button>`).join(""):"";}
 const C={};CLUBS.forEach(r=>{const[id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf]=r;C[id]={id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf:conf||(l==="Landslag"||l==="Damlandslag"?"UEFA":null)};});
 const CONFS=[["UEFA","Europa"],["CONMEBOL","Sydamerika"],["CONCACAF","Nord- och Centralamerika"],["CAF","Afrika"],["AFC","Asien"],["OFC","Oceanien"]];
@@ -1011,7 +1023,7 @@ function placeDist(m,place){const nq=norm(cityQ);if(!nq)return -1;
 
 let citiesFor=null;
 function renderMatches(){matchKindChips();
-  document.getElementById("matchViewChips").innerHTML=[["list","Alla matcher"],["team","Lag"],["double","Dubbelmatcher"],...(AI_ON?[["plan","Planera med Claude"]]:[])].map(([k,l])=>`<button class="chip" data-mview="${k}" aria-pressed="${matchView===k}">${l}</button>`).join("");
+  document.getElementById("matchViewChips").innerHTML=[["list","Matcher"],["team","Lag"],["double","Dubbelmatcher"],...(AI_ON?[["plan","Planera med Claude"]]:[])].map(([k,l])=>`<button class="chip" data-mview="${k}" aria-pressed="${matchView===k}">${l}</button>`).join("");
   document.getElementById("doubleOpts").hidden=matchView!=="double";
   document.getElementById("v-matcher").classList.toggle("planmode",matchView==="plan"||matchView==="team");if(matchView==="plan"){renderPlanner();return;}if(matchView==="team"){renderTeamView();return;}renderMatchList();if(matchView==="double")renderDouble();}
 function renderMatchList(){
@@ -1019,7 +1031,8 @@ function renderMatchList(){
   document.getElementById("dFrom").value=dFrom;document.getElementById("dTo").value=dTo;
   document.getElementById("datePresets").innerHTML=presets().map(([l,a,b])=>`<button class="chip" data-from="${a}" data-to="${b}" aria-pressed="${dFrom===a&&dTo===b}">${l}</button>`).join("");
   const place=resolvePlace();const hasQ=!!norm(cityQ);
-  document.getElementById("radiusLbl").textContent=hasQ?`Avstånd från ${place&&place.ll?place.name:cityQ}`:"Avstånd (skriv en ort först)";
+  document.getElementById("radiusLbl").textContent=`Avstånd från ${place&&place.ll?place.name:cityQ}`;
+  document.getElementById("radiusLbl").hidden=!hasQ;document.getElementById("radiusChips").hidden=!hasQ;
   const isCustom=!RADII.includes(radius);
   document.getElementById("radiusChips").innerHTML=RADII.map(r=>`<button class="chip" data-radius="${r}" aria-pressed="${radius===r}"${hasQ?"":" disabled"}>${r===0?"Bara orten":r+" mil"}</button>`).join("")
     +`<label class="chip rin" for="rCustom" aria-pressed="${isCustom}">Eget<input id="rCustom" type="number" min="0.5" max="500" step="0.5" inputmode="decimal" value="${isCustom?String(radius):""}" placeholder="–"${hasQ?"":" disabled"}>mil</label>`;
@@ -1028,6 +1041,8 @@ function renderMatchList(){
     pr.innerHTML=`<span>Jag vet inte var <b>${esc(cityQ)}</b> ligger.${st&&st.state==="err"?" "+esc(st.msg):""}</span>${sampleFn===null?"<span>Prova en större ort i närheten.</span>":`<button class="btn small primary" id="locate"${st&&st.state==="busy"?" disabled":""}>${st&&st.state==="busy"?"Letar…":"Hitta orten med Claude"}</button>`}`;}
   else if(hasQ&&radius>0&&place&&place.ai){pr.hidden=false;pr.innerHTML=`<span>Mäter från <b>${esc(place.name)}</b> (position från Claude).</span>`;}
   else pr.hidden=true;
+  {const pre=presets().some(([l,a,b])=>dFrom===a&&dTo===b),n=(tiers.size?1:0)+(favOnly?1:0)+(pre||matchView==="double"?0:1);
+   const sum=document.getElementById("mFiltSum");if(sum)sum.innerHTML=`${matchView==="double"?"Fler filter och restid":"Fler filter"}${n?`<span class="mfn">${n} valda</span>`:""}`;}
   document.getElementById("tierChips").innerHTML=`<button class="chip" data-tier="all" aria-pressed="${tiers.size===0}">Alla</button>`+TIERS.map(([k,l])=>`<button class="chip" data-tier="${k}" aria-pressed="${tiers.has(k)}">${l}</button>`).join("")+(favList().length?`<button class="chip" data-favonly="1" aria-pressed="${favOnly}">${STAR(1)} ${favList().length===1?esc(C[favList()[0]].n):"Mina lag"}</button>`:"");
   if(citiesFor!==MATCHES){citiesFor=MATCHES;const cities=[...new Set([...MATCHES.map(m=>m.city),...Object.keys(GEO)])].filter(Boolean).sort((a,b)=>a.localeCompare(b,"sv"));
     const html=cities.map(c=>`<option value="${esc(c)}">`).join("");const dl=document.getElementById("cities");if(dl.innerHTML!==html)dl.innerHTML=html;}
@@ -1640,7 +1655,7 @@ function renderTopRated(){if(ratingsState==="loading")return`<div class="empty">
     <div class="teams">${x.clubs.map(c=>`<button data-open="${esc(c.id)}">${crest(c.id,c.n,24)}${esc(c.n)}${favStar(c.id)}</button>`).join('<span class="vs">·</span>')}</div>${s.bars}${s.acc?`<div class="accs">${s.acc}</div>`:""}</article>`;}).join("");}
 
 // ---------- dubbelmatcher ----------
-let matchView="list";try{const mv=store.get("fk-mview");if(mv==="double"||(mv==="plan"&&AI_ON)||mv==="team")matchView=mv;}catch(e){}
+let matchView="list";try{const mv=store.get("fk-mview");if((mv==="plan"&&AI_ON)||mv==="team")matchView=mv;}catch(e){}
 let dSpeed=70,dMargin=45;try{const s=+store.get("fk-dspeed");if([50,70,90].includes(s))dSpeed=s;const g=+store.get("fk-dmargin");if([30,45,60].includes(g))dMargin=g;}catch(e){}
 const MATCH_MIN=115,SPAN=14*36e5;
 const durTxt=m=>{m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?`${h} h${r?" "+r+" min":""}`:`${r} min`;};
@@ -2507,7 +2522,7 @@ document.getElementById("qClear").onclick=()=>{qEl.value="";q="";document.getEle
 let CITY_LIST=[];
 function citySugg(){const box=document.getElementById("citySug");const nq=norm(cityEl.value);
   if(!nq||document.activeElement!==cityEl){box.hidden=true;return;}
-  if(!CITY_LIST.length)CITY_LIST=[...new Set([...MATCHES.map(m=>m.city),...Object.keys(GEO)])].sort((a,b)=>a.localeCompare(b,"sv"));
+  if(!CITY_LIST.length)CITY_LIST=[...new Set([...MATCHES.map(m=>m.city),...Object.keys(GEO)])].filter(Boolean).sort((a,b)=>a.localeCompare(b,"sv"));
   const hits=CITY_LIST.filter(c=>norm(c).startsWith(nq)).concat(CITY_LIST.filter(c=>!norm(c).startsWith(nq)&&norm(c).includes(nq))).slice(0,6);
   if(!hits.length||(hits.length===1&&norm(hits[0])===nq)){box.hidden=true;return;}
   box.innerHTML=hits.map(c=>`<button type="button" class="chip" data-citypick="${esc(c)}">${esc(c)}</button>`).join("");box.hidden=false;}
