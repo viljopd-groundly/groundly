@@ -322,6 +322,9 @@ button.stamp{cursor:pointer}
 .sechead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
 #fkToast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;max-width:calc(100% - 32px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
 #fkToast.on{opacity:1;transform:translate(-50%,0)}
+#fkUndo{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:6px 6px 6px 16px;border-radius:12px;font-size:14px;max-width:calc(100% - 32px);display:flex;align-items:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:51;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+#fkUndo.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#fkUndo button{all:unset;cursor:pointer;font-weight:700;color:var(--bg);background:color-mix(in srgb,var(--bg) 18%,transparent);padding:8px 14px;border-radius:9px}
 button{touch-action:manipulation}
 .sugg{display:flex;flex-wrap:wrap;gap:6px;margin-top:-4px}
 .sugg[hidden]{display:none}
@@ -504,7 +507,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   .msi b{font-size:22px;line-height:1}
   .msi[aria-current="true"]{background:var(--accent-soft);color:var(--accent)}
   .msi:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  #fkToast{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+  #fkToast,#fkUndo{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
 }
 @media (prefers-reduced-motion:no-preference){.card,.chip{transition:border-color .15s,background-color .15s}}
 /* Stil: mjuka kort */
@@ -1243,7 +1246,8 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-lege
   if(t.id==="lgClose"||t.id==="lgOv"){const o=document.getElementById("lgOv");if(o)o.remove();legOpen=null;return;}
   if(t.dataset.legvote){if(!dbNs||!myId)return;const k=t.dataset.legvote;const cur=LEGV[myId]&&Array.isArray(LEGV[myId].keys)?LEGV[myId].keys:[];const next=cur.includes(k)?cur.filter(x=>x!==k):[...cur,k].slice(-500);
     LEGV={...LEGV,[myId]:{keys:next}};legRender();try{await dbNs.doc("legvotes/"+myId).set({keys:next});}catch(err){toast("Kunde inte spara.");}return;}
-  if(t.dataset.legdel){const id=t.dataset.legdel;if(t.dataset.sure!=="1"){t.dataset.sure="1";t.textContent="Tryck igen för att ta bort";return;}if(await legWrite(xs=>xs.filter(x=>x.id!==id)))legRender();return;}
+  if(t.dataset.legdel){const id=t.dataset.legdel;if(t.dataset.sure!=="1"){t.dataset.sure="1";t.textContent="Tryck igen för att ta bort";return;}let gone=[];if(await legWrite(xs=>{gone=xs.filter(x=>x.id===id);return xs.filter(x=>x.id!==id);})){legRender();
+    if(gone.length)undoToast("Legenden togs bort",async()=>{await legWrite(xs=>putBack(xs,gone));legRender();});}return;}
   if(t.dataset.leghide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"leg:"+t.dataset.leghide])]});}catch(err){toast("Kunde inte dölja.");}legRender();return;}});
 document.addEventListener("submit",async e=>{if(e.target.id!=="legForm")return;e.preventDefault();const f=e.target;const club=f.dataset.legfor;
   const name=f.n.value.trim().slice(0,60),role=["p","t","b"].includes(f.r.value)?f.r.value:"p",years=f.y.value.trim().slice(0,20),text=f.t.value.trim().slice(0,300);if(!name)return;
@@ -1448,7 +1452,8 @@ async function forumClick(t){
   if(t.dataset.fkind){fKind=t.dataset.fkind;accClub=null;renderForum();return true;}
   if(t.dataset.thread){openThread=openThread===t.dataset.thread?null:t.dataset.thread;renderForum();return true;}
   if(t.dataset.delpost){const id=t.dataset.delpost;if(!confirmDel[id]){confirmDel[id]=1;t.textContent="Tryck igen för att ta bort";setTimeout(()=>{delete confirmDel[id];},4000);return true;}
-    delete confirmDel[id];await writeMine(ps=>ps.filter(p=>p.id!==id&&p.parent!==myId+":"+id));renderForum();return true;}
+    delete confirmDel[id];let gone=[];await writeMine(ps=>{gone=ps.filter(p=>p.id===id||p.parent===myId+":"+id);return ps.filter(p=>p.id!==id&&p.parent!==myId+":"+id);});renderForum();
+    if(gone.length)undoToast("Inlägget togs bort",async()=>{await writeMine(ps=>putBack(ps,gone));renderForum();});return true;}
   if(t.dataset.hide&&isMod){const k=t.dataset.hide;try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,k])]});}catch(e){forumMsg="Kunde inte dölja inlägget.";}renderForum();return true;}
   return false;}
 
@@ -1496,6 +1501,14 @@ function mutate(fn){myErr="";fn(MY);if(Array.isArray(MY.favs))MY.fav=MY.favs[0]|
 const ic=(n,c)=>`<svg class="ic${c?" "+c:""}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 const STAR=on=>ic("star",on?"on":""),OK=ic("check"),NO=ic("x");
 function toast(msg,icon){let el=document.getElementById("fkToast");if(!el){el=document.createElement("div");el.id="fkToast";el.setAttribute("role","status");document.body.appendChild(el);}el.innerHTML=(icon?ic(icon):"")+esc(msg);el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),3500);}
+// "Borttaget · Ångra" i 10 sekunder efter att något tagits bort
+function undoToast(msg,undo,after){let el=document.getElementById("fkUndo");if(!el){el=document.createElement("div");el.id="fkUndo";el.setAttribute("role","status");document.body.appendChild(el);}
+  if(undoToast.fin)undoToast.fin();clearTimeout(undoToast.t);
+  el.innerHTML=`<span>${esc(msg)}</span><button type="button">Ångra</button>`;el.classList.add("on");let done=false;
+  const fin=()=>{if(done)return;done=true;el.classList.remove("on");undoToast.fin=null;if(after)try{after();}catch(e){}};undoToast.fin=fin;
+  el.querySelector("button").onclick=async()=>{if(done)return;done=true;clearTimeout(undoToast.t);el.classList.remove("on");undoToast.fin=null;try{await undo();toast("Återställt","check");}catch(e){toast("Kunde inte ångra.");}};
+  undoToast.t=setTimeout(fin,10000);}
+const putBack=(xs,gone)=>{const have=new Set(xs.map(x=>x&&x.id));return[...xs,...gone.filter(g=>g&&!have.has(g.id))];};
 const matchById=id=>MATCHES.find(m=>m._id===id);
 const slim=m=>({id:m._id,home:m.home||null,away:m.away||null,homeName:m.homeName,awayName:m.awayName,kickoff:m.kickoff||null,dateFrom:m.dateFrom||null,dateTo:m.dateTo||null,venue:m.venue||null,city:m.city||null,country:m.country||null,comp:m.comp||null});
 function attendFromMatch(m){return{id:newId(),mid:m._id,home:m.home||null,away:m.away||null,homeName:m.homeName,awayName:m.awayName,date:m.kickoff?dayKey(new Date(m.kickoff)):(m.dateFrom||today()),score:m.score?String(m.score).slice(0,12):null,note:"",venue:m.venue||null,city:m.city||null,country:m.country||null,comp:m.comp||null};}
@@ -1610,7 +1623,10 @@ function myClick(t){
   if(t.dataset.wishc){const id=t.dataset.wishc;mutate(d=>{d.wishClubs=d.wishClubs.includes(id)?d.wishClubs.filter(x=>x!==id):[...d.wishClubs,id];});return;}
   if(t.dataset.mydel){const k=t.dataset.mydel;if(!myConfirm[k]){myConfirm[k]=1;renderMine();setTimeout(()=>{if(myConfirm[k]){delete myConfirm[k];if(mode==="mine")renderMine();}},4000);return;}
     delete myConfirm[k];const[kind,...rest]=k.split(":");const id=rest.join(":");
-    mutate(d=>{if(kind==="att")d.attended=d.attended.filter(a=>a.id!==id);if(kind==="vis")delete d.visited[id];if(kind==="wm")d.wishMatches=d.wishMatches.filter(w=>w.id!==id);if(kind==="wc")d.wishClubs=d.wishClubs.filter(x=>x!==id);});return;}
+    let gone=null;
+    mutate(d=>{if(kind==="att"){gone=d.attended.filter(a=>a.id===id);d.attended=d.attended.filter(a=>a.id!==id);}if(kind==="vis"){gone=d.visited[id];delete d.visited[id];}if(kind==="wm"){gone=d.wishMatches.filter(w=>w.id===id);d.wishMatches=d.wishMatches.filter(w=>w.id!==id);}if(kind==="wc"){gone=d.wishClubs.includes(id)?[id]:[];d.wishClubs=d.wishClubs.filter(x=>x!==id);}});
+    if(gone&&(!Array.isArray(gone)||gone.length))undoToast(kind==="att"?"Matchen togs bort":kind==="vis"?"Besöket togs bort":"Borttaget från önskelistan",async()=>{
+      mutate(d=>{if(kind==="att")d.attended=putBack(d.attended,gone);if(kind==="vis")d.visited[id]=gone;if(kind==="wm")d.wishMatches=putBack(d.wishMatches,gone);if(kind==="wc"&&!d.wishClubs.includes(id))d.wishClubs=[...d.wishClubs,id];});});return;}
 }
 const isMyBtn=t=>t.dataset.stcountry!==undefined||t.dataset.stleague!==undefined||t.dataset.myyear||t.dataset.mysub||t.dataset.stteam||t.dataset.visopen||t.dataset.stkind||t.dataset.stsort||t.id==="amOpen"||t.id==="amCancel"||t.dataset.wishm||t.dataset.attend||t.dataset.wmdone||t.dataset.visit||t.dataset.wishc||t.dataset.mydel;
 document.addEventListener("submit",e=>{
@@ -1972,7 +1988,8 @@ async function pubClick(t){
   if(t.dataset.pubcrowd!==undefined){pubForm={...(pubForm||{}),crowd:t.dataset.pubcrowd};renderClubs();return;}
   if(t.dataset.pubvote){const k=t.dataset.pubvote;writePubs(d=>{if(d.votes[k])delete d.votes[k];else d.votes[k]=true;});return;}
   if(t.dataset.pubdel){const id=t.dataset.pubdel;if(!confirmPub[id]){confirmPub[id]=1;t.textContent="Tryck igen för att ta bort";setTimeout(()=>{delete confirmPub[id];},4000);return;}
-    delete confirmPub[id];writePubs(d=>{d.tips=d.tips.filter(p=>p.id!==id);});return;}
+    delete confirmPub[id];let gone=[];writePubs(d=>{gone=d.tips.filter(p=>p.id===id);d.tips=d.tips.filter(p=>p.id!==id);});
+    if(gone.length)undoToast("Tipset togs bort",async()=>{writePubs(d=>{d.tips=putBack(d.tips,gone);});});return;}
   if(t.dataset.pubhide&&isMod){const k="pub:"+t.dataset.pubhide;try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,k])]});}catch(e){pubMsg="Kunde inte dölja tipset.";renderClubs();}return;}
 }
 document.addEventListener("input",e=>{if(e.target.closest&&e.target.closest("#pubForm")&&pubForm){const id=e.target.id;if(id==="pfName")pubForm.name=e.target.value;if(id==="pfWalk")pubForm.walk=e.target.value;if(id==="pfText")pubForm.text=e.target.value;}});
@@ -2802,9 +2819,11 @@ async function repClick(t){
     const ph=(r.photos||[]).filter(p=>PHID.test(p));startRepDraft({editing:r.id,draft:!!r.draft,match:r.match||"",result:r.result||"",crowd:r.crowd?String(r.crowd):"",title:r.title||"",club:c?c.n:"",city:r.city||"",date:r.date||"",body:r.body||"",tip:r.tip||"",photos:ph.slice(),orig:ph.slice()});return;}
   if(t.dataset.repdel){const id=t.dataset.repdel;if(!confirmRepDel[id]){confirmRepDel[id]=1;t.textContent="Tryck igen för att ta bort";setTimeout(()=>{delete confirmRepDel[id];},4000);return;}
     delete confirmRepDel[id];const r=(REP[myId]&&REP[myId].items||[]).find(x=>x.id===id);const ok=await writeReps(rs=>rs.filter(x=>x.id!==id));
-    if(ok&&r)dropAssets((r.photos||[]).filter(p=>PHID.test(p)));repOpen=null;renderReports();return;}
+    repOpen=null;renderReports();
+    if(ok&&r)undoToast("Reportaget togs bort",async()=>{await writeReps(rs=>putBack(rs,[r]));renderReports();},()=>dropAssets((r.photos||[]).filter(p=>PHID.test(p))));return;}
   if(t.dataset.rcdel){const id=t.dataset.rcdel;if(!confirmRepDel["c"+id]){confirmRepDel["c"+id]=1;t.textContent="Tryck igen för att ta bort";setTimeout(()=>{delete confirmRepDel["c"+id];},4000);return;}
-    delete confirmRepDel["c"+id];if(await writeComments(cs=>cs.filter(x=>x.id!==id)))renderReports(true);return;}
+    delete confirmRepDel["c"+id];let gone=[];if(await writeComments(cs=>{gone=cs.filter(x=>x.id===id);return cs.filter(x=>x.id!==id);})){renderReports(true);
+      undoToast("Kommentaren togs bort",async()=>{await writeComments(cs=>putBack(cs,gone));renderReports(true);});}return;}
   if(t.dataset.rchide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"com:"+t.dataset.rchide])]});}catch(e){toast("Kunde inte dölja kommentaren.");}renderReports(true);return;}
   if(t.dataset.rephide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"rep:"+t.dataset.rephide])]});}catch(e){toast("Kunde inte dölja reportaget.");}renderReports();return;}}
 
@@ -3107,7 +3126,8 @@ async function tnClick(t){
   if(t.dataset.logmatch){openLogMatch(t.dataset.logmatch,null);return;}
   if(t.dataset.logderby){const d=TIPS.derbies.find(x=>x[0]===t.dataset.logderby);if(d)openLogMatch(d[2][0],d[2][1]);return;}
   if(t.dataset.tndel){const id=t.dataset.tndel;if(!tnConfirm[id]){tnConfirm[id]=1;t.textContent="Tryck igen för att ta bort";setTimeout(()=>{delete tnConfirm[id];},4000);return;}
-    delete tnConfirm[id];await tnWrite(xs=>xs.filter(x=>x.id!==id));rerenderQuizHost();return;}
+    delete tnConfirm[id];let gone=[];await tnWrite(xs=>{gone=xs.filter(x=>x.id===id);return xs.filter(x=>x.id!==id);});rerenderQuizHost();
+    if(gone.length)undoToast("Kommentaren togs bort",async()=>{await tnWrite(xs=>putBack(xs,gone));rerenderQuizHost();});return;}
   if(t.dataset.tnhide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"tn:"+t.dataset.tnhide])]});}catch(e){toast("Kunde inte dölja kommentaren.");}rerenderQuizHost();return;}}
 document.addEventListener("input",e=>{const k=e.target.dataset&&e.target.dataset.tnd;if(k)tnDraft[k]=e.target.value;});
 document.addEventListener("submit",async e=>{const f=e.target;if(!f.classList||!f.classList.contains("tnform"))return;e.preventDefault();const key=f.dataset.tnkey;const ta=f.querySelector("textarea");const text=ta.value.trim().slice(0,280);if(!text)return;
