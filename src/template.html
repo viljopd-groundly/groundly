@@ -271,10 +271,10 @@ a.link{color:var(--muted)}
 .pitem{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:start}
 .ptime{font-family:var(--f-mono);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;padding-top:2px}
 .pnotes{margin:0;padding-left:18px}
-.favcard{background:var(--surface);border:2px solid var(--accent);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.favcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:6px}
 .favtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .favtop .cname{font-family:var(--f-display);font-size:20px}
-.favcard.tone{border-color:var(--fc);background:linear-gradient(90deg,var(--fc) 0 6px,var(--fc2) 6px 9px,transparent 9px),color-mix(in srgb,var(--fc) 7%,var(--surface));padding-left:22px}
+.favcard.tone{border-color:var(--line);background:linear-gradient(90deg,var(--fc) 0 6px,var(--fc2) 6px 9px,transparent 9px),color-mix(in srgb,var(--fc) 7%,var(--surface));padding-left:22px}
 .favcard .crow{gap:10px}
 .ic{width:1.1em;height:1.1em;vertical-align:-.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;overflow:visible}
 .ic.on{fill:currentColor}
@@ -386,7 +386,7 @@ button{touch-action:manipulation}
 .fld select{font:500 15px var(--f-body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;min-width:0}
 .arc .drow .mini{white-space:nowrap}
 .chips.wrapchips{flex-wrap:wrap;overflow:visible}
-.selrow{display:flex;gap:8px}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.sel{width:100%}.selw[hidden]{display:none}
+.selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.sel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .sel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
 .selw:after{content:"";position:absolute;right:15px;top:50%;width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none;color:var(--muted)}
@@ -661,8 +661,8 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <input id="ntq" type="search" placeholder="Sök land eller arena" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="ntqClear" hidden>Rensa</button>
     </label>
-    <div class="chips" role="group" aria-label="Visa" id="ntChips"></div>
-    <div class="chips wrapchips" role="group" aria-label="Världsdel" id="ntConfChips"></div>
+    <div class="chips wrapchips" role="group" aria-label="Visa" id="ntChips"></div>
+    <div class="selrow" id="ntConfRow"><label class="selw"><span class="vh">Världsdel</span><select id="ntConfSel" class="sel"></select></label></div>
     <div class="toolbar"><div class="count" id="ntCount"></div></div>
     <div class="list" id="ntList"></div>
   </section>
@@ -747,7 +747,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   <!-- Forum -->
   <section id="v-forum" hidden style="display:contents">
     <div id="forumTop" class="ftop"></div>
-    <div class="chips" role="group" aria-label="Kategori" id="forumChips"></div>
+    <div class="chips wrapchips" role="group" aria-label="Kategori" id="forumChips"></div>
     <div class="list" id="forumList"></div>
   </section>
 
@@ -968,7 +968,7 @@ function renderNat(){const nq=norm(ntQ);const toks=nq?nq.split(" "):[];
   document.getElementById("ntChips").innerHTML=[["a","A-landslag"],["w","Damlandslag"],["u21","U21"],["cups","Mästerskap"]].map(([k,l])=>`<button class="chip" data-ntview="${k}" aria-pressed="${ntView===k}">${l}</button>`).join("");
   if(ntView==="cups"){renderCups(toks);return;}
   const lg=ntView==="u21"?"U21-landslag":ntView==="w"?"Damlandslag":"Landslag";const sid=ntView==="u21"?"u21-se":ntView==="w"?"wnt-se":"nt-se";const confOn=ntView==="a"||ntView==="w";
-  const confRow=document.getElementById("ntConfChips");if(confRow){confRow.hidden=!confOn;confRow.innerHTML=confOn?[["alla","Hela världen"],...CONFS].map(([k,l])=>`<button class="chip" data-ntconf="${k}" aria-pressed="${ntConf===k}">${l} <small>${Object.values(C).filter(c=>c.l===lg&&(k==="alla"||c.conf===k)).length}</small></button>`).join(""):"";}
+  const confRow=document.getElementById("ntConfRow");if(confRow){confRow.hidden=!confOn;if(confOn)setSel("ntConfSel",[["alla","Hela världen"],...CONFS].map(([k,l])=>[k,`${l} (${Object.values(C).filter(c=>c.l===lg&&(k==="alla"||c.conf===k)).length})`]),ntConf);}
   const list=Object.values(C).filter(c=>c.l===lg&&(!confOn||ntConf==="alla"||c.conf===ntConf)&&toks.every(t=>clubHay(c).includes(t))).sort((a,b)=>(a.id===sid?-1:b.id===sid?1:0)||a.n.localeCompare(b.n,"sv"));
   document.getElementById("ntCount").innerHTML=`<b>${list.length}</b> ${ntView==="u21"?"U21-landslag":ntView==="w"?"damlandslag":"landslag"}${ntQ?` för ”${esc(ntQ)}”`:""}`;
   document.getElementById("ntList").innerHTML=list.length?list.map(c=>clubCard(c,false)).join(""):`<div class="empty"><b>Inget landslag matchar.</b></div>`;}
@@ -987,6 +987,7 @@ document.addEventListener("change",e=>{const t=e.target;
   else if(t.id==="stCSel"){stCountry=t.value;stLeague="";stOpen=null;renderMine();}
   else if(t.id==="stLSel"){stLeague=t.value;stOpen=null;renderMine();}
   else if(t.id==="stSSel"){stSort=t.value;store.set("fk-stsort",stSort);renderMine();}
+  else if(t.id==="ntConfSel"){ntConf=t.value;store.set("fk-ntconf",ntConf);openClub=null;renderNat();}
   else if(t.id==="aSortSel"){aSort=t.value;store.set("fk-asort",aSort);aLimit=40;renderArenas();}});
 function renderClubs(){if(mode==="landslag")return renderNat();genderChips("gClubs");
   setSel("countrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?"Alla länder":l]),country);
