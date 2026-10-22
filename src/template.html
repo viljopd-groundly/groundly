@@ -984,6 +984,9 @@ document.addEventListener("change",e=>{const t=e.target;
   else if(t.id==="aCountrySel"){aCountry=t.value;aLimit=40;renderArenas();}
   else if(t.id==="tblCSel"){const ls=tblLeagues().filter(x=>x.c===t.value);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();}
   else if(t.id==="tblLSel"){tblLeague=t.value;tblHL=null;store.set("fk-tbl",tblLeague);renderTable();}
+  else if(t.id==="stCSel"){stCountry=t.value;stLeague="";stOpen=null;renderMine();}
+  else if(t.id==="stLSel"){stLeague=t.value;stOpen=null;renderMine();}
+  else if(t.id==="stSSel"){stSort=t.value;store.set("fk-stsort",stSort);renderMine();}
   else if(t.id==="aSortSel"){aSort=t.value;store.set("fk-asort",aSort);aLimit=40;renderArenas();}});
 function renderClubs(){if(mode==="landslag")return renderNat();genderChips("gClubs");
   setSel("countrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?"Alla länder":l]),country);
@@ -1536,7 +1539,7 @@ function renderMine(){
   MY.attended.forEach(a=>{if(a.country)countries.add(a.country);});
   const stats=[[MY.attended.length,"matcher"],[visitedStadiums().size,"arenor"],[countries.size,"länder"],[MY.wishMatches.length+MY.wishClubs.length,"på önskelistan"]];
   let h=favCards()+natCard()+`<div class="stats">${stats.map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>
-   <div class="chips" role="group" aria-label="Visa"><button class="chip" data-mysub="been" aria-pressed="${mySub==="been"}">Varit på</button><button class="chip" data-mysub="teams" aria-pressed="${mySub==="teams"}">Lag jag sett</button><button class="chip" data-mysub="wish" aria-pressed="${mySub==="wish"}">Vill besöka</button><button class="chip" data-mysub="challenges" aria-pressed="${mySub==="challenges"}">Utmaningar</button><button class="chip" data-mysub="pass" aria-pressed="${mySub==="pass"}">Arenapass</button></div>
+   <div class="chips wrapchips" role="group" aria-label="Visa"><button class="chip" data-mysub="been" aria-pressed="${mySub==="been"}">Varit på</button><button class="chip" data-mysub="teams" aria-pressed="${mySub==="teams"}">Lag jag sett</button><button class="chip" data-mysub="wish" aria-pressed="${mySub==="wish"}">Vill besöka</button><button class="chip" data-mysub="challenges" aria-pressed="${mySub==="challenges"}">Utmaningar</button><button class="chip" data-mysub="pass" aria-pressed="${mySub==="pass"}">Arenapass</button></div>
    ${myErr?`<p class="err">${esc(myErr)}</p>`:""}`;
   if(mySub==="been"){
     if(pendingLogg())h+=`<p class="notice">${ic("offline")} Du har ändringar som väntar på nät. De skickas automatiskt när kontakten är tillbaka. <button class="link strong" data-retrysave="1">Försök nu</button></p>`;
@@ -2233,14 +2236,16 @@ function renderSeenTeams(){const all=seenTeams();const nClub=all.filter(t=>!t.na
   if(stCountry)list=list.filter(t=>cOf(t)===stCountry);
   const ls=stCountry&&stCountry!=="Landslag"?cnt(list,lOf):[];if(stLeague&&!ls.some(([k])=>k===stLeague))stLeague="";
   if(stLeague)list=list.filter(t=>lOf(t)===stLeague);
-  const filt=cs.length>1?`<div class="lbl">Land</div><div class="chips wrapchips" role="group" aria-label="Land"><button class="chip" data-stcountry="" aria-pressed="${!stCountry}">Alla</button>${cs.map(([k,n])=>`<button class="chip" data-stcountry="${esc(k)}" aria-pressed="${stCountry===k}">${esc(k)} <small>${n}</small></button>`).join("")}</div>`:"";
-  const lfilt=ls.length>1?`<div class="lbl">Serie</div><div class="chips wrapchips" role="group" aria-label="Serie"><button class="chip" data-stleague="" aria-pressed="${!stLeague}">Alla serier</button>${ls.map(([k,n])=>`<button class="chip" data-stleague="${esc(k)}" aria-pressed="${stLeague===k}">${esc(k)} <small>${n}</small></button>`).join("")}</div>`:"";
+  const opt=(v,l,cur)=>`<option value="${esc(v)}"${v===cur?" selected":""}>${esc(l)}</option>`;
+  const filt=cs.length>1?`<label class="selw"><span class="vh">Land</span><select id="stCSel" class="sel${stCountry?" on":""}">${opt("","Alla länder",stCountry)}${cs.map(([k,n])=>opt(k,`${k} (${n})`,stCountry)).join("")}</select></label>`:"";
+  const lfilt=ls.length>1?`<label class="selw"><span class="vh">Serie</span><select id="stLSel" class="sel${stLeague?" on":""}">${opt("","Alla serier",stLeague)}${ls.map(([k,n])=>opt(k,`${k} (${n})`,stLeague)).join("")}</select></label>`:"";
+  const sfilt=`<label class="selw"><span class="vh">Sortera</span><select id="stSSel" class="sel">${[["n","Flest matcher"],["last","Senast sedda"],["az","A–Ö"]].map(([k,l])=>opt(k,l,stSort)).join("")}</select></label>`;
   list.sort(stSort==="az"?(a,b)=>a.name.localeCompare(b.name,"sv"):stSort==="last"?(a,b)=>b.last.localeCompare(a.last)||b.n-a.n:(a,b)=>b.n-a.n||b.last.localeCompare(a.last)||a.name.localeCompare(b.name,"sv"));
-  let h=`<div class="chips" role="group" aria-label="Typ av lag">${[["alla",`Alla <small>${all.length}</small>`],["klubb",`Klubblag <small>${nClub}</small>`],["landslag",`Landslag <small>${nNat}</small>`]].map(([k,l])=>`<button class="chip" data-stkind="${k}" aria-pressed="${stKind===k}">${l}</button>`).join("")}</div>
-    ${filt}${lfilt}<div class="lbl">Sortera</div><div class="chips" role="group" aria-label="Sortera">${[["n","Flest matcher"],["last","Senast sedda"],["az","A–Ö"]].map(([k,l])=>`<button class="chip" data-stsort="${k}" aria-pressed="${stSort===k}">${l}</button>`).join("")}</div>`;
+  let h=`<div class="chips" role="group" aria-label="Typ av lag"${nNat&&nClub?"":" hidden"}>${[["alla",`Alla <small>${all.length}</small>`],["klubb",`Klubblag <small>${nClub}</small>`],["landslag",`Landslag <small>${nNat}</small>`]].map(([k,l])=>`<button class="chip" data-stkind="${k}" aria-pressed="${stKind===k}">${l}</button>`).join("")}</div>
+    <div class="selrow">${filt}${sfilt}</div>${lfilt?`<div class="selrow">${lfilt}</div>`:""}`;
   if(!all.length)return h+`<div class="empty">Här samlas alla lag du sett, både hemma- och bortalag. Lägg till matcher under <b>Varit på</b> så fylls listan på.</div>`;
   if(!list.length)return h+`<div class="empty">${stKind==="landslag"?"Du har inte sparat någon landskamp än.":"Inga klubblag sparade än."}</div>`;
-  return h+`<p class="hint">${list.length} lag. Tryck på ett lag för att se matcherna du sett. V–O–F = vinster, oavgjorda och förluster i matcher där du fyllt i resultat.</p><div class="clist">${list.map(t=>{const open=stOpen===t.k;return`<div class="citem steam${open?" open":""}"><button class="sthead" data-stteam="${esc(t.k)}" aria-expanded="${open}"><span class="crow">${t.id?crest(t.id,t.name,32):`<span class="crest" style="--c1:var(--bg);--c2:var(--line);width:32px;height:32px;font-size:11px;color:var(--muted)">${esc(crestInitials(t.name))}</span>`}<span class="mmain">
+  return h+`<p class="hint">${list.length} lag · tryck på ett lag för att se matcherna</p><div class="clist">${list.map(t=>{const open=stOpen===t.k;return`<div class="citem steam${open?" open":""}"><button class="sthead" data-stteam="${esc(t.k)}" aria-expanded="${open}"><span class="crow">${t.id?crest(t.id,t.name,32):`<span class="crest" style="--c1:var(--bg);--c2:var(--line);width:32px;height:32px;font-size:11px;color:var(--muted)">${esc(crestInitials(t.name))}</span>`}<span class="mmain">
     <b class="stname">${esc(t.name)}${t.id?favStar(t.id):""}</b>
     <span class="venue">${t.nat?"Landslag · ":""}${t.home} hemma · ${t.away} borta${t.w+t.d+t.l?` · V ${t.w} · O ${t.d} · F ${t.l}`:""}</span>
     <span class="venue">${t.n===1?`Sett <span class="nw">${esc(fmtDate(t.last))}</span>`:`Först <span class="nw">${esc(fmtDate(t.first))}</span> · senast <span class="nw">${esc(fmtDate(t.last))}</span>`}</span></span></span>
