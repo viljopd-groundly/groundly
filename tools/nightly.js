@@ -77,6 +77,11 @@ const API=[
  ["Besta deild","Island","Iceland",1,"is.1",/^(besta deild|(u|ú)rvalsdeild)$/],["Lengjudeild","Island","Iceland",2,"is.2",/^(lengjudeild|1\. deild)$/],
  ["Ekstraklasa","Polen","Poland",1,"pl.1",/^ekstraklasa$/],["I liga","Polen","Poland",2,"pl.2",/^i liga$/],
  ["MLS","USA","USA",1,"us.1",/^major league soccer$/],
+ ["Liga Profesional","Argentina","Argentina",1,"ar.1",/^liga profesional argentina$/],["Série A (Brasilien)","Brasilien","Brazil",1,"br.1",/^serie a$/],["Série B (Brasilien)","Brasilien","Brazil",2,"br.2",/^serie b$/],
+ ["Primera División (Uruguay)","Uruguay","Uruguay",1,"uy.1",/^primera divisi(o|ó)n$/],["Primera División (Chile)","Chile","Chile",1,"cl.1",/^primera divisi(o|ó)n$/],["Primera A (Colombia)","Colombia","Colombia",1,"co.1",/^primera a$/],
+ ["J1 League","Japan","Japan",1,"jp.1",/^j1 league$/],["J2 League","Japan","Japan",2,"jp.2",/^j2 league$/],["K League 1","Sydkorea","South-Korea",1,"kr.1",/^k league 1$/],
+ ["Saudi Pro League","Saudiarabien","Saudi-Arabia",1,"sa.1",/^pro league$/],["A-League","Australien","Australia",1,"au.1",/^a-league$/],
+ ["Egyptian Premier League","Egypten","Egypt",1,"eg.1",/^premier league$/],["Botola Pro","Marocko","Morocco",1,"ma.1",/^botola pro$/],["Premiership (Sydafrika)","Sydafrika","South-Africa",1,"za.1",/^premier soccer league$/],
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}
@@ -93,8 +98,10 @@ if(NATW.size)API.push(["Damlandskamper","*","World","CUP","int.wfr",/^friendlies
 if(NATS.length)API.push(["Nations League","*","World","CUP","uefa.nl",/^uefa nations league$/,false,true],["VM-kval","*","World","CUP","wc.q",/^world cup - qualification europe$/,false,true],["EM-kval","*","World","CUP","ec.q",/^euro championship - qualification$/,false,true],["Landskamper","*","World","CUP","int.fr",/^friendlies$/,false,true]);
 const apiStat={};const extra={standings:{},players:{},squads:{},events:{}};
 if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();const BASE=(process.env.API_FOOTBALL_BASE||"https://v3.football.api-sports.io").replace(/\/$/,"");
-  const local=/^http:\/\/(127\.0\.0\.1|localhost)/.test(BASE);let calls=0,gap=220;const sleep=ms=>{try{execSync(`sleep ${ms/1000}`);}catch(e){}};
-  const raw=q=>{for(let i=0;i<4;i++){calls++;let out;try{out=execSync(`curl -sS -m 60 ${local?"--noproxy '*'":""} -H "x-apisports-key: ${KEY}" "${BASE}/${q}"`,{encoding:"utf8",maxBuffer:256<<20});}catch(e){sleep(5000);continue;}
+  const local=/^http:\/\/(127\.0\.0\.1|localhost)/.test(BASE);let calls=0,gap=220;
+  // anropstak per natt (API_CAP, standard 6500), räknat på det som redan använts i dag. Trupper hoppas över först, sedan spelarlistor.
+  const CAP=+(process.env.API_CAP||6500);let budget=CAP;const left=()=>budget-calls;const sleep=ms=>{try{execSync(`sleep ${ms/1000}`);}catch(e){}};
+  const raw=q=>{if(left()<=50)throw new Error("anropstaket nått");for(let i=0;i<4;i++){calls++;let out;try{out=execSync(`curl -sS -m 60 ${local?"--noproxy '*'":""} -H "x-apisports-key: ${KEY}" "${BASE}/${q}"`,{encoding:"utf8",maxBuffer:256<<20});}catch(e){sleep(5000);continue;}
       let j;try{j=JSON.parse(out);}catch(e){sleep(5000);continue;}
       const errs=j.errors&&(Array.isArray(j.errors)?j.errors:Object.values(j.errors));
       if(errs&&errs.length){const msg=JSON.stringify(j.errors);if(!Array.isArray(j.errors)&&j.errors.rateLimit){gap=Math.max(gap,6500);sleep(61000);continue;}throw new Error(msg);}
@@ -108,7 +115,7 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
   const unmatched={};
   try{
     // 0) vilken plan har kontot (visas i sammanfattningen, aldrig nyckeln)
-    try{const st=raw("status").response||{};apiStat.plan=st.subscription&&st.subscription.plan;apiStat.anropIdag=st.requests&&`${st.requests.current}/${st.requests.limit_day}`;}catch(e){apiStat.plan="okänd";}
+    try{const st=raw("status").response||{};apiStat.plan=st.subscription&&st.subscription.plan;apiStat.anropIdag=st.requests&&`${st.requests.current}/${st.requests.limit_day}`;if(st.requests)budget=Math.min(CAP,+st.requests.limit_day||CAP)-(+st.requests.current||0);apiStat.anropstak=`${CAP} (kvar vid start: ${budget})`;}catch(e){apiStat.plan="okänd";}
     if(apiStat.plan==="Free")throw new Error("Gratisplanen ger inte innevarande säsong – uppgradera till Pro på dashboard.api-football.com. Hoppar över API-Football.");
     // 1) vilka serier finns, och vilken säsong pågår
     const lg={};for(const ac of [...new Set(API.map(x=>x[2]))]){for(const x of get(`leagues?country=${encodeURIComponent(ac)}`)){const cur=(x.seasons||[]).find(s=>s.current)||(x.seasons||[]).slice(-1)[0];
@@ -155,14 +162,14 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
     // 4) skytte-, assist- och kortligor
     const tops=[["goals","players/topscorers",s=>s.goals.total],["assists","players/topassists",s=>s.goals.assists],["yellow","players/topyellowcards",s=>s.cards.yellow],["red","players/topredcards",s=>s.cards.red]];
     // bara serier där API:et har spelarstatistik, och bara spelare från seriens egna lag (API:et blandar ibland in andra serier)
-    for(const[lname,lid,season,country,tier,cov] of done){if(tier==="CUP")continue;if(cov&&cov.top_scorers===false){apiStat["spelarligor "+lname]="saknas i API";continue;}
+    for(const[lname,lid,season,country,tier,cov] of done){if(tier==="CUP")continue;if(left()<600){apiStat.spelarligor_tak="hoppade över resten (anropstak)";break;}if(cov&&cov.top_scorers===false){apiStat["spelarligor "+lname]="saknas i API";continue;}
       const own=new Set(rows.filter(r=>r[5]===lname).flatMap(r=>[r[0],r[1]]));const o={};
       for(const[k,ep,val] of tops){try{o[k]=get(`${ep}?league=${lid}&season=${season}`).map(x=>{const s=(x.statistics||[]).find(z=>z.league&&z.league.id===lid)||(x.statistics||[])[0]||{};return[x.player.name,tid(s.team,country)||((s.team&&s.team.name)||""),val(s)||0,(s.games&&s.games.appearences)||0];}).filter(r=>!own.size||own.has(r[1])).slice(0,20);}catch(e){o[k]=[];}}
       if(Object.values(o).some(v=>v.length>=5))extra.players[lname]=o;else apiStat["spelarligor "+lname]="för lite data";}
     // 5) spelarstatistik per klubb (alla tävlingar, summerat)
     const teamIds=Object.entries(teamMap).filter(([a,b])=>b);const sq=done.filter(d=>d[4]!=="CUP"&&!(d[5]&&d[5].players===false));const seasonOf={};
     for(const[lname,lid,season] of sq)for(const r of rows.filter(r=>r[5]===lname)){seasonOf[r[0]]=seasonOf[r[0]]||season;seasonOf[r[1]]=seasonOf[r[1]]||season;}
-    for(const[apiId,our] of teamIds){const season=seasonOf[our];if(!season||extra.squads[our])continue;const ps={};
+    for(const[apiId,our] of teamIds){if(left()<300){apiStat.trupper_tak="hoppade över resten (anropstak)";break;}const season=seasonOf[our];if(!season||extra.squads[our])continue;const ps={};
       try{let page=1,total=1;do{const j=raw(`players?team=${apiId}&season=${season}&page=${page}`);total=(j.paging&&j.paging.total)||1;
         for(const x of j.response||[]){const p=x.player;const acc=ps[p.id]||(ps[p.id]=[p.name,"",p.age||null,0,0,0,0,0,0]);
           for(const s of x.statistics||[]){if(s.team&&String(s.team.id)!==String(apiId))continue;const g=s.games||{};if(!acc[1]&&g.position)acc[1]=g.position;

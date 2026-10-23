@@ -183,14 +183,14 @@ module.exports = [
 ["red","Red Star FC","red star paris","Frankrike","Paris",1897,"Ligue 2",2,"Stade Bauer (Saint-Ouen)",10000,"L'Étoile Rouge",["5 Coupe de France"],1],
 ["fgr","Forest Green Rovers","fgr forest green","England","Nailsworth",1889,"National League",5,"The New Lawn",5147,"The Green Devils",[],1],
 // ---- Amerika, Asien
-["boc","Boca Juniors","boca","Argentina","Buenos Aires",1905,"Liga Profesional",1,"La Bombonera",54000,"Xeneizes",["35 ligatitlar","6 Copa Libertadores"],0],
-["riv","River Plate","river","Argentina","Buenos Aires",1901,"Liga Profesional",1,"Estadio Monumental",85018,"Los Millonarios",["38 ligatitlar","4 Copa Libertadores"],0],
-["fla","Flamengo","cr flamengo","Brasilien","Rio de Janeiro",1895,"Série A (Brasilien)",1,"Maracanã",73139,"Mengão",["Copa Libertadores 1981, 2019, 2022, 2025"],0],
-["pal","Palmeiras","se palmeiras","Brasilien","São Paulo",1914,"Série A (Brasilien)",1,"Allianz Parque",43713,"Verdão",["12 ligatitlar","3 Copa Libertadores"],0],
-["cor","Corinthians","sc corinthians","Brasilien","São Paulo",1910,"Série A (Brasilien)",1,"Neo Química Arena",49205,"Timão",["7 ligatitlar","Copa Libertadores 2012","2 Klubb-VM"],0],
-["sfc","Santos","santos fc","Brasilien","Santos",1912,"Série A (Brasilien)",1,"Vila Belmiro",16068,"Peixe",["3 Copa Libertadores"],0],
-["hil","Al-Hilal","al hilal","Saudiarabien","Riyadh",1957,"Saudi Pro League",1,"Kingdom Arena",26000,"Al-Za'eem",["4 asiatiska Champions League-titlar"],0],
-["nas","Al-Nassr","al nassr","Saudiarabien","Riyadh",1955,"Saudi Pro League",1,"Al-Awwal Park",25000,"Al-Alamy",[],0],
+["boc","Boca Juniors","boca","Argentina","Buenos Aires",1905,"Liga Profesional",1,"La Bombonera",54000,"Xeneizes",["35 ligatitlar","6 Copa Libertadores"],1],
+["riv","River Plate","river","Argentina","Buenos Aires",1901,"Liga Profesional",1,"Estadio Monumental",85018,"Los Millonarios",["38 ligatitlar","4 Copa Libertadores"],1],
+["fla","Flamengo","cr flamengo","Brasilien","Rio de Janeiro",1895,"Série A (Brasilien)",1,"Maracanã",73139,"Mengão",["Copa Libertadores 1981, 2019, 2022, 2025"],1],
+["pal","Palmeiras","se palmeiras","Brasilien","São Paulo",1914,"Série A (Brasilien)",1,"Allianz Parque",43713,"Verdão",["12 ligatitlar","3 Copa Libertadores"],1],
+["cor","Corinthians","sc corinthians","Brasilien","São Paulo",1910,"Série A (Brasilien)",1,"Neo Química Arena",49205,"Timão",["7 ligatitlar","Copa Libertadores 2012","2 Klubb-VM"],1],
+["sfc","Santos","santos fc","Brasilien","Santos",1912,"Série A (Brasilien)",1,"Vila Belmiro",16068,"Peixe",["3 Copa Libertadores"],1],
+["hil","Al-Hilal","al hilal","Saudiarabien","Riyadh",1957,"Saudi Pro League",1,"Kingdom Arena",26000,"Al-Za'eem",["4 asiatiska Champions League-titlar"],1],
+["nas","Al-Nassr","al nassr","Saudiarabien","Riyadh",1955,"Saudi Pro League",1,"Al-Awwal Park",25000,"Al-Alamy",[],1],
 // ---- MLS 2026
 ["phi","Philadelphia Union","philadelphia","USA","Philadelphia",2008,"MLS",1,"Subaru Park (Chester)",18500,"The U",["Supporters' Shield 2020"],1],
 ["clt","Charlotte FC","charlotte","USA","Charlotte",2019,"MLS",1,"Bank of America Stadium",38000,"The Crown",[],1],
@@ -226,3 +226,4 @@ module.exports.push(...require("./clubs_women.js"));
 module.exports.push(...require("./clubs_ettan.js"));
 module.exports.push(...require("./nationals_women.js"));
 module.exports.push(...require("./clubs_mls2.js"));
+module.exports.push(...require("./clubs_world.js"));
