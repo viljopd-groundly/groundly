@@ -925,9 +925,11 @@ function clubJump(){if(!openClub||(mode!=="klubbar"&&mode!=="landslag"))return f
   clubStack.push(st);if(clubStack.length>30)clubStack.shift();try{history.pushState({m:mode,cjump:true,from:jumpFrom},"");}catch(e){}return true;}
 function clubBack(){const st=clubStack.pop();if(!st)return;openClub=st.openClub;q=st.q;country=st.country;league=st.league;
   if(st.mode==="landslag"){ntQ=st.ntQ;const el=document.getElementById("ntq");if(el)el.value=ntQ;}else{qEl.value=q;document.getElementById("qClear").hidden=!q;}
-  render();syncBack();requestAnimationFrame(()=>window.scrollTo({top:st.y||0}));}
+  render();syncBack();window.scrollTo(0,st.y||0);requestAnimationFrame(()=>{if(Math.abs(window.scrollY-(st.y||0))>2)window.scrollTo(0,st.y||0);});}
 window.addEventListener("popstate",e=>{if(clubStack.length&&clubStack[clubStack.length-1].mode===mode){clubBack();return;}const st=e.state;if(!st||!st.m||!VIEW_SV[st.m])return;navPop=true;jumpFrom=st.from||null;try{setMode(st.m);}finally{navPop=false;}
-  const y=st.y||0;requestAnimationFrame(()=>window.scrollTo({top:y}));});
+  const y=st.y||0;window.scrollTo(0,y);requestAnimationFrame(()=>{if(Math.abs(window.scrollY-y)>2)window.scrollTo(0,y);});});
+// webbläsaren ska inte själv återställa scrollen vid bakåt: den gör det innan vyn hunnit bytas, så sidan hoppar (särskilt i Safari)
+try{history.scrollRestoration="manual";}catch(e){}
 function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)repPopOrder=null;
   if(!navPop){jumpFrom=pendingJump&&pendingJump!==m?pendingJump:(!topNav&&prev!==m?prev:null);
     if(prev!==m){try{history.replaceState({...(history.state||{}),m:prev,y:y0},"");history.pushState({m,from:jumpFrom,jump:!!jumpFrom},"");}catch(e){}}}
