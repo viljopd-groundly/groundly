@@ -4,7 +4,7 @@
 // så att appen visar ligans nuvarande namn (t.ex. Championship, inte First Division).
 const fs = require("fs"), path = require("path");
 function buildIndex(site) {
-  const A = path.join(site, "archive"), rows = [];
+  const A = path.join(site, "archive"), rows = [], teams = {};
   for (const code of fs.readdirSync(A).sort()) {
     const dir = path.join(A, code);
     if (!fs.statSync(dir).isDirectory()) continue;
@@ -13,9 +13,13 @@ function buildIndex(site) {
       let j; try { j = JSON.parse(fs.readFileSync(path.join(dir, s + ".json"), "utf8")); } catch (e) { continue; }
       if (!j || !Array.isArray(j.m) || !j.m.length) continue;
       rows.push([code, j.l || code, s, s.includes("-") ? s.replace("-", "/") : s, j.m.length]);
+      // lag-id -> säsonger där laget finns (för "Sök lag" i arkivet)
+      for (const t of j.t || []) if (t && t[1]) (teams[t[1]] = teams[t[1]] || []).push(code + "/" + s);
     }
   }
   fs.writeFileSync(path.join(A, "index.json"), JSON.stringify(rows));
+  for (const k in teams) teams[k] = [...new Set(teams[k])].sort((a, b) => b.split("/")[1].localeCompare(a.split("/")[1]));
+  fs.writeFileSync(path.join(A, "teams.json"), JSON.stringify(teams));
   return rows;
 }
 if (require.main === module) {

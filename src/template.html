@@ -393,6 +393,9 @@ button{touch-action:manipulation}
 #bnMore,.msi[data-bn="reportage"],#m-reportage{position:relative}.msi .actdot{right:8px;top:6px}#m-reportage .actdot{right:-6px;top:-6px}
 .actcard .actrow{font-size:14px;color:var(--muted);border-left:3px solid var(--accent-soft);padding-left:9px}.actcard .actrow b{color:var(--fg)}.actcard .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
 .morerow{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.arcsea{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:11px 14px;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.arcsea:after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:-4px 2px 0 auto}.arcsea[aria-expanded=true]:after{transform:rotate(-135deg);margin-top:4px}
+.arcsea .meta{margin-left:auto;font-size:13px}
 .selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.dsel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dsel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
@@ -3118,21 +3121,34 @@ function pollHtml(){const wk=isoWeek(new Date());const[q,opts]=POLLS[(wk.y*53+wk
       :`<button class="popt" data-vote="${i}"${voteBusy?" disabled":""}><span>${esc(o)}</span></button>`;}).join("")}</div>
     <p class="hint">${tot} ${tot===1?"röst":"röster"}${mine!==null?" · tryck på ett annat svar för att ändra":can?"":" · logga in för att rösta"}. Ny fråga varje måndag.</p></article>`;}
 // nytt i appen
-const NEWS=[["Okt 2026","Spelarstatistik","Officiella tabeller, skytte-, assist- och kortligor, och målskyttar på spelade matcher. Fylls på varje natt när den nya matchkällan är igång.","tabell"],["Okt 2026","Serietabeller","Ny flik Tabeller under Mer, en Tabell-knapp på varje klubb och Visa tabell när du filtrerar på en serie under Klubbar.","tabell"],["Okt 2026","Fler serier i England och Tyskland","205 nya klubbar: League One, League Two, National League, National League North och South samt de fem tyska Regionalliga-serierna. Matcherna kommer när den nya matchkällan är på plats.","klubbar"],["Okt 2026","Nytt quiz","Dagens quiz med svit, svårighetsgrad, flaggor, klubbfärger, fler jämförelsefrågor, veckans topplista och koder för att utmana en kompis.","quiz"],["Okt 2026","Karta, bilder och kalender","Dina arenor på en karta under Min fotboll, bild på loggade matcher, säkerhetskopia av loggen och Vill gå-matcher direkt till kalendern.","mine"],["Okt 2026","Välj utseende","Ny logga, enhetliga ikoner och tre stilar att välja mellan: mjuka kort, platt eller med ramar. Tryck på den runda knappen uppe till höger.","hem"],["Okt 2026","Alla världens landslag","FIFA:s 211 landslag med flaggor, sorterade per världsdel, och ett nytt märke för världsdelar.","landslag"],["Okt 2026","Hela säsongen i åtta ligor","Premier League, Championship, La Liga, Serie A, Bundesliga, Ligue 1, Eredivisie och Portugal fram till maj 2027.","matcher"],["Okt 2026","Förstasida","Veckans match, topplistor, veckans fråga och helgens matcher nära dig.","hem"],
- ["Okt 2026","Reportage","Skriv om dina resor med bilder, match, resultat och publik.","reportage"],
- ["Okt 2026","Lag jag sett och flera favoritlag","Alla hemma- och bortalag du sett, och upp till sex favoritlag i klubbfärger.","mine"],
- ["Okt 2026","Matcher i lägre serier","Logga matcher på vilken arena som helst, med serie och ort.","mine"],
- ["Okt 2026","Quiz i egen flik","Sju kategorier: klubblag, landslag, geografi, arenor, derbyn och svensk fotboll.","quiz"],
- ["Okt 2026","Fyra kommande mästerskap","U21-EM 2027, dam-VM 2027, EM 2028 och VM 2030 med arenor.","landslag"],
- ["Okt 2026","110 landslag","Europas 55 landslag och deras U21-lag, med flaggor.","landslag"],
- ["Okt 2026","Andraligor och 3. Liga","Drygt 200 nya klubbar från andraligorna i tio länder och Tysklands 3. Liga.","klubbar"],
- ["Okt 2026","Speciella arenor och kultklubbar","Nya tips om arenor och klubbar värda en resa.","tips"]];
-function newsHtml(){const list=homeMore.news?NEWS:NEWS.slice(0,1);return`<article class="tip"><div class="lbl">Nytt i appen</div><div class="dlist">${list.map(([d,t,x,go])=>`<button class="hcard news" data-gomode="${go}"><span class="htxt"><b>${esc(t)}</b><span class="meta">${esc(x)}</span></span><span class="meta nd">${esc(d)}</span></button>`).join("")}</div>${NEWS.length>1?`<button class="link more" data-homemore="news">${homeMore.news?"Visa färre":`Fler nyheter (${NEWS.length-1})`}</button>`:""}</article>`;}
+const NEWS=[// [datum, rubrik, text, flik]. Nyheter äldre än ett halvår visas inte längre (se newsList).
+ ["2026-10-23","Påminnelser och notiser","Appen frågar om du var på matcher du ville gå på, och du ser när någon kommenterar eller gillar dina reportage.","hem"],
+ ["2026-10-23","Historiska tabeller","Välj säsong under Tabeller och se slutställningen ända tillbaka till 2016, till exempel Allsvenskan, Superettan och Ettan.","tabell"],
+ ["2026-10-23","Sök lag i arkivet och din statistik","Hitta alla gamla matcher med ett lag direkt, och se din vinstprocent, målrikaste match och längsta resa under Min fotboll.","mine"],
+ ["2026-10-23","Kultspelare","Märk en klubblegend som kultspelare – publikfavoriten med speciell status.","klubbar"],
+ ["2026-10-22","Ångra","Tog du bort något av misstag? Tryck Ångra inom 10 sekunder så kommer det tillbaka.","reportage"],
+ ["2026-10-22","Längre arkiv","Allsvenskan, Superettan, Ettan, Norge och Danmark från 2016, plus kvalet till Ettan.","mine"],
+ ["2026-10-22","Enklare filter","Land, serie och sortering som rullgardiner, och Fler filter under Matcher.","matcher"],
+ ["2026-10-21","Klubblegender","Lägg till klubbens och landslagets största spelare och tränare, och håll med om andras förslag.","klubbar"],
+ ["2026-10-21","Kommentarer på reportage","Kommentera varandras reportage och tipsa om resan.","reportage"],
+ ["2026-10-20","Damfotboll","Damallsvenskan och de största damserierna i Norden och Europa, damlandslag och filtret Herr / Dam / Landslag.","matcher"],
+ ["2026-10-20","Ettan Norra och Södra","29 nya svenska klubbar med matcher och tabeller.","klubbar"],
+ ["2026-10-15","Serietabeller och skytteligor","Officiella tabeller, skytte- och assistligor och målskyttar på spelade matcher – uppdateras varje natt.","tabell"],
+ ["2026-10-12","Fler serier i England och Tyskland","League One, League Two, National League och de fem tyska Regionalligorna.","klubbar"],
+ ["2026-10-10","Nytt quiz","Dagens quiz med svit, svårighetsgrad, flaggor och klubbfärger, veckans topplista och koder för att utmana en kompis.","quiz"],
+ ["2026-10-08","Karta, bilder och kalender","Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.","mine"],
+ ["2026-10-05","Alla världens landslag","FIFA:s 211 landslag med flaggor, sorterade per världsdel.","landslag"],
+ ["2026-10-01","Reportage","Skriv om dina resor med bilder, match, resultat och publik.","reportage"]];
+const MON=["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
+const newsDate=d=>{const[y,m,dd]=d.split("-").map(Number);return`${dd} ${MON[m-1]}${y!==new Date().getFullYear()?" "+y:""}`;};
+// bara nyheter från det senaste halvåret, högst 10 under "Fler nyheter"
+const newsList=()=>NEWS.filter(n=>Date.now()-Date.parse(n[0])<183*864e5).slice(0,10);
+function newsHtml(){const all=newsList();if(!all.length)return"";const list=homeMore.news?all:all.slice(0,1);return`<article class="tip"><div class="lbl">Nytt i appen</div><div class="dlist">${list.map(([d,t,x,go])=>`<button class="hcard news" data-gomode="${go}"><span class="htxt"><b>${esc(t)}</b><span class="meta">${esc(x)}</span></span><span class="meta nd">${esc(newsDate(d))}</span></button>`).join("")}</div>${all.length>1?`<button class="link more" data-homemore="news">${homeMore.news?"Visa färre":`Fler nyheter (${all.length-1})`}</button>`:""}</article>`;}
 
 // ---------- matcharkiv (äldre säsonger från openfootball, hämtas vid behov) ----------
 const ARC_ORDER=["se.1","se.2","se.3s","en.1","en.2","en.3","en.4","en.5","de.1","de.2","de.3","es.1","es.2","it.1","it.2","fr.1","fr.2","nl.1","pt.1","sco.1","no.1","no.2","dk.1","dk.2","fi.1","uefa.cl","en.fa","en.lc","de.cup","no.cup","dk.cup"];
 const ARC_LAND={se:"Sverige",en:"England",de:"Tyskland",es:"Spanien",it:"Italien",fr:"Frankrike",nl:"Nederländerna",pt:"Portugal",sco:"Skottland",no:"Norge",dk:"Danmark",fi:"Finland",is:"Island",be:"Belgien",pl:"Polen",at:"Österrike",ch:"Schweiz",tr:"Turkiet",gr:"Grekland",cz:"Tjeckien",hr:"Kroatien",rs:"Serbien",ro:"Rumänien",hu:"Ungern",ua:"Ukraina",ru:"Ryssland",bg:"Bulgarien",sk:"Slovakien",si:"Slovenien",cy:"Cypern",ie:"Irland",nir:"Nordirland",wal:"Wales",al:"Albanien",ad:"Andorra",am:"Armenien",az:"Azerbajdzjan",by:"Belarus",ba:"Bosnien och Hercegovina",ee:"Estland",fo:"Färöarna",ge:"Georgien",gi:"Gibraltar",kos:"Kosovo",lv:"Lettland",li:"Liechtenstein",lt:"Litauen",lu:"Luxemburg",mt:"Malta",md:"Moldavien",me:"Montenegro",mk:"Nordmakedonien",sm:"San Marino",us:"USA",uefa:"Europacuper",int:"Landslag",wc:"Landslag",ec:"Landslag"};
-let ARC={open:false,index:null,code:"se.1",season:"",team:"",data:null,loading:false,err:""};const ARC_CACHE={};
+let ARC={open:false,index:null,code:"se.1",season:"",team:"",data:null,loading:false,err:"",mode:"team",tid:"",tlim:4,teams:null};const ARC_CACHE={};
 // arenor som klubbar lämnat; datum = sista dagen på den gamla arenan
 const VENUE_HIST={tot:[["2017-05-15","White Hart Lane"],["2019-04-02","Wembley Stadium"]],whu:[["2016-05-11","Boleyn Ground (Upton Park)"]],eve:[["2025-05-19","Goodison Park"]],
   bre:[["2020-08-05","Griffin Park"]],bri:[["2011-05-08","Withdean Stadium"]],juv:[["2011-05-30","Stadio Olimpico di Torino"]],atm:[["2017-05-21","Vicente Calderón"]],
@@ -3167,6 +3183,8 @@ function arcHtml(){if(!ARC.open)return"";const ix=ARC.index||[];
   let h=`<div class="compose arc" id="arcBox"><div class="sechead"><h2>Hitta match i arkivet</h2><button class="link" id="arcClose">Stäng</button></div>
     <p class="hint">Säsonger från öppen data (openfootball) och API-Football: Premier League från 1992, övriga engelska divisioner från 1998, de stora ligorna och deras andraserier från 2010–2014, cuper, Europacuperna, högstaligor i nästan alla europeiska länder samt innevarande säsong i alla serier appen följer, även Allsvenskan, Superettan och Ettan. Saknas din match lägger du till den med "+ Lägg till match".</p>`;
   if(!ARC.index){return h+`<p class="meta">${ARC.loading?"Laddar arkivet…":esc(ARC.err||"")}</p></div>`;}
+  h+=`<div class="chips" role="group" aria-label="Sök i arkivet"><button class="chip" data-arcmode="team" aria-pressed="${ARC.mode==="team"}">Sök lag</button><button class="chip" data-arcmode="league" aria-pressed="${ARC.mode==="league"}">Bläddra per serie</button></div>`;
+  if(ARC.mode==="team")return h+arcTeamHtml()+`</div>`;
   h+=`<div class="row2"><label class="fld" for="arcCode">Liga<select id="arcCode">${[...new Set(codes.map(arcLand))].map(L=>`<optgroup label="${esc(L)}">${codes.filter(c=>arcLand(c)===L).map(c=>`<option value="${c}"${c===ARC.code?" selected":""}>${esc((ix.find(x=>x[0]===c)||[])[1]||c)}</option>`).join("")}</optgroup>`).join("")}</select></label>
     <label class="fld" for="arcSeason">Säsong<select id="arcSeason">${seasons.map(([k,l])=>`<option value="${k}"${k===ARC.season?" selected":""}>${esc(l)}</option>`).join("")}</select></label></div>
     <label class="fld" for="arcTeam">Lag<select id="arcTeam"${d?"":" disabled"}><option value="">Välj lag…</option>${teams.map(([n,,lbl])=>`<option value="${esc(n)}"${n===ARC.team?" selected":""}>${esc(lbl)}</option>`).join("")}</select></label>`;
@@ -3181,19 +3199,45 @@ function arcHtml(){if(!ARC.open)return"";const ix=ARC.index||[];
       <div class="mmain"><b>${esc(H[1]&&C[H[1]]?C[H[1]].n:H[0])} <span class="num">${esc(sc)}</span> ${esc(A[1]&&C[A[1]]?C[A[1]].n:A[0])}</b><span class="meta">${esc((arcNeutral(ARC.code,ARC.season,r)||[])[0]||venueAt(H[1],r[2])||[H[2],H[3]].filter(Boolean).join(", ")||"Arena saknas, fyll i efteråt")}</span></div>
       <button class="mini" data-arcadd="${i}" aria-pressed="${done}"${done?" disabled":""}>${done?`Sparad ${OK}`:"Jag var där"}</button></div>`;}).join("");
   return h+`</div></div>`;}
-function arcAdd(i){const d=ARC.data;if(!d||myState!=="ready")return;const r=d.m[i];if(!r)return;const H=d.t[r[0]],A=d.t[r[1]];const hc=H[1]&&C[H[1]],ac=A[1]&&C[A[1]];
-  const cup=d.tier==="EC"||d.tier==="CUP";const nv=arcNeutral(ARC.code,ARC.season,r);const sc=r[4]!=null?`${r[4]}–${r[5]}`:null;
-  mutate(x=>{x.attended.push({id:newId(),mid:arcMid(i),home:hc?H[1]:null,away:ac?A[1]:null,homeName:hc?hc.n:H[0],awayName:ac?ac.n:A[0],date:r[2],score:sc,note:r[6]?`Straffar ${r[6].replace("-","–")}`:"",
+// ---- sök lag i arkivet: alla säsonger där laget finns (archive/teams.json) ----
+function arcTeamHtml(){const c=ARC.tid&&C[ARC.tid];
+  let h=`<label class="fld" for="arcTeamIn">Lag<input id="arcTeamIn" list="allClubs" maxlength="80" placeholder="t.ex. Jönköpings Södra IF" value="${esc(c?c.n:"")}"></label>`;
+  if(!c)return h+`<p class="hint">Skriv ett lag så visas alla matcher med laget i arkivet, säsong för säsong, nyaste först.</p>`;
+  if(!ARC.teams){if(!ARC.tload){ARC.tload=1;arcLoad("archive/teams.json").then(j=>{ARC.teams=j;renderMine();}).catch(()=>{ARC.teams={};renderMine();});}return h+`<p class="meta">Laddar…</p>`;}
+  const all=ARC.teams[ARC.tid]||[];if(!all.length)return h+`<p class="hint">Inga matcher med ${esc(c.n)} i arkivet än.</p>`;
+  const show=all.slice(0,ARC.tlim);const missing=show.filter(k=>!ARC_CACHE[`archive/${k}.json`]);
+  if(missing.length){ARC.tp=ARC.tp||{};const go=missing.filter(k=>!ARC.tp[k]);go.forEach(k=>ARC.tp[k]=1);if(go.length)Promise.all(go.map(k=>arcLoad(`archive/${k}.json`).catch(()=>{ARC_CACHE[`archive/${k}.json`]={t:[],m:[],l:"",s:""};}))).then(()=>renderMine());return h+`<p class="meta">Laddar ${missing.length} ${missing.length===1?"säsong":"säsonger"}…</p>`;}
+  h+=`<p class="hint">${esc(c.n)} finns i ${all.length} ${all.length===1?"säsong":"säsonger"} i arkivet. Tryck <b>Jag var där</b> på de matcher du sett.</p>`;
+  for(const k of show){const[code,season]=k.split("/");const d=ARC_CACHE[`archive/${k}.json`];if(!d)continue;const ti=d.t.findIndex(t=>t[1]===ARC.tid);if(ti<0)continue;
+    const rows=d.m.map((r,i)=>[r,i]).filter(([r])=>r[0]===ti||r[1]===ti);
+    ARC.topen=ARC.topen||{[show[0]]:1};const op=!!ARC.topen[k];const seen=rows.filter(([r,i])=>isAtt(`arc:${code}:${season}:${i}`)).length;
+    h+=`<button class="arcsea" data-arcsea="${esc(k)}" aria-expanded="${op}"><b>${esc(d.l)} ${esc(d.s)}</b><span class="meta">${rows.length} matcher${seen?` · ${seen} sparade`:""}</span></button>`+(op?`<div class="dlist">`+rows.map(([r,i])=>arcRowHtml(d,code,season,r,i,ti)).join("")+`</div>`:"");}
+  if(all.length>ARC.tlim)h+=`<div class="morerow"><button class="btn small" data-arcmore="1">Visa äldre säsonger (${all.length-ARC.tlim} till)</button></div>`;
+  return h;}
+function arcRowHtml(d,code,season,r,i,ti){const H=d.t[r[0]],A=d.t[r[1]];const sc=r[4]!=null?`${r[4]}–${r[5]}${r[6]?` (str ${r[6].replace("-","–")})`:""}`:"–";const mid=`arc:${code}:${season}:${i}`;
+  const done=isAtt(mid)||MY.attended.some(a=>a.date===r[2]&&a.homeName===(H[1]&&C[H[1]]?C[H[1]].n:H[0]));
+  return`<div class="drow"><div class="dcd"><b>${esc(fmtDate(r[2]))}</b><span>${esc(r[7]||(r[0]===ti?"Hemma":"Borta"))}</span></div>
+    <div class="mmain"><b>${esc(H[1]&&C[H[1]]?C[H[1]].n:H[0])} <span class="num">${esc(sc)}</span> ${esc(A[1]&&C[A[1]]?C[A[1]].n:A[0])}</b><span class="meta">${esc((arcNeutral(code,season,r)||[])[0]||venueAt(H[1],r[2])||[H[2],H[3]].filter(Boolean).join(", ")||"Arena saknas, fyll i efteråt")}</span></div>
+    <button class="mini" data-arcadd2="${esc(code+"|"+season+"|"+i)}" aria-pressed="${done}"${done?" disabled":""}>${done?`Sparad ${OK}`:"Jag var där"}</button></div>`;}
+function arcAdd(i){arcAddFrom(ARC.data,ARC.code,ARC.season,i);}
+function arcAddFrom(d,code,season,i){if(!d||myState!=="ready")return;const r=d.m[i];if(!r)return;const H=d.t[r[0]],A=d.t[r[1]];const hc=H[1]&&C[H[1]],ac=A[1]&&C[A[1]];
+  const cup=d.tier==="EC"||d.tier==="CUP";const nv=arcNeutral(code,season,r);const sc=r[4]!=null?`${r[4]}–${r[5]}`:null;
+  mutate(x=>{x.attended.push({id:newId(),mid:`arc:${code}:${season}:${i}`,home:hc?H[1]:null,away:ac?A[1]:null,homeName:hc?hc.n:H[0],awayName:ac?ac.n:A[0],date:r[2],score:sc,note:r[6]?`Straffar ${r[6].replace("-","–")}`:"",
     ...(nv?{venue:nv[0],city:nv[1],country:nv[2]}:{venue:hc?venueAt(H[1],r[2]):(H[2]||null),city:hc?hc.city:(H[3]||null),country:hc?hc.c:(d.c||null)}),comp:cup?`${d.l}${r[7]?" · "+r[7]:""}`:d.l});});
   toast("Matchen är sparad under Varit på.");}
-const isArcBtn=t=>t.id==="arcOpen"||t.id==="arcClose"||t.dataset.arcadd!==undefined;
+const isArcBtn=t=>t.id==="arcOpen"||t.id==="arcClose"||t.dataset.arcadd!==undefined||t.dataset.arcadd2||t.dataset.arcmode||t.dataset.arcmore||t.dataset.arcsea;
 function arcClick(t){if(t.id==="arcOpen"){ARC.open=true;addingMatch=false;renderMine();arcIndex();setTimeout(()=>document.getElementById("arcBox")?.scrollIntoView({block:"start",behavior:"smooth"}),50);return;}
   if(t.id==="arcClose"){ARC.open=false;renderMine();return;}
-  if(t.dataset.arcadd!==undefined){arcAdd(+t.dataset.arcadd);return;}}
+  if(t.dataset.arcadd!==undefined){arcAdd(+t.dataset.arcadd);return;}
+  if(t.dataset.arcadd2){const[code,season,i]=t.dataset.arcadd2.split("|");arcAddFrom(ARC_CACHE[`archive/${code}/${season}.json`],code,season,+i);return;}
+  if(t.dataset.arcmode){ARC.mode=t.dataset.arcmode;renderMine();return;}
+  if(t.dataset.arcmore){ARC.tlim+=6;renderMine();return;}
+  if(t.dataset.arcsea){const k=t.dataset.arcsea;ARC.topen=ARC.topen||{};if(ARC.topen[k])delete ARC.topen[k];else ARC.topen[k]=1;renderMine();return;}}
 document.addEventListener("change",e=>{const id=e.target.id;
   if(id==="arcCode"){ARC.code=e.target.value;const s=(ARC.index||[]).filter(x=>x[0]===ARC.code).map(x=>x[2]).sort().reverse();ARC.season=s.includes(ARC.season)?ARC.season:(s[0]||"");arcSeason();}
   else if(id==="arcSeason"){ARC.season=e.target.value;arcSeason();}
-  else if(id==="arcTeam"){ARC.team=e.target.value;renderMine();}});
+  else if(id==="arcTeam"){ARC.team=e.target.value;renderMine();}
+  else if(id==="arcTeamIn"){const v=norm(e.target.value);const c=Object.values(C).find(x=>norm(x.n)===v)||Object.values(C).find(x=>norm(x.n).startsWith(v));if(c){ARC.tid=c.id;ARC.tlim=4;ARC.topen=null;renderMine();}}});
 
 // ---------- kommentarer och "sett" på tips ----------
 let TIPNOTES={},tnState="loading",tnOpen=null,tnBusy=false,tnMsg="",tnDraft={};
