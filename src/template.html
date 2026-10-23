@@ -242,6 +242,8 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .prep{grid-column:1/-1;border-top:1px solid var(--line);margin-top:8px;padding-top:10px;display:flex;flex-direction:column;gap:8px;cursor:default}
 .prep h3{font-family:var(--f-display);font-weight:600;font-size:17px;margin:0}
 .prep h4{font-size:14px;margin:6px 0 0}
+.trip{display:flex;flex-direction:column;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.trip .actions{margin-top:2px}.trip .sechead{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.trip .meta{margin:0}
 .prep a:not(.btn){color:var(--accent)}
 a.btn,a.mini{text-decoration:none;display:inline-block}
 a.link{color:var(--muted)}
@@ -1984,7 +1986,7 @@ function renderChallenges(){const vs=visitedStadiums();
 function afterMine(){if(mySub==="been")drawLiveMap();if(mySub==="pass"){drawPass();}else if(mySub==="challenges"){drawMap();drawSeason();}else if(mySub==="been"&&shareMatchId){const a=MY.attended.find(z=>z.id===shareMatchId);if(a)drawMatch(a);}}
 
 // ---------- klick för de nya funktionerna ----------
-const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard;
+const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.tripfor||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard;
 function openClubCard(id){if(!C[id])return;qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;}
 function featClick(t){
   if(t.dataset.mview){matchView=t.dataset.mview;store.set("fk-mview",matchView);if(matchView==="double"&&dTo<addDays(dFrom,6))dTo=addDays(dFrom,13);renderMatches();return;}
@@ -2006,6 +2008,7 @@ function featClick(t){
     t.parentElement.querySelectorAll("[data-ryn]").forEach(b=>{const p=b.dataset.ryn.split(":");b.setAttribute("aria-pressed",String((rateDraft[p[0]]&&rateDraft[p[0]][p[1]]||"")===p[2]));});return;}
   if(t.dataset.homeedit){homeEdit=true;render();setTimeout(()=>document.getElementById("homeIn")?.focus(),0);return;}
   if(t.dataset.homecancel){homeEdit=false;render();return;}
+  if(t.dataset.tripfor){tripOpen=tripOpen===t.dataset.tripfor?null:t.dataset.tripfor;homeEdit=false;renderClubs();return;}
   if(t.dataset.year){seasonYear=+t.dataset.year;renderMine();return;}
   if(t.dataset.fmt){shareFmt=t.dataset.fmt;store.set("fk-fmt",shareFmt);renderMine();return;}
   if(t.dataset.arsel){const allL=tblLeagues().map(x=>x.l);if(!arDraft)arDraft=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.includes(l)):LEAGUES.slice();
@@ -2075,7 +2078,7 @@ function pubFormHtml(c){const f=pubForm||{crowd:""};
     <div class="actions"><button class="btn small primary" type="submit">Publicera tipset</button><button class="btn small" type="button" data-pubcancel="1">Avbryt</button></div></form>`;}
 function prepBlock(c){if(!c.s)return"";const pubs=pubList(c);const seed=SEEDMAP.get(arenaKey(c.s));const canTip=!!myId&&pubsState==="ready";
   return`<div class="prep" data-noclose="1"><h3>Inför matchen</h3>
-   <div class="actions">${extLink(bookingUrl(c.s,c.city),adLabel("Hotell nära arenan"),"btn small primary")}${extLink(mapsSearch(`pub nära ${c.s}, ${c.city}`),"Pubar på kartan","btn small")}${extLink(mapsDir(c.s,c.city),"Hitta till arenan","btn small")}${extLink(transitUrl("",placeStr(c.s,c.city)),"Kollektivt till arenan","btn small")}</div>${homeRow(c)}
+   <div class="actions">${extLink(bookingUrl(c.s,c.city),adLabel("Hotell nära arenan"),"btn small")}${extLink(mapsSearch(`pub nära ${c.s}, ${c.city}`),"Pubar på kartan","btn small")}<button class="btn small" data-tripfor="${esc(c.id)}" aria-expanded="${tripOpen===c.id}">Ta dig till arenan</button></div>${tripOpen===c.id?tripPanel(c):""}
    <h4>Pubtips före match</h4>
    ${seed&&seed.note?`<p class="notice">${esc(seed.note)}</p>`:""}
    ${pubs.length?`<div class="pubs">${pubs.slice(0,lim("pub:"+c.id,5)).map(pubItem).join("")}</div>${limBtns("pub:"+c.id,pubs.length,5)}`:`<p class="meta">Inga pubtips än. Vet du var man tar en öl före match här?</p>`}
@@ -2109,9 +2112,18 @@ document.addEventListener("submit",e=>{if(e.target.id!=="pubForm")return;e.preve
   pubOpen=null;pubForm=null;renderClubs();});
 
 // ---------- resa och biljetter ----------
-let homeTown="",homeEdit=false;try{homeTown=(store.get("fk-home")||"").slice(0,60);}catch(e){}
+let homeTown="",homeEdit=false,tripOpen=null;try{homeTown=(store.get("fk-home")||"").slice(0,60);}catch(e){}
 const placeStr=(s,city)=>[s,city].filter(Boolean).join(", ");
 const transitUrl=(from,to)=>"https://www.google.com/maps/dir/?api=1"+(from?"&origin="+enc(from):"")+"&destination="+enc(to)+"&travelmode=transit";
+const dirUrl=(from,to,mode)=>"https://www.google.com/maps/dir/?api=1"+(from?"&origin="+enc(from):"")+"&destination="+enc(to)+"&travelmode="+mode;
+// "Ta dig till arenan": långresan från hemorten (om den inte ligger nära) och sista biten på plats
+function tripPanel(c){const to=placeStr(c.s,c.city);const hl=homeLL(),cl=GEO[c.city];
+  const local=!!homeTown&&(norm(homeTown)===norm(c.city||"")||!!(hl&&cl&&haversine(hl.ll,cl)<25));
+  const far=homeTown&&!local?`<div class="tripsec"><div class="sechead"><div class="lbl">Från ${esc(homeTown)}</div><button class="link" data-homeedit="1">Byt hemort</button></div>
+    <div class="actions">${extLink(dirUrl(homeTown,to,"transit"),"Tåg och buss","btn small")}${extLink(dirUrl(homeTown,to,"driving"),"Bil","btn small")}</div></div>`:"";
+  const near=`<div class="tripsec"><div class="lbl">På plats</div><div class="actions">${extLink(dirUrl("",to,"walking"),"Gång","btn small")}${extLink(dirUrl("",to,"transit"),"Kollektivt","btn small")}${extLink(dirUrl("",to,"driving"),"Bil","btn small")}</div></div>`;
+  const foot=homeEdit?homeRow(c):!homeTown?`<div><button class="link" data-homeedit="1">Ange din hemort för resväg hela vägen hit</button></div>`:local?`<p class="meta">Du bor nära, så vi visar bara sista biten. <button class="link" data-homeedit="1">Byt hemort</button></p>`:"";
+  return`<div class="trip" data-noclose="1">${far}${near}${foot}</div>`;}
 const tripLink=m=>homeTown&&m.city?extLink(transitUrl(homeTown,placeStr(m.venue,m.city)),"Resa","mini"):"";
 function homeRow(c){if(homeEdit)return`<form class="homeform" id="homeForm" data-noclose="1"><label class="fld" for="homeIn">Din hemort<input id="homeIn" maxlength="60" value="${esc(homeTown)}" placeholder="t.ex. Jönköping"></label><button class="btn small primary" type="submit">Spara</button><button class="btn small" type="button" data-homecancel="1">Avbryt</button></form>`;
   if(homeTown)return`<div class="actions">${extLink(transitUrl(homeTown,placeStr(c.s,c.city)),`Res hit från ${esc(homeTown)}`,"btn small")}<button class="link" data-homeedit="1">Byt hemort</button></div>`;
