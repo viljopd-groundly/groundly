@@ -853,7 +853,7 @@ const tierPill=(t,label)=>{if(t==="EC")return`<span class="pill ec">Europacup</s
 const CITY_ALIAS={rome:"Rom",roma:"Rom",naples:"Neapel",napoli:"Neapel",munich:"München",munchen:"München",cologne:"Köln",koln:"Köln",milan:"Milano",torino:"Turin",florence:"Florens",firenze:"Florens",venice:"Venedig",venezia:"Venedig",genoa:"Genua",genova:"Genua",lisbon:"Lissabon",lisboa:"Lissabon",copenhagen:"Köpenhamn",kobenhavn:"Köpenhamn",prague:"Prag",praha:"Prag",athens:"Aten",gothenburg:"Göteborg",seville:"Sevilla",solna:"Stockholm",bruges:"Brygge",brugge:"Brygge",brussels:"Bryssel",bruxelles:"Bryssel","new york city":"New York",nyc:"New York",la:"Los Angeles"};
 
 // ---------- state ----------
-let mode="hem";try{const m=store.get("fk-mode");if(m==="klubbar"||m==="hem"||m==="quiz"||m==="landslag"||m==="arenor"||m==="matcher"||m==="tips"||m==="forum"||m==="reportage"||m==="mine")mode=m;}catch(e){}
+let mode="hem";// appen öppnar alltid på Hem
 let q="",country="alla",openClub=null;
 let cityQ="",tiers=new Set();
 let MATCHES=[],dbState="loading",META=null;
