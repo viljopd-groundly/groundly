@@ -906,16 +906,26 @@ const TAGLINES={sv:"Planera & logga dina fotbollsresor",en:"Plan & log your foot
 // Tillbaka: hoppar man från en vy till en annan (t.ex. arena → landslag) sparas varifrån man kom,
 // så att mobilens bakåt-gest och knappen "Tillbaka till …" leder rätt.
 const VIEW_SV={hem:"Hem",klubbar:"Klubbar",landslag:"Landslag",arenor:"Arenor",matcher:"Matcher",tabell:"Tabeller",tips:"Tips",quiz:"Quiz",reportage:"Reportage",forum:"Forum",mine:"Min fotboll"};
-let navPop=false,pendingJump=null,jumpFrom=null;
+let navPop=false,pendingJump=null,jumpFrom=null,topNav=false;
+// menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
+function goTop(m){topNav=true;try{setMode(m);}finally{topNav=false;}}
 function syncBack(){let b=document.getElementById("backPill");
-  if(!b){document.body.insertAdjacentHTML("beforeend",`<button id="backPill" class="backpill" hidden></button>`);b=document.getElementById("backPill");b.onclick=()=>{if(history.state&&history.state.jump)history.back();else if(jumpFrom)setMode(jumpFrom);};}
-  const on=!!(jumpFrom&&jumpFrom!==mode);b.hidden=!on;if(on)b.innerHTML=`<span aria-hidden="true">←</span> Tillbaka till ${esc(VIEW_SV[jumpFrom]||"förra sidan")}`;}
-window.addEventListener("popstate",e=>{const st=e.state;if(!st||!st.m||!VIEW_SV[st.m])return;navPop=true;jumpFrom=st.from||null;try{setMode(st.m);}finally{navPop=false;}
+  if(!b){document.body.insertAdjacentHTML("beforeend",`<button id="backPill" class="backpill" hidden></button>`);b=document.getElementById("backPill");b.onclick=()=>{if(clubStack.length){if(history.state&&history.state.cjump)history.back();else clubBack();return;}if(history.state&&history.state.jump)history.back();else if(jumpFrom)setMode(jumpFrom);};}
+  const top=clubStack.length?clubStack[clubStack.length-1]:null;const on=!!top||!!(jumpFrom&&jumpFrom!==mode);b.hidden=!on;
+  if(on)b.innerHTML=`<span aria-hidden="true">←</span> Tillbaka till ${esc(top?(C[top.openClub]?C[top.openClub].n:"förra klubben"):(VIEW_SV[jumpFrom]||"förra sidan"))}`;}
+// klubb → annan klubb i samma vy (t.ex. Liknande klubbar): spara var man var, så att pilen och bakåt-gesten leder tillbaka
+let clubStack=[];
+function clubJump(){if(!openClub||(mode!=="klubbar"&&mode!=="landslag"))return false;const st={mode,openClub,q,country,league,ntQ:typeof ntQ!=="undefined"?ntQ:"",y:window.scrollY};
+  clubStack.push(st);if(clubStack.length>30)clubStack.shift();try{history.pushState({m:mode,cjump:true,from:jumpFrom},"");}catch(e){}return true;}
+function clubBack(){const st=clubStack.pop();if(!st)return;openClub=st.openClub;q=st.q;country=st.country;league=st.league;
+  if(st.mode==="landslag"){ntQ=st.ntQ;const el=document.getElementById("ntq");if(el)el.value=ntQ;}else{qEl.value=q;document.getElementById("qClear").hidden=!q;}
+  render();syncBack();requestAnimationFrame(()=>window.scrollTo({top:st.y||0}));}
+window.addEventListener("popstate",e=>{if(clubStack.length&&clubStack[clubStack.length-1].mode===mode){clubBack();return;}const st=e.state;if(!st||!st.m||!VIEW_SV[st.m])return;navPop=true;jumpFrom=st.from||null;try{setMode(st.m);}finally{navPop=false;}
   const y=st.y||0;requestAnimationFrame(()=>window.scrollTo({top:y}));});
 function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)repPopOrder=null;
-  if(!navPop){jumpFrom=pendingJump&&pendingJump!==m?pendingJump:null;
+  if(!navPop){jumpFrom=pendingJump&&pendingJump!==m?pendingJump:(!topNav&&prev!==m?prev:null);
     if(prev!==m){try{history.replaceState({...(history.state||{}),m:prev,y:y0},"");history.pushState({m,from:jumpFrom,jump:!!jumpFrom},"");}catch(e){}}}
-  pendingJump=null;
+  pendingJump=null;if(m!==prev)clubStack=[];
   mode=m;store.set("fk-mode",m);window.__gmode=m;try{window.dispatchEvent(new CustomEvent("gmode",{detail:m}));}catch(e){}
   document.querySelectorAll(".mode").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===m)));
   ["hem","klubbar","landslag","arenor","matcher","tabell","tips","quiz","reportage","forum","mine"].forEach(v=>{const s=document.getElementById("v-"+v);s.hidden=m!==v;s.style.display=m===v?"contents":"none";});
@@ -924,7 +934,7 @@ function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)repPopOrder=nu
   try{render();}catch(e){console.error("[groundly] render",e);try{toast("Något gick fel i vyn. Prova att ladda om sidan.");}catch(_){}}
   syncBack();}
 try{history.replaceState({m:mode,y:0},"");}catch(e){}window.__gmode=mode;
-document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>goTop(b.dataset.mode));
 // bottenmenyn
 const MORE_MODES=["tabell","klubbar","landslag","arenor","tips","quiz","reportage","forum"];
 function syncNav(){document.querySelectorAll("[data-bn]").forEach(b=>b.setAttribute("aria-current",String(b.dataset.bn===mode)));
@@ -933,8 +943,8 @@ function closeMore(){const sh=document.getElementById("moreSheet");if(sh)sh.hidd
 document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMore,#bnLog,#moreBack");if(!b)return;
   if(b.id==="moreBack"){closeMore();return;}
   if(b.id==="bnMore"){const sh=document.getElementById("moreSheet");const open=sh.hidden;sh.hidden=!open;b.setAttribute("aria-expanded",String(open));return;}
-  if(b.id==="bnLog"){closeMore();if(myState!=="ready"){setMode("mine");return;}openLogMatch(null,null);return;}
-  closeMore();if(b.dataset.bn!==mode)setMode(b.dataset.bn);window.scrollTo({top:0});},true);
+  if(b.id==="bnLog"){closeMore();if(myState!=="ready"){goTop("mine");return;}openLogMatch(null,null);return;}
+  closeMore();if(b.dataset.bn!==mode)goTop(b.dataset.bn);window.scrollTo({top:0});},true);
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMore();});
 
 // ---------- clubs ----------
@@ -985,7 +995,7 @@ function clubCard(c,isAi){const sel=openClub===c.id;
     <dt>Meriter</dt><dd>${c.h&&c.h.length?`<ul>${c.h.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"Inga större titlar"}</dd>
     ${isAi?"":`<dt>Nästa match</dt><dd>${up.length?`<ul class="nextlist">${up.map(m=>`<li><span class="nd">${esc(m.kickoff?shortDate(m.kickoff):rangeTxt(m))}</span>${m.kickoff?`<span class="nt">${esc(timeOf(m.kickoff))}</span>`:""}<span class="nm">${esc(m.homeName)} – ${esc(m.awayName)}</span></li>`).join("")}</ul>`:dbState==="ready"?"Inga matcher i schemat":"Laddar schema…"}</dd>`}
    </dl>
-   ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">Matcher i ${esc(c.city)}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">Matcher i ${esc(c.city)}</button>`:"")+wishBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
+   ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">Matcher i ${esc(cityLbl(c))}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">Matcher i ${esc(cityLbl(c))}</button>`:"")+wishBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
      return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">Lagets matcher</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} Tabell</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>${favBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="Fler val">${more?"Färre":"⋯ Mer"}</button>`:""}</div>${more&&extra?`<div class="cmore">${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
   return h+`</div>`;}
 let ntQ="",ntView="a";
@@ -2789,7 +2799,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.mkind){mKind=t.dataset.mkind;store.set("fk-mkind",mKind);renderMatches();return;}
   if(t.dataset.gender){gender=t.dataset.gender;store.set("fk-gender",gender);render();return;}
   if(t.dataset.tier){const k=t.dataset.tier;if(k==="all")tiers.clear();else if(tiers.has(k))tiers.delete(k);else tiers.add(k);renderMatches();return;}
-  if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");window.scrollTo({top:0});return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");window.scrollTo({top:0});return;}
+  if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;const same=(isNat(C[id])?"landslag":"klubbar")===mode;if(same&&openClub&&openClub!==id){clubJump();}else pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");window.scrollTo({top:0});return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");window.scrollTo({top:0});return;}
   if(t.dataset.club){openClub=openClub===t.dataset.club?null:t.dataset.club;renderClubs();}});
 document.addEventListener("change",e=>{const id=e.target.id;
   if(id==="dFrom"&&e.target.value){dFrom=e.target.value;if(dTo<dFrom)dTo=dFrom;renderMatches();}
