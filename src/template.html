@@ -2696,6 +2696,10 @@ addEventListener("submit",async e=>{const f=e.target.closest&&e.target.closest("
   if(ok){ta.value="";renderReports(true);}});
 function likeCount(key){let n=0;Object.values(LIKES).forEach(d=>{if(d&&Array.isArray(d.keys)&&d.keys.includes(key))n++;});return n;}
 function iLike(key){const d=LIKES[myId];return!!(d&&Array.isArray(d.keys)&&d.keys.includes(key));}
+const likeInner=key=>{const n=likeCount(key);return`${ic("heart",iLike(key)?"on":"")} ${iLike(key)?"Gillad":"Gilla"}${n?` (${n})`:""}`;};
+// uppdatera gilla-knappar och hjärtan där de står, utan att rita om listan (då laddas bilder och märken om och sidan hoppar)
+function likesInPlace(){document.querySelectorAll("[data-replike]").forEach(b=>{const k=b.dataset.replike;b.setAttribute("aria-pressed",iLike(k));b.innerHTML=likeInner(k);});
+  document.querySelectorAll(".lkn[data-lk]").forEach(x=>{const n=likeCount(x.dataset.lk);x.innerHTML=n?` · ${ic("heart")} ${n}`:"";});}
 function repsFor(id){return repState==="ready"?allReps().filter(r=>r.club===id).length:0;}
 const canWriteRep=()=>!!(dbNs&&myId&&canRep!==false);
 function repBtn(c){const n=repsFor(c.id);return n?`<button class="btn small" data-repclub="${esc(c.id)}">Reportage (${n})</button>`:"";}
@@ -2769,7 +2773,7 @@ function renderReports(namesOnly){
         ${r.photos.length&&!open?`<span class="rcover">${phImg(r.photos[0])}${r.photos.length>1?`<span class="rcount">${r.photos.length} bilder</span>`:""}</span>`:""}
         <span class="rtxt">${r.draft?`<span class="pill ec draftpill">Utkast · syns bara för dig</span>`:""}<span class="rtitle">${esc(r.title)}</span>
         ${meta?`<span class="rmeta">${c?crest(c.id,c.n,20):""}${esc(meta)}</span>`:""}
-        <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}${n?` · ${ic("heart")} ${n}`:""}${(()=>{const k=commentsFor(r.key).length;return k?` · ${k} ${k===1?"kommentar":"kommentarer"}`:"";})()}</span>
+        <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}<span class="lkn" data-lk="${esc(r.key)}">${n?` · ${ic("heart")} ${n}`:""}</span>${(()=>{const k=commentsFor(r.key).length;return k?` · ${k} ${k===1?"kommentar":"kommentarer"}`:"";})()}</span>
         ${open?"":`<span class="rex">${esc(String(r.body).slice(0,160))}${String(r.body).length>160?"…":""}</span>`}</span>
       </button>
       ${open?`<div class="rbody">
@@ -2777,7 +2781,7 @@ function renderReports(namesOnly){
         ${matchBox(r)}
         <div class="body">${esc(r.body)}</div>
         ${r.tip?`<div class="rtip"><b>Bästa tipset</b>${esc(r.tip)}</div>`:""}
-        <div class="actions">${canWriteRep()?`<button class="btn small" data-replike="${esc(r.key)}" aria-pressed="${iLike(r.key)}"${likeBusy?" disabled":""}>${ic("heart",iLike(r.key)?"on":"")} ${iLike(r.key)?"Gillad":"Gilla"}${n?` (${n})`:""}</button>`:n?`<span class="meta">${ic("heart")} ${n}</span>`:""}
+        <div class="actions">${canWriteRep()?`<button class="btn small" data-replike="${esc(r.key)}" aria-pressed="${iLike(r.key)}">${likeInner(r.key)}</button>`:n?`<span class="meta">${ic("heart")} ${n}</span>`:""}
           ${c?`<button class="btn small" data-open="${esc(c.id)}">Visa ${esc(c.n)}</button>`:""}
           ${c&&c.city&&!isNat(c)?`<button class="btn small" data-teamview="${esc(c.id)}">Lagets matcher</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} Tabell</button>`:""}${!isNat(c)&&c.l?`<button class="btn small" data-squad="${esc(c.id)}">Spelare</button>`:""}</div>
         ${mine||isMod?`<div class="pactions">${mine?`<button class="link" data-repedit="${esc(r.id)}">Redigera</button><button class="link" data-repdel="${esc(r.id)}">Ta bort</button>`:""}${isMod&&!mine?`<button class="link" data-rephide="${esc(r.key)}">Dölj</button>`:""}</div>`:""}
@@ -2832,9 +2836,10 @@ async function repClick(t){
   if(t.dataset.phview){openPhoto(t.dataset.phview);return;}
   if(t.id==="phClose"){closePhoto();return;}
   if(t.dataset.replike){if(!dbNs||!myId||likeBusy)return;const k=t.dataset.replike;const cur=LIKES[myId]&&Array.isArray(LIKES[myId].keys)?LIKES[myId].keys:[];
-    const next=cur.includes(k)?cur.filter(x=>x!==k):[...cur,k].slice(-500);likeBusy=true;renderReports(true);
-    try{await dbNs.doc("likes/"+myId).set({keys:next});LIKES={...LIKES,[myId]:{keys:next}};}catch(e){toast("Kunde inte spara gillningen.");}
-    likeBusy=false;renderReports(true);return;}
+    const next=cur.includes(k)?cur.filter(x=>x!==k):[...cur,k].slice(-500);const prev=LIKES[myId];likeBusy=true;
+    LIKES={...LIKES,[myId]:{keys:next}};likesInPlace();
+    try{await dbNs.doc("likes/"+myId).set({keys:next});}catch(e){LIKES={...LIKES,[myId]:prev};likesInPlace();toast("Kunde inte spara gillningen.");}
+    likeBusy=false;return;}
   if(t.dataset.repedit){const r=(REP[myId]&&REP[myId].items||[]).find(x=>x.id===t.dataset.repedit);if(!r)return;const c=r.club&&C[r.club];
     const ph=(r.photos||[]).filter(p=>PHID.test(p));startRepDraft({editing:r.id,draft:!!r.draft,match:r.match||"",result:r.result||"",crowd:r.crowd?String(r.crowd):"",title:r.title||"",club:c?c.n:"",city:r.city||"",date:r.date||"",body:r.body||"",tip:r.tip||"",photos:ph.slice(),orig:ph.slice()});return;}
   if(t.dataset.repdel){const id=t.dataset.repdel;if(!confirmRepDel[id]){confirmRepDel[id]=1;t.textContent="Tryck igen för att ta bort";setTimeout(()=>{delete confirmRepDel[id];},4000);return;}
@@ -2871,9 +2876,9 @@ document.addEventListener("submit",async e=>{if(e.target.id!=="repForm")return;e
 async function startReports(db){
   try{assetsNs=await window.claude?.use?.("assets")??null;}catch(e){assetsNs=null;}
   if(!db){repState="none";if(mode==="reportage")renderReports();return;}
-  db.collection("reports").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});REP=o;repState="ready";if(mode==="reportage")renderReports();else if(mode==="hem")renderHome();else if(mode==="klubbar"&&openClub)renderClubs();},()=>{repState="none";if(mode==="reportage")renderReports();});
-  db.collection("likes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});LIKES=o;if(mode==="reportage")renderReports(true);else if(mode==="hem")renderHome();},()=>{});
-  db.collection("comments").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});COMM=o;if(mode==="reportage")renderReports();},()=>{});}
+  db.collection("reports").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(repState==="ready"&&JSON.stringify(o)===JSON.stringify(REP))return;REP=o;repState="ready";if(mode==="reportage")renderReports();else if(mode==="hem")renderHome();else if(mode==="klubbar"&&openClub)renderClubs();},()=>{repState="none";if(mode==="reportage")renderReports();});
+  db.collection("likes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(JSON.stringify(o)===JSON.stringify(LIKES))return;LIKES=o;if(mode==="reportage")likesInPlace();else if(mode==="hem")renderHome();},()=>{});
+  db.collection("comments").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(JSON.stringify(o)===JSON.stringify(COMM))return;COMM=o;if(mode==="reportage")renderReports();},()=>{});}
 
 // ---------- hem ----------
 let STATS={},statsState="loading",HYPE={},boardTab="matches",statsSig="",statsBusy=false,hypeBusy=false;
