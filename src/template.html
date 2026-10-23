@@ -1385,7 +1385,7 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
     ${past?goalsHtml(m):""}
     ${past?"":`<h3>Biljetter</h3>${tix||`<p class="meta">Vi har ingen biljettlänk för den här matchen.</p>`}${awayTix}`}
     ${det}
-    ${past||!m.city||homeIsLocal(m.city)?"":`<h3>Resa</h3><div class="actions">${omioLink(homeTown,m.city)}${homeTown?extLink(transitUrl(homeTown,placeStr(m.venue,m.city)),`Resväg från ${esc(homeTown)}`,"btn small"):""}</div>`}
+    ${past||!m.city||homeIsLocal(m.city)?"":`<h3 id="msResa">Resa</h3><div class="actions">${omioLink(homeTown,m.city)}${homeTown?extLink(transitUrl(homeTown,placeStr(m.venue,m.city)),`Resväg från ${esc(homeTown)}`,"btn small"):""}</div>`}
     <div class="mp">${myBtns(m)}${hotelLink(m)}${calLink(m)}</div>
     ${past?"":`<p class="hint">Tider kan flyttas, till exempel för tv. Kolla hos klubben innan du bokar resa.</p>`}
   </div></div>`;}
@@ -1400,6 +1400,7 @@ document.addEventListener("click",e=>{const ov=document.getElementById("msOv");
     if(e.target===ov){closeMatchSheet();return;}
     if(e.target.closest("[data-wishm],[data-attend]"))setTimeout(refreshMatchSheet,60);return;}
   const bt=e.target.closest("[data-mopen]");if(bt){openMatchSheet(bt.dataset.mopen);return;}
+  const tb=e.target.closest("[data-mstrip]");if(tb){openMatchSheet(tb.dataset.mstrip);requestAnimationFrame(()=>document.getElementById("msResa")?.scrollIntoView({block:"start"}));return;}
   const row=e.target.closest("[data-mrow]");if(!row||e.target.closest("button,a,input,select,label,summary"))return;
   if(window.getSelection&&String(window.getSelection()).length)return;openMatchSheet(row.dataset.mrow);});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElementById("msOv"))closeMatchSheet();});
@@ -2168,7 +2169,7 @@ function tripPanel(c){const to=placeStr(c.s,c.city);
   const near=`<div class="tripsec"><div class="lbl">På plats</div><div class="actions">${extLink(dirUrl("",to,"walking"),"Gång","btn small")}${extLink(dirUrl("",to,"transit"),"Kollektivt","btn small")}${extLink(dirUrl("",to,"driving"),"Bil","btn small")}</div></div>`;
   const foot=homeEdit?homeRow(c):!homeTown?`<div><button class="link" data-homeedit="1">Ange din hemort för resväg hela vägen hit</button></div>`:local?`<p class="meta">Du bor nära, så vi visar bara sista biten. <button class="link" data-homeedit="1">Byt hemort</button></p>`:"";
   return`<div class="trip" data-noclose="1">${far}${near}${foot}</div>`;}
-const tripLink=m=>homeTown&&m.city?extLink(transitUrl(homeTown,placeStr(m.venue,m.city)),"Resa","mini"):"";
+const tripLink=m=>m&&m._id&&m.city&&!homeIsLocal(m.city)&&!(m.score||(m.kickoff&&mTs(m)<Date.now()-2*36e5))?`<button class="mini" data-mstrip="${esc(m._id)}">Resa</button>`:"";
 function homeRow(c){if(homeEdit)return`<form class="homeform" id="homeForm" data-noclose="1"><label class="fld" for="homeIn">Din hemort<input id="homeIn" maxlength="60" value="${esc(homeTown)}" placeholder="t.ex. Jönköping"></label><button class="btn small primary" type="submit">Spara</button><button class="btn small" type="button" data-homecancel="1">Avbryt</button></form>`;
   if(homeTown)return`<div class="actions">${extLink(transitUrl(homeTown,placeStr(c.s,c.city)),`Res hit från ${esc(homeTown)}`,"btn small")}<button class="link" data-homeedit="1">Byt hemort</button></div>`;
   return`<div class="actions"><button class="link" data-homeedit="1">Ange din hemort för en reselänk hela vägen hit</button></div>`;}
@@ -3090,7 +3091,7 @@ function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==
     <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,40)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,40)}${esc(m.awayName)}${favStar(m.away)}</button></div>
     <div class="cd">${esc(dayLabel(dayKey(new Date(m.kickoff))))} kl ${timeOf(m.kickoff)} · <b>${countdown(m.kickoff)}</b></div>
     <div class="venue">${esc([m.venue,m.city].filter(Boolean).join(" · "))}</div><p>${why}</p>
-    <div class="actions">${tixMini(m,"btn small primary")}${hypeBtn(m)}${myBtns(m).replace(/class="mini"/g,'class="btn small"')}${hotelLink(m)}</div>
+    <div class="actions">${tixMini(m,"btn small primary")}${hypeBtn(m)}${myBtns(m).replace(/class="mini"/g,'class="btn small"')}${hotelLink(m)}${tripLink(m).replace('class="mini"','class="btn small"')}</div>
     ${more.length?`<div class="hmore"><div class="lbl">Fler heta matcher</div>${more.map(x=>`<div class="hrow mrow"${mrowAttr(x)}><span class="num">${esc(dayLabel(dayKey(new Date(x.kickoff))))} ${timeOf(x.kickoff)}</span><span>${esc(x.homeName)} – ${esc(x.awayName)}${derbyOf(x)?` <span class="pill ec">Derby</span>`:""}${wPill(x)}</span>${hypeBtn(x)}</div>`).join("")}</div>`:""}</article>`;}
 function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl=favList();
   const nx=dbState==="ready"&&fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
