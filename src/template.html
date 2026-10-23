@@ -2176,7 +2176,7 @@ const SIZE_LBL={liten:"Liten arena",mindre:"Mindre arena",mellanstor:"Mellanstor
 function similarClubs(c){const k=arenaKey(c.s);const co={};
   if(k)Object.values(RATINGS).forEach(d=>{const r=d&&d.r;if(!r||!r[k])return;Object.keys(r).forEach(k2=>{if(k2!==k)co[k2]=(co[k2]||0)+1;});});
   const rivals=new Set();TIPS.derbies.forEach(d=>{if(d[2].includes(c.id))d[2].forEach(x=>rivals.add(x));});
-  const scored=Object.values(C).filter(o=>o.id!==c.id&&!isNat(o)&&o.s!==c.s&&!rivals.has(o.id)).map(o=>{let s=0;const why=[];
+  const scored=Object.values(C).filter(o=>o.id!==c.id&&!isNat(o)&&!!isW(o)===!!isW(c)&&o.s!==c.s&&!rivals.has(o.id)).map(o=>{let s=0;const why=[];
     if(CULTSET.has(c.id)&&CULTSET.has(o.id)){s+=5;why.push("Också en kultklubb");}
     const n=co[arenaKey(o.s)]||0;if(n){s+=2+n;why.push(`${n} ${n===1?"besökare":"besökare"} har betygsatt båda arenorna`);}
     if(o.l&&o.l===c.l){s+=1.5;why.push("Samma serie");}else if(o.t&&o.t===c.t&&o.c===c.c){s+=0.7;why.push("Samma nivå i "+o.c);}
@@ -2471,7 +2471,7 @@ function clubLevel(c){if(c.c==="Sverige")return c.t===1?0:c.t===2?1:2;if(c.t===1
 function natLevel(c){if(FAMOUS.has(c.n))return 0;if(c.conf==="UEFA"||c.conf==="CONMEBOL")return 1;return 2;}
 const qLvlIdx=l=>({latt:0,medel:1,svar:2})[l]??1;
 function inLevel(c,lvl){const L=isNat(c)?natLevel(c):clubLevel(c);const k=qLvlIdx(lvl);return k===0?L===0:k===1?L<=1:L>=1;}
-function quizPool(cat,lvl){const all=Object.values(C);const clubs=all.filter(c=>!isNat(c)&&c.s&&c.city);const nats=all.filter(c=>c.l==="Landslag"&&c.s&&c.city);
+function quizPool(cat,lvl){const all=Object.values(C);const clubs=all.filter(c=>!isNat(c)&&!isW(c)&&c.s&&c.city);// damlag ärver ofta herrklubbens år och arena, så de blandas inte inconst nats=all.filter(c=>c.l==="Landslag"&&c.s&&c.city);
   let p=cat==="landslag"||cat==="flagga"?nats:cat==="sverige"?clubs.filter(c=>c.c==="Sverige"):cat==="mix"?clubs.concat(nats):clubs;
   const f=p.filter(c=>inLevel(c,lvl));return f.length>=12?f:p;}
 // mer jämförelser, mindre grundår och kapacitet
