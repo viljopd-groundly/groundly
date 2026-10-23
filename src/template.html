@@ -1798,7 +1798,8 @@ async function startMine(db,uid){
     ()=>{myState="none";render();});}
 
 // ---------- arenabetyg och tillgänglighet ----------
-const RCATS=[["s","Stämning"],["f","Mat och dryck"],["v","Utsikt"],["p","Prisvärt"]];
+// "m" ersatte "v" (Utsikt) i okt 2026; gamla utsiktsbetyg ligger kvar i databasen men visas och räknas inte
+const RCATS=[["s","Stämning"],["f","Mat och dryck"],["m","Matchupplevelse"],["p","Prisvärt"]];
 const ACC=[["wc","Rullstolsplatser"],["step","Stegfri väg in"],["toilet","Tillgänglig toalett"],["comp","Ledsagare går gratis"],["park","Parkering för rörelsehindrade"],["loop","Hörslinga"],["audio","Syntolkning"],["quiet","Lugnt rum"]];
 let RATINGS={},ratingsState="loading",ratingsNs=null,rateOpen=null,rateDraft=null,rateBusy=false,rateMsg="",rateDelConfirm=false;
 const _ak=new Map();const arenaKey=s=>{if(_ak.has(s))return _ak.get(s);const k=norm(s||"").replace(/ /g,"-").slice(0,80)||null;_ak.set(s,k);return k;};
