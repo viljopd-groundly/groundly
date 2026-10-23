@@ -336,6 +336,100 @@ GEO = {
  "East London": [-33.015, 27.912], "Pretoria": [-25.747, 28.229], "Stellenbosch": [-33.932, 18.861], "Mbombela": [-25.475, 30.970],
 }
 
+
+# snyggare id där förkortningen blev otydlig
+IDFIX = {"ar-independiex": "ar-indriva", "ar-gimnasiayex": "ar-gimmendoz", "ar-gimnasiaye": "ar-gimnasia", "ar-estudiantex": "ar-estrcuart", "ar-estudiante": "ar-estudiant",
+ "cl-universida": "cl-uchile", "cl-universidax": "cl-udeconce", "cl-universidaxx": "cl-ucatolica", "co-deportivopx": "co-pereira", "co-independie": "co-medellin",
+ "uy-montevideo": "uy-wanderers", "uy-montevideox": "uy-mctorque", "ar-velezsarsf": "ar-velez", "ar-newellsold": "ar-newells", "ar-rosariocen": "ar-rosario",
+ "ar-unionsanta": "ar-union", "ar-defensayju": "ar-defensa", "ar-atleticotu": "ar-tucuman", "ar-centralcor": "ar-ccordoba", "ar-barracasce": "ar-barracas",
+ "ar-deportivor": "ar-riestra", "br-internacio": "br-inter", "br-vascodagam": "br-vasco", "br-athleticop": "br-athletico", "br-redbullbra": "br-bragantino",
+ "br-atleticomi": "br-atleticomg", "br-sportrecif": "br-sport", "br-americamin": "br-americamg", "br-atleticogo": "br-atleticogo", "br-operariofe": "br-operario",
+ "co-millonario": "co-millonarios", "co-atleticona": "co-nacional", "co-americacal": "co-america", "co-internacio": "co-interbog", "co-atleticobu": "co-bucaraman",
+ "co-deportivoc": "co-cali", "co-deportivop": "co-pasto", "jp-urawareddi": "jp-urawa", "jp-kashimaant": "jp-kashima", "jp-hokkaidoco": "jp-sapporo",
+ "jp-yokohamafm": "jp-marinos", "jp-kawasakifr": "jp-frontale", "jp-sanfrecceh": "jp-sanfrecce", "kr-jeonbukhyu": "kr-jeonbuk", "kr-pohangstee": "kr-pohang",
+ "kr-daejeonhan": "kr-daejeon", "kr-bucheon199": "kr-bucheon", "kr-gimcheonsa": "kr-gimcheon", "au-westernsyd": "au-wsw", "au-melbournev": "au-victory",
+ "au-melbourne": "au-melbcity", "au-centralcoa": "au-mariners", "au-newcastlej": "au-jets", "au-brisbanero": "au-roar", "au-perthglory": "au-perth",
+ "ma-wydadcasab": "ma-wydad", "ma-rajacasabl": "ma-raja", "ma-rsberkane": "ma-berkane", "za-kaizerchie": "za-chiefs", "za-orlandopir": "za-pirates",
+ "za-mamelodisu": "za-sundowns", "eg-talaeagais": "eg-gaish", "eg-ittihadale": "eg-ittihad", "eg-arabcontra": "eg-mokawloon", "eg-misrlelmak": "eg-makkasa"}
+
+# meriter (internationella titlar) för de största klubbarna
+HON = {
+ "ar-independie": ["7 Copa Libertadores", "2 Interkontinentala cupen"], "ar-estudiant": ["4 Copa Libertadores", "Interkontinentala cupen 1968"],
+ "ar-racing": ["Copa Libertadores 1967", "Interkontinentala cupen 1967"], "ar-velez": ["Copa Libertadores 1994", "Interkontinentala cupen 1994"],
+ "ar-argentinos": ["Copa Libertadores 1985"], "ar-sanlorenzo": ["Copa Libertadores 2014"], "ar-lanus": ["Copa Sudamericana 2013, 2025"],
+ "br-saopaulo": ["3 Copa Libertadores", "3 Interkontinentala cupen/Klubb-VM"], "br-gremio": ["3 Copa Libertadores", "Interkontinentala cupen 1983"],
+ "br-inter": ["2 Copa Libertadores", "Klubb-VM 2006"], "br-cruzeiro": ["2 Copa Libertadores"], "br-vasco": ["Copa Libertadores 1998"],
+ "br-atleticomg": ["Copa Libertadores 2013"], "br-botafogo": ["Copa Libertadores 2024"], "br-fluminense": ["Copa Libertadores 2023"],
+ "uy-penarol": ["5 Copa Libertadores", "3 Interkontinentala cupen"], "uy-nacional": ["3 Copa Libertadores", "3 Interkontinentala cupen"],
+ "cl-colocolo": ["Copa Libertadores 1991"], "cl-uchile": ["Copa Sudamericana 2011"],
+ "co-nacional": ["2 Copa Libertadores"], "co-oncecaldas": ["Copa Libertadores 2004"],
+ "jp-urawa": ["3 asiatiska Champions League"], "jp-gambaosaka": ["Asiatiska Champions League 2008"], "jp-kashima": ["Asiatiska Champions League 2018"],
+ "kr-pohang": ["3 asiatiska Champions League"], "kr-jeonbuk": ["2 asiatiska Champions League"], "kr-ulsanhd": ["2 asiatiska Champions League"],
+ "sa-ittihad": ["2 asiatiska Champions League"], "sa-ahli": ["Asiatiska Champions League Elite 2025"], "au-wsw": ["Asiatiska Champions League 2014"],
+ "eg-ahly": ["12 afrikanska Champions League"], "eg-zamalek": ["5 afrikanska Champions League"], "eg-pyramids": ["Afrikanska Champions League 2025"],
+ "ma-raja": ["3 afrikanska Champions League"], "ma-wydad": ["3 afrikanska Champions League"], "ma-asfar": ["Afrikanska Champions League 1985"],
+ "ma-berkane": ["3 CAF Confederation Cup"], "za-sundowns": ["Afrikanska Champions League 2016"], "za-pirates": ["Afrikanska Champions League 1995"],
+}
+
+# klubbfärger: [bakgrund, text, förkortning]
+COL = {
+ "ar-gimnasia": ["#0b2a5b", "#ffffff", "GELP"], "ar-racing": ["#7ab8e8", "#ffffff", "RAC"], "ar-rosario": ["#0b2a5b", "#ffd200", "RC"], "ar-velez": ["#ffffff", "#0b2a5b", "CAVS"],
+ "ar-belgrano": ["#7ab8e8", "#0b2a5b", "CAB"], "ar-union": ["#e2001a", "#ffffff", "USF"], "ar-defensa": ["#00843d", "#ffd200", "DYJ"], "ar-huracan": ["#ffffff", "#e2001a", "CAH"],
+ "ar-lanus": ["#7a1f2b", "#ffffff", "CAL"], "ar-banfield": ["#00843d", "#ffffff", "CAB"], "ar-estudiant": ["#e2001a", "#ffffff", "EDLP"], "ar-tigre": ["#0b2a5b", "#e2001a", "CAT"],
+ "ar-independie": ["#e2001a", "#ffffff", "CAI"], "ar-tucuman": ["#7ab8e8", "#ffffff", "CAT"], "ar-talleres": ["#0b2a5b", "#ffffff", "CAT"], "ar-newells": ["#e2001a", "#000000", "NOB"],
+ "ar-argentinos": ["#e2001a", "#ffffff", "AAAJ"], "ar-sanlorenzo": ["#0b2a5b", "#e2001a", "CASLA"], "ar-aldosivi": ["#ffd200", "#00843d", "ALD"], "ar-indriva": ["#0b2a5b", "#ffffff", "CSIR"],
+ "ar-sarmiento": ["#00843d", "#ffffff", "CAS"], "ar-instituto": ["#e2001a", "#ffffff", "IACC"], "ar-platense": ["#ffffff", "#6b3e26", "CAP"], "ar-ccordoba": ["#000000", "#ffffff", "CACC"],
+ "ar-gimmendoz": ["#000000", "#ffffff", "GEM"], "ar-barracas": ["#e2001a", "#ffffff", "CABC"], "ar-riestra": ["#000000", "#ffffff", "DR"],
+ "br-bahia": ["#0057b8", "#e2001a", "ECB"], "br-inter": ["#e2001a", "#ffffff", "SCI"], "br-botafogo": ["#000000", "#ffffff", "BFR"], "br-fluminense": ["#7a1f2b", "#00843d", "FFC"],
+ "br-saopaulo": ["#ffffff", "#e2001a", "SPFC"], "br-gremio": ["#0aa0e0", "#000000", "GFBPA"], "br-chapecoens": ["#00843d", "#ffffff", "ACF"], "br-vasco": ["#000000", "#ffffff", "CRVG"],
+ "br-athletico": ["#e2001a", "#000000", "CAP"], "br-cruzeiro": ["#0b2a5b", "#ffffff", "CEC"], "br-vitoria": ["#e2001a", "#000000", "ECV"], "br-coritiba": ["#00843d", "#ffffff", "CFC"],
+ "br-bragantino": ["#ffffff", "#e2001a", "RBB"], "br-atleticomg": ["#000000", "#ffffff", "CAM"], "br-remo": ["#0b2a5b", "#ffffff", "CR"], "br-mirassol": ["#ffd200", "#00843d", "MFC"],
+ "br-sport": ["#e2001a", "#000000", "SCR"], "br-americamg": ["#00843d", "#000000", "AFC"], "br-ceara": ["#000000", "#ffffff", "CSC"], "br-pontepreta": ["#000000", "#ffffff", "AAPP"],
+ "br-criciuma": ["#ffd200", "#000000", "CEC"], "br-vilanova": ["#e2001a", "#ffffff", "VNFC"], "br-atleticogo": ["#e2001a", "#000000", "ACG"], "br-avai": ["#0057b8", "#ffffff", "AFC"],
+ "br-crb": ["#e2001a", "#ffffff", "CRB"], "br-londrina": ["#7ab8e8", "#ffffff", "LEC"], "br-goias": ["#00843d", "#ffffff", "GEC"], "br-juventude": ["#00843d", "#ffffff", "ECJ"],
+ "br-fortaleza": ["#0b2a5b", "#e2001a", "FEC"], "br-nautico": ["#e2001a", "#ffffff", "CNC"], "br-cuiaba": ["#00843d", "#ffd200", "CEC"], "br-operario": ["#000000", "#ffffff", "OFEC"],
+ "br-botafogosp": ["#e2001a", "#000000", "BFC"], "br-novorizont": ["#ffd200", "#000000", "GN"], "br-saobernard": ["#ffd200", "#000000", "SBFC"], "br-athletic": ["#000000", "#ffffff", "ACMG"],
+ "uy-penarol": ["#ffd200", "#000000", "CAP"], "uy-defensorsp": ["#5b2a86", "#ffffff", "DSC"], "uy-danubio": ["#ffffff", "#000000", "DFC"], "uy-juventudla": ["#ffffff", "#0b2a5b", "JLP"],
+ "uy-nacional": ["#ffffff", "#0b2a5b", "CNdeF"], "uy-liverpoolm": ["#000000", "#0057b8", "LFC"], "uy-racingmont": ["#00843d", "#ffffff", "RCM"], "uy-wanderers": ["#000000", "#ffffff", "MWFC"],
+ "uy-bostonrive": ["#e2001a", "#ffffff", "BR"], "uy-cerro": ["#7ab8e8", "#ffffff", "CAC"], "uy-progreso": ["#ffd200", "#e2001a", "CAP"], "uy-mctorque": ["#7ab8e8", "#0b2a5b", "MCT"],
+ "uy-centralesp": ["#e2001a", "#0057b8", "CE"], "uy-cerrolargo": ["#0057b8", "#ffffff", "CLFC"], "uy-deportivom": ["#e2001a", "#00843d", "DM"],
+ "cl-colocolo": ["#ffffff", "#000000", "CC"], "cl-palestino": ["#00843d", "#e2001a", "CDP"], "cl-ohiggins": ["#7ab8e8", "#ffffff", "OHI"], "cl-uchile": ["#0b2a5b", "#e2001a", "UCH"],
+ "cl-udeconce": ["#ffd200", "#0b2a5b", "UDC"], "cl-evertonvin": ["#0b2a5b", "#ffd200", "EVE"], "cl-unioncaler": ["#e2001a", "#ffffff", "ULC"], "cl-huachipato": ["#0b2a5b", "#000000", "HUA"],
+ "cl-audaxitali": ["#00843d", "#ffffff", "AI"], "cl-coquimboun": ["#ffd200", "#000000", "CU"], "cl-cobresal": ["#ff8200", "#ffffff", "COB"], "cl-nublense": ["#e2001a", "#ffffff", "NUB"],
+ "cl-deportesse": ["#e2001a", "#ffffff", "DLS"], "cl-ucatolica": ["#ffffff", "#0b2a5b", "UC"], "cl-deportesco": ["#7a4fa0", "#ffffff", "DC"],
+ "co-millonarios": ["#0b2a5b", "#ffffff", "MFC"], "co-pasto": ["#e2001a", "#0b2a5b", "DP"], "co-cali": ["#00843d", "#ffffff", "DC"], "co-medellin": ["#e2001a", "#0b2a5b", "DIM"],
+ "co-bucaraman": ["#ffd200", "#00843d", "CAB"], "co-boyacachic": ["#0b2a5b", "#ffffff", "BCH"], "co-junior": ["#e2001a", "#ffffff", "JUN"], "co-oncecaldas": ["#ffffff", "#000000", "OC"],
+ "co-nacional": ["#00843d", "#ffffff", "AN"], "co-america": ["#e2001a", "#ffffff", "AME"], "co-santafe": ["#e2001a", "#ffffff", "ISF"], "co-deportesto": ["#7a1f2b", "#ffd200", "TOL"],
+ "co-pereira": ["#ffd200", "#e2001a", "DP"], "co-cucutadepo": ["#e2001a", "#000000", "CD"], "co-aguilasdor": ["#ffd200", "#000000", "AGD"],
+ "jp-sapporo": ["#e2001a", "#000000", "CON"], "jp-jubiloiwat": ["#7ab8e8", "#ffffff", "JUB"], "jp-shonanbell": ["#00843d", "#0057b8", "SHO"], "jp-vegaltasen": ["#ffd200", "#0b2a5b", "VEG"],
+ "jp-sagantosu": ["#7ab8e8", "#e86ea8", "SAG"], "jp-oitatrinit": ["#0b2a5b", "#ffd200", "OIT"], "jp-tokushimav": ["#0b2a5b", "#ffffff", "TOK"], "jp-yokohama": ["#7ab8e8", "#ffffff", "YFC"],
+ "jp-ventforetk": ["#0b2a5b", "#e2001a", "VFK"], "jp-albirexnii": ["#ff8200", "#0b2a5b", "ALB"], "jp-montedioya": ["#0b2a5b", "#ffd200", "MON"], "jp-omiyaardij": ["#ff8200", "#0b2a5b", "OMI"],
+ "jp-kashiwarey": ["#ffd200", "#000000", "KAS"], "jp-sanfrecce": ["#5b2a86", "#ffffff", "SAN"], "jp-shimizuspu": ["#ff8200", "#0b2a5b", "SSP"], "jp-vvarennaga": ["#0b2a5b", "#ff8200", "VVN"],
+ "jp-urawa": ["#e2001a", "#000000", "URA"], "jp-nagoyagram": ["#e2001a", "#ffd200", "NAG"], "jp-visselkobe": ["#7a1f2b", "#ffffff", "VIS"], "jp-kashima": ["#7a1f2b", "#0b2a5b", "KAS"],
+ "jp-cerezoosak": ["#e86ea8", "#0b2a5b", "CER"], "jp-tokyo": ["#0057b8", "#e2001a", "FCT"], "jp-gambaosaka": ["#0057b8", "#000000", "GAM"], "jp-frontale": ["#7ab8e8", "#000000", "FRO"],
+ "jp-marinos": ["#0057b8", "#ffffff", "YFM"], "jp-jefchiba": ["#ffd200", "#00843d", "JEF"], "jp-kyotosanga": ["#5b2a86", "#ffffff", "KYO"], "jp-machidazel": ["#0b2a5b", "#ffffff", "MAC"],
+ "jp-mitohollyh": ["#0b2a5b", "#ffffff", "MIT"], "jp-tokyoverdy": ["#00843d", "#ffffff", "VER"], "jp-fagianooka": ["#e2001a", "#0b2a5b", "FAG"], "jp-avispafuku": ["#0b2a5b", "#ffffff", "AVI"],
+ "kr-bucheon": ["#e2001a", "#000000", "BFC"], "kr-gangwon": ["#ff8200", "#0b2a5b", "GFC"], "kr-anyang": ["#5b2a86", "#ffffff", "ANY"], "kr-daejeon": ["#00843d", "#7a1f2b", "DHC"],
+ "kr-gwangju": ["#ffd200", "#e2001a", "GJU"], "kr-jejusk": ["#ff8200", "#000000", "JEJ"], "kr-jeonbuk": ["#00843d", "#ffffff", "JHM"], "kr-incheon": ["#0b2a5b", "#000000", "INU"],
+ "kr-pohang": ["#e2001a", "#000000", "POH"], "kr-seoul": ["#e2001a", "#000000", "FCS"], "kr-ulsanhd": ["#0057b8", "#ffd200", "UHD"], "kr-gimcheon": ["#e2001a", "#0b2a5b", "GSM"],
+ "sa-khaleej": ["#ffd200", "#00843d", "KHA"], "sa-ahli": ["#00843d", "#ffffff", "AHL"], "sa-faisaly": ["#ff8200", "#000000", "FAI"], "sa-fateh": ["#0057b8", "#ffffff", "FAT"],
+ "sa-qadsiah": ["#e2001a", "#ffd200", "QAD"], "sa-ettifaq": ["#00843d", "#e2001a", "ETT"], "sa-taawoun": ["#ffd200", "#0057b8", "TAA"], "sa-ittihad": ["#ffd200", "#000000", "ITT"],
+ "sa-shabab": ["#ffffff", "#000000", "SHB"], "sa-fayha": ["#ff8200", "#0b2a5b", "FAY"], "sa-hazem": ["#ffd200", "#000000", "HAZ"], "sa-abha": ["#000000", "#ffd200", "ABH"],
+ "sa-kholood": ["#e2001a", "#ffffff", "KHO"], "sa-riyadh": ["#e2001a", "#000000", "RIY"],
+ "au-wsw": ["#e2001a", "#000000", "WSW"], "au-perth": ["#5b2a86", "#ff8200", "PGL"], "au-mariners": ["#ffd200", "#0b2a5b", "CCM"], "au-wellington": ["#ffd200", "#000000", "WPH"],
+ "au-sydney": ["#7ab8e8", "#0b2a5b", "SFC"], "au-victory": ["#0b2a5b", "#ffffff", "MVI"], "au-melbcity": ["#7ab8e8", "#ffffff", "MCY"], "au-jets": ["#0b2a5b", "#e2001a", "NJE"],
+ "au-roar": ["#ff8200", "#000000", "BRR"], "au-adelaide": ["#e2001a", "#0b2a5b", "AUN"], "au-macarthur": ["#000000", "#c8a24a", "MAC"], "au-auckland": ["#0057b8", "#ffffff", "AFC"],
+ "eg-masry": ["#00843d", "#ffffff", "MAS"], "eg-pyramids": ["#0b2a5b", "#7ab8e8", "PYR"], "eg-enppi": ["#e2001a", "#ffffff", "ENP"], "eg-zamalek": ["#ffffff", "#e2001a", "ZAM"],
+ "eg-smouha": ["#0057b8", "#ffffff", "SMO"], "eg-ittihad": ["#00843d", "#ffffff", "ITA"], "eg-mokawloon": ["#ffd200", "#000000", "ARC"], "eg-ahly": ["#e2001a", "#ffffff", "AHL"],
+ "eg-ghazlmahal": ["#ffd200", "#000000", "GHM"], "eg-ceramicacl": ["#ff8200", "#0b2a5b", "CER"],
+ "ma-berkane": ["#ff8200", "#000000", "RSB"], "ma-difaajadid": ["#00843d", "#ffffff", "DHJ"], "ma-moghrebtet": ["#e2001a", "#ffffff", "MAT"], "ma-wydad": ["#e2001a", "#ffffff", "WAC"],
+ "ma-asfar": ["#00843d", "#e2001a", "FAR"], "ma-kawkabmarr": ["#e2001a", "#ffffff", "KACM"], "ma-hassaniaag": ["#e2001a", "#ffd200", "HUSA"], "ma-ittihadtan": ["#0057b8", "#ffffff", "IRT"],
+ "ma-raja": ["#00843d", "#ffffff", "RCA"], "ma-fusrabat": ["#ff8200", "#000000", "FUS"], "ma-maghrebfes": ["#ffd200", "#000000", "MAS"], "ma-codmmeknes": ["#e2001a", "#00843d", "COD"],
+ "za-amazulu": ["#00843d", "#ffffff", "AMA"], "za-goldenarro": ["#ffd200", "#00843d", "LGA"], "za-chiefs": ["#ffd200", "#000000", "KC"], "za-polokwane": ["#e2001a", "#ffd200", "PCF"],
+ "za-chippa": ["#0057b8", "#ffffff", "CHI"], "za-sundowns": ["#ffd200", "#0057b8", "MSFC"], "za-pirates": ["#000000", "#ffffff", "OP"], "za-stellenbos": ["#7a1f2b", "#ffffff", "SFC"],
+ "za-tsgalaxy": ["#e2001a", "#ffffff", "TSG"], "za-richardsba": ["#0057b8", "#ffffff", "RB"], "za-sekhukhune": ["#0b2a5b", "#ffd200", "SEK"], "za-marumogall": ["#ffd200", "#0b2a5b", "MG"],
+}
+
 def slug(s):
     import unicodedata
     s = unicodedata.normalize("NFD", s).encode("ascii", "ignore").decode().lower()
@@ -362,9 +456,9 @@ for c in W["countries"]:
             land = fix.get("land", land0)
             cid = cc + "-" + slug(name)
             while cid in used: cid += "x"
-            used.add(cid); extra[str(t["id"])] = cid
+            used.add(cid); cid = IDFIX.get(cid, cid); extra[str(t["id"])] = cid
             alias = " ".join(dict.fromkeys(x for x in [ascii_low(name), ascii_low(t["name"]), al] if x and x != name.lower()))
-            rows.append([cid, name, alias, land, city, founded, lname, tier, arena, cap, nick, [], 1])
+            rows.append([cid, name, alias, land, city, founded, lname, tier, arena, cap, nick, HON.get(cid, []), 1])
             assert city in GEO or city in ("Buenos Aires", "Rio de Janeiro", "São Paulo", "Santos", "Montevideo", "Santiago", "Barranquilla", "Seoul", "Riyadh", "Sydney", "Auckland", "Rabat", "Johannesburg"), city
 
 # rader
@@ -374,6 +468,7 @@ for r in rows:
     if r[6] != last: out.append(f"// ---- {r[3]}, {r[6]}"); last = r[6]
     out.append(json.dumps(r, ensure_ascii=False) + ",")
 out.append("];")
+out.append("module.exports.colors=" + json.dumps({k: v for k, v in COL.items() if k in {r[0] for r in rows}}, ensure_ascii=False) + ";")
 open(os.path.join(ROOT, "src", "clubs_world.js"), "w", encoding="utf8").write("\n".join(out) + "\n")
 open(os.path.join(ROOT, "src", "geo_world.js"), "w", encoding="utf8").write("// koordinater för städerna i clubs_world.js\nmodule.exports=" + json.dumps(GEO, ensure_ascii=False) + ";\n")
 p = os.path.join(ROOT, "tools", "extra_ids.json"); E = json.load(open(p, encoding="utf8")); E["teams"].update(extra)

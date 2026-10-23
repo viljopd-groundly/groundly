@@ -49,3 +49,4 @@ Object.assign(module.exports,require("./clubs_cult.js").colors);
 Object.assign(module.exports,require("./clubs_women.js").colors);
 Object.assign(module.exports,require("./clubs_ettan.js").colors);
 Object.assign(module.exports,require("./clubs_mls2.js").colors);
+Object.assign(module.exports,require("./clubs_world.js").colors);

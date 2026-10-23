@@ -169,6 +169,8 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
     // 5) spelarstatistik per klubb (alla tävlingar, summerat)
     const teamIds=Object.entries(teamMap).filter(([a,b])=>b);const sq=done.filter(d=>d[4]!=="CUP"&&!(d[5]&&d[5].players===false));const seasonOf={};
     for(const[lname,lid,season] of sq)for(const r of rows.filter(r=>r[5]===lname)){seasonOf[r[0]]=seasonOf[r[0]]||season;seasonOf[r[1]]=seasonOf[r[1]]||season;}
+    // Avstängt som standard: trupperna visas inte i appen och kostade flest anrop. Slå på med API_SQUADS=1.
+    if(process.env.API_SQUADS!=="1")apiStat.trupper="hämtas inte (API_SQUADS av)";else
     for(const[apiId,our] of teamIds){if(left()<300){apiStat.trupper_tak="hoppade över resten (anropstak)";break;}const season=seasonOf[our];if(!season||extra.squads[our])continue;const ps={};
       try{let page=1,total=1;do{const j=raw(`players?team=${apiId}&season=${season}&page=${page}`);total=(j.paging&&j.paging.total)||1;
         for(const x of j.response||[]){const p=x.player;const acc=ps[p.id]||(ps[p.id]=[p.name,"",p.age||null,0,0,0,0,0,0]);
@@ -188,7 +190,7 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
 if(Object.keys(extra.standings).length||Object.keys(extra.players).length||Object.keys(extra.squads).length||Object.keys(extra.events).length){fs.mkdirSync(path.join(OUT,"data"),{recursive:true});const up=new Date().toISOString();
   fs.writeFileSync(path.join(OUT,"data","standings.json"),JSON.stringify({updated:up,leagues:extra.standings}));
   fs.writeFileSync(path.join(OUT,"data","players.json"),JSON.stringify({updated:up,leagues:extra.players}));
-  fs.writeFileSync(path.join(OUT,"data","squads.json"),JSON.stringify({updated:up,clubs:extra.squads}));
+if(Object.keys(extra.squads).length)fs.writeFileSync(path.join(OUT,"data","squads.json"),JSON.stringify({updated:up,clubs:extra.squads}));
   fs.writeFileSync(path.join(OUT,"data","events.json"),JSON.stringify({updated:up,m:extra.events}));}
 fs.mkdirSync(path.join(OUT,"data"),{recursive:true});
 fs.writeFileSync(path.join(OUT,"data","fixtures.json"),JSON.stringify({updated:new Date().toISOString(),season:SEASON,source:process.env.API_FOOTBALL_KEY?"openfootball (CC0) och API-Football":"openfootball (CC0)",rows}));
