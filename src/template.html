@@ -818,9 +818,11 @@ const SURF_CLUB={"häc": ["art", "se"], "dif": ["art", "se"], "ham": ["art", "se
 const SURF_SRC={se:["Fotbollsresultat.com, Allsvenskan 2026","https://fotbollsresultat.com/vilka-lag-i-allsvenskan-spelar-pa-konstgras/"],se2:["Superettanstatistik, arenaguide 2026","https://superettanstatistik.se/artiklar/guide-till-superettan-arenorna-2026"],no:["Wikipedia, List of Eliteserien venues","https://en.wikipedia.org/wiki/List_of_Eliteserien_venues"]};
 const SURF_LBL={nat:"Naturgräs",hyb:"Hybridgräs",art:"Konstgräs",nh:"Naturgräs eller hybridgräs"};
 const NO_ART_LEAGUES=new Set(["Premier League","La Liga","Serie A","Bundesliga","Ligue 1","Championship","Champions League"]);
+// arena -> klubbar som spelar där; byggs en gång per renderingsvarv (listor frågar om hundratals arenor)
+let _ac=null;function clubsAt(k){if(!_ac){_ac=new Map();Object.values(C).forEach(o=>{if(!o.s)return;const kk=arenaKey(o.s);if(!_ac.has(kk))_ac.set(kk,[]);_ac.get(kk).push(o);});setTimeout(()=>{_ac=null;},0);}return _ac.get(k)||[];}
 function surfaceOf(c){if(!c||!c.s)return null;const k=arenaKey(c.s);
   const crowd={};Object.values(RATINGS).forEach(d=>{const r=d&&d.r&&d.r[k];const v=r&&r.tr&&r.tr.surf;if(v&&SURF_LBL[v])crowd[v]=(crowd[v]||0)+1;});
-  const sharers=Object.values(C).filter(o=>o.s&&arenaKey(o.s)===k);const src=sharers.map(o=>SURF_CLUB[o.id]).find(Boolean);
+  const sharers=clubsAt(k);const src=sharers.map(o=>SURF_CLUB[o.id]).find(Boolean);
   if(src)return{v:src[0],src:SURF_SRC[src[1]]};
   const top=Object.entries(crowd).sort((a,b)=>b[1]-a[1])[0];if(top)return{v:top[0],crowd:top[1]};
   if(sharers.some(o=>NO_ART_LEAGUES.has(o.l)))return{v:"nh",rule:true};return null;}
@@ -868,7 +870,7 @@ let MATCHES=[],dbState="loading",META=null;
 // säsongen 2026/27 i de stora ligorna, från öppen data (openfootball, CC0): [hemma, borta, avspark|null, datum, resultat, serie, nivå]
 let FIXTURES=[],FX_UPDATED=null,DBM=null,dbFailed=false;
 // säsongsdatan ligger i en egen fil som uppdateras varje natt
-function remergeMatches(){setTimeout(()=>{try{(window.requestIdleCallback||(f=>f()))(()=>{try{upIndex();}catch(e){}});}catch(e){}},50);if(DBM===null&&!dbFailed&&!FIXTURES.length)return;MATCHES=mergeFixtures(DBM||[]);dbState=MATCHES.length?"ready":(dbFailed?"none":"empty");render();}
+function remergeMatches(){setTimeout(()=>{try{(window.requestIdleCallback||(f=>f()))(()=>{try{upIndex();}catch(e){}try{MATCHES.forEach(m=>{mTs(m);if(m.kickoff)koDay(m.kickoff);});}catch(e){}});}catch(e){}},50);if(DBM===null&&!dbFailed&&!FIXTURES.length)return;MATCHES=mergeFixtures(DBM||[]);dbState=MATCHES.length?"ready":(dbFailed?"none":"empty");render();}
 (window.requestIdleCallback||(f=>setTimeout(f,300)))(()=>fetch("data/flags.json").then(r=>r.ok?r.json():null).then(j=>{if(!j)return;Object.assign(FLAGS,j);Object.keys(j).forEach(k=>{if(k.startsWith("nt-")){FLAGS["u21-"+k.slice(3)]=j[k];FLAGS["w"+k]=j[k];}});try{render();}catch(e){}}).catch(()=>{}));
 let mapsP=null;function loadMaps(){return mapsP||(mapsP=fetch("data/maps.json").then(r=>r.json()).then(j=>{for(const k in j)if(MAPS[k]){MAPS[k].path=j[k].path;if(j[k].path2)MAPS[k].path2=j[k].path2;}}).catch(()=>{mapsP=null;}));}
 fetch("data/fixtures.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&Array.isArray(j.rows)){FIXTURES=j.rows;FX_UPDATED=j.updated||null;remergeMatches();}}).catch(()=>{});
@@ -884,6 +886,8 @@ const ai={}; // q-norm -> {state, data}
 // snabba datumhjälpare (toLocale… skapar en ny formaterare vid varje anrop och var flaskhalsen)
 const p2=n=>(n<10?"0":"")+n;
 const dayKey=d=>d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate());
+// matchens starttid i ms (sparas på objektet, så att listor inte tolkar datum om och om igen)
+const mTs=m=>m._t!==undefined?m._t:(m._t=m.kickoff?Date.parse(m.kickoff):Date.parse((m.dateFrom||"")+"T12:00:00"));
 const _dk=new Map();const koDay=iso=>{let v=_dk.get(iso);if(v===undefined){v=dayKey(new Date(iso));_dk.set(iso,v);}return v;};
 const today=()=>dayKey(new Date());
 function nextDays(n){const out=[];const d=new Date();d.setHours(12,0,0,0);for(let i=0;i<n;i++){out.push(new Date(d));d.setDate(d.getDate()+1);}return out;}
@@ -1131,8 +1135,7 @@ function renderMatchList(){
   const n=sel.length;const where=favOnly&&favList().length?` med ${favList().length===1?esc(C[favList()[0]].n):"dina favoritlag"}`:!hasQ?" i hela världen":radius===0?` i ${esc(cityQ)}`:` inom ${String(radius).replace(".",",")} mil från ${esc(place&&place.ll?place.name:cityQ)}`;
   const dTxt=dFrom===dTo?dayLong(dFrom):`${dayLong(dFrom)} – ${dayLong(dTo)}`;
   cn.innerHTML=`<b>${n}</b> ${n===1?"match":"matcher"}${where} · ${esc(dTxt)}`;
-  const maxDay=MATCHES.reduce((mx,m)=>{const k=m.kickoff?dayKey(new Date(m.kickoff)):m.dateTo;return k>mx?k:mx;},"");
-  if(!n){let why="Prova fler dagar, ett större avstånd eller en annan serienivå.";
+  if(!n){const maxDay=MATCHES.reduce((mx,m)=>{const k=m.kickoff?koDay(m.kickoff):m.dateTo;return k>mx?k:mx;},"");let why="Prova fler dagar, ett större avstånd eller en annan serienivå.";
     if(dFrom>maxDay)why=`Schemat sträcker sig just nu till och med ${esc(dayLong(maxDay))}, så det finns inga matcher inlagda för de här datumen än.`;
     else if(hasQ&&radius>0&&place&&!place.ll)why="Hitta orten först, så kan avståndet räknas ut.";
     el.innerHTML=`<div class="empty"><b>Inga matcher hittades.</b><div>${why}</div></div>`;return;}
@@ -3045,9 +3048,10 @@ function boardHtml(){const b=BOARDS.find(x=>x[0]===boardTab)||BOARDS[0];
   return`<article class="tip"><div class="sechead"><h2 class="name">Topplistor ${YEAR}</h2></div>${chips}${body}${join}${b[0]==="home"||b[0]==="away"?`<p class="hint">Hemma och borta räknas mot respektive användares favoritlag.</p>`:""}</article>`;}
 function hypeCount(mid){let n=0;Object.values(HYPE).forEach(d=>{if(d&&Array.isArray(d.ids)&&d.ids.includes(mid))n++;});return n;}
 const iHype=mid=>!!(HYPE[myId]&&Array.isArray(HYPE[myId].ids)&&HYPE[myId].ids.includes(mid));
-function derbyOf(m){return(TIPS.derbies||[]).find(d=>Array.isArray(d[2])&&d[2].includes(m.home)&&d[2].includes(m.away))||null;}
+let _dpair=null;function derbyPairs(){if(_dpair)return _dpair;_dpair=new Map();(TIPS.derbies||[]).forEach(d=>{const ids=Array.isArray(d[2])?d[2]:[];ids.forEach(a=>ids.forEach(b=>{if(a!==b&&!_dpair.has(a+"|"+b))_dpair.set(a+"|"+b,d);}));});return _dpair;}
+function derbyOf(m){return derbyPairs().get(m.home+"|"+m.away)||null;}
 function hypeCandidates(){if(dbState!=="ready")return[];const now=Date.now(),end=now+10*864e5;const fl=favList();
-  return MATCHES.filter(m=>m.kickoff&&Date.parse(m.kickoff)>now&&Date.parse(m.kickoff)<end).map(m=>{const h=C[m.home],a=C[m.away];let sc=0;
+  return MATCHES.filter(m=>m.kickoff&&mTs(m)>now&&mTs(m)<end).map(m=>{const h=C[m.home],a=C[m.away];let sc=0;
     if(derbyOf(m))sc+=100;if(fl.includes(m.home)||fl.includes(m.away))sc+=60;sc+=hypeCount(m._id)*15;if(String(m.tier)==="1")sc+=20;if(tierOf(m)==="CUP")sc+=/Champions/i.test(m.comp||"")?30:15;
     sc+=Math.min(30,((h&&h.cap)||0)/3000);return{m,sc};}).sort((x,y)=>y.sc-x.sc).map(x=>x.m);}
 function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return"Pågår snart";const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5);return d?`om ${d} ${d===1?"dag":"dagar"} och ${h} tim`:`om ${h} tim`;}
@@ -3135,8 +3139,8 @@ function hopperHtml(){if(statsState!=="ready")return"";const m=ym();
     <p class="hint">Räknar arenor man besökt för första gången under ${esc(mon)}.</p></article>`;}
 // nästa derby per land
 function derbyNext(){if(dbState!=="ready")return[];const now=Date.now()-2*36e5;const byC=new Map();
-  (TIPS.derbies||[]).forEach(d=>{const ids=d[2]||[];MATCHES.forEach(m=>{if(!ids.includes(m.home)||!ids.includes(m.away))return;const t=m.kickoff?Date.parse(m.kickoff):Date.parse((m.dateFrom||"")+"T12:00:00");if(!(t>now))return;
-    const land=(C[m.home]&&C[m.home].c)||m.country||"";const cur=byC.get(land);if(!cur||t<cur.t)byC.set(land,{t,m,d,land});});});
+  const dp=derbyPairs();MATCHES.forEach(m=>{const d=dp.get(m.home+"|"+m.away);if(!d)return;const t=mTs(m);if(!(t>now))return;
+    const land=(C[m.home]&&C[m.home].c)||m.country||"";const cur=byC.get(land);if(!cur||t<cur.t)byC.set(land,{t,m,d,land});});
   return[...byC.values()].sort((a,b)=>a.t-b.t);}
 // nedräkning i hela dagar; samma dag visas timmar
 function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;if(!day)return"snart";
@@ -3160,7 +3164,7 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?"i da
   if(!homeTown||homeEdit)return`<article class="tip"><div class="lbl">Tips för helgen</div><p>Ange din hemort så visar vi matcher nära dig ${label}.</p><form class="homeform" id="homeForm"><label class="fld" for="homeIn">Din hemort<input id="homeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="t.ex. Jönköping"></label><button class="btn small primary" type="submit">Spara</button></form></article>`;
   const p=homeLL();if(!p)return`<article class="tip"><div class="lbl">Tips för helgen</div><p class="meta">Hittar inte ${esc(homeTown)} på kartan. Prova en större ort i närheten.</p><button class="link" data-homeedit="1">Byt hemort</button></article>`;
   if(dbState!=="ready")return"";
-  const list=MATCHES.filter(m=>m.kickoff?(dayKey(new Date(m.kickoff))>=from&&dayKey(new Date(m.kickoff))<=to&&Date.parse(m.kickoff)>Date.now()-2*36e5):(m.dateFrom<=to&&m.dateTo>=from)).map(m=>{const ll=GEO[m.city];return{m,km:ll?haversine(p.ll,ll):null};}).filter(x=>x.km!==null).sort((a,b)=>a.km-b.km);
+  const nowW=Date.now()-2*36e5;const list=MATCHES.filter(m=>m.kickoff?(mTs(m)>nowW&&koDay(m.kickoff)>=from&&koDay(m.kickoff)<=to):(m.dateFrom<=to&&m.dateTo>=from)).map(m=>{const ll=GEO[m.city];return{m,km:ll?haversine(p.ll,ll):null};}).filter(x=>x.km!==null).sort((a,b)=>a.km-b.km);
   const near=list.filter(x=>x.km<=wkRadius*10);const pool=(near.length?near:list.slice(0,3)).slice(0,12);const show=homeMore.wk?pool:pool.slice(0,3);
   const chips=[5,15,30].map(r=>`<button class="chip" data-wkr="${r}" aria-pressed="${wkRadius===r}">${r} mil</button>`).join("");
   return`<article class="tip"><div class="sechead"><div class="lbl">Tips för helgen · nära ${esc(p.name)}</div><button class="link" data-homeedit="1">Byt hemort</button></div><div class="chips" role="group" aria-label="Avstånd">${chips}</div>
