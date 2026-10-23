@@ -119,14 +119,15 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
     if(apiStat.plan==="Free")throw new Error("Gratisplanen ger inte innevarande säsong – uppgradera till Pro på dashboard.api-football.com. Hoppar över API-Football.");
     // 1) vilka serier finns, och vilken säsong pågår
     const lg={};for(const ac of [...new Set(API.map(x=>x[2]))]){for(const x of get(`leagues?country=${encodeURIComponent(ac)}`)){const cur=(x.seasons||[]).find(s=>s.current)||(x.seasons||[]).slice(-1)[0];
-      lg[ac+"|"+String(x.league.name).toLowerCase().replace(/\s+/g," ").trim()]={id:x.league.id,season:cur&&cur.year,start:cur&&cur.start,end:cur&&cur.end,cov:cur&&cur.coverage||{}};}}
+      lg[ac+"|"+String(x.league.name).toLowerCase().replace(/\s+/g," ").trim()]={id:x.league.id,season:cur&&cur.year,start:cur&&cur.start,end:cur&&cur.end,cov:cur&&cur.coverage||{},seasons:(x.seasons||[]).map(z=>[z.year,z.start,z.end])};}}
     // 1b) äldre säsonger till arkivet (BACKFILL="se.1:2010-2025,se.3n:2016-2025"); befintliga filer skrivs inte över
     if(process.env.BACKFILL){apiStat.backfill={};
       for(const spec of process.env.BACKFILL.split(",").map(x=>x.trim()).filter(Boolean)){const[code,range]=spec.split(":");const[a,b]=(range||"").split("-").map(Number);
         const ent=API.find(x=>x[4]===code);if(!ent||!a){apiStat.backfill[spec]="okänd";continue;}const[lname,country,ac,tier,,re,isW,isN]=ent;
         const key=Object.keys(lg).find(k=>k.startsWith(ac+"|")&&re.test(k.split("|")[1]));if(!key){apiStat.backfill[spec]="saknas i API";continue;}
         const cross=String(lg[key].start||"").slice(0,4)!==String(lg[key].end||"").slice(0,4);// höst–vår-serie: filen heter 2016-17
-        const got=[];for(let yr=a;yr<=(b||a);yr++){const SKb=cross?`${yr}-${String((yr+1)%100).padStart(2,"0")}`:String(yr);const f=path.join(OUT,"archive",code,SKb+".json");if(fs.existsSync(f)){got.push(SKb+" fanns");continue;}
+        const got=[];for(let yr=a;yr<=(b||a);yr++){const sy=(lg[key].seasons||[]).find(z=>+z[0]===yr);const cr=sy?String(sy[1]||"").slice(0,4)!==String(sy[2]||"").slice(0,4):cross;// t.ex. Japan bytte från kalenderår till höst–vår
+          const SKb=cr?`${yr}-${String((yr+1)%100).padStart(2,"0")}`:String(yr);const f=path.join(OUT,"archive",code,SKb+".json");if(fs.existsSync(f)){got.push(SKb+" fanns");continue;}
           let fx;try{fx=get(`fixtures?league=${lg[key].id}&season=${yr}&timezone=UTC`);}catch(e){got.push(yr+" fel");continue;}if(!fx.length){got.push(yr+" tom");continue;}
           const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const pre=tm&&teamMap[tm.id];const c=pre?[pre]:isW||isN?null:findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};
           const arc=[];for(const x of fx){const st=x.fixture.status&&x.fixture.status.short;if(["PST","CANC","ABD","AWD","WO"].includes(st))continue;const fin=["FT","AET","PEN"].includes(st);const d=x.fixture.date;
