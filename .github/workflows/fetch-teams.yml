@@ -5,6 +5,7 @@ on:
     inputs:
       country: { description: "Land (engelska, som i API-Football)", default: "Sweden" }
       match: { description: "Regex på serienamn", default: "ettan" }
+      jobs: { description: "Flera länder: Land=regex;Land=regex (skriver tools/teams_world.json)", default: "" }
 permissions:
   contents: write
 jobs:
@@ -18,10 +19,11 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           COUNTRY: ${{ inputs.country }}
           MATCH: ${{ inputs.match }}
+          JOBS: ${{ inputs.jobs }}
         run: node scripts/fetch-teams.js
       - run: |
           git config user.name "groundly-bot"
           git config user.email "groundly-bot@users.noreply.github.com"
-          git add tools/teams_raw.json
+          git add tools/teams_raw.json tools/teams_world.json 2>/dev/null || git add tools/teams_raw.json
           git diff --cached --quiet || git commit -m "Lag från API-Football"
           for i in 1 2 3; do git pull --rebase -q origin main && git push && break; sleep 5; done
