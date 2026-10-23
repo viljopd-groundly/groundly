@@ -2077,7 +2077,9 @@ function openAccForum(id){const c=C[id];if(!c)return;const n=allPosts().filter(p
 let accClub=null;
 // ---------- liknande klubbar ----------
 const CULTSET=new Set(TIPS.cult.map(x=>x[0]));
-const sizeClass=x=>!x?null:x<15000?"liten":x<40000?"mellan":"stor";
+// arenastorlek: liten <5 000, mindre 5 000–9 999, mellanstor 10 000–19 999, stor 20 000+
+const sizeClass=x=>!x?null:x<5000?"liten":x<10000?"mindre":x<20000?"mellanstor":"stor";
+const SIZE_LBL={liten:"Liten arena",mindre:"Mindre arena",mellanstor:"Mellanstor arena",stor:"Stor arena"};
 function similarClubs(c){const k=arenaKey(c.s);const co={};
   if(k)Object.values(RATINGS).forEach(d=>{const r=d&&d.r;if(!r||!r[k])return;Object.keys(r).forEach(k2=>{if(k2!==k)co[k2]=(co[k2]||0)+1;});});
   const rivals=new Set();TIPS.derbies.forEach(d=>{if(d[2].includes(c.id))d[2].forEach(x=>rivals.add(x));});
@@ -2085,7 +2087,7 @@ function similarClubs(c){const k=arenaKey(c.s);const co={};
     if(CULTSET.has(c.id)&&CULTSET.has(o.id)){s+=5;why.push("Också en kultklubb");}
     const n=co[arenaKey(o.s)]||0;if(n){s+=2+n;why.push(`${n} ${n===1?"besökare":"besökare"} har betygsatt båda arenorna`);}
     if(o.l&&o.l===c.l){s+=1.5;why.push("Samma serie");}else if(o.t&&o.t===c.t&&o.c===c.c){s+=0.7;why.push("Samma nivå i "+o.c);}
-    const sz=sizeClass(c.cap);if(sz&&sz===sizeClass(o.cap)){s+=1;why.push(sz==="liten"?"Liten arena nära planen":sz==="stor"?"Stor arena":"Lika stor arena");}
+    const sz=sizeClass(c.cap);if(sz&&sz===sizeClass(o.cap)){s+=1;why.push("Båda har "+SIZE_LBL[sz].toLowerCase());}
     if(c.f&&o.f&&c.f<1905&&o.f<1905){s+=0.5;why.push("Anrik klubb från 1800-talet");}
     if(c.h&&o.h&&c.h.length===0&&o.h.length===0&&c.t>=2&&o.t>=2){s+=0.5;why.push("Underdog utan stora titlar");}
     return{o,s,why};}).filter(x=>x.s>=2).sort((a,b)=>b.s-a.s||a.o.n.localeCompare(b.o.n,"sv"));
