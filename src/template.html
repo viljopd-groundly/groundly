@@ -399,6 +399,10 @@ button{touch-action:manipulation}
 .mystats>summary{cursor:pointer;font-weight:700;display:flex;align-items:center;gap:8px;list-style:none}.mystats>summary::-webkit-details-marker{display:none}.mystats>summary .meta{margin-left:auto;font-weight:500}
 .mystats>summary:after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:-4px 2px 0 6px}.mystats[open]>summary:after{transform:rotate(-135deg);margin-top:4px}
 .msg{display:flex;flex-direction:column;gap:6px;margin-top:10px}.msr{display:flex;justify-content:space-between;gap:12px;font-size:14px;border-top:1px dashed var(--line);padding-top:6px}.msr span{color:var(--muted)}.msr b{text-align:right;font-weight:600}
+.obex{border:1px dashed color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:9px;margin:4px 0 8px;background:color-mix(in srgb,var(--accent) 4%,var(--surface))}
+.obex>.pill{align-self:flex-start}.obtiles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.obtiles div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 4px;text-align:center;display:flex;flex-direction:column}
+.obtiles b{font:700 18px var(--f-mono);color:var(--accent)}.obtiles span{font-size:11px;color:var(--muted)}
+.obrow{display:flex;flex-direction:column;gap:1px;font-size:14px;border-top:1px dashed var(--line);padding-top:7px}.obrow>.meta:first-child{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
 .selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.dsel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dsel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
@@ -1632,7 +1636,7 @@ function renderMine(){
       ${a.with?`<div class="venue">Sällskap: ${esc(a.with)}</div>`:""}${a.note?`<div class="mnote">${esc(a.note)}</div>`:""}
       ${a.photo&&PHID.test(a.photo)?`<button class="attph" data-phview="${esc(a.photo)}" aria-label="Visa bilden från matchen">${phImg(a.photo)}</button>`:""}${attPhUp===a.id?`<p class="hint">Laddar upp bilden…</p>`:""}
       ${editAtt===a.id?editAttForm(a):""}<div class="pactions">${assetsNs?`<label class="link strong" for="attPh-${esc(a.id)}">${ic("image")} ${a.photo?"Byt bild":"Lägg till bild"}<input id="attPh-${esc(a.id)}" data-attphoto="${esc(a.id)}" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic" hidden></label>${a.photo?`<button class="link" data-attphdel="${esc(a.id)}">Ta bort bild</button>`:""}`:""}<button class="link" data-editatt="${esc(a.id)}">${editAtt===a.id?"Stäng":a.score?"Redigera":"Lägg till resultat"}</button><button class="link strong" data-repfrom="${esc(a.id)}">Skriv reportage</button><button class="link strong" data-sharematch="${esc(a.id)}">${shareMatchId===a.id?"Stäng":"Dela matchkort"}</button>${delBtn("att",a.id)}</div>${shareMatchId===a.id?`<div class="studio">${fmtChips()}${studioHtml("match","Matchkort")}</div>`:""}</div></div>`).join("")+moreBtns("att",att.length)
-     :`<div class="empty">Inga matcher sparade än. Lägg till en match du varit på, eller tryck <b>Jag var där</b> på en spelad match under Matcher.</div>`;
+     :`<div class="empty">Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck <b>Jag var där</b> på en spelad match under Matcher.</div><p class="hint">Så här kan det se ut efter en säsong:</p>${exampleHtml()}`;
     const visNT=[...vm.entries()].filter(([id])=>C[id]&&isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
     const vis=[...vm.entries()].filter(([id])=>C[id]&&!isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
     h+=`<h3 class="sec">Klubbar och arenor jag besökt</h3>`;
@@ -3384,13 +3388,23 @@ document.addEventListener("submit",e=>{if(e.target.classList&&e.target.classList
 function onboardHtml(){if(myState!=="ready"||MY.onboarded)return"";const s1=favList().length>0,s2=!!homeTown,s3=MY.attended.length>0;
   const step=(n,done,title,body)=>`<div class="obstep${done?" done":""}"><span class="obn">${done?OK:n}</span><div class="mmain"><b>${title}</b>${done?"":body}</div></div>`;
   return`<article class="tip onboard"><div class="sechead"><h2 class="name">Kom igång med Groundly</h2><button class="link" data-obskip="1">${s1&&s2&&s3?"Stäng":"Hoppa över"}</button></div>
-    <p class="meta">Tre snabba steg så blir startsidan och Min fotboll din egen.</p>
+    <p class="meta">Tre snabba steg så blir startsidan och Min fotboll din egen. <button class="link strong" data-obex="1" aria-expanded="${obEx}">${obEx?"Dölj exemplet":"Se hur det kan se ut"}</button></p>
+    ${obEx?exampleHtml():""}
     ${step(1,s1,"Välj ditt favoritlag",`<form class="homeform" id="obFav"><label class="fld" for="obFavIn">Lag<input id="obFavIn" list="allClubs" maxlength="80" placeholder="t.ex. Jönköpings Södra IF"></label><button class="btn small primary" type="submit">Spara</button></form>`)}
     ${step(2,s2,"Ange din hemort",`<form class="homeform" id="obHome"><label class="fld" for="obHomeIn">Ort<input id="obHomeIn" list="cities" maxlength="60" placeholder="t.ex. Jönköping"></label><button class="btn small primary" type="submit">Spara</button></form>`)}
-    ${step(3,s3,"Logga matcher du har sett",`<div class="actions"><button class="btn small primary" data-oblog="arc">Hitta i arkivet</button><button class="btn small" data-oblog="add">Lägg till match</button></div><p class="hint">Arkivet har tusentals matcher med resultat sedan 2004.</p>`)}
+    ${step(3,s3,"Logga matcher du har sett",`<div class="actions"><button class="btn small primary" data-oblog="arc">Hitta i arkivet</button><button class="btn small" data-oblog="add">Lägg till match</button></div><p class="hint">Arkivet har tusentals matcher med resultat – Allsvenskan, Superettan och Ettan från 2016, Premier League ända från 1992. Sök på ditt lag.</p>`)}
     ${s1&&s2&&s3?`<p><b>Klart!</b> Nu fylls startsidan, topplistor och Min fotboll på med dina matcher.</p>`:""}</article>`;}
-const isObBtn=t=>t.dataset.obskip||t.dataset.oblog;
-function obClick(t){if(t.dataset.obskip){mutate(d=>{d.onboarded=true;});return;}
+// exempel på hur Min fotboll ser ut efter en säsong (påhittade siffror, tydligt märkt)
+let obEx=false;
+function exampleHtml(){const tile=(n,l)=>`<div><b>${n}</b><span>${l}</span></div>`;
+  return`<div class="obex" aria-label="Exempel"><span class="pill sm">Exempel</span>
+    <div class="obtiles">${tile(27,"matcher")}${tile(14,"arenor")}${tile(4,"länder")}${tile(6,"på önskelistan")}</div>
+    <div class="obrow"><span class="meta">Favoritlag</span><b>Jönköpings Södra IF</b><span class="meta">12 matcher · V 7 · O 3 · F 2 · längsta bortaresan Luleå, 103 mil</span></div>
+    <div class="obrow"><span class="meta">Senast</span><b>Jönköpings Södra – Trollhättan 2–1</b><span class="meta">lör 24 okt · Stadsparksvallen · med bild och reportage</span></div>
+    <div class="obrow"><span class="meta">Min statistik</span><b>52 % hemmasegrar · 3,1 mål per match</b><span class="meta">resat ca 4 800 km · vanligaste matchdag lördag</span></div>
+    <div class="obrow"><span class="meta">Utmaningar</span><b>11 av 16 arenor i Ettan Södra</b><span class="meta">karta över alla arenor du besökt, märken och arenapass</span></div></div>`;}
+const isObBtn=t=>t.dataset.obskip||t.dataset.oblog||t.dataset.obex;
+function obClick(t){if(t.dataset.obex){obEx=!obEx;render();return;}if(t.dataset.obskip){mutate(d=>{d.onboarded=true;});return;}
   if(t.dataset.oblog==="add"){openLogMatch(null,null);return;}
   if(t.dataset.oblog==="arc"){mySub="been";setMode("mine");setTimeout(()=>document.getElementById("arcOpen")?.click(),60);return;}}
 document.addEventListener("submit",e=>{if(e.target.id==="obFav"){e.preventDefault();const id=clubIdFromName(document.getElementById("obFavIn").value);
