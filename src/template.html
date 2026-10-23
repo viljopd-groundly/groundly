@@ -388,6 +388,7 @@ button{touch-action:manipulation}
 .chips.wrapchips{flex-wrap:wrap;overflow:visible}
 .lgchk{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--muted);cursor:pointer}.lgchk input{margin-top:2px;accent-color:var(--accent);width:17px;height:17px;flex:none}.lgchk b{color:var(--fg)}
 .pill.cultp{background:color-mix(in srgb,#e8ad00 18%,var(--surface));color:color-mix(in srgb,#b07a00 85%,var(--fg))}.pill.cultp .ic{width:11px;height:11px;vertical-align:-1px}
+.remind .rmrow{display:flex;flex-direction:column;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}.remind .rmrow:first-of-type{border-top:0;padding-top:2px}.remind .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
 .selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.dsel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dsel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
@@ -2973,11 +2974,19 @@ function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().t
 function quizLeadHtml(){if(quizState!=="ready")return"";const rows=Object.entries(QSCORES).filter(([,d])=>d&&+d.best>=0).sort((a,b)=>(+b[1].best)-(+a[1].best))[0];if(!rows)return"";
   const[uid,d]=rows;return`<article class="tip"><div class="sechead"><div><div class="lbl">Quizledare</div><h2 class="name">${esc(uid===myId?"Du":(QNAMES[uid]||NAMES[uid]||"Medlem"))} · ${+d.best}/10</h2></div><button class="btn small primary" data-goquiz="1">Utmana</button></div></article>`;}
 function toneHome(el){el.querySelectorAll(":scope > article, :scope > .tip").forEach(a=>{if(a.classList.contains("hero"))return;a.dataset.tone="1";const l=a.querySelector(":scope > .lbl, :scope > .sechead > .lbl");if(l)l.classList.add("lbl-lg");});}
+// påminnelse: matcher på "Vill gå" som har spelats (2 tim–14 dagar sedan) och inte loggats
+function remindHtml(){if(myState!=="ready"||!Array.isArray(MY.wishMatches))return"";const now=Date.now();
+  const due=MY.wishMatches.filter(w=>w&&w.kickoff&&now-Date.parse(w.kickoff)>2*36e5&&now-Date.parse(w.kickoff)<14*864e5&&!MY.attended.some(a=>a.mid===w.id)).sort((a,b)=>String(b.kickoff).localeCompare(String(a.kickoff))).slice(0,3);
+  if(!due.length)return"";
+  return`<article class="tip remind"><div class="lbl">${ic("calendar")} Var du där?</div>${due.map(w=>`<div class="rmrow"><div><b>${esc(w.homeName)} – ${esc(w.awayName)}</b><div class="meta">${esc(dayLong(dayKey(new Date(w.kickoff))))}${w.venue?` · ${esc(w.venue)}`:""}</div></div>
+    <div class="actions"><button class="btn small primary" data-wmdone="${esc(w.id)}">Ja, logga matchen</button><button class="btn small" data-wmno="${esc(w.id)}">Nej</button></div></div>`).join("")}</article>`;}
 function renderHome(){const el=document.getElementById("homeBody");if(!el)return;try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
   const ids=Object.keys(STATS).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="hem")renderHome();}).catch(()=>{});
-  el.innerHTML=onboardHtml()+heroHtml()+mineSnap()+friendsHtml()+weekendHtml()+derbyHtml()+latestHtml()+pollHtml()+boardHtml()+hopperHtml()+topArenaHtml()+quizLeadHtml()+newsHtml();}
-const isHomeBtn=t=>t.dataset.vote!==undefined||t.dataset.wkr||t.dataset.gomode||(t.dataset.homeedit&&mode==="hem")||t.dataset.board||t.dataset.pub!==undefined||t.dataset.hype||t.dataset.homerep||t.dataset.homethread||t.dataset.gomine||t.dataset.goquiz||t.dataset.gorep;
+  el.innerHTML=onboardHtml()+remindHtml()+heroHtml()+mineSnap()+friendsHtml()+weekendHtml()+derbyHtml()+latestHtml()+pollHtml()+boardHtml()+hopperHtml()+topArenaHtml()+quizLeadHtml()+newsHtml();}
+const isHomeBtn=t=>t.dataset.wmno||t.dataset.vote!==undefined||t.dataset.wkr||t.dataset.gomode||(t.dataset.homeedit&&mode==="hem")||t.dataset.board||t.dataset.pub!==undefined||t.dataset.hype||t.dataset.homerep||t.dataset.homethread||t.dataset.gomine||t.dataset.goquiz||t.dataset.gorep;
 async function homeClick(t){
+  if(t.dataset.wmno){const id=t.dataset.wmno;let gone=[];mutate(d=>{gone=d.wishMatches.filter(w=>w.id===id);d.wishMatches=d.wishMatches.filter(w=>w.id!==id);});
+    if(gone.length)undoToast("Borttagen från Vill gå",async()=>{mutate(d=>{d.wishMatches=putBack(d.wishMatches,gone);});});return;}
   if(t.dataset.gomode){setMode(t.dataset.gomode);window.scrollTo({top:0});return;}
   if(t.dataset.wkr){wkRadius=+t.dataset.wkr;renderHome();return;}
   if(t.dataset.homeedit){homeEdit=true;renderHome();setTimeout(()=>document.getElementById("homeIn")?.focus(),0);return;}
