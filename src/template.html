@@ -386,6 +386,8 @@ button{touch-action:manipulation}
 .fld select{font:500 15px var(--f-body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;min-width:0}
 .arc .drow .mini{white-space:nowrap}
 .chips.wrapchips{flex-wrap:wrap;overflow:visible}
+.lgchk{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--muted);cursor:pointer}.lgchk input{margin-top:2px;accent-color:var(--accent);width:17px;height:17px;flex:none}.lgchk b{color:var(--fg)}
+.pill.cultp{background:color-mix(in srgb,#e8ad00 18%,var(--surface));color:color-mix(in srgb,#b07a00 85%,var(--fg))}.pill.cultp .ic{width:11px;height:11px;vertical-align:-1px}
 .selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.dsel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dsel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
@@ -1254,7 +1256,7 @@ function legStart(){if(legState!=="idle"||!dbNs)return;legState="loading";
 function legHtml(id){const c=C[id];const list=legAll(id).map(x=>({...x,v:legVotes(x.key)})).sort((a,b)=>b.v-a.v||String(a.at).localeCompare(String(b.at)));
   const mine=LEGV[myId]&&Array.isArray(LEGV[myId].keys)?LEGV[myId].keys:[];const can=!!(dbNs&&myId);
   const items=legState!=="ready"?`<p class="meta">${legState==="none"?"Legenderna kunde inte hämtas.":"Hämtar legender…"}</p>`:!list.length?`<p class="meta">Inga legender för ${esc(c.n)} än. Vem borde stå här? Lägg till den första!</p>`
-   :list.map(x=>`<div class="lgd"><div class="lgdh"><b>${esc(x.name)}</b><span class="pill sm">${esc(LEG_ROLE[x.role]||"Spelare")}</span>${x.years?`<span class="meta">${esc(x.years)}</span>`:""}</div>
+   :list.map(x=>`<div class="lgd"><div class="lgdh"><b>${esc(x.name)}</b><span class="pill sm">${esc(LEG_ROLE[x.role]||"Spelare")}</span>${x.cult?`<span class="pill sm cultp">${ic("flame")} Kultspelare</span>`:""}${x.years?`<span class="meta">${esc(x.years)}</span>`:""}</div>
       ${x.text?`<div class="lgdt">${esc(x.text)}</div>`:""}
       <div class="lgdf"><span class="meta">Tillagd av ${esc(who(x.uid))}</span>
         ${can?`<button class="mini" data-legvote="${esc(x.key)}" aria-pressed="${mine.includes(x.key)}">${ic("heart",mine.includes(x.key)?"on":"")} ${mine.includes(x.key)?"Håller med":"Håller med"}${x.v?` (${x.v})`:""}</button>`:x.v?`<span class="meta">${ic("heart")} ${x.v}</span>`:""}
@@ -1263,6 +1265,7 @@ function legHtml(id){const c=C[id];const list=legAll(id).map(x=>({...x,v:legVote
       <label class="fld">Namn<input name="n" maxlength="60" required placeholder="t.ex. ${isNat(c)?"Zlatan Ibrahimović":"spelarens eller tränarens namn"}"></label>
       <div class="legrow"><label class="fld">Roll<select name="r"><option value="p">Spelare</option><option value="t">Tränare</option><option value="b">Spelare och tränare</option></select></label>
       <label class="fld">${isNat(c)?"År i landslaget":"År i klubben"}<input name="y" maxlength="20" placeholder="t.ex. 1985–1994"></label></div>
+      <label class="lgchk"><input type="checkbox" name="k"> <span><b>Kultspelare</b> – en publikfavorit med speciell status, även om hen inte var bäst</span></label>
       <label class="fld">Varför en legend?<textarea name="t" maxlength="300" rows="2" placeholder="${isNat(c)?"Landskamper, mästerskap, ett oförglömligt mål…":"Mål, titlar, en oförglömlig match…"}"></textarea></label>
       ${legMsg?`<p class="err">${esc(legMsg)}</p>`:""}<div class="actions"><button class="btn small primary" type="submit"${legBusy?" disabled":""}>Lägg till</button><button class="btn small" type="button" data-legadd="0">Avbryt</button></div></form>`
     :`<p class="meta">Logga in för att lägga till legender.</p><button class="btn small" data-glogin>Logga in</button>`;
@@ -1270,10 +1273,10 @@ function legHtml(id){const c=C[id];const list=legAll(id).map(x=>({...x,v:legVote
   return`<div id="lgOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="lgT"><div class="compose askbox pvbox msbox"><div class="mshead"><h2 id="lgT" class="msteams">${crest(id,c.n,28)} ${esc(c.n)} – ${legLbl(c).toLowerCase()}</h2><button class="btn small" id="lgClose">Stäng</button></div>
     <div class="leglist">${items}</div>${form}${sq}</div></div>`;}
 function legRender(){const o=document.getElementById("lgOv");if(!o||!legOpen)return;
-  const f=document.getElementById("legForm");const keep=f?{n:f.n.value,r:f.r.value,y:f.y.value,t:f.t.value}:null;const ae=document.activeElement&&document.activeElement.name;
+  const f=document.getElementById("legForm");const keep=f?{n:f.n.value,r:f.r.value,y:f.y.value,t:f.t.value,k:f.k.checked}:null;const ae=document.activeElement&&document.activeElement.name;
   const sc=o.querySelector(".msbox")?o.querySelector(".msbox").scrollTop:0;o.outerHTML=legHtml(legOpen);
   const o2=document.getElementById("lgOv");if(o2&&o2.querySelector(".msbox"))o2.querySelector(".msbox").scrollTop=sc;
-  const f2=document.getElementById("legForm");if(f2&&keep){f2.n.value=keep.n;f2.r.value=keep.r;f2.y.value=keep.y;f2.t.value=keep.t;if(ae&&f2[ae])f2[ae].focus({preventScroll:true});}}
+  const f2=document.getElementById("legForm");if(f2&&keep){f2.n.value=keep.n;f2.r.value=keep.r;f2.y.value=keep.y;f2.t.value=keep.t;f2.k.checked=keep.k;if(ae&&f2[ae])f2[ae].focus({preventScroll:true});}}
 function openLegends(id){if(!C[id])return;legOpen=id;legMsg="";legAdding=false;legStart();const o=document.getElementById("lgOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",legHtml(id));}
 async function legWrite(fn){if(!dbNs||!myId||legBusy)return false;legBusy=true;const cur=LEG[myId]&&Array.isArray(LEG[myId].items)?LEG[myId].items:[];const next=fn(cur.slice()).slice(-200);
   try{await dbNs.doc("legends/"+myId).set({items:next});LEG={...LEG,[myId]:{items:next}};return true;}catch(e){legMsg=e&&e.code==="invalid_argument"?"Du har inte behörighet att spara.":"Kunde inte spara. Försök igen.";return false;}finally{legBusy=false;}}
@@ -1288,9 +1291,9 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-lege
     if(gone.length)undoToast("Legenden togs bort",async()=>{await legWrite(xs=>putBack(xs,gone));legRender();});}return;}
   if(t.dataset.leghide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"leg:"+t.dataset.leghide])]});}catch(err){toast("Kunde inte dölja.");}legRender();return;}});
 document.addEventListener("submit",async e=>{if(e.target.id!=="legForm")return;e.preventDefault();const f=e.target;const club=f.dataset.legfor;
-  const name=f.n.value.trim().slice(0,60),role=["p","t","b"].includes(f.r.value)?f.r.value:"p",years=f.y.value.trim().slice(0,20),text=f.t.value.trim().slice(0,300);if(!name)return;
+  const name=f.n.value.trim().slice(0,60),role=["p","t","b"].includes(f.r.value)?f.r.value:"p",years=f.y.value.trim().slice(0,20),text=f.t.value.trim().slice(0,300),cult=!!f.k.checked;if(!name)return;
   const dup=legAll(club).find(x=>legNorm(x.name)===legNorm(name));if(dup){legMsg=`${dup.name} finns redan – tryck på Håller med i stället.`;legRender();return;}
-  legMsg="";const ok=await legWrite(xs=>[...xs,{id:Math.random().toString(36).slice(2,10),club,name,role,years,text,at:new Date().toISOString()}]);
+  legMsg="";const ok=await legWrite(xs=>[...xs,{id:Math.random().toString(36).slice(2,10),club,name,role,years,text,...(cult?{cult:true}:{}),at:new Date().toISOString()}]);
   if(ok){f.reset();legAdding=false;}legRender();});
 function openSquad(id){if(!C[id])return;const o=document.getElementById("sqOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",squadHtml(id));
   if(!XD.squads)loadXD("squads").then(()=>{const o2=document.getElementById("sqOv");if(o2){o2.outerHTML=squadHtml(id);}});}
