@@ -386,12 +386,12 @@ button{touch-action:manipulation}
 .fld select{font:500 15px var(--f-body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;min-width:0}
 .arc .drow .mini{white-space:nowrap}
 .chips.wrapchips{flex-wrap:wrap;overflow:visible}
-.selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.sel{width:100%}.selw[hidden]{display:none}
+.selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.dsel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.sel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
+.dsel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
 .selw:after{content:"";position:absolute;right:15px;top:50%;width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none;color:var(--muted)}
-.sel.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.selw:has(.sel.on):after{color:var(--bg)}
+.dsel.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.selw:has(.dsel.on):after{color:var(--bg)}
 .steam{flex-direction:column;align-items:stretch}
 .sthead{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%}
 .sthead:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -649,7 +649,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <button class="clear" id="qClear" hidden>Rensa</button>
     </label>
     <div class="chips" role="group" aria-label="Herr eller dam" id="gClubs"></div>
-    <div class="selrow"><label class="selw" id="countryW"><span class="vh">Land</span><select id="countrySel" class="sel"></select></label><label class="selw" id="leagueW" hidden><span class="vh">Serie</span><select id="leagueSel" class="sel"></select></label></div>
+    <div class="selrow"><label class="selw" id="countryW"><span class="vh">Land</span><select id="countrySel" class="dsel"></select></label><label class="selw" id="leagueW" hidden><span class="vh">Serie</span><select id="leagueSel" class="dsel"></select></label></div>
     <div class="toolbar"><div class="count" id="clubCount"></div></div>
     <div class="list" id="clubList"></div>
   </section>
@@ -662,7 +662,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <button class="clear" id="ntqClear" hidden>Rensa</button>
     </label>
     <div class="chips wrapchips" role="group" aria-label="Visa" id="ntChips"></div>
-    <div class="selrow" id="ntConfRow"><label class="selw"><span class="vh">Världsdel</span><select id="ntConfSel" class="sel"></select></label></div>
+    <div class="selrow" id="ntConfRow"><label class="selw"><span class="vh">Världsdel</span><select id="ntConfSel" class="dsel"></select></label></div>
     <div class="toolbar"><div class="count" id="ntCount"></div></div>
     <div class="list" id="ntList"></div>
   </section>
@@ -674,7 +674,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
       <input id="aq" type="search" placeholder="Sök arena, stad eller klubb" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="aqClear" hidden>Rensa</button>
     </label>
-    <div class="selrow"><label class="selw"><span class="vh">Land</span><select id="aCountrySel" class="sel"></select></label><label class="selw"><span class="vh">Sortera</span><select id="aSortSel" class="sel"></select></label></div>
+    <div class="selrow"><label class="selw"><span class="vh">Land</span><select id="aCountrySel" class="dsel"></select></label><label class="selw"><span class="vh">Sortera</span><select id="aSortSel" class="dsel"></select></label></div>
     <div class="lbl">Visa bara</div>
     <div class="chips wrapchips" role="group" aria-label="Filter" id="aFiltChips"></div>
     <div class="toolbar"><div class="count" id="arenaCount"></div></div>
@@ -722,7 +722,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   <!-- Tabeller -->
   <section id="v-tabell" hidden style="display:contents">
     <div class="chips" role="group" aria-label="Herr eller dam" id="gTbl"></div>
-    <div class="selrow"><label class="selw"><span class="vh">Land</span><select id="tblCSel" class="sel"></select></label><label class="selw"><span class="vh">Serie</span><select id="tblLSel" class="sel"></select></label></div>
+    <div class="selrow"><label class="selw"><span class="vh">Land</span><select id="tblCSel" class="dsel"></select></label><label class="selw"><span class="vh">Serie</span><select id="tblLSel" class="dsel"></select></label></div>
     <div id="tblBox"></div>
   </section>
 
@@ -2249,9 +2249,9 @@ function renderSeenTeams(){const all=seenTeams();const nClub=all.filter(t=>!t.na
   const ls=stCountry&&stCountry!=="Landslag"?cnt(list,lOf):[];if(stLeague&&!ls.some(([k])=>k===stLeague))stLeague="";
   if(stLeague)list=list.filter(t=>lOf(t)===stLeague);
   const opt=(v,l,cur)=>`<option value="${esc(v)}"${v===cur?" selected":""}>${esc(l)}</option>`;
-  const filt=cs.length>1?`<label class="selw"><span class="vh">Land</span><select id="stCSel" class="sel${stCountry?" on":""}">${opt("","Alla länder",stCountry)}${cs.map(([k,n])=>opt(k,`${k} (${n})`,stCountry)).join("")}</select></label>`:"";
-  const lfilt=ls.length>1?`<label class="selw"><span class="vh">Serie</span><select id="stLSel" class="sel${stLeague?" on":""}">${opt("","Alla serier",stLeague)}${ls.map(([k,n])=>opt(k,`${k} (${n})`,stLeague)).join("")}</select></label>`:"";
-  const sfilt=`<label class="selw"><span class="vh">Sortera</span><select id="stSSel" class="sel">${[["n","Flest matcher"],["last","Senast sedda"],["az","A–Ö"]].map(([k,l])=>opt(k,l,stSort)).join("")}</select></label>`;
+  const filt=cs.length>1?`<label class="selw"><span class="vh">Land</span><select id="stCSel" class="dsel${stCountry?" on":""}">${opt("","Alla länder",stCountry)}${cs.map(([k,n])=>opt(k,`${k} (${n})`,stCountry)).join("")}</select></label>`:"";
+  const lfilt=ls.length>1?`<label class="selw"><span class="vh">Serie</span><select id="stLSel" class="dsel${stLeague?" on":""}">${opt("","Alla serier",stLeague)}${ls.map(([k,n])=>opt(k,`${k} (${n})`,stLeague)).join("")}</select></label>`:"";
+  const sfilt=`<label class="selw"><span class="vh">Sortera</span><select id="stSSel" class="dsel">${[["n","Flest matcher"],["last","Senast sedda"],["az","A–Ö"]].map(([k,l])=>opt(k,l,stSort)).join("")}</select></label>`;
   list.sort(stSort==="az"?(a,b)=>a.name.localeCompare(b.name,"sv"):stSort==="last"?(a,b)=>b.last.localeCompare(a.last)||b.n-a.n:(a,b)=>b.n-a.n||b.last.localeCompare(a.last)||a.name.localeCompare(b.name,"sv"));
   let h=`<div class="chips" role="group" aria-label="Typ av lag"${nNat&&nClub?"":" hidden"}>${[["alla",`Alla <small>${all.length}</small>`],["klubb",`Klubblag <small>${nClub}</small>`],["landslag",`Landslag <small>${nNat}</small>`]].map(([k,l])=>`<button class="chip" data-stkind="${k}" aria-pressed="${stKind===k}">${l}</button>`).join("")}</div>
     <div class="selrow">${filt}${sfilt}</div>${lfilt?`<div class="selrow">${lfilt}</div>`:""}`;
