@@ -88,6 +88,12 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .detail{grid-column:1/-1;border-top:1px solid var(--line);margin-top:8px;padding-top:10px;display:grid;grid-template-columns:auto 1fr;gap:7px 14px;font-size:14px}
 .detail dt{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding-top:3px}
 .detail dd{margin:0;min-width:0}
+.nextlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.nextlist li{display:flex;align-items:baseline;gap:2px 8px;flex-wrap:wrap;position:relative;padding-left:14px}
+.nextlist li:before{content:"";position:absolute;left:0;top:.5em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.nextlist .nd{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.nextlist .nt{color:var(--muted);font-variant-numeric:tabular-nums}
+.nextlist .nm{flex-basis:100%}
 .detail ul{margin:0;padding-left:18px}
 .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
@@ -970,7 +976,7 @@ function clubCard(c,isAi){const sel=openClub===c.id;
     ${c.nick?`<dt>Smeknamn</dt><dd>${esc(c.nick)}</dd>`:""}${webRow(c)}
     ${isAi?"":similarRow(c)}
     <dt>Meriter</dt><dd>${c.h&&c.h.length?`<ul>${c.h.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"Inga större titlar"}</dd>
-    ${isAi?"":`<dt>Nästa match</dt><dd>${up.length?up.map(m=>`<div>${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"Spelas "+rangeTxt(m))} · ${esc(m.homeName)} – ${esc(m.awayName)}</div>`).join(""):dbState==="ready"?"Inga matcher i schemat":"Laddar schema…"}</dd>`}
+    ${isAi?"":`<dt>Nästa match</dt><dd>${up.length?`<ul class="nextlist">${up.map(m=>`<li><span class="nd">${esc(m.kickoff?shortDate(m.kickoff):rangeTxt(m))}</span>${m.kickoff?`<span class="nt">${esc(timeOf(m.kickoff))}</span>`:""}<span class="nm">${esc(m.homeName)} – ${esc(m.awayName)}</span></li>`).join("")}</ul>`:dbState==="ready"?"Inga matcher i schemat":"Laddar schema…"}</dd>`}
    </dl>
    ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">Matcher i ${esc(c.city)}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">Matcher i ${esc(c.city)}</button>`:"")+wishBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
      return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">Lagets matcher</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} Tabell</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>${favBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="Fler val">${more?"Färre":"⋯ Mer"}</button>`:""}</div>${more&&extra?`<div class="cmore">${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
@@ -1587,6 +1593,8 @@ function clubMyPills(c){if(myState!=="ready"||!C[c.id])return"";return(isFav(c.i
 function delBtn(kind,id,label){const k=kind+":"+id;return`<button class="link" data-mydel="${esc(k)}">${myConfirm[k]?"Tryck igen för att ta bort":label||"Ta bort"}</button>`;}
 // alltid "17 okt 2026": tre bokstäver för månaden, utan punkt
 const MON3=["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
+// "2 nov", med årtal bara om matchen inte spelas i år
+function shortDate(iso){const d=new Date(iso);return`${d.getDate()} ${MON3[d.getMonth()]}${d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():""}`;}
 const fmtDate=k=>{if(!k)return"";const[y,m,d]=String(k).split("-").map(Number);return y&&m&&d?`${d} ${MON3[m-1]} ${y}`:"";};
 
 let myYear="all";
