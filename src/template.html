@@ -1569,6 +1569,10 @@ function mutate(fn){myErr="";fn(MY);if(Array.isArray(MY.favs))MY.fav=MY.favs[0]|
 const ic=(n,c)=>`<svg class="ic${c?" "+c:""}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 const STAR=on=>ic("star",on?"on":""),OK=ic("check"),NO=ic("x");
 function toast(msg,icon){let el=document.getElementById("fkToast");if(!el){el=document.createElement("div");el.id="fkToast";el.setAttribute("role","status");document.body.appendChild(el);}el.innerHTML=(icon?ic(icon):"")+esc(msg);el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),3500);}
+// beta: visa JavaScript-fel som en ruta för moderatorer, så att fel på telefonen går att se
+const showErr=(m,st)=>{try{if(typeof isMod==="undefined"||!isMod)return;const at=String(st||"").split("\n").slice(0,3).map(x=>x.trim()).join(" ← ");toast("Fel: "+String(m||"okänt").slice(0,140)+(at?" · "+at.slice(0,160):""));clearTimeout(toast.t);toast.t=setTimeout(()=>{const el=document.getElementById("fkToast");if(el)el.classList.remove("on");},12000);}catch(x){}};
+window.addEventListener("error",e=>showErr(e.message,(e.error&&e.error.stack)||(e.lineno?"rad "+e.lineno+":"+e.colno:"")));
+window.addEventListener("unhandledrejection",e=>showErr(e.reason&&e.reason.message||e.reason,e.reason&&e.reason.stack));
 // "Borttaget · Ångra" i 10 sekunder efter att något tagits bort
 function undoToast(msg,undo,after){let el=document.getElementById("fkUndo");if(!el){el=document.createElement("div");el.id="fkUndo";el.setAttribute("role","status");document.body.appendChild(el);}
   if(undoToast.fin)undoToast.fin();clearTimeout(undoToast.t);
