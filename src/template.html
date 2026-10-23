@@ -389,6 +389,9 @@ button{touch-action:manipulation}
 .lgchk{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--muted);cursor:pointer}.lgchk input{margin-top:2px;accent-color:var(--accent);width:17px;height:17px;flex:none}.lgchk b{color:var(--fg)}
 .pill.cultp{background:color-mix(in srgb,#e8ad00 18%,var(--surface));color:color-mix(in srgb,#b07a00 85%,var(--fg))}.pill.cultp .ic{width:11px;height:11px;vertical-align:-1px}
 .remind .rmrow{display:flex;flex-direction:column;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}.remind .rmrow:first-of-type{border-top:0;padding-top:2px}.remind .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
+.actdot{position:absolute;top:2px;right:calc(50% - 22px);min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#d64545;color:#fff;font:700 10px/17px var(--f-body);text-align:center;box-sizing:border-box;pointer-events:none}
+#bnMore,.msi[data-bn="reportage"],#m-reportage{position:relative}.msi .actdot{right:8px;top:6px}#m-reportage .actdot{right:-6px;top:-6px}
+.actcard .actrow{font-size:14px;color:var(--muted);border-left:3px solid var(--accent-soft);padding-left:9px}.actcard .actrow b{color:var(--fg)}.actcard .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
 .selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.dsel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dsel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
@@ -2709,6 +2712,24 @@ const blobUrl=id=>"/_blob/"+id;
 function allReps(){const out=[];Object.entries(REP).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(r=>{if(r&&r.id&&r.title&&r.body)out.push({...r,uid,key:uid+":"+r.id,photos:(Array.isArray(r.photos)?r.photos:[]).filter(p=>typeof p==="string"&&PHID.test(p)).slice(0,REP_MAXPH)});});});
   return out.filter(r=>!HIDDEN.includes("rep:"+r.key)&&(!r.draft||r.uid===myId));}
 // kommentarer: var och en sparar sina egna i comments/{uid}.items = [{id, rep:"ägare:reportageId", body, at}]
+// ---------- nytt på mina reportage (kommentarer och gillningar sedan jag senast tittade) ----------
+var likesLoaded=false;
+function repActivity(){if(!myId||repState!=="ready"||!likesLoaded)return null;const mine=(REP[myId]&&Array.isArray(REP[myId].items)?REP[myId].items:[]).filter(r=>r&&r.id&&!r.draft).map(r=>({key:myId+":"+r.id,title:r.title}));
+  if(!mine.length)return null;const keys=new Set(mine.map(r=>r.key));
+  const likes={};Object.entries(LIKES).forEach(([uid,d])=>{if(uid===myId||!d||!Array.isArray(d.keys))return;d.keys.forEach(k=>{if(keys.has(k))likes[k]=(likes[k]||0)+1;});});
+  const coms=[];Object.entries(COMM).forEach(([uid,d])=>{if(uid===myId)return;(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&keys.has(c.rep)&&c.at)coms.push({...c,uid});});});
+  let seen=null;try{seen=JSON.parse(store.get("fk-repseen")||"null");}catch(e){}
+  if(!seen){seen={c:new Date().toISOString(),l:likes};try{store.set("fk-repseen",JSON.stringify(seen));}catch(e){}}
+  const newC=coms.filter(c=>String(c.at)>seen.c);let newL=0;Object.entries(likes).forEach(([k,n])=>{newL+=Math.max(0,n-((seen.l||{})[k]||0));});
+  return{newC,newL,likes,mine};}
+function repSeen(){const a=repActivity();if(!a)return;try{store.set("fk-repseen",JSON.stringify({c:new Date().toISOString(),l:a.likes}));}catch(e){}actBadge();}
+function actBadge(){const a=repActivity();const n=a?a.newC.length+a.newL:0;
+  for(const el of [document.getElementById("bnMore"),document.querySelector('.msi[data-bn="reportage"]'),document.getElementById("m-reportage")]){if(!el)continue;let d=el.querySelector(".actdot");
+    if(n&&!d){d=document.createElement("span");d.className="actdot";el.appendChild(d);}if(d){if(n)d.textContent=n>9?"9+":n;else d.remove();}}}
+function activityHtml(){const a=repActivity();if(!a||!(a.newC.length+a.newL))return"";
+  const parts=[a.newC.length?`${a.newC.length} ${a.newC.length===1?"ny kommentar":"nya kommentarer"}`:"",a.newL?`${a.newL} ${a.newL===1?"ny gillning":"nya gillningar"}`:""].filter(Boolean).join(" och ");
+  const last=a.newC.slice(-2).map(c=>`<div class="actrow"><b>${esc(who(c.uid))}</b> om <i>${esc((a.mine.find(r=>r.key===c.rep)||{}).title||"ditt reportage")}</i>: ${esc(String(c.body).slice(0,90))}${String(c.body).length>90?"…":""}</div>`).join("");
+  return`<article class="tip actcard"><div class="lbl">${ic("chat")} Nytt på dina reportage</div><p style="margin:0"><b>${parts}</b> sedan du senast tittade.</p>${last}<div class="actions"><button class="btn small primary" data-gomyrep="1">Visa mina reportage</button><button class="btn small" data-actseen="1">Markera som läst</button></div></article>`;}
 function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&c.id&&c.rep===key&&c.body&&!HIDDEN.includes("com:"+uid+":"+c.id))out.push({...c,uid});});});return out.sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
 function commentsHtml(r){const cs=commentsFor(r.key);
   return`<div class="rcomments"><h3 class="sec">Kommentarer${cs.length?` (${cs.length})`:""}</h3>
@@ -2855,7 +2876,7 @@ const isRepBtn=t=>t.id==="repNew"||t.id==="repCancel"||t.dataset.repsort||t.data
 async function repClick(t){
   if(t.id==="repNew"){startRepDraft();return;}
   if(t.id==="repCancel"){const d=repDraft;repDraft=null;repMsg="";renderReports();if(d)dropAssets(d.added);return;}
-  if(t.dataset.repsort){repSort=t.dataset.repsort;repPopOrder=null;renderReports();return;}
+  if(t.dataset.repsort){repSort=t.dataset.repsort;repPopOrder=null;if(repSort==="mina")repSeen();renderReports();return;}
   if(t.dataset.repclubclear){repClub=null;renderReports();return;}
   if(t.dataset.repclub){repClub=t.dataset.repclub;repSort="nya";repOpen=null;setMode("reportage");window.scrollTo({top:0});return;}
   if(t.dataset.repfrom){draftFromAtt(t.dataset.repfrom);return;}
@@ -2905,9 +2926,9 @@ document.addEventListener("submit",async e=>{if(e.target.id!=="repForm")return;e
 async function startReports(db){
   try{assetsNs=await window.claude?.use?.("assets")??null;}catch(e){assetsNs=null;}
   if(!db){repState="none";if(mode==="reportage")renderReports();return;}
-  db.collection("reports").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(repState==="ready"&&JSON.stringify(o)===JSON.stringify(REP))return;REP=o;repState="ready";if(mode==="reportage")renderReports();else if(mode==="hem")renderHome();else if(mode==="klubbar"&&openClub)renderClubs();},()=>{repState="none";if(mode==="reportage")renderReports();});
-  db.collection("likes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(JSON.stringify(o)===JSON.stringify(LIKES))return;LIKES=o;if(mode==="reportage")likesInPlace();else if(mode==="hem")renderHome();},()=>{});
-  db.collection("comments").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(JSON.stringify(o)===JSON.stringify(COMM))return;COMM=o;if(mode==="reportage")renderReports();},()=>{});}
+  db.collection("reports").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(repState==="ready"&&JSON.stringify(o)===JSON.stringify(REP))return;REP=o;setTimeout(actBadge,0);repState="ready";if(mode==="reportage")renderReports();else if(mode==="hem")renderHome();else if(mode==="klubbar"&&openClub)renderClubs();},()=>{repState="none";if(mode==="reportage")renderReports();});
+  db.collection("likes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(!likesLoaded){likesLoaded=true;LIKES=o;actBadge();if(mode==="reportage")likesInPlace();else if(mode==="hem")renderHome();return;}if(JSON.stringify(o)===JSON.stringify(LIKES))return;LIKES=o;actBadge();if(mode==="reportage")likesInPlace();else if(mode==="hem")renderHome();},()=>{});
+  db.collection("comments").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(JSON.stringify(o)===JSON.stringify(COMM))return;COMM=o;actBadge();if(mode==="hem")renderHome();if(mode==="reportage")renderReports();},()=>{});}
 
 // ---------- hem ----------
 let STATS={},statsState="loading",HYPE={},boardTab="matches",statsSig="",statsBusy=false,hypeBusy=false;
@@ -2982,9 +3003,11 @@ function remindHtml(){if(myState!=="ready"||!Array.isArray(MY.wishMatches))retur
     <div class="actions"><button class="btn small primary" data-wmdone="${esc(w.id)}">Ja, logga matchen</button><button class="btn small" data-wmno="${esc(w.id)}">Nej</button></div></div>`).join("")}</article>`;}
 function renderHome(){const el=document.getElementById("homeBody");if(!el)return;try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
   const ids=Object.keys(STATS).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="hem")renderHome();}).catch(()=>{});
-  el.innerHTML=onboardHtml()+remindHtml()+heroHtml()+mineSnap()+friendsHtml()+weekendHtml()+derbyHtml()+latestHtml()+pollHtml()+boardHtml()+hopperHtml()+topArenaHtml()+quizLeadHtml()+newsHtml();}
-const isHomeBtn=t=>t.dataset.wmno||t.dataset.vote!==undefined||t.dataset.wkr||t.dataset.gomode||(t.dataset.homeedit&&mode==="hem")||t.dataset.board||t.dataset.pub!==undefined||t.dataset.hype||t.dataset.homerep||t.dataset.homethread||t.dataset.gomine||t.dataset.goquiz||t.dataset.gorep;
+  el.innerHTML=onboardHtml()+remindHtml()+activityHtml()+heroHtml()+mineSnap()+friendsHtml()+weekendHtml()+derbyHtml()+latestHtml()+pollHtml()+boardHtml()+hopperHtml()+topArenaHtml()+quizLeadHtml()+newsHtml();}
+const isHomeBtn=t=>t.dataset.wmno||t.dataset.gomyrep||t.dataset.actseen||t.dataset.vote!==undefined||t.dataset.wkr||t.dataset.gomode||(t.dataset.homeedit&&mode==="hem")||t.dataset.board||t.dataset.pub!==undefined||t.dataset.hype||t.dataset.homerep||t.dataset.homethread||t.dataset.gomine||t.dataset.goquiz||t.dataset.gorep;
 async function homeClick(t){
+  if(t.dataset.gomyrep){repSort="mina";repPopOrder=null;repClub=null;repOpen=null;setMode("reportage");window.scrollTo({top:0});repSeen();return;}
+  if(t.dataset.actseen){repSeen();renderHome();return;}
   if(t.dataset.wmno){const id=t.dataset.wmno;let gone=[];mutate(d=>{gone=d.wishMatches.filter(w=>w.id===id);d.wishMatches=d.wishMatches.filter(w=>w.id!==id);});
     if(gone.length)undoToast("Borttagen från Vill gå",async()=>{mutate(d=>{d.wishMatches=putBack(d.wishMatches,gone);});});return;}
   if(t.dataset.gomode){setMode(t.dataset.gomode);window.scrollTo({top:0});return;}
