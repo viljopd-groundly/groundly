@@ -1149,7 +1149,7 @@ function teamSugg(){const inp=document.getElementById("teamIn"),box=document.get
   const hits=all.filter(c=>norm(c.n).startsWith(nq)).concat(all.filter(c=>!norm(c.n).startsWith(nq)&&clubHay(c).includes(nq))).slice(0,6);
   if(!hits.length||(teamId&&C[teamId]&&norm(C[teamId].n)===nq)){box.hidden=true;return;}
   box.innerHTML=hits.map(c=>`<button type="button" class="chip" data-teampick="${esc(c.id)}">${crest(c.id,c.n,20)}${esc(c.n)}${favStar(c.id)}</button>`).join("");box.hidden=false;}
-function pickTeam(id){teamId=id;store.set("fk-team",id);const inp=document.getElementById("teamIn");if(inp){inp.value=C[id].n;inp.blur();}document.getElementById("teamSug").hidden=true;renderTeamRes();}
+function pickTeam(id){teamId=id;delete LIM.tu;store.set("fk-team",id);const inp=document.getElementById("teamIn");if(inp){inp.value=C[id].n;inp.blur();}document.getElementById("teamSug").hidden=true;renderTeamRes();}
 document.addEventListener("input",e=>{if(e.target.id==="teamIn")teamSugg();});
 document.addEventListener("keydown",e=>{if(e.target.id!=="teamIn"||e.key!=="Enter")return;e.preventDefault();const b=document.querySelector("#teamSug [data-teampick]");if(b)pickTeam(b.dataset.teampick);});
 function renderTeamRes(){const el=document.getElementById("teamRes");if(!el)return;
@@ -1159,7 +1159,11 @@ function renderTeamRes(){const el=document.getElementById("teamRes");if(!el)retu
   const home=ms.filter(m=>m.home===teamId).length;const up=ms.filter(m=>!(m.kickoff&&Date.parse(m.kickoff)<now-2*36e5));const played=ms.length-up.length;
   let h=`<div class="teamhead">${crest(c.id,c.n,40)}<div><b>${esc(c.n)}</b><div class="meta">${ms.length} ${ms.length===1?"match":"matcher"} i schemat · ${home} hemma · ${ms.length-home} borta${played?` · ${played} spelade`:""}</div></div></div>`;
   if(!ms.length){el.innerHTML=h+`<div class="empty"><b>Inga matcher i schemat för ${esc(c.n)} än.</b><div>Schemat täcker hela säsongen i Premier League, Championship, La Liga, Serie A, Bundesliga, 2. Bundesliga, 3. Liga, Ligue 1, Eredivisie och portugisiska ligan, plus Allsvenskan, Superettan, MLS och Champions League fram till början av november. Fler serier och cuper kommer med matchdata från API-Football.</div></div>`;return;}
-  let last="";for(const m of ms){const k=m.kickoff?dayKey(new Date(m.kickoff)):(m.dateFrom&&m.dateFrom===m.dateTo?m.dateFrom:"tbd");if(k!==last){h+=`<h3 class="sec">${k==="tbd"?"Datum ej klart":esc(dayLong(k))}</h3>`;last=k;}h+=matchRow(m,now,-1);}
+  // spelade matcher döljs bakom en knapp, kommande visas 5 i taget
+  const pastL=ms.filter(m=>!up.includes(m)),showPast=!!LIM["tp:"+teamId];
+  const rows=list=>{let last="",o="";for(const m of list){const k=m.kickoff?dayKey(new Date(m.kickoff)):(m.dateFrom&&m.dateFrom===m.dateTo?m.dateFrom:"tbd");if(k!==last){o+=`<h3 class="sec">${k==="tbd"?"Datum ej klart":esc(dayLong(k))}</h3>`;last=k;}o+=matchRow(m,now,-1);}return o;};
+  if(pastL.length)h+=`<div class="morerow"><button class="btn small" ${showPast?`data-limless="tp:${esc(teamId)}">Dölj tidigare matcher`:`data-limmore="tp:${esc(teamId)}" data-limbase="1">Visa tidigare matcher (${pastL.length})`}</button></div>`+(showPast?rows(pastL):"");
+  h+=up.length?rows(up.slice(0,lim("tu",5)))+limBtns("tu",up.length,5,"Visa fler kommande"):`<p class="hint">Inga fler matcher i schemat just nu.</p>`;
   h+=ms.some(m=>m.src==="openfootball")?`<p class="hint">Säsongen kommer från öppen data (openfootball). Matcher kan flyttas, och tider som inte är spikade visas som "tid ej klar". Kontrollera alltid hos klubben innan du bokar resa.</p>`:`<p class="hint">Schemat för den här serien täcker just nu matcher fram till början av november.</p>`;
   el.innerHTML=h;}
 function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36e5;
@@ -1261,11 +1265,11 @@ function legStart(){if(legState!=="idle"||!dbNs)return;legState="loading";
 function legHtml(id){const c=C[id];const list=legAll(id).map(x=>({...x,v:legVotes(x.key)})).sort((a,b)=>b.v-a.v||String(a.at).localeCompare(String(b.at)));
   const mine=LEGV[myId]&&Array.isArray(LEGV[myId].keys)?LEGV[myId].keys:[];const can=!!(dbNs&&myId);
   const items=legState!=="ready"?`<p class="meta">${legState==="none"?"Legenderna kunde inte hämtas.":"Hämtar legender…"}</p>`:!list.length?`<p class="meta">Inga legender för ${esc(c.n)} än. Vem borde stå här? Lägg till den första!</p>`
-   :list.map(x=>`<div class="lgd"><div class="lgdh"><b>${esc(x.name)}</b><span class="pill sm">${esc(LEG_ROLE[x.role]||"Spelare")}</span>${x.cult?`<span class="pill sm cultp">${ic("flame")} Kultspelare</span>`:""}${x.years?`<span class="meta">${esc(x.years)}</span>`:""}</div>
+   :list.slice(0,lim("leg:"+id,5)).map(x=>`<div class="lgd"><div class="lgdh"><b>${esc(x.name)}</b><span class="pill sm">${esc(LEG_ROLE[x.role]||"Spelare")}</span>${x.cult?`<span class="pill sm cultp">${ic("flame")} Kultspelare</span>`:""}${x.years?`<span class="meta">${esc(x.years)}</span>`:""}</div>
       ${x.text?`<div class="lgdt">${esc(x.text)}</div>`:""}
       <div class="lgdf"><span class="meta">Tillagd av ${esc(who(x.uid))}</span>
         ${can?`<button class="mini" data-legvote="${esc(x.key)}" aria-pressed="${mine.includes(x.key)}">${ic("heart",mine.includes(x.key)?"on":"")} ${mine.includes(x.key)?"Håller med":"Håller med"}${x.v?` (${x.v})`:""}</button>`:x.v?`<span class="meta">${ic("heart")} ${x.v}</span>`:""}
-        ${x.uid===myId?`<button class="link" data-legdel="${esc(x.id)}">Ta bort</button>`:isMod?`<button class="link" data-leghide="${esc(x.key)}">Dölj</button>`:""}</div></div>`).join("");
+        ${x.uid===myId?`<button class="link" data-legdel="${esc(x.id)}">Ta bort</button>`:isMod?`<button class="link" data-leghide="${esc(x.key)}">Dölj</button>`:""}</div></div>`).join("")+limBtns("leg:"+id,list.length,5);
   const form=can&&!legAdding?`<div class="legform"><button class="btn small primary" data-legadd="1">+ Lägg till en legend</button></div>`:can?`<form class="legform" id="legForm" data-legfor="${esc(id)}"><h3 class="sec">Lägg till en legend</h3>
       <label class="fld">Namn<input name="n" maxlength="60" required placeholder="t.ex. ${isNat(c)?"Zlatan Ibrahimović":"spelarens eller tränarens namn"}"></label>
       <div class="legrow"><label class="fld">Roll<select name="r"><option value="p">Spelare</option><option value="t">Tränare</option><option value="b">Spelare och tränare</option></select></label>
@@ -1377,7 +1381,7 @@ function renderTips0(){
     .map(([k,l])=>`<button class="chip" data-tips="${k}" aria-pressed="${tipsTab===k}">${l}</button>`).join("");
   const el=document.getElementById("tipsList");
   if(tipsTab==="derby"){
-    el.innerHTML=TIPS.derbies.map(([id,name,ids,where,why])=>{const nm=dbState==="ready"?nextMeeting(ids):null;
+    el.innerHTML=TIPS.derbies.slice(0,lim("tdy",10)).map(([id,name,ids,where,why])=>{const nm=dbState==="ready"?nextMeeting(ids):null;
       const sep=ids.length===2?`<span class="vs">mot</span>`:`<span class="vs">·</span>`;
       return`<article class="tip tipx"${tipBand(ids)}>
         <div class="tip-head"><h2 class="name">${esc(name)}</h2><span class="meta">${esc(where)}</span></div>
@@ -1385,18 +1389,18 @@ function renderTips0(){
         <p>${esc(why)}</p>
         ${nm?nextBox("Nästa möte",nm,`${esc(nm.homeName)} – ${esc(nm.awayName)}`):`<div class="next">${dbState==="ready"?"Inget möte i det inlagda schemat just nu.":"Laddar schema…"}</div>`}
         ${tipFeedback("derby",id,null)}
-      </article>`;}).join("");
+      </article>`;}).join("")+limBtns("tdy",TIPS.derbies.length,10);
   }else if(tipsTab==="arenas"){
-    el.innerHTML=(TIPS.arenas||[]).map(([id,why])=>{const c=C[id];if(!c||!c.s)return"";const k=arenaKey(c.s);const ax=arenas().find(x=>x.k===k);const sharers=ax?ax.clubs:[c];const sf=surfaceOf(c);const visited=myState==="ready"&&visitedStadiums().has(c.s);
+    el.innerHTML=(TIPS.arenas||[]).slice(0,lim("tar",10)).map(([id,why])=>{const c=C[id];if(!c||!c.s)return"";const k=arenaKey(c.s);const ax=arenas().find(x=>x.k===k);const sharers=ax?ax.clubs:[c];const sf=surfaceOf(c);const visited=myState==="ready"&&visitedStadiums().has(c.s);
       return`<article class="tip tipx"${tipBand(sharers.map(o=>o.id))}><div class="tip-head"><h2 class="name">${esc(c.s)}</h2><span class="meta">${esc([c.city,c.c].join(", "))}</span></div>
         <div class="teams">${sharers.map(o=>`<button data-open="${esc(o.id)}">${crest(o.id,o.n,22)}${esc(o.n)}${favStar(o.id)}</button>`).join('<span class="vs">·</span>')}</div>
         <div class="mp">${c.cap?`<span class="pill">${fmtCap(c.cap)} platser</span>`:""}${sf?`<span class="pill">${esc(SURF_LBL[sf.v])}</span>`:""}${visited?`<span class="pill t1">Besökt ${OK}</span>`:""}</div>
         <p>${esc(why)}</p>
-        <div class="actions">${extLink(mapsDir(c.s,c.city),"Hitta hit","btn small")}${extLink(bookingUrl(c.s,c.city),adLabel("Hotell"),"btn small")}<button class="btn small" data-teamview="${esc(c.id)}">Kommande matcher</button></div>${tipFeedback("arena",id,c.id)}</article>`;}).join("");
+        <div class="actions">${extLink(mapsDir(c.s,c.city),"Hitta hit","btn small")}${extLink(bookingUrl(c.s,c.city),adLabel("Hotell"),"btn small")}<button class="btn small" data-teamview="${esc(c.id)}">Kommande matcher</button></div>${tipFeedback("arena",id,c.id)}</article>`;}).join("")+limBtns("tar",(TIPS.arenas||[]).length,10);
   }else if(tipsTab==="quiz"){el.innerHTML=renderQuiz();
   }else if(tipsTab==="top"){el.innerHTML=renderTopRated();
   }else{
-    el.innerHTML=TIPS.cult.map(([id,why])=>{const c=C[id];if(!c)return"";const up=dbState==="ready"?upcomingFor(id)[0]:null;
+    el.innerHTML=TIPS.cult.slice(0,lim("tcu",10)).map(([id,why])=>{const c=C[id];if(!c)return"";const up=dbState==="ready"?upcomingFor(id)[0]:null;
       return`<article class="tip tipx"${tipBand([id])}>
         <div class="tip-head tiph-c">${crest(id,c.n,40)}<div><h2 class="name">${esc(c.n)}</h2><span class="meta">${esc([c.city,c.c].join(", "))}${c.f?` · grundad ${c.f}`:""}</span></div></div>
         <div class="mp">${c.l?tierPill(c.t,c.l):""}${c.s?`<span class="pill">${esc(c.s)}</span>`:""}</div>
@@ -1404,7 +1408,7 @@ function renderTips0(){
         ${up?nextBox("Nästa match",up,`${esc(up.homeName)} – ${esc(up.awayName)}`):""}
         <div class="actions"><button class="btn small" data-open="${esc(id)}">Visa klubbfakta</button>${GEO[c.city]?`<button class="btn small primary" data-near="${esc(c.city)}">Matcher inom 5 mil</button>`:""}</div>
         ${tipFeedback("cult",id,id)}
-      </article>`;}).join("");}
+      </article>`;}).join("")+limBtns("tcu",TIPS.cult.length,10);}
 }
 
 // ---------- forum ----------
@@ -1453,7 +1457,7 @@ function renderForum(namesOnly){
   threads.sort((a,b)=>last(b).localeCompare(last(a)));
   const ids=[...new Set(posts.map(p=>p.uid))];if(!namesOnly)resolveNames(ids);
   if(!threads.length){el.innerHTML=`<div class="empty"><b>${posts.length?"Inga inlägg i den här kategorin än.":"Forumet är tomt än så länge."}</b><div>Ställ en fråga om en arena, tipsa om ett derby värt resan eller en klubb med speciell stämning.</div></div>`;return;}
-  el.innerHTML=threads.map(t=>{const rs=(replies[t.key]||[]).sort((a,b)=>a.at.localeCompare(b.at));const open=openThread===t.key;
+  el.innerHTML=threads.filter((t,i)=>i<lim("fo",10)||t.key===openThread).map(t=>{const rs=(replies[t.key]||[]).sort((a,b)=>a.at.localeCompare(b.at));const open=openThread===t.key;
     return`<article class="thread${open?" open":""}">
       <button class="thead" data-thread="${esc(t.key)}" aria-expanded="${open}">
         <span class="pill ${t.kind==="fraga"?"t2":t.kind==="derby"?"ec":t.kind==="tillg"?"t3":"t1"}">${esc(KIND_L[t.kind]||"Inlägg")}</span>
@@ -1463,7 +1467,7 @@ function renderForum(namesOnly){
       ${open?`<div class="tbody">${postHtml(t,false)}${rs.map(r=>postHtml(r,true)).join("")}
         ${myId&&canPost!==false?`<form class="replyForm" data-replyto="${esc(t.key)}"><label class="fld" for="r-${esc(t.key)}">Svara<textarea id="r-${esc(t.key)}" maxlength="2000" rows="2" required>${esc(replyDraft[t.key]||"")}</textarea></label><div class="actions"><button class="btn small primary" type="submit"${writeBusy?" disabled":""}>Skicka svar</button></div></form>`:""}
       </div>`:""}
-    </article>`;}).join("");}
+    </article>`;}).join("")+limBtns("fo",threads.length,10);}
 
 // skrivningar: en i taget till det egna dokumentet
 async function writeMine(fn){if(!dbNs||!myId||writeBusy)return false;writeBusy=true;forumMsg="";
@@ -1632,20 +1636,20 @@ function renderMine(){
   }else if(mySub==="wish"){
     const wm=MY.wishMatches.slice().sort((a,b)=>(a.kickoff||a.dateFrom||"").localeCompare(b.kickoff||b.dateFrom||""));const now=Date.now();
     h+=`<h3 class="sec">Matcher jag vill gå på</h3>`;
-    h+=wm.length?wm.map(w=>{const past=w.kickoff&&Date.parse(w.kickoff)<now;const when=w.kickoff?`${dayLong(dayKey(new Date(w.kickoff)))} kl ${timeOf(w.kickoff)}`:w.dateFrom?`spelas ${rangeTxt(w)}`:"";
+    h+=wm.length?wm.slice(0,lim("wm",3)).map(w=>{const past=w.kickoff&&Date.parse(w.kickoff)<now;const when=w.kickoff?`${dayLong(dayKey(new Date(w.kickoff)))} kl ${timeOf(w.kickoff)}`:w.dateFrom?`spelas ${rangeTxt(w)}`:"";
       return`<div class="mrow"><div class="mdate">${esc(w.kickoff?fmtDate(dayKey(new Date(w.kickoff))):w.dateFrom?rangeTxt(w):"")}</div><div class="mmain">
       <div class="teams">${w.home&&C[w.home]?`<button data-open="${esc(w.home)}">${esc(w.homeName)}</button>`:esc(w.homeName)}<span class="vs">–</span>${w.away&&C[w.away]?`<button data-open="${esc(w.away)}">${esc(w.awayName)}</button>`:esc(w.awayName)}</div>
       <div class="venue">${esc(when)} · ${esc([w.venue,w.city].filter(Boolean).join(", "))}</div>
-      <div class="pactions">${past?`<button class="link strong" data-wmdone="${esc(w.id)}">Matchen är spelad. Var du där?</button>`:calLinks(w)+(w.home&&C[w.home]&&C[w.home].tix?`<a class="link strong" href="${esc(C[w.home].tix)}" target="_blank" rel="noopener">Biljetter</a>`:"")+hotelLink(w,"link")}${delBtn("wm",w.id)}</div></div></div>`;}).join("")
+      <div class="pactions">${past?`<button class="link strong" data-wmdone="${esc(w.id)}">Matchen är spelad. Var du där?</button>`:calLinks(w)+(w.home&&C[w.home]&&C[w.home].tix?`<a class="link strong" href="${esc(C[w.home].tix)}" target="_blank" rel="noopener">Biljetter</a>`:"")+hotelLink(w,"link")}${delBtn("wm",w.id)}</div></div></div>`;}).join("")+limBtns("wm",wm.length,3)
      :`<div class="empty">Tryck <b>Vill gå</b> på en kommande match under Matcher för att spara den här.</div>`;
     h+=`<h3 class="sec">Klubbar jag vill besöka</h3>`;
     const wc=MY.wishClubs.filter(id=>C[id]&&!isNat(C[id]));const wn=MY.wishClubs.filter(id=>C[id]&&isNat(C[id]));
-    h+=wc.length?`<div class="clist">${wc.map(id=>{const c=C[id];const up=dbState==="ready"?upcomingFor(id).find(m=>m.home===id):null;return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${esc(c.n)}</button>
+    h+=wc.length?`<div class="clist">${wc.slice(0,lim("wc",3)).map(id=>{const c=C[id];const up=dbState==="ready"?upcomingFor(id).find(m=>m.home===id):null;return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${esc(c.n)}</button>
       <div class="venue">${esc([c.s,c.city,c.c].filter(Boolean).join(" · "))}</div>
       <div class="venue">${up?`Nästa hemmamatch: ${esc(up.kickoff?dayLabel(dayKey(new Date(up.kickoff)))+" "+timeOf(up.kickoff):rangeTxt(up))} mot ${esc(up.awayName)}`:"Ingen hemmamatch i det inlagda schemat"}</div>
-      <div class="pactions">${GEO[c.city]?`<button class="link" data-near="${esc(c.city)}">Matcher inom 5 mil</button>`:""}${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>`
+      <div class="pactions">${GEO[c.city]?`<button class="link" data-near="${esc(c.city)}">Matcher inom 5 mil</button>`:""}${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>${limBtns("wc",wc.length,3)}`
      :`<div class="empty">Tryck <b>Vill besöka</b> på ett klubbkort, eller lägg till en klubb här nedanför.</div>`;
-    h+=`<h3 class="sec">Landslag jag vill se</h3>`+(wn.length?`<div class="clist">${wn.map(id=>{const c=C[id];return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${crest(id,c.n,22)}${esc(c.n)}${favStar(id)}</button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}</div><div class="pactions">${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>`:`<div class="empty">Tryck <b>Vill besöka</b> på ett landslag under fliken Landslag.</div>`);
+    h+=`<h3 class="sec">Landslag jag vill se</h3>`+(wn.length?`<div class="clist">${wn.slice(0,lim("wn",3)).map(id=>{const c=C[id];return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${crest(id,c.n,22)}${esc(c.n)}${favStar(id)}</button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}</div><div class="pactions">${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>${limBtns("wn",wn.length,3)}`:`<div class="empty">Tryck <b>Vill besöka</b> på ett landslag under fliken Landslag.</div>`);
     h+=addClubRow("wishClubAdd","Lägg till på önskelistan");
   }else if(mySub==="teams"){h+=renderSeenTeams();}else if(mySub==="pass"){h+=renderPass();}else{h+=renderChallenges();}
   el.innerHTML=h;afterMine();}
@@ -1677,6 +1681,14 @@ function myClick(t){
     if(gone&&(!Array.isArray(gone)||gone.length))undoToast(kind==="att"?"Matchen togs bort":kind==="vis"?"Besöket togs bort":"Borttaget från önskelistan",async()=>{
       mutate(d=>{if(kind==="att")d.attended=putBack(d.attended,gone);if(kind==="vis")d.visited[id]=gone;if(kind==="wm")d.wishMatches=putBack(d.wishMatches,gone);if(kind==="wc"&&!d.wishClubs.includes(id))d.wishClubs=[...d.wishClubs,id];});});return;}
 }
+// ---------- "Visa fler" för långa listor ----------
+const LIM={};const lim=(k,base)=>LIM[k]||base;
+function limBtns(k,total,base,more,less){const n=lim(k,base);if(total<=base)return"";
+  return`<div class="morerow">${n<total?`<button class="btn small" data-limmore="${esc(k)}" data-limbase="${base}">${more||"Visa fler"} (${total-n} till)</button>`:""}${n>base?`<button class="btn small" data-limless="${esc(k)}">${less||"Visa färre"}</button>`:""}</div>`;}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-limmore],[data-limless]");if(!t)return;
+  const k=t.dataset.limmore||t.dataset.limless;if(t.dataset.limmore){const b=+t.dataset.limbase||5;LIM[k]=lim(k,b)+Math.max(b,10);}else delete LIM[k];
+  if(k.startsWith("leg"))legRender();else if(k.startsWith("com:"))renderReports(true);else render();
+  if(t.dataset.limless){const card=document.querySelector(`[data-limhead="${CSS.escape(k)}"]`);if(card)card.scrollIntoView({block:"start"});}});
 // "Varit på": visa 3 i taget per lista
 const MYMORE={att:3,vis:3,nt:3};
 function moreBtns(k,total){const n=MYMORE[k];if(total<=3)return"";
@@ -2023,7 +2035,7 @@ function prepBlock(c){if(!c.s)return"";const pubs=pubList(c);const seed=SEEDMAP.
    <div class="actions">${extLink(bookingUrl(c.s,c.city),adLabel("Hotell nära arenan"),"btn small primary")}${extLink(mapsSearch(`pub nära ${c.s}, ${c.city}`),"Pubar på kartan","btn small")}${extLink(mapsDir(c.s,c.city),"Hitta till arenan","btn small")}${extLink(transitUrl("",placeStr(c.s,c.city)),"Kollektivt till arenan","btn small")}</div>${homeRow(c)}
    <h4>Pubtips före match</h4>
    ${seed&&seed.note?`<p class="notice">${esc(seed.note)}</p>`:""}
-   ${pubs.length?`<div class="pubs">${pubs.map(pubItem).join("")}</div>`:`<p class="meta">Inga pubtips än. Vet du var man tar en öl före match här?</p>`}
+   ${pubs.length?`<div class="pubs">${pubs.slice(0,lim("pub:"+c.id,5)).map(pubItem).join("")}</div>${limBtns("pub:"+c.id,pubs.length,5)}`:`<p class="meta">Inga pubtips än. Vet du var man tar en öl före match här?</p>`}
    ${seed?`<p class="hint">Redaktionens tips bygger på ${extLink(seed.url,esc(seed.src),"")}. Kontrollera öppettider och regler för bortafans inför besöket.</p>`:""}
    ${pubMsg&&pubOpen===c.id?`<p class="err">${esc(pubMsg)}</p>`:""}
    ${pubOpen===c.id?pubFormHtml(c):canTip?`<div><button class="btn small" data-pubadd="${esc(c.id)}">+ Tipsa om en pub</button></div>`:""}
@@ -2297,12 +2309,12 @@ function renderSeenTeams(){const all=seenTeams();const nClub=all.filter(t=>!t.na
     <div class="selrow">${filt}${sfilt}</div>${lfilt?`<div class="selrow">${lfilt}</div>`:""}`;
   if(!all.length)return h+`<div class="empty">Här samlas alla lag du sett, både hemma- och bortalag. Lägg till matcher under <b>Varit på</b> så fylls listan på.</div>`;
   if(!list.length)return h+`<div class="empty">${stKind==="landslag"?"Du har inte sparat någon landskamp än.":"Inga klubblag sparade än."}</div>`;
-  return h+`<p class="hint">${list.length} lag · tryck på ett lag för att se matcherna</p><div class="clist">${list.map(t=>{const open=stOpen===t.k;return`<div class="citem steam${open?" open":""}"><button class="sthead" data-stteam="${esc(t.k)}" aria-expanded="${open}"><span class="crow">${t.id?crest(t.id,t.name,32):`<span class="crest" style="--c1:var(--bg);--c2:var(--line);width:32px;height:32px;font-size:11px;color:var(--muted)">${esc(crestInitials(t.name))}</span>`}<span class="mmain">
+  return h+`<p class="hint">${list.length} lag · tryck på ett lag för att se matcherna</p><div class="clist">${list.filter((t,i)=>i<lim("st",5)||t.k===stOpen).map(t=>{const open=stOpen===t.k;return`<div class="citem steam${open?" open":""}"><button class="sthead" data-stteam="${esc(t.k)}" aria-expanded="${open}"><span class="crow">${t.id?crest(t.id,t.name,32):`<span class="crest" style="--c1:var(--bg);--c2:var(--line);width:32px;height:32px;font-size:11px;color:var(--muted)">${esc(crestInitials(t.name))}</span>`}<span class="mmain">
     <b class="stname">${esc(t.name)}${t.id?favStar(t.id):""}</b>
     <span class="venue">${t.nat?"Landslag · ":""}${t.home} hemma · ${t.away} borta${t.w+t.d+t.l?` · V ${t.w} · O ${t.d} · F ${t.l}`:""}</span>
     <span class="venue">${t.n===1?`Sett <span class="nw">${esc(fmtDate(t.last))}</span>`:`Först <span class="nw">${esc(fmtDate(t.first))}</span> · senast <span class="nw">${esc(fmtDate(t.last))}</span>`}</span></span></span>
     <span class="stn"><b>${t.n}</b><span>${t.n===1?"match":"matcher"}</span></span></button>
-    ${open?`${seenRowsHtml(t.games)}${t.id?`<div class="actions"><button class="btn small" data-open="${esc(t.id)}">Visa ${t.nat?"landslaget":"klubben"}</button></div>`:""}`:""}</div>`;}).join("")}</div>`;}
+    ${open?`${seenRowsHtml(t.games)}${t.id?`<div class="actions"><button class="btn small" data-open="${esc(t.id)}">Visa ${t.nat?"landslaget":"klubben"}</button></div>`:""}`:""}</div>`;}).join("")}</div>${limBtns("st",list.length,5)}`;}
 // ---------- favoritlag ----------
 let favOnly=false,favAdd=false,natEdit=false;
 const scoreOf=a=>{const m=/(\d+)\s*[–—-]\s*(\d+)/.exec(a.score||"");return m?[+m[1],+m[2]]:null;};
@@ -2739,9 +2751,10 @@ function activityHtml(){const a=repActivity();if(!a||!(a.newC.length+a.newL))ret
   const last=a.newC.slice(-2).map(c=>`<div class="actrow"><b>${esc(who(c.uid))}</b> om <i>${esc((a.mine.find(r=>r.key===c.rep)||{}).title||"ditt reportage")}</i>: ${esc(String(c.body).slice(0,90))}${String(c.body).length>90?"…":""}</div>`).join("");
   return`<article class="tip actcard"><div class="lbl">${ic("chat")} Nytt på dina reportage</div><p style="margin:0"><b>${parts}</b> sedan du senast tittade.</p>${last}<div class="actions"><button class="btn small primary" data-gomyrep="1">Visa mina reportage</button><button class="btn small" data-actseen="1">Markera som läst</button></div></article>`;}
 function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&c.id&&c.rep===key&&c.body&&!HIDDEN.includes("com:"+uid+":"+c.id))out.push({...c,uid});});});return out.sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
-function commentsHtml(r){const cs=commentsFor(r.key);
+function commentsHtml(r){const cs=commentsFor(r.key);const ck="com:"+r.key,cn=lim(ck,3);
   return`<div class="rcomments"><h3 class="sec">Kommentarer${cs.length?` (${cs.length})`:""}</h3>
-    ${cs.map(c=>`<div class="rcom"><div class="rcomh"><b>${esc(who(c.uid))}</b> <span class="meta">· ${esc(ago(c.at))}</span>${c.uid===myId?`<button class="link" data-rcdel="${esc(c.id)}">Ta bort</button>`:isMod?`<button class="link" data-rchide="${esc(c.uid+":"+c.id)}">Dölj</button>`:""}</div><div class="rcomb">${esc(c.body)}</div></div>`).join("")||`<p class="meta">Inga kommentarer än.</p>`}
+    ${cs.length>3?`<div class="morerow">${cn<cs.length?`<button class="btn small" data-limmore="${esc(ck)}" data-limbase="3">Visa tidigare kommentarer (${cs.length-cn})</button>`:`<button class="btn small" data-limless="${esc(ck)}">Visa färre</button>`}</div>`:""}
+    ${cs.slice(-cn).map(c=>`<div class="rcom"><div class="rcomh"><b>${esc(who(c.uid))}</b> <span class="meta">· ${esc(ago(c.at))}</span>${c.uid===myId?`<button class="link" data-rcdel="${esc(c.id)}">Ta bort</button>`:isMod?`<button class="link" data-rchide="${esc(c.uid+":"+c.id)}">Dölj</button>`:""}</div><div class="rcomb">${esc(c.body)}</div></div>`).join("")||`<p class="meta">Inga kommentarer än.</p>`}
     ${canWriteRep()?`<form class="rcform" data-rcform="${esc(r.key)}"><textarea name="b" maxlength="600" rows="2" placeholder="Skriv en kommentar…" aria-label="Skriv en kommentar" required></textarea><button class="btn small primary" type="submit"${commBusy?" disabled":""}>Skicka</button></form>`:`<button class="btn small" data-glogin>Logga in för att kommentera</button>`}</div>`;}
 async function writeComments(fn){if(!dbNs||!myId||commBusy)return false;commBusy=true;
   const cur=COMM[myId]&&Array.isArray(COMM[myId].items)?COMM[myId].items:[];const next=fn(cur.slice()).slice(-300);
@@ -2824,7 +2837,7 @@ function renderReports(namesOnly){
     reps.sort((a,b)=>(repPopOrder.get(a.key)??-1)-(repPopOrder.get(b.key)??-1)||b.at.localeCompare(a.at));}
   else reps.sort((a,b)=>String(b.at).localeCompare(String(a.at)));
   if(!reps.length){el.innerHTML=`<div class="empty"><b>${repSort==="mina"?"Du har inte skrivit något reportage än.":repClub?"Inga reportage om den här klubben än.":"Inga reportage än."}</b><div>Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna. Lägg gärna till bilder.</div></div>`;return;}
-  el.innerHTML=reps.map(r=>{const c=r.club&&C[r.club];const open=repOpen===r.key;const n=likeCount(r.key);const mine=r.uid===myId;
+  el.innerHTML=reps.filter((r,i)=>i<lim("rp",5)||r.key===repOpen).map(r=>{const c=r.club&&C[r.club];const open=repOpen===r.key;const n=likeCount(r.key);const mine=r.uid===myId;
     const meta=[r.match&&r.result?`${String(r.match).slice(0,100)} ${String(r.result).slice(0,12)}`:c?c.n:"",r.city,repDateTxt(r.date)].filter(Boolean).join(" · ");
     return`<article class="rep${open?" open":""}">
       <button class="rhead" data-rep="${esc(r.key)}" aria-expanded="${open}">
@@ -2845,7 +2858,7 @@ function renderReports(namesOnly){
         ${mine||isMod?`<div class="pactions">${mine?`<button class="link" data-repedit="${esc(r.id)}">Redigera</button><button class="link" data-repdel="${esc(r.id)}">Ta bort</button>`:""}${isMod&&!mine?`<button class="link" data-rephide="${esc(r.key)}">Dölj</button>`:""}</div>`:""}
         ${commentsHtml(r)}
       </div>`:""}
-    </article>`;}).join("");
+    </article>`;}).join("")+limBtns("rp",reps.length,5);
   keepAll.forEach(([key,v])=>{const t=el.querySelector(`[data-rcform="${CSS.escape(key)}"] textarea`);if(t)t.value=v;});
   if(keep){const t=el.querySelector(`[data-rcform="${CSS.escape(keep.k)}"] textarea`);if(t){t.focus({preventScroll:true});try{t.setSelectionRange(keep.s,keep.s);}catch(e){}}}}
 
