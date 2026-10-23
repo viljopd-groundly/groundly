@@ -5,6 +5,9 @@
 import json, os, re, math
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 W = json.load(open(os.path.join(ROOT, "tools", "teams_world.json"), encoding="utf8"))
+# andra vågen (Europa och Mexiko) hämtades till en egen fil
+_w2 = os.path.join(ROOT, "tools", "teams_world2.json")
+if os.path.exists(_w2): W["countries"] += json.load(open(_w2, encoding="utf8"))["countries"]
 
 # API-land + API-liga -> (vårt land, vårt liganamn, nivå, id-prefix)
 LEAGUES = {
@@ -337,6 +340,120 @@ GEO = {
 }
 
 
+# ======== andra vågen: Europa och Mexiko ========
+LEAGUES.update({
+ ("Austria", "Bundesliga"): ("Österrike", "Bundesliga (Österrike)", 1, "at"),
+ ("Switzerland", "Super League"): ("Schweiz", "Super League (Schweiz)", 1, "ch"),
+ ("Czech-Republic", "Czech Liga"): ("Tjeckien", "Chance Liga", 1, "cz"),
+ ("Turkey", "Süper Lig"): ("Turkiet", "Süper Lig", 1, "tr"),
+ ("Greece", "Super League 1"): ("Grekland", "Super League (Grekland)", 1, "gr"),
+ ("Croatia", "HNL"): ("Kroatien", "HNL", 1, "hr"),
+ ("Serbia", "Super Liga"): ("Serbien", "Superliga (Serbien)", 1, "rs"),
+ ("Hungary", "NB I"): ("Ungern", "NB I", 1, "hu"),
+ ("Ireland", "Premier Division"): ("Irland", "Premier Division (Irland)", 1, "ie"),
+ ("Mexico", "Liga MX"): ("Mexiko", "Liga MX", 1, "mx"),
+})
+EXISTING.update({571: "rbs", 1026: "ask", 560: "sla", 3714: "boh", 549: "bjk", 611: "fen", 645: "gal", 553: "oly", 575: "aek"})
+T.update({
+ # Österrike
+ 601: ["Austria Wien", "Wien", "Die Veilchen", "austria vienna fk austria", {}], 618: ["SCR Altach", "Altach", "", "rheindorf altach", {}],
+ 637: ["Sturm Graz", "Graz", "Die Blackies", "sk sturm", {}], 781: ["Rapid Wien", "Wien", "Grün-Weiße", "rapid vienna sk rapid", {}],
+ 1025: ["Wolfsberger AC", "Wolfsberg", "WAC", "", {}], 1028: ["SV Ried", "Ried im Innkreis", "", "ried", {}],
+ 1072: ["TSV Hartberg", "Hartberg", "", "hartberg", {}], 1398: ["WSG Tirol", "Innsbruck", "", "wsg wattens", {}],
+ 1399: ["Austria Lustenau", "Bregenz", "", "lustenau", {}], 4256: ["Grazer AK", "Graz", "GAK", "", {}],
+ # Schweiz och Liechtenstein
+ 551: ["FC Basel", "Basel", "Rotblau", "basel 1893", {}], 565: ["Young Boys", "Bern", "YB", "bsc young boys", {}],
+ 606: ["FC Lugano", "Lugano", "Bianconeri", "lugano", {}], 630: ["FC Sion", "Sion", "", "sion sitten", {}],
+ 644: ["FC Luzern", "Luzern", "", "luzern", {}], 660: ["FC Vaduz", "Vaduz", "", "vaduz", {"land": "Liechtenstein"}],
+ 783: ["FC Zürich", "Zürich", "FCZ", "fc zurich", {}], 1011: ["FC St. Gallen", "St. Gallen", "Espen", "st gallen", {}],
+ 1012: ["FC Thun", "Thun", "", "thun", {}], 1013: ["Grasshoppers", "Zürich", "GC", "grasshopper club zurich", {}],
+ 1014: ["Lausanne-Sport", "Lausanne", "", "lausanne", {}], 2184: ["Servette", "Genève", "Grenat", "servette geneve", {}],
+ # Tjeckien
+ 567: ["Viktoria Plzeň", "Plzeň", "", "viktoria plzen pilsen", {}], 603: ["FC Zlín", "Zlín", "", "zlin", {}],
+ 628: ["Sparta Prag", "Prag", "Rudí", "sparta praha prague", {}], 640: ["Mladá Boleslav", "Mladá Boleslav", "", "mlada boleslav", {}],
+ 782: ["Slovan Liberec", "Liberec", "", "", {}], 1122: ["FK Jablonec", "Jablonec nad Nisou", "", "jablonec", {}],
+ 2250: ["Sigma Olomouc", "Olomouc", "", "", {}], 3713: ["Baník Ostrava", "Ostrava", "", "banik ostrava", {}],
+ 3719: ["1. FC Slovácko", "Uherské Hradiště", "", "slovacko", {}], 3720: ["FK Teplice", "Teplice", "", "teplice", {}],
+ 3723: ["Hradec Králové", "Hradec Králové", "", "hradec kralove", {}], 3724: ["FK Pardubice", "Pardubice", "", "pardubice", {}],
+ 3733: ["Zbrojovka Brno", "Brno", "", "fc zbrojovka brno", {}], 4257: ["Artis Brno", "Brno", "", "artis", {}],
+ # Turkiet
+ 564: ["Başakşehir", "Istanbul", "", "basaksehir istanbul basaksehir", {}], 607: ["Konyaspor", "Konya", "", "", {}],
+ 994: ["Göztepe", "İzmir", "", "goztepe izmir", {}], 996: ["Alanyaspor", "Alanya", "", "", {}],
+ 997: ["Gençlerbirliği", "Ankara", "", "genclerbirligi", {}], 998: ["Trabzonspor", "Trabzon", "Fırtına", "", {}],
+ 1004: ["Kasımpaşa", "Istanbul", "", "kasimpasa", {}], 1007: ["Çaykur Rizespor", "Rize", "", "rizespor caykur", {}],
+ 1009: ["Erzurumspor", "Erzurum", "", "erzurumspor fk", {}], 3573: ["Gaziantep FK", "Gaziantep", "", "gaziantep", {}],
+ 3579: ["Amedspor", "Diyarbakır", "", "amed diyarbakir", {}], 3588: ["Eyüpspor", "Istanbul", "", "eyupspor", {}],
+ 3603: ["Samsunspor", "Samsun", "", "", {}], 6343: ["Çorum FK", "Çorum", "", "corum", {}], 7411: ["Kocaelispor", "Kocaeli", "", "izmit", {}],
+ # Grekland
+ 617: ["Panathinaikos", "Aten", "Trifylli", "panathinaikos athens pao", {}], 619: ["PAOK", "Thessaloniki", "Dikefalos", "paok saloniki", {}],
+ 949: ["Panetolikos", "Agrinio", "", "", {}], 955: ["Asteras Tripolis", "Tripoli (Grekland)", "", "asteras", {}],
+ 957: ["Levadiakos", "Livadeia", "", "", {}], 1123: ["Aris Thessaloniki", "Thessaloniki", "", "aris thessalonikis", {}],
+ 1124: ["OFI Kreta", "Heraklion", "", "ofi crete", {}], 2110: ["Volos", "Volos", "", "volos nfc", {}],
+ 5046: ["Kalamata", "Kalamata", "", "", {}], 5050: ["Kifisia", "Aten", "", "", {}],
+ 12260: ["Atromitos", "Aten", "", "atromitos peristeri", {}], 17991: ["Iraklis", "Thessaloniki", "", "iraklis 1908", {}],
+ # Kroatien
+ 561: ["HNK Rijeka", "Rijeka", "", "rijeka", {}], 608: ["Hajduk Split", "Split", "Bili", "hnk hajduk", {}],
+ 616: ["NK Osijek", "Osijek", "", "osijek", {}], 620: ["Dinamo Zagreb", "Zagreb", "Modri", "gnk dinamo", {}],
+ 1016: ["NK Istra 1961", "Pula", "", "istra", {}], 1017: ["Lokomotiva Zagreb", "Zagreb", "", "nk lokomotiva", {}],
+ 1018: ["Slaven Belupo", "Koprivnica", "", "", {}], 1019: ["NK Rudeš", "Zagreb", "", "rudes", {}],
+ 1068: ["HNK Gorica", "Velika Gorica", "", "gorica", {}], 1483: ["NK Varaždin", "Varaždin", "", "varazdin", {}],
+ # Serbien
+ 573: ["Partizan", "Belgrad", "Crno-beli", "fk partizan belgrade", {}], 598: ["Röda Stjärnan", "Belgrad", "Zvezda", "crvena zvezda red star belgrade", {}],
+ 699: ["Mladost Lučani", "Lučani", "", "mladost lucani", {}], 702: ["Vojvodina", "Novi Sad", "", "fk vojvodina", {}],
+ 2254: ["Radnički Niš", "Niš", "", "radnicki nis", {}], 2633: ["OFK Beograd", "Belgrad", "", "ofk belgrade", {}],
+ 2637: ["Mačva Šabac", "Šabac", "", "macva sabac", {}], 2642: ["Zemun", "Belgrad", "", "fk zemun", {}],
+ 2643: ["Novi Pazar", "Novi Pazar", "", "", {}], 2644: ["Radnički 1923", "Kragujevac", "", "radnicki kragujevac", {}],
+ 2656: ["Čukarički", "Belgrad", "", "cukaricki", {}], 2657: ["Radnik Surdulica", "Surdulica", "", "", {}],
+ 12316: ["IMT Novi Beograd", "Belgrad", "", "imt", {}], 12360: ["Železničar Pančevo", "Pančevo", "", "zeleznicar pancevo", {}],
+ # Ungern
+ 576: ["Budapest Honvéd", "Budapest", "", "honved", {}], 651: ["Ferencváros", "Budapest", "Fradi", "ferencvarosi tc ftc", {}],
+ 675: ["Vasas", "Budapest", "", "vasas sc", {}], 2255: ["Újpest", "Budapest", "Lilák", "ujpest fc", {}],
+ 2390: ["Paksi FC", "Paks", "", "paks", {}], 2391: ["Puskás Akadémia", "Felcsút", "", "puskas academy", {}],
+ 2392: ["Debreceni VSC", "Debrecen", "Loki", "dvsc debrecen", {}], 2394: ["Kisvárda", "Kisvárda", "", "kisvarda", {}],
+ 2396: ["MTK Budapest", "Budapest", "", "mtk", {}], 2402: ["Győri ETO", "Győr", "", "gyori eto gyor", {}],
+ 2403: ["Nyíregyháza Spartacus", "Nyíregyháza", "", "nyiregyhaza", {"arena": "", "cap": None}], 2414: ["Zalaegerszegi TE", "Zalaegerszeg", "ZTE", "zalaegerszeg", {}],
+ # Irland
+ 584: ["Dundalk", "Dundalk", "The Lilywhites", "dundalk fc", {}], 652: ["Shamrock Rovers", "Dublin", "The Hoops", "", {}],
+ 670: ["Derry City", "Derry", "The Candystripes", "", {"land": "Nordirland"}], 3840: ["Bohemians", "Dublin", "The Gypsies", "bohemian fc", {}],
+ 3842: ["Sligo Rovers", "Sligo", "The Bit o' Red", "", {}], 3843: ["St Patrick's Athletic", "Dublin", "The Saints", "st pats", {}],
+ 3845: ["Waterford FC", "Waterford", "The Blues", "waterford", {}], 3850: ["Drogheda United", "Drogheda", "The Drogs", "", {}],
+ 3851: ["Galway United", "Galway", "The Tribesmen", "", {}], 3854: ["Shelbourne", "Dublin", "The Reds", "shelbourne fc", {}],
+ # Mexiko
+ 2278: ["Guadalajara", "Zapopan", "Chivas", "chivas guadalajara", {}], 2279: ["Tigres UANL", "San Nicolás de los Garza", "Los Felinos", "tigres", {}],
+ 2280: ["Club Tijuana", "Tijuana", "Xolos", "xolos tijuana", {}], 2281: ["Toluca", "Toluca", "Los Diablos Rojos", "deportivo toluca", {}],
+ 2282: ["Monterrey", "Guadalupe (Mexiko)", "Rayados", "cf monterrey", {}], 2283: ["Atlas", "Guadalajara", "Los Zorros", "atlas fc", {}],
+ 2285: ["Santos Laguna", "Torreón", "Los Guerreros", "", {}], 2286: ["Pumas UNAM", "Mexico City", "Pumas", "unam pumas", {}],
+ 2287: ["Club América", "Mexico City", "Las Águilas", "america", {}], 2288: ["Necaxa", "Aguascalientes", "Los Rayos", "", {}],
+ 2289: ["Club León", "León (Mexiko)", "La Fiera", "leon", {}], 2290: ["Querétaro", "Querétaro", "Gallos Blancos", "club queretaro", {}],
+ 2291: ["Puebla", "Puebla", "La Franja", "club puebla", {}], 2292: ["Pachuca", "Pachuca", "Los Tuzos", "cf pachuca", {}],
+ 2295: ["Cruz Azul", "Mexico City", "La Máquina", "", {}], 2298: ["FC Juárez", "Ciudad Juárez", "Los Bravos", "juarez", {}],
+ 2312: ["Atlante", "Mexico City", "Los Potros de Hierro", "atlante fc", {}], 2314: ["Atlético San Luis", "San Luis Potosí", "", "atletico san luis", {}],
+})
+GEO.update({
+ "Altach": [47.350, 9.651], "Graz": [47.071, 15.439], "Wolfsberg": [46.841, 14.842], "Ried im Innkreis": [48.211, 13.489], "Hartberg": [47.281, 15.970],
+ "Innsbruck": [47.269, 11.404], "Bregenz": [47.503, 9.747], "Basel": [47.560, 7.588], "Lugano": [46.004, 8.951], "Sion": [46.233, 7.360],
+ "Luzern": [47.050, 8.309], "Zürich": [47.377, 8.541], "St. Gallen": [47.424, 9.377], "Thun": [46.758, 7.628], "Lausanne": [46.520, 6.633], "Genève": [46.204, 6.143],
+ "Plzeň": [49.738, 13.373], "Zlín": [49.226, 17.667], "Mladá Boleslav": [50.411, 14.903], "Liberec": [50.767, 15.056], "Jablonec nad Nisou": [50.724, 15.171],
+ "Olomouc": [49.594, 17.251], "Ostrava": [49.820, 18.262], "Uherské Hradiště": [49.070, 17.460], "Teplice": [50.640, 13.825], "Hradec Králové": [50.209, 15.833],
+ "Pardubice": [50.034, 15.781], "Brno": [49.195, 16.608],
+ "Konya": [37.871, 32.485], "İzmir": [38.423, 27.143], "Alanya": [36.544, 31.995], "Ankara": [39.934, 32.860], "Trabzon": [41.003, 39.717], "Rize": [41.025, 40.517],
+ "Erzurum": [39.905, 41.266], "Gaziantep": [37.066, 37.383], "Diyarbakır": [37.914, 40.230], "Samsun": [41.287, 36.330], "Çorum": [40.550, 34.955], "Kocaeli": [40.765, 29.940],
+ "Thessaloniki": [40.640, 22.944], "Agrinio": [38.621, 21.408], "Tripoli (Grekland)": [37.509, 22.373], "Livadeia": [38.436, 22.875], "Heraklion": [35.339, 25.144],
+ "Volos": [39.362, 22.942], "Kalamata": [37.039, 22.114],
+ "Rijeka": [45.327, 14.442], "Split": [43.508, 16.440], "Osijek": [45.555, 18.694], "Pula": [44.866, 13.850], "Koprivnica": [46.163, 16.833],
+ "Velika Gorica": [45.713, 16.075], "Varaždin": [46.305, 16.336],
+ "Lučani": [43.861, 20.138], "Novi Sad": [45.267, 19.833], "Niš": [43.320, 21.896], "Šabac": [44.755, 19.694], "Novi Pazar": [43.137, 20.512],
+ "Kragujevac": [44.012, 20.911], "Surdulica": [42.690, 22.171], "Pančevo": [44.871, 20.641],
+ "Paks": [46.622, 18.856], "Felcsút": [47.455, 18.588], "Debrecen": [47.532, 21.627], "Kisvárda": [48.218, 22.081], "Győr": [47.687, 17.650],
+ "Nyíregyháza": [47.956, 21.717], "Zalaegerszeg": [46.840, 16.844],
+ "Dundalk": [54.000, -6.405], "Derry": [54.997, -7.309], "Sligo": [54.270, -8.473], "Waterford": [52.259, -7.110], "Drogheda": [53.718, -6.348], "Galway": [53.271, -9.057],
+ "Zapopan": [20.721, -103.392], "San Nicolás de los Garza": [25.743, -100.302], "Tijuana": [32.514, -117.038], "Toluca": [19.282, -99.656],
+ "Guadalupe (Mexiko)": [25.677, -100.256], "Guadalajara": [20.659, -103.349], "Torreón": [25.540, -103.406], "Aguascalientes": [21.885, -102.291],
+ "León (Mexiko)": [21.122, -101.684], "Querétaro": [20.588, -100.390], "Puebla": [19.041, -98.206], "Pachuca": [20.101, -98.759],
+ "Ciudad Juárez": [31.690, -106.424], "San Luis Potosí": [22.156, -100.985],
+})
+EXTRA_OK = {"Wien", "Linz", "Salzburg", "Prag", "Istanbul", "Aten", "Pireus", "Zagreb", "Belgrad", "Budapest", "Bern", "Vaduz", "Dublin", "Mexico City"}
+
 # snyggare id där förkortningen blev otydlig
 IDFIX = {"ar-independiex": "ar-indriva", "ar-gimnasiayex": "ar-gimmendoz", "ar-gimnasiaye": "ar-gimnasia", "ar-estudiantex": "ar-estrcuart", "ar-estudiante": "ar-estudiant",
  "cl-universida": "cl-uchile", "cl-universidax": "cl-udeconce", "cl-universidaxx": "cl-ucatolica", "co-deportivopx": "co-pereira", "co-independie": "co-medellin",
@@ -430,6 +547,49 @@ COL = {
  "za-tsgalaxy": ["#e2001a", "#ffffff", "TSG"], "za-richardsba": ["#0057b8", "#ffffff", "RB"], "za-sekhukhune": ["#0b2a5b", "#ffd200", "SEK"], "za-marumogall": ["#ffd200", "#0b2a5b", "MG"],
 }
 
+# andra vågen: id, meriter och färger
+IDFIX.update({"tr-kasmpasa": "tr-kasimpasa", "at-austriawie": "at-austria", "at-rapidwien": "at-rapid", "cz-spartaprag": "cz-sparta", "cz-viktoriapl": "cz-plzen",
+ "hr-hajdukspli": "hr-hajduk", "hr-dinamozagr": "hr-dinamo", "rs-rodastjarn": "rs-zvezda", "hu-ferencvaro": "hu-ferencvaros", "gr-panathinai": "gr-pao",
+ "mx-guadalajar": "mx-chivas", "ie-shamrockro": "ie-shamrock", "cz-banikostra": "cz-banik", "tr-trabzonspo": "tr-trabzon", "gr-aristhessa": "gr-aris"})
+HON.update({"hu-ferencvaros": ["Mässcupen 1965"], "rs-zvezda": ["Europacupen 1991", "Interkontinentala cupen 1991"], "hr-dinamo": ["Mässcupen 1967"],
+ "rs-partizan": ["Europacupfinal 1966"], "gr-pao": ["Europacupfinal 1971"], "mx-pachuca": ["Copa Sudamericana 2006"]})
+COL.update({
+ "at-austria": ["#5b2a86", "#ffffff", "FAK"], "at-scraltach": ["#000000", "#ffd200", "SCRA"], "at-sturmgraz": ["#000000", "#ffffff", "SKS"], "at-rapid": ["#00843d", "#ffffff", "SCR"],
+ "at-wolfsberge": ["#000000", "#ffffff", "WAC"], "at-svried": ["#000000", "#00843d", "SVR"], "at-tsvhartber": ["#0057b8", "#ffffff", "TSV"], "at-wsgtirol": ["#00843d", "#ffffff", "WSG"],
+ "at-austrialus": ["#00843d", "#ffffff", "SCAL"], "at-grazerak": ["#e2001a", "#ffffff", "GAK"],
+ "ch-basel": ["#e2001a", "#0b2a5b", "FCB"], "ch-youngboys": ["#ffd200", "#000000", "YB"], "ch-lugano": ["#000000", "#ffffff", "FCL"], "ch-sion": ["#e2001a", "#ffffff", "FCS"],
+ "ch-luzern": ["#0057b8", "#ffffff", "FCL"], "ch-vaduz": ["#e2001a", "#ffffff", "FCV"], "ch-zurich": ["#ffffff", "#0057b8", "FCZ"], "ch-stgallen": ["#00843d", "#ffffff", "FCSG"],
+ "ch-thun": ["#e2001a", "#ffffff", "FCT"], "ch-grasshoppe": ["#0057b8", "#ffffff", "GC"], "ch-lausannesp": ["#0b2a5b", "#ffffff", "LS"], "ch-servette": ["#7a1f2b", "#ffffff", "SFC"],
+ "cz-plzen": ["#e2001a", "#0057b8", "FCVP"], "cz-zlin": ["#ffd200", "#0b2a5b", "FCZ"], "cz-sparta": ["#7a1f2b", "#ffffff", "ACS"], "cz-mladaboles": ["#0057b8", "#ffffff", "FKMB"],
+ "cz-slovanlibe": ["#ffffff", "#0057b8", "FCSL"], "cz-fkjablonec": ["#00843d", "#000000", "FKJ"], "cz-sigmaolomo": ["#0057b8", "#ffffff", "SKSO"], "cz-banik": ["#0057b8", "#ffffff", "FCB"],
+ "cz-1slovacko": ["#0057b8", "#e2001a", "FCS"], "cz-fkteplice": ["#ffd200", "#0057b8", "FKT"], "cz-hradeckral": ["#000000", "#ffffff", "FCHK"], "cz-fkpardubic": ["#e2001a", "#ffffff", "FKP"],
+ "cz-zbrojovkab": ["#e2001a", "#ffffff", "FCZB"],
+ "tr-basaksehir": ["#ff8200", "#0b2a5b", "IBFK"], "tr-konyaspor": ["#00843d", "#ffffff", "KON"], "tr-goztepe": ["#ffd200", "#e2001a", "GOZ"], "tr-alanyaspor": ["#ff8200", "#00843d", "ALA"],
+ "tr-genclerbir": ["#e2001a", "#000000", "GEN"], "tr-trabzon": ["#7a1f2b", "#7ab8e8", "TS"], "tr-kasimpasa": ["#0b2a5b", "#ffffff", "KAS"], "tr-caykurrize": ["#00843d", "#0057b8", "RIZ"],
+ "tr-erzurumspo": ["#0057b8", "#ffffff", "ERZ"], "tr-gaziantepf": ["#e2001a", "#000000", "GFK"], "tr-amedspor": ["#00843d", "#e2001a", "AMD"], "tr-eyupspor": ["#5b2a86", "#ffd200", "EYP"],
+ "tr-samsunspor": ["#e2001a", "#ffffff", "SAM"], "tr-corumfk": ["#e2001a", "#000000", "COR"], "tr-kocaelispo": ["#00843d", "#000000", "KOC"],
+ "gr-pao": ["#00843d", "#ffffff", "PAO"], "gr-paok": ["#000000", "#ffffff", "PAOK"], "gr-panetoliko": ["#ffd200", "#0057b8", "PNT"], "gr-asterastri": ["#ffd200", "#000000", "AST"],
+ "gr-levadiakos": ["#00843d", "#ffffff", "LEV"], "gr-aris": ["#ffd200", "#000000", "ARIS"], "gr-ofikreta": ["#000000", "#ffffff", "OFI"], "gr-volos": ["#0057b8", "#ffffff", "VOL"],
+ "gr-kalamata": ["#000000", "#ffffff", "KAL"], "gr-kifisia": ["#0057b8", "#ffffff", "KIF"], "gr-atromitos": ["#0057b8", "#ffffff", "ATR"], "gr-iraklis": ["#0057b8", "#ffffff", "IRA"],
+ "hr-hnkrijeka": ["#ffffff", "#0057b8", "HNKR"], "hr-hajduk": ["#ffffff", "#0b2a5b", "HAJ"], "hr-nkosijek": ["#0057b8", "#ffffff", "NKO"], "hr-dinamo": ["#0057b8", "#ffffff", "GNKD"],
+ "hr-nkistra196": ["#00843d", "#ffd200", "IST"], "hr-lokomotiva": ["#0057b8", "#ffffff", "LOK"], "hr-slavenbelu": ["#ffffff", "#000000", "SLB"], "hr-nkrudes": ["#ffd200", "#000000", "RUD"],
+ "hr-hnkgorica": ["#e2001a", "#ffffff", "GOR"], "hr-nkvarazdin": ["#0057b8", "#ffffff", "VAR"],
+ "rs-partizan": ["#000000", "#ffffff", "FKP"], "rs-zvezda": ["#e2001a", "#ffffff", "CZV"], "rs-mladostluc": ["#ff8200", "#000000", "MLA"], "rs-vojvodina": ["#e2001a", "#ffffff", "VOJ"],
+ "rs-radnickini": ["#e2001a", "#ffffff", "RAD"], "rs-ofkbeograd": ["#0057b8", "#ffffff", "OFK"], "rs-macvasabac": ["#ffd200", "#000000", "MAC"], "rs-zemun": ["#0057b8", "#ffffff", "ZEM"],
+ "rs-novipazar": ["#e2001a", "#ffffff", "NP"], "rs-radnicki19": ["#e2001a", "#0057b8", "R23"], "rs-cukaricki": ["#000000", "#ffd200", "CUK"],
+ "hu-budapestho": ["#e2001a", "#000000", "BHFC"], "hu-ferencvaros": ["#00843d", "#ffffff", "FTC"], "hu-vasas": ["#e2001a", "#0057b8", "VAS"], "hu-ujpest": ["#5b2a86", "#ffffff", "UTE"],
+ "hu-paksi": ["#00843d", "#ffffff", "PFC"], "hu-puskasakad": ["#0057b8", "#ffd200", "PAFC"], "hu-debreceniv": ["#e2001a", "#ffffff", "DVSC"], "hu-kisvarda": ["#e2001a", "#ffffff", "KIS"],
+ "hu-mtkbudapes": ["#0057b8", "#ffffff", "MTK"], "hu-gyorieto": ["#00843d", "#ffffff", "ETO"], "hu-nyiregyhaz": ["#0057b8", "#ffffff", "NYI"], "hu-zalaegersz": ["#0057b8", "#ffffff", "ZTE"],
+ "ie-dundalk": ["#ffffff", "#000000", "DFC"], "ie-shamrock": ["#00843d", "#ffffff", "SRFC"], "ie-derry": ["#e2001a", "#ffffff", "DCFC"], "ie-bohemians": ["#e2001a", "#000000", "BFC"],
+ "ie-sligorover": ["#e2001a", "#ffffff", "SRFC"], "ie-stpatricks": ["#e2001a", "#ffffff", "SPAFC"], "ie-waterford": ["#0057b8", "#ffffff", "WFC"], "ie-drogheda": ["#7a1f2b", "#7ab8e8", "DUFC"],
+ "ie-galway": ["#7a1f2b", "#ffffff", "GUFC"], "ie-shelbourne": ["#e2001a", "#ffffff", "SFC"],
+ "mx-chivas": ["#e2001a", "#ffffff", "CHV"], "mx-tigresuanl": ["#ffd200", "#0057b8", "TIG"], "mx-tijuana": ["#e2001a", "#000000", "XOL"], "mx-toluca": ["#e2001a", "#ffffff", "TOL"],
+ "mx-monterrey": ["#0b2a5b", "#ffffff", "MTY"], "mx-atlas": ["#e2001a", "#000000", "ATL"], "mx-santoslagu": ["#00843d", "#ffffff", "SAN"], "mx-pumasunam": ["#0b2a5b", "#c8a24a", "PUM"],
+ "mx-america": ["#ffd200", "#0b2a5b", "AME"], "mx-necaxa": ["#e2001a", "#ffffff", "NEC"], "mx-leon": ["#00843d", "#ffffff", "LEO"], "mx-queretaro": ["#0057b8", "#000000", "QRO"],
+ "mx-puebla": ["#ffffff", "#0057b8", "PUE"], "mx-pachuca": ["#0b2a5b", "#ffffff", "PAC"], "mx-cruzazul": ["#0057b8", "#ffffff", "CAZ"], "mx-juarez": ["#00843d", "#e2001a", "JUA"],
+ "mx-atlante": ["#e2001a", "#0057b8", "ATL"], "mx-atleticosa": ["#e2001a", "#ffffff", "ASL"],
+})
+
 def slug(s):
     import unicodedata
     s = unicodedata.normalize("NFD", s).encode("ascii", "ignore").decode().lower()
@@ -459,7 +619,7 @@ for c in W["countries"]:
             used.add(cid); cid = IDFIX.get(cid, cid); extra[str(t["id"])] = cid
             alias = " ".join(dict.fromkeys(x for x in [ascii_low(name), ascii_low(t["name"]), al] if x and x != name.lower()))
             rows.append([cid, name, alias, land, city, founded, lname, tier, arena, cap, nick, HON.get(cid, []), 1])
-            assert city in GEO or city in ("Buenos Aires", "Rio de Janeiro", "São Paulo", "Santos", "Montevideo", "Santiago", "Barranquilla", "Seoul", "Riyadh", "Sydney", "Auckland", "Rabat", "Johannesburg"), city
+            assert city in GEO or city in ("Buenos Aires", "Rio de Janeiro", "São Paulo", "Santos", "Montevideo", "Santiago", "Barranquilla", "Seoul", "Riyadh", "Sydney", "Auckland", "Rabat", "Johannesburg") or city in EXTRA_OK, city
 
 # rader
 out = ["// Ligor i Sydamerika, Asien, Oceanien och Afrika 2026 (lag, arenor och kapacitet från API-Football okt 2026, se scripts/build-world.py). Samma format som clubs.js.", "module.exports=["]

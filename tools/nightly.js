@@ -82,6 +82,10 @@ const API=[
  ["J1 League","Japan","Japan",1,"jp.1",/^j1 league$/],["J2 League","Japan","Japan",2,"jp.2",/^j2 league$/],["K League 1","Sydkorea","South-Korea",1,"kr.1",/^k league 1$/],
  ["Saudi Pro League","Saudiarabien","Saudi-Arabia",1,"sa.1",/^pro league$/],["A-League","Australien","Australia",1,"au.1",/^a-league$/],
  ["Egyptian Premier League","Egypten","Egypt",1,"eg.1",/^premier league$/],["Botola Pro","Marocko","Morocco",1,"ma.1",/^botola pro$/],["Premiership (Sydafrika)","Sydafrika","South-Africa",1,"za.1",/^premier soccer league$/],
+ ["Bundesliga (Österrike)","Österrike","Austria",1,"at.1",/^bundesliga$/],["Super League (Schweiz)","Schweiz","Switzerland",1,"ch.1",/^super league$/],["Chance Liga","Tjeckien","Czech-Republic",1,"cz.1",/^(czech liga|chance liga)$/],
+ ["Süper Lig","Turkiet","Turkey",1,"tr.1",/^s(u|ü)per lig$/],["Super League (Grekland)","Grekland","Greece",1,"gr.1",/^super league 1$/],["HNL","Kroatien","Croatia",1,"hr.1",/^hnl$/],
+ ["Superliga (Serbien)","Serbien","Serbia",1,"rs.1",/^super liga$/],["NB I","Ungern","Hungary",1,"hu.1",/^nb i$/],["Premier Division (Irland)","Irland","Ireland",1,"ie.1",/^premier division$/],
+ ["Liga MX","Mexiko","Mexico",1,"mx.1",/^liga mx$/],
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}

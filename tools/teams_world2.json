@@ -1,0 +1,2671 @@
+{
+ "fetched": "2026-10-23T13:47:07.362Z",
+ "countries": [
+  {
+   "country": "Austria",
+   "fetched": "2026-10-23T13:46:58.421Z",
+   "all": [
+    "220 | Cup | Cup",
+    "219 | 2. Liga | League",
+    "218 | Bundesliga | League",
+    "222 | Regionalliga - Mitte | League",
+    "221 | Regionalliga - Ost | League",
+    "223 | Regionalliga - West | League",
+    "224 | Landesliga - Burgenland | League",
+    "225 | Landesliga - Karnten | League",
+    "226 | Landesliga - Niederosterreich | League",
+    "227 | Landesliga - Oberosterreich | League",
+    "228 | Landesliga - Salzburg | League",
+    "229 | Landesliga - Steiermark | League",
+    "230 | Landesliga - Tirol | League",
+    "231 | Landesliga - Vorarlbergliga | League",
+    "232 | Landesliga - Wien | League",
+    "484 | Frauenliga | League",
+    "687 | Regionalliga - Tirol | League",
+    "688 | Regionalliga - Salzburg | League",
+    "1238 | Regionalliga - South | League",
+    "1239 | Regionalliga - North | League"
+   ],
+   "leagues": [
+    {
+     "id": 218,
+     "name": "Bundesliga",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-07-16",
+       "2012-05-17",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-07-21",
+       "2013-05-26",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-07-20",
+       "2014-05-12",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-07-19",
+       "2015-05-31",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-07-25",
+       "2016-05-15",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-07-23",
+       "2017-05-28",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-22",
+       "2018-05-27",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-27",
+       "2019-06-02",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-26",
+       "2020-07-15",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-11",
+       "2021-05-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-23",
+       "2022-05-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-22",
+       "2023-06-11",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-28",
+       "2024-05-28",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-02",
+       "2025-06-01",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-01",
+       "2026-05-25",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-31",
+       "2027-02-27",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 571,
+       "name": "Red Bull Salzburg",
+       "founded": 1933,
+       "venue": {
+        "name": "Red Bull Arena",
+        "city": "Wals-Siezenheim",
+        "capacity": 31895,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 601,
+       "name": "Austria Vienna",
+       "founded": 1911,
+       "venue": {
+        "name": "Generali Arena",
+        "city": "Wien",
+        "capacity": 18944,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 618,
+       "name": "SCR Altach",
+       "founded": 1929,
+       "venue": {
+        "name": "CASHPOINT Arena",
+        "city": "Altach",
+        "capacity": 8500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 637,
+       "name": "Sturm Graz",
+       "founded": 1909,
+       "venue": {
+        "name": "Merkur Arena",
+        "city": "Graz",
+        "capacity": 16764,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 781,
+       "name": "Rapid Vienna",
+       "founded": 1899,
+       "venue": {
+        "name": "Allianz Stadion",
+        "city": "Wien",
+        "capacity": 28345,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1025,
+       "name": "Wolfsberger AC",
+       "founded": 1931,
+       "venue": {
+        "name": "Lavanttal Arena",
+        "city": "Wolfsberg",
+        "capacity": 9000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1026,
+       "name": "Lask Linz",
+       "founded": 1908,
+       "venue": {
+        "name": "Raiffeisen Arena",
+        "city": "Linz",
+        "capacity": 19080,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1028,
+       "name": "Ried",
+       "founded": 1912,
+       "venue": {
+        "name": "Innviertel Arena",
+        "city": "Ried Im Innkreis",
+        "capacity": 7680,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1072,
+       "name": "TSV Hartberg",
+       "founded": 1946,
+       "venue": {
+        "name": "PROfertil ARENA",
+        "city": "Hartberg",
+        "capacity": 5420,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1398,
+       "name": "WSG Wattens",
+       "founded": 1930,
+       "venue": {
+        "name": "Tivoli Stadion Tirol",
+        "city": "Innsbruck",
+        "capacity": 16008,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1399,
+       "name": "Austria Lustenau",
+       "founded": 1914,
+       "venue": {
+        "name": "ImmoAgentur Stadion Bregenz",
+        "city": "Bregenz",
+        "capacity": 11112,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4256,
+       "name": "Grazer AK",
+       "founded": 1902,
+       "venue": {
+        "name": "Merkur Arena",
+        "city": "Graz",
+        "capacity": 16764,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Switzerland",
+   "fetched": "2026-10-23T13:46:59.354Z",
+   "all": [
+    "207 | Super League | League",
+    "208 | Challenge League | League",
+    "510 | 1. Liga Promotion | League",
+    "209 | Schweizer Cup | Cup",
+    "599 | 1. Liga Classic - Group 1 | League",
+    "600 | 1. Liga Classic - Group 2 | League",
+    "601 | 1. Liga Classic - Group 3 | League",
+    "739 | AXA Women’s Super League | League",
+    "796 | 2. Liga Interregional - Group 1 | League",
+    "797 | 2. Liga Interregional - Group 2 | League",
+    "798 | 2. Liga Interregional - Group 3 | League",
+    "799 | 2. Liga Interregional - Group 4 | League",
+    "800 | 2. Liga Interregional - Group 5 | League",
+    "801 | 2. Liga Interregional - Group 6 | League",
+    "1005 | 1. Liga Classic - Play-offs | League",
+    "1044 | Erste Liga Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 207,
+     "name": "Super League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-07-23",
+       "2017-06-02",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-22",
+       "2018-05-19",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-21",
+       "2019-05-25",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-19",
+       "2020-08-10",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-19",
+       "2021-05-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-24",
+       "2022-05-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-16",
+       "2023-06-06",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-22",
+       "2024-05-31",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-20",
+       "2025-05-30",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-25",
+       "2026-05-21",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-25",
+       "2027-02-07",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 551,
+       "name": "FC Basel 1893",
+       "founded": 1893,
+       "venue": {
+        "name": "St. Jakob-Park",
+        "city": "Basel",
+        "capacity": 37994,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 565,
+       "name": "BSC Young Boys",
+       "founded": 1898,
+       "venue": {
+        "name": "Stadion Wankdorf",
+        "city": "Bern",
+        "capacity": 31700,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 606,
+       "name": "FC Lugano",
+       "founded": 1908,
+       "venue": {
+        "name": "Stadio di Cornaredo",
+        "city": "Lugano",
+        "capacity": 5476,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 630,
+       "name": "FC Sion",
+       "founded": 1909,
+       "venue": {
+        "name": "Stade de Tourbillon",
+        "city": "Sion",
+        "capacity": 14283,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 644,
+       "name": "FC Luzern",
+       "founded": 1901,
+       "venue": {
+        "name": "swissporarena",
+        "city": "Luzern",
+        "capacity": 16490,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 660,
+       "name": "FC Vaduz",
+       "founded": 1932,
+       "venue": {
+        "name": "Rheinpark Stadion",
+        "city": "Vaduz",
+        "capacity": 7564,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 783,
+       "name": "FC Zurich",
+       "founded": 1896,
+       "venue": {
+        "name": "Stadion Letzigrund",
+        "city": "Zürich",
+        "capacity": 26114,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1011,
+       "name": "FC ST. Gallen",
+       "founded": 1879,
+       "venue": {
+        "name": "kybunpark",
+        "city": "St. Gallen",
+        "capacity": 20029,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1012,
+       "name": "FC Thun",
+       "founded": 1898,
+       "venue": {
+        "name": "Stockhorn Arena",
+        "city": "Thun",
+        "capacity": 10014,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 1013,
+       "name": "Grasshoppers",
+       "founded": 1886,
+       "venue": {
+        "name": "Stadion Letzigrund",
+        "city": "Zürich",
+        "capacity": 26114,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1014,
+       "name": "Lausanne",
+       "founded": 1896,
+       "venue": {
+        "name": "Stade de la Tuilière",
+        "city": "Lausanne",
+        "capacity": 13132,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2184,
+       "name": "Servette FC",
+       "founded": 1890,
+       "venue": {
+        "name": "Stade de Genève",
+        "city": "Lancy",
+        "capacity": 28229,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Czech-Republic",
+   "fetched": "2026-10-23T13:47:00.312Z",
+   "all": [
+    "925 | Super Cup | Cup",
+    "345 | Czech Liga | League",
+    "346 | FNL | League",
+    "347 | Cup | Cup",
+    "348 | 3. liga - CFL A | League",
+    "349 | 3. liga - MSFL | League",
+    "350 | 4. liga - Divizie A | League",
+    "351 | 4. liga - Divizie B | League",
+    "352 | 4. liga - Divizie C | League",
+    "353 | 4. liga - Divizie D | League",
+    "354 | 4. liga - Divizie E | League",
+    "668 | 1. Liga U19 | League",
+    "669 | 1. Liga Women | League",
+    "685 | 3. liga - CFL B | League",
+    "686 | 4. liga - Divizie F | League",
+    "1010 | 3. liga - Promotion Play-off | League",
+    "1211 | Tipsport Liga | League"
+   ],
+   "leagues": [
+    {
+     "id": 345,
+     "name": "Czech Liga",
+     "season": 2026,
+     "seasons": [
+      [
+       2018,
+       "2018-07-20",
+       "2019-06-01",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-12",
+       "2020-07-26",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-21",
+       "2021-05-29",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-24",
+       "2022-05-22",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-30",
+       "2023-06-04",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-22",
+       "2024-06-02",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-19",
+       "2025-06-01",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-18",
+       "2026-05-31",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-25",
+       "2027-04-24",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 560,
+       "name": "Slavia Praha",
+       "founded": 1892,
+       "venue": {
+        "name": "Fortuna Arena",
+        "city": "Praha",
+        "capacity": 21000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 567,
+       "name": "Plzen",
+       "founded": 1911,
+       "venue": {
+        "name": "Doosan Aréna",
+        "city": "Plzeň",
+        "capacity": 12500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 603,
+       "name": "Zlin",
+       "founded": 1919,
+       "venue": {
+        "name": "Stadion Letná",
+        "city": "Zlín",
+        "capacity": 6375,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 628,
+       "name": "Sparta Praha",
+       "founded": 1893,
+       "venue": {
+        "name": "epet ARENA",
+        "city": "Praha",
+        "capacity": 20854,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 640,
+       "name": "Mlada Boleslav",
+       "founded": 1902,
+       "venue": {
+        "name": "Lokotrans Aréna",
+        "city": "Mladá Boleslav",
+        "capacity": 5500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 782,
+       "name": "Slovan Liberec",
+       "founded": 1921,
+       "venue": {
+        "name": "Stadion u Nisy",
+        "city": "Liberec",
+        "capacity": 9900,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1122,
+       "name": "FK Jablonec",
+       "founded": 1945,
+       "venue": {
+        "name": "Stadion Střelnice",
+        "city": "Jablonec nad Nisou",
+        "capacity": 6280,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2250,
+       "name": "Sigma Olomouc",
+       "founded": 1919,
+       "venue": {
+        "name": "Andrův stadion",
+        "city": "Olomouc",
+        "capacity": 12566,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3713,
+       "name": "Baník Ostrava",
+       "founded": 1922,
+       "venue": {
+        "name": "Městský stadion - Vítkovice Aréna",
+        "city": "Ostrava",
+        "capacity": 15275,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3714,
+       "name": "Bohemians 1905",
+       "founded": 1905,
+       "venue": {
+        "name": "Stadion Ďolíček",
+        "city": "Praha",
+        "capacity": 7500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3719,
+       "name": "Slovácko",
+       "founded": 1927,
+       "venue": {
+        "name": "Městský fotbalový stadion Miroslava Valenty",
+        "city": "Uherské Hradiště",
+        "capacity": 8121,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3720,
+       "name": "Teplice",
+       "founded": 1945,
+       "venue": {
+        "name": "AGC Aréna Na Stínadlech",
+        "city": "Teplice",
+        "capacity": 18221,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3723,
+       "name": "Hradec Králové",
+       "founded": 1905,
+       "venue": {
+        "name": "Malšovická Aréna",
+        "city": "Hradec Králové",
+        "capacity": 9300,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3724,
+       "name": "Pardubice",
+       "founded": null,
+       "venue": {
+        "name": "CFIG Arena",
+        "city": "Pardubice",
+        "capacity": 4625,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3733,
+       "name": "Zbrojovka Brno",
+       "founded": 1913,
+       "venue": {
+        "name": "Městský fotbalový stadion Srbská",
+        "city": "Brno",
+        "capacity": 12550,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4257,
+       "name": "Artis",
+       "founded": null,
+       "venue": {
+        "name": "Stadion SK Líšeň",
+        "city": "Brno",
+        "capacity": 2070,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Turkey",
+   "fetched": "2026-10-23T13:47:01.256Z",
+   "all": [
+    "203 | Süper Lig | League",
+    "204 | 1. Lig | League",
+    "205 | 2. Lig | League",
+    "206 | Türkiye Kupası | Cup",
+    "552 | 3. Lig - Group 1 | League",
+    "553 | 3. Lig - Group 2 | League",
+    "554 | 3. Lig - Group 3 | League",
+    "551 | Super Cup | Cup",
+    "1007 | 3. Lig - Play-offs | League",
+    "1027 | 3. Lig - Group 4 | League",
+    "1240 | U19 league | League"
+   ],
+   "leagues": [
+    {
+     "id": 203,
+     "name": "Süper Lig",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-09-10",
+       "2012-05-12",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-08-17",
+       "2013-05-19",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-08-16",
+       "2014-05-18",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-08-29",
+       "2015-05-30",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-08-14",
+       "2016-05-19",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-08-19",
+       "2017-06-03",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-08-11",
+       "2018-05-19",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-10",
+       "2019-05-26",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-16",
+       "2020-07-26",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-11",
+       "2021-05-15",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-13",
+       "2022-05-22",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-05",
+       "2023-06-07",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-13",
+       "2024-05-19",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-09",
+       "2025-06-01",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-08",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-14",
+       "2027-05-23",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 549,
+       "name": "Beşiktaş",
+       "founded": 1903,
+       "venue": {
+        "name": "Tüpraş Stadyumu",
+        "city": "İstanbul",
+        "capacity": 43500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 564,
+       "name": "Başakşehir",
+       "founded": 1990,
+       "venue": {
+        "name": "Başakşehir Fatih Terim Stadyumu",
+        "city": "İstanbul",
+        "capacity": 17319,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 607,
+       "name": "Konyaspor",
+       "founded": 1922,
+       "venue": {
+        "name": "Medaş Konya Büyükşehir Stadyumu",
+        "city": "Konya",
+        "capacity": 42276,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 611,
+       "name": "Fenerbahçe",
+       "founded": 1907,
+       "venue": {
+        "name": "Chobani Stadyumu Fenerbahçe Şükrü Saracoğlu Spor Kompleksi",
+        "city": "İstanbul",
+        "capacity": 47834,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 645,
+       "name": "Galatasaray",
+       "founded": 1905,
+       "venue": {
+        "name": "RAMS Park",
+        "city": "İstanbul",
+        "capacity": 53798,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 994,
+       "name": "Göztepe",
+       "founded": 1925,
+       "venue": {
+        "name": "Gürsel Aksel Stadyumu",
+        "city": "İzmir",
+        "capacity": 30035,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 996,
+       "name": "Alanyaspor",
+       "founded": 1948,
+       "venue": {
+        "name": "GAIN Park Stadium",
+        "city": "Antalya",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 997,
+       "name": "Gençlerbirliği S.K.",
+       "founded": 1923,
+       "venue": {
+        "name": "Eryaman Stadyumu",
+        "city": "Ankara",
+        "capacity": 20560,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 998,
+       "name": "Trabzonspor",
+       "founded": 1967,
+       "venue": {
+        "name": "Papara Park",
+        "city": "Trabzon",
+        "capacity": 41513,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1004,
+       "name": "Kasımpaşa",
+       "founded": 1921,
+       "venue": {
+        "name": "Recep Tayyip Erdoğan Stadyumu",
+        "city": "İstanbul",
+        "capacity": 14234,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1007,
+       "name": "Rizespor",
+       "founded": 1953,
+       "venue": {
+        "name": "Çaykur Didi Stadyumu",
+        "city": "Rize",
+        "capacity": 15558,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1009,
+       "name": "Erzurumspor FK",
+       "founded": 2005,
+       "venue": {
+        "name": "Kazım Karabekir Stadyumu",
+        "city": "Erzurum",
+        "capacity": 23700,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3573,
+       "name": "Gaziantep FK",
+       "founded": 1988,
+       "venue": {
+        "name": "Gaziantep Stadyumu",
+        "city": "Gaziantep",
+        "capacity": 35558,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3579,
+       "name": "Amed",
+       "founded": 1990,
+       "venue": {
+        "name": "Seyrantepe Spor Kompleksi Stadyumu 1",
+        "city": "Diyarbakır",
+        "capacity": 2500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3588,
+       "name": "Eyüpspor",
+       "founded": 1919,
+       "venue": {
+        "name": "Recep Tayyip Erdoğan Stadyumu",
+        "city": "İstanbul",
+        "capacity": 14234,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3603,
+       "name": "Samsunspor",
+       "founded": 1965,
+       "venue": {
+        "name": "Samsun Yeni 19 Mayıs Stadyumu",
+        "city": "Samsun",
+        "capacity": 34658,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 6343,
+       "name": "Çorum FK",
+       "founded": 1997,
+       "venue": {
+        "name": "Çorum Şehir Stadyumu",
+        "city": "Çorum",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7411,
+       "name": "Kocaelispor",
+       "founded": 1966,
+       "venue": {
+        "name": "Yıldız Entegre Kocaeli Stadyumu",
+        "city": "Kocaeli",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Greece",
+   "fetched": "2026-10-23T13:47:02.199Z",
+   "all": [
+    "199 | Cup | Cup",
+    "198 | Football League | League",
+    "197 | Super League 1 | League",
+    "494 | Super League 2 | League",
+    "576 | Gamma Ethniki - Group 1 | League",
+    "577 | Gamma Ethniki - Group 2 | League",
+    "578 | Gamma Ethniki - Group 3 | League",
+    "579 | Gamma Ethniki - Group 4 | League",
+    "580 | Gamma Ethniki - Group 5 | League",
+    "581 | Gamma Ethniki - Group 6 | League",
+    "582 | Gamma Ethniki - Group 7 | League",
+    "583 | Gamma Ethniki - Group 8 | League",
+    "693 | Gamma Ethniki - Group 9 | League",
+    "694 | Gamma Ethniki - Group 10 | League",
+    "990 | Gamma Ethniki - Promotion Group | League",
+    "1099 | Gamma Ethniki - Relegation Play-offs | League",
+    "1210 | Super Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 197,
+     "name": "Super League 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-08-27",
+       "2012-05-20",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-08-25",
+       "2013-06-02",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-08-17",
+       "2014-05-17",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-08-23",
+       "2015-06-07",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-08-22",
+       "2016-05-31",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-09-10",
+       "2017-05-31",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-08-19",
+       "2018-05-07",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-25",
+       "2019-05-05",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-24",
+       "2020-08-29",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-11",
+       "2021-05-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-11",
+       "2022-06-18",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-19",
+       "2023-05-13",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-18",
+       "2024-05-12",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-17",
+       "2025-05-22",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-23",
+       "2026-05-21",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-22",
+       "2027-03-20",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 553,
+       "name": "Olympiakos Piraeus",
+       "founded": 1925,
+       "venue": {
+        "name": "Stadio Georgios Karaiskáki",
+        "city": "Piraeus",
+        "capacity": 33296,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 575,
+       "name": "AEK Athens FC",
+       "founded": 1924,
+       "venue": {
+        "name": "OPAP Arena",
+        "city": "Athens",
+        "capacity": 33000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 617,
+       "name": "Panathinaikos",
+       "founded": 1908,
+       "venue": {
+        "name": "Stadio Apóstolos Nikolaidis",
+        "city": "Athína (Athens)",
+        "capacity": 16620,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 619,
+       "name": "PAOK",
+       "founded": 1926,
+       "venue": {
+        "name": "Stadio Toumbas",
+        "city": "Thessaloníki",
+        "capacity": 28803,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 949,
+       "name": "Panetolikos",
+       "founded": 1926,
+       "venue": {
+        "name": "Stadio Panetolikou",
+        "city": "Agrinio",
+        "capacity": 7200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 955,
+       "name": "Asteras Tripolis",
+       "founded": 1930,
+       "venue": {
+        "name": "Stadio Theodoros Kolokotronis",
+        "city": "Tripoli",
+        "capacity": 7717,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 957,
+       "name": "Levadiakos",
+       "founded": 1961,
+       "venue": {
+        "name": "Stadio Levadias",
+        "city": "Levadia",
+        "capacity": 5915,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1123,
+       "name": "Aris Thessalonikis",
+       "founded": 1914,
+       "venue": {
+        "name": "Stadio Harilaou Kleánthis Vikelídis",
+        "city": "Thessaloníki",
+        "capacity": 23220,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1124,
+       "name": "OFI",
+       "founded": 1925,
+       "venue": {
+        "name": "Stadio Thódoros Vardinoyánnis",
+        "city": "Heraklion",
+        "capacity": 9000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2110,
+       "name": "Volos NFC",
+       "founded": 2017,
+       "venue": {
+        "name": "Panthessaliko Stadio",
+        "city": "Volos",
+        "capacity": 22700,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5046,
+       "name": "Kalamata",
+       "founded": null,
+       "venue": {
+        "name": "Gipedo Messiniakos",
+        "city": "Kalamata",
+        "capacity": 5613,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5050,
+       "name": "Kifisia",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Kaisarianis Michalis Kritikopoulos",
+        "city": "Athens",
+        "capacity": 4851,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12260,
+       "name": "Atromitos",
+       "founded": 1923,
+       "venue": {
+        "name": "Stadio Peristeriou",
+        "city": "Athens",
+        "capacity": 9035,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17991,
+       "name": "Iraklis 1908",
+       "founded": 2021,
+       "venue": {
+        "name": "Kaftanzoglio Stadio",
+        "city": "Thessaloníki",
+        "capacity": 27770,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Croatia",
+   "fetched": "2026-10-23T13:47:03.122Z",
+   "all": [
+    "210 | HNL | League",
+    "211 | First NL | League",
+    "212 | Cup | Cup",
+    "213 | Third NL - Istok | League",
+    "214 | Third NL - Jug | League",
+    "215 | Third NL - Sjever | League",
+    "216 | Third NL - Sredite | League",
+    "217 | Third NL - Zapad | League",
+    "946 | Second NL | League",
+    "1021 | Super Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 210,
+     "name": "HNL",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-07-15",
+       "2017-05-27",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-14",
+       "2018-05-19",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-27",
+       "2019-05-26",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-19",
+       "2020-07-25",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-14",
+       "2021-05-22",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-16",
+       "2022-05-21",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-15",
+       "2023-06-04",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-22",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-03",
+       "2025-05-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-01",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-31",
+       "2027-05-22",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 561,
+       "name": "HNK Rijeka",
+       "founded": 1946,
+       "venue": {
+        "name": "Stadion HNK Rijeka",
+        "city": "Rijeka",
+        "capacity": 8279,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 608,
+       "name": "HNK Hajduk Split",
+       "founded": 1911,
+       "venue": {
+        "name": "Stadion Poljud",
+        "city": "Split",
+        "capacity": 34448,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 616,
+       "name": "NK Osijek",
+       "founded": 1947,
+       "venue": {
+        "name": "Opus Arena",
+        "city": "Osijek",
+        "capacity": 13005,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 620,
+       "name": "Dinamo Zagreb",
+       "founded": 1911,
+       "venue": {
+        "name": "Stadion Maksimir",
+        "city": "Zagreb",
+        "capacity": 37168,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1016,
+       "name": "Istra 1961",
+       "founded": 1964,
+       "venue": {
+        "name": "Stadion Aldo Drosina",
+        "city": "Pula",
+        "capacity": 8923,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1017,
+       "name": "NK Lokomotiva Zagreb",
+       "founded": 1914,
+       "venue": {
+        "name": "Stadion Maksimir",
+        "city": "Zagreb",
+        "capacity": 37168,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1018,
+       "name": "NK Slaven Belupo",
+       "founded": 1912,
+       "venue": {
+        "name": "Gradski Stadion",
+        "city": "Koprivnica",
+        "capacity": 4448,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1019,
+       "name": "Rudes",
+       "founded": 1957,
+       "venue": {
+        "name": "Igralište NK Rudeš",
+        "city": "Zagreb",
+        "capacity": 2500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1068,
+       "name": "HNK Gorica",
+       "founded": 2009,
+       "venue": {
+        "name": "ŠRC Velika Gorica",
+        "city": "Velika Gorica",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1483,
+       "name": "NK Varazdin",
+       "founded": 1932,
+       "venue": {
+        "name": "Stadion Anđelko Herjavec",
+        "city": "Varaždin",
+        "capacity": 10800,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Serbia",
+   "fetched": "2026-10-23T13:47:04.035Z",
+   "all": [
+    "286 | Super Liga | League",
+    "287 | Prva Liga | League",
+    "572 | Srpska Liga - Belgrade | League",
+    "573 | Srpska Liga - Vojvodina | League",
+    "574 | Srpska Liga - East | League",
+    "575 | Srpska Liga - West | League",
+    "732 | Cup | Cup",
+    "1241 | U19 league | League"
+   ],
+   "leagues": [
+    {
+     "id": 286,
+     "name": "Super Liga",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-07-22",
+       "2017-05-21",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-21",
+       "2018-05-19",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-20",
+       "2019-05-19",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-19",
+       "2020-06-20",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-07-31",
+       "2021-05-19",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-16",
+       "2022-05-28",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-08",
+       "2023-06-04",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-29",
+       "2024-06-03",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-19",
+       "2025-06-01",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-19",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-17",
+       "2027-04-03",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 573,
+       "name": "FK Partizan",
+       "founded": 1945,
+       "venue": {
+        "name": "Stadion Partizana",
+        "city": "Beograd",
+        "capacity": 32710,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 598,
+       "name": "FK Crvena Zvezda",
+       "founded": 1945,
+       "venue": {
+        "name": "Stadion Rajko Mitić",
+        "city": "Beograd",
+        "capacity": 51862,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 699,
+       "name": "Mladost Lucani",
+       "founded": 1952,
+       "venue": {
+        "name": "Mladost Stadium Lučani",
+        "city": "Lučani",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 702,
+       "name": "Vojvodina",
+       "founded": 1914,
+       "venue": {
+        "name": "Stadion Karađorđe",
+        "city": "Novi Sad",
+        "capacity": 14458,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2254,
+       "name": "Radnicki NIS",
+       "founded": 1923,
+       "venue": {
+        "name": "Gradski Stadion Čair",
+        "city": "Niš",
+        "capacity": 18321,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2633,
+       "name": "OFK Beograd",
+       "founded": 1911,
+       "venue": {
+        "name": "Omladinski Stadion",
+        "city": "Beograd",
+        "capacity": 13912,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2637,
+       "name": "Macva",
+       "founded": 1919,
+       "venue": {
+        "name": "Stadion FK Mačva",
+        "city": "Šabac",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2642,
+       "name": "Zemun",
+       "founded": 1946,
+       "venue": {
+        "name": "Stadion u Gornjoj Varoši",
+        "city": "Zemun",
+        "capacity": 9600,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2643,
+       "name": "Novi Pazar",
+       "founded": 1928,
+       "venue": {
+        "name": "Caizcoin Arena",
+        "city": "Novi Pazar",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2644,
+       "name": "Radnicki 1923",
+       "founded": 1923,
+       "venue": {
+        "name": "Stadion Čika Dača",
+        "city": "Kragujevac",
+        "capacity": 15100,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2656,
+       "name": "Cukaricki",
+       "founded": 1926,
+       "venue": {
+        "name": "Stadion na Banovom brdu",
+        "city": "Beograd",
+        "capacity": 4070,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2657,
+       "name": "Radnik Surdulica",
+       "founded": null,
+       "venue": {
+        "name": "EFBET Stadion",
+        "city": "Surdulica",
+        "capacity": 3500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12316,
+       "name": "IMT Novi Beograd",
+       "founded": 1953,
+       "venue": {
+        "name": "Stadion FK Bežanija",
+        "city": "Beograd",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12360,
+       "name": "Železničar Pančevo",
+       "founded": 1947,
+       "venue": {
+        "name": "Sportsko-Rekreativni Centar Mladost",
+        "city": "Pančevo",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Hungary",
+   "fetched": "2026-10-23T13:47:04.981Z",
+   "all": [
+    "272 | NB II | League",
+    "271 | NB I | League",
+    "273 | Magyar Kupa | Cup",
+    "633 | NB III - Northeast | League",
+    "634 | NB III - Southwest | League",
+    "635 | NB III - Northwest | League",
+    "1023 | NB III - Southeast | League",
+    "1111 | NB III - Promotion Play-offs | League"
+   ],
+   "leagues": [
+    {
+     "id": 271,
+     "name": "NB I",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-07-15",
+       "2012-05-27",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-07-27",
+       "2013-06-02",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-07-26",
+       "2014-06-01",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-07-25",
+       "2015-05-31",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-07-18",
+       "2016-04-30",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-07-16",
+       "2017-05-27",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-15",
+       "2018-06-02",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-21",
+       "2019-05-19",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-03",
+       "2020-06-23",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-14",
+       "2021-05-08",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-30",
+       "2022-05-14",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-30",
+       "2023-05-27",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-28",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-27",
+       "2025-05-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-25",
+       "2026-05-16",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-24",
+       "2027-05-22",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 576,
+       "name": "Budapest Honved",
+       "founded": 1908,
+       "venue": {
+        "name": "Bozsik Aréna",
+        "city": "Budapest",
+        "capacity": 8200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 651,
+       "name": "Ferencvarosi TC",
+       "founded": 1899,
+       "venue": {
+        "name": "Groupama Aréna",
+        "city": "Budapest",
+        "capacity": 23698,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 675,
+       "name": "Vasas",
+       "founded": 1911,
+       "venue": {
+        "name": "Illovszky Rudolf Stadion",
+        "city": "Budapest",
+        "capacity": 5054,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2255,
+       "name": "Ujpest",
+       "founded": 1885,
+       "venue": {
+        "name": "Szusza Ferenc Stadion",
+        "city": "Budapest",
+        "capacity": 13501,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2390,
+       "name": "Paks",
+       "founded": 1952,
+       "venue": {
+        "name": "Paksi FC Stadion",
+        "city": "Paks",
+        "capacity": 4950,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2391,
+       "name": "Puskas Academy",
+       "founded": 2007,
+       "venue": {
+        "name": "Puskás Akadémia Pancho Aréna",
+        "city": "Felcsút",
+        "capacity": 3865,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2392,
+       "name": "Debreceni VSC",
+       "founded": 1902,
+       "venue": {
+        "name": "Nagyerdei Stadion",
+        "city": "Debrecen",
+        "capacity": 20340,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2394,
+       "name": "Kisvarda FC",
+       "founded": 2003,
+       "venue": {
+        "name": "Várkerti Stadion",
+        "city": "Kisvárda",
+        "capacity": 3385,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2396,
+       "name": "MTK Budapest",
+       "founded": 1888,
+       "venue": {
+        "name": "Hidegkuti Nándor Stadion",
+        "city": "Budapest",
+        "capacity": 5322,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2402,
+       "name": "Gyori ETO FC",
+       "founded": 1904,
+       "venue": {
+        "name": "ETO Park",
+        "city": "Győr",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2403,
+       "name": "Nyiregyhaza",
+       "founded": 1928,
+       "venue": {
+        "name": "Balmazújvárosi Városi Sportpálya",
+        "city": "Balmazújváros",
+        "capacity": 3500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2414,
+       "name": "Zalaegerszegi TE",
+       "founded": 1920,
+       "venue": {
+        "name": "ZTE-Aréna",
+        "city": "Zalaegerszeg",
+        "capacity": 11200,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Ireland",
+   "fetched": "2026-10-23T13:47:05.917Z",
+   "all": [
+    "357 | Premier Division | League",
+    "358 | First Division | League",
+    "359 | FAI Cup | Cup",
+    "360 | League Cup | Cup",
+    "546 | FAI President's Cup | Cup",
+    "1175 | Women's President's Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 357,
+     "name": "Premier Division",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-02-15",
+       "2019-10-25",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-14",
+       "2020-10-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-19",
+       "2021-11-26",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-18",
+       "2022-11-11",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-17",
+       "2023-11-10",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-02-16",
+       "2024-11-16",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-02-14",
+       "2025-11-07",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-02-06",
+       "2026-10-30",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 584,
+       "name": "Dundalk",
+       "founded": 1903,
+       "venue": {
+        "name": "Oriel Park",
+        "city": "Dundalk",
+        "capacity": 4500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 652,
+       "name": "Shamrock Rovers",
+       "founded": 1899,
+       "venue": {
+        "name": "Tallaght Stadium",
+        "city": "Dublin",
+        "capacity": 10500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 670,
+       "name": "Derry City",
+       "founded": 1928,
+       "venue": {
+        "name": "The Ryan McBride Brandywell Stadium",
+        "city": "Derry (Londonderry)",
+        "capacity": 7000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3840,
+       "name": "Bohemians",
+       "founded": 1890,
+       "venue": {
+        "name": "Dalymount Park",
+        "city": "Dublin",
+        "capacity": 4443,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3842,
+       "name": "Sligo Rovers",
+       "founded": 1928,
+       "venue": {
+        "name": "The Showgrounds",
+        "city": "Sligo",
+        "capacity": 6100,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3843,
+       "name": "St Patrick's Athl.",
+       "founded": 1929,
+       "venue": {
+        "name": "Richmond Park",
+        "city": "Dublin",
+        "capacity": 5500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3845,
+       "name": "Waterford",
+       "founded": 1930,
+       "venue": {
+        "name": "Waterford Regional Sports Centre",
+        "city": "Waterford",
+        "capacity": 5500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3850,
+       "name": "Drogheda United",
+       "founded": 1975,
+       "venue": {
+        "name": "Sullivan & Lambe Park",
+        "city": "Drogheda",
+        "capacity": 3500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3851,
+       "name": "Galway United",
+       "founded": 2013,
+       "venue": {
+        "name": "Eamonn Deacy Park",
+        "city": "Galway",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3854,
+       "name": "Shelbourne",
+       "founded": 1895,
+       "venue": {
+        "name": "Tolka Park",
+        "city": "Dublin",
+        "capacity": 9681,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Mexico",
+   "fetched": "2026-10-23T13:47:06.878Z",
+   "all": [
+    "262 | Liga MX | League",
+    "263 | Liga de Expansión MX | League",
+    "264 | Copa MX | Cup",
+    "662 | Copa por México | Cup",
+    "673 | Liga MX Femenil | League",
+    "722 | Liga Premier Serie A | League",
+    "857 | Campeón de Campeones | Cup",
+    "861 | U20 League | League",
+    "872 | Liga Premier Serie B | League",
+    "1017 | U23 League | League",
+    "1200 | Liga MX U21 | League",
+    "1242 | Primera Premier | League"
+   ],
+   "leagues": [
+    {
+     "id": 262,
+     "name": "Liga MX",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-07-16",
+       "2017-05-28",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-22",
+       "2018-05-21",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-21",
+       "2019-05-27",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-20",
+       "2020-05-11",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-07-25",
+       "2021-05-31",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-23",
+       "2022-05-30",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-02",
+       "2023-05-28",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-01",
+       "2024-05-26",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-05",
+       "2025-05-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-12",
+       "2026-05-24",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-17",
+       "2026-11-23",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2278,
+       "name": "Guadalajara Chivas",
+       "founded": 1906,
+       "venue": {
+        "name": "Estadio AKRON",
+        "city": "Zapopan",
+        "capacity": 46609,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2279,
+       "name": "Tigres UANL",
+       "founded": 1960,
+       "venue": {
+        "name": "Estadio Universitario de Nuevo León",
+        "city": "San Nicolás de los Garza",
+        "capacity": 42000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2280,
+       "name": "Club Tijuana",
+       "founded": 2006,
+       "venue": {
+        "name": "Estadio Caliente",
+        "city": "Tijuana",
+        "capacity": 33333,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2281,
+       "name": "Toluca",
+       "founded": 1917,
+       "venue": {
+        "name": "Estadio Nemesio Díez",
+        "city": "Toluca de Lerdo",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2282,
+       "name": "Monterrey",
+       "founded": 1945,
+       "venue": {
+        "name": "Estadio BBVA",
+        "city": "Guadalupe",
+        "capacity": 53500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2283,
+       "name": "Atlas",
+       "founded": 1916,
+       "venue": {
+        "name": "Estadio Jalisco",
+        "city": "Guadalajara",
+        "capacity": 56713,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2285,
+       "name": "Santos Laguna",
+       "founded": 1983,
+       "venue": {
+        "name": "Estadio Corona",
+        "city": "Torreón",
+        "capacity": 28914,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2286,
+       "name": "U.N.A.M. - Pumas",
+       "founded": 1954,
+       "venue": {
+        "name": "Estadio Olímpico de Universitario",
+        "city": "D.F.",
+        "capacity": 72449,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2287,
+       "name": "Club America",
+       "founded": 1916,
+       "venue": {
+        "name": "Estadio Azteca",
+        "city": "D.F.",
+        "capacity": 106187,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2288,
+       "name": "Necaxa",
+       "founded": 1923,
+       "venue": {
+        "name": "Estadio Victoria",
+        "city": "Aguascalientes",
+        "capacity": 25500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2289,
+       "name": "Leon",
+       "founded": 1944,
+       "venue": {
+        "name": "Estadio León (Nou Camp)",
+        "city": "León de los Aldamas",
+        "capacity": 33943,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2290,
+       "name": "Club Queretaro",
+       "founded": 1950,
+       "venue": {
+        "name": "Estadio Corregidora",
+        "city": "Santiago de Querétaro",
+        "capacity": 34130,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2291,
+       "name": "Puebla",
+       "founded": 1944,
+       "venue": {
+        "name": "Estadio Cuauhtémoc",
+        "city": "Puebla",
+        "capacity": 51726,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2292,
+       "name": "CF Pachuca",
+       "founded": 1901,
+       "venue": {
+        "name": "Estadio Hidalgo",
+        "city": "Pachuca de Soto",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2295,
+       "name": "Cruz Azul",
+       "founded": 1927,
+       "venue": {
+        "name": "Estadio Azteca",
+        "city": "D.F.",
+        "capacity": 106187,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2298,
+       "name": "FC Juarez",
+       "founded": 2015,
+       "venue": {
+        "name": "Estadio Olímpico Benito Juárez",
+        "city": "Ciudad Juárez",
+        "capacity": 22300,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2312,
+       "name": "Atlante FC",
+       "founded": 1916,
+       "venue": {
+        "name": "Estadio Ciudad de los Deportes",
+        "city": "D.F.",
+        "capacity": 32329,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2314,
+       "name": "Atletico San Luis",
+       "founded": 2013,
+       "venue": {
+        "name": "Estadio Alfonso Lastras Ramírez",
+        "city": "San Luis Potosí",
+        "capacity": 26400,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
