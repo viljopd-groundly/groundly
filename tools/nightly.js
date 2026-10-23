@@ -118,14 +118,15 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
       for(const spec of process.env.BACKFILL.split(",").map(x=>x.trim()).filter(Boolean)){const[code,range]=spec.split(":");const[a,b]=(range||"").split("-").map(Number);
         const ent=API.find(x=>x[4]===code);if(!ent||!a){apiStat.backfill[spec]="okänd";continue;}const[lname,country,ac,tier,,re,isW,isN]=ent;
         const key=Object.keys(lg).find(k=>k.startsWith(ac+"|")&&re.test(k.split("|")[1]));if(!key){apiStat.backfill[spec]="saknas i API";continue;}
-        const got=[];for(let yr=a;yr<=(b||a);yr++){const f=path.join(OUT,"archive",code,yr+".json");if(fs.existsSync(f)){got.push(yr+" fanns");continue;}
+        const cross=String(lg[key].start||"").slice(0,4)!==String(lg[key].end||"").slice(0,4);// höst–vår-serie: filen heter 2016-17
+        const got=[];for(let yr=a;yr<=(b||a);yr++){const SKb=cross?`${yr}-${String((yr+1)%100).padStart(2,"0")}`:String(yr);const f=path.join(OUT,"archive",code,SKb+".json");if(fs.existsSync(f)){got.push(SKb+" fanns");continue;}
           let fx;try{fx=get(`fixtures?league=${lg[key].id}&season=${yr}&timezone=UTC`);}catch(e){got.push(yr+" fel");continue;}if(!fx.length){got.push(yr+" tom");continue;}
           const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const pre=tm&&teamMap[tm.id];const c=pre?[pre]:isW||isN?null:findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};
           const arc=[];for(const x of fx){const st=x.fixture.status&&x.fixture.status.short;if(["PST","CANC","ABD","AWD","WO"].includes(st))continue;const fin=["FT","AET","PEN"].includes(st);const d=x.fixture.date;
             const pen=x.score&&x.score.penalty&&x.score.penalty.home!=null?`${x.score.penalty.home}-${x.score.penalty.away}`:"";
             arc.push([T(x.teams.home.name,x.teams.home),T(x.teams.away.name,x.teams.away),d.slice(0,10),/T00:00:00/.test(d)?"":d.slice(11,16),fin?x.goals.home:null,fin?x.goals.away:null,pen,tier==="CUP"?(x.league.round||""):""]);}
           arc.sort((p,q)=>(p[2]+p[3]).localeCompare(q[2]+q[3]));
-          fs.mkdirSync(path.join(OUT,"archive",code),{recursive:true});fs.writeFileSync(f,JSON.stringify({l:lname,s:String(yr),c:country,tier,t:teams,m:arc}));got.push(yr+": "+arc.length);}
+          fs.mkdirSync(path.join(OUT,"archive",code),{recursive:true});fs.writeFileSync(f,JSON.stringify({l:lname,s:SKb.replace("-","/"),c:country,tier,t:teams,m:arc}));got.push(SKb+": "+arc.length);}
         apiStat.backfill[spec]=got.join(", ");}}
     const done=[];// [lname, apiLeagueId, season, country, tier]
     // 2) matcher och resultat
