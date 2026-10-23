@@ -396,6 +396,9 @@ button{touch-action:manipulation}
 .arcsea{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:11px 14px;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .arcsea:after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:-4px 2px 0 auto}.arcsea[aria-expanded=true]:after{transform:rotate(-135deg);margin-top:4px}
 .arcsea .meta{margin-left:auto;font-size:13px}
+.mystats>summary{cursor:pointer;font-weight:700;display:flex;align-items:center;gap:8px;list-style:none}.mystats>summary::-webkit-details-marker{display:none}.mystats>summary .meta{margin-left:auto;font-weight:500}
+.mystats>summary:after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:-4px 2px 0 6px}.mystats[open]>summary:after{transform:rotate(-135deg);margin-top:4px}
+.msg{display:flex;flex-direction:column;gap:6px;margin-top:10px}.msr{display:flex;justify-content:space-between;gap:12px;font-size:14px;border-top:1px dashed var(--line);padding-top:6px}.msr span{color:var(--muted)}.msr b{text-align:right;font-weight:600}
 .selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.dsel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dsel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
@@ -1619,6 +1622,7 @@ function renderMine(){
     const yearChips=attAll.length?`<div class="chips" role="group" aria-label="Visa år">${[["all","Alla",attAll.length],...yTop.map(y=>[y,y,yCount[y]]),...(oldN?[["old","Tidigare",oldN]]:[])].map(([k,l,n])=>`<button class="chip" data-myyear="${k}" aria-pressed="${myYear===k}">${l}<small>${n}</small></button>`).join("")}</div>`:"";
     if(MY.attended.length){const pins=visitedPins();const reg=mapRegion||autoRegion(pins);
       h+=`<div class="sechead"><h3 class="sec">Mina arenor på kartan</h3></div><div class="lmap"><div class="chips" role="group" aria-label="Karta">${[["se","Sverige"],["eu","Europa"],["world","Världen"]].map(([k,l])=>`<button class="chip" data-mapr="${k}" aria-pressed="${reg===k}">${l}</button>`).join("")}</div><div id="liveMap" class="lmapbox"><p class="hint">Laddar kartan…</p></div><p class="hint" id="lmapInfo">Tryck på en nål för att se arenan.</p></div>`;}
+    h+=myStatsHtml();
     h+=`<div class="sechead"><h3 class="sec">Matcher jag varit på</h3>${MY.attended.length?`<div class="actions"><button class="btn small" data-exportcsv="1">${ic("download")} Excel (CSV)</button><button class="btn small" data-backup="1">${ic("download")} Säkerhetskopia</button><label class="btn small" for="restoreIn">${ic("upload")} Läs in<input id="restoreIn" type="file" accept=".json,application/json" hidden></label></div>`:`<label class="btn small" for="restoreIn">${ic("upload")} Läs in säkerhetskopia<input id="restoreIn" type="file" accept=".json,application/json" hidden></label>`}</div><p class="hint" id="csvMsg"></p>`+yearChips;
     const attShow=att.filter((a,i)=>i<MYMORE.att||a.id===editAtt||a.id===shareMatchId);
     h+=att.length?attShow.map(a=>`<div class="mrow">
@@ -1692,6 +1696,38 @@ document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest
   const k=t.dataset.limmore||t.dataset.limless;if(t.dataset.limmore){const b=+t.dataset.limbase||5;LIM[k]=lim(k,b)+Math.max(b,10);}else delete LIM[k];
   if(k.startsWith("leg"))legRender();else if(k.startsWith("com:"))renderReports(true);else render();
   if(t.dataset.limless){const card=document.querySelector(`[data-limhead="${CSS.escape(k)}"]`);if(card)card.scrollIntoView({block:"start"});}});
+// ---------- min statistik (alla loggade matcher) ----------
+let myStatsOpen=false;
+function myStatsHtml(){const A=MY.attended||[];if(A.length<2)return"";
+  const sc=A.map(a=>[a,scoreOf(a)]).filter(x=>x[1]);const n=sc.length;let goals=0,hw=0,dr=0,aw=0,nil=0;let top=null,big=null;
+  sc.forEach(([a,[h,g]])=>{goals+=h+g;if(h>g)hw++;else if(h<g)aw++;else dr++;if(h+g===0)nil++;if(!top||h+g>top.t)top={a,t:h+g};if(!big||Math.abs(h-g)>big.d)big={a,d:Math.abs(h-g)};});
+  const pct=x=>n?Math.round(100*x/n)+" %":"–";
+  // favoritlagen när jag är på plats
+  const favs=favList();let fw=0,fd=0,fl=0;sc.forEach(([a,[h,g]])=>{const f=favs.find(x=>x===a.home||x===a.away);if(!f)return;const[my,op]=a.home===f?[h,g]:[g,h];if(my>op)fw++;else if(my===op)fd++;else fl++;});const fn=fw+fd+fl;
+  // resor från hemorten
+  const hl=homeLL();let far=null,km=0,kmN=0;if(hl)A.forEach(a=>{const ll=GEO[a.city];if(!ll)return;const d=haversine(hl.ll,ll);km+=2*d;kmN++;if(!far||d>far.d)far={a,d};});
+  // veckodag, månad, mest sedda lag och arena
+  const WD=["söndag","måndag","tisdag","onsdag","torsdag","fredag","lördag"];const cnt=(f)=>{const m=new Map();A.forEach(a=>{const k=f(a);if(k)m.set(k,(m.get(k)||0)+1);});return[...m.entries()].sort((x,y)=>y[1]-x[1])[0]||null;};
+  const wd=cnt(a=>WD[new Date(a.date+"T12:00:00").getDay()]),mo=cnt(a=>["januari","februari","mars","april","maj","juni","juli","augusti","september","oktober","november","december"][+a.date.slice(5,7)-1]);
+  const team=(()=>{const m=new Map();A.forEach(a=>[[a.home,a.homeName],[a.away,a.awayName]].forEach(([id,nm])=>{const k=id||nm;if(!k)return;const e=m.get(k)||{n:0,name:id&&C[id]?C[id].n:nm};e.n++;m.set(k,e);}));return[...m.values()].sort((x,y)=>y.n-x.n)[0];})();
+  const ar=cnt(a=>a.venue);const mt=x=>`${esc(x.a.homeName)} – ${esc(x.a.awayName)} ${esc(x.a.score||"")} <span class="meta">(${esc(fmtDate(x.a.date))})</span>`;
+  const row=(l,v)=>v?`<div class="msr"><span>${l}</span><b>${v}</b></div>`:"";
+  return`<details class="mystats tip"${myStatsOpen?" open":""}><summary>${ic("table")} Min statistik <span class="meta">${A.length} matcher</span></summary><div class="msg">
+    ${n?`<div class="hb">${[["Hemmaseger",hw],["Oavgjort",dr],["Bortaseger",aw]].map(([l,v])=>`<div><span>${l}</span><b>${pct(v)}</b><small>${v} av ${n}</small></div>`).join("")}</div>`:""}
+    ${row("Mål per match",n?(goals/n).toFixed(1).replace(".",",")+` <span class="meta">(${goals} mål)</span>`:"")}
+    ${row("Målrikaste match",top&&top.t?mt(top):"")}
+    ${row("Största segermarginal",big&&big.d?mt(big):"")}
+    ${row("Mållösa matcher",n?String(nil):"")}
+    ${fn?row("Mina favoritlag på plats",`${Math.round(100*fw/fn)} % vinster <span class="meta">(V ${fw} · O ${fd} · F ${fl})</span>`):""}
+    ${far?row("Längsta resan",`${esc(far.a.city)}, ${milTxt(far.d)} från ${esc(hl.name)}`):""}
+    ${kmN?row("Resat totalt",`ca ${Math.round(km).toLocaleString("sv-SE")} km tur och retur`):""}
+    ${row("Mest sedda lag",team&&team.n>1?`${esc(team.name)} <span class="meta">(${team.n} matcher)</span>`:"")}
+    ${row("Mest besökta arena",ar&&ar[1]>1?`${esc(ar[0])} <span class="meta">(${ar[1]} gånger)</span>`:"")}
+    ${row("Vanligaste matchdag",wd&&wd[1]>1?`${wd[0]} <span class="meta">(${wd[1]} matcher)</span>`:"")}
+    ${row("Flest matcher i",mo&&mo[1]>1?`${mo[0]} <span class="meta">(${mo[1]})</span>`:"")}
+    ${n<A.length?`<p class="hint">${A.length-n} matcher saknar resultat och räknas inte i procent och mål.${hl?"":" Ange din hemort på Hem för att se resorna."}</p>`:hl?"":`<p class="hint">Ange din hemort på Hem för att se längsta resan och hur långt du rest.</p>`}
+  </div></details>`;}
+document.addEventListener("toggle",e=>{if(e.target.classList&&e.target.classList.contains("mystats"))myStatsOpen=e.target.open;},true);
 // "Varit på": visa 3 i taget per lista
 const MYMORE={att:3,vis:3,nt:3};
 function moreBtns(k,total){const n=MYMORE[k];if(total<=3)return"";
