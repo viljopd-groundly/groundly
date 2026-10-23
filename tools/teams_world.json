@@ -1,0 +1,4551 @@
+{
+ "fetched": "2026-10-23T12:06:49.868Z",
+ "countries": [
+  {
+   "country": "Argentina",
+   "fetched": "2026-10-23T12:06:38.698Z",
+   "all": [
+    "131 | Primera B Metropolitana | League",
+    "129 | Primera Nacional | League",
+    "132 | Primera C | League",
+    "133 | Primera D | League",
+    "134 | Torneo Federal A | League",
+    "128 | Liga Profesional Argentina | League",
+    "130 | Copa Argentina | Cup",
+    "517 | Trofeo de Campeones de la Superliga | Cup",
+    "483 | Copa de la Superliga | Cup",
+    "810 | Super Copa | Cup",
+    "906 | Reserve League | League",
+    "1032 | Copa de la Liga Profesional | League",
+    "1067 | Torneo Promocional Amateur | League",
+    "1178 | Super Copa International | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 128,
+     "name": "Liga Profesional Argentina",
+     "season": 2026,
+     "seasons": [
+      [
+       2015,
+       "2015-02-13",
+       "2015-12-07",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-08-26",
+       "2017-06-27",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-08-25",
+       "2018-05-15",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-10",
+       "2019-04-07",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-27",
+       "2020-03-10",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-30",
+       "2021-01-18",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-02-12",
+       "2021-12-12",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-10",
+       "2022-10-23",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-01-26",
+       "2023-07-30",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-05-12",
+       "2024-12-15",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-01-23",
+       "2025-12-14",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-01-22",
+       "2026-11-08",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 434,
+       "name": "Gimnasia L.P.",
+       "founded": 1887,
+       "venue": {
+        "name": "Estadio Juan Carmelo Zerillo",
+        "city": "La Plata, Provincia de Buenos Aires",
+        "capacity": 24544,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 435,
+       "name": "River Plate",
+       "founded": 1901,
+       "venue": {
+        "name": "Estadio Mâs Monumental",
+        "city": "Capital Federal, Ciudad de Buenos Aires",
+        "capacity": 83214,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 436,
+       "name": "Racing Club",
+       "founded": 1903,
+       "venue": {
+        "name": "Estadio Presidente Juan Domingo Perón",
+        "city": "Avellaneda, Provincia de Buenos Aires",
+        "capacity": 51500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 437,
+       "name": "Rosario Central",
+       "founded": 1889,
+       "venue": {
+        "name": "Estadio Gigante de Arroyito",
+        "city": "Rosario, Provincia de Santa Fe",
+        "capacity": 41654,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 438,
+       "name": "Velez Sarsfield",
+       "founded": 1910,
+       "venue": {
+        "name": "Estadio José Amalfitani",
+        "city": "Capital Federal, Ciudad de Buenos Aires",
+        "capacity": 49747,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 440,
+       "name": "Belgrano Cordoba",
+       "founded": 1905,
+       "venue": {
+        "name": "Estadio Julio César Villagra",
+        "city": "Ciudad de Córdoba, Provincia de Córdoba",
+        "capacity": 28000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 441,
+       "name": "Union Santa Fe",
+       "founded": 1907,
+       "venue": {
+        "name": "Estadio 15 de Abril",
+        "city": "Ciudad de Santa Fe, Provincia de Santa Fe",
+        "capacity": 27000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 442,
+       "name": "Defensa Y Justicia",
+       "founded": 1935,
+       "venue": {
+        "name": "Estadio Norberto Tito Tomaghello",
+        "city": "Florencio Varela, Provincia de Buenos Aires",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 445,
+       "name": "Huracan",
+       "founded": 1908,
+       "venue": {
+        "name": "Estadio Tomás Adolfo Ducó",
+        "city": "Capital Federal, Ciudad de Buenos Aires",
+        "capacity": 48314,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 446,
+       "name": "Lanus",
+       "founded": 1915,
+       "venue": {
+        "name": "Estadio Ciudad de Lanús - Néstor Díaz Pérez",
+        "city": "Lanús, Provincia de Buenos Aires",
+        "capacity": 46619,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 449,
+       "name": "Banfield",
+       "founded": 1896,
+       "venue": {
+        "name": "Estadio Florencio Solá",
+        "city": "Lomas de Zamora, Provincia de Buenos Aires",
+        "capacity": 34901,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 450,
+       "name": "Estudiantes L.P.",
+       "founded": 1905,
+       "venue": {
+        "name": "Estadio Único Diego Armando Maradona",
+        "city": "La Plata, Provincia de Buenos Aires",
+        "capacity": 53000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 451,
+       "name": "Boca Juniors",
+       "founded": 1905,
+       "venue": {
+        "name": "Estadio Alberto José Armando",
+        "city": "Ciudad de Buenos Aires",
+        "capacity": 49000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 452,
+       "name": "Tigre",
+       "founded": 1902,
+       "venue": {
+        "name": "Estadio José Dellagiovanna",
+        "city": "San Fernando, Provincia de Buenos Aires",
+        "capacity": 26282,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 453,
+       "name": "Independiente",
+       "founded": 1905,
+       "venue": {
+        "name": "Estadio Libertadores de América",
+        "city": "Avellaneda, Provincia de Buenos Aires",
+        "capacity": 52364,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 455,
+       "name": "Atletico Tucuman",
+       "founded": 1902,
+       "venue": {
+        "name": "Estadio Monumental Presidente José Fierro",
+        "city": "San Miguel de Tucumán, Provincia de Tucumán",
+        "capacity": 35200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 456,
+       "name": "Talleres Cordoba",
+       "founded": 1913,
+       "venue": {
+        "name": "Estadio Mario Alberto Kempes",
+        "city": "Ciudad de Córdoba, Provincia de Córdoba",
+        "capacity": 57503,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 457,
+       "name": "Newells Old Boys",
+       "founded": 1903,
+       "venue": {
+        "name": "Estadio Marcelo Alberto Bielsa",
+        "city": "Rosario, Provincia de Santa Fe",
+        "capacity": 42000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 458,
+       "name": "Argentinos JRS",
+       "founded": 1904,
+       "venue": {
+        "name": "Estadio Diego Armando Maradona",
+        "city": "Capital Federal, Ciudad de Buenos Aires",
+        "capacity": 24380,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 460,
+       "name": "San Lorenzo",
+       "founded": 1908,
+       "venue": {
+        "name": "Estadio Pedro Bidegaín",
+        "city": "Capital Federal, Ciudad de Buenos Aires",
+        "capacity": 43494,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 463,
+       "name": "Aldosivi",
+       "founded": 1913,
+       "venue": {
+        "name": "Estadio José María Minella",
+        "city": "Mar del Plata, Provincia de Buenos Aires",
+        "capacity": 35354,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 473,
+       "name": "Independ. Rivadavia",
+       "founded": 1913,
+       "venue": {
+        "name": "Estadio Juan Bautista Gargantini",
+        "city": "Mendoza, Provincia de Mendoza",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 474,
+       "name": "Sarmiento Junin",
+       "founded": 1911,
+       "venue": {
+        "name": "Estadio Eva Perón de Junín",
+        "city": "Junín, Provincia de Buenos Aires",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 476,
+       "name": "Deportivo Riestra",
+       "founded": 1931,
+       "venue": {
+        "name": "Estadio Guillermo Laza",
+        "city": "Capital Federal, Ciudad de Buenos Aires",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 478,
+       "name": "Instituto Cordoba",
+       "founded": 1918,
+       "venue": {
+        "name": "Estadio Juan Domingo Perón",
+        "city": "Ciudad de Córdoba, Provincia de Córdoba",
+        "capacity": 26535,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1064,
+       "name": "Platense",
+       "founded": 1905,
+       "venue": {
+        "name": "Estadio Ciudad de Vicente López",
+        "city": "Vicente López, Provincia de Buenos Aires",
+        "capacity": 31030,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1065,
+       "name": "Central Cordoba de Santiago",
+       "founded": 1919,
+       "venue": {
+        "name": "Estadio Alfredo Terrera",
+        "city": "Santiago del Estero, Provincia de Santiago del Est",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1066,
+       "name": "Gimnasia M.",
+       "founded": 1908,
+       "venue": {
+        "name": "Estadio Víctor Antonio Legrotaglie",
+        "city": "Mendoza, Provincia de Mendoza",
+        "capacity": 11500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2424,
+       "name": "Estudiantes de Rio Cuarto",
+       "founded": 1912,
+       "venue": {
+        "name": "Estadio Ciudad de Río Cuarto",
+        "city": "Ciudad de Río Cuarto, Provincia de Córdoba",
+        "capacity": 9000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2432,
+       "name": "Barracas Central",
+       "founded": 1904,
+       "venue": {
+        "name": "Estadio Claudio Fabián Tapia",
+        "city": "Capital Federal, Ciudad de Buenos Aires",
+        "capacity": 4400,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Brazil",
+   "fetched": "2026-10-23T12:06:39.808Z",
+   "all": [
+    "71 | Serie A | League",
+    "72 | Serie B | League",
+    "75 | Serie C | League",
+    "76 | Serie D | League",
+    "520 | Acreano | League",
+    "73 | Copa Do Brasil | Cup",
+    "74 | Brasileiro Women | League",
+    "521 | Amapaense | League",
+    "522 | Amazonense | League",
+    "77 | Alagoano | Cup",
+    "613 | Baiano - 2 | League",
+    "620 | Cearense - 2 | League",
+    "625 | Carioca - 2 | League",
+    "475 | Paulista - A1 | League",
+    "476 | Paulista - A2 | League",
+    "477 | Gaúcho - 1 | League",
+    "478 | Gaúcho - 2 | League",
+    "602 | Baiano - 1 | League",
+    "603 | Paraibano | League",
+    "604 | Catarinense - 1 | League",
+    "605 | Paulista - A3 | League",
+    "606 | Paranaense - 1 | League",
+    "607 | Roraimense | League",
+    "608 | Maranhense | League",
+    "609 | Cearense - 1 | League",
+    "610 | Brasiliense | League",
+    "611 | Capixaba | League",
+    "612 | Copa do Nordeste | Cup",
+    "614 | Paranaense - 2 | League",
+    "615 | Rondoniense | League",
+    "616 | Potiguar | League",
+    "617 | Copa do Brasil U20 | Cup",
+    "618 | São Paulo Youth Cup | Cup",
+    "619 | Mineiro - 2 | League",
+    "621 | Piauiense | League",
+    "622 | Pernambucano - 1 | League",
+    "623 | Sul-Matogrossense | League",
+    "624 | Carioca - 1 | League",
+    "626 | Sergipano | League",
+    "627 | Paraense | League",
+    "628 | Goiano - 1 | League",
+    "629 | Mineiro - 1 | League",
+    "630 | Matogrossense | League",
+    "631 | Tocantinense | League",
+    "632 | Supercopa do Brasil | Cup",
+    "740 | Brasileiro U20 A | Cup",
+    "741 | Brasileiro de Aspirantes | Cup",
+    "742 | Copa Paulista | Cup",
+    "843 | Copa Verde | Cup",
+    "851 | Carioca A2 | League",
+    "936 | Catarinense - 2 | League",
+    "1030 | Goiano - 2 | League",
+    "1035 | Copa Rio | Cup",
+    "1036 | Copa Santa Catarina | Cup",
+    "1037 | Paraibano 2 | League",
+    "1059 | Recopa Catarinense | Cup",
+    "1062 | Paulista - A4 | League",
+    "1063 | Copa Alagoas | Cup",
+    "1069 | Goiano U20 | League",
+    "1071 | Paranaense U20 | League",
+    "1073 | Baiano U20 | League",
+    "1076 | Catarinense U20 | League",
+    "1082 | Copa Rio U20 | Cup",
+    "1086 | Paulista - U20 | League",
+    "1088 | Pernambucano - U20 | League",
+    "1096 | Matogrossense 2 | League",
+    "1097 | Copa Espírito Santo | Cup",
+    "1098 | Paulista Série B | League",
+    "1100 | Brasiliense U20 | League",
+    "1106 | Carioca C | League",
+    "1107 | Mineiro U20 | League",
+    "1108 | Sergipano U20 | League",
+    "1110 | Alagoano U20 | League",
+    "1112 | Cearense U20 | League",
+    "1114 | Carioca U20 | League",
+    "1115 | Paraense A3 | League",
+    "1120 | Paraibano U20 | League",
+    "1124 | Cearense - 3 | League",
+    "1125 | Pernambucano - 2 | League",
+    "1128 | Brasileiro U17 | League",
+    "1133 | Goiano - 3 | League",
+    "1134 | Amazonense - 2 | League",
+    "1135 | Sergipano - 2 | League",
+    "1138 | Paranaense - 3 | League",
+    "1139 | Potiguar - U20 | League",
+    "1141 | Brasiliense B | League",
+    "1142 | Mineiro - 3 | League",
+    "1143 | Estadual Junior U20 | League",
+    "1145 | Paraense B1 | League",
+    "1146 | Alagoano - 2 | Cup",
+    "1148 | Maranhense - 2 | League",
+    "1149 | Potiguar - 2 | League",
+    "1150 | Gaúcho - 3 | League",
+    "1151 | Pernambucano - 3 | League",
+    "1154 | Catarinense - 3 | League",
+    "1155 | Carioca B2 | League",
+    "1157 | Paraense U20 | League",
+    "1158 | Copa Gaúcha | Cup",
+    "1165 | Copa Fares Lopes | Cup",
+    "1147 | Capixaba B | League",
+    "1179 | Copa do Brasil U17 | Cup",
+    "1183 | Brasileiro U20 B | Cup",
+    "1184 | Copa Grão Pará | Cup",
+    "1203 | Piauiense - 2 | League",
+    "1204 | Rondoniense - 2 | League",
+    "1205 | Kings Cup | Cup",
+    "1223 | Copa Norte | Cup",
+    "1224 | Copa Sul-Sudeste | Cup",
+    "1225 | Copa Centro-Oeste | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 71,
+     "name": "Serie A",
+     "season": 2026,
+     "seasons": [
+      [
+       2010,
+       "2010-05-08",
+       "2010-11-28",
+       true,
+       true
+      ],
+      [
+       2011,
+       "2011-05-21",
+       "2011-12-04",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-05-19",
+       "2012-12-02",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-05-25",
+       "2013-12-08",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-04-19",
+       "2014-12-07",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-05-09",
+       "2015-12-06",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-05-14",
+       "2016-12-11",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-05-13",
+       "2017-12-03",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-04-14",
+       "2018-12-02",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-04-27",
+       "2019-12-08",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-08",
+       "2021-02-26",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-05-29",
+       "2021-12-10",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-04-10",
+       "2022-11-13",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-04-15",
+       "2023-12-03",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-04-13",
+       "2024-12-08",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-03-29",
+       "2025-12-07",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-01-28",
+       "2026-12-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 118,
+       "name": "Bahia",
+       "founded": 1931,
+       "venue": {
+        "name": "Arena Fonte Nova",
+        "city": "Salvador, Bahia",
+        "capacity": 56500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 119,
+       "name": "Internacional",
+       "founded": 1909,
+       "venue": {
+        "name": "Estádio José Pinheiro Borda",
+        "city": "Porto Alegre, Rio Grande do Sul",
+        "capacity": 50128,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 120,
+       "name": "Botafogo",
+       "founded": 1904,
+       "venue": {
+        "name": "Estádio Nilton Santos",
+        "city": "Rio de Janeiro",
+        "capacity": 46931,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 121,
+       "name": "Palmeiras",
+       "founded": 1914,
+       "venue": {
+        "name": "Allianz Parque",
+        "city": "São Paulo, São Paulo",
+        "capacity": 43713,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 124,
+       "name": "Fluminense",
+       "founded": 1902,
+       "venue": {
+        "name": "Estadio Jornalista Mário Filho (Maracanã)",
+        "city": "Rio de Janeiro, Rio de Janeiro",
+        "capacity": 78838,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 126,
+       "name": "Sao Paulo",
+       "founded": 1930,
+       "venue": {
+        "name": "Estádio Cícero Pompeu de Toledo (Morumbi)",
+        "city": "São Paulo, São Paulo",
+        "capacity": 66795,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 127,
+       "name": "Flamengo",
+       "founded": 1895,
+       "venue": {
+        "name": "Estadio Jornalista Mário Filho (Maracanã)",
+        "city": "Rio de Janeiro, Rio de Janeiro",
+        "capacity": 78838,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 128,
+       "name": "Santos",
+       "founded": 1912,
+       "venue": {
+        "name": "Estádio Urbano Caldeira",
+        "city": "Santos, São Paulo",
+        "capacity": 21256,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 130,
+       "name": "Gremio",
+       "founded": 1903,
+       "venue": {
+        "name": "Arena do Grêmio",
+        "city": "Porto Alegre, Rio Grande do Sul",
+        "capacity": 60540,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 131,
+       "name": "Corinthians",
+       "founded": 1910,
+       "venue": {
+        "name": "Neo Química Arena",
+        "city": "São Paulo, São Paulo",
+        "capacity": 49205,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 132,
+       "name": "Chapecoense-sc",
+       "founded": 1973,
+       "venue": {
+        "name": "Arena Condá",
+        "city": "Chapecó, Santa Catarina",
+        "capacity": 22600,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 133,
+       "name": "Vasco DA Gama",
+       "founded": 1898,
+       "venue": {
+        "name": "Estádio São Januário",
+        "city": "Rio de Janeiro, Rio de Janeiro",
+        "capacity": 24584,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 134,
+       "name": "Atletico Paranaense",
+       "founded": 1924,
+       "venue": {
+        "name": "Arena da Baixada",
+        "city": "Curitiba, Paraná",
+        "capacity": 43981,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 135,
+       "name": "Cruzeiro",
+       "founded": 1921,
+       "venue": {
+        "name": "Estádio Governador Magalhães Pinto",
+        "city": "Belo Horizonte, Minas Gerais",
+        "capacity": 62170,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 136,
+       "name": "Vitoria",
+       "founded": 1899,
+       "venue": {
+        "name": "Estádio Manoel Barradas",
+        "city": "Salvador, Bahia",
+        "capacity": 35980,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 147,
+       "name": "Coritiba",
+       "founded": 1909,
+       "venue": {
+        "name": "Estádio Major Antônio Couto Pereira",
+        "city": "Curitiba, Paraná",
+        "capacity": 45563,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 794,
+       "name": "RB Bragantino",
+       "founded": 1928,
+       "venue": {
+        "name": "Estádio Nabi Abi Chedid",
+        "city": "Bragança Paulista, São Paulo",
+        "capacity": 17128,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1062,
+       "name": "Atletico-MG",
+       "founded": 1908,
+       "venue": {
+        "name": "Arena MRV",
+        "city": "Belo Horizonte, Minas Gerais",
+        "capacity": 47465,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1198,
+       "name": "Remo",
+       "founded": 1905,
+       "venue": {
+        "name": "Estádio Estadual Jornalista Edgar Augusto Proença",
+        "city": "Belém, Pará",
+        "capacity": 53635,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7848,
+       "name": "Mirassol",
+       "founded": 1925,
+       "venue": {
+        "name": "Estádio José Maria de Campos Maia",
+        "city": "Mirassol, São Paulo",
+        "capacity": 14534,
+        "surface": "grass"
+       }
+      }
+     ]
+    },
+    {
+     "id": 72,
+     "name": "Serie B",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-05-19",
+       "2012-11-24",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-05-24",
+       "2013-11-30",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-04-18",
+       "2014-11-29",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-05-08",
+       "2015-11-28",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-05-13",
+       "2016-11-26",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-05-12",
+       "2017-11-25",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-04-13",
+       "2018-11-24",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-04-26",
+       "2019-11-30",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-07",
+       "2021-01-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-05-28",
+       "2021-11-28",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-04-09",
+       "2022-11-05",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-04-14",
+       "2023-11-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-04-19",
+       "2024-11-26",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-04-04",
+       "2025-11-22",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-03-21",
+       "2026-11-14",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 123,
+       "name": "Sport Recife",
+       "founded": 1905,
+       "venue": {
+        "name": "Itaipava Arena Pernambuco",
+        "city": "Recife, Pernambuco",
+        "capacity": 46154,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 125,
+       "name": "America Mineiro",
+       "founded": 1912,
+       "venue": {
+        "name": "Estádio Raimundo Sampaio",
+        "city": "Belo Horizonte, Minas Gerais",
+        "capacity": 23018,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 129,
+       "name": "Ceara",
+       "founded": 1914,
+       "venue": {
+        "name": "Estádio Governador Plácido Aderaldo Castelo",
+        "city": "Fortaleza, Ceará",
+        "capacity": 63903,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 139,
+       "name": "Ponte Preta",
+       "founded": 1900,
+       "venue": {
+        "name": "Estádio Moisés Lucarelli",
+        "city": "Campinas, São Paulo",
+        "capacity": 17728,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 140,
+       "name": "Criciuma",
+       "founded": 1947,
+       "venue": {
+        "name": "Estádio Heriberto Hülse",
+        "city": "Criciúma, Santa Catarina",
+        "capacity": 19300,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 142,
+       "name": "Vila Nova",
+       "founded": 1943,
+       "venue": {
+        "name": "Estádio Onésio Brasileiro Alvarenga",
+        "city": "Goiânia, Goiás",
+        "capacity": 11788,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 144,
+       "name": "Atletico Goianiense",
+       "founded": 1937,
+       "venue": {
+        "name": "Estádio Antônio Accioly",
+        "city": "Goiânia, Goiás",
+        "capacity": 12500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 145,
+       "name": "Avai",
+       "founded": 1923,
+       "venue": {
+        "name": "Estádio Aderbal Ramos da Silva",
+        "city": "Florianópolis, Santa Catarina",
+        "capacity": 19000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 146,
+       "name": "CRB",
+       "founded": 1912,
+       "venue": {
+        "name": "Estádio Rei Pelé",
+        "city": "Maceió, Alagoas",
+        "capacity": 20801,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 148,
+       "name": "Londrina",
+       "founded": 1956,
+       "venue": {
+        "name": "Estádio Municipal Jacy Scaff",
+        "city": "Londrina, Paraná",
+        "capacity": 31019,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 151,
+       "name": "Goias",
+       "founded": 1943,
+       "venue": {
+        "name": "Estádio de Hailé Pinheiro",
+        "city": "Goiânia, Goiás",
+        "capacity": 14525,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 152,
+       "name": "Juventude",
+       "founded": 1913,
+       "venue": {
+        "name": "Estádio Alfredo Jaconi",
+        "city": "Caxias do Sul, Rio Grande do Sul",
+        "capacity": 19924,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 154,
+       "name": "Fortaleza EC",
+       "founded": 1918,
+       "venue": {
+        "name": "Estádio Governador Plácido Aderaldo Castelo",
+        "city": "Fortaleza, Ceará",
+        "capacity": 63903,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 755,
+       "name": "Nautico Recife",
+       "founded": 1901,
+       "venue": {
+        "name": "Estádio Eládio de Barros Carvalho",
+        "city": "Recife, Pernambuco",
+        "capacity": 22856,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1193,
+       "name": "Cuiaba",
+       "founded": 2001,
+       "venue": {
+        "name": "Arena Pantanal",
+        "city": "Cuiabá, Mato Grosso",
+        "capacity": 44003,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1223,
+       "name": "Operario-PR",
+       "founded": 1912,
+       "venue": {
+        "name": "Estádio Germano Krüger",
+        "city": "Ponta Grossa, Paraná",
+        "capacity": 8679,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2618,
+       "name": "Botafogo SP",
+       "founded": 1918,
+       "venue": {
+        "name": "Estádio Santa Cruz",
+        "city": "Ribeirão Preto, São Paulo",
+        "capacity": 28562,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7834,
+       "name": "Novorizontino",
+       "founded": 1973,
+       "venue": {
+        "name": "Estádio Dr. Jorge Ismael de Biasi",
+        "city": "Novo Horizonte, São Paulo",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7865,
+       "name": "São Bernardo",
+       "founded": 2004,
+       "venue": {
+        "name": "Estádio Primeiro de Maio",
+        "city": "São Bernardo do Campo, São Paulo",
+        "capacity": 17054,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13975,
+       "name": "Athletic Club",
+       "founded": 1909,
+       "venue": {
+        "name": "Estádio Joaquim Portugal",
+        "city": "São João Del Rei, Minas Gerais",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Uruguay",
+   "fetched": "2026-10-23T12:06:41.111Z",
+   "all": [
+    "269 | Segunda División | League",
+    "268 | Primera División | League",
+    "270 | Primera División - Clausura | League",
+    "842 | Super Copa | Cup",
+    "930 | Copa Uruguay | Cup",
+    "1212 | Copa De La Liga Auf | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 268,
+     "name": "Primera División",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-08-25",
+       "2012-12-10",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-08-17",
+       "2013-12-15",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-08-16",
+       "2014-12-07",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-08-15",
+       "2015-12-06",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-08-28",
+       "2016-12-11",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-02-04",
+       "2017-05-14",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-02-03",
+       "2018-05-06",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-02-16",
+       "2019-06-05",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-15",
+       "2020-10-14",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-05-15",
+       "2021-09-13",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-05",
+       "2022-07-23",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-03",
+       "2023-12-16",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-02-16",
+       "2024-08-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-01-31",
+       "2025-06-28",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-02-06",
+       "2026-11-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2348,
+       "name": "Penarol",
+       "founded": 1891,
+       "venue": {
+        "name": "Estadio Campeón del Siglo",
+        "city": "Montevideo",
+        "capacity": 40005,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2350,
+       "name": "Defensor Sporting",
+       "founded": 1913,
+       "venue": {
+        "name": "Estadio Luis Franzini",
+        "city": "Montevideo",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2352,
+       "name": "Danubio",
+       "founded": 1932,
+       "venue": {
+        "name": "Estadio Jardines del Hipódromo",
+        "city": "Montevideo",
+        "capacity": 14401,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2353,
+       "name": "Juventud",
+       "founded": 1935,
+       "venue": {
+        "name": "Estadio Municipal Parque Artigas",
+        "city": "Las Piedras",
+        "capacity": 5500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2356,
+       "name": "Club Nacional",
+       "founded": 1899,
+       "venue": {
+        "name": "Estadio Gran Parque Central",
+        "city": "Montevideo",
+        "capacity": 34000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2358,
+       "name": "Liverpool Montevideo",
+       "founded": 1915,
+       "venue": {
+        "name": "Estadio Belvedere",
+        "city": "Montevideo",
+        "capacity": 8384,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2359,
+       "name": "Racing Montevideo",
+       "founded": 1919,
+       "venue": {
+        "name": "Parque Osvaldo Roberto",
+        "city": "Montevideo",
+        "capacity": 8500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2360,
+       "name": "Wanderers",
+       "founded": 1902,
+       "venue": {
+        "name": "Parque Alfredo Víctor Viera",
+        "city": "Montevideo",
+        "capacity": 7420,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2361,
+       "name": "Boston River",
+       "founded": 1939,
+       "venue": {
+        "name": "Estadio Campeones Olímpicos",
+        "city": "Ciudad de Florida",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2362,
+       "name": "Cerro",
+       "founded": 1922,
+       "venue": {
+        "name": "Estadio Monumental Luis Tróccoli",
+        "city": "Montevideo",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2363,
+       "name": "Progreso",
+       "founded": 1917,
+       "venue": {
+        "name": "Parque Abraham Paladino",
+        "city": "Montevideo",
+        "capacity": 7500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2365,
+       "name": "Atletico Torque",
+       "founded": 2007,
+       "venue": {
+        "name": "Estadio Centenario",
+        "city": "Montevideo",
+        "capacity": 60235,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2368,
+       "name": "Central Espanol",
+       "founded": 1905,
+       "venue": {
+        "name": "Parque Palermo",
+        "city": "Montevideo",
+        "capacity": 5500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2369,
+       "name": "Cerro Largo",
+       "founded": 2002,
+       "venue": {
+        "name": "Estadio Municipal Arquitecto Antonio Eleuterio Ubilla",
+        "city": "Melo",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2370,
+       "name": "Deportivo Maldonado",
+       "founded": 1928,
+       "venue": {
+        "name": "Estadio Domingo Burgueño Miguel",
+        "city": "Maldonado",
+        "capacity": 28000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2378,
+       "name": "Albion FC",
+       "founded": 1891,
+       "venue": {
+        "name": "Parque Dr. Enrique Falco Lichtemberger",
+        "city": "Montevideo",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Chile",
+   "fetched": "2026-10-23T12:06:41.994Z",
+   "all": [
+    "527 | Super Cup | Cup",
+    "265 | Primera División | League",
+    "266 | Primera B | League",
+    "267 | Copa Chile | Cup",
+    "711 | Segunda División | League",
+    "1220 | Copa De La Liga | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 265,
+     "name": "Primera División",
+     "season": 2026,
+     "seasons": [
+      [
+       2018,
+       "2018-02-02",
+       "2018-12-02",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-02-15",
+       "2019-12-21",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-01-24",
+       "2021-02-17",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-27",
+       "2021-12-05",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-04",
+       "2022-11-06",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-01-22",
+       "2023-12-10",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-02-18",
+       "2024-11-10",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-02-15",
+       "2025-12-07",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-01-30",
+       "2026-12-06",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2315,
+       "name": "Colo Colo",
+       "founded": 1925,
+       "venue": {
+        "name": "Estadio Monumental David Arellano",
+        "city": "Santiago de Chile",
+        "capacity": 47017,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2318,
+       "name": "Palestino",
+       "founded": 1920,
+       "venue": {
+        "name": "Estadio Municipal de La Cisterna",
+        "city": "Santiago de Chile",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2320,
+       "name": "O'Higgins",
+       "founded": 1955,
+       "venue": {
+        "name": "Estadio El Teniente",
+        "city": "Rancagua",
+        "capacity": 14450,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2323,
+       "name": "Universidad de Chile",
+       "founded": 1927,
+       "venue": {
+        "name": "Estadio Santa Laura-Universidad SEK",
+        "city": "Santiago de Chile",
+        "capacity": 28500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2324,
+       "name": "Universidad de Concepcion",
+       "founded": 1994,
+       "venue": {
+        "name": "Estadio Municipal Alcaldesa Ester Roa Rebolledo",
+        "city": "Concepción",
+        "capacity": 33000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2325,
+       "name": "Everton de Vina",
+       "founded": 1909,
+       "venue": {
+        "name": "Estadio Sausalito",
+        "city": "Viña del Mar",
+        "capacity": 23360,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2326,
+       "name": "Union La Calera",
+       "founded": 1954,
+       "venue": {
+        "name": "Estadio Municipal Nicolás Chahuán Nazar",
+        "city": "La Calera",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2328,
+       "name": "Huachipato",
+       "founded": 1947,
+       "venue": {
+        "name": "Estadio CAP",
+        "city": "Talcahuano",
+        "capacity": 10579,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2329,
+       "name": "A. Italiano",
+       "founded": 1910,
+       "venue": {
+        "name": "Estadio Bicentenario Municipal de La Florida",
+        "city": "Santiago de Chile",
+        "capacity": 12000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2330,
+       "name": "Coquimbo Unido",
+       "founded": 1957,
+       "venue": {
+        "name": "Estadio Bicentenario Francisco Sánchez Rumoroso",
+        "city": "Coquimbo",
+        "capacity": 18750,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2331,
+       "name": "Cobresal",
+       "founded": 1979,
+       "venue": {
+        "name": "Estadio El Cobre",
+        "city": "El Salvador, Diego de Almagro",
+        "capacity": 20752,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2337,
+       "name": "Nublense",
+       "founded": 1916,
+       "venue": {
+        "name": "Estadio Bicentenario Municipal Nelson Oyarzún",
+        "city": "Chillán",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2341,
+       "name": "D. La Serena",
+       "founded": 1955,
+       "venue": {
+        "name": "Estadio La Portada de La Serena",
+        "city": "La Serena",
+        "capacity": 18500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2994,
+       "name": "U. Catolica",
+       "founded": 1937,
+       "venue": {
+        "name": "Estadio Santa Laura-Universidad SEK",
+        "city": "Santiago de Chile",
+        "capacity": 28500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5635,
+       "name": "Concepción",
+       "founded": 1966,
+       "venue": {
+        "name": "Estadio Municipal Alcaldesa Ester Roa Rebolledo",
+        "city": "Concepción",
+        "capacity": 33000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16730,
+       "name": "Deportes Limache",
+       "founded": null,
+       "venue": {
+        "name": "Estadio Gustavo Ocaranza",
+        "city": "Limache",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Colombia",
+   "fetched": "2026-10-23T12:06:42.867Z",
+   "all": [
+    "239 | Primera A | League",
+    "240 | Primera B | League",
+    "241 | Copa Colombia | Cup",
+    "712 | Liga Femenina | League",
+    "713 | Superliga | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 239,
+     "name": "Primera A",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-01-30",
+       "2016-12-18",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-02-04",
+       "2017-12-18",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-02-03",
+       "2018-12-16",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-01-26",
+       "2019-12-07",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-01-24",
+       "2020-12-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-01-16",
+       "2021-12-23",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-01-20",
+       "2022-12-07",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-01-25",
+       "2023-12-14",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-01-19",
+       "2024-12-22",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-01-24",
+       "2025-12-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-01-16",
+       "2026-11-12",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 1125,
+       "name": "Millonarios",
+       "founded": 1946,
+       "venue": {
+        "name": "Estadio Nemesio Camacho El Campín",
+        "city": "Bogotá, D.C.",
+        "capacity": 39512,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1126,
+       "name": "Deportivo Pasto",
+       "founded": 1949,
+       "venue": {
+        "name": "Estadio Departamental Libertad",
+        "city": "San Juan de Pasto",
+        "capacity": 27380,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1127,
+       "name": "Deportivo Cali",
+       "founded": 1912,
+       "venue": {
+        "name": "Estadio Deportivo Cali",
+        "city": "Palmira",
+        "capacity": 52000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1128,
+       "name": "Independiente Medellin",
+       "founded": 1913,
+       "venue": {
+        "name": "Estadio Atanasio Girardot",
+        "city": "Medellín",
+        "capacity": 45943,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1131,
+       "name": "Bucaramanga",
+       "founded": 1949,
+       "venue": {
+        "name": "Estadio Américo Montanini",
+        "city": "Bucaramanga",
+        "capacity": 28000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 1132,
+       "name": "Chico",
+       "founded": 2002,
+       "venue": {
+        "name": "Estadio de La Independencia",
+        "city": "Tunja",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1133,
+       "name": "Jaguares",
+       "founded": 2012,
+       "venue": {
+        "name": "Estadio de Fútbol Jaraguay de Montería",
+        "city": "Montería",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1134,
+       "name": "Internacional de Bogota",
+       "founded": 1990,
+       "venue": {
+        "name": "Estadio Metropolitano de Techo",
+        "city": "Bogotá, D.C.",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1135,
+       "name": "Junior",
+       "founded": 1924,
+       "venue": {
+        "name": "Estadio Metropolitano Roberto Meléndez",
+        "city": "Barranquilla",
+        "capacity": 49612,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1136,
+       "name": "Once Caldas",
+       "founded": 1961,
+       "venue": {
+        "name": "Estadio Palogrande",
+        "city": "Manizales",
+        "capacity": 42678,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1137,
+       "name": "Atletico Nacional",
+       "founded": 1947,
+       "venue": {
+        "name": "Estadio Atanasio Girardot",
+        "city": "Medellín",
+        "capacity": 45943,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1138,
+       "name": "America de Cali",
+       "founded": 1927,
+       "venue": {
+        "name": "Estadio Olímpico Pascual Guerrero",
+        "city": "Santiago de Cali",
+        "capacity": 46400,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1139,
+       "name": "Santa Fe",
+       "founded": 1941,
+       "venue": {
+        "name": "Estadio Nemesio Camacho El Campín",
+        "city": "Bogotá, D.C.",
+        "capacity": 39512,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1141,
+       "name": "Alianza Valledupar",
+       "founded": 1991,
+       "venue": {
+        "name": "Estadio Daniel Villa Zapata",
+        "city": "Barrancabermeja",
+        "capacity": 10400,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1142,
+       "name": "Deportes Tolima",
+       "founded": 1954,
+       "venue": {
+        "name": "Estadio Manuel Murillo Toro",
+        "city": "Ibagué",
+        "capacity": 38000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1144,
+       "name": "Águilas Doradas",
+       "founded": 1991,
+       "venue": {
+        "name": "Estadio Alberto Grisales",
+        "city": "Rionegro, Antioquia",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1147,
+       "name": "Fortaleza FC",
+       "founded": 2010,
+       "venue": {
+        "name": "Estadio Municipal de Cota",
+        "city": "Cota",
+        "capacity": 4000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1462,
+       "name": "Deportivo Pereira",
+       "founded": 1944,
+       "venue": {
+        "name": "Estadio Hernán Ramírez Villegas",
+        "city": "Pereira",
+        "capacity": 30297,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1464,
+       "name": "Llaneros",
+       "founded": 2012,
+       "venue": {
+        "name": "Estadio Bello Horizonte - Rey Pelé",
+        "city": "Villavicencio",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1470,
+       "name": "Cucuta",
+       "founded": 1949,
+       "venue": {
+        "name": "Estadio General Santander",
+        "city": "Cúcuta",
+        "capacity": 42901,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Japan",
+   "fetched": "2026-10-23T12:06:43.748Z",
+   "all": [
+    "100 | J3 League | League",
+    "102 | Emperor Cup | Cup",
+    "99 | J2 League | League",
+    "98 | J1 League | League",
+    "101 | J-League Cup | Cup",
+    "497 | Japan Football League | League",
+    "548 | Super Cup | Cup",
+    "854 | WE League | League",
+    "1235 | J2/J3 League | League"
+   ],
+   "leagues": [
+    {
+     "id": 99,
+     "name": "J2 League",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-03-04",
+       "2012-11-23",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-03-03",
+       "2013-12-08",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-03-02",
+       "2014-12-07",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-03-08",
+       "2015-12-06",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-02-28",
+       "2016-12-04",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-02-26",
+       "2017-12-03",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-02-25",
+       "2018-12-02",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-02-24",
+       "2019-12-08",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-23",
+       "2020-12-19",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-02-27",
+       "2021-12-05",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-19",
+       "2022-11-06",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-18",
+       "2023-12-02",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-02-24",
+       "2024-12-07",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-02-15",
+       "2025-12-14",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-08",
+       "2027-05-23",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 279,
+       "name": "Consadole Sapporo",
+       "founded": 1935,
+       "venue": {
+        "name": "Daiwa House Premist Dome",
+        "city": "Sapporo",
+        "capacity": 53845,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 280,
+       "name": "Jubilo Iwata",
+       "founded": 1970,
+       "venue": {
+        "name": "Yamaha Stadium",
+        "city": "Iwata",
+        "capacity": 15165,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 284,
+       "name": "Shonan Bellmare",
+       "founded": 1968,
+       "venue": {
+        "name": "Lemon Gas Stadium Hiratsuka",
+        "city": "Hiratsuka",
+        "capacity": 15380,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 286,
+       "name": "Vegalta Sendai",
+       "founded": 1988,
+       "venue": {
+        "name": "Yurtec Stadium Sendai",
+        "city": "Sendai",
+        "capacity": 19694,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 295,
+       "name": "Sagan Tosu",
+       "founded": 1987,
+       "venue": {
+        "name": "Ekimae Real Estate Stadium",
+        "city": "Tosu",
+        "capacity": 24130,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 298,
+       "name": "Oita Trinita",
+       "founded": 1994,
+       "venue": {
+        "name": "Resonac Dome Oita",
+        "city": "Oita",
+        "capacity": 43254,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 299,
+       "name": "Tokushima Vortis",
+       "founded": 1955,
+       "venue": {
+        "name": "Pocari Sweat Stadium",
+        "city": "Naruto",
+        "capacity": 17924,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 307,
+       "name": "Yokohama FC",
+       "founded": 1998,
+       "venue": {
+        "name": "NHK Spring Mitsuzawa Football Stadium",
+        "city": "Yokohama",
+        "capacity": 15440,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 308,
+       "name": "Ventforet Kofu",
+       "founded": 1965,
+       "venue": {
+        "name": "JIT Recycle Ink Stadium",
+        "city": "Kofu",
+        "capacity": 15853,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 311,
+       "name": "Albirex Niigata",
+       "founded": 1955,
+       "venue": {
+        "name": "Denka Big Swan Stadium",
+        "city": "Niigata",
+        "capacity": 41684,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 312,
+       "name": "Montedio Yamagata",
+       "founded": 1984,
+       "venue": {
+        "name": "ND Soft Stadium",
+        "city": "Tendo",
+        "capacity": 20772,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 313,
+       "name": "Omiya Ardija",
+       "founded": 1964,
+       "venue": {
+        "name": "NACK5 Stadium",
+        "city": "Saitama",
+        "capacity": 15491,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4315,
+       "name": "Blaublitz Akita",
+       "founded": 1965,
+       "venue": {
+        "name": "Soyu Stadium",
+        "city": "Akita",
+        "capacity": 20125,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4317,
+       "name": "Fujieda MYFC",
+       "founded": 2004,
+       "venue": {
+        "name": "Fujieda City General Sports Park",
+        "city": "Fujieda",
+        "capacity": 13000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4322,
+       "name": "Kataller Toyama",
+       "founded": 2007,
+       "venue": {
+        "name": "Toyama Athletic Recreation Park Stadium",
+        "city": "Toyama",
+        "capacity": 28494,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4326,
+       "name": "Vanraure Hachinohe",
+       "founded": null,
+       "venue": {
+        "name": "Prifoods Stadium",
+        "city": "Hachinohe",
+        "capacity": 5200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7127,
+       "name": "Iwaki",
+       "founded": 2012,
+       "venue": {
+        "name": "Hawaiians Stadium Iwaki",
+        "city": "Iwaki",
+        "capacity": 5600,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7145,
+       "name": "Tochigi City",
+       "founded": null,
+       "venue": {
+        "name": "City Football Station",
+        "city": "Tochigi",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10075,
+       "name": "Imabari",
+       "founded": 1976,
+       "venue": {
+        "name": "Imabari Satoyama Stadium",
+        "city": "Imabari",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10409,
+       "name": "Tegevajaro Miyazaki",
+       "founded": 1965,
+       "venue": {
+        "name": "Ichigo Miyazaki Shintomi Soccer Field",
+        "city": "Shintomi",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      }
+     ]
+    },
+    {
+     "id": 98,
+     "name": "J1 League",
+     "season": 2027,
+     "seasons": [
+      [
+       2012,
+       "2012-03-10",
+       "2012-12-01",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-03-02",
+       "2013-12-07",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-03-01",
+       "2014-12-08",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-03-07",
+       "2015-12-05",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-02-27",
+       "2016-12-03",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-02-25",
+       "2017-12-02",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-02-23",
+       "2018-12-01",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-02-22",
+       "2019-12-14",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-21",
+       "2020-12-19",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-02-26",
+       "2021-12-04",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-18",
+       "2022-11-05",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-17",
+       "2023-12-03",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-02-23",
+       "2024-12-08",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-02-14",
+       "2025-12-06",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-02-06",
+       "2026-06-06",
+       true,
+       true
+      ],
+      [
+       2027,
+       "2026-08-07",
+       "2027-06-06",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 281,
+       "name": "Kashiwa Reysol",
+       "founded": 1940,
+       "venue": {
+        "name": "SANKYO FRONTIER Kashiwa Stadium",
+        "city": "Kashiwa",
+        "capacity": 15900,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 282,
+       "name": "Sanfrecce Hiroshima",
+       "founded": 1938,
+       "venue": {
+        "name": "Edion Peace Wing Hiroshima",
+        "city": "Hiroshima",
+        "capacity": 28520,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 283,
+       "name": "Shimizu S-pulse",
+       "founded": 1991,
+       "venue": {
+        "name": "IAI Stadium Nihondaira",
+        "city": "Shizuoka",
+        "capacity": 20339,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 285,
+       "name": "V-varen Nagasaki",
+       "founded": 1985,
+       "venue": {
+        "name": "PEACE STADIUM Connected by SoftBank",
+        "city": "Nagasaki",
+        "capacity": 20027,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 287,
+       "name": "Urawa",
+       "founded": 1950,
+       "venue": {
+        "name": "Saitama Stadium 2002",
+        "city": "Saitama",
+        "capacity": 65000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 288,
+       "name": "Nagoya Grampus",
+       "founded": 1939,
+       "venue": {
+        "name": "Toyota Stadium",
+        "city": "Toyota",
+        "capacity": 45000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 289,
+       "name": "Vissel Kobe",
+       "founded": 1966,
+       "venue": {
+        "name": "NOEVIR Stadium Kobe",
+        "city": "Kobe",
+        "capacity": 30132,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 290,
+       "name": "Kashima",
+       "founded": 1991,
+       "venue": {
+        "name": "Kashima Soccer Stadium",
+        "city": "Kashima",
+        "capacity": 40728,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 291,
+       "name": "Cerezo Osaka",
+       "founded": 1957,
+       "venue": {
+        "name": "Yodoko Sakura Stadium",
+        "city": "Osaka",
+        "capacity": 24481,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 292,
+       "name": "FC Tokyo",
+       "founded": 1935,
+       "venue": {
+        "name": "Ajinomoto Stadium",
+        "city": "Chōfu",
+        "capacity": 48955,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 293,
+       "name": "Gamba Osaka",
+       "founded": 1980,
+       "venue": {
+        "name": "Panasonic Stadium Suita",
+        "city": "Suita",
+        "capacity": 40322,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 294,
+       "name": "Kawasaki Frontale",
+       "founded": 1955,
+       "venue": {
+        "name": "Uvance Todoroki Stadium by Fujitsu",
+        "city": "Kawasaki",
+        "capacity": 27495,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 296,
+       "name": "Yokohama F. Marinos",
+       "founded": 1972,
+       "venue": {
+        "name": "Nissan Stadium",
+        "city": "Yokohama",
+        "capacity": 72327,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 301,
+       "name": "JEF United Chiba",
+       "founded": 1946,
+       "venue": {
+        "name": "Fukuda Denshi Arena",
+        "city": "Chiba",
+        "capacity": 19470,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 302,
+       "name": "Kyoto Sanga",
+       "founded": 1922,
+       "venue": {
+        "name": "Sanga Stadium by Kyocera",
+        "city": "Kameoka",
+        "capacity": 21600,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 303,
+       "name": "Machida Zelvia",
+       "founded": 1977,
+       "venue": {
+        "name": "Machida Gion Stadium",
+        "city": "Tokyo",
+        "capacity": 15489,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 305,
+       "name": "Mito Hollyhock",
+       "founded": 1990,
+       "venue": {
+        "name": "K’s Denki Stadium",
+        "city": "Mito",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 306,
+       "name": "Tokyo Verdy",
+       "founded": 1969,
+       "venue": {
+        "name": "Ajinomoto Stadium",
+        "city": "Chōfu",
+        "capacity": 48955,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 310,
+       "name": "Fagiano Okayama",
+       "founded": 2004,
+       "venue": {
+        "name": "JFE Harenokuni Stadium",
+        "city": "Okayama",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 316,
+       "name": "Avispa Fukuoka",
+       "founded": 1982,
+       "venue": {
+        "name": "Best Denki Stadium",
+        "city": "Fukuoka",
+        "capacity": 22331,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "South-Korea",
+   "fetched": "2026-10-23T12:06:45.057Z",
+   "all": [
+    "292 | K League 1 | League",
+    "293 | K League 2 | League",
+    "295 | K3 League | League",
+    "294 | FA Cup | Cup",
+    "660 | WK-League | League",
+    "1234 | K4 League | League"
+   ],
+   "leagues": [
+    {
+     "id": 292,
+     "name": "K League 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-03-12",
+       "2016-11-06",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-10-14",
+       "2017-11-18",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-03-01",
+       "2018-12-02",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-03-01",
+       "2019-12-08",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-05-08",
+       "2020-11-01",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-02-27",
+       "2021-12-12",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-19",
+       "2022-10-29",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-25",
+       "2023-12-09",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-03-01",
+       "2024-11-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-02-15",
+       "2025-12-07",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-02-28",
+       "2026-10-24",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2745,
+       "name": "Bucheon FC 1995",
+       "founded": 2007,
+       "venue": {
+        "name": "Bucheon Stadium",
+        "city": "Bucheon",
+        "capacity": 35545,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2746,
+       "name": "Gangwon FC",
+       "founded": 2008,
+       "venue": {
+        "name": "Gangneung Stadium",
+        "city": "Gangneung",
+        "capacity": 33000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2748,
+       "name": "FC Anyang",
+       "founded": null,
+       "venue": {
+        "name": "Anyang Stadium",
+        "city": "Anyang",
+        "capacity": 17143,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2750,
+       "name": "Daejeon Citizen",
+       "founded": 1997,
+       "venue": {
+        "name": "Daejeon World Cup Stadium",
+        "city": "Daejeon",
+        "capacity": 41295,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2759,
+       "name": "Gwangju FC",
+       "founded": 2010,
+       "venue": {
+        "name": "Gwangju Football Stadium",
+        "city": "Gwangju",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2761,
+       "name": "Jeju United FC",
+       "founded": 1982,
+       "venue": {
+        "name": "Jeju World Cup Stadium",
+        "city": "Seogwipo",
+        "capacity": 35657,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2762,
+       "name": "Jeonbuk Motors",
+       "founded": 1993,
+       "venue": {
+        "name": "Jeonju World Cup Stadium",
+        "city": "Jeonju",
+        "capacity": 42477,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2763,
+       "name": "Incheon United",
+       "founded": 2003,
+       "venue": {
+        "name": "Sungui Arena Park",
+        "city": "Incheon",
+        "capacity": 20891,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2764,
+       "name": "Pohang Steelers",
+       "founded": 1973,
+       "venue": {
+        "name": "Steelyard Stadium",
+        "city": "Pohang",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2766,
+       "name": "FC Seoul",
+       "founded": 1983,
+       "venue": {
+        "name": "Seoul World Cup Stadium",
+        "city": "Seoul",
+        "capacity": 68476,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2767,
+       "name": "Ulsan Hyundai FC",
+       "founded": 1983,
+       "venue": {
+        "name": "Ulsan Munsu Football Stadium",
+        "city": "Ulsan",
+        "capacity": 44102,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2768,
+       "name": "Gimcheon Sangmu FC",
+       "founded": 1985,
+       "venue": {
+        "name": "Gimcheon Stadium",
+        "city": "Gimcheon",
+        "capacity": 32000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Saudi-Arabia",
+   "fetched": "2026-10-23T12:06:45.923Z",
+   "all": [
+    "307 | Pro League | League",
+    "308 | Division 1 | League",
+    "309 | Division 2 | League",
+    "504 | King's Cup | Cup",
+    "827 | Crown Prince Cup | Cup",
+    "826 | Super Cup | Cup",
+    "1227 | Premier League Women | League"
+   ],
+   "leagues": [
+    {
+     "id": 307,
+     "name": "Pro League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-08-11",
+       "2017-05-04",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-08-10",
+       "2018-04-12",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-30",
+       "2019-05-16",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-22",
+       "2020-09-09",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-17",
+       "2021-05-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-11",
+       "2022-05-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-25",
+       "2023-05-31",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-11",
+       "2024-05-27",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-22",
+       "2025-05-26",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-28",
+       "2026-05-21",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-13",
+       "2027-05-28",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2928,
+       "name": "Al Khaleej Saihat",
+       "founded": 1945,
+       "venue": {
+        "name": "Prince Mohamed bin Fahd Stadium",
+        "city": "Dammam",
+        "capacity": 35000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2929,
+       "name": "Al-Ahli Jeddah",
+       "founded": 1937,
+       "venue": {
+        "name": "Prince Abdullah al-Faisal Stadium",
+        "city": "Jeddah",
+        "capacity": 27000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2930,
+       "name": "Al-Faisaly FC",
+       "founded": 1954,
+       "venue": {
+        "name": "Al Majma'ah Sports City Stadium",
+        "city": "Al Majma&apos;ah",
+        "capacity": 7000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2931,
+       "name": "Al-Fateh",
+       "founded": 1958,
+       "venue": {
+        "name": "Al Fateh Club Stadium",
+        "city": "Al-Hasa",
+        "capacity": 27550,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2932,
+       "name": "Al-Hilal Saudi FC",
+       "founded": 1957,
+       "venue": {
+        "name": "Kingdom Arena",
+        "city": "Riyadh",
+        "capacity": 26000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2933,
+       "name": "Al-Qadisiyah FC",
+       "founded": 1967,
+       "venue": {
+        "name": "Prince Saud bin Jalawi Stadium",
+        "city": "Khobar",
+        "capacity": 20100,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2934,
+       "name": "Al-Ettifaq",
+       "founded": 1944,
+       "venue": {
+        "name": "Prince Mohamed bin Fahd Stadium",
+        "city": "Dammam",
+        "capacity": 35000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2936,
+       "name": "Al Taawon",
+       "founded": 1956,
+       "venue": {
+        "name": "Al Taawon Club Stadium",
+        "city": "Buraidah",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2938,
+       "name": "Al-Ittihad FC",
+       "founded": 1927,
+       "venue": {
+        "name": "King Abdullah Sports City",
+        "city": "Jeddah",
+        "capacity": 63079,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2939,
+       "name": "Al-Nassr",
+       "founded": 1955,
+       "venue": {
+        "name": "Al Awal Park at King Saud University",
+        "city": "Riyadh",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2940,
+       "name": "Al Shabab",
+       "founded": 1947,
+       "venue": {
+        "name": "SHG Arena",
+        "city": "Riyadh",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2944,
+       "name": "Al-Fayha",
+       "founded": null,
+       "venue": {
+        "name": "Al Majma'ah Sports City Stadium",
+        "city": "Al Majma&apos;ah",
+        "capacity": 7000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2945,
+       "name": "Al-Hazm",
+       "founded": 1965,
+       "venue": {
+        "name": "Ar-Rass Stadium (Al Hazm Club Stadium)",
+        "city": "Rass",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2951,
+       "name": "Abha",
+       "founded": null,
+       "venue": {
+        "name": "Prince Sultan bin Abdulaziz Sports City Stadium",
+        "city": "Abha",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10509,
+       "name": "Al Kholood",
+       "founded": 1970,
+       "venue": {
+        "name": "Ar-Rass Stadium (Al Hazm Club Stadium)",
+        "city": "Rass",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10511,
+       "name": "Al Riyadh",
+       "founded": 1954,
+       "venue": {
+        "name": "Prince Faisal bin Fahd Stadium",
+        "city": "Riyadh",
+        "capacity": 28000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10513,
+       "name": "NEOM",
+       "founded": 1965,
+       "venue": {
+        "name": "King Khalid Sport City Stadium",
+        "city": "Tabouk",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26738,
+       "name": "Al Diriyah",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Australia",
+   "fetched": "2026-10-23T12:06:46.815Z",
+   "all": [
+    "188 | A-League | League",
+    "191 | Brisbane Premier League | League",
+    "193 | Northern Territory Premier League | League",
+    "481 | Northern NSW NPL | League",
+    "189 | Capital Territory NPL | League",
+    "190 | A-League Women | League",
+    "192 | New South Wales NPL | League",
+    "194 | South Australia NPL | League",
+    "195 | Victoria NPL | League",
+    "196 | Western Australia NPL | League",
+    "482 | Queensland NPL | League",
+    "648 | Tasmania NPL | League",
+    "833 | Queensland Premier League | League",
+    "834 | South Australia State League 1 | League",
+    "835 | New South Wales NPL 2 | League",
+    "836 | Victoria NPL 2 | League",
+    "874 | Australia Cup | Cup",
+    "1090 | NNSW League 1 | League",
+    "1091 | Tasmania Northern Championship | League",
+    "1092 | Capital Territory NPL 2 | League",
+    "1093 | Tasmania Southern Championship | League",
+    "1094 | Western Australia State League 1 | League",
+    "1202 | Australian Championship | Cup",
+    "1226 | Victoria Premier League 2 | League",
+    "1230 | Npl Nsw U20 | League"
+   ],
+   "leagues": [
+    {
+     "id": 188,
+     "name": "A-League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-10-08",
+       "2012-04-22",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-10-05",
+       "2013-04-21",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-10-11",
+       "2014-05-04",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-10-10",
+       "2015-05-17",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-10-08",
+       "2016-05-01",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-10-07",
+       "2017-05-07",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-10-06",
+       "2018-05-05",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-10-19",
+       "2019-05-05",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-10-11",
+       "2020-08-30",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-12-28",
+       "2021-06-26",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-11-19",
+       "2022-05-28",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-10-07",
+       "2023-06-03",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-10-20",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-10-18",
+       "2025-05-31",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-10-17",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-10-16",
+       "2027-05-09",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 939,
+       "name": "Western Sydney Wanderers",
+       "founded": 2012,
+       "venue": {
+        "name": "CommBank Stadium",
+        "city": "Sydney",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 940,
+       "name": "Perth Glory",
+       "founded": 1995,
+       "venue": {
+        "name": "HBF Park",
+        "city": "Perth",
+        "capacity": 20500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 941,
+       "name": "Central Coast Mariners",
+       "founded": 2004,
+       "venue": {
+        "name": "Industree Group Stadium",
+        "city": "Gosford",
+        "capacity": 21379,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 942,
+       "name": "Wellington Phoenix",
+       "founded": 2007,
+       "venue": {
+        "name": "Sky Stadium",
+        "city": "Wellington",
+        "capacity": 37034,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 943,
+       "name": "Sydney",
+       "founded": 2004,
+       "venue": {
+        "name": "Allianz Stadium",
+        "city": "Sydney",
+        "capacity": 45500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 944,
+       "name": "Melbourne Victory",
+       "founded": 2004,
+       "venue": {
+        "name": "AAMI Park",
+        "city": "Melbourne",
+        "capacity": 30050,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 945,
+       "name": "Melbourne City",
+       "founded": 2008,
+       "venue": {
+        "name": "AAMI Park",
+        "city": "Melbourne",
+        "capacity": 30050,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 946,
+       "name": "Newcastle Jets",
+       "founded": 2000,
+       "venue": {
+        "name": "McDonald Jones Stadium",
+        "city": "Newcastle",
+        "capacity": 33000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 947,
+       "name": "Brisbane Roar",
+       "founded": 2005,
+       "venue": {
+        "name": "Suncorp Stadium",
+        "city": "Brisbane",
+        "capacity": 52500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 948,
+       "name": "Adelaide United",
+       "founded": 2003,
+       "venue": {
+        "name": "Coopers Stadium",
+        "city": "Adelaide",
+        "capacity": 17000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15550,
+       "name": "Macarthur",
+       "founded": null,
+       "venue": {
+        "name": "Campbelltown Sports Stadium",
+        "city": "Sydney",
+        "capacity": 21000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 24608,
+       "name": "Auckland",
+       "founded": 2024,
+       "venue": {
+        "name": "Go Media Stadium",
+        "city": "Auckland",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Egypt",
+   "fetched": "2026-10-23T12:06:47.683Z",
+   "all": [
+    "233 | Premier League | League",
+    "539 | Super Cup | Cup",
+    "714 | Cup | Cup",
+    "887 | Second League | League",
+    "888 | Second League - Group B | League",
+    "889 | Second League - Group C | League",
+    "895 | League Cup | Cup",
+    "1014 | Second League - Play-offs | League"
+   ],
+   "leagues": [
+    {
+     "id": 233,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-10-14",
+       "2012-02-13",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2013-02-02",
+       "2013-06-26",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-12-24",
+       "2014-07-07",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-09-15",
+       "2015-08-03",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-10-20",
+       "2016-07-09",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-09-15",
+       "2017-07-17",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-09-08",
+       "2018-05-20",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-31",
+       "2019-07-28",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-09-21",
+       "2020-10-31",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-12-11",
+       "2021-08-27",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-25",
+       "2022-08-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-10-18",
+       "2023-07-26",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-18",
+       "2024-08-18",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-10-30",
+       "2025-06-01",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-08",
+       "2026-05-28",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-21",
+       "2027-02-20",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 1031,
+       "name": "AL Masry",
+       "founded": 1920,
+       "venue": {
+        "name": "Ismaïlia Stadium",
+        "city": "Ismailia",
+        "capacity": 18525,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1036,
+       "name": "Pyramids FC",
+       "founded": null,
+       "venue": {
+        "name": "30 June Air Defence Stadium",
+        "city": "al-Qāhirah (Cairo)",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1037,
+       "name": "Enppi",
+       "founded": 1980,
+       "venue": {
+        "name": "Petrosport Stadium",
+        "city": "Cairo",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1039,
+       "name": "El Geish",
+       "founded": 1997,
+       "venue": {
+        "name": "Gehaz El Reyada Stadium",
+        "city": "Cairo",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1040,
+       "name": "Zamalek SC",
+       "founded": 1911,
+       "venue": {
+        "name": "Cairo International Stadium",
+        "city": "Cairo",
+        "capacity": 74100,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1041,
+       "name": "Petrojet",
+       "founded": 1980,
+       "venue": {
+        "name": "Petrosport Stadium",
+        "city": "Cairo",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1044,
+       "name": "Smouha SC",
+       "founded": 1949,
+       "venue": {
+        "name": "Alexandria Stadium",
+        "city": "Alexandria",
+        "capacity": 19676,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1046,
+       "name": "Wadi Degla",
+       "founded": 2002,
+       "venue": {
+        "name": "Cairo International Stadium",
+        "city": "Cairo",
+        "capacity": 74100,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1572,
+       "name": "Al Ittihad",
+       "founded": 1914,
+       "venue": {
+        "name": "Alexandria Stadium",
+        "city": "Alexandria",
+        "capacity": 19676,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1574,
+       "name": "El Gouna FC",
+       "founded": 2003,
+       "venue": {
+        "name": "Khaled Bichara Stadium",
+        "city": "El-Gouna",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1575,
+       "name": "El Mokawloon",
+       "founded": 1973,
+       "venue": {
+        "name": "Arab Contractors Stadium (Osman Ahmed Osman Stadium)",
+        "city": "Cairo",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1577,
+       "name": "Al Ahly",
+       "founded": 1907,
+       "venue": {
+        "name": "WE Al-Ahly Stadium",
+        "city": "Cairo",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7520,
+       "name": "Masr",
+       "founded": 2009,
+       "venue": {
+        "name": "Cairo International Stadium",
+        "city": "Cairo",
+        "capacity": 74100,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13819,
+       "name": "Ghazl El Mehalla",
+       "founded": 1927,
+       "venue": {
+        "name": "El Mahalla Stadium",
+        "city": "El-Mahalla El-Kubra",
+        "capacity": 29000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13822,
+       "name": "Olympic El Qanah",
+       "founded": 1946,
+       "venue": {
+        "name": "Suez Canal Stadium",
+        "city": "Ismailia",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 14651,
+       "name": "Ceramica Cleopatra",
+       "founded": null,
+       "venue": {
+        "name": "Cairo International Stadium",
+        "city": "Cairo",
+        "capacity": 74100,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15570,
+       "name": "National Bank of Egypt",
+       "founded": null,
+       "venue": {
+        "name": "National Bank of Egypt Stadium",
+        "city": "Cairo",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 15731,
+       "name": "Abu Qair Semad",
+       "founded": null,
+       "venue": {
+        "name": "Abou Qir Fertilizers Stadium",
+        "city": "Al Mandarah",
+        "capacity": 1500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16431,
+       "name": "Future FC",
+       "founded": null,
+       "venue": {
+        "name": "WE Al-Ahly Stadium",
+        "city": "Cairo",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 18021,
+       "name": "Asyut Petrol",
+       "founded": 1990,
+       "venue": {
+        "name": "Asyut University Stadium",
+        "city": "Assyut",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Morocco",
+   "fetched": "2026-10-23T12:06:48.568Z",
+   "all": [
+    "200 | Botola Pro | League",
+    "201 | Botola 2 | League",
+    "822 | Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 200,
+     "name": "Botola Pro",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-08-26",
+       "2017-06-12",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-09-08",
+       "2018-05-21",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-08-25",
+       "2019-06-11",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-09-14",
+       "2020-10-11",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-12-04",
+       "2021-07-27",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-10",
+       "2022-07-04",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-01",
+       "2023-06-23",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-25",
+       "2024-06-14",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-30",
+       "2025-05-30",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-12",
+       "2026-07-21",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-24",
+       "2026-11-08",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 962,
+       "name": "Renaissance Berkane",
+       "founded": 1971,
+       "venue": {
+        "name": "Stade Municipal de Berkane",
+        "city": "Berkane",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 964,
+       "name": "Difaa EL Jadida",
+       "founded": 1956,
+       "venue": {
+        "name": "Stade Ben Ahmed El Abdi",
+        "city": "Mazghan",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 965,
+       "name": "Moghreb Tetouan",
+       "founded": 1933,
+       "venue": {
+        "name": "Stade Saniat Rmel",
+        "city": "Tétouan",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 968,
+       "name": "Wydad AC",
+       "founded": 1937,
+       "venue": {
+        "name": "Stade Mohamed V",
+        "city": "Casablanca",
+        "capacity": 45891,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 969,
+       "name": "FAR Rabat",
+       "founded": 1958,
+       "venue": {
+        "name": "Stade Prince Moulay Abdallah",
+        "city": "Rabat",
+        "capacity": 68700,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 971,
+       "name": "Kawkab Marrakech",
+       "founded": 1947,
+       "venue": {
+        "name": "Stade de Marrakech",
+        "city": "Marrakech",
+        "capacity": 41356,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 973,
+       "name": "Hassania Agadir",
+       "founded": 1946,
+       "venue": {
+        "name": "Stade d'Agadir",
+        "city": "Agadir",
+        "capacity": 45480,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 974,
+       "name": "Ittihad Tanger",
+       "founded": 1983,
+       "venue": {
+        "name": "Grand Stade de Tanger",
+        "city": "Tanger",
+        "capacity": 65000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 976,
+       "name": "Raja Casablanca",
+       "founded": 1949,
+       "venue": {
+        "name": "Stade Mohamed V",
+        "city": "Casablanca",
+        "capacity": 45891,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 977,
+       "name": "FUS Rabat",
+       "founded": 1946,
+       "venue": {
+        "name": "Stade Prince Moulay El Hassan",
+        "city": "Rabat",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3449,
+       "name": "CR Khemis Zemamra",
+       "founded": 1977,
+       "venue": {
+        "name": "Stade Ahmed Choukri",
+        "city": "Zemamra",
+        "capacity": 2500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3453,
+       "name": "Maghreb Fès",
+       "founded": 1946,
+       "venue": {
+        "name": "Complexe Sportif de Fès",
+        "city": "Fès",
+        "capacity": 45000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3458,
+       "name": "Widad Témara",
+       "founded": 1993,
+       "venue": {
+        "name": "Stade Municipal de Témara",
+        "city": "Témara",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 14806,
+       "name": "UTS Rabat",
+       "founded": 1969,
+       "venue": {
+        "name": "Terrain Filine",
+        "city": "Sala Al Jadida",
+        "capacity": 1000,
+        "surface": null
+       }
+      },
+      {
+       "id": 18753,
+       "name": "Amal Tiznit",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 22218,
+       "name": "CODM Meknès",
+       "founded": 1962,
+       "venue": {
+        "name": "Stade d'Honneur",
+        "city": "Meknès",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "South-Africa",
+   "fetched": "2026-10-23T12:06:49.435Z",
+   "all": [
+    "288 | Premier Soccer League | League",
+    "289 | 1st Division | League",
+    "507 | Cup | Cup",
+    "508 | League Cup | Cup",
+    "509 | 8 Cup | Cup",
+    "734 | Diski Challenge | League",
+    "935 | Diski Shield | Cup",
+    "1243 | Super League Women | League"
+   ],
+   "leagues": [
+    {
+     "id": 288,
+     "name": "Premier Soccer League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-08-23",
+       "2017-05-27",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-08-18",
+       "2018-05-12",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-04",
+       "2019-05-11",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-03",
+       "2020-09-21",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-24",
+       "2021-06-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-20",
+       "2022-06-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-05",
+       "2023-06-14",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-04",
+       "2024-06-19",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-14",
+       "2025-06-30",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-09",
+       "2026-06-13",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-01",
+       "2027-05-22",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2669,
+       "name": "Amazulu",
+       "founded": 1932,
+       "venue": {
+        "name": "Moses Mabhida Stadium",
+        "city": "Durban",
+        "capacity": 69957,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2682,
+       "name": "Marumo Gallants",
+       "founded": 1986,
+       "venue": {
+        "name": "Free State Toyota Stadium",
+        "city": "Bloemfontein, FS",
+        "capacity": 40911,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2690,
+       "name": "Golden Arrows",
+       "founded": 1943,
+       "venue": {
+        "name": "Mpumalanga Stadium",
+        "city": "Mpumalanga",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2691,
+       "name": "Kaizer Chiefs",
+       "founded": 1970,
+       "venue": {
+        "name": "FNB Stadium (Soccer City)",
+        "city": "Johannesburg, GA",
+        "capacity": 94736,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2693,
+       "name": "Polokwane City",
+       "founded": null,
+       "venue": {
+        "name": "Old Peter Mokaba Stadium",
+        "city": "Pietersburg",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2698,
+       "name": "Chippa United",
+       "founded": null,
+       "venue": {
+        "name": "Buffalo City Stadium",
+        "city": "East London",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2699,
+       "name": "Mamelodi Sundowns",
+       "founded": 1970,
+       "venue": {
+        "name": "Loftus Versfeld Stadium",
+        "city": "Tshwane",
+        "capacity": 51762,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2700,
+       "name": "Orlando Pirates",
+       "founded": 1937,
+       "venue": {
+        "name": "Orlando Stadium",
+        "city": "Johannesburg, GA",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4905,
+       "name": "Stellenbosch",
+       "founded": 1980,
+       "venue": {
+        "name": "Danie Craven Stadium",
+        "city": "Stellenbosch",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8074,
+       "name": "TS Galaxy",
+       "founded": 2015,
+       "venue": {
+        "name": "Mbombela Stadium",
+        "city": "Nelspruit",
+        "capacity": 43589,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10567,
+       "name": "Richards Bay",
+       "founded": null,
+       "venue": {
+        "name": "King Goodwill Zwelithini Stadium",
+        "city": "Durban, KN",
+        "capacity": 14500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15537,
+       "name": "Sekhukhune United",
+       "founded": null,
+       "venue": {
+        "name": "Peter Mokaba Stadium",
+        "city": "Pietersburg",
+        "capacity": 45264,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22234,
+       "name": "Milford FC",
+       "founded": null,
+       "venue": {
+        "name": "Princess Magogo Stadium",
+        "city": "Durban",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 24757,
+       "name": "Durban City",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 24759,
+       "name": "Kruger United",
+       "founded": null,
+       "venue": {
+        "name": "Mbombela Stadium",
+        "city": "Nelspruit",
+        "capacity": 43589,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26299,
+       "name": "Siwelele",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
