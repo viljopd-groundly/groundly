@@ -364,6 +364,12 @@ button{touch-action:manipulation}
 .rmatch span{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
 .rmatch b{font-size:15px;overflow-wrap:anywhere}
 .rmatch div:first-child:not(:last-child){grid-column:1/-1}
+[data-hype]{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;width:max-content;justify-self:start}.hcnt{font-variant-numeric:tabular-nums;min-width:20px;padding:1px 7px;border-radius:999px;background:var(--line);text-align:center;font-size:12px;line-height:18px}
+[data-hype][aria-pressed="true"] .hcnt{background:var(--accent);color:var(--chalk)}
+/* markering när muspekaren är över något klickbart (bara på datorer, inte på telefoner) */
+@media (hover:hover){.card,.mrow,.simbtn,.thead,.rhead,.hcard,.arcsea,.sthead,.popt,.btn,.chip,.mini,.themebtn{transition:background-color .12s,border-color .12s}
+  .card:not([aria-expanded="true"]):hover,.mrow:hover,.simbtn:hover,.thead:hover,.rhead:hover,.hcard:hover,.arcsea:hover,.sthead:hover,.popt:hover{background:var(--line)}
+  .btn:not(.primary):not(:disabled):hover,.chip:hover,.mini:not(:disabled):hover,.themebtn:hover{border-color:var(--accent)}}
 .hero{border:2px solid var(--accent);background:linear-gradient(160deg,var(--accent-soft),var(--surface) 60%)}
 .teams.big{font-size:20px;font-family:var(--f-display);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .teams.big button{display:inline-flex;align-items:center;gap:8px;border-bottom:0}
@@ -1379,7 +1385,8 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
     ${past?goalsHtml(m):""}
     ${past?"":`<h3>Biljetter</h3>${tix||`<p class="meta">Vi har ingen biljettlänk för den här matchen.</p>`}${awayTix}`}
     ${det}
-    <div class="mp">${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
+    ${past||!m.city||homeIsLocal(m.city)?"":`<h3>Resa</h3><div class="actions">${omioLink(homeTown,m.city)}${homeTown?extLink(transitUrl(homeTown,placeStr(m.venue,m.city)),`Resväg från ${esc(homeTown)}`,"btn small"):""}</div>`}
+    <div class="mp">${myBtns(m)}${hotelLink(m)}${calLink(m)}</div>
     ${past?"":`<p class="hint">Tider kan flyttas, till exempel för tv. Kolla hos klubben innan du bokar resa.</p>`}
   </div></div>`;}
 let msId=null;
@@ -2056,6 +2063,14 @@ const CROWD={home:"Hemmafans",away:"Bortafans",neutral:"Blandat",sports:"Sportba
 const BOOKING_AID=""; // partner-id om du går med direkt hos Booking
 // Travelpayouts: fyll i värdena från deras länkgenerator för Booking.com (marker = ditt partner-id).
 const TP={marker:"",trs:"",p:"",campaign_id:""};
+// Omio (tåg, buss och flyg) via Travelpayouts: fyll i p och campaign_id från deras länkgenerator för Omio, så blir länkarna annonslänkar.
+// OMIO_FK: stad -> Omios stads-id (från Travelpayouts "Omio Deep link Creator"). Finns båda städerna öppnar Omio med sträckan ifylld.
+const OMIO={p:"",campaign_id:""};
+const OMIO_FK={};
+const OMIO_ON=!!(TP.marker&&OMIO.p);
+function omioUrl(from,to){const f=OMIO_FK[from],t=OMIO_FK[to];const u="https://www.omio.se/"+(f&&t?`?departure_fk=${enc(f)}&arrival_fk=${enc(t)}`:"");
+  if(!OMIO_ON)return u;const q=new URLSearchParams({marker:TP.marker,p:OMIO.p});if(OMIO.campaign_id)q.set("campaign_id",OMIO.campaign_id);if(TP.trs)q.set("trs",TP.trs);q.set("u",u);return"https://tp.media/r?"+q.toString();}
+const omioLink=(from,to,cls)=>extLink(omioUrl(from,to),OMIO_ON?`Tåg, buss och flyg (Omio)<small class="adtag">Annonslänk</small>`:"Tåg, buss och flyg (Omio)",cls||"btn small");
 const AFFILIATE=!!(BOOKING_AID||TP.marker);
 const adLabel=t=>AFFILIATE?`${t}<small class="adtag">Annonslänk</small>`:t;
 const SEEDMAP=new Map();PUBSEED.forEach(([st,src,url,note,pubs])=>SEEDMAP.set(arenaKey(st),{src,url,note,pubs}));
@@ -2145,10 +2160,11 @@ const placeStr=(s,city)=>[s,city].filter(Boolean).join(", ");
 const transitUrl=(from,to)=>"https://www.google.com/maps/dir/?api=1"+(from?"&origin="+enc(from):"")+"&destination="+enc(to)+"&travelmode=transit";
 const dirUrl=(from,to,mode)=>"https://www.google.com/maps/dir/?api=1"+(from?"&origin="+enc(from):"")+"&destination="+enc(to)+"&travelmode="+mode;
 // "Ta dig till arenan": långresan från hemorten (om den inte ligger nära) och sista biten på plats
-function tripPanel(c){const to=placeStr(c.s,c.city);const hl=homeLL(),cl=GEO[c.city];
-  const local=!!homeTown&&(norm(homeTown)===norm(c.city||"")||!!(hl&&cl&&haversine(hl.ll,cl)<25));
+function homeIsLocal(city){if(!homeTown)return false;const hl=homeLL(),cl=GEO[city];return norm(homeTown)===norm(city||"")||!!(hl&&cl&&haversine(hl.ll,cl)<25);}
+function tripPanel(c){const to=placeStr(c.s,c.city);
+  const local=homeIsLocal(c.city);
   const far=homeTown&&!local?`<div class="tripsec"><div class="sechead"><div class="lbl">Från ${esc(homeTown)}</div><button class="link" data-homeedit="1">Byt hemort</button></div>
-    <div class="actions">${extLink(dirUrl(homeTown,to,"transit"),"Tåg och buss","btn small")}${extLink(dirUrl(homeTown,to,"driving"),"Bil","btn small")}</div></div>`:"";
+    <div class="actions">${omioLink(homeTown,c.city)}${extLink(dirUrl(homeTown,to,"transit"),"Kollektivt i kartan","btn small")}${extLink(dirUrl(homeTown,to,"driving"),"Bil","btn small")}</div></div>`:"";
   const near=`<div class="tripsec"><div class="lbl">På plats</div><div class="actions">${extLink(dirUrl("",to,"walking"),"Gång","btn small")}${extLink(dirUrl("",to,"transit"),"Kollektivt","btn small")}${extLink(dirUrl("",to,"driving"),"Bil","btn small")}</div></div>`;
   const foot=homeEdit?homeRow(c):!homeTown?`<div><button class="link" data-homeedit="1">Ange din hemort för resväg hela vägen hit</button></div>`:local?`<p class="meta">Du bor nära, så vi visar bara sista biten. <button class="link" data-homeedit="1">Byt hemort</button></p>`:"";
   return`<div class="trip" data-noclose="1">${far}${near}${foot}</div>`;}
@@ -3065,7 +3081,7 @@ function hypeCandidates(){if(dbState!=="ready")return[];const now=Date.now(),end
     if(derbyOf(m))sc+=100;if(fl.includes(m.home)||fl.includes(m.away))sc+=60;sc+=hypeCount(m._id)*15;if(String(m.tier)==="1")sc+=20;if(tierOf(m)==="CUP")sc+=/Champions/i.test(m.comp||"")?30:15;
     sc+=Math.min(30,((h&&h.cap)||0)/3000);return{m,sc};}).sort((x,y)=>y.sc-x.sc).map(x=>x.m);}
 function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return"Pågår snart";const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5);return d?`om ${d} ${d===1?"dag":"dagar"} och ${h} tim`:`om ${h} tim`;}
-function hypeBtn(m){const n=hypeCount(m._id);return dbNs&&myId?`<button class="btn small" data-hype="${esc(m._id)}" aria-pressed="${iHype(m._id)}"${hypeBusy?" disabled":""}>${ic("flame",iHype(m._id)?"on":"")} ${iHype(m._id)?"Peppad":"Peppa"}${n?` · ${n}`:""}</button>`:n?`<span class="meta">${ic("flame")} ${n} peppade</span>`:"";}
+function hypeBtn(m){const n=hypeCount(m._id);return dbNs&&myId?`<button class="btn small" data-hype="${esc(m._id)}" aria-pressed="${iHype(m._id)}"${hypeBusy?" disabled":""}>${ic("flame",iHype(m._id)?"on":"")} ${iHype(m._id)?"Peppad":"Peppa"}${n?`<span class="hcnt" aria-label="${n} peppade">${n}</span>`:""}</button>`:n?`<span class="meta">${ic("flame")} Peppad av ${n}</span>`:"";}
 function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==="loading"?`<article class="tip hero"><p class="meta">Hämtar matchschemat…</p></article>`:"";
   const m=list[0],dby=derbyOf(m),fav=isFav(m.home)||isFav(m.away);
   const why=dby?`${esc(dby[1])}. ${esc(String(dby[4]||"").split(". ")[0])}.`:fav?"Ditt favoritlag spelar.":`${esc(m.comp||"")}${C[m.home]&&C[m.home].cap?` inför upp till ${C[m.home].cap.toLocaleString("sv-SE")} åskådare`:""}.`;
