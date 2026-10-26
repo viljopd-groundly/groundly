@@ -1970,7 +1970,7 @@ function projPin([la,lo],R){const my=l=>Math.log(Math.tan(Math.PI/4+l*Math.PI/36
 const STUDIO={};
 const fmtChips=()=>`<div class="chips" role="group" aria-label="Format">${[["post","Inlägg 4:5"],["story","Story 9:16"]].map(([k,l])=>`<button class="chip" data-fmt="${k}" aria-pressed="${shareFmt===k}">${l}</button>`).join("")}</div>`;
 const studioHtml=(id,alt)=>`<img id="img-${id}" class="seasonimg ${shareFmt}" alt="${esc(alt)}">
-  <div class="actions">${dlNs===null?"":`<button class="btn primary" data-savecard="${id}">Spara bild</button>`}${navigator.share?`<button class="btn${dlNs===null?" primary":""}" data-sharecard="${id}">${ic("share")} Dela</button>`:""}<button class="btn" data-copycard="${id}">Kopiera som text</button></div>
+  <div class="actions">${dlNs===null?"":`<button class="btn primary" data-savecard="${id}">Spara bild</button>`}${navigator.share?`<button class="btn${dlNs===null?" primary":""}" data-sharecard="${id}">${ic("share")} Dela</button>`:""}</div>
   <p class="hint" id="msg-${id}">${dlNs===null?"Håll fingret på bilden eller högerklicka för att spara den.":"I Claude-appen på mobilen öppnar Spara bild delningsmenyn, så du kan skicka bilden direkt till Instagram eller andra appar."}</p>`;
 const studioMsg=(id,t)=>{const e=document.getElementById("msg-"+id);if(e)e.textContent=t;};
 const CC={BG:"#123d24",FG:"#f3f7f4",AC:"#8fe0ad",MU:"#a9c4b3",LN:"rgba(243,247,244,.14)",LAND:"#21603c",SEA:"#0f3420",PAPER:"#f4efe2",INK:"#13261b",INKM:"#5b6b60"};
