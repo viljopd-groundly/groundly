@@ -425,6 +425,9 @@ button{touch-action:manipulation}
 .logopick[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}.logopick[aria-pressed=true] span{color:var(--fg);font-weight:700}
 .logopick:focus-visible{outline:2px solid var(--accent)}
 .setsw{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.setsw input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent);flex:none}.setsw b{display:block;font-size:14px}.setsw small{color:var(--muted);font-size:12px}
+.accdet>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px;padding:6px 0}.accdet>summary::-webkit-details-marker{display:none}
+.accdet>summary .meta{font-weight:500}.accdet>summary:after{content:"";width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:-3px 0 0 auto}
+.accdet[open]>summary:after{transform:rotate(-135deg);margin-top:3px}.accdet>summary .ic{width:14px;height:14px;color:var(--accent)}
 .selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.dsel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dsel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
@@ -2760,13 +2763,14 @@ function arenaList(){const toks=norm(aq)?norm(aq).split(" "):[];
   list.sort(aSort==="az"?az:aSort==="rate"?(p,q)=>(q.a.total??-1)-(p.a.total??-1)||q.a.n-p.a.n||(q.cap||0)-(p.cap||0):(p,q)=>(q.cap||0)-(p.cap||0)||az(p,q));
   return list;}
 function nextTxt(m){return m.kickoff?`${dayLong(dayKey(new Date(m.kickoff)))} kl ${timeOf(m.kickoff)}`:rangeTxt(m);}
+const ACC_OPEN=new Set();document.addEventListener("toggle",e=>{const d=e.target;if(d.classList&&d.classList.contains("accdet")){if(d.open)ACC_OPEN.add(d.dataset.acck);else ACC_OPEN.delete(d.dataset.acck);}},true);
 function arenaCard(x){const s=ratingSummary(x.a);const up=arenaUpcoming(x);const c0=x.clubs[0];const pubs=pubList(c0).length;
   const shared=x.clubs.length>1;
   return`<article class="tip arena"><div class="tip-head"><h2 class="name">${esc(x.s)}</h2><span class="meta">${esc(x.city)}, ${esc(x.c)}</span></div>
    <div class="apills">${x.cap?`<span class="pill">${fmtCap(x.cap)} platser</span>`:`<span class="pill">Kapacitet saknas</span>`}${(()=>{const sf=surfaceOf(x.clubs[0]);return sf?`<span class="pill">${esc(SURF_LBL[sf.v])}</span>`:"";})()}${shared?`<span class="pill ec">Delas av ${x.clubs.length} klubbar</span>`:""}${arenaVisited(x)?`<span class="pill t1">Besökt ${OK}</span>`:""}${x.a.n?`<span class="pill">${x.a.total!=null?STAR(1)+" "+dec(x.a.total)+" · ":""}${x.a.n} betyg</span>`:""}</div>
    <div class="teams">${x.clubs.map(c=>`<button data-open="${esc(c.id)}">${crest(c.id,c.n,24)}${esc(c.n)}${favStar(c.id)}</button>`).join('<span class="vs">·</span>')}</div>
    ${up.length?`<div class="anext"><b>Nästa match:</b> ${esc(up[0].homeName)} – ${esc(up[0].awayName)}, ${esc(nextTxt(up[0]))}${up.length>1?` <span class="meta">(+${up.length-1} till i schemat)</span>`:""}</div>`:""}
-   ${s.bars}${s.acc?`<div class="accs">${s.acc}</div>`:""}
+   ${s.bars}${s.acc?`<details class="accdet" data-acck="${esc(x.k)}"${ACC_OPEN.has(x.k)?" open":""}><summary>${ic("check")} Tillgänglighet <span class="meta">${(s.acc.match(/class="acc /g)||[]).length} uppgifter från besökare</span></summary><div class="accs">${s.acc}</div></details>`:""}
    <div class="actions"><button class="btn small" data-open="${esc(c0.id)}">${shared?"Visa "+esc(c0.n):"Visa klubb och arenafakta"}</button><button class="btn small" data-tripfor="${esc(c0.id)}" aria-expanded="${tripOpen===c0.id}">Ta dig till arenan</button>${extLink(bookingUrl(x.s,x.city,up[0]?matchDate(up[0]):null),adLabel("Hotell"),"btn small")}${pubs?`<button class="btn small" data-open="${esc(c0.id)}">${pubs} pubtips</button>`:""}</div>${tripOpen===c0.id?tripPanel(C[c0.id]):""}
   </article>`;}
 function renderArenas(){
