@@ -232,5 +232,6 @@ if(Object.keys(extra.squads).length)fs.writeFileSync(path.join(OUT,"data","squad
   fs.writeFileSync(path.join(OUT,"data","events.json"),JSON.stringify({updated:up,m:extra.events}));}
 fs.mkdirSync(path.join(OUT,"data"),{recursive:true});
 fs.writeFileSync(path.join(OUT,"data","fixtures.json"),JSON.stringify({updated:new Date().toISOString(),season:SEASON,source:process.env.API_FOOTBALL_KEY?"openfootball (CC0) och API-Football":"openfootball (CC0)",rows}));
+try{apiStat.fixtures_delning=require(path.join(TOOLS,"split-fixtures.js")).splitFixtures(OUT);}catch(e){apiStat.fixtures_delning_fel=String(e.message).slice(0,120);}
 try{const{buildIndex}=require(path.join(TOOLS,"archive-index.js"));apiStat.arkivsäsonger=buildIndex(OUT).length;}catch(e){apiStat.arkivindex_fel=String(e.message).slice(0,120);}
 console.log(JSON.stringify({season:SEASON,matches:rows.length,played:rows.filter(r=>r[4]).length,perLeague:stat,apiFootball:apiStat}));

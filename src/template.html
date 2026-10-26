@@ -8,7 +8,7 @@
 :root{
   --bg:#eef3ef; --surface:#ffffff; --fg:#10231a; --muted:#566b5e; --line:#d3dfd6;
   --pitch:#1d6b3b; --pitch-soft:#d9eee0; --chalk:#f7faf7;
-  --flood:#a87700; --flood-soft:#fbefcc; --two:#3b5788; --two-soft:#e1e8f5; --three:#7a4f8f; --three-soft:#efe4f4;
+  --flood:#8a6200; --flood-soft:#fbefcc; --two:#3b5788; --two-soft:#e1e8f5; --three:#7a4f8f; --three-soft:#efe4f4;
   --bad:#b23a2e;
   --accent:var(--pitch); --accent-soft:var(--pitch-soft);
   --f-display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
@@ -889,7 +889,13 @@ let FIXTURES=[],FX_UPDATED=null,DBM=null,dbFailed=false;
 function remergeMatches(){setTimeout(()=>{try{(window.requestIdleCallback||(f=>f()))(()=>{try{upIndex();}catch(e){}try{MATCHES.forEach(m=>{mTs(m);if(m.kickoff)koDay(m.kickoff);});}catch(e){}});}catch(e){}},50);if(DBM===null&&!dbFailed&&!FIXTURES.length)return;MATCHES=mergeFixtures(DBM||[]);dbState=MATCHES.length?"ready":(dbFailed?"none":"empty");render();}
 (window.requestIdleCallback||(f=>setTimeout(f,300)))(()=>fetch("data/flags.json").then(r=>r.ok?r.json():null).then(j=>{if(!j)return;Object.assign(FLAGS,j);Object.keys(j).forEach(k=>{if(k.startsWith("nt-")){FLAGS["u21-"+k.slice(3)]=j[k];FLAGS["w"+k]=j[k];}});try{render();}catch(e){}}).catch(()=>{}));
 let mapsP=null;function loadMaps(){return mapsP||(mapsP=fetch("data/maps.json").then(r=>r.json()).then(j=>{for(const k in j)if(MAPS[k]){MAPS[k].path=j[k].path;if(j[k].path2)MAPS[k].path2=j[k].path2;}}).catch(()=>{mapsP=null;}));}
-fetch("data/fixtures.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&Array.isArray(j.rows)){FIXTURES=j.rows;FX_UPDATED=j.updated||null;remergeMatches();}}).catch(()=>{});
+// kommande matcher först (mindre fil), äldre resultat när appen är igång. Faller tillbaka på hela fixtures.json.
+let FX_NEXT=null,FX_PAST=null;
+function fxSet(){FIXTURES=(FX_PAST||[]).concat(FX_NEXT||[]);remergeMatches();}
+const fxGet=f=>fetch("data/"+f,{cache:"no-cache"}).then(r=>r.ok?r.json():null);
+fxGet("fixtures-next.json").then(j=>{if(!j||!Array.isArray(j.rows))throw 0;FX_UPDATED=j.updated||null;FX_NEXT=j.rows;fxSet();
+  (window.requestIdleCallback||(f=>setTimeout(f,400)))(()=>fxGet("fixtures-past.json").then(p=>{if(p&&Array.isArray(p.rows)){FX_PAST=p.rows;fxSet();}}).catch(()=>{}));})
+  .catch(()=>fxGet("fixtures.json").then(j=>{if(j&&Array.isArray(j.rows)){FIXTURES=j.rows;FX_UPDATED=j.updated||null;remergeMatches();}}).catch(()=>{}));
 function fixtureMatches(){return FIXTURES.map(([h,a,ko,date,sc,comp,tier])=>{const H=C[h],A=C[a];if(!H||!A)return null;
   return{_id:`of-${date}-${h}-${a}`,home:h,away:a,homeName:H.n,awayName:A.n,comp,tier,country:H.c,city:H.city,venue:H.s||null,kickoff:ko||null,dateFrom:ko?null:date,dateTo:ko?null:date,score:sc||null,src:"openfootball"};}).filter(Boolean);}
 // databasens matcher går före; öppen data fyller på resten av säsongen
@@ -1042,7 +1048,7 @@ function setSel(id,opts,val){const el=document.getElementById(id);if(!el)return;
 document.addEventListener("change",e=>{const t=e.target;
   if(t.id==="countrySel"){country=t.value;league="";openClub=null;renderClubs();}
   else if(t.id==="leagueSel"){league=t.value;openClub=null;renderClubs();}
-  else if(t.id==="aCountrySel"){aCountry=t.value;aLimit=40;renderArenas();}
+  else if(t.id==="aCountrySel"){aCountry=t.value;aSave();aLimit=40;renderArenas();}
   else if(t.id==="tblCSel"){tblSeason="";const ls=tblLeagues().filter(x=>x.c===t.value);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();}
   else if(t.id==="tblSSel"){tblSeason=t.value;renderTable();}
   else if(t.id==="tblLSel"){tblSeason="";tblLeague=t.value;tblHL=null;store.set("fk-tbl",tblLeague);renderTable();}
@@ -2061,7 +2067,7 @@ async function fillScores(){if(fillBusy||fillDone||myState!=="ready"||!Array.isA
   }finally{fillBusy=false;}
   const n=Object.keys(up).length;fillDone=true;if(!n)return;
   mutate(d=>{d.attended.forEach(a=>{if(!a.score&&up[a.id])a.score=up[a.id];});});toast(`${n} ${n===1?"resultat":"resultat"} fylldes i automatiskt i din logg`,"check");}
-setTimeout(function tryFill(){if(myState==="ready")fillScores();else setTimeout(tryFill,4000);},6000);
+setTimeout(function tryFill(){if(myState==="ready"&&(FX_PAST||!FX_NEXT))fillScores();else setTimeout(tryFill,4000);},6000);
 function afterMine(){if(mySub==="been")drawLiveMap();if(mySub==="pass"){drawPass();}else if(mySub==="challenges"){drawMap();drawSeason();}else if(mySub==="been"&&shareMatchId){const a=MY.attended.find(z=>z.id===shareMatchId);if(a)drawMatch(a);}}
 
 // ---------- klick för de nya funktionerna ----------
@@ -2751,6 +2757,9 @@ async function exportCsv(){const rows=[["Datum","Hemmalag","Bortalag","Resultat"
 // ---------- arenor ----------
 let aq="",aCountry="alla",aSort="cap",aFilt=new Set(),aLimit=40;
 try{const s=store.get("fk-asort");if(["cap","rate","az"].includes(s))aSort=s;}catch(e){}
+// land och filter på Arenor sparas så att valen ligger kvar när man kommer tillbaka
+try{const c=store.get("fk-acountry");if(c)aCountry=c;const f=JSON.parse(store.get("fk-afilt")||"[]");if(Array.isArray(f))f.filter(k=>["up","acc","rated","vis","notv"].includes(k)).forEach(k=>aFilt.add(k));}catch(e){}
+const aSave=()=>{store.set("fk-acountry",aCountry);store.set("fk-afilt",JSON.stringify([...aFilt]));};
 let ARENAS=null;
 function arenas(){if(ARENAS)return ARENAS;const map=new Map();
   Object.values(C).forEach(c=>{if(!c.s)return;const k=arenaKey(c.s);if(!map.has(k))map.set(k,{k,s:c.s,city:c.city,c:c.c,cap:c.cap||null,clubs:[]});const x=map.get(k);x.clubs.push(c);if(c.cap&&(!x.cap||c.cap>x.cap))x.cap=c.cap;});
@@ -2773,8 +2782,8 @@ function arenaList(){const toks=norm(aq)?norm(aq).split(" "):[];
   if(aFilt.has("up"))list=list.filter(x=>arenaUpcoming(x).length);
   if(aFilt.has("acc"))list=list.filter(x=>arenaHasAcc(x.a));
   if(aFilt.has("rated"))list=list.filter(x=>x.a.n>0);
-  if(aFilt.has("notv"))list=list.filter(x=>!arenaVisited(x));
-  if(aFilt.has("vis"))list=list.filter(x=>arenaVisited(x));
+  if(aFilt.has("notv")&&myState==="ready")list=list.filter(x=>!arenaVisited(x));
+  if(aFilt.has("vis")&&myState==="ready")list=list.filter(x=>arenaVisited(x));
   const az=(p,q)=>p.s.localeCompare(q.s,"sv");
   list.sort(aSort==="az"?az:aSort==="rate"?(p,q)=>(q.a.total??-1)-(p.a.total??-1)||q.a.n-p.a.n||(q.cap||0)-(p.cap||0):(p,q)=>(q.cap||0)-(p.cap||0)||az(p,q));
   return list;}
@@ -2790,6 +2799,7 @@ function arenaCard(x){const s=ratingSummary(x.a);const up=arenaUpcoming(x);const
    <div class="actions"><button class="btn small" data-open="${esc(c0.id)}">${shared?"Visa "+esc(c0.n):"Visa klubb och arenafakta"}</button><button class="btn small" data-tripfor="${esc(c0.id)}" aria-expanded="${tripOpen===c0.id}">Ta dig till arenan</button>${extLink(bookingUrl(x.s,x.city,up[0]?matchDate(up[0]):null),adLabel("Hotell"),"btn small")}${pubs?`<button class="btn small" data-open="${esc(c0.id)}">${pubs} pubtips</button>`:""}</div>${tripOpen===c0.id?tripPanel(C[c0.id]):""}
   </article>`;}
 function renderArenas(){
+  if(!COUNTRIES.some(([k])=>k===aCountry))aCountry="alla";
   setSel("aCountrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?"Alla länder":l]),aCountry);
   setSel("aSortSel",ASORT,aSort);document.getElementById("aSortSel").classList.remove("on");
   document.getElementById("aFiltChips").innerHTML=AFILT.filter(([k])=>(k!=="notv"&&k!=="vis")||myState==="ready").map(([k,l])=>`<button class="chip" data-afilt="${k}" aria-pressed="${aFilt.has(k)}">${l}</button>`).join("");
@@ -2801,9 +2811,9 @@ function renderArenas(){
   el.innerHTML=list.slice(0,aLimit).map(arenaCard).join("")+(list.length>aLimit?`<button class="btn" data-amore="1">Visa fler (${list.length-aLimit} kvar)</button>`:"");}
 const isArenaBtn=t=>t.dataset.acountry||t.dataset.asort||t.dataset.afilt||t.dataset.amore;
 function arenaClick(t){
-  if(t.dataset.acountry){aCountry=t.dataset.acountry;aLimit=40;}
+  if(t.dataset.acountry){aCountry=t.dataset.acountry;aSave();aLimit=40;}
   else if(t.dataset.asort){aSort=t.dataset.asort;store.set("fk-asort",aSort);aLimit=40;}
-  else if(t.dataset.afilt){const k=t.dataset.afilt;aFilt.has(k)?aFilt.delete(k):(aFilt.add(k),k==="vis"&&aFilt.delete("notv"),k==="notv"&&aFilt.delete("vis"));aLimit=40;}
+  else if(t.dataset.afilt){const k=t.dataset.afilt;aFilt.has(k)?aFilt.delete(k):(aFilt.add(k),k==="vis"&&aFilt.delete("notv"),k==="notv"&&aFilt.delete("vis"));aSave();aLimit=40;}
   else if(t.dataset.amore){aLimit+=40;}
   renderArenas();}
 {const aqEl=document.getElementById("aq");let t;aqEl.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{aq=aqEl.value.trim();aLimit=40;document.getElementById("aqClear").hidden=!aq;renderArenas();},120);});
