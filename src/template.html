@@ -1107,7 +1107,10 @@ const geoAi={}; // norm -> {state, name, ll, msg}
 
 function haversine(a,b){const R=6371,r=x=>x*Math.PI/180;const dLa=r(b[0]-a[0]),dLo=r(b[1]-a[1]);
   const h=Math.sin(dLa/2)**2+Math.cos(r(a[0]))*Math.cos(r(b[0]))*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
-const milTxt=km=>{const m=km/10;return(m<10?m.toFixed(1):Math.round(m).toString()).replace(".",",")+" mil";};
+const milTxt=km=>{const m=km/10;return"ca "+(m<10?m.toFixed(1):Math.round(m).toString()).replace(".",",")+" mil";};
+// uppskattad bilväg: fågelvägen + 25 % (stämmer ungefär med vägavstånd i Sverige och Europa). Exakt sträcka finns under "Ta dig till arenan".
+const ROADF=1.25;const roadKm=(a,b)=>haversine(a,b)*ROADF;
+const DIST_NOTE="Avstånden är uppskattad bilväg. För exakt sträcka, tryck Ta dig till arenan.";
 // vilken punkt mäter vi från?
 function resolvePlace(){const nq=norm(cityQ);if(!nq)return null;
   const alias=CITY_ALIAS[nq];if(alias&&GEO[alias])return{name:alias,ll:GEO[alias]};
@@ -1127,7 +1130,7 @@ function inDates(m){if(m.kickoff){const k=koDay(m.kickoff);return k>=dFrom&&k<=d
 // returnerar null om matchen inte är med, annars avstånd i km (eller -1 när avstånd inte används)
 function placeDist(m,place){const nq=norm(cityQ);if(!nq)return -1;
   if(radius===0){const target=CITY_ALIAS[nq]?norm(CITY_ALIAS[nq]):nq;return(norm(m.city).includes(target)||norm(m.venue).includes(nq))?-1:null;}
-  if(!place||!place.ll)return null;const ll=GEO[m.city];if(!ll)return null;const km=haversine(place.ll,ll);return km<=radius*10+0.01?km:null;}
+  if(!place||!place.ll)return null;const ll=GEO[m.city];if(!ll)return null;const km=roadKm(place.ll,ll);return km<=radius*10+0.01?km:null;}
 
 let citiesFor=null;
 function renderMatches(){matchKindChips();MLQ=null;
@@ -1139,7 +1142,7 @@ function renderMatchList(){
   document.getElementById("dFrom").value=dFrom;document.getElementById("dTo").value=dTo;
   document.getElementById("datePresets").innerHTML=presets().map(([l,a,b])=>`<button class="chip" data-from="${a}" data-to="${b}" aria-pressed="${dFrom===a&&dTo===b}">${l}</button>`).join("");
   const place=resolvePlace();const hasQ=!!norm(cityQ);
-  document.getElementById("radiusLbl").textContent=`Avstånd från ${place&&place.ll?place.name:cityQ}`;
+  document.getElementById("radiusLbl").textContent=`Avstånd från ${place&&place.ll?place.name:cityQ} · uppskattad bilväg`;
   document.getElementById("radiusLbl").hidden=!hasQ;document.getElementById("radiusChips").hidden=!hasQ;
   const isCustom=!RADII.includes(radius);
   document.getElementById("radiusChips").innerHTML=RADII.map(r=>`<button class="chip" data-radius="${r}" aria-pressed="${radius===r}"${hasQ?"":" disabled"}>${r===0?"Bara orten":r+" mil"}</button>`).join("")
@@ -1762,7 +1765,7 @@ function myStatsHtml(){const A=MY.attended||[];if(A.length<2)return"";
   // favoritlagen när jag är på plats
   const favs=favList();let fw=0,fd=0,fl=0;sc.forEach(([a,[h,g]])=>{const f=favs.find(x=>x===a.home||x===a.away);if(!f)return;const[my,op]=a.home===f?[h,g]:[g,h];if(my>op)fw++;else if(my===op)fd++;else fl++;});const fn=fw+fd+fl;
   // resor från hemorten
-  const hl=homeLL();let far=null,km=0,kmN=0;if(hl)A.forEach(a=>{const ll=GEO[a.city];if(!ll)return;const d=haversine(hl.ll,ll);km+=2*d;kmN++;if(!far||d>far.d)far={a,d};});
+  const hl=homeLL();let far=null,km=0,kmN=0;if(hl)A.forEach(a=>{const ll=GEO[a.city];if(!ll)return;const d=roadKm(hl.ll,ll);km+=2*d;kmN++;if(!far||d>far.d)far={a,d};});
   // veckodag, månad, mest sedda lag och arena
   const WD=["söndag","måndag","tisdag","onsdag","torsdag","fredag","lördag"];const cnt=(f)=>{const m=new Map();A.forEach(a=>{const k=f(a);if(k)m.set(k,(m.get(k)||0)+1);});return[...m.entries()].sort((x,y)=>y[1]-x[1])[0]||null;};
   const wd=cnt(a=>WD[new Date(a.date+"T12:00:00").getDay()]),mo=cnt(a=>["januari","februari","mars","april","maj","juni","juli","augusti","september","oktober","november","december"][+a.date.slice(5,7)-1]);
@@ -1778,6 +1781,7 @@ function myStatsHtml(){const A=MY.attended||[];if(A.length<2)return"";
     ${fn?row("Mina favoritlag på plats",`${Math.round(100*fw/fn)} % vinster <span class="meta">(V ${fw} · O ${fd} · F ${fl})</span>`):""}
     ${far?row("Längsta resan",`${esc(far.a.city)}, ${milTxt(far.d)} från ${esc(hl.name)}`):""}
     ${kmN?row("Resat totalt",`ca ${Math.round(km).toLocaleString("sv-SE")} km tur och retur`):""}
+    ${far?`<p class="hint">${DIST_NOTE}</p>`:""}
     ${row("Mest sedda lag",team&&team.n>1?`${esc(team.name)} <span class="meta">(${team.n} matcher)</span>`:"")}
     ${row("Mest besökta arena",ar&&ar[1]>1?`${esc(ar[0])} <span class="meta">(${ar[1]} gånger)</span>`:"")}
     ${row("Vanligaste matchdag",wd&&wd[1]>1?`${wd[0]} <span class="meta">(${wd[1]} matcher)</span>`:"")}
@@ -1891,7 +1895,7 @@ let matchView="list";try{const mv=store.get("fk-mview");if((mv==="plan"&&AI_ON)|
 let dSpeed=70,dMargin=45;try{const s=+store.get("fk-dspeed");if([50,70,90].includes(s))dSpeed=s;const g=+store.get("fk-dmargin");if([30,45,60].includes(g))dMargin=g;}catch(e){}
 const MATCH_MIN=115,SPAN=14*36e5;
 const durTxt=m=>{m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?`${h} h${r?" "+r+" min":""}`:`${r} min`;};
-function hopInfo(a,b){const la=GEO[a.city],lb=GEO[b.city];if(!la||!lb)return null;const km=haversine(la,lb);
+function hopInfo(a,b){const la=GEO[a.city],lb=GEO[b.city];if(!la||!lb)return null;const km=roadKm(la,lb);
   const travel=(km<3?0:km/dSpeed*60)+dMargin;const arrive=Date.parse(a.kickoff)+MATCH_MIN*6e4+travel*6e4;const ko=Date.parse(b.kickoff);
   return{km,travel,arrive,spare:(ko-arrive)/6e4,ok:arrive<=ko};}
 function findCombos(){const place=resolvePlace();
@@ -2329,7 +2333,7 @@ function planCands(inp,needKick){const from=isoDate(inp.from)||today(),to=isoDat
   if(inp.near){near=resolveCity(inp.near);if(!near)throw new Error(`Okänd ort "${inp.near}". Prova en större stad i närheten.`);if(!rad)rad=60;}
   const co=inp.country?norm(inp.country):null,comp=inp.competition?norm(inp.competition):null;
   const list=MATCHES.filter(m=>{if(needKick&&!m.kickoff)return false;const d=m.kickoff?matchDate(m):null;if(d?(d<from||d>to):(m.dateTo<from||m.dateFrom>to))return false;
-    if(co&&norm(m.country)!==co)return false;if(comp&&!norm(m.comp).includes(comp))return false;if(near){const ll=GEO[m.city];if(!ll||haversine(near[1],ll)>rad)return false;}return true;}).sort(sortM);
+    if(co&&norm(m.country)!==co)return false;if(comp&&!norm(m.comp).includes(comp))return false;if(near){const ll=GEO[m.city];if(!ll||roadKm(near[1],ll)>rad)return false;}return true;}).sort(sortM);
   return{list,near,from,to};}
 const PLAN_TOOLS=[
  {name:"sok_matcher",description:"Söker matcher i appens schema. Returnerar id, datum, tid (svensk tid), lag, turnering, arena, stad och land. Använd bara matcher som det här verktyget returnerar.",
@@ -2462,7 +2466,7 @@ function favRecord(f){const games=MY.attended.filter(a=>a.home===f||a.away===f);
   games.forEach(a=>{const sc=scoreOf(a);if(!sc)return;n++;const[my,op]=a.home===f?sc:[sc[1],sc[0]];if(my>op)w++;else if(my===op)d++;else l++;});return{games:games.length,n,w,d,l};}
 function favStats(f){const home=[],away=[];MY.attended.forEach(a=>{if(a.home===f)home.push(a);else if(a.away===f)away.push(a);});
   const rec=list=>{let w=0,d=0,l=0,gf=0,ga=0,n=0;list.forEach(a=>{const sc=scoreOf(a);if(!sc)return;n++;const[my,op]=a.home===f?sc:[sc[1],sc[0]];gf+=my;ga+=op;if(my>op)w++;else if(my===op)d++;else l++;});return{games:list.length,n,w,d,l,gf,ga};};
-  const base=GEO[C[f].city];let far=null;away.forEach(a=>{const ll=GEO[a.city];if(base&&ll){const km=haversine(base,ll);if(!far||km>far.km)far={km,a};}});
+  const base=GEO[C[f].city];let far=null;away.forEach(a=>{const ll=GEO[a.city];if(base&&ll){const km=roadKm(base,ll);if(!far||km>far.km)far={km,a};}});
   return{home:rec(home),away:rec(away),all:rec([...home,...away]),far,grounds:new Set(away.map(a=>a.venue||a.homeName)).size};}
 function favSplit(f){const s=favStats(f);const t=r=>r.n?`V ${r.w} · O ${r.d} · F ${r.l}<br>mål ${r.gf}–${r.ga}${r.games>r.n?`<br>${r.games-r.n} utan resultat`:""}`:r.games?"resultat saknas":"–";
   return`<div class="hb" role="group" aria-label="Sedda matcher hemma och borta">${[["Hemma",s.home],["Borta",s.away],["Totalt",s.all]].map(([l,r])=>`<div><span>${l}</span><b>${r.games}</b><small>${t(r)}</small></div>`).join("")}</div>
@@ -3232,13 +3236,13 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?"i da
   if(!homeTown||homeEdit)return`<article class="tip"><div class="lbl">Tips för helgen</div><p>Ange din hemort så visar vi matcher nära dig ${label}.</p><form class="homeform" id="homeForm"><label class="fld" for="homeIn">Din hemort<input id="homeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="t.ex. Jönköping"></label><button class="btn small primary" type="submit">Spara</button></form></article>`;
   const p=homeLL();if(!p)return`<article class="tip"><div class="lbl">Tips för helgen</div><p class="meta">Hittar inte ${esc(homeTown)} på kartan. Prova en större ort i närheten.</p><button class="link" data-homeedit="1">Byt hemort</button></article>`;
   if(dbState!=="ready")return"";
-  const nowW=Date.now()-2*36e5;const list=MATCHES.filter(m=>m.kickoff?(mTs(m)>nowW&&koDay(m.kickoff)>=from&&koDay(m.kickoff)<=to):(m.dateFrom<=to&&m.dateTo>=from)).map(m=>{const ll=GEO[m.city];return{m,km:ll?haversine(p.ll,ll):null};}).filter(x=>x.km!==null).sort((a,b)=>a.km-b.km);
+  const nowW=Date.now()-2*36e5;const list=MATCHES.filter(m=>m.kickoff?(mTs(m)>nowW&&koDay(m.kickoff)>=from&&koDay(m.kickoff)<=to):(m.dateFrom<=to&&m.dateTo>=from)).map(m=>{const ll=GEO[m.city];return{m,km:ll?roadKm(p.ll,ll):null};}).filter(x=>x.km!==null).sort((a,b)=>a.km-b.km);
   const near=list.filter(x=>x.km<=wkRadius*10);const pool=(near.length?near:list.slice(0,3)).slice(0,12);const show=homeMore.wk?pool:pool.slice(0,3);
   const chips=[5,15,30].map(r=>`<button class="chip" data-wkr="${r}" aria-pressed="${wkRadius===r}">${r} mil</button>`).join("");
   return`<article class="tip"><div class="sechead"><div class="lbl">Tips för helgen · nära ${esc(p.name)}</div><button class="link" data-homeedit="1">Byt hemort</button></div><div class="chips" role="group" aria-label="Avstånd">${chips}</div>
     ${!list.length?`<p class="meta">Inga matcher i det inlagda schemat ${label}.</p>`:!near.length?`<p class="meta">Inget inom ${wkRadius} mil ${label}. Närmaste matcherna:</p>`:""}
     <div class="dlist">${show.map(({m,km})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${km<5?"i stan":esc(milTxt(km))}</b><span>${m.kickoff?esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])+" "+timeOf(m.kickoff):"datum ej klart"}</span></div>
-      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div>${moreBtn("wk",pool.length)}</article>`;}
+      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div>${moreBtn("wk",pool.length)}<p class="hint">${DIST_NOTE}</p></article>`;}
 // veckans fråga
 const POLLS=[
  ["Bästa ståplatsläktaren?",["Gula väggen, Dortmund","Millerntor, St. Pauli","Ostseestadion, Rostock","Celtic Park, Glasgow","Någon i Sverige"]],
