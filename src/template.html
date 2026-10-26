@@ -1209,7 +1209,8 @@ document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[da
 // ---------- håll kvar det man tryckte på (inget hopp när listan ritas om) ----------
 // När ett klick ritar om en lista (gilla, betyg, spara, sortering …) ersätts knappen av en ny kopia. Vi letar upp kopian
 // och scrollar så att den hamnar exakt där den gamla var. Avbryts om man själv scrollar eller byter sida.
-{let A=null;const SKIP=/^(bn|mode|open|teamview|tbl|near|mview|mysub|tips|editatt)$/;
+{let A=null;// "Visa fler" ska fälla ut under knappen, inte följa med knappen nedåt
+ const SKIP=/^(bn|mode|open|teamview|tbl|near|mview|mysub|tips|editatt|mymore|limmore)$/;
  const selFor=el=>{if(el.id)return"#"+CSS.escape(el.id);for(const at of el.attributes){if(at.name.startsWith("data-")&&at.value!==""){const k=at.name.slice(5).replace(/-./g,x=>x[1].toUpperCase());if(SKIP.test(k))return null;return`[${at.name}="${CSS.escape(at.value)}"]`;}}return null;};
  const fix=()=>{if(!A)return;if(mode!==A.mode||Date.now()>A.until){A=null;return;}if(A.el.isConnected)return;
    const n=document.querySelector(A.sel);if(!n){return;}const top=n.getBoundingClientRect().top;const d=top-A.top;if(Math.abs(d)>1)window.scrollBy(0,d);A.el=n;A.top=n.getBoundingClientRect().top;};
