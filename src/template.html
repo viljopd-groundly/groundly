@@ -2796,6 +2796,7 @@ function renderArenas(){
   const sv=country;country=aCountry;let list;try{list=arenaList();}finally{country=sv;}
   document.getElementById("arenaCount").innerHTML=`<b>${list.length}</b> ${list.length===1?"arena":"arenor"}${aq?` för ”${esc(aq)}”`:""}${(()=>{if(myState!=="ready")return"";const vs=visitedStadiums();const vk=new Set([...vs].map(arenaKey));const n=list.filter(x=>vk.has(x.k)).length;return n?` · <b>${n}</b> ${n===1?"besökt":"besökta"} av dig`:"";})()}`;
   const el=document.getElementById("arenaList");
+  if(!list.length&&aFilt.has("vis")&&!visitedStadiums().size){el.innerHTML=`<div class="empty"><b>Du har inte loggat någon arena än.</b><div>Logga en match du varit på så hamnar arenan här.</div></div>`;return;}
   if(!list.length){el.innerHTML=`<div class="empty"><b>Ingen arena matchar.</b><div>Prova ett annat land, ta bort ett filter eller sök på stad eller klubb.</div></div>`;return;}
   el.innerHTML=list.slice(0,aLimit).map(arenaCard).join("")+(list.length>aLimit?`<button class="btn" data-amore="1">Visa fler (${list.length-aLimit} kvar)</button>`:"");}
 const isArenaBtn=t=>t.dataset.acountry||t.dataset.asort||t.dataset.afilt||t.dataset.amore;
