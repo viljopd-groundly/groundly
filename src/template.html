@@ -2531,9 +2531,12 @@ const hashStr=s=>{let h=0;for(const ch of String(s))h=(h*31+ch.charCodeAt(0))|0;
 function passStamps(){const m=new Map();
   const add=(key,o)=>{const cur=m.get(key);if(!cur){m.set(key,{...o,visits:o.visits||0});return;}
     if(o.date&&(!cur.date||o.date<cur.date))cur.date=o.date;cur.visits+=o.visits||0;if(o.last&&(!cur.lastDate||o.date>cur.lastDate)){cur.last=o.last;cur.lastDate=o.date;}if(!cur.club&&o.club)cur.club=o.club;};
-  MY.attended.forEach(a=>{const hc=a.home&&C[a.home];const s=(hc&&hc.s)||a.venue||(a.homeName?`${a.homeName}s arena`:null);if(!s)return;
-    add(s,{s,city:(hc&&hc.city)||a.city||"",country:(hc&&hc.c)||a.country||"Okänt land",club:hc?hc.id:null,date:a.date,visits:1,last:`${a.homeName} ${a.score||"–"} ${a.awayName}`});});
-  visitedMap().forEach((d,id)=>{const c=C[id];if(!c||!c.s)return;add(c.s,{s:c.s,city:c.city,country:c.c,club:id,date:d.date||"",visits:0});});
+  // arenan som står på matchen gäller i första hand (man kan ha ändrat den), annars hemmalagets arena
+  let byCity=null;const cityLand=ct=>{if(!ct)return null;if(!byCity){byCity=new Map();for(const id in C){const c=C[id];if(c.city&&c.c&&!byCity.has(norm(c.city)))byCity.set(norm(c.city),c.c);}}return byCity.get(norm(ct))||null;};
+  let byArena=null;const clubAt=k=>{if(!byArena){byArena=new Map();for(const id in C){const c=C[id];if(c.s&&!byArena.has(arenaKey(c.s)))byArena.set(arenaKey(c.s),c);}}return byArena.get(k)||null;};
+  MY.attended.forEach(a=>{const hc=a.home&&C[a.home];const s=a.venue||(hc&&hc.s)||(a.homeName?`${a.homeName}s arena`:null);if(!s)return;const k=arenaKey(s);
+    const ac=hc&&hc.s&&arenaKey(hc.s)===k?hc:clubAt(k);
+    add(k,{s:ac&&ac.s||s,city:a.city||(ac&&ac.city)||(!a.venue&&hc&&hc.city)||"",country:a.country||(ac&&ac.c)||(!a.venue&&hc&&hc.c)||cityLand(a.city)||"Okänt land",club:ac?ac.id:null,date:a.date,visits:1,last:`${a.homeName} ${a.score||"–"} ${a.awayName}`});});
   return[...m.values()].map(x=>({...x,visits:Math.max(1,x.visits)}));}
 function renderPass(){const st=passStamps();
   if(!st.length)return`<div class="empty"><b>Passet är tomt än.</b><div>Varje arena du besöker blir en stämpel. Logga en match du varit på så kommer stämpeln här.</div></div>`;
