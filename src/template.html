@@ -1050,8 +1050,8 @@ function renderNat(){const nq=norm(ntQ);const toks=nq?nq.split(" "):[];
 let clubLimit=60,clubLimitKey="";
 // rullgardin som ser ut som en knapp; mörk när något annat än "alla" är valt
 function setSel(id,opts,val){const el=document.getElementById(id);if(!el)return;const o1=([k,l])=>`<option value="${esc(k)}">${esc(l)}</option>`;
-  // grupper: {g:"Rubrik",o:[[värde,text],…]} – en tom rad läggs mellan grupperna
-  const h=opts.map((x,i)=>x&&x.g?`${i?`<option disabled></option>`:""}<optgroup label="${esc(x.g)}">${x.o.map(o1).join("")}</optgroup>`:o1(x)).join("");
+  // grupper: {g:"Rubrik",o:[[värde,text],…]}
+  const h=opts.map((x,i)=>x&&x.g?`<optgroup label="${esc(x.g)}">${x.o.map(o1).join("")}</optgroup>`:o1(x)).join("");
   if(el.dataset.h!==h){el.innerHTML=h;el.dataset.h=h;}el.value=val;el.classList.toggle("on",!!val&&val!=="alla");}
 document.addEventListener("change",e=>{const t=e.target;
   if(t.id==="countrySel"){country=t.value;league="";openClub=null;renderClubs();}
