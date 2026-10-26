@@ -6,6 +6,8 @@
 const fs=require("fs"),path=require("path"),{execSync}=require("child_process");
 const TOOLS=path.resolve(process.argv[2]||__dirname),OUT=path.resolve(process.argv[3]||"out"),WORK=path.resolve("of_src");
 const {parse}=require(path.join(TOOLS,"ftxt.js"));
+// API:t skickar ibland namn dubbelkodade ("Ã\x96stman"); rättas när svaret läses in
+const FIXR=require(path.join(TOOLS,"fixtext.js")).fixReplacer;
 const clubs=JSON.parse(fs.readFileSync(path.join(TOOLS,"clubs.json"),"utf8"));const OVR=JSON.parse(fs.readFileSync(path.join(TOOLS,"overrides.json"),"utf8"));
 fs.mkdirSync(WORK,{recursive:true});
 for(const r of ["england","deutschland","espana","italy","europe","football.json"]){const d=path.join(WORK,r);
@@ -106,7 +108,7 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
   // anropstak per natt (API_CAP, standard 6500), räknat på det som redan använts i dag. Trupper hoppas över först, sedan spelarlistor.
   const CAP=+(process.env.API_CAP||6500);let budget=CAP;const left=()=>budget-calls;const sleep=ms=>{try{execSync(`sleep ${ms/1000}`);}catch(e){}};
   const raw=q=>{if(left()<=50)throw new Error("anropstaket nått");for(let i=0;i<4;i++){calls++;let out;try{out=execSync(`curl -sS -m 60 ${local?"--noproxy '*'":""} -H "x-apisports-key: ${KEY}" "${BASE}/${q}"`,{encoding:"utf8",maxBuffer:256<<20});}catch(e){sleep(5000);continue;}
-      let j;try{j=JSON.parse(out);}catch(e){sleep(5000);continue;}
+      let j;try{j=JSON.parse(out,FIXR);}catch(e){sleep(5000);continue;}
       const errs=j.errors&&(Array.isArray(j.errors)?j.errors:Object.values(j.errors));
       if(errs&&errs.length){const msg=JSON.stringify(j.errors);if(!Array.isArray(j.errors)&&j.errors.rateLimit){gap=Math.max(gap,6500);sleep(61000);continue;}throw new Error(msg);}
       if(!local)sleep(gap);return j;}throw new Error("API-Football svarar inte: "+q);};
@@ -198,9 +200,9 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
         page++;}while(page<=Math.min(total,4));
         const pl=Object.values(ps).filter(p=>p[3]>0||p[4]>0).sort((a,b)=>b[4]-a[4]);if(pl.length>=8)extra.squads[our]={season,players:pl};}catch(e){apiStat.trupp_fel=(apiStat.trupp_fel||0)+1;}}
     // 6) målskyttar och utvisningar: nya matcher sedan förra körningen (alla vid första körningen)
-    let prev={};try{prev=JSON.parse(fs.readFileSync(path.join(TOOLS,"prev_events.json"),"utf8")).m||{};}catch(e){}
+    let prev={};try{prev=JSON.parse(fs.readFileSync(path.join(TOOLS,"prev_events.json"),"utf8"),FIXR).m||{};}catch(e){}
     // assistlämnare sparas i en egen fil (tools/ev_assist.json) så att events.json som appen laddar inte blir större
-    let AS={};try{AS=JSON.parse(fs.readFileSync(path.join(TOOLS,"ev_assist.json"),"utf8"));}catch(e){}
+    let AS={};try{AS=JSON.parse(fs.readFileSync(path.join(TOOLS,"ev_assist.json"),"utf8"),FIXR);}catch(e){}
     const recent=Date.now()-5*864e5;const need=finished.filter(f=>!prev[f.key]||!(f.key in AS)||Date.parse(f.date)>=recent);Object.assign(extra.events,prev);
     for(let i=0;i<need.length;i+=20){const chunk=need.slice(i,i+20);let r;try{r=get(`fixtures?ids=${chunk.map(f=>f.id).join("-")}`);}catch(e){apiStat.händelser_fel=String(e.message).slice(0,80);break;}
       for(const f of r){const me=chunk.find(c=>c.id===f.fixture.id);if(!me)continue;const homeId=f.teams.home.id;
