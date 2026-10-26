@@ -369,7 +369,7 @@ button{touch-action:manipulation}
 [data-hype][aria-pressed="true"] .hcnt{background:var(--accent);color:var(--chalk)}
 /* markering när muspekaren är över något klickbart (bara på datorer, inte på telefoner) */
 @media (hover:hover){.card,.mrow,.simbtn,.thead,.rhead,.hcard,.arcsea,.sthead,.popt,.btn,.chip,.mini,.themebtn{transition:background-color .12s,border-color .12s}
-  .card:not([aria-expanded="true"]):hover,.mrow:hover,.simbtn:hover,.thead:hover,.rhead:hover,.hcard:hover,.arcsea:hover,.sthead:hover,.popt:hover{background:var(--line)}
+  .card:not([aria-expanded="true"]):hover,.mrow:hover,.simbtn:hover,.thead:hover,.rhead:hover,.hcard:hover,.arcsea:hover,.sthead:hover,.popt:not(.res):not(:disabled):hover{background:var(--line)}
   .btn:not(.primary):not(:disabled):hover,.chip:hover,.mini:not(:disabled):hover,.themebtn:hover{border-color:var(--accent)}}
 .hero{border:2px solid var(--accent);background:linear-gradient(160deg,var(--accent-soft),var(--surface) 60%)}
 .teams.big{font-size:20px;font-family:var(--f-display);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
@@ -394,6 +394,7 @@ button{touch-action:manipulation}
 .poll{display:flex;flex-direction:column;gap:6px}
 .popt{font:600 14px var(--f-body);text-align:left;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:10px;padding:10px 12px;cursor:pointer;display:flex;justify-content:space-between;gap:8px}
 .popt.res{background:linear-gradient(90deg,var(--accent-soft) var(--p),var(--bg) var(--p))}
+.popt.res{cursor:default;color:var(--fg);opacity:1}.popt:disabled:not(.res){cursor:wait;opacity:.6}
 .popt.mine{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 .popt b{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .hcard.news{width:100%;justify-content:space-between}
@@ -3216,7 +3217,7 @@ async function homeClick(t){
   if(t.dataset.gomode){setMode(t.dataset.gomode);window.scrollTo({top:0});return;}
   if(t.dataset.wkr){wkRadius=+t.dataset.wkr;renderHome();return;}
   if(t.dataset.homeedit){homeEdit=true;renderHome();setTimeout(()=>document.getElementById("homeIn")?.focus(),0);return;}
-  if(t.dataset.vote!==undefined){if(!dbNs||!myId||voteBusy)return;const c=+t.dataset.vote;const w=isoWeek(new Date()).key;voteBusy=true;
+  if(t.dataset.vote!==undefined){if(!dbNs||!myId||voteBusy||!votesLoaded)return;const c=+t.dataset.vote;const w=isoWeek(new Date()).key;if(VOTES[myId]&&VOTES[myId].w===w)return;voteBusy=true;
     try{await dbNs.doc("votes/"+myId).set({w,c});VOTES={...VOTES,[myId]:{w,c}};}catch(e){toast("Kunde inte spara rösten.");}voteBusy=false;renderHome();return;}
   if(t.dataset.board){boardTab=t.dataset.board;renderHome();return;}
   if(t.dataset.pub!==undefined){const on=t.dataset.pub==="1";mutate(d=>{d.pub=on;});syncStats();toast(on?"Du syns nu i topplistorna.":"Du syns inte längre i topplistorna.");return;}
@@ -3230,7 +3231,7 @@ async function homeClick(t){
   if(t.dataset.goquiz){setMode("quiz");window.scrollTo({top:0});return;}}
 function startHome(db){if(!db){statsState="none";return;}
   db.collection("stats").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});STATS=o;statsState="ready";if(mode==="hem")renderHome();},()=>{statsState="none";});
-  db.collection("votes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});VOTES=o;if(mode==="hem")renderHome();},()=>{});
+  db.collection("votes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});VOTES=o;votesLoaded=true;if(mode==="hem")renderHome();},()=>{});
   db.collection("hype").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});HYPE=o;if(mode==="hem")renderHome();},()=>{});}
 
 // ---------- hem: fler block ----------
@@ -3290,15 +3291,16 @@ const POLLS=[
  ["Vilken arenatyp gillar du mest?",["Gammal klassiker med ståplats","Modern arena med tak","Liten idyll vid vattnet","Stor nationalarena"]],
  ["Vilken serie vill du se mer av?",["Allsvenskan","Superettan och lägre","Premier League","Bundesliga","Annan liga i Europa"]]];
 function isoWeek(d){d=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-day);const y=d.getUTCFullYear();const w=Math.ceil(((d-Date.UTC(y,0,1))/864e5+1)/7);return{y,w,key:`${y}-W${String(w).padStart(2,"0")}`};}
-let VOTES={},voteBusy=false;
+let VOTES={},voteBusy=false,votesLoaded=false;
 function pollHtml(){const wk=isoWeek(new Date());const[q,opts]=POLLS[(wk.y*53+wk.w)%POLLS.length];
   const votes=Object.entries(VOTES).filter(([,d])=>d&&d.w===wk.key&&Number.isInteger(d.c)&&d.c>=0&&d.c<opts.length);const tot=votes.length;
   const cnt=opts.map((_,i)=>votes.filter(([,d])=>d.c===i).length);const mine=VOTES[myId]&&VOTES[myId].w===wk.key?VOTES[myId].c:null;const can=!!(dbNs&&myId);
-  const showRes=mine!==null||!can;
+  // när man röstat är frågan låst; innan rösterna hunnit laddas går det inte att rösta (annars kunde en gammal röst skrivas över)
+  const showRes=mine!==null||!can;const wait=can&&!votesLoaded;
   return`<article class="tip"><div class="lbl">Veckans fråga · vecka ${wk.w}</div><h2 class="name">${esc(q)}</h2><div class="poll">${opts.map((o,i)=>{const pct=tot?Math.round(cnt[i]/tot*100):0;
-    return showRes?`<button class="popt res${mine===i?" mine":""}" data-vote="${i}"${can?"":" disabled"} style="--p:${pct}%"><span>${esc(o)}${mine===i?" "+OK:""}</span><b>${pct} %</b></button>`
-      :`<button class="popt" data-vote="${i}"${voteBusy?" disabled":""}><span>${esc(o)}</span></button>`;}).join("")}</div>
-    <p class="hint">${tot} ${tot===1?"röst":"röster"}${mine!==null?" · tryck på ett annat svar för att ändra":can?"":" · logga in för att rösta"}. Ny fråga varje måndag.</p></article>`;}
+    return showRes?`<button class="popt res${mine===i?" mine":""}" disabled aria-disabled="true" style="--p:${pct}%"><span>${esc(o)}${mine===i?" "+OK:""}</span><b>${pct} %</b></button>`
+      :`<button class="popt" data-vote="${i}"${voteBusy||wait?" disabled":""}><span>${esc(o)}</span></button>`;}).join("")}</div>
+    <p class="hint">${tot} ${tot===1?"röst":"röster"}${mine!==null?" · du har röstat":wait?" · hämtar rösterna…":can?"":" · logga in för att rösta"}. Ny fråga varje måndag.</p></article>`;}
 // nytt i appen
 const NEWS=[// [datum, rubrik, text, flik]. Nyheter äldre än ett halvår visas inte längre (se newsList).
  ["2026-10-26","Ny logga och inställningar","Groundly har fått en ny logga. Under kugghjulet uppe till höger väljer du mellan tolv loggor, ljust eller mörkt utseende, notiser och hemort.","hem"],
