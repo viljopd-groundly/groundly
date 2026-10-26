@@ -764,7 +764,6 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 
   <!-- Tabeller -->
   <section id="v-tabell" hidden style="display:contents">
-    <div class="chips" role="group" aria-label="Herr eller dam" id="gTbl"></div>
     <div class="selrow"><label class="selw"><span class="vh">Land</span><select id="tblCSel" class="dsel"></select></label><label class="selw"><span class="vh">Serie</span><select id="tblLSel" class="dsel"></select></label></div>
     <div class="selrow" id="tblSRow" hidden><label class="selw"><span class="vh">Säsong</span><select id="tblSSel" class="dsel"></select></label></div>
     <div id="tblBox"></div>
@@ -1050,13 +1049,15 @@ function renderNat(){const nq=norm(ntQ);const toks=nq?nq.split(" "):[];
  document.getElementById("ntqClear").onclick=()=>{el.value="";ntQ="";document.getElementById("ntqClear").hidden=true;renderNat();el.focus();};}
 let clubLimit=60,clubLimitKey="";
 // rullgardin som ser ut som en knapp; mörk när något annat än "alla" är valt
-function setSel(id,opts,val){const el=document.getElementById(id);if(!el)return;const h=opts.map(([k,l])=>`<option value="${esc(k)}">${esc(l)}</option>`).join("");
+function setSel(id,opts,val){const el=document.getElementById(id);if(!el)return;const o1=([k,l])=>`<option value="${esc(k)}">${esc(l)}</option>`;
+  // grupper: {g:"Rubrik",o:[[värde,text],…]} – en tom rad läggs mellan grupperna
+  const h=opts.map((x,i)=>x&&x.g?`${i?`<option disabled></option>`:""}<optgroup label="${esc(x.g)}">${x.o.map(o1).join("")}</optgroup>`:o1(x)).join("");
   if(el.dataset.h!==h){el.innerHTML=h;el.dataset.h=h;}el.value=val;el.classList.toggle("on",!!val&&val!=="alla");}
 document.addEventListener("change",e=>{const t=e.target;
   if(t.id==="countrySel"){country=t.value;league="";openClub=null;renderClubs();}
   else if(t.id==="leagueSel"){league=t.value;openClub=null;renderClubs();}
   else if(t.id==="aCountrySel"){aCountry=t.value;aSave();aLimit=40;renderArenas();}
-  else if(t.id==="tblCSel"){tblSeason="";const ls=tblLeagues().filter(x=>x.c===t.value);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();}
+  else if(t.id==="tblCSel"){tblSeason="";const ls=tblLeagues(true).filter(x=>x.c===t.value);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();}
   else if(t.id==="tblSSel"){tblSeason=t.value;renderTable();}
   else if(t.id==="tblLSel"){tblSeason="";tblLeague=t.value;tblHL=null;store.set("fk-tbl",tblLeague);renderTable();}
   else if(t.id==="stCSel"){stCountry=t.value;stLeague="";stOpen=null;renderMine();}
@@ -1259,10 +1260,10 @@ function archiveTable(d){const n=d.t.length,st=d.t.map((t,i)=>({i,name:t[0],id:t
     if(gh>ga){H.v++;H.p+=3;A.f++;H.form.push("W");A.form.push("L");}else if(gh<ga){A.v++;A.p+=3;H.f++;H.form.push("L");A.form.push("W");}else{H.o++;A.o++;H.p++;A.p++;H.form.push("D");A.form.push("D");}});
   const list=st.filter(x=>ok(x.i)&&x.s).sort((x,y)=>y.p-x.p||(y.gm-y.im)-(x.gm-x.im)||y.gm-x.gm||x.name.localeCompare(y.name,"sv"));
   return{played:ms.length,rows:list.map((x,k)=>[x.id&&C[x.id]?x.id:null,x.name,k+1,x.s,x.v,x.o,x.f,x.gm,x.im,x.p,x.form.join(""),""])};}try{tblLeague=store.get("fk-tbl")||null;}catch(e){}
-function tblLeagues(){const m=new Map();Object.values(C).forEach(c=>{if(!gOk(c)||isNat(c)||!c.l||c.l==="Landslag"||c.l==="U21-landslag"||c.l==="Non-league"||!c.t)return;const k=c.l;if(!m.has(k))m.set(k,{l:k,c:c.c,t:c.t,n:0});m.get(k).n++;});
+function tblLeagues(all){const m=new Map();Object.values(C).forEach(c=>{if((!all&&!gOk(c))||isNat(c)||!c.l||c.l==="Landslag"||c.l==="U21-landslag"||c.l==="Non-league"||!c.t)return;const k=c.l;if(!m.has(k))m.set(k,{l:k,c:c.c,t:c.t,w:isW(c),n:0});m.get(k).n++;});
   const order=COUNTRIES.map(x=>x[0]);const oi=c=>{const i=order.indexOf(c);return i<0?99:i;};
-  return[...m.values()].filter(x=>x.n>=6).sort((a,b)=>(oi(a.c)-oi(b.c))||a.c.localeCompare(b.c,"sv")||(a.t-b.t)||a.l.localeCompare(b.l,"sv"));}
-const hasTable=l=>!!l&&tblLeagues().some(x=>x.l===l);
+  return[...m.values()].filter(x=>x.n>=6).sort((a,b)=>(oi(a.c)-oi(b.c))||a.c.localeCompare(b.c,"sv")||(a.w-b.w)||(a.t-b.t)||a.l.localeCompare(b.l,"sv"));}
+const hasTable=l=>!!l&&tblLeagues(true).some(x=>x.l===l);
 function leagueTable(L){const rows=new Map();const add=id=>{if(!rows.has(id)&&C[id])rows.set(id,{id,s:0,v:0,o:0,f:0,gm:0,im:0,p:0,form:[]});return rows.get(id);};
   Object.values(C).forEach(c=>{if(c.l===L&&!isNat(c))add(c.id);});
   const ms=MATCHES.filter(m=>m.comp===L&&tierOf(m)!=="CUP"&&m.score&&m.home&&m.away).sort((a,b)=>String(a.kickoff||a.dateFrom).localeCompare(String(b.kickoff||b.dateFrom)));
@@ -1288,11 +1289,15 @@ function statBoardHtml(L){const P=XD.players&&XD.players.leagues&&XD.players.lea
    ${Array.isArray(P.own)&&P.own.includes(tblStat)?`<p class="hint">Uträknad från målskyttarna i seriens matcher, eftersom källans färdiga lista är ofullständig för ${esc(L)}.</p>`:""}
    <div class="tblwrap"><table class="ltbl"><thead><tr><th>#</th><th class="tl">Spelare</th><th class="tl">Lag</th><th title="Matcher">M</th><th>${esc(tabs.find(t=>t[0]===tblStat)[1])}</th></tr></thead><tbody>
    ${list.map((r,i)=>{const[nm,team,val,apps]=r;const c=team&&C[team];return`<tr><td class="n">${i+1}</td><td class="tl">${esc(nm)}</td><td class="tl">${c?`<button class="tteam" data-open="${esc(team)}">${crest(team,c.n,18)}<span>${esc(c.n)}</span></button>`:esc(team||"")}</td><td class="n">${apps||""}</td><td class="n"><b>${val}</b></td></tr>`;}).join("")}</tbody></table></div></article>`;}
-function renderTable(){genderChips("gTbl");const ls=tblLeagues();if(!ls.length)return;
-  if(!XD.standings){loadXD("standings").then(()=>{if(mode==="tabell")renderTable();});loadXD("players").then(()=>{if(mode==="tabell")renderTable();});}
+function renderTable(){const ls=tblLeagues(true);if(!ls.length)return;
+  // hämta tabeller och spelarstatistik en gång. (Förut kunde spelarfilen bli klar först och då ritades tabellen om i en
+  // oändlig loop medan tabellfilen fortfarande laddades – sidan låste sig.)
+  for(const nm of ["standings","players"])if(!xdP[nm])loadXD(nm).then(()=>{if(mode==="tabell")renderTable();});
   if(!tblLeague||!ls.some(x=>x.l===tblLeague)){const fl=favList().map(id=>C[id]).filter(Boolean);const f=fl.find(c=>ls.some(x=>x.l===c.l));tblLeague=f?f.l:(ls.find(x=>x.l==="Allsvenskan")||ls[0]).l;}
   const cur=ls.find(x=>x.l===tblLeague);const countries=[...new Set(ls.map(x=>x.c))];
-  setSel("tblCSel",countries.map(c=>[c,c]),cur.c);setSel("tblLSel",ls.filter(x=>x.c===cur.c).map(x=>[x.l,x.l]),tblLeague);
+  setSel("tblCSel",countries.map(c=>[c,c]),cur.c);{const inC=ls.filter(x=>x.c===cur.c),mh=inC.filter(x=>!x.w),wd=inC.filter(x=>x.w);
+    // Herr överst, sedan Dam (rubrikerna går inte att välja)
+    setSel("tblLSel",mh.length&&wd.length?[{g:"Herr",o:mh.map(x=>[x.l,x.l])},{g:"Dam",o:wd.map(x=>[x.l,x.l])}]:inC.map(x=>[x.l,x.l]),tblLeague);}
   document.getElementById("tblCSel").classList.remove("on");document.getElementById("tblLSel").classList.remove("on");
   const box=document.getElementById("tblBox");const fav=new Set(favList());
   // säsongsval från arkivet
@@ -2880,7 +2885,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.country){country=t.dataset.country;league="";openClub=null;renderClubs();return;}
   if(t.dataset.league!==undefined){league=t.dataset.league;openClub=null;renderClubs();return;}
   if(t.dataset.tbl!==undefined){pendingJump=mode;tblLeague=t.dataset.tbl;tblHL=t.dataset.tblhl||null;tblHLJump=!!tblHL;store.set("fk-tbl",tblLeague);window.scrollTo({top:0});setMode("tabell");return;}
-  if(t.dataset.tblc!==undefined){const ls=tblLeagues().filter(x=>x.c===t.dataset.tblc);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();return;}
+  if(t.dataset.tblc!==undefined){const ls=tblLeagues(true).filter(x=>x.c===t.dataset.tblc);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();return;}
   if(t.dataset.tbll!==undefined){tblLeague=t.dataset.tbll;tblHL=null;store.set("fk-tbl",tblLeague);renderTable();return;}
   if(t.id==="askAi"){askClaude();return;}
   if(t.dataset.city){e.stopPropagation();cityEl.value=t.dataset.city;cityQ=t.dataset.city;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),6);radius=0;setMode("matcher");window.scrollTo({top:0});return;}
