@@ -18,10 +18,12 @@ for (const re of [/\$t\(\s*/g, /\$tn\([^,]+,\s*/g]) {
   }
 }
 // fast HTML (utan skript och stil)
-const body = html.slice(html.indexOf("<body")).replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "");
+const body = html.replace(/<head[\s\S]*?<\/head>/, "").replace(/<title[\s\S]*?<\/title>/g, "").replace(/<svg[\s\S]*?<\/svg>/g, "").replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "");
 const ent = s => s.replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"');
 for (const m of body.matchAll(/>([^<>]+)</g)) { const k = ent(m[1]).trim(); if (/[A-Za-zÅÄÖåäö]{2,}/.test(k)) keys.add(k); }
 for (const m of body.matchAll(/\s(?:placeholder|aria-label|title|alt)="([^"]*)"/g)) { const k = ent(m[1]).trim(); if (/[A-Za-zÅÄÖåäö]{2,}/.test(k)) keys.add(k); }
+// nycklar som bara används dynamiskt (land- och stadsnamn ur datan)
+try { for (const k of JSON.parse(fs.readFileSync(path.join(ROOT, "src", "i18n", "_dyn.json"), "utf8"))) keys.add(k); } catch (e) {}
 const all = [...keys].sort((a, b) => a.localeCompare(b, "sv"));
 fs.writeFileSync(path.join(ROOT, "src", "i18n", "_keys.json"), JSON.stringify(all, null, 0).replace(/","/g, '",\n"'));
 const langs = fs.readdirSync(path.join(ROOT, "src", "i18n")).filter(f => /^[a-z]{2}\.json$/.test(f)).map(f => f.slice(0, 2));

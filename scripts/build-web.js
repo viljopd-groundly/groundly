@@ -120,7 +120,7 @@ html = head + html.replace('<meta name="claude:viewport-fit-sides" content="cove
 fs.mkdirSync(path.join(SITE, "data"), { recursive: true });
 // översättningar: src/i18n/<språk>.json -> site/i18n/<språk>.js
 fs.mkdirSync(path.join(SITE, "i18n"), { recursive: true });
-for (const f of fs.readdirSync(path.join(SRC, "i18n")).filter(f => f.endsWith(".json"))) {
+for (const f of fs.readdirSync(path.join(SRC, "i18n")).filter(f => /^[a-z]{2}\.json$/.test(f))) {
   const d = JSON.parse(fs.readFileSync(path.join(SRC, "i18n", f), "utf8"));
   fs.writeFileSync(path.join(SITE, "i18n", f.replace(/json$/, "js")), "window.I18N=" + JSON.stringify(d) + ";\n");
 }

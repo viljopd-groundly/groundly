@@ -835,7 +835,9 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 const LANG=window.LANG||"sv";const I18N=window.I18N||{};
 const LOCALES={sv:"sv-SE",en:"en-GB",nb:"nb-NO",da:"da-DK",fi:"fi-FI",is:"is-IS"};const LOC=LOCALES[LANG]||"sv-SE";
 const LANG_LIST=[["sv","Svenska"],["en","English"],["nb","Norsk"],["da","Dansk"],["fi","Suomi"],["is","Íslenska"]];
-function $t(s,v){let r=I18N[s];if(r==null||r==="")r=s;return v?r.replace(/\{(\w+)\}/g,(m,k)=>v[k]!=null?v[k]:m):r;}
+// länder (svenska namn i datan) översätts med webbläsarens egna landsnamn
+const CISO={"Spanien":"ES","Italien":"IT","Tyskland":"DE","Frankrike":"FX","Monaco":"MC","Sverige":"SE","Nederländerna":"NL","Portugal":"PT","Turkiet":"TR","Belgien":"BE","Österrike":"AT","Tjeckien":"CZ","Slovakien":"SK","Ukraina":"UA","Grekland":"GR","Azerbajdzjan":"AZ","Danmark":"DK","Norge":"NO","Argentina":"AR","Brasilien":"BR","Saudiarabien":"SA","USA":"US","Kanada":"CA","Polen":"PL","Finland":"FI","Island":"IS","Andorra":"AD","Albanien":"AL","Armenien":"AM","Belarus":"BY","Bosnien och Hercegovina":"BA","Bulgarien":"BG","Kroatien":"HR","Cypern":"CY","Estland":"EE","Färöarna":"FO","Georgien":"GE","Gibraltar":"GI","Ungern":"HU","Israel":"IL","Kazakstan":"KZ","Kosovo":"XK","Lettland":"LV","Liechtenstein":"LI","Litauen":"LT","Luxemburg":"LU","Malta":"MT","Moldavien":"MD","Montenegro":"ME","Nordmakedonien":"MK","Irland":"IE","Rumänien":"RO","Ryssland":"SU","San Marino":"SM","Serbien":"YU","Slovenien":"SI","Schweiz":"CH","Bolivia":"BO","Chile":"CL","Colombia":"CO","Ecuador":"EC","Paraguay":"PY","Peru":"PE","Uruguay":"UY","Venezuela":"VE","Anguilla":"AI","Antigua och Barbuda":"AG","Aruba":"AW","Bahamas":"BS","Barbados":"BB","Belize":"BZ","Bermuda":"BM","Brittiska Jungfruöarna":"VG","Caymanöarna":"KY","Costa Rica":"CR","Kuba":"CU","Curaçao":"CW","Dominica":"DM","Dominikanska republiken":"DO","El Salvador":"SV","Grenada":"GD","Guatemala":"GT","Guyana":"GY","Haiti":"HT","Honduras":"HN","Jamaica":"JM","Mexiko":"MX","Montserrat":"MS","Nicaragua":"NI","Panama":"PA","Puerto Rico":"PR","Surinam":"SR","Trinidad och Tobago":"TT","Turks- och Caicosöarna":"TC","Amerikanska Jungfruöarna":"VI","Algeriet":"DZ","Angola":"AO","Benin":"DY","Botswana":"BW","Burkina Faso":"HV","Burundi":"BI","Kamerun":"CM","Kap Verde":"CV","Centralafrikanska republiken":"CF","Tchad":"TD","Komorerna":"KM","Kongo-Brazzaville":"CG","Djibouti":"DJ","Egypten":"EG","Ekvatorialguinea":"GQ","Eritrea":"ER","Eswatini":"SZ","Etiopien":"ET","Gabon":"GA","Gambia":"GM","Ghana":"GH","Guinea":"GN","Guinea-Bissau":"GW","Elfenbenskusten":"CI","Kenya":"KE","Lesotho":"LS","Liberia":"LR","Libyen":"LY","Madagaskar":"MG","Malawi":"MW","Mali":"ML","Mauretanien":"MR","Mauritius":"MU","Marocko":"MA","Moçambique":"MZ","Namibia":"NA","Niger":"NE","Nigeria":"NG","Rwanda":"RW","São Tomé och Príncipe":"ST","Senegal":"SN","Seychellerna":"SC","Sierra Leone":"SL","Somalia":"SO","Sydafrika":"ZA","Sydsudan":"SS","Sudan":"SD","Tanzania":"TZ","Togo":"TG","Tunisien":"TN","Uganda":"UG","Zambia":"ZM","Zimbabwe":"ZW","Afghanistan":"AF","Australien":"AU","Bahrain":"BH","Bangladesh":"BD","Bhutan":"BT","Brunei":"BN","Kambodja":"KH","Kina":"CN","Taiwan":"TW","Guam":"GU","Indien":"IN","Indonesien":"ID","Iran":"IR","Irak":"IQ","Japan":"JP","Jordanien":"JO","Kuwait":"KW","Kirgizistan":"KG","Laos":"LA","Libanon":"LB","Malaysia":"MY","Maldiverna":"MV","Mongoliet":"MN","Nepal":"NP","Nordkorea":"KP","Oman":"OM","Pakistan":"PK","Filippinerna":"PH","Qatar":"QA","Singapore":"SG","Sydkorea":"KR","Sri Lanka":"LK","Syrien":"SY","Tadzjikistan":"TJ","Thailand":"TH","Östtimor":"TP","Turkmenistan":"TM","Förenade Arabemiraten":"AE","Uzbekistan":"UZ","Vietnam":"VN","Saint Kitts och Nevis":"KN","Saint Lucia":"LC","Saint Vincent och Grenadinerna":"VC","DR Kongo":"CD","Hongkong":"HK","Macao":"MO","Myanmar":"MM","Palestina":"PS"};let _dn=null;const ctryName=s=>{if(LANG==="sv"||!CISO[s])return null;try{_dn=_dn||new Intl.DisplayNames([LOC],{type:"region"});return _dn.of(CISO[s]);}catch(e){return null;}};
+function $t(s,v){if(typeof s!=="string")return s==null?s:String(s);let r=I18N[s];if(r==null||r===""){r=ctryName(s)||s;const i=r.indexOf("|");if(i>0)r=r.slice(0,i);}return v?r.replace(/\{(\w+)\}/g,(m,k)=>v[k]!=null?v[k]:m):r;}
 const $tn=(n,one,many,v)=>$t(n===1?one:many,Object.assign({n},v||{}));
 // fast text i sidans HTML (menyer, rubriker, sökrutor) översätts en gång när sidan laddas
 function trDom(root){if(LANG==="sv")return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const ns=[];while(w.nextNode())ns.push(w.currentNode);
@@ -870,7 +872,7 @@ function surfaceOf(c){if(!c||!c.s)return null;const k=arenaKey(c.s);
   const top=Object.entries(crowd).sort((a,b)=>b[1]-a[1])[0];if(top)return{v:top[0],crowd:top[1]};
   if(sharers.some(o=>NO_ART_LEAGUES.has(o.l)))return{v:"nh",rule:true};return null;}
 function surfaceRow(c){const x=surfaceOf(c);if(!c.s)return"";
-  return`<dt>${$t("Underlag")}</dt><dd>${x?`${esc(SURF_LBL[x.v])}${x.src?"":x.crowd?` <span class="meta">${$t("(enligt {0} {1})",[x.crowd,x.crowd===1?$t("besökare"):$t("besökare")])}</span>`:x.rule?` <span class="meta">${$t("(konstgräs är inte tillåtet i ligan)")}</span>`:""}`:`<span class="meta">${$t("Ingen uppgift än.")}</span> ${typeof suggestBtn==="function"&&c?suggestBtn(c,"surf",$t("Föreslå underlag")):""}`}</dd>`;}
+  return`<dt>${$t("Underlag")}</dt><dd>${x?`${esc(SURF_LBL[x.v])}${x.src?"":x.crowd?` <span class="meta">${$t("(enligt {0} {1})",[x.crowd,x.crowd===1?$t("besökare"):$t("besökare|pl")])}</span>`:x.rule?` <span class="meta">${$t("(konstgräs är inte tillåtet i ligan)")}</span>`:""}`:`<span class="meta">${$t("Ingen uppgift än.")}</span> ${typeof suggestBtn==="function"&&c?suggestBtn(c,"surf",$t("Föreslå underlag")):""}`}</dd>`;}
 const seasTxt=n=>`${n} ${n===1?$t("säsong"):$t("säsonger")}`;
 function seasonRows(c){const x=SEASONS[c.id];if(!x)return"";return`<dt>${$t("Högsta ligan")}</dt><dd>${x.top?`<span class="num">${seasTxt(x.top)}</span> i ${esc(x.topL)}`:$t("Aldrig spelat i {0}",[esc(x.topL)])}</dd><dt>${$t("Näst högsta")}</dt><dd>${x.sec?`<span class="num">${seasTxt(x.sec)}</span> i ${esc(x.secL)}`:$t("Ingen säsong i {0}",[esc(x.secL)])} <span class="meta">(${esc(x.secNote)})</span></dd>`;}
 Object.keys(COLORS).filter(k=>k.startsWith("nt-")).forEach(k=>{COLORS["u21-"+k.slice(3)]=COLORS[k];COLORS["w"+k]=COLORS[k];});
@@ -899,7 +901,7 @@ const CONFS=[["UEFA",$t("Europa")],["CONMEBOL",$t("Sydamerika")],["CONCACAF",$t(
 const CONF_L=Object.fromEntries(CONFS);
 const esc=s=>String(s??"").replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
 const norm=s=>String(s??"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/ø/g,"o").replace(/æ/g,"ae").replace(/ß/g,"ss").replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim();
-const fmtCap=n=>n?String(n).replace(/\B(?=(\d{3})+(?!\d))/g," "):null;
+const fmtCap=n=>n?(LANG==="sv"?String(n).replace(/\B(?=(\d{3})+(?!\d))/g," "):Number(n).toLocaleString(LOC)):null;
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 const tierPill=(t,label)=>{if(t==="EC")return`<span class="pill ec">${$t("Europacup")}</span>`;if(!t)return"";const c=t==1?"t1":t==2?"t2":"t3";return`<span class="pill ${c}">${$t("{0}Nivå {1}",[esc(label?label+" · ":""),t])}</span>`;};
 // stadsnamn på andra språk -> namnet i datan
@@ -1005,7 +1007,7 @@ const REGIONS={Sydamerika:new Set(["Argentina","Brasilien","Uruguay","Chile","Co
 const MAIN=new Set(["Sverige","England","Spanien","Italien","Tyskland","Frankrike","USA","Kanada","Mexiko","Monaco","Norge","Danmark","Finland","Island","Nederländerna","Belgien","Portugal","Polen","Skottland","Wales","Andorra",...Object.values(REGIONS).flatMap(r=>[...r])]);
 function inCountry(c){if(country==="alla")return true;if(country==="landslag")return c.l==="Landslag";if(isNat(c)&&country==="övrigt")return false;if(country==="USA")return c.c==="USA"||c.c==="Kanada"||c.c==="Mexiko";if(country==="Frankrike")return c.c==="Frankrike"||c.c==="Monaco";if(country==="övrigt")return !MAIN.has(c.c);if(country==="Norden")return NORDEN.has(c.c);if(REGIONS[country])return REGIONS[country].has(c.c);if(country==="England")return c.c==="England"||c.c==="Wales";if(country==="Spanien")return c.c==="Spanien"||c.c==="Andorra";return c.c===country;}
 // "Florida (Uruguay)" visas som "Florida" när landet står bredvid
-const cityLbl=c=>String(c.city||"").replace(" ("+c.c+")","");
+const cityLbl=c=>$t(String(c.city||"").replace(" ("+c.c+")",""));
 function clubHay(c){return c._h||(c._h=norm([c.n,c.a,c.city,c.c,c.s,c.nick].join(" ")));}
 // serier i valt land (landschip eller sökning på landets namn)
 let league="";
@@ -1031,7 +1033,7 @@ function crest(id,name,size){size=size||40;const lg=LOGOS[id];const cls=`crest${
   return`<span class="${cls}" aria-hidden="true" style="${st};--c1:${c1};--c2:${c2};color:${fg};font-size:${fs}px">${esc(lbl)}</span>`;}
 function clubCard(c,isAi){const sel=openClub===c.id;
   let h=`<div class="card${sel?" sel":""}" role="button" tabindex="0" aria-expanded="${sel}" data-club="${esc(c.id)}">
-   <div class="main crow">${crest(c.id,c.n,42)}<div class="ctxt"><p class="name">${esc(c.n)}${favStar(c.id)}</p><div class="meta">${esc([cityLbl(c),c.c].filter(Boolean).join(", "))}</div></div></div>
+   <div class="main crow">${crest(c.id,c.n,42)}<div class="ctxt"><p class="name">${esc(c.n)}${favStar(c.id)}</p><div class="meta">${esc([cityLbl(c),$t(c.c)].filter(Boolean).join(", "))}</div></div></div>
    <div class="yr">${c.f?`<b>${c.f}</b><small>${$t("grundad")}</small>`:c.l==="U21-landslag"?"":`<small>${$t("grundår saknas")}</small>`}</div>
    <div class="pills">${c.l==="Landslag"?`<span class="pill ec">${$t("Landslag")}</span>`:c.l==="U21-landslag"?`<span class="pill ec">U21</span>`:""}${c.l?tierPill(c.t,c.l):""}${isAi?`<span class="pill ai">${$t("Svar från Claude")}</span>`:""}${!isAi&&!c.v?`<span class="pill">${$t("Senast kända serie")}</span>`:""}${isAi?"":clubMyPills(c)+ratingPill(c)}</div>`;
   if(sel){const up=isAi?[]:upcomingFor(c.id);
@@ -1268,7 +1270,7 @@ function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36
   return`<div class="match mrow"${m._id?` data-mrow="${esc(m._id)}"`:""}>
    ${m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
    <div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(m.awayName)}${favStar(m.away)}</button></div>
-   <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc(m.city)}, ${esc(m.country)}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>
+   <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc($t(m.city))}, ${esc($t(m.country))}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>
    <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?"I orten":milTxt(km)+" bort"}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
   </div>`;}
 // ---------- serietabeller ----------
@@ -1330,16 +1332,16 @@ function renderTable(){const ls=tblLeagues(true);if(!ls.length)return;
   if(tblSeason){const code=arcRows[0][0],r=arcRows.find(x=>x[2]===tblSeason);const url=`archive/${code}/${tblSeason}.json`;
     if(!ARC_CACHE[url]){box.innerHTML=`<div class="empty">${$t("Hämtar säsongen…")}</div>`;arcLoad(url).then(()=>{if(mode==="tabell")renderTable();}).catch(()=>{box.innerHTML=`<div class="empty">${$t("Säsongen kunde inte hämtas.")}</div>`;});return;}
     const A=archiveTable(ARC_CACHE[url]);
-    box.innerHTML=`<article class="tip tblcard"><div class="tblhead"><h2 class="name">${esc(tblLeague)} ${esc(r[3])}</h2><span class="meta">${$t("{0} · nivå {1} · slutställning uträknad från {2} matcher i arkivet",[esc(cur.c),cur.t,A.played])}</span></div>
+    box.innerHTML=`<article class="tip tblcard"><div class="tblhead"><h2 class="name">${esc(tblLeague)} ${esc(r[3])}</h2><span class="meta">${$t("{0} · nivå {1} · slutställning uträknad från {2} matcher i arkivet",[esc($t(cur.c)),cur.t,A.played])}</span></div>
       ${A.rows.length?`<div class="tblwrap"><table class="ltbl">${TBL_HEAD}<tbody>${officialRowsHtml({rows:A.rows},fav)}</tbody></table></div>`:`<p class="hint">${$t("Inga resultat finns för den här säsongen.")}</p>`}
       <p class="hint">${$t("Räknat med 3 poäng för vinst. Poängavdrag, slutspel och kval kan göra att den officiella tabellen skiljer sig något.")}</p></article>`;return;}
   const off=XD.standings&&XD.standings.leagues&&XD.standings.leagues[tblLeague];
   if(off&&off.groups&&off.groups.some(g=>g.rows.length)){const up=XD.standings.updated;
-    box.innerHTML=`<article class="tip tblcard"><div class="tblhead"><h2 class="name">${esc(tblLeague)}</h2><span class="meta">${$t("{0} · nivå {1} · officiell tabell",[esc(cur.c),cur.t])}${up?`, uppdaterad ${esc(fmtDate(up.slice(0,10)))}`:""}</span></div>
+    box.innerHTML=`<article class="tip tblcard"><div class="tblhead"><h2 class="name">${esc(tblLeague)}</h2><span class="meta">${$t("{0} · nivå {1} · officiell tabell",[esc($t(cur.c)),cur.t])}${up?`, uppdaterad ${esc(fmtDate(up.slice(0,10)))}`:""}</span></div>
       ${off.groups.map(g=>`${off.groups.length>1&&g.name?`<h3 class="sec">${esc(g.name)}</h3>`:""}<div class="tblwrap"><table class="ltbl">${TBL_HEAD}<tbody>${officialRowsHtml(g,fav)}</tbody></table></div>`).join("")}</article>${statBoardHtml(tblLeague)}`;}
   else{if(dbState==="loading"){box.innerHTML=`<div class="empty">${$t("Hämtar resultaten…")}</div>`;return;}
   const T=leagueTable(tblLeague);
-  const head=`<div class="tblhead"><h2 class="name">${esc(tblLeague)}</h2><span class="meta">${$t("{0} · nivå {1}",[esc(cur.c),cur.t])}${T.played?$t(" · {0} spelade matcher{1}",[T.played,T.last?`, senast ${esc(fmtDate(T.last))}`:""]):""} ${$t("· uträknad")}</span></div>`;
+  const head=`<div class="tblhead"><h2 class="name">${esc(tblLeague)}</h2><span class="meta">${$t("{0} · nivå {1}",[esc($t(cur.c)),cur.t])}${T.played?$t(" · {0} spelade matcher{1}",[T.played,T.last?`, senast ${esc(fmtDate(T.last))}`:""]):""} ${$t("· uträknad")}</span></div>`;
   const newSrc=["League One","League Two","National League","National League North","National League South"].includes(tblLeague)||/^Regionalliga/.test(tblLeague);
   const note=!T.played?`<p class="hint">${$t("Inga resultat från {0} finns i appen än, så alla står på noll.{1}",[esc(tblLeague),newSrc?$t(" Resultaten kommer när den nya matchkällan är igång."):""])}</p>`:"";
   const fdot=r=>r.form.slice(-5).map(x=>`<i class="fm ${x==="V"?"w":x==="F"?"l":"d"}" title="${x==="V"?$t("Vinst"):x==="F"?$t("Förlust"):$t("Oavgjort")}">${x}</i>`).join("");
@@ -1447,7 +1449,7 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
   return`<div id="msOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="msT"><div class="compose askbox pvbox msbox">
     <div class="mshead"><div class="mp">${comp}${past?`<span class="pill">${$t("Spelad")}</span>`:""}</div><button class="btn small" id="msClose">${$t("Stäng")}</button></div>
     <h2 id="msT" class="msteams">${team(m.home,m.homeName)}<span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span>${team(m.away,m.awayName)}</h2>
-    <p class="msmeta"><b>${when}</b><br>${esc(m.venue||$t("Arena ej angiven"))}${cap} · ${esc(m.city||"")}${m.country?", "+esc(m.country):""}</p>
+    <p class="msmeta"><b>${when}</b><br>${esc(m.venue||$t("Arena ej angiven"))}${cap} · ${esc(m.city||"")}${m.country?", "+esc($t(m.country)):""}</p>
     ${past?goalsHtml(m):""}
     ${past?"":`<h3>${$t("Biljetter")}</h3>${tix||`<p class="meta">${$t("Vi har ingen biljettlänk för den här matchen.")}</p>`}${awayTix}`}
     ${det}
@@ -1570,7 +1572,7 @@ function renderForum(namesOnly){
       <button class="thead" data-thread="${esc(t.key)}" aria-expanded="${open}">
         <span class="pill ${t.kind==="fraga"?"t2":t.kind==="derby"?"ec":t.kind==="tillg"?"t3":"t1"}">${esc(KIND_L[t.kind]||$t("Inlägg"))}</span>
         <span class="ttitle">${esc(t.title)}</span>
-        <span class="tmeta">${esc(who(t.uid))} · ${esc(ago(t.at))} · ${rs.length} ${rs.length===1?"svar":"svar"}</span>
+        <span class="tmeta">${esc(who(t.uid))} · ${esc(ago(t.at))} · ${rs.length} ${rs.length===1?$t("svar"):$t("svar|pl")}</span>
       </button>
       ${open?`<div class="tbody">${postHtml(t,false)}${rs.map(r=>postHtml(r,true)).join("")}
         ${myId&&canPost!==false?`<form class="replyForm" data-replyto="${esc(t.key)}"><label class="fld" for="r-${esc(t.key)}">${$t("Svara")}<textarea id="r-${esc(t.key)}" maxlength="2000" rows="2" required>${esc(replyDraft[t.key]||"")}</textarea></label><div class="actions"><button class="btn small primary" type="submit"${writeBusy?" disabled":""}>${$t("Skicka svar")}</button></div></form>`:""}
@@ -1736,7 +1738,7 @@ function renderMine(){
     h+=att.length?attShow.map(a=>`<div class="mrow">
       <div class="mdate">${esc(fmtDate(a.date))}</div>
       <div class="mmain"><div class="teams">${a.home&&C[a.home]?`<button data-open="${esc(a.home)}">${esc(a.homeName)}</button>`:esc(a.homeName)}<span class="vs">${a.score?esc(a.score):"–"}</span>${a.away&&C[a.away]?`<button data-open="${esc(a.away)}">${esc(a.awayName)}</button>`:esc(a.awayName)}</div>
-      <div class="venue">${esc([a.venue,a.city].filter(Boolean).join(" · ")||$t("Arena ej angiven"))}${a.comp?" · "+esc(a.comp):""}</div>${derbyOfAtt(a)?`<div><span class="pill ec">${ic("flame")} ${esc(derbyOfAtt(a)[1])}</span></div>`:""}
+      <div class="venue">${esc([a.venue,$t(a.city)].filter(Boolean).join(" · ")||$t("Arena ej angiven"))}${a.comp?" · "+esc(a.comp):""}</div>${derbyOfAtt(a)?`<div><span class="pill ec">${ic("flame")} ${esc(derbyOfAtt(a)[1])}</span></div>`:""}
       ${a.with?`<div class="venue">${$t("Sällskap: {0}",[esc(a.with)])}</div>`:""}${a.note?`<div class="mnote">${esc(a.note)}</div>`:""}
       ${a.photo&&PHID.test(a.photo)?`<button class="attph" data-phview="${esc(a.photo)}" aria-label="${$t("Visa bilden från matchen")}">${phImg(a.photo)}</button>`:""}${attPhUp===a.id?`<p class="hint">${$t("Laddar upp bilden…")}</p>`:""}
       ${editAtt===a.id?editAttForm(a):""}<div class="pactions">${assetsNs?`<label class="link strong" for="attPh-${esc(a.id)}">${ic("image")} ${a.photo?$t("Byt bild"):$t("Lägg till bild")}<input id="attPh-${esc(a.id)}" data-attphoto="${esc(a.id)}" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic" hidden></label>${a.photo?`<button class="link" data-attphdel="${esc(a.id)}">${$t("Ta bort bild")}</button>`:""}`:""}<button class="link" data-editatt="${esc(a.id)}">${editAtt===a.id?$t("Stäng"):a.score?$t("Redigera"):$t("Lägg till resultat")}</button><button class="link strong" data-repfrom="${esc(a.id)}">${$t("Skriv reportage")}</button><button class="link strong" data-sharematch="${esc(a.id)}">${shareMatchId===a.id?$t("Stäng"):$t("Dela matchkort")}</button>${delBtn("att",a.id)}</div>${shareMatchId===a.id?`<div class="studio">${fmtChips()}${studioHtml("match",$t("Matchkort"))}</div>`:""}</div></div>`).join("")+moreBtns("att",att.length)
@@ -1754,13 +1756,13 @@ function renderMine(){
     h+=wm.length?wm.slice(0,lim("wm",3)).map(w=>{const past=w.kickoff&&Date.parse(w.kickoff)<now;const when=w.kickoff?`${dayLong(dayKey(new Date(w.kickoff)))} kl ${timeOf(w.kickoff)}`:w.dateFrom?`spelas ${rangeTxt(w)}`:"";
       return`<div class="mrow"><div class="mdate">${esc(w.kickoff?fmtDate(dayKey(new Date(w.kickoff))):w.dateFrom?rangeTxt(w):"")}</div><div class="mmain">
       <div class="teams">${w.home&&C[w.home]?`<button data-open="${esc(w.home)}">${esc(w.homeName)}</button>`:esc(w.homeName)}<span class="vs">–</span>${w.away&&C[w.away]?`<button data-open="${esc(w.away)}">${esc(w.awayName)}</button>`:esc(w.awayName)}</div>
-      <div class="venue">${esc(when)} · ${esc([w.venue,w.city].filter(Boolean).join(", "))}</div>
+      <div class="venue">${esc(when)} · ${esc([w.venue,$t(w.city)].filter(Boolean).join(", "))}</div>
       <div class="pactions">${past?`<button class="link strong" data-wmdone="${esc(w.id)}">${$t("Matchen är spelad. Var du där?")}</button>`:calLinks(w)+(w.home&&C[w.home]&&C[w.home].tix?`<a class="link strong" href="${esc(C[w.home].tix)}" target="_blank" rel="noopener">${$t("Biljetter")}</a>`:"")+hotelLink(w,"link")}${delBtn("wm",w.id)}</div></div></div>`;}).join("")+limBtns("wm",wm.length,3)
      :`<div class="empty">${$t("Tryck")} <b>${$t("Vill gå")}</b> ${$t("på en kommande match under Matcher för att spara den här.")}</div>`;
     h+=`<h3 class="sec">${$t("Klubbar jag vill besöka")}</h3>`;
     const wc=MY.wishClubs.filter(id=>C[id]&&!isNat(C[id]));const wn=MY.wishClubs.filter(id=>C[id]&&isNat(C[id]));
     h+=wc.length?`<div class="clist">${wc.slice(0,lim("wc",3)).map(id=>{const c=C[id];const up=dbState==="ready"?upcomingFor(id).find(m=>m.home===id):null;return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${esc(c.n)}</button>
-      <div class="venue">${esc([c.s,cityLbl(c),c.c].filter(Boolean).join(" · "))}</div>
+      <div class="venue">${esc([c.s,cityLbl(c),$t(c.c)].filter(Boolean).join(" · "))}</div>
       <div class="venue">${up?$t("Nästa hemmamatch: {0} mot {1}",[esc(up.kickoff?dayLabel(dayKey(new Date(up.kickoff)))+" "+timeOf(up.kickoff):rangeTxt(up)),esc(up.awayName)]):$t("Ingen hemmamatch i det inlagda schemat")}</div>
       <div class="pactions">${nearBtn(c.city,"link")}${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>${limBtns("wc",wc.length,3)}`
      :`<div class="empty">${$t("Tryck")} <b>${$t("Vill besöka")}</b> ${$t("på ett klubbkort, eller lägg till en klubb här nedanför.")}</div>`;
@@ -1908,7 +1910,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-accmore],#
   if(t.dataset.accmore){const o=document.getElementById("accOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",accHtml(t.dataset.accmore));return;}
   const o=document.getElementById("accOv");if(o)o.remove();});
 function ratingRow(c){if(!c.s)return"";const a=arenaAgg(c.s);const s=ratingSummary(a);
-  return`<dt>${$t("Arenabetyg")}</dt><dd>${s.bars?`${s.bars}<div class="meta">${$t("{0} {1} betygsatt {2}",[a.n,a.n===1?$t("besökare har"):$t("besökare har"),esc(c.s)])}</div>`:`<span class="meta">${$t("Inga betyg än.")}${canRate(c)?"":$t(" Har du loggat en match här kan du betygsätta arenan.")}</span>`}</dd>
+  return`<dt>${$t("Arenabetyg")}</dt><dd>${s.bars?`${s.bars}<div class="meta">${$t("{0} {1} betygsatt {2}",[a.n,a.n===1?$t("besökare har"):$t("besökare har|pl"),esc(c.s)])}</div>`:`<span class="meta">${$t("Inga betyg än.")}${canRate(c)?"":$t(" Har du loggat en match här kan du betygsätta arenan.")}</span>`}</dd>
   <dt>${$t("Tillgänglighet")}</dt><dd><div class="accs">${s.wc||`<span class="acc">${$t("Rullstolsplatser")}<small>${$t("ingen uppgift")}</small></span>`}<button class="mini" data-accmore="${esc(c.id)}">${$t("Mer tillgänglighetsinfo")}</button></div></dd>`;}
 function ratingPill(c){if(!c.s||ratingsState!=="ready")return"";const a=arenaAgg(c.s);return a.total!=null?`<span class="pill ec">${STAR(1)} ${dec(a.total)}</span>`:"";}
 function rateButton(c){if(!canRate(c))return"";return`<button class="btn small" data-rate="${esc(c.id)}">${myRating(c)?$t("Ändra betyg och fakta"):$t("Betygsätt och lägg till fakta")}</button>`;}
@@ -1935,7 +1937,7 @@ function renderTopRated(){if(ratingsState==="loading")return`<div class="empty">
   const map=new Map();Object.values(C).forEach(c=>{if(!c.s)return;const k=arenaKey(c.s);if(!map.has(k))map.set(k,{s:c.s,clubs:[],city:c.city,country:c.c});map.get(k).clubs.push(c);});
   const rows=[...map.values()].map(x=>({...x,a:arenaAgg(x.s)})).filter(x=>x.a.n>0).sort((p,q)=>(q.a.total??-1)-(p.a.total??-1)||q.a.n-p.a.n);
   if(!rows.length)return`<div class="empty"><b>${$t("Inga arenor har betyg än.")}</b><div>${$t("Markera en klubb du besökt och tryck")} <b>${$t("Betygsätt arenan")}</b> ${$t("på klubbkortet. Där kan du också rapportera tillgänglighet.")}</div></div>`;
-  return rows.map((x,i)=>{const s=ratingSummary(x.a);return`<article class="tip"><div class="tip-head"><h2 class="name">${x.a.total!=null?i+1+". ":""}${esc(x.s)}</h2><span class="meta">${$t("{0}, {1} · {2} betyg",[esc(x.city),esc(x.country),x.a.n])}</span></div>
+  return rows.map((x,i)=>{const s=ratingSummary(x.a);return`<article class="tip"><div class="tip-head"><h2 class="name">${x.a.total!=null?i+1+". ":""}${esc(x.s)}</h2><span class="meta">${$t("{0}, {1} · {2} betyg",[esc($t(x.city)),esc($t(x.country)),x.a.n])}</span></div>
     <div class="teams">${x.clubs.map(c=>`<button data-open="${esc(c.id)}">${crest(c.id,c.n,24)}${esc(c.n)}${favStar(c.id)}</button>`).join('<span class="vs">·</span>')}</div>${s.bars}${s.acc?`<div class="accs">${s.acc}</div>`:""}</article>`;}).join("");}
 
 // ---------- dubbelmatcher ----------
@@ -1962,7 +1964,7 @@ function renderDouble(){
   cn.innerHTML=`<b>${count}</b> ${$t("{0} där du hinner med flera matcher · en match räknas som 1 h 55 min",[count===1?$t("kombination"):$t("kombinationer")])}`;
   if(!combos.length){el.innerHTML=`<div class="empty"><b>${$t("Inga dubbelmatcher hittades.")}</b><div>${$t("Matcherna måste ligga nära varandra med tillräckligt mellanrum. Prova fler dagar, ett större avstånd eller töm ortfältet för att söka i hela världen.")}</div></div>`;return;}
   el.innerHTML=combos.map(c=>{const legs=c.map((m,i)=>{let s="";if(i>0){const h=hopInfo(c[i-1],m);s=`<div class="hop">${h.km<3?$t("Samma ort"):milTxt(h.km)} ${$t("· ca")} ${durTxt(h.travel)} ${$t("med marginal · framme {0},",[timeOf(new Date(h.arrive).toISOString())])} ${durTxt(Math.max(0,h.spare))} ${$t("före avspark ·")} ${extLink(transitUrl(placeStr(c[i-1].venue,c[i-1].city),placeStr(m.venue,m.city)),$t("Kollektivt"),"")}</div>`;}
-      return s+`<div class="leg"><span class="lt">${timeOf(m.kickoff)}</span><div class="mmain"><div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(m.awayName)}${favStar(m.away)}</button></div><div class="venue">${esc([m.venue,m.city].filter(Boolean).join(" · "))} · ${esc(m.comp)}</div></div></div>`;}).join("");
+      return s+`<div class="leg"><span class="lt">${timeOf(m.kickoff)}</span><div class="mmain"><div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(m.awayName)}${favStar(m.away)}</button></div><div class="venue">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))} · ${esc(m.comp)}</div></div></div>`;}).join("");
     const ids=c.map(m=>m._id).join(",");const all=c.every(m=>isWishM(m._id));
     return`<article class="combo"><div class="combo-head"><b>${$t("{0} matcher",[c.length])}</b><span>${esc(dayLong(dayKey(new Date(c[0].kickoff))))}</span></div>${legs}<div class="actions">${hotelLink(c[c.length-1],"btn small")}</div>${myState==="ready"?`<div class="actions"><button class="btn small" data-wishall="${esc(ids)}" aria-pressed="${all}">${all?$t("Sparade på önskelistan {0}",[OK]):$t("Spara alla på önskelistan")}</button></div>`:""}</article>`;}).join("");}
 
@@ -2034,7 +2036,7 @@ async function drawMatch(a){if(!document.getElementById("img-match"))return;awai
   x.font=`700 ${st?230:190}px ${F_M}`;x.fillStyle=CC.BG;x.fillText(a.score||"–",cx,sy);
   x.fillStyle=CC.INK;t=fitText(x,a.awayName,800,F_D,st?104:92,48,inner);x.fillText(t,cx,ay);
   x.textAlign="left";x.fillStyle=CC.INK;const sx=tx+70;
-  t=fitText(x,[a.venue,a.city].filter(Boolean).join(", ")||$t("Arena okänd"),700,F_B,44,30,tw-140);x.fillText(t,sx,cut+95);
+  t=fitText(x,[a.venue,$t(a.city)].filter(Boolean).join(", ")||$t("Arena okänd"),700,F_B,44,30,tw-140);x.fillText(t,sx,cut+95);
   x.fillStyle=CC.INKM;x.font=`500 34px ${F_B}`;x.fillText(new Date(a.date+"T12:00:00").toLocaleDateString(LOC,{weekday:"long",day:"numeric",month:"long",year:"numeric"}),sx,cut+150);
   x.font=`700 30px ${F_M}`;x.fillText(`MATCH NR ${f.n}`,sx,cut+(st?260:225));
   if(f.newArena){x.save();x.translate(tx+tw-190,cut+(st?230:200));x.rotate(-0.12);x.strokeStyle=CC.BG;x.lineWidth=6;rrect(x,-130,-48,260,96,14);x.stroke();x.fillStyle=CC.BG;x.font=`800 40px ${F_D}`;x.textAlign="center";x.fillText("NY ARENA",0,14);x.restore();}
@@ -2078,7 +2080,7 @@ function renderChallenges(){const vs=visitedStadiums();
    ${miss.length?`<details><summary>${$t("Kvar att se ({0})",[miss.length])}</summary><div class="miss">${miss.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.n)}</button> <span class="meta">${esc(c.s||"")}</span>`).join("<br>")}</div></details>`:`<small class="meta">${$t("Alla 55 landslag sedda!")}</small>`}</div>`;}
   h+=`<h3 class="sec">${$t("Arenor per serie")}</h3><p class="hint">${$t("Som \"The 92\" i England: besök alla arenor i en serie. Arenor som delas av flera klubbar räknas en gång.")}</p>
    <details class="arsel"${arSelOpen?" open":""}><summary>${$t("Välj serier ({0} valda)",[sel.length])}</summary>
-   ${(()=>{const dr=arDraft||sel;return[...new Set(allL.map(x=>x.c))].map(cn=>`<div class="lbl">${esc(cn)}</div><div class="chips wrapchips">${allL.filter(x=>x.c===cn).map(x=>`<button class="chip" data-arsel="${esc(x.l)}" aria-pressed="${dr.includes(x.l)}">${esc(x.l)}</button>`).join("")}</div>`).join("");})()}
+   ${(()=>{const dr=arDraft||sel;return[...new Set(allL.map(x=>x.c))].map(cn=>`<div class="lbl">${esc($t(cn))}</div><div class="chips wrapchips">${allL.filter(x=>x.c===cn).map(x=>`<button class="chip" data-arsel="${esc(x.l)}" aria-pressed="${dr.includes(x.l)}">${esc(x.l)}</button>`).join("")}</div>`).join("");})()}
    <div class="actions"><button class="btn small primary" data-arsel-save="1">${$t("Spara")}</button><button class="btn small" data-arsel-reset="1">${$t("Standardurval")}</button></div></details>
    ${!lg.length?`<p class="meta">${$t("Inga serier valda.")}</p>`:""}`;
   h+=lg.map(x=>`<div class="prog"><div class="ptop"><b>${esc(x.l)}</b><span>${x.done}/${x.total}</span></div><span class="rbar"><i style="width:${x.done/x.total*100}%"></i></span><div class="pdets">${x.miss.length?`<details><summary>${$t("Kvar att besöka ({0})",[x.miss.length])}</summary><div class="miss">${x.miss.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.s)}</button> <span class="meta">${esc(c.n)}</span>`).join("<br>")}</div></details>`:`<small class="meta">${$t("Alla arenor besökta!")}</small>`}${x.seen.length?`<details class="pseen"><summary>${$t("Besökta ({0})",[x.seen.length])}</summary><div class="miss">${x.seen.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.s)}</button> <span class="meta">${esc(c.n)}</span>`).join("<br>")}</div></details>`:""}</div></div>`).join("");
@@ -2101,7 +2103,7 @@ async function fillScores(){if(fillBusy||fillDone||myState!=="ready"||!Array.isA
     if(typeof MATCHES!=="undefined")miss.filter(a=>!up[a.id]).forEach(a=>{const m=MATCHES.find(x=>x.score&&((a.mid&&x._id===a.mid)||(x.home===a.home&&x.away===a.away&&a.home&&(x.kickoff?dayKey(new Date(x.kickoff)):x.dateFrom)===a.date)));if(m){const sc=scoreOf(m);if(sc)up[a.id]=`${sc[0]}–${sc[1]}`;}});
   }finally{fillBusy=false;}
   const n=Object.keys(up).length;fillDone=true;if(!n)return;
-  mutate(d=>{d.attended.forEach(a=>{if(!a.score&&up[a.id])a.score=up[a.id];});});toast($t("{0} {1} fylldes i automatiskt i din logg",[n,n===1?"resultat":"resultat"]),"check");}
+  mutate(d=>{d.attended.forEach(a=>{if(!a.score&&up[a.id])a.score=up[a.id];});});toast($t("{0} {1} fylldes i automatiskt i din logg",[n,n===1?$t("resultat"):$t("resultat|pl")]),"check");}
 setTimeout(function tryFill(){if(myState==="ready"&&(FX_PAST||!FX_NEXT))fillScores();else setTimeout(tryFill,4000);},6000);
 function afterMine(){if(mySub==="been")drawLiveMap();if(mySub==="pass"){drawPass();}else if(mySub==="challenges"){drawMap();drawSeason();}else if(mySub==="been"&&shareMatchId){const a=MY.attended.find(z=>z.id===shareMatchId);if(a)drawMatch(a);}}
 
@@ -2192,7 +2194,7 @@ const localTimeTxt=m=>{const lp=localParts(m);if(!lp)return"";const own=timeOf(m
 const matchDate=m=>{if(!m.kickoff)return m.dateFrom||null;const lp=localParts(m);if(lp)return lp.date;const ll=GEO[m.city];return new Date(Date.parse(m.kickoff)+(ll?ll[1]/15*36e5:0)).toISOString().slice(0,10);};
 const gcalStamp=d=>d.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
 function calUrl(m){if(!m.kickoff)return null;const st=new Date(m.kickoff),en=new Date(Date.parse(m.kickoff)+2*36e5);
-  const p=new URLSearchParams({action:"TEMPLATE",text:`${m.homeName} – ${m.awayName}`,dates:`${gcalStamp(st)}/${gcalStamp(en)}`,location:[m.venue,m.city,m.country].filter(Boolean).join(", "),details:`${m.comp||""}\nSparad via Groundly`});
+  const p=new URLSearchParams({action:"TEMPLATE",text:`${m.homeName} – ${m.awayName}`,dates:`${gcalStamp(st)}/${gcalStamp(en)}`,location:[m.venue,m.city,$t(m.country)].filter(Boolean).join(", "),details:`${m.comp||""}\nSparad via Groundly`});
   return"https://calendar.google.com/calendar/render?"+p.toString();}
 // efter matchen behövs inte hotell, resa, kalender eller pepp – bara matchinfo och "Jag var där"
 const calLink=m=>{if(mPast(m))return"";const u=calUrl(m);return u?extLink(u,$t("Kalender"),"mini"):"";};
@@ -2304,7 +2306,7 @@ function travelRows(c,parts){if(!c.s)return parts?{tr:"",tk:""}:"";const a=trave
   // medlemskap visas bara när det faktiskt krävs (de flesta klubbar säljer till alla)
   const mem=a.yn.member;const tkChips=mem&&mem.y>mem.n?ynChip(a,"member",$t("Medlemskap krävs")):"";
   const tk=a.where.length||a.price.length||a.away.length||tkChips?`${a.where.length?`<div>${esc(a.where[0])}</div>`:""}${a.price.length?`<div class="meta">${$t("Rapporterade priser: {0}",[uniq(a.price).slice(0,3).map(esc).join(", ")])}</div>`:""}${a.away.length?`<div class="meta">${$t("Bortasektion: {0}",[esc(a.away[0])])}</div>`:""}${tkChips?`<div class="accs">${tkChips}</div>`:""}`:`<span class="meta">${$t("Ingen information än.")}</span>`;
-  const by=a.n?`<div class="meta">${$t("Från {0} {1}.",[a.n,a.n===1?$t("besökare"):$t("besökare")])}</div>`:"";
+  const by=a.n?`<div class="meta">${$t("Från {0} {1}.",[a.n,a.n===1?$t("besökare"):$t("besökare|pl")])}</div>`:"";
   const tkHas=a.where.length||a.price.length||a.away.length||tkChips;
   // "Resa hit" visas bara när det finns något att visa
   const trRow=tr?`<dt>${$t("Resa hit")}</dt><dd>${tr}${st||walk||trChips?by:""}</dd>`:"";
@@ -2319,7 +2321,7 @@ function ticketLink(c,cls){if(!c||isNat(c)&&!c.tix)return"";const E=encodeURICom
 
 // tillgänglighet i forumet
 function accForum(c){if(forumState!=="ready")return"";const n=allPosts().filter(p=>!p.parent&&p.kind==="tillg"&&p.club===c.id).length;
-  return`<div class="actions"><button class="link strong" data-accforum="${esc(c.id)}">${n?$t("{0} {1} om tillgängligheten här i forumet",[n,n===1?$t("inlägg"):$t("inlägg")]):$t("Fråga om tillgängligheten i forumet")}</button></div>`;}
+  return`<div class="actions"><button class="link strong" data-accforum="${esc(c.id)}">${n?$t("{0} {1} om tillgängligheten här i forumet",[n,n===1?$t("inlägg"):$t("inlägg|pl")]):$t("Fråga om tillgängligheten i forumet")}</button></div>`;}
 function openAccForum(id){const c=C[id];if(!c)return;const n=allPosts().filter(p=>!p.parent&&p.kind==="tillg"&&p.club===id).length;
   fKind="tillg";accClub=n?id:null;if(!n&&myId&&canPost!==false){composing=true;composeKind="tillg";composeClub=c.n;forumMsg="";topSig="";}
   setMode("forum");window.scrollTo({top:0});}
@@ -2334,7 +2336,7 @@ function similarClubs(c){const k=arenaKey(c.s);const co={};
   const rivals=new Set();TIPS.derbies.forEach(d=>{if(d[2].includes(c.id))d[2].forEach(x=>rivals.add(x));});
   const scored=Object.values(C).filter(o=>o.id!==c.id&&!isNat(o)&&!!isW(o)===!!isW(c)&&o.s!==c.s&&!rivals.has(o.id)).map(o=>{let s=0;const why=[];
     if(CULTSET.has(c.id)&&CULTSET.has(o.id)){s+=5;why.push($t("Också en kultklubb"));}
-    const n=co[arenaKey(o.s)]||0;if(n){s+=2+n;why.push($t("{0} {1} har betygsatt båda arenorna",[n,n===1?$t("besökare"):$t("besökare")]));}
+    const n=co[arenaKey(o.s)]||0;if(n){s+=2+n;why.push($t("{0} {1} har betygsatt båda arenorna",[n,n===1?$t("besökare"):$t("besökare|pl")]));}
     if(o.l&&o.l===c.l){s+=1.5;why.push($t("Samma serie"));}else if(o.t&&o.t===c.t&&o.c===c.c){s+=0.7;why.push($t("Samma nivå i ")+o.c);}
     const sz=sizeClass(c.cap);if(sz&&sz===sizeClass(o.cap)){s+=1;why.push($t("Båda har ")+SIZE_LBL[sz].toLowerCase());}
     if(c.f&&o.f&&c.f<1905&&o.f<1905){s+=0.5;why.push($t("Anrik klubb från 1800-talet"));}
@@ -2433,7 +2435,7 @@ function planOutHtml(P){const ids=[];
   const days=(Array.isArray(P.days)?P.days:[]).map(d=>{const items=(Array.isArray(d.items)?d.items:[]).map(it=>{const m=it.match_id?matchById(String(it.match_id)):null;const c=it.club_id?C[String(it.club_id)]:null;if(m)ids.push(m._id);
       const kp=KIND_PL[it.kind]||KIND_PL.other;
       return`<div class="pitem"><span class="ptime">${esc(it.time||"")}</span><div class="mmain"><div><span class="pill ${kp[1]}">${kp[0]}</span> ${esc(it.text||"")}</div>
-        ${m?`<div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(m.awayName)}${favStar(m.away)}</button></div><div class="venue">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.kickoff?" · "+timeOf(m.kickoff):""}</div><div class="mp">${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>`:""}
+        ${m?`<div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(m.awayName)}${favStar(m.away)}</button></div><div class="venue">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}${m.kickoff?" · "+timeOf(m.kickoff):""}</div><div class="mp">${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>`:""}
         ${!m&&c?`<div><button class="link" data-open="${esc(c.id)}">${esc(c.n)} · ${esc(c.s||"")}</button></div>`:""}</div></div>`;}).join("");
     const lbl=d.label||(isoDate(d.date)?dayLong(d.date):d.date||"");return`<div class="pday"><h3>${esc(lbl)}</h3>${items}</div>`;}).join("");
   const notes=Array.isArray(P.notes)&&P.notes.length?`<h3 class="sec">${$t("Bra att veta")}</h3><ul class="pnotes">${P.notes.map(n=>`<li>${esc(n)}</li>`).join("")}</ul>`:"";
@@ -2481,7 +2483,7 @@ function askScore(attId){const a=MY.attended.find(x=>x.id===attId);if(!a)return;
 
 // ---------- lag jag sett ----------
 let stOpen=null,visOpen=null;
-function seenRowsHtml(list){return`<div class="seenlist">${list.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(a=>`<div class="seenrow"><span class="num">${esc(fmtDate(a.date))}</span><span><b>${esc(a.homeName)} ${a.score?`<span class="num">${esc(a.score)}</span>`:"–"} ${esc(a.awayName)}</b><span class="meta">${esc([a.venue,a.city].filter(Boolean).join(" · ")||$t("Arena ej angiven"))}${a.comp?" · "+esc(a.comp):""}${derbyOfAtt(a)?` · ${ic("flame")} ${esc(derbyOfAtt(a)[1])}`:""}</span></span></div>`).join("")}</div>`;}
+function seenRowsHtml(list){return`<div class="seenlist">${list.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(a=>`<div class="seenrow"><span class="num">${esc(fmtDate(a.date))}</span><span><b>${esc(a.homeName)} ${a.score?`<span class="num">${esc(a.score)}</span>`:"–"} ${esc(a.awayName)}</b><span class="meta">${esc([a.venue,$t(a.city)].filter(Boolean).join(" · ")||$t("Arena ej angiven"))}${a.comp?" · "+esc(a.comp):""}${derbyOfAtt(a)?` · ${ic("flame")} ${esc(derbyOfAtt(a)[1])}`:""}</span></span></div>`).join("")}</div>`;}
 let stKind="alla",stSort="n",stCountry="",stLeague="";
 try{const a=store.get("fk-stkind"),b=store.get("fk-stsort");if(["alla","klubb","landslag"].includes(a))stKind=a;if(["n","az","last"].includes(b))stSort=b;}catch(e){}
 function seenTeams(){const m=new Map();
@@ -2525,7 +2527,7 @@ function favStats(f){const home=[],away=[];MY.attended.forEach(a=>{if(a.home===f
   return{home:rec(home),away:rec(away),all:rec([...home,...away]),far,grounds:new Set(away.map(a=>a.venue||a.homeName)).size};}
 function favSplit(f){const s=favStats(f);const t=r=>r.n?`V ${r.w} · O ${r.d} · F ${r.l}<br>${$t("mål {0}–{1}",[r.gf,r.ga])}${r.games>r.n?`<br>${$t("{0} utan resultat",[r.games-r.n])}`:""}`:r.games?"resultat saknas":"–";
   return`<div class="hb" role="group" aria-label="${$t("Sedda matcher hemma och borta")}">${[[$t("Hemma"),s.home],[$t("Borta"),s.away],[$t("Totalt"),s.all]].map(([l,r])=>`<div><span>${l}</span><b>${r.games}</b><small>${t(r)}</small></div>`).join("")}</div>
-   ${s.away.games?`<div class="meta">${s.grounds} ${s.grounds===1?"bortaarena":"olika bortaarenor"}${s.far&&s.far.km>=5?$t(" · längsta bortaresan: {0}, {1} hemifrån",[esc(s.far.a.city),milTxt(s.far.km)]):""}</div>`:""}`;}
+   ${s.away.games?`<div class="meta">${s.grounds} ${s.grounds===1?$t("bortaarena"):$t("olika bortaarenor")}${s.far&&s.far.km>=5?$t(" · längsta bortaresan: {0}, {1} hemifrån",[esc(s.far.a.city),milTxt(s.far.km)]):""}</div>`:""}`;}
 // klubbens färger på kortet: den färg som inte är vit/ljus blir huvudfärg
 function favTone(id){const k=COLORS[id];if(!k||!k[0])return"";const lum=h=>{const n=parseInt(String(h).slice(1),16);return isNaN(n)?0:.299*(n>>16)+.587*(n>>8&255)+.114*(n&255);};
   let a=k[0],b=k[1]||k[0];if(lum(a)>215&&lum(b)<=215)[a,b]=[b,a];if(lum(a)>215)a="#8a8f8c";return` tone" style="--fc:${esc(a)};--fc2:${esc(b)}`;}
@@ -2535,7 +2537,7 @@ function favForm(nat,editing){const id=nat?"natForm":"favForm",inp=nat?"natIn":"
     ${nat?"":`<p class="hint">${$t("Du kan ha upp till {0} favoritlag. Varje lag får sina klubbfärger här.",[MAXFAV])}</p>`}
     <div class="actions"><button class="btn small primary" type="submit">${$t("Spara")}</button>${editing?`<button class="btn small" type="button" data-${nat?"natcancel":"favcancel"}="1">${$t("Avbryt")}</button>`:""}</div></form>`;}
 function favCard(id,nat){const c=C[id];const r=favRecord(id);const up=dbState==="ready"?upcomingFor(c.id)[0]:null;
-  const lucky=r.n?$t("När du är på plats har {0} vunnit {1} % av matcherna ({2} {3}, {4} {5}, {6} {7}).",[esc(c.n),Math.round(r.w/r.n*100),r.w,r.w===1?"vinst":"vinster",r.d,r.d===1?"oavgjord":"oavgjorda",r.l,r.l===1?$t("förlust"):$t("förluster")]):r.games?$t("Lägg till resultat på dina matcher så räknar appen ut om du är en lyckobringare."):$t("Spara matcher du sett med laget så räknar appen ut om du är en lyckobringare.");
+  const lucky=r.n?$t("När du är på plats har {0} vunnit {1} % av matcherna ({2} {3}, {4} {5}, {6} {7}).",[esc(c.n),Math.round(r.w/r.n*100),r.w,r.w===1?$t("vinst"):$t("vinster"),r.d,r.d===1?$t("oavgjord"):$t("oavgjorda"),r.l,r.l===1?$t("förlust"):$t("förluster")]):r.games?$t("Lägg till resultat på dina matcher så räknar appen ut om du är en lyckobringare."):$t("Spara matcher du sett med laget så räknar appen ut om du är en lyckobringare.");
   return`<div class="favcard${favTone(id)}"><div class="lbl">${STAR(1)} ${nat?$t("Mitt landslag"):$t("Favoritlag")}</div><div class="favtop"><span class="crow">${crest(c.id,c.n,34)}<button class="cname" data-open="${esc(c.id)}">${esc(c.n)}</button></span>${nat?`<button class="link" data-natedit="1">${$t("Byt landslag")}</button>`:`<button class="link" data-favdel="${esc(c.id)}">${$t("Ta bort")}</button>`}</div>
     <div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}${c.l?" · "+esc(c.l):""}</div>
     <div>${up?`<b>${$t("Nästa match:")}</b> ${esc(up.kickoff?dayLabel(dayKey(new Date(up.kickoff)))+" "+timeOf(up.kickoff):"spelas "+rangeTxt(up))} · ${esc(up.homeName)} – ${esc(up.awayName)} <span class="mp">${myBtns(up)}${hotelLink(up)}${tripLink(up)}${calLink(up)}</span>`:`<span class="meta">${$t("Ingen match i det inlagda schemat just nu.")}</span>`}</div>
@@ -2587,7 +2589,7 @@ function renderPass(){const st=passStamps();
   const totalIn=cn=>new Set(Object.values(C).filter(c=>c.c===cn&&c.s).map(c=>c.s)).size;
   let h=`<div class="passhead"><b>${st.length}</b><span>${$t("{0} från {1} {2}",[st.length===1?$t("stämpel"):$t("stämplar"),countries.length,countries.length===1?$t("land"):$t("länder")])}</span></div>`;
   h+=countries.map(([cn,list],ci)=>{const col=STAMP_COLORS[ci%STAMP_COLORS.length];const tot=totalIn(cn);
-    return`<section class="passpage"><div class="ptop"><b>${esc(cn)}</b><span>${list.length}${tot?$t(" av {0} arenor i appen",[tot]):""}</span></div><div class="stamps">${list.sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(x=>{const rot=(hashStr(x.s)%11)-5;
+    return`<section class="passpage"><div class="ptop"><b>${esc($t(cn))}</b><span>${list.length}${tot?$t(" av {0} arenor i appen",[tot]):""}</span></div><div class="stamps">${list.sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(x=>{const rot=(hashStr(x.s)%11)-5;
       const d=x.date?fmtDate(x.date):"";
       return`<${x.club?`button data-open="${esc(x.club)}"`:"div"} class="stamp" style="--sc:var(${col});--rot:${rot}deg" title="${esc(x.last||x.s)}"><span class="st-city">${esc(x.city||"")}</span><b>${esc(x.s)}</b><span class="st-date">${esc(d)}</span>${x.visits>1?`<span class="st-n">${$t("{0} besök",[x.visits])}</span>`:""}</${x.club?"button":"div"}>`;}).join("")}</div></section>`;}).join("");
   h+=`<h3 class="sec">${$t("Dela passet")}</h3>${fmtChips()}${studioHtml("pass",$t("Mitt arenapass"))}`;
@@ -2836,7 +2838,7 @@ function nextTxt(m){return m.kickoff?`${dayLong(dayKey(new Date(m.kickoff)))} kl
 const ACC_OPEN=new Set();document.addEventListener("toggle",e=>{const d=e.target;if(d.classList&&d.classList.contains("accdet")){if(d.open)ACC_OPEN.add(d.dataset.acck);else ACC_OPEN.delete(d.dataset.acck);}},true);
 function arenaCard(x){const s=ratingSummary(x.a);const up=arenaUpcoming(x);const c0=x.clubs[0];const pubs=pubList(c0).length;
   const shared=x.clubs.length>1;
-  return`<article class="tip arena"><div class="tip-head"><h2 class="name">${esc(x.s)}</h2><span class="meta">${esc(x.city)}, ${esc(x.c)}</span></div>
+  return`<article class="tip arena"><div class="tip-head"><h2 class="name">${esc(x.s)}</h2><span class="meta">${esc($t(x.city))}, ${esc($t(x.c))}</span></div>
    <div class="apills">${x.cap?`<span class="pill">${$t("{0} platser",[fmtCap(x.cap)])}</span>`:`<span class="pill">${$t("Kapacitet saknas")}</span>`}${(()=>{const sf=surfaceOf(x.clubs[0]);return sf?`<span class="pill">${esc(SURF_LBL[sf.v])}</span>`:"";})()}${shared?`<span class="pill ec">${$t("Delas av {0} klubbar",[x.clubs.length])}</span>`:""}${arenaVisited(x)?`<span class="pill t1">${$t("Besökt {0}",[OK])}</span>`:""}${x.a.n?`<span class="pill">${x.a.total!=null?STAR(1)+" "+dec(x.a.total)+" · ":""}${$t("{0} betyg",[x.a.n])}</span>`:""}</div>
    <div class="teams">${x.clubs.map(c=>`<button data-open="${esc(c.id)}">${crest(c.id,c.n,24)}${esc(c.n)}${favStar(c.id)}</button>`).join('<span class="vs">·</span>')}</div>
    ${up.length?`<div class="anext"><b>${$t("Nästa match:")}</b> ${esc(up[0].homeName)} – ${esc(up[0].awayName)}, ${esc(nextTxt(up[0]))}${up.length>1?` <span class="meta">${$t("(+{0} till i schemat)",[up.length-1])}</span>`:""}</div>`:""}
@@ -2962,7 +2964,7 @@ function actBadge(){const a=notifOn("act")?repActivity():null;const n=a?a.newC.l
   for(const el of [document.getElementById("bnMore"),document.querySelector('.msi[data-bn="reportage"]'),document.getElementById("m-reportage")]){if(!el)continue;let d=el.querySelector(".actdot");
     if(n&&!d){d=document.createElement("span");d.className="actdot";el.appendChild(d);}if(d){if(n)d.textContent=n>9?"9+":n;else d.remove();}}}
 function activityHtml(){if(!notifOn("act"))return"";const a=repActivity();if(!a||!(a.newC.length+a.newL))return"";
-  const parts=[a.newC.length?`${a.newC.length} ${a.newC.length===1?"ny kommentar":"nya kommentarer"}`:"",a.newL?`${a.newL} ${a.newL===1?"ny gillning":"nya gillningar"}`:""].filter(Boolean).join($t(" och "));
+  const parts=[a.newC.length?`${a.newC.length} ${a.newC.length===1?$t("ny kommentar"):$t("nya kommentarer")}`:"",a.newL?`${a.newL} ${a.newL===1?$t("ny gillning"):$t("nya gillningar")}`:""].filter(Boolean).join($t(" och "));
   const last=a.newC.slice(-2).map(c=>`<div class="actrow"><b>${esc(who(c.uid))}</b> ${$t("om")} <i>${esc((a.mine.find(r=>r.key===c.rep)||{}).title||$t("ditt reportage"))}</i>: ${esc(String(c.body).slice(0,90))}${String(c.body).length>90?"…":""}</div>`).join("");
   return`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Nytt på dina reportage")}</div><p style="margin:0"><b>${parts}</b> ${$t("sedan du senast tittade.")}</p>${last}<div class="actions"><button class="btn small primary" data-gomyrep="1">${$t("Visa mina reportage")}</button><button class="btn small" data-actseen="1">${$t("Markera som läst")}</button></div></article>`;}
 function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&c.id&&c.rep===key&&c.body&&!HIDDEN.includes("com:"+uid+":"+c.id))out.push({...c,uid});});});return out.sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
@@ -3065,7 +3067,7 @@ function renderReports(namesOnly){
         ${r.photos.length&&!open?`<span class="rcover">${phImg(r.photos[0])}${r.photos.length>1?`<span class="rcount">${$t("{0} bilder",[r.photos.length])}</span>`:""}</span>`:""}
         <span class="rtxt">${r.draft?`<span class="pill ec draftpill">${$t("Utkast · syns bara för dig")}</span>`:""}<span class="rtitle">${esc(r.title)}</span>
         ${meta?`<span class="rmeta">${c?crest(c.id,c.n,20):""}${esc(meta)}</span>`:""}
-        <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}<span class="lkn" data-lk="${esc(r.key)}">${n?` · ${ic("heart")} ${n}`:""}</span>${(()=>{const k=commentsFor(r.key).length;return k?` · ${k} ${k===1?"kommentar":"kommentarer"}`:"";})()}</span>
+        <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}<span class="lkn" data-lk="${esc(r.key)}">${n?` · ${ic("heart")} ${n}`:""}</span>${(()=>{const k=commentsFor(r.key).length;return k?` · ${k} ${k===1?$t("kommentar"):$t("kommentarer")}`:"";})()}</span>
         ${open?"":`<span class="rex">${esc(String(r.body).slice(0,160))}${String(r.body).length>160?"…":""}</span>`}</span>
       </button>
       ${open?`<div class="rbody">
@@ -3211,7 +3213,7 @@ function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==
   return`<article class="tip hero"><div class="lbl">${$t("Veckans match")}</div>
     <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,40)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,40)}${esc(m.awayName)}${favStar(m.away)}</button></div>
     <div class="cd">${$t("{0} kl {1} ·",[esc(dayLabel(dayKey(new Date(m.kickoff)))),timeOf(m.kickoff)])} <b>${countdown(m.kickoff)}</b></div>
-    <div class="venue">${esc([m.venue,m.city].filter(Boolean).join(" · "))}</div><p>${why}</p>
+    <div class="venue">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}</div><p>${why}</p>
     <div class="actions">${tixMini(m,"btn small primary")}${hypeBtn(m)}${myBtns(m).replace(/class="mini"/g,'class="btn small"')}${hotelLink(m)}${tripLink(m).replace('class="mini"','class="btn small"')}</div>
     ${more.length?`<div class="hmore"><div class="lbl">${$t("Fler heta matcher")}</div>${more.map(x=>`<div class="hrow mrow"${mrowAttr(x)}><span class="num">${esc(dayLabel(dayKey(new Date(x.kickoff))))} ${timeOf(x.kickoff)}</span><span>${esc(x.homeName)} – ${esc(x.awayName)}${derbyOf(x)?` <span class="pill ec">${$t("Derby")}</span>`:""}${wPill(x)}</span>${hypeBtn(x)}</div>`).join("")}</div>`:""}</article>`;}
 function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl=favList();
@@ -3234,7 +3236,7 @@ function latestHtml(){const parts=[];
 function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().toISOString().slice(0,7);const cnt={};
   Object.values(RATINGS).forEach(d=>{Object.entries((d&&d.r)||{}).forEach(([k,r])=>{if(r&&String(r.at||"").startsWith(ym))cnt[k]=(cnt[k]||0)+1;});});
   const best=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];if(!best)return"";const x=arenas().find(a=>a.k===best[0]);if(!x)return"";
-  return`<article class="tip"><div class="lbl">${$t("Månadens arena")}</div><h2 class="name">${esc(x.s)}</h2><p class="meta">${esc(x.city)}, ${esc(x.c)} · ${best[1]} ${best[1]===1?"nytt betyg":"nya betyg"} i ${new Date().toLocaleDateString(LOC,{month:"long"})}</p><div class="actions"><button class="btn small" data-open="${esc(x.clubs[0].id)}">${$t("Visa arenan")}</button></div></article>`;}
+  return`<article class="tip"><div class="lbl">${$t("Månadens arena")}</div><h2 class="name">${esc(x.s)}</h2><p class="meta">${esc($t(x.city))}, ${esc($t(x.c))} · ${best[1]} ${best[1]===1?$t("nytt betyg"):$t("nya betyg")} i ${new Date().toLocaleDateString(LOC,{month:"long"})}</p><div class="actions"><button class="btn small" data-open="${esc(x.clubs[0].id)}">${$t("Visa arenan")}</button></div></article>`;}
 function quizLeadHtml(){if(quizState!=="ready")return"";const rows=Object.entries(QSCORES).filter(([,d])=>d&&+d.best>=0).sort((a,b)=>(+b[1].best)-(+a[1].best))[0];if(!rows)return"";
   const[uid,d]=rows;return`<article class="tip"><div class="sechead"><div><div class="lbl">${$t("Quizledare")}</div><h2 class="name">${esc(uid===myId?"Du":(QNAMES[uid]||NAMES[uid]||$t("Medlem")))} · ${+d.best}/10</h2></div><button class="btn small primary" data-goquiz="1">${$t("Utmana")}</button></div></article>`;}
 function toneHome(el){el.querySelectorAll(":scope > article, :scope > .tip").forEach(a=>{if(a.classList.contains("hero"))return;a.dataset.tone="1";const l=a.querySelector(":scope > .lbl, :scope > .sechead > .lbl");if(l)l.classList.add("lbl-lg");});}
@@ -3308,7 +3310,7 @@ function homeLL(){if(!homeTown)return null;const nq=norm(homeTown);const al=CITY
 function weekendRange(){const d=new Date();const wd=(d.getDay()+6)%7;const fri=new Date(d);fri.setDate(d.getDate()+(wd<=4?4-wd:0));const sun=new Date(d);sun.setDate(d.getDate()+(6-wd));
   return[wd>=4?today():dayKey(fri),dayKey(sun)];}
 let wkRadius=15;
-function weekendHtml(){const[from,to]=weekendRange();const label=from===to?"i dag":"i helgen";
+function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i dag"):$t("i helgen");
   if(!homeTown||homeEdit)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p>${$t("Ange din hemort så visar vi matcher nära dig {0}.",[label])}</p><form class="homeform" id="homeForm"><label class="fld" for="homeIn">${$t("Din hemort")}<input id="homeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button></form></article>`;
   const p=homeLL();if(!p)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p class="meta">${$t("Hittar inte {0} på kartan. Prova en större ort i närheten.",[esc(homeTown)])}</p><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></article>`;
   if(dbState!=="ready")return"";
@@ -3318,7 +3320,7 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?"i da
   return`<article class="tip"><div class="sechead"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></div><div class="chips" role="group" aria-label="${$t("Avstånd")}">${chips}</div>
     ${!list.length?`<p class="meta">${$t("Inga matcher i det inlagda schemat {0}.",[label])}</p>`:!near.length?`<p class="meta">${$t("Inget inom {0} mil {1}. Närmaste matcherna:",[wkRadius,label])}</p>`:""}
     <div class="dlist">${show.map(({m,km})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${km<5?"i stan":esc(milTxt(km))}</b><span>${m.kickoff?esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])+" "+timeOf(m.kickoff):"datum ej klart"}</span></div>
-      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,m.city].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div>${moreBtn("wk",pool.length)}<p class="hint">${DIST_NOTE}</p></article>`;}
+      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div>${moreBtn("wk",pool.length)}<p class="hint">${DIST_NOTE}</p></article>`;}
 // veckans fråga
 const POLLS=[
  [$t("Bästa ståplatsläktaren?"),[$t("Gula väggen, Dortmund"),"Millerntor, St. Pauli","Ostseestadion, Rostock","Celtic Park, Glasgow",$t("Någon i Sverige")]],
@@ -3478,7 +3480,7 @@ function tipFeedback(type,id,club){const key=type+":"+id;const notes=tnState==="
     else if(club&&C[club]){const n=type==="arena"?MY.attended.filter(a=>a.home===club||(C[club].s&&a.venue&&arenaKey(a.venue)===arenaKey(C[club].s))).length:MY.attended.filter(a=>a.home===club||a.away===club).length;
       mine=`<button class="btn small" data-logmatch="${esc(club)}"${n?' aria-pressed="true"':""}>${n?`${OK} ${type==="arena"?$t("Varit här"):$t("Sett")} ${n} ${n===1?$t("gång"):$t("gånger")}`:$t("{0} Logga match",[ic("plus")])}</button>`;}}
   const cnt=notes.length;
-  let h=`<div class="tipfb"><div class="actions">${mine}${tnState==="ready"?`<button class="btn small" data-tnopen="${esc(key)}" aria-expanded="${open}">${ic("chat")} ${cnt?`${cnt} ${cnt===1?"kommentar":"kommentarer"}`:$t("Kommentera")}</button>`:""}</div>`;
+  let h=`<div class="tipfb"><div class="actions">${mine}${tnState==="ready"?`<button class="btn small" data-tnopen="${esc(key)}" aria-expanded="${open}">${ic("chat")} ${cnt?`${cnt} ${cnt===1?$t("kommentar"):$t("kommentarer")}`:$t("Kommentera")}</button>`:""}</div>`;
   if(open){
     h+=`<div class="tnlist">${notes.length?notes.map(n=>`<div class="tnrow"><div class="by"><b>${esc(who(n.uid))}</b><span>${esc(ago(n.at))}</span></div><div class="body">${esc(n.text)}</div>
       ${n.uid===myId||isMod?`<div class="pactions">${n.uid===myId?`<button class="link" data-tndel="${esc(n.id)}">${$t("Ta bort")}</button>`:""}${isMod&&n.uid!==myId?`<button class="link" data-tnhide="${esc(n.nkey)}">${$t("Dölj")}</button>`:""}</div>`:""}</div>`).join(""):`<p class="hint">${$t("Inga kommentarer än. Har du varit här? Dela ett kort tips.")}</p>`}</div>`;
@@ -3612,7 +3614,7 @@ function calLinks(w){let g,os,oe,all=false;
   if(w.kickoff){const st=new Date(w.kickoff);if(isNaN(st))return"";const en=new Date(st.getTime()+2*3600e3);const f=d=>d.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");g=`${f(st)}/${f(en)}`;os=st.toISOString();oe=en.toISOString();}
   else if(w.dateFrom){const to=new Date((w.dateTo||w.dateFrom)+"T12:00:00Z");if(isNaN(to))return"";to.setUTCDate(to.getUTCDate()+1);const en=to.toISOString().slice(0,10);g=`${w.dateFrom.replace(/-/g,"")}/${en.replace(/-/g,"")}`;os=w.dateFrom;oe=en;all=true;}
   else return"";
-  const t=`${w.homeName} – ${w.awayName}`,loc=[w.venue,w.city].filter(Boolean).join(", "),det=(w.comp?w.comp+". ":"")+(all?$t("Exakt avsparkstid är inte klar än. "):"")+$t("Sparad i Groundly."),E=encodeURIComponent;
+  const t=`${w.homeName} – ${w.awayName}`,loc=[w.venue,$t(w.city)].filter(Boolean).join(", "),det=(w.comp?w.comp+". ":"")+(all?$t("Exakt avsparkstid är inte klar än. "):"")+$t("Sparad i Groundly."),E=encodeURIComponent;
   const gl=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${E(t)}&dates=${g}&location=${E(loc)}&details=${E(det)}`;
   const ol=`https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=${E(t)}&startdt=${E(os)}&enddt=${E(oe)}&location=${E(loc)}&body=${E(det)}${all?"&allday=true":""}`;
   return`<a class="link strong" href="${esc(gl)}" target="_blank" rel="noopener">${ic("calendar")} ${$t("Google Kalender")}</a><a class="link" href="${esc(ol)}" target="_blank" rel="noopener">${$t("Outlook")}</a>`;}
@@ -3692,7 +3694,7 @@ function friendsHtml(){if(myState!=="ready"||!dbNs||!myId)return"";
   const share=MY.share?`<p class="meta">${ic("check")} ${$t("Dina senaste matcher syns för andra.")} <button class="link" data-share="0">${$t("Sluta dela")}</button></p>`
     :`<div class="notice">${$t("Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.",[PUB_N])} <button class="btn small primary" data-share="1">${$t("Visa mina matcher för andra")}</button></div>`;
   const feedH=feed.length?`<div class="flist">${feed.map(r=>{const k=r.uid+":"+r.id,n=cheerCount(k),mine=myCheers().includes(k);
-      return`<div class="fitem"><div class="mmain"><div><b>${esc(who(r.uid))}</b> ${$t("var på")} <b>${esc(r.h)}${r.sc?` ${esc(r.sc)} `:" – "}${esc(r.a)}</b></div><div class="venue">${esc([r.v,r.c].filter(Boolean).join(", "))}${r.v||r.c?" · ":""}${esc(fmtDate(r.d))}</div></div>
+      return`<div class="fitem"><div class="mmain"><div><b>${esc(who(r.uid))}</b> ${$t("var på")} <b>${esc(r.h)}${r.sc?` ${esc(r.sc)} `:" – "}${esc(r.a)}</b></div><div class="venue">${esc([r.v,$t(r.c)].filter(Boolean).join(", "))}${r.v||r.c?" · ":""}${esc(fmtDate(r.d))}</div></div>
         <button class="btn small${mine?" on":""}" data-cheer="${esc(k)}" aria-pressed="${mine}"${cheerBusy?" disabled":""}>${ic("heart",mine?"on":"")} ${mine?"Snyggt!":$t("Snyggt")}${n?` · ${n}`:""}</button></div>`;}).join("")}</div>`
     :fl.length?`<p class="meta">${$t("De du följer har inte loggat några matcher än.")}</p>`:`<p class="meta">${$t("Följ andra groundhoppers så ser du deras matcher här.")}</p>`;
   const show=hopAll?others:others.slice(0,6);
