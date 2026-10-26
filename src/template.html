@@ -3722,7 +3722,9 @@ function invText(){let t="Kolla in Groundly – en app för att hitta matcher, p
   try{if(myState==="ready"&&MY.attended.length){const n=passStamps().length;if(n>1)t=`Jag loggar mina fotbollsresor i Groundly – ${n} arenor hittills! Hitta matcher, planera resor och samla dina egna arenor.`;}}catch(e){}
   return t;}
 const INV_CH=[["fb","Facebook"],["wa","WhatsApp"],["sms","SMS"],["mail","E-post"],["x","X"],["copy","Kopiera länk"]];
-function inviteBody(){return`<p class="hint" style="margin-top:0">Dela Groundly med någon du åker på fotboll med.</p><div class="actions invbtns">${navigator.share?`<button class="btn small primary" data-invite="native">${ic("share")} Dela</button>`:""}${INV_CH.map(([k,l])=>`<button class="btn small" data-invite="${k}">${esc(l)}</button>`).join("")}</div>`;}
+// SMS visas bara på mobil/surfplatta (en dator kan oftast inte skicka sms)
+const isPhone=()=>/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1);
+function inviteBody(){return`<p class="hint" style="margin-top:0">Dela Groundly med någon du åker på fotboll med.</p><div class="actions invbtns">${navigator.share?`<button class="btn small primary" data-invite="native">${ic("share")} Dela</button>`:""}${INV_CH.filter(([k])=>k!=="sms"||isPhone()).map(([k,l])=>`<button class="btn small" data-invite="${k}">${esc(l)}</button>`).join("")}</div>`;}
 function inviteHomeHtml(){if(store.get("fk-inv-hide")==="1")return"";if(myState!=="ready"||!MY.attended||MY.attended.length<1)return"";
   return`<article class="tip"><div class="lbl">Tipsa en kompis</div><h2 class="name">Åk inte ensam på nästa match</h2>${inviteBody()}<p class="hint"><button class="link" data-invhide="1">Dölj det här</button> · finns också under Inställningar</p></article>`;}
 async function doInvite(ch){const txt=invText(),u=invUrl(ch==="native"?"dela":ch),e=encodeURIComponent;
