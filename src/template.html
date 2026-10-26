@@ -1249,7 +1249,7 @@ function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36
    <div class="mp">${isW(C[m.home])?`<span class="pill dam">Dam</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||"Cup")}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?"I orten":milTxt(km)+" bort"}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?"Matchinfo":`${ic("ticket")} Biljetter och info`}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
   </div>`;}
 // ---------- serietabeller ----------
-let tblLeague=null,tblHL=null,tblSeason="",TBLIDX=null;
+let tblLeague=null,tblHL=null,tblHLJump=false,tblSeason="",TBLIDX=null;
 // historiska tabeller: räknas fram ur arkivets matcher (3 p för vinst). Lag med under hälften så många matcher som
 // de flesta (t.ex. kvallag som bara spelat två kvalmatcher) räknas inte in.
 function archiveTable(d){const n=d.t.length,st=d.t.map((t,i)=>({i,name:t[0],id:t[1]||null,s:0,v:0,o:0,f:0,gm:0,im:0,p:0,form:[]}));
@@ -1318,7 +1318,8 @@ function renderTable(){genderChips("gTbl");const ls=tblLeagues();if(!ls.length)r
   const fdot=r=>r.form.slice(-5).map(x=>`<i class="fm ${x==="V"?"w":x==="F"?"l":"d"}" title="${x==="V"?"Vinst":x==="F"?"Förlust":"Oavgjort"}">${x}</i>`).join("");
   box.innerHTML=`<article class="tip tblcard">${head}${note}<div class="tblwrap"><table class="ltbl">${TBL_HEAD}<tbody>
     ${T.list.map((r,i)=>{const c=C[r.id];const gd=r.gm-r.im;return`<tr class="${r.id===tblHL?"hl":""}${fav.has(r.id)?" fav":""}"><td class="n">${i+1}</td><td class="tl"><button class="tteam" data-open="${esc(r.id)}">${crest(r.id,c.n,20)}<span>${esc(c.n)}</span></button></td><td class="n">${r.s}</td><td class="n">${r.v}</td><td class="n">${r.o}</td><td class="n">${r.f}</td><td class="n">${gd>0?"+":""}${gd}</td><td class="n"><b>${r.p}</b></td><td class="fcol">${fdot(r)}</td></tr>`;}).join("")}</tbody></table></div></article>${statBoardHtml(tblLeague)}`;}
-  if(tblHL){const el=box.querySelector("tr.hl");if(el)el.scrollIntoView({block:"center"});}}
+  // hoppa till det markerade laget bara en gång; tabellen ritas om när data kommer in och då ska man kunna skrolla fritt
+  if(tblHL&&tblHLJump){const el=box.querySelector("tr.hl");if(el){el.scrollIntoView({block:"center"});tblHLJump=false;}}}
 // trupp och spelarstatistik per klubb
 const POS_SV={Goalkeeper:"MV",Defender:"B",Midfielder:"MF",Attacker:"A"};
 function squadHtml(id){const c=C[id];const S=XD.squads&&XD.squads.clubs&&XD.squads.clubs[id];
@@ -2878,7 +2879,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.id==="newPost"||t.id==="cancelPost"||t.dataset.fkind||t.dataset.thread||t.dataset.delpost||t.dataset.hide){forumClick(t);return;}
   if(t.dataset.country){country=t.dataset.country;league="";openClub=null;renderClubs();return;}
   if(t.dataset.league!==undefined){league=t.dataset.league;openClub=null;renderClubs();return;}
-  if(t.dataset.tbl!==undefined){pendingJump=mode;tblLeague=t.dataset.tbl;tblHL=t.dataset.tblhl||null;store.set("fk-tbl",tblLeague);setMode("tabell");window.scrollTo({top:0});return;}
+  if(t.dataset.tbl!==undefined){pendingJump=mode;tblLeague=t.dataset.tbl;tblHL=t.dataset.tblhl||null;tblHLJump=!!tblHL;store.set("fk-tbl",tblLeague);window.scrollTo({top:0});setMode("tabell");return;}
   if(t.dataset.tblc!==undefined){const ls=tblLeagues().filter(x=>x.c===t.dataset.tblc);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();return;}
   if(t.dataset.tbll!==undefined){tblLeague=t.dataset.tbll;tblHL=null;store.set("fk-tbl",tblLeague);renderTable();return;}
   if(t.id==="askAi"){askClaude();return;}
