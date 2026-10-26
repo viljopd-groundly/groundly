@@ -159,6 +159,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .modes{flex-wrap:wrap}
 .mode{padding:8px 13px}
 .ftop{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.reprow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}.reprow>.ftop{flex:0 0 auto;max-width:100%}.reprow>.ftop>.btn{height:100%;white-space:nowrap}.reprow>.ftop:has(form),.reprow>.ftop:has(.place){flex:1 1 100%}.reprow>.search{flex:1 1 0;min-width:120px}.reprow>.search input{min-width:0;width:100%}.reprow>.search[hidden]{display:none}
 .compose{align-self:stretch;background:var(--surface);border:2px solid var(--accent);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:12px}
 .compose h2{font-family:var(--f-display);font-weight:600;font-size:19px;margin:0}
 .compose .chip input{accent-color:var(--accent);margin:0 4px 0 0}
@@ -781,7 +782,12 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 
   <!-- Reportage -->
   <section id="v-reportage" hidden style="display:contents">
-    <div id="repTop" class="ftop"></div>
+    <div class="reprow"><div id="repTop" class="ftop"></div>
+    <label class="search" for="repQ" id="repSearch">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="repQ" type="search" placeholder="Sök" aria-label="Sök bland reportagen" autocomplete="off" enterkeyhint="search">
+      <button class="clear" id="repQClear" hidden>Rensa</button>
+    </label></div>
     <div class="chips" role="group" aria-label="Visa" id="repChips"></div>
     <div class="list" id="repList"></div>
   </section>
@@ -2982,6 +2988,9 @@ function renderRepPhotos(){const el=document.getElementById("repPh");if(!el||!re
 function matchBox(r){const m=String(r.match||"").slice(0,100),res=String(r.result||"").slice(0,12),cr=Number.isFinite(+r.crowd)&&+r.crowd>0?Math.round(+r.crowd):0;
   if(!m&&!res&&!cr)return"";
   return`<div class="rmatch">${m?`<div><span>Match</span><b>${esc(m)}</b></div>`:""}${res?`<div><span>Resultat</span><b class="num">${esc(res)}</b></div>`:""}${cr?`<div><span>Publik</span><b class="num">ca ${cr.toLocaleString("sv-SE")}</b></div>`:""}</div>`;}
+let repQ="";
+{const qEl=document.getElementById("repQ");let t;if(qEl){qEl.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{repQ=qEl.value.trim();document.getElementById("repQClear").hidden=!repQ;renderReports(true);},150);});
+  document.getElementById("repQClear").addEventListener("click",e=>{e.preventDefault();qEl.value="";repQ="";e.currentTarget.hidden=true;renderReports(true);qEl.focus();});}}
 function renderReports(namesOnly){
   // behåll påbörjade kommentarer om listan ritas om (t.ex. när någon annan kommenterar)
   const ae=document.activeElement,cf=ae&&ae.closest&&ae.closest("[data-rcform]"),keep=cf?{k:cf.dataset.rcform,s:ae.selectionStart}:null;
@@ -2991,6 +3000,7 @@ function renderReports(namesOnly){
     +(repClub&&C[repClub]?`<button class="chip" data-repclubclear="1" aria-pressed="true" aria-label="Sluta filtrera på ${esc(C[repClub].n)}">${esc(C[repClub].n)} ${NO}</button>`:"");
   if(repState==="none"){top.innerHTML="";el.innerHTML=`<div class="empty"><b>Reportagen kan inte visas här.</b><div>Öppna sidan inloggad på claude.ai för att läsa och skriva.</div></div>`;return;}
   if(repState==="loading"){top.innerHTML="";el.innerHTML=`<div class="empty">Hämtar reportage…</div>`;return;}
+  {const sw=document.getElementById("repSearch");if(sw)sw.hidden=!!repDraft;}
   const sig=[canWriteRep(),!!repDraft,repDraft&&repDraft.editing].join("|");
   if(sig!==repTopSig){repTopSig=sig;
     if(!canWriteRep())top.innerHTML=`<div class="place"><span>Du kan läsa reportagen. För att skriva behöver ägaren bjuda in dig till sidan.</span></div>`;
@@ -3001,10 +3011,12 @@ function renderReports(namesOnly){
   let reps=allReps();const ids=[...new Set([...reps.map(r=>r.uid),...Object.keys(COMM)])];if(!namesOnly)resolveRepNames(ids);
   if(repSort==="mina")reps=reps.filter(r=>r.uid===myId);
   if(repClub)reps=reps.filter(r=>r.club===repClub);
+  if(repQ){const words=norm(repQ).split(/\s+/).filter(Boolean);reps=reps.filter(r=>{const c=r.club&&C[r.club];const hay=norm([r.title,r.body,r.tip,r.city,r.match,c&&c.n,c&&c.city,c&&c.s,who(r.uid)].filter(Boolean).join(" "));return words.every(w=>hay.includes(w));});}
   // "Populärast": ordningen låses när fliken väljs, så att ett kort inte flyger iväg när man gillar det
   if(repSort==="pop"){if(!repPopOrder){const o=[...reps].sort((a,b)=>likeCount(b.key)-likeCount(a.key)||b.at.localeCompare(a.at));repPopOrder=new Map(o.map((r,i)=>[r.key,i]));}
     reps.sort((a,b)=>(repPopOrder.get(a.key)??-1)-(repPopOrder.get(b.key)??-1)||b.at.localeCompare(a.at));}
   else reps.sort((a,b)=>String(b.at).localeCompare(String(a.at)));
+  if(!reps.length&&repQ){el.innerHTML=`<div class="empty"><b>Inga reportage matchar ”${esc(repQ)}”.</b><div>Prova ett annat ord, till exempel en stad, en klubb eller en arena.</div></div>`;return;}
   if(!reps.length){el.innerHTML=`<div class="empty"><b>${repSort==="mina"?"Du har inte skrivit något reportage än.":repClub?"Inga reportage om den här klubben än.":"Inga reportage än."}</b><div>Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna. Lägg gärna till bilder.</div></div>`;return;}
   el.innerHTML=reps.filter((r,i)=>i<lim("rp",5)||r.key===repOpen).map(r=>{const c=r.club&&C[r.club];const open=repOpen===r.key;const n=likeCount(r.key);const mine=r.uid===myId;
     const meta=[r.match&&r.result?`${String(r.match).slice(0,100)} ${String(r.result).slice(0,12)}`:c?c.n:"",r.city,repDateTxt(r.date)].filter(Boolean).join(" · ");
