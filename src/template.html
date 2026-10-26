@@ -2267,14 +2267,16 @@ function travelRows(c,parts){if(!c.s)return parts?{tr:"",tk:""}:"";const a=trave
   const yesOnly=(k,l)=>{const x=a.yn[k];return x&&x.y>x.n?ynChip(a,k,l):"";};
   const trChips=yesOnly("kombi","Lokaltrafik ingår i biljetten")+yesOnly("extra","Extratåg och extrabussar brukar finnas");
   const de=c.c==="Tyskland"||c.c==="Österrike"?" I Tyskland och Österrike ingår ofta lokaltrafiken i matchbiljetten, så läs på biljetten.":"";
-  const tr=st||walk||trChips?`${st?`<div><b>${esc(st[0])}</b>${walk?` · ca ${walk} min promenad`:""}</div>`:walk?`<div>ca ${walk} min promenad från närmaste station</div>`:""}${trChips?`<div class="accs">${trChips}</div>`:""}`:`<span class="meta">Ingen information än.${de}</span>`;
+  const tr=st||walk||trChips?`${st?`<div><b>${esc(st[0])}</b>${walk?` · ca ${walk} min promenad`:""}</div>`:walk?`<div>ca ${walk} min promenad från närmaste station</div>`:""}${trChips?`<div class="accs">${trChips}</div>`:""}`:de?`<span class="meta">${de.trim()}</span>`:"";
   // medlemskap visas bara när det faktiskt krävs (de flesta klubbar säljer till alla)
   const mem=a.yn.member;const tkChips=mem&&mem.y>mem.n?ynChip(a,"member","Medlemskap krävs"):"";
   const tk=a.where.length||a.price.length||a.away.length||tkChips?`${a.where.length?`<div>${esc(a.where[0])}</div>`:""}${a.price.length?`<div class="meta">Rapporterade priser: ${uniq(a.price).slice(0,3).map(esc).join(", ")}</div>`:""}${a.away.length?`<div class="meta">Bortasektion: ${esc(a.away[0])}</div>`:""}${tkChips?`<div class="accs">${tkChips}</div>`:""}`:`<span class="meta">Ingen information än.</span>`;
   const by=a.n?`<div class="meta">Från ${a.n} ${a.n===1?"besökare":"besökare"}.</div>`:"";
   const tkHas=a.where.length||a.price.length||a.away.length||tkChips;
-  if(parts)return{tr:`<dt>Resa hit</dt><dd>${tr}${st||walk||trChips?by:""}</dd>`,tk:tkHas?tk+by:""};
-  return`<dt>Resa hit</dt><dd>${tr}${st||walk||trChips?by:""}</dd><dt>Biljetter</dt><dd>${ticketLink(c)}${tk}${tkHas?by:""}</dd>`;}
+  // "Resa hit" visas bara när det finns något att visa
+  const trRow=tr?`<dt>Resa hit</dt><dd>${tr}${st||walk||trChips?by:""}</dd>`:"";
+  if(parts)return{tr:trRow,tk:tkHas?tk+by:""};
+  return`${trRow}<dt>Biljetter</dt><dd>${ticketLink(c)}${tk}${tkHas?by:""}</dd>`;}
 function webUrl(c){const w=c&&(c.web||WEB[c.id]);if(!w||typeof w!=="string")return null;const u=/^https?:\/\//.test(w)?w.replace(/^http:/,"https:"):"https://"+w;return/^https:\/\/[^\s"'<>]+$/.test(u)?u:null;}
 function webRow(c){if(isNat(c))return"";const u=webUrl(c);const host=u&&u.replace(/^https:\/\/(www\.)?/,"").replace(/\/$/,"");
   return`<dt>Hemsida</dt><dd>${u?`<a class="link strong" href="${esc(u)}" target="_blank" rel="noopener">${esc(host)}</a>`:`<a class="link" href="https://www.google.com/search?q=${encodeURIComponent(c.n+" officiell hemsida")}" target="_blank" rel="noopener">Sök klubbens hemsida</a>`}</dd>`;}
