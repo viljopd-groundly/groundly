@@ -1132,6 +1132,13 @@ function placeDist(m,place){const nq=norm(cityQ);if(!nq)return -1;
   if(radius===0){const target=CITY_ALIAS[nq]?norm(CITY_ALIAS[nq]):nq;return(norm(m.city).includes(target)||norm(m.venue).includes(nq))?-1:null;}
   if(!place||!place.ll)return null;const ll=GEO[m.city];if(!ll)return null;const km=roadKm(place.ll,ll);return km<=radius*10+0.01?km:null;}
 
+// "Matcher i närheten" för klubbkort: välj minsta radie (5/10/25 mil) som ger några matcher kommande 30 dagar
+const NEAR_C={};
+function nearInfo(city){const ll=GEO[city];if(!ll||!MATCHES.length)return null;const key=city+"|"+MATCHES.length+"|"+today();if(key in NEAR_C)return NEAR_C[key];
+  const t0=today(),t1=addDays(t0,29);const ds=[];for(const m of MATCHES){const d=m.kickoff?koDay(m.kickoff):m.dateFrom;if(d<t0||d>t1)continue;const l2=GEO[m.city];if(l2)ds.push(roadKm(ll,l2));}
+  let r=null;for(const mil of [5,10,25]){const n=ds.filter(k=>k<=mil*10+0.01).length;if(n>=3||(mil===25&&n)){r={mil,n};break;}}
+  return NEAR_C[key]=r;}
+function nearBtn(city,cls){const ni=nearInfo(city);if(!ni)return "";return `<button class="${cls}" data-near="${esc(city)}" data-nr="${ni.mil}">${ni.n} matcher inom ${ni.mil} mil</button>`;}
 let citiesFor=null;
 function renderMatches(){matchKindChips();MLQ=null;
   document.getElementById("matchViewChips").innerHTML=[["list","Matcher"],["team","Lag"],["double","Dubbelmatcher"],...(AI_ON?[["plan","Planera med Claude"]]:[])].map(([k,l])=>`<button class="chip" data-mview="${k}" aria-pressed="${matchView===k}">${l}</button>`).join("");
@@ -1466,7 +1473,7 @@ function renderTips0(){
         <div class="mp">${c.l?tierPill(c.t,c.l):""}${c.s?`<span class="pill">${esc(c.s)}</span>`:""}</div>
         <p>${esc(why)}</p>
         ${up?nextBox("Nästa match",up,`${esc(up.homeName)} – ${esc(up.awayName)}`):""}
-        <div class="actions"><button class="btn small" data-open="${esc(id)}">Visa klubbfakta</button>${GEO[c.city]?`<button class="btn small primary" data-near="${esc(c.city)}">Matcher inom 5 mil</button>`:""}</div>
+        <div class="actions"><button class="btn small" data-open="${esc(id)}">Visa klubbfakta</button>${nearBtn(c.city,"btn small primary")}</div>
         ${tipFeedback("cult",id,id)}
       </article>`;}).join("")+limBtns("tcu",TIPS.cult.length,10);}
 }
@@ -1714,7 +1721,7 @@ function renderMine(){
     h+=wc.length?`<div class="clist">${wc.slice(0,lim("wc",3)).map(id=>{const c=C[id];const up=dbState==="ready"?upcomingFor(id).find(m=>m.home===id):null;return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${esc(c.n)}</button>
       <div class="venue">${esc([c.s,cityLbl(c),c.c].filter(Boolean).join(" · "))}</div>
       <div class="venue">${up?`Nästa hemmamatch: ${esc(up.kickoff?dayLabel(dayKey(new Date(up.kickoff)))+" "+timeOf(up.kickoff):rangeTxt(up))} mot ${esc(up.awayName)}`:"Ingen hemmamatch i det inlagda schemat"}</div>
-      <div class="pactions">${GEO[c.city]?`<button class="link" data-near="${esc(c.city)}">Matcher inom 5 mil</button>`:""}${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>${limBtns("wc",wc.length,3)}`
+      <div class="pactions">${nearBtn(c.city,"link")}${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>${limBtns("wc",wc.length,3)}`
      :`<div class="empty">Tryck <b>Vill besöka</b> på ett klubbkort, eller lägg till en klubb här nedanför.</div>`;
     h+=`<h3 class="sec">Landslag jag vill se</h3>`+(wn.length?`<div class="clist">${wn.slice(0,lim("wn",3)).map(id=>{const c=C[id];return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${crest(id,c.n,22)}${esc(c.n)}${favStar(id)}</button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}</div><div class="pactions">${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>${limBtns("wn",wn.length,3)}`:`<div class="empty">Tryck <b>Vill besöka</b> på ett landslag under fliken Landslag.</div>`);
     h+=addClubRow("wishClubAdd","Lägg till på önskelistan");
@@ -2854,7 +2861,10 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.city){e.stopPropagation();cityEl.value=t.dataset.city;cityQ=t.dataset.city;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),6);radius=0;setMode("matcher");window.scrollTo({top:0});return;}
   if(t.id==="locate"){locateWithClaude();return;}
   if(t.dataset.tips){tipsTab=t.dataset.tips;store.set("fk-tips",tipsTab);rerenderQuizHost();return;}
-  if(t.dataset.near){cityEl.value=t.dataset.near;cityQ=t.dataset.near;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),29);radius=5;store.set("fk-radius","5");setMode("matcher");window.scrollTo({top:0});return;}
+  if(t.dataset.near){cityEl.value=t.dataset.near;cityQ=t.dataset.near;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),29);radius=+t.dataset.nr||5;store.set("fk-radius",String(radius));
+    // nollställ andra filter så att alla matcher i närheten syns (lagvy, Herr/Dam, serie och "bara mina lag" kunde ligga kvar)
+    matchView="list";mKind="alla";if(typeof tiers!=="undefined")tiers.clear();favOnly=false;
+    setMode("matcher");requestAnimationFrame(()=>{const el=document.getElementById("matchCount");const tb=document.querySelector(".topbar");if(el)window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-(tb?tb.offsetHeight:0)-12)});});return;}
   if(t.dataset.from){dFrom=t.dataset.from;dTo=t.dataset.to;renderMatches();return;}
   if(t.dataset.radius!==undefined&&!t.disabled){radius=+t.dataset.radius;store.set("fk-radius",String(radius));renderMatches();return;}
   if(t.dataset.mkind){mKind=t.dataset.mkind;store.set("fk-mkind",mKind);renderMatches();return;}
