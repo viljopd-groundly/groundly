@@ -2031,6 +2031,22 @@ function renderChallenges(){const vs=visitedStadiums();
   h+=`<h3 class="sec">Säsongskort</h3><p class="hint">Årets matcher i en bild att dela.</p>
    <div class="chips" role="group" aria-label="År">${years.map(y=>`<button class="chip" data-year="${y}" aria-pressed="${seasonYear===y}">${y}</button>`).join("")}</div>${fmtChips()}${studioHtml("season","Säsongskort för "+seasonYear)}`;
   return h;}
+// fyll i resultat som saknas i loggen när resultatet finns i arkivet eller i matchschemat (t.ex. matcher sparade före avspark)
+let fillBusy=false,fillDone=false;
+async function fillScores(){if(fillBusy||fillDone||myState!=="ready"||!Array.isArray(MY.attended))return;const miss=MY.attended.filter(a=>!a.score&&a.date&&a.date<today());if(!miss.length){fillDone=true;return;}
+  fillBusy=true;const nm=x=>norm(String(x||""));const up={};
+  try{
+    // 1) arkivet (mid = arc:kod:säsong:i). Indexet kan ha ändrats när säsongen hämtats om, så vi matchar på datum och lag
+    const files=[...new Set(miss.filter(a=>/^arc:/.test(a.mid||"")).map(a=>a.mid.split(":").slice(1,3).join("/")))];
+    for(const k of files){let d;try{d=await arcLoad(`archive/${k}.json?r=${today()}`);}catch(e){continue;}
+      miss.filter(a=>(a.mid||"").startsWith("arc:"+k.replace("/",":")+":")).forEach(a=>{const r=d.m.find(m=>m[2]===a.date&&m[4]!=null&&(()=>{const H=d.t[m[0]],A=d.t[m[1]];const hit=(t,id,n)=>(id&&t[1]===id)||nm(t[0])===nm(n)||(t[1]&&C[t[1]]&&nm(C[t[1]].n)===nm(n));return hit(H,a.home,a.homeName)&&hit(A,a.away,a.awayName);})());
+        if(r)up[a.id]=`${r[4]}–${r[5]}`;});}
+    // 2) matchschemat
+    if(typeof MATCHES!=="undefined")miss.filter(a=>!up[a.id]).forEach(a=>{const m=MATCHES.find(x=>x.score&&((a.mid&&x._id===a.mid)||(x.home===a.home&&x.away===a.away&&a.home&&(x.kickoff?dayKey(new Date(x.kickoff)):x.dateFrom)===a.date)));if(m){const sc=scoreOf(m);if(sc)up[a.id]=`${sc[0]}–${sc[1]}`;}});
+  }finally{fillBusy=false;}
+  const n=Object.keys(up).length;fillDone=true;if(!n)return;
+  mutate(d=>{d.attended.forEach(a=>{if(!a.score&&up[a.id])a.score=up[a.id];});});toast(`${n} ${n===1?"resultat":"resultat"} fylldes i automatiskt i din logg`,"check");}
+setTimeout(function tryFill(){if(myState==="ready")fillScores();else setTimeout(tryFill,4000);},6000);
 function afterMine(){if(mySub==="been")drawLiveMap();if(mySub==="pass"){drawPass();}else if(mySub==="challenges"){drawMap();drawSeason();}else if(mySub==="been"&&shareMatchId){const a=MY.attended.find(z=>z.id===shareMatchId);if(a)drawMatch(a);}}
 
 // ---------- klick för de nya funktionerna ----------

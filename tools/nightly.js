@@ -125,13 +125,14 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
     const lg={};for(const ac of [...new Set(API.map(x=>x[2]))]){for(const x of get(`leagues?country=${encodeURIComponent(ac)}`)){const cur=(x.seasons||[]).find(s=>s.current)||(x.seasons||[]).slice(-1)[0];
       lg[ac+"|"+String(x.league.name).toLowerCase().replace(/\s+/g," ").trim()]={id:x.league.id,season:cur&&cur.year,start:cur&&cur.start,end:cur&&cur.end,cov:cur&&cur.coverage||{},seasons:(x.seasons||[]).map(z=>[z.year,z.start,z.end])};}}
     // 1b) äldre säsonger till arkivet (BACKFILL="se.1:2010-2025,se.3n:2016-2025"); befintliga filer skrivs inte över
-    if(process.env.BACKFILL){apiStat.backfill={};
-      for(const spec of process.env.BACKFILL.split(",").map(x=>x.trim()).filter(Boolean)){const[code,range]=spec.split(":");const[a,b]=(range||"").split("-").map(Number);
-        const ent=API.find(x=>x[4]===code);if(!ent||!a){apiStat.backfill[spec]="okänd";continue;}const[lname,country,ac,tier,,re,isW,isN]=ent;
-        const key=Object.keys(lg).find(k=>k.startsWith(ac+"|")&&re.test(k.split("|")[1]));if(!key){apiStat.backfill[spec]="saknas i API";continue;}
+    // "!kod:år" skriver över en befintlig fil (t.ex. en säsong som sparades innan den var färdigspelad)
+    const runBackfill=(specs,out)=>{
+      for(const spec0 of specs){const force=spec0.startsWith("!");const spec=spec0.replace(/^!/,"");const[code,range]=spec.split(":");const[a,b]=(range||"").split("-").map(Number);
+        const ent=API.find(x=>x[4]===code);if(!ent||!a){out[spec0]="okänd";continue;}const[lname,country,ac,tier,,re,isW,isN]=ent;
+        const key=Object.keys(lg).find(k=>k.startsWith(ac+"|")&&re.test(k.split("|")[1]));if(!key){out[spec0]="saknas i API";continue;}
         const cross=String(lg[key].start||"").slice(0,4)!==String(lg[key].end||"").slice(0,4);// höst–vår-serie: filen heter 2016-17
         const got=[];for(let yr=a;yr<=(b||a);yr++){const sy=(lg[key].seasons||[]).find(z=>+z[0]===yr);const cr=sy?String(sy[1]||"").slice(0,4)!==String(sy[2]||"").slice(0,4):cross;// t.ex. Japan bytte från kalenderår till höst–vår
-          const SKb=cr?`${yr}-${String((yr+1)%100).padStart(2,"0")}`:String(yr);const f=path.join(OUT,"archive",code,SKb+".json");if(fs.existsSync(f)){got.push(SKb+" fanns");continue;}
+          const SKb=cr?`${yr}-${String((yr+1)%100).padStart(2,"0")}`:String(yr);const f=path.join(OUT,"archive",code,SKb+".json");if(!force&&fs.existsSync(f)){got.push(SKb+" fanns");continue;}
           let fx;try{fx=get(`fixtures?league=${lg[key].id}&season=${yr}&timezone=UTC`);}catch(e){got.push(yr+" fel");continue;}if(!fx.length){got.push(yr+" tom");continue;}
           const teams=[],tix={};const T=(nm,tm)=>{if(nm in tix)return tix[nm];const pre=tm&&teamMap[tm.id];const c=pre?[pre]:isW||isN?null:findAny(nm,country);tix[nm]=teams.length;teams.push(c?[nm,c[0]]:[nm]);return tix[nm];};
           const arc=[];for(const x of fx){const st=x.fixture.status&&x.fixture.status.short;if(["PST","CANC","ABD","AWD","WO"].includes(st))continue;const fin=["FT","AET","PEN"].includes(st);const d=x.fixture.date;
@@ -139,7 +140,15 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
             arc.push([T(x.teams.home.name,x.teams.home),T(x.teams.away.name,x.teams.away),d.slice(0,10),/T00:00:00/.test(d)?"":d.slice(11,16),fin?x.goals.home:null,fin?x.goals.away:null,pen,tier==="CUP"?(x.league.round||""):""]);}
           arc.sort((p,q)=>(p[2]+p[3]).localeCompare(q[2]+q[3]));
           fs.mkdirSync(path.join(OUT,"archive",code),{recursive:true});fs.writeFileSync(f,JSON.stringify({l:lname,s:SKb.replace("-","/"),c:country,tier,t:teams,m:arc}));got.push(SKb+": "+arc.length);}
-        apiStat.backfill[spec]=got.join(", ");}}
+        out[spec0]=got.join(", ");}};
+    if(process.env.BACKFILL){apiStat.backfill={};runBackfill(process.env.BACKFILL.split(",").map(x=>x.trim()).filter(Boolean),apiStat.backfill);}
+    // 1c) förra säsongen sparades medan den pågick – hämta om den om resultat saknas (en gång, när säsongen är slut)
+    {const todo=[];const today=new Date().toISOString().slice(0,10);
+      for(const ent of API){const code=ent[4];const key=Object.keys(lg).find(k=>k.startsWith(ent[2]+"|")&&ent[5].test(k.split("|")[1]));if(!key||!lg[key].season)continue;
+        const yr=+lg[key].season-1;const dir=path.join(OUT,"archive",code);if(!fs.existsSync(dir))continue;
+        for(const fn of [yr+".json",`${yr}-${String((yr+1)%100).padStart(2,"0")}.json`]){const f=path.join(dir,fn);if(!fs.existsSync(f))continue;
+          try{const j=JSON.parse(fs.readFileSync(f,"utf8"));const past=j.m.filter(m=>m[2]<today).length,res=j.m.filter(m=>m[4]!=null).length;if(past&&res<past*0.95)todo.push(`!${code}:${yr}`);}catch(e){}}}
+      if(todo.length){apiStat.omhämtat={};runBackfill(todo.slice(0,60),apiStat.omhämtat);}}
     const done=[];// [lname, apiLeagueId, season, country, tier]
     // 2) matcher och resultat
     const now=Date.now();const finished=[];
@@ -170,6 +179,11 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
     for(const[lname,lid,season,country,tier,cov] of done){if(tier==="CUP")continue;if(left()<600){apiStat.spelarligor_tak="hoppade över resten (anropstak)";break;}if(cov&&cov.top_scorers===false){apiStat["spelarligor "+lname]="saknas i API";continue;}
       const own=new Set(rows.filter(r=>r[5]===lname).flatMap(r=>[r[0],r[1]]));const o={};
       for(const[k,ep,val] of tops){try{o[k]=get(`${ep}?league=${lid}&season=${season}`).map(x=>{const s=(x.statistics||[]).find(z=>z.league&&z.league.id===lid)||(x.statistics||[])[0]||{};return[x.player.name,tid(s.team,country)||((s.team&&s.team.name)||""),val(s)||0,(s.games&&s.games.appearences)||0];}).filter(r=>!own.size||own.has(r[1])).slice(0,20);}catch(e){o[k]=[];}}
+      // rimlighetskontroll: API:et har för vissa serier (t.ex. Superettan) bara statistik från en del av matcherna.
+      // Är skytteligan orimligt låg i förhållande till antal spelade omgångar visas inga spelarligor alls för serien.
+      const st=extra.standings[lname];const rounds=st?Math.max(0,...st.groups.flatMap(g=>g.rows.map(r=>+r[3]||0))):0;
+      const topG=(o.goals&&o.goals[0]&&o.goals[0][2])||0,topA=(o.assists&&o.assists[0]&&o.assists[0][2])||0;
+      if(rounds>=8&&(topG<rounds*0.3||topA<rounds*0.12)){apiStat["spelarligor "+lname]=`ofullständig i API (${topG} mål/${topA} assist efter ${rounds} omg.)`;continue;}
       if(Object.values(o).some(v=>v.length>=5))extra.players[lname]=o;else apiStat["spelarligor "+lname]="för lite data";}
     // 5) spelarstatistik per klubb (alla tävlingar, summerat)
     const teamIds=Object.entries(teamMap).filter(([a,b])=>b);const sq=done.filter(d=>d[4]!=="CUP"&&!(d[5]&&d[5].players===false));const seasonOf={};
