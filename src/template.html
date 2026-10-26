@@ -2056,7 +2056,10 @@ function featClick(t){
     t.parentElement.querySelectorAll("[data-ryn]").forEach(b=>{const p=b.dataset.ryn.split(":");b.setAttribute("aria-pressed",String((rateDraft[p[0]]&&rateDraft[p[0]][p[1]]||"")===p[2]));});return;}
   if(t.dataset.homeedit){homeEdit=true;render();setTimeout(()=>document.getElementById("homeIn")?.focus(),0);return;}
   if(t.dataset.homecancel){homeEdit=false;render();return;}
-  if(t.dataset.tripfor){tripOpen=tripOpen===t.dataset.tripfor?null:t.dataset.tripfor;homeEdit=false;renderClubs();return;}
+  if(t.dataset.tripfor){const id=t.dataset.tripfor;const was=tripOpen===id;tripOpen=was?null:id;homeEdit=false;
+    // öppna/stäng panelen där den står i stället för att rita om hela listan (då hoppade skärmen)
+    document.querySelectorAll(".trip[data-tripof]").forEach(x=>x.remove());document.querySelectorAll("[data-tripfor]").forEach(b=>b.setAttribute("aria-expanded","false"));
+    if(!was&&C[id]){const row=t.closest(".actions");if(row){row.insertAdjacentHTML("afterend",tripPanel(C[id]));t.setAttribute("aria-expanded","true");}else renderClubs();}return;}
   if(t.dataset.year){seasonYear=+t.dataset.year;renderMine();return;}
   if(t.dataset.fmt){shareFmt=t.dataset.fmt;store.set("fk-fmt",shareFmt);renderMine();return;}
   if(t.dataset.arsel){const allL=tblLeagues().map(x=>x.l);if(!arDraft)arDraft=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.includes(l)):LEAGUES.slice();
@@ -2178,10 +2181,10 @@ function homeIsLocal(city){if(!homeTown)return false;const hl=homeLL(),cl=GEO[ci
 function tripPanel(c){const to=placeStr(c.s,c.city);
   const local=homeIsLocal(c.city);
   const far=homeTown&&!local?`<div class="tripsec"><div class="sechead"><div class="lbl">Från ${esc(homeTown)}</div><button class="link" data-homeedit="1">Byt hemort</button></div>
-    <div class="actions">${omioLink(homeTown,c.city)}${extLink(dirUrl(homeTown,to,"transit"),"Kollektivt i kartan","btn small")}${extLink(dirUrl(homeTown,to,"driving"),"Bil","btn small")}</div></div>`:"";
+    <div class="actions">${omioLink(homeTown,c.city)}${extLink(dirUrl(homeTown,to,"driving"),"Bil","btn small")}</div></div>`:"";
   const near=`<div class="tripsec"><div class="lbl">På plats</div><div class="actions">${extLink(dirUrl("",to,"walking"),"Gång","btn small")}${extLink(dirUrl("",to,"transit"),"Kollektivt","btn small")}${extLink(dirUrl("",to,"driving"),"Bil","btn small")}</div></div>`;
   const foot=homeEdit?homeRow(c):!homeTown?`<div><button class="link" data-homeedit="1">Ange din hemort för resväg hela vägen hit</button></div>`:local?`<p class="meta">Du bor nära, så vi visar bara sista biten. <button class="link" data-homeedit="1">Byt hemort</button></p>`:"";
-  return`<div class="trip" data-noclose="1">${far}${near}${foot}</div>`;}
+  return`<div class="trip" data-noclose="1" data-tripof="${esc(c.id)}">${far}${near}${foot}</div>`;}
 const tripLink=m=>m&&m._id&&m.city&&!homeIsLocal(m.city)&&!mPast(m)?`<button class="mini" data-mstrip="${esc(m._id)}">Resa</button>`:"";
 function homeRow(c){if(homeEdit)return`<form class="homeform" id="homeForm" data-noclose="1"><label class="fld" for="homeIn">Din hemort<input id="homeIn" maxlength="60" value="${esc(homeTown)}" placeholder="t.ex. Jönköping"></label><button class="btn small primary" type="submit">Spara</button><button class="btn small" type="button" data-homecancel="1">Avbryt</button></form>`;
   if(homeTown)return`<div class="actions">${extLink(transitUrl(homeTown,placeStr(c.s,c.city)),`Res hit från ${esc(homeTown)}`,"btn small")}<button class="link" data-homeedit="1">Byt hemort</button></div>`;
