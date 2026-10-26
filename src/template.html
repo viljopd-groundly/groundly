@@ -159,8 +159,8 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .modes{flex-wrap:wrap}
 .mode{padding:8px 13px}
 .ftop{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
-/* när en sparad match redigeras får formuläret hela bredden (datumrutan hamnar ovanför) */
-.mrow:has(#editAttForm){grid-template-columns:1fr}.mrow:has(#editAttForm)>.mmain{min-width:0}
+/* när en sparad match redigeras eller delas får rutan hela bredden (datumrutan hamnar ovanför) */
+.mrow:has(#editAttForm),.mrow:has(.seasonimg){grid-template-columns:1fr}.mrow:has(#editAttForm)>.mmain,.mrow:has(.seasonimg)>.mmain{min-width:0}
 .reprow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}.reprow>.ftop{flex:0 0 auto;max-width:100%}.reprow>.ftop>.btn{height:100%;white-space:nowrap}.reprow>.ftop:has(form),.reprow>.ftop:has(.place){flex:1 1 100%}.reprow>.search{flex:1 1 0;min-width:120px}.reprow>.search input{min-width:0;width:100%}.reprow>.search[hidden]{display:none}
 .compose{align-self:stretch;background:var(--surface);border:2px solid var(--accent);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:12px}
 .compose h2{font-family:var(--f-display);font-weight:600;font-size:19px;margin:0}
@@ -1970,7 +1970,7 @@ function projPin([la,lo],R){const my=l=>Math.log(Math.tan(Math.PI/4+l*Math.PI/36
 const STUDIO={};
 const fmtChips=()=>`<div class="chips" role="group" aria-label="Format">${[["post","Inlägg 4:5"],["story","Story 9:16"]].map(([k,l])=>`<button class="chip" data-fmt="${k}" aria-pressed="${shareFmt===k}">${l}</button>`).join("")}</div>`;
 const studioHtml=(id,alt)=>`<img id="img-${id}" class="seasonimg ${shareFmt}" alt="${esc(alt)}">
-  <div class="actions">${dlNs===null?"":`<button class="btn primary" data-savecard="${id}">Spara bild</button>`}<button class="btn" data-copycard="${id}">Kopiera som text</button></div>
+  <div class="actions">${dlNs===null?"":`<button class="btn primary" data-savecard="${id}">Spara bild</button>`}${navigator.share?`<button class="btn${dlNs===null?" primary":""}" data-sharecard="${id}">${ic("share")} Dela</button>`:""}<button class="btn" data-copycard="${id}">Kopiera som text</button></div>
   <p class="hint" id="msg-${id}">${dlNs===null?"Håll fingret på bilden eller högerklicka för att spara den.":"I Claude-appen på mobilen öppnar Spara bild delningsmenyn, så du kan skicka bilden direkt till Instagram eller andra appar."}</p>`;
 const studioMsg=(id,t)=>{const e=document.getElementById("msg-"+id);if(e)e.textContent=t;};
 const CC={BG:"#123d24",FG:"#f3f7f4",AC:"#8fe0ad",MU:"#a9c4b3",LN:"rgba(243,247,244,.14)",LAND:"#21603c",SEA:"#0f3420",PAPER:"#f4efe2",INK:"#13261b",INKM:"#5b6b60"};
@@ -2087,7 +2087,7 @@ setTimeout(function tryFill(){if(myState==="ready"&&(FX_PAST||!FX_NEXT))fillScor
 function afterMine(){if(mySub==="been")drawLiveMap();if(mySub==="pass"){drawPass();}else if(mySub==="challenges"){drawMap();drawSeason();}else if(mySub==="been"&&shareMatchId){const a=MY.attended.find(z=>z.id===shareMatchId);if(a)drawMatch(a);}}
 
 // ---------- klick för de nya funktionerna ----------
-const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.tripfor||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard;
+const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.tripfor||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard||t.dataset.sharecard;
 // hoppa direkt till det öppnade klubbkortet (sökrutan ovanför behöver inte synas)
 function scrollToCard(){const go=()=>{const el=document.querySelector('section[id^="v-"]:not([hidden]) .card.sel');if(!el){window.scrollTo({top:0});return;}
   const tb=document.querySelector(".topbar");const off=(tb?tb.getBoundingClientRect().height:0)+8;window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+window.scrollY-off)});};
@@ -2125,6 +2125,11 @@ function featClick(t){
   if(t.dataset.arselSave){const d=arDraft;arDraft=null;arSelOpen=false;if(d){const same=d.length===LEAGUES.length&&d.every(l=>LEAGUES.includes(l));mutate(x=>{if(same)delete x.arSel;else x.arSel=d;});}else renderMine();toast("Urvalet är sparat.");return;}
   if(t.dataset.mapr){mapRegion=t.dataset.mapr;store.set("fk-mapr",mapRegion);renderMine();return;}
   if(t.dataset.sharematch){shareMatchId=shareMatchId===t.dataset.sharematch?null:t.dataset.sharematch;renderMine();return;}
+  if(t.dataset.sharecard){const id=t.dataset.sharecard,S=STUDIO[id];if(!S)return;
+    // dela bilden med telefonens delningsmeny; går inte filer att dela skickas texten och länken
+    S.cv.toBlob(async blob=>{try{const file=blob&&new File([blob],S.filename||"groundly.png",{type:"image/png"});
+      if(file&&navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file],text:S.text});
+      else await navigator.share({title:"Groundly",text:S.text,url:APP_URL});}catch(err){if(err&&err.name!=="AbortError")studioMsg(id,"Kunde inte dela. Prova Spara bild i stället.");}},"image/png");return;}
   if(t.dataset.copycard){const id=t.dataset.copycard,S=STUDIO[id];if(!S)return;navigator.clipboard.writeText(S.text).then(()=>studioMsg(id,"Texten är kopierad.")).catch(()=>studioMsg(id,"Kunde inte kopiera här. "+S.text));return;}
   if(t.dataset.savecard){const id=t.dataset.savecard,S=STUDIO[id];if(!S||!dlNs)return;S.cv.toBlob(async b=>{try{await dlNs.save({filename:S.filename,data:b});studioMsg(id,"Bilden är sparad.");}
     catch(e){studioMsg(id,e&&e.code==="declined"?"":e&&e.code==="rate_limited"?"Vänta en stund och försök igen.":"Det gick inte att spara här. Håll fingret på bilden eller högerklicka för att spara den.");}},"image/png");return;}
