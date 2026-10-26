@@ -2765,7 +2765,7 @@ function upIndex(){const now=Date.now()-2*36e5;const day=today();
 function arenaUpcoming(x){if(dbState!=="ready")return[];const I=upIndex();const out=[...(I.byKey.get(x.k)||[])];x.clubs.forEach(c=>{const h=I.byHome.get(c.id);if(h)out.push(...h);});return out.sort(sortM);}
 const arenaVisited=x=>myState==="ready"&&visitedStadiums().has(x.s);
 const arenaHasAcc=a=>ACC.some(([k])=>a.acc[k].y||a.acc[k].n);
-const AFILT=[["up","Kommande matcher"],["acc","Tillgänglighetsinfo"],["rated","Har betyg"],["notv","Inte besökta"]];
+const AFILT=[["up","Kommande matcher"],["acc","Tillgänglighetsinfo"],["rated","Har betyg"],["vis","Besökta"],["notv","Inte besökta"]];
 const ASORT=[["cap","Störst först"],["rate","Bäst betyg"],["az","A–Ö"]];
 function arenaList(){const toks=norm(aq)?norm(aq).split(" "):[];
   let list=arenas().filter(x=>inCountry({c:x.c})&&toks.every(t=>x.hay.includes(t)));
@@ -2774,6 +2774,7 @@ function arenaList(){const toks=norm(aq)?norm(aq).split(" "):[];
   if(aFilt.has("acc"))list=list.filter(x=>arenaHasAcc(x.a));
   if(aFilt.has("rated"))list=list.filter(x=>x.a.n>0);
   if(aFilt.has("notv"))list=list.filter(x=>!arenaVisited(x));
+  if(aFilt.has("vis"))list=list.filter(x=>arenaVisited(x));
   const az=(p,q)=>p.s.localeCompare(q.s,"sv");
   list.sort(aSort==="az"?az:aSort==="rate"?(p,q)=>(q.a.total??-1)-(p.a.total??-1)||q.a.n-p.a.n||(q.cap||0)-(p.cap||0):(p,q)=>(q.cap||0)-(p.cap||0)||az(p,q));
   return list;}
@@ -2791,7 +2792,7 @@ function arenaCard(x){const s=ratingSummary(x.a);const up=arenaUpcoming(x);const
 function renderArenas(){
   setSel("aCountrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?"Alla länder":l]),aCountry);
   setSel("aSortSel",ASORT,aSort);document.getElementById("aSortSel").classList.remove("on");
-  document.getElementById("aFiltChips").innerHTML=AFILT.filter(([k])=>k!=="notv"||myState==="ready").map(([k,l])=>`<button class="chip" data-afilt="${k}" aria-pressed="${aFilt.has(k)}">${l}</button>`).join("");
+  document.getElementById("aFiltChips").innerHTML=AFILT.filter(([k])=>(k!=="notv"&&k!=="vis")||myState==="ready").map(([k,l])=>`<button class="chip" data-afilt="${k}" aria-pressed="${aFilt.has(k)}">${l}</button>`).join("");
   const sv=country;country=aCountry;let list;try{list=arenaList();}finally{country=sv;}
   document.getElementById("arenaCount").innerHTML=`<b>${list.length}</b> ${list.length===1?"arena":"arenor"}${aq?` för ”${esc(aq)}”`:""}${(()=>{if(myState!=="ready")return"";const vs=visitedStadiums();const vk=new Set([...vs].map(arenaKey));const n=list.filter(x=>vk.has(x.k)).length;return n?` · <b>${n}</b> ${n===1?"besökt":"besökta"} av dig`:"";})()}`;
   const el=document.getElementById("arenaList");
@@ -2801,7 +2802,7 @@ const isArenaBtn=t=>t.dataset.acountry||t.dataset.asort||t.dataset.afilt||t.data
 function arenaClick(t){
   if(t.dataset.acountry){aCountry=t.dataset.acountry;aLimit=40;}
   else if(t.dataset.asort){aSort=t.dataset.asort;store.set("fk-asort",aSort);aLimit=40;}
-  else if(t.dataset.afilt){const k=t.dataset.afilt;aFilt.has(k)?aFilt.delete(k):aFilt.add(k);aLimit=40;}
+  else if(t.dataset.afilt){const k=t.dataset.afilt;aFilt.has(k)?aFilt.delete(k):(aFilt.add(k),k==="vis"&&aFilt.delete("notv"),k==="notv"&&aFilt.delete("vis"));aLimit=40;}
   else if(t.dataset.amore){aLimit+=40;}
   renderArenas();}
 {const aqEl=document.getElementById("aq");let t;aqEl.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{aq=aqEl.value.trim();aLimit=40;document.getElementById("aqClear").hidden=!aq;renderArenas();},120);});
