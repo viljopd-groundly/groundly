@@ -62,11 +62,17 @@ const swaps = [
   [`I Claude-appen på mobilen öppnar Spara bild delningsmenyn, så du kan skicka bilden direkt till Instagram eller andra appar.`,
    `Bilden laddas ner som en fil. På mobilen kan du också hålla fingret på bilden för att dela den.`]
 ];
-for (const [a, b] of swaps) {
+// texter i HTML-mallar ligger inlindade i $t("…") (översättning) – prova även den formen
+const wrapT = x => (">" + x).replace(/>([^<>]*[A-Za-zÅÄÖåäö][^<>]*)</g, (m, txt) => { const k = txt.trim(); if (txt.includes("${")) return m; const pre = txt.match(/^\s*/)[0], post = txt.match(/\s*$/)[0]; return ">" + pre + "${$t(" + JSON.stringify(k) + ")}" + post + "<"; }).slice(1);
+for (let [a, b] of swaps) {
+  if (!html.includes(a) && html.includes(wrapT(a))) { a = wrapT(a); b = wrapT(b); }
   if (!html.includes(a)) throw new Error("Hittar inte texten att byta:\n  " + a.slice(0, 120));
   html = html.split(a).join(b);
 }
 
+// telefonens språk väljs automatiskt först när översättningarna är klara; tills dess bara via Inställningar eller ?lang=
+const AUTO_LANG = false;
+const I18NV = require("crypto").createHash("md5").update(fs.readdirSync(path.join(SRC, "i18n")).sort().map(f => fs.readFileSync(path.join(SRC, "i18n", f), "utf8")).join("|")).digest("hex").slice(0, 8);
 // ---- dokumenthuvud + runtime (claude.ai lade till skelettet automatiskt) ----
 const head = `<!doctype html>
 <html lang="sv">
@@ -94,6 +100,13 @@ const head = `<!doctype html>
 <meta name="apple-mobile-web-app-title" content="Groundly">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <script>
+// språk: ?lang=xx, sparat val (fk-lang) eller telefonens språk; okänt språk ger engelska. Översättningen laddas före appen.
+(function(){var ok={sv:1,en:1,nb:1,da:1,fi:1,is:1},L=null;
+try{var q=new URLSearchParams(location.search).get("lang");if(q==="no"||q==="nn")q="nb";if(q&&ok[q]){localStorage.setItem("fk-lang",q);}var st=localStorage.getItem("fk-lang");if(st&&ok[st])L=st;}catch(e){}
+if(!L&&${AUTO_LANG}){var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"sv"];for(var i=0;i<ls.length&&!L;i++){var c=String(ls[i]||"").toLowerCase().split("-")[0];if(c==="no"||c==="nn")c="nb";if(ok[c])L=c;}if(!L)L="en";}if(!L)L="sv";
+window.LANG=L;document.documentElement.lang=L;if(L!=="sv")document.write('<script src="i18n/'+L+'.js?v=${I18NV}"><\\/script>');})();
+</script>
+<script>
 // Appens kod frågar window.claude.use(...) direkt vid start; runtime.js (Firebase) svarar när den är klar.
 (function(){var ready,p=new Promise(function(r){ready=r});window.__groundlyReady=ready;
 setTimeout(function(){ready({use:function(){return Promise.resolve(null)}})},15000);
@@ -105,12 +118,18 @@ window.claude={use:function(n){return p.then(function(rt){return rt.use(n)})}};}
 html = head + html.replace('<meta name="claude:viewport-fit-sides" content="cover">\n', "") + "\n</html>\n";
 
 fs.mkdirSync(path.join(SITE, "data"), { recursive: true });
+// översättningar: src/i18n/<språk>.json -> site/i18n/<språk>.js
+fs.mkdirSync(path.join(SITE, "i18n"), { recursive: true });
+for (const f of fs.readdirSync(path.join(SRC, "i18n")).filter(f => f.endsWith(".json"))) {
+  const d = JSON.parse(fs.readFileSync(path.join(SRC, "i18n", f), "utf8"));
+  fs.writeFileSync(path.join(SITE, "i18n", f.replace(/json$/, "js")), "window.I18N=" + JSON.stringify(d) + ";\n");
+}
 fs.writeFileSync(path.join(SITE, "index.html"), html);
 fs.writeFileSync(path.join(SITE, "data", "flags.json"), JSON.stringify(R("flags.js")));
 fs.writeFileSync(path.join(SITE, "data", "maps.json"), JSON.stringify(Object.fromEntries(Object.entries(maps).map(([k, v]) => [k, { path: v.path, path2: v.path2 || null }]))));
 fs.writeFileSync(path.join(SITE, ".nojekyll"), "");
 
 // syntaxkontroll av appens skript
-const js = html.split("<script>")[2].split("</script>")[0];
+const js = html.split("<script>").slice(1).map(x => x.split("</script>")[0]).sort((a, b) => b.length - a.length)[0]; // appens stora skript
 new Function(js);
 console.log(`site/index.html ${html.length} byte, AI ${aiOn ? "på" : "av"}, skript ok`);
