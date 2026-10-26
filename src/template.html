@@ -1811,7 +1811,7 @@ async function startMine(db,uid){
 // ---------- arenabetyg och tillgänglighet ----------
 // "m" ersatte "v" (Utsikt) i okt 2026; gamla utsiktsbetyg ligger kvar i databasen men visas och räknas inte
 const RCATS=[["s","Stämning"],["f","Mat och dryck"],["m","Matchupplevelse"],["p","Prisvärt"]];
-const ACC=[["wc","Rullstolsplatser"],["step","Stegfri väg in"],["toilet","Tillgänglig toalett"],["comp","Ledsagare går gratis"],["park","Parkering för rörelsehindrade"],["loop","Hörslinga"],["audio","Syntolkning"],["quiet","Lugnt rum"]];
+const ACC=[["wc","Rullstolsplatser"],["step","Stegfri väg in"],["toilet","Tillgänglig toalett"],["comp","Ledsagare går gratis"],["park","Parkering för rörelsehindrade"],["loop","Hörslinga"],["audio","Syntolkning"]];
 let RATINGS={},ratingsState="loading",ratingsNs=null,rateOpen=null,rateDraft=null,rateBusy=false,rateMsg="",rateDelConfirm=false;
 const _ak=new Map();const arenaKey=s=>{if(_ak.has(s))return _ak.get(s);const k=norm(s||"").replace(/ /g,"-").slice(0,80)||null;_ak.set(s,k);return k;};
 const dec=x=>x.toFixed(1).replace(".",",");
@@ -2055,6 +2055,10 @@ function afterMine(){if(mySub==="been")drawLiveMap();if(mySub==="pass"){drawPass
 
 // ---------- klick för de nya funktionerna ----------
 const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.tripfor||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard;
+// hoppa direkt till det öppnade klubbkortet (sökrutan ovanför behöver inte synas)
+function scrollToCard(){const go=()=>{const el=document.querySelector('section[id^="v-"]:not([hidden]) .card.sel');if(!el){window.scrollTo({top:0});return;}
+  const tb=document.querySelector(".topbar");const off=(tb?tb.getBoundingClientRect().height:0)+8;window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+window.scrollY-off)});};
+  go();requestAnimationFrame(()=>{go();setTimeout(go,120);});}
 function openClubCard(id){if(!C[id])return;qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;}
 function featClick(t){
   if(t.dataset.mview){matchView=t.dataset.mview;store.set("fk-mview",matchView);if(matchView==="double"&&dTo<addDays(dFrom,6))dTo=addDays(dFrom,13);renderMatches();return;}
@@ -2853,7 +2857,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.mkind){mKind=t.dataset.mkind;store.set("fk-mkind",mKind);renderMatches();return;}
   if(t.dataset.gender){gender=t.dataset.gender;store.set("fk-gender",gender);render();return;}
   if(t.dataset.tier){const k=t.dataset.tier;if(k==="all")tiers.clear();else if(tiers.has(k))tiers.delete(k);else tiers.add(k);renderMatches();return;}
-  if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;const same=(isNat(C[id])?"landslag":"klubbar")===mode;if(same&&openClub&&openClub!==id){clubJump();}else pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");window.scrollTo({top:0});return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");window.scrollTo({top:0});return;}
+  if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;const same=(isNat(C[id])?"landslag":"klubbar")===mode;if(same&&openClub&&openClub!==id){clubJump();}else pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");scrollToCard();return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");scrollToCard();return;}
   if(t.dataset.club){openClub=openClub===t.dataset.club?null:t.dataset.club;renderClubs();}});
 document.addEventListener("change",e=>{const id=e.target.id;
   if(id==="dFrom"&&e.target.value){dFrom=e.target.value;if(dTo<dFrom)dTo=dFrom;renderMatches();}
