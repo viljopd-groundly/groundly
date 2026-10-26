@@ -1,6 +1,6 @@
 <title>Groundly</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 40%27%3E%3Cpath d=%27M16 1C8.3 1 2 7.2 2 14.8c0 10.2 12.3 23 13.1 23.8a1.3 1.3 0 0 0 1.8 0C17.7 37.8 30 25 30 14.8 30 7.2 23.7 1 16 1z%27 fill=%27%231d6b3b%27/%3E%3Cellipse cx=%2716%27 cy=%2714.6%27 rx=%2710%27 ry=%277.8%27 fill=%27%23f7faf7%27/%3E%3Crect x=%2710%27 y=%2710.4%27 width=%2712%27 height=%278.4%27 rx=%271.6%27 fill=%27%231d6b3b%27/%3E%3C/svg%3E">
+<link rel="icon" id="favLink" href="logos/stadion.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
@@ -417,6 +417,14 @@ button{touch-action:manipulation}
 .obex>.pill{align-self:flex-start}.obtiles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.obtiles div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 4px;text-align:center;display:flex;flex-direction:column}
 .obtiles b{font:700 18px var(--f-mono);color:var(--accent)}.obtiles span{font-size:11px;color:var(--muted)}
 .obrow{display:flex;flex-direction:column;gap:1px;font-size:14px;border-top:1px dashed var(--line);padding-top:7px}.obrow>.meta:first-child{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.blogo{border-radius:9px;object-fit:cover;width:34px;height:34px;display:block}
+.setbox{max-height:min(86vh,760px);overflow:auto}.setsec{border-top:1px solid var(--line);padding:12px 0 4px;display:flex;flex-direction:column;gap:8px}.setsec h3{margin:0;font-size:16px}
+.logogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px}
+.logopick{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px;border-radius:12px;border:2px solid transparent;text-align:center}
+.logopick img{width:60px;height:60px;border-radius:14px;object-fit:cover;box-shadow:0 1px 3px rgba(0,0,0,.15)}.logopick span{font-size:11px;color:var(--muted);line-height:1.2}
+.logopick[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}.logopick[aria-pressed=true] span{color:var(--fg);font-weight:700}
+.logopick:focus-visible{outline:2px solid var(--accent)}
+.setsw{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.setsw input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent);flex:none}.setsw b{display:block;font-size:14px}.setsw small{color:var(--muted);font-size:12px}
 .selrow{display:flex;gap:8px}.selrow[hidden]{display:none}.selw{position:relative;display:flex;flex:1 1 0;min-width:0;max-width:260px}.dsel{width:100%}.selw[hidden]{display:none}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dsel{appearance:none;-webkit-appearance:none;font:600 14px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
@@ -659,13 +667,12 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
   </div>
 
   <header class="topbar">
-    <button class="brand" data-bn="hem" aria-label="Groundly, till startsidan"><svg class="logo" viewBox="0 0 32 40" width="26" height="32" aria-hidden="true"><path d="M16 1C8.3 1 2 7.2 2 14.8c0 10.2 12.3 23 13.1 23.8a1.3 1.3 0 0 0 1.8 0C17.7 37.8 30 25 30 14.8 30 7.2 23.7 1 16 1z" fill="var(--accent)"/><ellipse cx="16" cy="14.6" rx="10" ry="7.8" fill="var(--chalk)"/><rect x="10" y="10.4" width="12" height="8.4" rx="1.6" fill="var(--accent)"/><path d="M16 10.4v8.4" stroke="var(--chalk)" stroke-width="1"/><circle cx="16" cy="14.6" r="2" fill="none" stroke="var(--chalk)" stroke-width="1"/></svg><span class="wordmark"><span>Ground</span>ly</span><span class="betadot" title="Betaversion">beta</span></button>
+    <button class="brand" data-bn="hem" aria-label="Groundly, till startsidan"><img class="logo blogo" id="brandLogo" src="logos/stadion.png" width="34" height="34" alt="" decoding="async"><span class="wordmark"><span>Ground</span>ly</span><span class="betadot" title="Betaversion">beta</span></button>
     <span class="tbtitle" id="tbTitle"></span>
-    <button class="iconbtn" id="themeBtn" aria-expanded="false" aria-controls="themeRow" aria-label="Byt utseende" title="Byt utseende"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+    <button class="iconbtn" id="themeBtn" aria-haspopup="dialog" aria-label="Inställningar" title="Inställningar"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
   </header>
   <div class="intro" id="intro"><h1 class="vh">Groundly</h1><div class="tagline" id="tagline" lang="en">Plan &amp; log your football trips</div><div class="sub" id="sub"></div></div>
 
-  <div class="chips wrapchips" id="themeRow" role="group" aria-label="Utseende" hidden></div>
 
   <!-- Hem -->
   <section id="v-hem" hidden style="display:none">
@@ -2849,10 +2856,10 @@ function repActivity(){if(!myId||repState!=="ready"||!likesLoaded)return null;co
   const newC=coms.filter(c=>String(c.at)>seen.c);let newL=0;Object.entries(likes).forEach(([k,n])=>{newL+=Math.max(0,n-((seen.l||{})[k]||0));});
   return{newC,newL,likes,mine};}
 function repSeen(){const a=repActivity();if(!a)return;try{store.set("fk-repseen",JSON.stringify({c:new Date().toISOString(),l:a.likes}));}catch(e){}actBadge();}
-function actBadge(){const a=repActivity();const n=a?a.newC.length+a.newL:0;
+function actBadge(){const a=notifOn("act")?repActivity():null;const n=a?a.newC.length+a.newL:0;
   for(const el of [document.getElementById("bnMore"),document.querySelector('.msi[data-bn="reportage"]'),document.getElementById("m-reportage")]){if(!el)continue;let d=el.querySelector(".actdot");
     if(n&&!d){d=document.createElement("span");d.className="actdot";el.appendChild(d);}if(d){if(n)d.textContent=n>9?"9+":n;else d.remove();}}}
-function activityHtml(){const a=repActivity();if(!a||!(a.newC.length+a.newL))return"";
+function activityHtml(){if(!notifOn("act"))return"";const a=repActivity();if(!a||!(a.newC.length+a.newL))return"";
   const parts=[a.newC.length?`${a.newC.length} ${a.newC.length===1?"ny kommentar":"nya kommentarer"}`:"",a.newL?`${a.newL} ${a.newL===1?"ny gillning":"nya gillningar"}`:""].filter(Boolean).join(" och ");
   const last=a.newC.slice(-2).map(c=>`<div class="actrow"><b>${esc(who(c.uid))}</b> om <i>${esc((a.mine.find(r=>r.key===c.rep)||{}).title||"ditt reportage")}</i>: ${esc(String(c.body).slice(0,90))}${String(c.body).length>90?"…":""}</div>`).join("");
   return`<article class="tip actcard"><div class="lbl">${ic("chat")} Nytt på dina reportage</div><p style="margin:0"><b>${parts}</b> sedan du senast tittade.</p>${last}<div class="actions"><button class="btn small primary" data-gomyrep="1">Visa mina reportage</button><button class="btn small" data-actseen="1">Markera som läst</button></div></article>`;}
@@ -3124,7 +3131,7 @@ function quizLeadHtml(){if(quizState!=="ready")return"";const rows=Object.entrie
   const[uid,d]=rows;return`<article class="tip"><div class="sechead"><div><div class="lbl">Quizledare</div><h2 class="name">${esc(uid===myId?"Du":(QNAMES[uid]||NAMES[uid]||"Medlem"))} · ${+d.best}/10</h2></div><button class="btn small primary" data-goquiz="1">Utmana</button></div></article>`;}
 function toneHome(el){el.querySelectorAll(":scope > article, :scope > .tip").forEach(a=>{if(a.classList.contains("hero"))return;a.dataset.tone="1";const l=a.querySelector(":scope > .lbl, :scope > .sechead > .lbl");if(l)l.classList.add("lbl-lg");});}
 // påminnelse: matcher på "Vill gå" som har spelats (2 tim–14 dagar sedan) och inte loggats
-function remindHtml(){if(myState!=="ready"||!Array.isArray(MY.wishMatches))return"";const now=Date.now();
+function remindHtml(){if(!notifOn("remind")||myState!=="ready"||!Array.isArray(MY.wishMatches))return"";const now=Date.now();
   const due=MY.wishMatches.filter(w=>w&&w.kickoff&&now-Date.parse(w.kickoff)>2*36e5&&now-Date.parse(w.kickoff)<14*864e5&&!MY.attended.some(a=>a.mid===w.id)).sort((a,b)=>String(b.kickoff).localeCompare(String(a.kickoff))).slice(0,3);
   if(!due.length)return"";
   return`<article class="tip remind"><div class="lbl">${ic("calendar")} Var du där?</div>${due.map(w=>`<div class="rmrow"><div><b>${esc(w.homeName)} – ${esc(w.awayName)}</b><div class="meta">${esc(dayLong(dayKey(new Date(w.kickoff))))}${w.venue?` · ${esc(w.venue)}`:""}</div></div>
@@ -3226,6 +3233,7 @@ function pollHtml(){const wk=isoWeek(new Date());const[q,opts]=POLLS[(wk.y*53+wk
     <p class="hint">${tot} ${tot===1?"röst":"röster"}${mine!==null?" · tryck på ett annat svar för att ändra":can?"":" · logga in för att rösta"}. Ny fråga varje måndag.</p></article>`;}
 // nytt i appen
 const NEWS=[// [datum, rubrik, text, flik]. Nyheter äldre än ett halvår visas inte längre (se newsList).
+ ["2026-10-26","Ny logga och inställningar","Groundly har fått en ny logga. Under kugghjulet uppe till höger väljer du mellan tolv loggor, ljust eller mörkt utseende, notiser och hemort.","hem"],
  ["2026-10-23","Påminnelser och notiser","Appen frågar om du var på matcher du ville gå på, och du ser när någon kommenterar eller gillar dina reportage.","hem"],
  ["2026-10-23","Historiska tabeller","Välj säsong under Tabeller och se slutställningen ända tillbaka till 2016, till exempel Allsvenskan, Superettan och Ettan.","tabell"],
  ["2026-10-23","Sök lag i arkivet och din statistik","Hitta alla gamla matcher med ett lag direkt, och se din vinstprocent, målrikaste match och längsta resa under Min fotboll.","mine"],
@@ -3627,10 +3635,39 @@ function applyTheme(){const r=document.documentElement;if(theme==="auto")r.remov
   const row=document.getElementById("themeRow");r.setAttribute("data-style",uiStyle);
   if(row)row.innerHTML=`<span class="tlbl">Färg</span>`+THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")+`<span class="tlbl">Stil</span>`+STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("");}
 applyTheme();
-document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,[data-theme-pick],[data-style-pick]");if(!b)return;
-  if(b.dataset.stylePick){uiStyle=b.dataset.stylePick;store.set("fk-style",uiStyle);applyTheme();toast(`Stil: ${STYLES.find(x=>x[0]===uiStyle)[1]}`);return;}
-  if(b.id==="themeBtn"){const row=document.getElementById("themeRow");row.hidden=!row.hidden;b.setAttribute("aria-expanded",String(!row.hidden));return;}
-  theme=b.dataset.themePick;store.set("fk-theme",theme);applyTheme();toast(`Tema: ${THEMES.find(x=>x[0]===theme)[1]}`);},true);
+// ---------- inställningar: logga, utseende, notiser, hemort ----------
+const BRAND_LOGOS=[["stadion","Stadion"],["enkel","Stadion ljus"],["premium","Stadion premium"],["cirkel","Cirkel"],["cirkel-orange","Cirkel orange"],["skold","Sköld"],
+  ["boll","Boll"],["boll-orange","Boll orange"],["plats","Kartnål"],["g-gron","G grön"],["g-orange","G orange"],["dynamisk","G i farten"]];
+let logoPick="stadion";try{const l=store.get("fk-logo");if(BRAND_LOGOS.some(x=>x[0]===l))logoPick=l;}catch(e){}
+function applyLogo(){const src=`logos/${logoPick}.png`;const im=document.getElementById("brandLogo");if(im&&im.getAttribute("src")!==src)im.setAttribute("src",src);
+  const fl=document.getElementById("favLink");if(fl)fl.setAttribute("href",src);}
+applyLogo();
+const NOTIF=[["remind","Påminn mig att logga matcher jag ville gå på","Rutan Var du där? på Hem efter matchen"],["act","Nytt på mina reportage","Röd siffra och ruta på Hem när någon kommenterar eller gillar"]];
+const notifOn=k=>store.get("fk-n-"+k)!=="0";
+let setOpen=false;
+function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>${b}</section>`;
+  return`<div id="setOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="setT"><div class="compose askbox pvbox msbox setbox">
+   <div class="mshead"><h2 id="setT">Inställningar</h2><button class="btn small" id="setClose">Klar</button></div>
+   ${sec("Logga",`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
+     <p class="hint">Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.</p>`)}
+   ${sec("Utseende",`<div class="lbl">Färg</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>
+     <div class="lbl">Stil</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>`)}
+   ${sec("Notiser",NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")+`<p class="hint">Notiserna visas i appen. Appen skickar inga push-notiser till telefonen.</p>`)}
+   ${sec("Hemort",`<form class="homeform" id="setHome"><label class="fld" for="setHomeIn">Används för helgtips, avstånd och resor<input id="setHomeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="t.ex. Jönköping"></label><button class="btn small primary" type="submit">Spara</button></form>`)}
+   ${sec("Mer",`<div class="actions"><button class="btn small" data-privacy="1">${ic("shield")} Integritet och villkor</button><button class="btn small" data-feedback="1">${ic("chat")} Tyck till</button></div><p class="hint">Konto, inloggning och Radera mitt konto finns under knappen med din bokstav uppe till höger.</p>`)}
+  </div></div>`;}
+function openSettings(){setOpen=true;let ov=document.getElementById("setOv");const y=ov?ov.querySelector(".setbox").scrollTop:0;if(ov)ov.remove();document.body.insertAdjacentHTML("beforeend",settingsHtml());ov=document.getElementById("setOv");ov.querySelector(".setbox").scrollTop=y;}
+function closeSettings(){setOpen=false;document.getElementById("setOv")?.remove();}
+document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick]");if(!b)return;
+  if(b.id==="themeBtn"){openSettings();return;}
+  if(b.id==="setClose"||(b.id==="setOv"&&e.target===b)){closeSettings();return;}
+  if(b.id==="setOv")return;
+  if(b.dataset.logoPick){logoPick=b.dataset.logoPick;store.set("fk-logo",logoPick);applyLogo();openSettings();return;}
+  if(b.dataset.stylePick){uiStyle=b.dataset.stylePick;store.set("fk-style",uiStyle);applyTheme();if(setOpen)openSettings();return;}
+  theme=b.dataset.themePick;store.set("fk-theme",theme);applyTheme();if(setOpen)openSettings();},true);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&setOpen)closeSettings();});
+document.addEventListener("change",e=>{const k=e.target.dataset&&e.target.dataset.notif;if(!k)return;store.set("fk-n-"+k,e.target.checked?"1":"0");try{actBadge();}catch(x){}if(mode==="hem")renderHome();});
+document.addEventListener("submit",e=>{if(e.target.id!=="setHome")return;e.preventDefault();const v=document.getElementById("setHomeIn").value.trim().slice(0,60);homeTown=v;if(v)store.set("fk-home",v);else store.del("fk-home");toast(v?`Hemort: ${v}`:"Hemorten är borttagen");render();});
 
 // ---------- render ----------
 function render(){
