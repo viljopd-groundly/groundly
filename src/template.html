@@ -2750,7 +2750,7 @@ function arenaCard(x){const s=ratingSummary(x.a);const up=arenaUpcoming(x);const
    <div class="teams">${x.clubs.map(c=>`<button data-open="${esc(c.id)}">${crest(c.id,c.n,24)}${esc(c.n)}${favStar(c.id)}</button>`).join('<span class="vs">·</span>')}</div>
    ${up.length?`<div class="anext"><b>Nästa match:</b> ${esc(up[0].homeName)} – ${esc(up[0].awayName)}, ${esc(nextTxt(up[0]))}${up.length>1?` <span class="meta">(+${up.length-1} till i schemat)</span>`:""}</div>`:""}
    ${s.bars}${s.acc?`<div class="accs">${s.acc}</div>`:""}
-   <div class="actions"><button class="btn small" data-open="${esc(c0.id)}">${shared?"Visa "+esc(c0.n):"Visa klubb och arenafakta"}</button>${extLink(mapsDir(x.s,x.city),"Hitta hit","btn small")}${extLink(transitUrl(homeTown||"",placeStr(x.s,x.city)),"Kollektivt","btn small")}${extLink(bookingUrl(x.s,x.city,up[0]?matchDate(up[0]):null),adLabel("Hotell"),"btn small")}${pubs?`<button class="btn small" data-open="${esc(c0.id)}">${pubs} pubtips</button>`:""}</div>
+   <div class="actions"><button class="btn small" data-open="${esc(c0.id)}">${shared?"Visa "+esc(c0.n):"Visa klubb och arenafakta"}</button><button class="btn small" data-tripfor="${esc(c0.id)}" aria-expanded="${tripOpen===c0.id}">Ta dig till arenan</button>${extLink(bookingUrl(x.s,x.city,up[0]?matchDate(up[0]):null),adLabel("Hotell"),"btn small")}${pubs?`<button class="btn small" data-open="${esc(c0.id)}">${pubs} pubtips</button>`:""}</div>${tripOpen===c0.id?tripPanel(C[c0.id]):""}
   </article>`;}
 function renderArenas(){
   setSel("aCountrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?"Alla länder":l]),aCountry);
