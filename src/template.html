@@ -1259,6 +1259,7 @@ function statBoardHtml(L){const P=XD.players&&XD.players.leagues&&XD.players.lea
   const list=P[tblStat];
   return`<article class="tip tblcard" id="statBoard"><div class="tblhead"><h2 class="name">Spelarligor</h2><span class="meta">${esc(L)} · topp ${list.length}</span></div>
    <div class="chips">${tabs.map(([k,l])=>`<button class="chip" data-tblstat="${k}" aria-pressed="${k===tblStat}">${l}</button>`).join("")}</div>
+   ${Array.isArray(P.own)&&P.own.includes(tblStat)?`<p class="hint">Uträknad från målskyttarna i seriens matcher, eftersom källans färdiga lista är ofullständig för ${esc(L)}.</p>`:""}
    <div class="tblwrap"><table class="ltbl"><thead><tr><th>#</th><th class="tl">Spelare</th><th class="tl">Lag</th><th title="Matcher">M</th><th>${esc(tabs.find(t=>t[0]===tblStat)[1])}</th></tr></thead><tbody>
    ${list.map((r,i)=>{const[nm,team,val,apps]=r;const c=team&&C[team];return`<tr><td class="n">${i+1}</td><td class="tl">${esc(nm)}</td><td class="tl">${c?`<button class="tteam" data-open="${esc(team)}">${crest(team,c.n,18)}<span>${esc(c.n)}</span></button>`:esc(team||"")}</td><td class="n">${apps||""}</td><td class="n"><b>${val}</b></td></tr>`;}).join("")}</tbody></table></div></article>`;}
 function renderTable(){genderChips("gTbl");const ls=tblLeagues();if(!ls.length)return;

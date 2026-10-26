@@ -199,10 +199,29 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
         const pl=Object.values(ps).filter(p=>p[3]>0||p[4]>0).sort((a,b)=>b[4]-a[4]);if(pl.length>=8)extra.squads[our]={season,players:pl};}catch(e){apiStat.trupp_fel=(apiStat.trupp_fel||0)+1;}}
     // 6) målskyttar och utvisningar: nya matcher sedan förra körningen (alla vid första körningen)
     let prev={};try{prev=JSON.parse(fs.readFileSync(path.join(TOOLS,"prev_events.json"),"utf8")).m||{};}catch(e){}
-    const recent=Date.now()-5*864e5;const need=finished.filter(f=>!prev[f.key]||Date.parse(f.date)>=recent);Object.assign(extra.events,prev);
+    // assistlämnare sparas i en egen fil (tools/ev_assist.json) så att events.json som appen laddar inte blir större
+    let AS={};try{AS=JSON.parse(fs.readFileSync(path.join(TOOLS,"ev_assist.json"),"utf8"));}catch(e){}
+    const recent=Date.now()-5*864e5;const need=finished.filter(f=>!prev[f.key]||!(f.key in AS)||Date.parse(f.date)>=recent);Object.assign(extra.events,prev);
     for(let i=0;i<need.length;i+=20){const chunk=need.slice(i,i+20);let r;try{r=get(`fixtures?ids=${chunk.map(f=>f.id).join("-")}`);}catch(e){apiStat.händelser_fel=String(e.message).slice(0,80);break;}
       for(const f of r){const me=chunk.find(c=>c.id===f.fixture.id);if(!me)continue;const homeId=f.teams.home.id;
+        AS[me.key]=(f.events||[]).filter(e=>e.type==="Goal"&&!/missed|own/i.test(e.detail||"")&&e.assist&&e.assist.name).map(e=>[e.assist.name,e.team&&e.team.id===homeId?"h":"a"]);
         extra.events[me.key]=(f.events||[]).filter(e=>e.type==="Goal"&&!/missed/i.test(e.detail||"")||(e.type==="Card"&&/red/i.test(e.detail||""))).map(e=>[(e.time.elapsed||0)+(e.time.extra?"+"+e.time.extra:""),e.type==="Card"?"R":/own/i.test(e.detail||"")?"OG":/penalty/i.test(e.detail||"")?"P":"G",e.player&&e.player.name||"",e.team&&e.team.id===homeId?"h":"a"]);}}
+    try{fs.writeFileSync(path.join(TOOLS,"ev_assist.json"),JSON.stringify(AS));}catch(e){}
+    // 7) egna skytte- och assistligor uträknade från målskyttarna i varje match. Används när API:ets färdiga lista
+    //    är ofullständig (lägre topp än vad matcherna visar) eller saknas helt. Gula/röda kort tas från API:et.
+    {const own={};const LT=new Map();
+      for(const r of rows){if(!r[4])continue;const L=r[5];if(!LT.has(L))LT.set(L,{fin:0,ev:0,as:0,g:{},a:{},gp:{}});const o=LT.get(L);o.fin++;const k=r[0]+"|"+r[1]+"|"+r[3];const ev=extra.events[k];
+        o.gp[r[0]]=(o.gp[r[0]]||0)+1;o.gp[r[1]]=(o.gp[r[1]]||0)+1;
+        if(ev){o.ev++;for(const x of ev){if((x[1]==="G"||x[1]==="P")&&x[2]){const t=x[3]==="h"?r[0]:r[1];const id=x[2]+"|"+t;o.g[id]=(o.g[id]||0)+1;}}}
+        if(AS[k]){o.as++;for(const[nm,side] of AS[k]){const t=side==="h"?r[0]:r[1];const id=nm+"|"+t;o.a[id]=(o.a[id]||0)+1;}}}
+      const top=(m,gp)=>Object.entries(m).sort((x,y)=>y[1]-x[1]).slice(0,20).map(([id,n])=>{const[nm,t]=id.split("|");return[nm,t,n,0];});
+      const choice={};
+      for(const[lname,,,,tier] of done){if(tier==="CUP")continue;const o=LT.get(lname);if(!o||o.fin<10)continue;const P=extra.players[lname]||{};
+        const evOk=o.ev>=o.fin*0.9,asOk=o.as>=o.fin*0.9;const ownG=top(o.g,o.gp),ownA=top(o.a,o.gp);
+        const apiG=(P.goals&&P.goals[0]&&P.goals[0][2])||0,apiA=(P.assists&&P.assists[0]&&P.assists[0][2])||0;
+        const useG=evOk&&ownG.length&&(ownG[0][2]>apiG),useA=asOk&&ownA.length&&(ownA[0][2]>apiA);
+        if(useG||useA){extra.players[lname]={...P,...(useG?{goals:ownG}:{}),...(useA?{assists:ownA}:{}),own:[useG?"goals":null,useA?"assists":null].filter(Boolean)};choice[lname]=`egen ${useG?"skytteliga ("+ownG[0][2]+" vs API "+apiG+")":""}${useA?" assist ("+ownA[0][2]+" vs API "+apiA+")":""}`;}}
+      apiStat.egnaSpelarligor=choice;}
     apiStat.anrop=calls;apiStat.okändaLag=Object.entries(unmatched).sort((a,b)=>b[1]-a[1]).slice(0,25).map(x=>x[0]);
   }catch(e){apiStat.fel=String(e.message).slice(0,200);apiStat.anrop=calls;}
 }else apiStat.info="API_FOOTBALL_KEY saknas, hoppar över API-Football";

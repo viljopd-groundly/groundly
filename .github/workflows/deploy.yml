@@ -60,7 +60,7 @@ jobs:
           rm -f tools/prev_events.json
           git config user.name "groundly-bot"
           git config user.email "groundly-bot@users.noreply.github.com"
-          git add site/data site/archive tools/last-run.json
+          git add site/data site/archive tools/last-run.json $(ls tools/ev_assist.json 2>/dev/null)
           git diff --cached --quiet || git commit -m "Nattuppdatering $(date -u +%F)"
           # någon kan ha pushat under körningen (t.ex. en kodändring) – lägg datan ovanpå
           for i in 1 2 3; do git pull --rebase -q origin main && git push && break; sleep 5; done
