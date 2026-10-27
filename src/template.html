@@ -163,6 +163,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .mrow:has(#editAttForm),.mrow:has(.seasonimg){grid-template-columns:1fr}.mrow:has(#editAttForm)>.mmain,.mrow:has(.seasonimg)>.mmain{min-width:0}
 .cmore[hidden]{display:none!important}
 .trlink{display:inline-block;margin:4px 0 2px;font-size:13px}
+.trbox{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin:10px 0 4px}.trbox small{color:var(--muted);font-size:12px}
 .reprow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}.reprow>.ftop{flex:0 0 auto;max-width:100%}.reprow>.ftop>.btn{height:100%;white-space:nowrap}.reprow>.ftop:has(form),.reprow>.ftop:has(.place){flex:1 1 100%}.reprow>.search{flex:1 1 0;min-width:120px}.reprow>.search input{min-width:0;width:100%}.reprow>.search[hidden]{display:none}
 .compose{align-self:stretch;background:var(--surface);border:2px solid var(--accent);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:12px}
 .compose h2{font-family:var(--f-display);font-weight:600;font-size:19px;margin:0}
@@ -843,8 +844,10 @@ function $t(s,v){if(typeof s!=="string")return s==null?s:String(s);let r=I18N[s]
 const $tn=(n,one,many,v)=>$t(n===1?one:many,Object.assign({n},v||{}));
 // text ur datan med siffror (t.ex. meriter "13 ligatitlar (senast 2004)"): siffrorna blir {0}, {1} … i nyckeln
 function $tp(x){if(LANG==="sv"||typeof x!=="string")return x;const nums=[];const k=x.replace(/\d+/g,m=>{nums.push(m);return`{${nums.length-1}}`;});return I18N[k]!=null&&I18N[k]!==""?$t(k,nums):(I18N[x]||x);}
-// text som användare skrivit översätts inte av appen; på andra språk än svenska finns en länk till Google Översätt
-function trLink(txt){if(LANG==="sv"||!txt)return"";const u="https://translate.google.com/?sl=auto&tl="+(LANG==="nb"?"no":LANG)+"&op=translate&text="+encodeURIComponent(String(txt).slice(0,4500));return`<a class="link trlink" href="${u}" target="_blank" rel="noopener">${$t("Översätt")}</a>`;}
+// text som användare skrivit översätts inte av appen. Reportage har en knapp till Google Translate (alltid), forum och kommentarer en länk på andra språk än svenska
+function trLink(txt,big){if(!txt)return"";const u="https://translate.google.com/?sl=auto&tl="+(LANG==="nb"?"no":LANG)+"&op=translate&text="+encodeURIComponent(String(txt).slice(0,4500));
+  if(big)return`<div class="trbox"><a class="btn small" href="${u}" target="_blank" rel="noopener">${ic("globe")} ${$t("Översätt med Google Translate")}</a><small>${$t("Översättningen görs automatiskt av Google och det är inte säkert att allt blir rätt.")}</small></div>`;
+  if(LANG==="sv")return"";return`<a class="link trlink" href="${u}" target="_blank" rel="noopener">${$t("Översätt")}</a>`;}
 // fast text i sidans HTML (menyer, rubriker, sökrutor) översätts en gång när sidan laddas
 function trDom(root){if(LANG==="sv")return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const ns=[];while(w.nextNode())ns.push(w.currentNode);
   for(const n of ns){const p=n.parentNode;if(!p||/^(SCRIPT|STYLE)$/.test(p.nodeName))continue;const v=n.nodeValue,k=v.trim();if(k&&I18N[k])n.nodeValue=v.replace(k,I18N[k]);}
@@ -3091,7 +3094,7 @@ function renderReports(namesOnly){
       ${open?`<div class="rbody">
         ${r.photos.length?`<div class="phgrid big">${r.photos.map((id,i)=>`<button class="phbtn" data-phview="${esc(id)}" aria-label="${$t("Visa bild {0} i större storlek",[i+1])}">${phImg(id)}</button>`).join("")}</div>`:""}
         ${matchBox(r)}
-        <div class="body">${esc(r.body)}</div>${trLink(r.title+"\n\n"+r.body+(r.tip?"\n\n"+r.tip:""))}
+        <div class="body">${esc(r.body)}</div>${trLink(r.title+"\n\n"+r.body+(r.tip?"\n\n"+r.tip:""),true)}
         ${r.tip?`<div class="rtip"><b>${$t("Bästa tipset")}</b>${esc(r.tip)}</div>`:""}
         <div class="actions">${canWriteRep()?`<button class="btn small" data-replike="${esc(r.key)}" aria-pressed="${iLike(r.key)}">${likeInner(r.key)}</button>`:n?`<span class="meta">${ic("heart")} ${n}</span>`:""}
           ${c?`<button class="btn small" data-open="${esc(c.id)}">${$t("Visa {0}",[esc(c.n)])}</button>`:""}
