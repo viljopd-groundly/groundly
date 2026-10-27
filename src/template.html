@@ -166,6 +166,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 /* när en sparad match redigeras eller delas får rutan hela bredden (datumrutan hamnar ovanför) */
 .mrow:has(#editAttForm),.mrow:has(.seasonimg){grid-template-columns:1fr}.mrow:has(#editAttForm)>.mmain,.mrow:has(.seasonimg)>.mmain{min-width:0}
 .cmore[hidden]{display:none!important}
+.itiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}.itile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:12px 10px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}.itile .ic{width:20px;height:20px;color:var(--accent)}.itile b{font-size:14px}.itile small{font-size:12px;color:var(--muted);line-height:1.3}.itile:focus-visible{outline:2px solid var(--accent)}
 .homecust{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0 18px}
 .hclist{display:flex;flex-direction:column;gap:6px;margin:8px 0}.hcrow{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--line);border-radius:12px;padding:6px 8px 6px 10px;background:var(--surface)}
 .hcrow.off b{color:var(--muted)}.hcrow .setsw{flex:1;margin:0}.hcmove{display:flex;gap:4px}.hcmove .btn{min-width:36px;padding:6px 0}
@@ -970,7 +971,7 @@ function dayLong(k){let v=_dl.get(k);if(v===undefined){v=_dlF.format(new Date(k+
 const _tm=new Map();const timeOf=iso=>{let v=_tm.get(iso);if(v===undefined){const d=new Date(iso);v=p2(d.getHours())+":"+p2(d.getMinutes());_tm.set(iso,v);}return v;};
 
 // ---------- undertitel efter telefonens språk ----------
-const TAGLINES={sv:"Planera & logga dina fotbollsresor",en:"Plan & log your football trips",nb:"Planlegg & logg fotballturer",no:"Planlegg & logg fotballturer",nn:"Planlegg & logg fotballturer",da:"Planlæg & log fodboldture",fi:"Suunnittele & tallenna futisreissut",de:"Fußballreisen planen & loggen",nl:"Plan & log je voetbaltrips",fr:"Planifie & note tes virées foot",es:"Planea y guarda viajes de fútbol",it:"Pianifica & registra trasferte",pt:"Planeia & regista viagens de futebol",pl:"Planuj i zapisuj wyjazdy na mecze"};
+const TAGLINES={sv:"Planera, boka & logga dina fotbollsresor",en:"Plan, book & log your football trips",nb:"Planlegg, bestill & logg fotballturer",no:"Planlegg, bestill & logg fotballturer",nn:"Planlegg, bestill & logg fotballturer",da:"Planlæg, book & log fodboldture",fi:"Suunnittele, varaa & tallenna futisreissut",is:"Skipuleggðu, bókaðu & skráðu fótboltaferðir",de:"Fußballreisen planen, buchen & loggen",nl:"Plan, boek & log je voetbaltrips",fr:"Planifie, réserve & note tes virées foot",es:"Planea, reserva y guarda viajes de fútbol",it:"Pianifica, prenota & registra trasferte",pt:"Planeia, reserva & regista viagens de futebol",pl:"Planuj, rezerwuj i zapisuj wyjazdy na mecze"};
 (()=>{try{const langs=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"en"]).map(l=>String(l).toLowerCase().split("-")[0]);
   const l=TAGLINES[LANG]?LANG:"en";const el=document.getElementById("tagline");if(el){el.textContent=TAGLINES[l];el.lang=l;}}catch(e){}})();
 // ---------- mode ----------
@@ -3279,7 +3280,8 @@ function latestHtml(){const parts=[];
     const ym=new Date().toISOString().slice(0,7);const hot=th.map(t=>({t,n:ps.filter(p=>p.parent===t.key&&String(p.at).startsWith(ym)).length})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
     const card=(t,lbl,extra)=>`<button class="hcard" data-homethread="${esc(t.key)}"><span class="htxt"><span class="lbl">${lbl}</span><b>${esc(t.title)}</b><span class="meta">${esc(KIND_L[t.kind]||$t("Inlägg"))} · ${esc(who(t.uid))} · ${esc(ago(lastAt(t)))}${extra||""}</span></span></button>`;
     if(last)parts.push(card(last,$t("Senast i forumet")));if(hot&&(!last||hot.t.key!==last.key))parts.push(card(hot.t,$t("Hetast i forumet denna månad"),$t(" · {0} svar",[hot.n])));}
-  return parts.length?`<article class="tip"><h2 class="name">${$t("Från communityn")}</h2><div class="hgrid">${parts.join("")}</div></article>`:"";}
+  return`<article class="tip community"><div class="lbl">${$t("Community och forum")}</div><h2 class="name">${$t("Från communityn")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras reportage.")}</p>${parts.length?`<div class="hgrid">${parts.join("")}</div>`:""}
+    <div class="actions"><button class="btn small primary" data-gomode="forum">${ic("chat")} ${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs reportage")}</button></div></article>`;}
 function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().toISOString().slice(0,7);const cnt={};
   Object.values(RATINGS).forEach(d=>{Object.entries((d&&d.r)||{}).forEach(([k,r])=>{if(r&&String(r.at||"").startsWith(ym))cnt[k]=(cnt[k]||0)+1;});});
   const best=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];if(!best)return"";const x=arenas().find(a=>a.k===best[0]);if(!x)return"";
@@ -3297,11 +3299,15 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   const ids=Object.keys(STATS).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="hem")renderHome();}).catch(()=>{});
   const ob=onboardHtml();
   el.innerHTML=ob+remindHtml()+activityHtml()+homeOrder().filter(k=>homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+// tre saker man gör i appen: planera och boka, logga, och communityn
+function introHtml(){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
+  return`<article class="tip howto"><h2 class="name">${$t("Så funkar Groundly")}</h2>
+    <div class="itiles">${tile('data-gomode="matcher"',"calendar",$t("Planera & boka"),$t("Matcher, biljetter, hotell och resa"))}${tile('data-gomine="1"',"check",$t("Logga"),$t("Matcherna du sett och dina arenor"))}${tile('data-gomode="forum"',"chat",$t("Community"),$t("Fråga och tipsa andra i forumet"))}</div></article>`;}
 // ---------- startsidan: vilka rutor som visas och i vilken ordning ----------
 // standard = kort startsida; resten slås på under Anpassa startsidan. Valen sparas på kontot (homeCfg) och i telefonen.
-const HOME_BLOCKS=[["hero","Veckans match",true],["mine","Din säsong",true],["weekend","Tips för helgen",true],["latest","Från communityn",true],["news","Nytt i appen",false],
+const HOME_BLOCKS=[["intro","Så funkar Groundly",true],["hero","Veckans match",true],["latest","Från communityn",true],["mine","Din säsong",true],["weekend","Tips för helgen",true],["news","Nytt i appen",false],
   ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["board","Topplistor",false],["hopper","Månadens groundhopper",false],["toparena","Månadens arena",false],["quiz","Quizledare",false],["invite","Tipsa en kompis",false]];
-const HOME_FN={hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
+const HOME_FN={intro:()=>introHtml(),hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
 function normHomeCfg(c){const keys=HOME_BLOCKS.map(x=>x[0]);if(!c||typeof c!=="object")return null;const order=Array.isArray(c.order)?c.order.filter((k,i,a)=>keys.includes(k)&&a.indexOf(k)===i):[];
   const on={};if(c.on&&typeof c.on==="object")keys.forEach(k=>{if(typeof c.on[k]==="boolean")on[k]=c.on[k];});return{order,on};}
 function homeCfg(){if(myState==="ready"&&MY.homeCfg)return MY.homeCfg;try{return normHomeCfg(JSON.parse(store.get("fk-homecfg")||"null"))||{order:[],on:{}};}catch(e){return{order:[],on:{}};}}
@@ -3893,7 +3899,7 @@ document.addEventListener("submit",e=>{if(e.target.id!=="setHome")return;e.preve
 
 // ---------- render ----------
 function render(){
-  const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Veckans match, topplistor och det senaste från andra som reser på fotboll"),quiz:$t("Testa dina kunskaper om klubbar, landslag, arenor och derbyn"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka")};
+  const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Testa dina kunskaper om klubbar, landslag, arenor och derbyn"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka")};
   document.getElementById("sub").textContent=SUB[mode];
   {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Reportage"),forum:$t("Forum"),mine:$t("Min fotboll")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
    const intro=document.getElementById("intro");if(intro)intro.hidden=mode!=="hem";}
