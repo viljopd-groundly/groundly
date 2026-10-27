@@ -1674,7 +1674,7 @@ async function forumClick(t){
 
 // ---------- min fotboll ----------
 let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",myRef=null,myQ=Promise.resolve(),myPending=0,myErr="",mySub="home",addingMatch=false;
-let arView="list";try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms))mySub=ms;}catch(e){}
+let arView="list";window.groundlyOpenMod=()=>{mySub="mod";if(mode==="mine")renderMine();else setMode("mine");window.scrollTo({top:0});};try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms))mySub=ms;}catch(e){}
 const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
   wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^u_[A-Za-z0-9_-]{6,40}$/.test(x)).slice(0,200):[]};}
@@ -1755,9 +1755,11 @@ function renderMine(){
   const vis=[...vm.entries()].filter(([id])=>C[id]&&!isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
   if(mySub==="home"){
     h+=favCards()+natCard();const st=myStatsHtml();h+=st||(MY.attended.length?"":`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><div class="actions"><button class="btn primary" data-mysub="been">${$t("+ Lägg till match")}</button></div>`);
+  }else if(mySub==="mod"){
+    const r=fixReviewHtml()+feedbackReviewHtml();
+    h+=`<div class="sechead"><h3 class="sec">${ic("shield")} ${$t("Moderering")}</h3></div>`+(isMod?(r||`<div class="empty">${$t("Inga nya rättelser eller meddelanden.")}</div>`):`<div class="empty">${$t("Bara moderatorer ser det här.")}</div>`);
   }else if(mySub==="been"){
     if(pendingLogg())h+=`<p class="notice">${ic("offline")} ${$t("Du har ändringar som väntar på nät. De skickas automatiskt när kontakten är tillbaka.")} <button class="link strong" data-retrysave="1">${$t("Försök nu")}</button></p>`;
-    h+=fixReviewHtml()+feedbackReviewHtml();
     h+=addingMatch?`<form class="compose" id="addMatchForm">
       <h2>${$t("Lägg till en match du varit på")}</h2>
       <div class="row2"><label class="fld" for="amHome">${$t("Hemmalag")}<input id="amHome" list="allClubs" required maxlength="80" placeholder="${$t("t.ex. Jönköpings Södra IF")}"></label>

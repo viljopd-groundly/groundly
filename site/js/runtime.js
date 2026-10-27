@@ -279,11 +279,13 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
       ${mod ? `<div class="role">${SHIELD} Moderator – du kan dölja inlägg och reportage, sköta rättelser och läsa feedback</div>` : ""}
       <form data-gname><label for="gNm">Visningsnamn (syns i forum och topplistor)</label><input id="gNm" maxlength="40" value="${esc(name)}" required>
       <div class="row"><button class="btn" type="submit">Spara namn</button></div></form>
+       ${mod ? `<div class="row"><button class="btn" data-gmod>${SHIELD} Rättelser och feedback</button></div>` : ""}
       <div class="msg" aria-live="polite"></div>
       <div class="row"><button class="btn" data-gout>Logga ut</button></div>
       <div class="gdel"><button class="link" data-gdel>Radera mitt konto</button></div></div>`;
     dlg.hidden = false;
     dlg.querySelector("[data-gx]").onclick = close;
+    const gm = dlg.querySelector("[data-gmod]"); if (gm) gm.onclick = () => { close(); if (window.groundlyOpenMod) window.groundlyOpenMod(); };
     dlg.querySelector("[data-gout]").onclick = () => A.signOut(auth);
     dlg.querySelector("[data-gdel]").onclick = () => confirmDelete(u);
     dlg.querySelector("[data-gname]").onsubmit = async ev => {
