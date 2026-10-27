@@ -1855,7 +1855,7 @@ function myStatsHtml(){const A=MY.attended||[];if(A.length<2)return"";
     ${row($t("Mållösa matcher"),n?String(nil):"")}
     ${fn?row($t("Mina favoritlag på plats"),`${$t("{0} % vinster",[Math.round(100*fw/fn)])} <span class="meta">(V ${fw} · O ${fd} · F ${fl})</span>`):""}
     ${far?row($t("Längsta resan"),$t("{0}, {1} från {2}",[esc(far.a.city),milTxt(far.d),esc(hl.name)])):""}
-    ${kmN?row($t("Resat totalt"),$t("ca {0} tur och retur",[kmU(km)])):""}
+    ${kmN?row($t("Rest totalt"),$t("ca {0} tur och retur",[kmU(km)])):""}
     ${far?`<p class="hint">${DIST_NOTE}</p>`:""}
     ${row($t("Mest sedda lag"),team&&team.n>1?`${esc(team.name)} <span class="meta">${$t("({0} matcher)",[team.n])}</span>`:"")}
     ${row($t("Mest besökta arena"),ar&&ar[1]>1?`${esc(ar[0])} <span class="meta">${$t("({0} gånger)",[ar[1]])}</span>`:"")}
@@ -3620,7 +3620,7 @@ function exampleHtml(){const tile=(n,l)=>`<div><b>${n}</b><span>${l}</span></div
     <div class="obtiles">${tile(27,$t("matcher"))}${tile(14,$t("arenor"))}${tile(4,$t("länder"))}${tile(6,$t("på önskelistan"))}</div>
     <div class="obrow"><span class="meta">${$t("Favoritlag")}</span><b>${$t("Jönköpings Södra IF")}</b><span class="meta">${$t("12 matcher · V 7 · O 3 · F 2 · längsta bortaresan Luleå, 103 mil")}</span></div>
     <div class="obrow"><span class="meta">${$t("Senast")}</span><b>${$t("Jönköpings Södra – Trollhättan 2–1")}</b><span class="meta">${$t("lör 24 okt · Stadsparksvallen · med bild och reportage")}</span></div>
-    <div class="obrow"><span class="meta">${$t("Min statistik")}</span><b>${$t("52 % hemmasegrar · 3,1 mål per match")}</b><span class="meta">${$t("resat ca 4 800 km · vanligaste matchdag lördag")}</span></div>
+    <div class="obrow"><span class="meta">${$t("Min statistik")}</span><b>${$t("52 % hemmasegrar · 3,1 mål per match")}</b><span class="meta">${$t("rest ca 4 800 km · vanligaste matchdag lördag")}</span></div>
     <div class="obrow"><span class="meta">${$t("Utmaningar")}</span><b>${$t("11 av 16 arenor i Ettan Södra")}</b><span class="meta">${$t("karta över alla arenor du besökt, märken och arenapass")}</span></div></div>`;}
 const isObBtn=t=>t.dataset.obskip||t.dataset.oblog||t.dataset.obex;
 function obClick(t){if(t.dataset.obex){obEx=!obEx;render();return;}if(t.dataset.obskip){mutate(d=>{d.onboarded=true;});return;}
