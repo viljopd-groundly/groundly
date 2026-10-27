@@ -1858,10 +1858,13 @@ document.addEventListener("submit",e=>{
     if(!id){myErr=$t("Hittade ingen klubb som heter ”{0}” i listan.",[inp.value.trim()]);renderMine();return;}
     mutate(d=>{if(ac==="markClub")d.visited[id]={date:today()};else if(!d.wishClubs.includes(id))d.wishClubs.push(id);});}});
 
+let myNewDone=false;
 async function startMine(db,uid){
   if(!db||!uid){myState="none";if(mode==="mine")renderMine();return;}
   try{myRef=db.doc("data/users/"+uid+"/logg");}catch(e){myState="none";return;}
   myRef.onSnapshot(s=>{if(myPending>0)return;const server=s.exists?s.data():{};const pend=pendingLogg();
+    // nytt konto (ingen logg sparad än): syns i topplistor och för vänner från start, går att välja bort
+    if(!s.exists&&!pend&&!myNewDone&&navigator.onLine!==false&&!(s.metadata&&s.metadata.fromCache)){myNewDone=true;setTimeout(()=>{try{mutate(d=>{if(d.pub===undefined||d.pub===false)d.pub=true;if(d.share===undefined||d.share===false)d.share=true;});setTimeout(()=>{try{syncStats();syncPublic();}catch(e){}},300);}catch(e){}},400);}
     if(pend&&(!server||!server.savedAt||String(pend.savedAt)>String(server.savedAt))){MY=normMy(pend);setTimeout(retryPending,500);}else{MY=normMy(server);if(pend)store.del(PENDING_KEY);}myState="ready";render();setTimeout(()=>{try{syncStats();}catch(e){}},800);},
     ()=>{myState="none";render();});}
 
@@ -3655,9 +3658,9 @@ let wipeArm=false;
 function privacyHtml(){return`<div id="privacyOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="pvT"><div class="compose askbox pvbox">
   <h2 id="pvT">${ic("shield")} ${$t("Integritet och villkor")}</h2>
   <h3>${$t("Ditt konto")}</h3><p>${$t("Du loggar in med Google eller e-post och lösenord. Vi sparar din e-postadress och ditt visningsnamn. Visningsnamnet syns för andra, e-postadressen gör det inte.")}</p>
-  <h3>${$t("Det som bara du ser")}</h3><p>${$t("Matcher du loggar, favoritlag, önskelista, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.")}</p>
-  <h3>${$t("Om du väljer att dela")}</h3><p>${$t("Trycker du på Visa mina matcher för andra syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för alla som använder appen. Anteckningar och sällskap delas aldrig. Du kan sluta dela när som helst, då tas det delade bort.")}</p>
-  <h3>${$t("Det som andra ser")}</h3><p>${$t("Foruminlägg, reportage, kommentarer, klubblegender, kommentarer på tips, pubtips, arenabetyg, förslag på rättelser, quizresultat, gillningar, peppningar och röster syns för alla som använder appen, tillsammans med ditt visningsnamn. Topplistorna visar bara dina antal, och bara om du har valt att vara med.")}</p>
+  <h3>${$t("Det som bara du ser")}</h3><p>${$t("Anteckningar, sällskap, bilder, önskelista, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.")}</p>
+  <h3>${$t("Delning och topplistor")}</h3><p>${$t("Som ny användare syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för andra, så att vänner kan följa dig. Du är också med i topplistorna med dina antal. Anteckningar, sällskap och bilder delas aldrig. Du kan välja bort båda när som helst under Min fotboll och på Hem, och då tas det delade bort.")}</p>
+  <h3>${$t("Det som andra ser")}</h3><p>${$t("Foruminlägg, reportage, kommentarer, klubblegender, kommentarer på tips, pubtips, arenabetyg, förslag på rättelser, quizresultat, gillningar, peppningar och röster syns för alla som använder appen, tillsammans med ditt visningsnamn. Topplistorna visar bara dina antal, och bara om du inte har valt bort det.")}</p>
   <h3>${$t("Var datan lagras")}</h3><p>${$t("Allt lagras hos Google Firebase. Appens ägare har teknisk åtkomst till databasen för drift och säkerhetskopior, men använder den inte för att läsa din logg. En säkerhetskopia tas varje vecka och sparas privat.")}</p>
   <h3>${$t("Moderering")}</h3><p>${$t("Moderatorer kan dölja inlägg, reportage, kommentarer och legender, godkänna rättelser av klubbfakta och läsa det du skickar via Tyck till.")}</p>
   <h3>${$t("Ta bort")}</h3><p>${$t("Inlägg, reportage, kommentarer och legender tar du bort där de ligger. Din logg kan du radera här nedan. Vill du ta bort hela kontot väljer du")} <b>${$t("Radera mitt konto")}</b> ${$t("under kontoknappen uppe till höger – då raderas kontot och allt du har sparat eller skrivit. Det går inte att ångra, så spara gärna en säkerhetskopia först under Min fotboll.")}</p>
@@ -3829,7 +3832,7 @@ function render(){
    :mode==="landslag"?`<div>${$t("Grundår avser förbundet. Flaggor från flag-icons av Panayiotis Lipiridis (MIT-licens).")}</div>`
    :mode==="arenor"?`<div>${$t("Kapacitet enligt klubbdatan. Betyg och tillgänglighet kommer från besökare. Arenor som delas av flera klubbar visas en gång.")}</div>`
    :mode==="tips"?`<div>${$t("Urvalet och beskrivningarna är redaktionella tips. Nästa möte hämtas från det inlagda matchschemat.")}</div>`
-   :mode==="hem"?`<div>${$t("Topplistorna visar bara antal, och bara för dem som valt att synas. Veckans match väljs bland derbyn, dina favoritlag och matcher andra peppar.")}</div>`
+   :mode==="hem"?`<div>${$t("Topplistorna visar bara antal, och bara för dem som inte valt bort det. Veckans match väljs bland derbyn, dina favoritlag och matcher andra peppar.")}</div>`
    :mode==="reportage"?`<div>${$t("Reportagen och bilderna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja reportage. Lägg inte upp bilder på andra personer utan att de vet om det.")}</div>`
    :mode==="mine"?`<div>${$t("Matcherna och listorna här syns bara för dig och följer med ditt claude.ai-konto.")}</div>`
    :`<div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; sidans ägare kan dölja inlägg.")}</div>`;
