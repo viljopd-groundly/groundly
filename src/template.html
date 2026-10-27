@@ -1677,11 +1677,13 @@ let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",my
 let arView="list";window.groundlyOpenMod=()=>{mySub="mod";if(mode==="mine")renderMine();else setMode("mine");window.scrollTo({top:0});};try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms))mySub=ms;}catch(e){}
 const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
-  wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^u_[A-Za-z0-9_-]{6,40}$/.test(x)).slice(0,200):[]};}
-const MAXFAV=6;
+  wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,favNats:(Array.isArray(d&&d.favNats)?d.favNats:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&isNat(C[x])&&x!==d.favNat&&a.indexOf(x)===i).slice(0,MAXNAT),pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^u_[A-Za-z0-9_-]{6,40}$/.test(x)).slice(0,200):[]};}
+const MAXFAV=6,MAXNAT=5;
+const natExtra=()=>myState==="ready"&&MY&&Array.isArray(MY.favNats)?MY.favNats.filter(id=>C[id]&&id!==MY.favNat):[];
+const isFavNat=id=>myState==="ready"&&!!MY&&(MY.favNat===id||natExtra().includes(id));
 const favList=()=>myState==="ready"&&MY&&Array.isArray(MY.favs)?MY.favs.filter(id=>C[id]):[];
 const isFav=id=>favList().includes(id);
-const favStar=id=>isFav(id)||(myState==="ready"&&MY.favNat===id)?`<span class="fstar" title="${$t("Favorit")}" aria-label="${$t("Favorit")}">${STAR(1)}</span>`:"";
+const favStar=id=>isFav(id)||isFavNat(id)?`<span class="fstar" title="${$t("Favorit")}" aria-label="${$t("Favorit")}">${STAR(1)}</span>`:"";
 const isWishM=id=>MY.wishMatches.some(w=>w.id===id);
 const isAtt=id=>MY.attended.some(a=>a.mid===id);
 const isWishC=id=>MY.wishClubs.includes(id);
@@ -1727,11 +1729,11 @@ function myBtns(m){if(!m._id||myState!=="ready")return"";const past=m.kickoff&&D
   return`<button class="mini" data-wishm="${esc(m._id)}" aria-pressed="${isWishM(m._id)}">${isWishM(m._id)?$t("Sparad {0}",[OK]):$t("Vill gå")}</button>`;}
 function logBtn(c){if(myState!=="ready"||!C[c.id])return"";const nM=MY.attended.filter(a=>a.home===c.id||a.away===c.id).length;
   return`<button class="btn small primary" data-logmatch="${esc(c.id)}">${nM?$t("+ Logga match ({0})",[nM]):$t("+ Logga match")}</button>`;}
-function favBtn(c){if(myState!=="ready"||!C[c.id])return"";return`<button class="btn small" data-fav="${esc(c.id)}" aria-pressed="${isFav(c.id)||MY.favNat===c.id}">${isNat(c)?(MY.favNat===c.id?STAR(1)+" Mitt landslag":STAR()+" Mitt landslag"):(isFav(c.id)?STAR(1)+" Favorit":STAR()+" Favorit")}</button>`;}
+function favBtn(c){if(myState!=="ready"||!C[c.id])return"";return`<button class="btn small" data-fav="${esc(c.id)}" aria-pressed="${isFav(c.id)||isFavNat(c.id)}">${isNat(c)?(isFavNat(c.id)?STAR(1)+" Mitt landslag":STAR()+" Mitt landslag"):(isFav(c.id)?STAR(1)+" Favorit":STAR()+" Favorit")}</button>`;}
 function wishBtn(c){if(myState!=="ready"||!C[c.id])return"";return`<button class="btn small" data-wishc="${esc(c.id)}" aria-pressed="${isWishC(c.id)}">${isWishC(c.id)?$t("På önskelistan {0}",[OK]):$t("Vill besöka")}</button>`;}
 function clubMyBtns(c){return logBtn(c)+wishBtn(c)+favBtn(c);}
 let cardMore=null;
-function clubMyPills(c){if(myState!=="ready"||!C[c.id])return"";return(isFav(c.id)?`<span class="pill ec">${STAR(1)} ${$t("Favoritlag")}</span>`:"")+(MY.favNat===c.id?`<span class="pill ec">${STAR(1)} ${$t("Mitt landslag")}</span>`:"")+(isVisited(c.id)?`<span class="pill t1">${$t("Besökt")}</span>`:"")+(isWishC(c.id)?`<span class="pill ec">${$t("Vill besöka")}</span>`:"");}
+function clubMyPills(c){if(myState!=="ready"||!C[c.id])return"";return(isFav(c.id)?`<span class="pill ec">${STAR(1)} ${$t("Favoritlag")}</span>`:"")+(isFavNat(c.id)?`<span class="pill ec">${STAR(1)} ${$t("Mitt landslag")}</span>`:"")+(isVisited(c.id)?`<span class="pill t1">${$t("Besökt")}</span>`:"")+(isWishC(c.id)?`<span class="pill ec">${$t("Vill besöka")}</span>`:"");}
 function delBtn(kind,id,label){const k=kind+":"+id;return`<button class="link" data-mydel="${esc(k)}">${myConfirm[k]?$t("Tryck igen för att ta bort"):label||$t("Ta bort")}</button>`;}
 // alltid "17 okt 2026": tre bokstäver för månaden, utan punkt
 const MON3=L_MO3;
@@ -1747,14 +1749,14 @@ function renderMine(){
   const vm=visitedMap();const countries=new Set([...vm.keys()].map(id=>C[id]&&C[id].c).filter(Boolean));
   MY.attended.forEach(a=>{if(a.country)countries.add(a.country);});
   const teamsN=new Set(MY.attended.flatMap(a=>[a.home||a.homeName,a.away||a.awayName]).filter(Boolean)).size;
-  const tiles=[["home",ic("heart"),$t("Översikt"),""],["been",MY.attended.length,$t("Matcher"),""],["teams",teamsN,$t("Lag"),""],
+  const tiles=[["home",ic("heart"),$t("Favoritlag"),""],["been",MY.attended.length,$t("Matcher"),""],["teams",teamsN,$t("Lag"),""],
     ["arenas",visitedStadiums().size,$t("Arenor"),countries.size?$tn(countries.size,"{n} land","{n} länder"):""],["wish",MY.wishMatches.length+MY.wishClubs.length,$t("Önskelista"),""],["challenges",ic("shield"),$t("Utmaningar"),""]];
   let h=`<nav class="mymenu" aria-label="${$t("Min fotboll")}">${tiles.map(([k,n,l,s])=>`<button class="mtile" data-mysub="${k}" aria-pressed="${mySub===k}"><b>${n}</b><span>${l}</span>${s?`<small>${s}</small>`:""}</button>`).join("")}</nav>
    ${myErr?`<p class="err">${esc(myErr)}</p>`:""}`;
   const visNT=[...vm.entries()].filter(([id])=>C[id]&&isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
   const vis=[...vm.entries()].filter(([id])=>C[id]&&!isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
   if(mySub==="home"){
-    h+=favCards()+natCard();const st=myStatsHtml();h+=st||(MY.attended.length?"":`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><div class="actions"><button class="btn primary" data-mysub="been">${$t("+ Lägg till match")}</button></div>`);
+    h+=favCards()+natCard()+favAddRow();const st=myStatsHtml();h+=st||(MY.attended.length?"":`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><div class="actions"><button class="btn primary" data-mysub="been">${$t("+ Lägg till match")}</button></div>`);
   }else if(mySub==="mod"){
     const r=fixReviewHtml()+feedbackReviewHtml();
     h+=`<div class="sechead"><h3 class="sec">${ic("shield")} ${$t("Moderering")}</h3></div>`+(isMod?(r||`<div class="empty">${$t("Inga nya rättelser eller meddelanden.")}</div>`):`<div class="empty">${$t("Bara moderatorer ser det här.")}</div>`);
@@ -2578,7 +2580,7 @@ function renderSeenTeams(){const all=seenTeams();const nClub=all.filter(t=>!t.na
     <span class="stn"><b>${t.n}</b><span>${t.n===1?$t("match"):$t("matcher")}</span></span></button>
     ${open?`${seenRowsHtml(t.games)}${t.id?`<div class="actions"><button class="btn small" data-open="${esc(t.id)}">${$t("Visa {0}",[t.nat?$t("landslaget"):$t("klubben")])}</button></div>`:""}`:""}</div>`;}).join("")}</div>${limBtns("st",list.length,5)}`;}
 // ---------- favoritlag ----------
-let favOnly=false,favAdd=false,natEdit=false;const favOpen=new Set();
+let favOnly=false,favAdd=false,natEdit=false,natAdd=false;const favOpen=new Set();
 const scoreOf=a=>{const m=/(\d+)\s*[–—-]\s*(\d+)/.exec(a.score||"");return m?[+m[1],+m[2]]:null;};
 function favRecord(f){const games=MY.attended.filter(a=>a.home===f||a.away===f);let w=0,d=0,l=0,n=0;
   games.forEach(a=>{const sc=scoreOf(a);if(!sc)return;n++;const[my,op]=a.home===f?sc:[sc[1],sc[0]];if(my>op)w++;else if(my===op)d++;else l++;});return{games:games.length,n,w,d,l};}
@@ -2592,13 +2594,13 @@ function favSplit(f){const s=favStats(f);const t=r=>r.n?`V ${r.w} · O ${r.d} ·
 // klubbens färger på kortet: den färg som inte är vit/ljus blir huvudfärg
 function favTone(id){const k=COLORS[id];if(!k||!k[0])return"";const lum=h=>{const n=parseInt(String(h).slice(1),16);return isNaN(n)?0:.299*(n>>16)+.587*(n>>8&255)+.114*(n&255);};
   let a=k[0],b=k[1]||k[0];if(lum(a)>215&&lum(b)<=215)[a,b]=[b,a];if(lum(a)>215)a="#8a8f8c";return` tone" style="--fc:${esc(a)};--fc2:${esc(b)}`;}
-function favForm(nat,editing){const id=nat?"natForm":"favForm",inp=nat?"natIn":"favIn";
-  return`<form class="favcard" id="${id}"><div class="lbl">${nat?$t("Mitt landslag"):favList().length?$t("Lägg till favoritlag"):$t("Mina favoritlag")}</div>
+function favForm(nat,editing){const id=nat==="x"?"natXForm":nat?"natForm":"favForm",inp=nat==="x"?"natXIn":nat?"natIn":"favIn";
+  return`<form class="favcard" id="${id}"><div class="lbl">${nat==="x"?$t("Lägg till landslag"):nat?$t("Mitt landslag"):favList().length?$t("Lägg till favoritlag"):$t("Mina favoritlag")}</div>
     <label class="fld" for="${inp}">${nat?$t("Välj ditt landslag"):$t("Välj en klubb")}<input id="${inp}" list="${nat?"allNats":"allClubs"}" maxlength="80" placeholder="${nat?"t.ex. Sverige":$t("t.ex. Jönköpings Södra IF")}"></label>
     ${nat?"":`<p class="hint">${$t("Du kan ha upp till {0} favoritlag. Varje lag får sina klubbfärger här.",[MAXFAV])}</p>`}
-    <div class="actions"><button class="btn small primary" type="submit">${$t("Spara")}</button>${editing?`<button class="btn small" type="button" data-${nat?"natcancel":"favcancel"}="1">${$t("Avbryt")}</button>`:""}</div></form>`;}
+    <div class="actions"><button class="btn small primary" type="submit">${$t("Spara")}</button>${editing?`<button class="btn small" type="button" data-${nat==="x"?"natxcancel":nat?"natcancel":"favcancel"}="1">${$t("Avbryt")}</button>`:""}</div></form>`;}
 function favCard(id,nat){const c=C[id];const r=favRecord(id);const up=dbState==="ready"?upcomingFor(c.id)[0]:null;const open=favOpen.has(id);
-  const top=`<div class="lbl">${STAR(1)} ${nat?$t("Mitt landslag"):$t("Favoritlag")}</div><div class="favtop"><span class="crow">${crest(c.id,c.n,34)}<button class="cname" data-open="${esc(c.id)}">${esc(c.n)}</button></span>${nat?`<button class="link" data-natedit="1">${$t("Byt landslag")}</button>`:`<button class="link" data-favdel="${esc(c.id)}">${$t("Ta bort")}</button>`}</div>`;
+  const top=`<div class="lbl">${STAR(1)} ${nat==="x"?$t("Landslag"):nat?$t("Mitt landslag"):$t("Favoritlag")}</div><div class="favtop"><span class="crow">${crest(c.id,c.n,34)}<button class="cname" data-open="${esc(c.id)}">${esc(c.n)}</button></span>${nat==="x"?`<button class="link" data-natdel="${esc(c.id)}">${$t("Ta bort")}</button>`:nat?`<button class="link" data-natedit="1">${$t("Byt landslag")}</button>`:`<button class="link" data-favdel="${esc(c.id)}">${$t("Ta bort")}</button>`}</div>`;
   const when=up?esc(up.kickoff?dayLabel(dayKey(new Date(up.kickoff)))+" "+timeOf(up.kickoff):"spelas "+rangeTxt(up)):"";
   const tog=`<button class="link more" data-favmore="${esc(id)}" aria-expanded="${open}">${open?$t("Visa mindre"):$t("Visa mer")}</button>`;
   if(!open)return`<div class="favcard mini${favTone(id)}" data-favcard="${esc(id)}">${top}
@@ -2610,17 +2612,22 @@ function favCard(id,nat){const c=C[id];const r=favRecord(id);const up=dbState===
     ${favSplit(id)}<div class="lucky">${lucky}</div>${tog}</div>`;}
 function favCards(){const fl=favList();let h=fl.map(id=>favCard(id,false)).join("");
   if(!fl.length||favAdd)h+=favForm(false,favAdd&&fl.length>0);
-  else if(fl.length<MAXFAV)h+=`<div class="actions"><button class="btn small" data-favadd="1">${$t("+ Lägg till favoritlag")}</button></div>`;
   if(fl.length)h+=`<p class="hint">${$t("V = vinster, O = oavgjorda, F = förluster. Räknas bara på matcher där du fyllt i resultat.")}</p>`;
   return h;}
-function natCard(){return natEdit||!MY.favNat||!C[MY.favNat]?favForm(true,natEdit):favCard(MY.favNat,true);}
+function favAddRow(){const a=favList().length&&favList().length<MAXFAV&&!favAdd,b=MY.favNat&&C[MY.favNat]&&!natEdit&&!natAdd&&natExtra().length<MAXNAT;
+  return a||b?`<div class="actions">${a?`<button class="btn small" data-favadd="1">${$t("+ Lägg till favoritlag")}</button>`:""}${b?`<button class="btn small" data-natadd="1">${$t("+ Lägg till landslag")}</button>`:""}</div>`:"";}
+function natCard(){return(natEdit||!MY.favNat||!C[MY.favNat]?favForm(true,natEdit):favCard(MY.favNat,true))+natExtra().map(id=>favCard(id,"x")).join("")+(natAdd?favForm("x",true):"");}
+document.addEventListener("submit",e=>{if(e.target.id!=="natXForm")return;e.preventDefault();const id=clubIdFromName(document.getElementById("natXIn").value);
+  if(!id||!isNat(C[id])){myErr=$t("Hittade inget landslag med det namnet.");renderMine();return;}
+  if(isFavNat(id)){natAdd=false;renderMine();return;}if(natExtra().length>=MAXNAT){myErr=$t("Du kan ha högst {0} extra landslag.",[MAXNAT]);renderMine();return;}
+  natAdd=false;mutate(d=>{d.favNats=[...natExtra(),id];});});
 document.addEventListener("submit",e=>{if(e.target.id!=="natForm")return;e.preventDefault();const id=clubIdFromName(document.getElementById("natIn").value);
-  if(!id||!isNat(C[id])){myErr=$t("Hittade inget landslag med det namnet.");renderMine();return;}natEdit=false;mutate(d=>{d.favNat=id;});});
+  if(!id||!isNat(C[id])){myErr=$t("Hittade inget landslag med det namnet.");renderMine();return;}natEdit=false;mutate(d=>{d.favNat=id;d.favNats=natExtra().filter(x=>x!==id);});});
 document.addEventListener("submit",e=>{if(e.target.id!=="favForm")return;e.preventDefault();const id=clubIdFromName(document.getElementById("favIn").value);
   if(!id||isNat(C[id])){myErr=$t("Hittade ingen klubb med det namnet i listan.");renderMine();return;}
   if(isFav(id)){favAdd=false;renderMine();return;}if(favList().length>=MAXFAV){myErr=$t("Du kan ha högst {0} favoritlag.",[MAXFAV]);renderMine();return;}
   favAdd=false;mutate(d=>{d.favs=[...favList(),id];});});
-const isFavBtn=t=>t.dataset.favmore||t.dataset.fav||t.dataset.natedit||t.dataset.natcancel||t.dataset.favonly||t.dataset.favadd||t.dataset.favdel||t.dataset.favcancel;
+const isFavBtn=t=>t.dataset.favmore||t.dataset.natadd||t.dataset.natdel||t.dataset.natxcancel||t.dataset.fav||t.dataset.natedit||t.dataset.natcancel||t.dataset.favonly||t.dataset.favadd||t.dataset.favdel||t.dataset.favcancel;
 const favConfirm={};
 function favClick(t){
   if(t.dataset.favmore){const id=t.dataset.favmore;const sel=`[data-favcard="${CSS.escape(id)}"]`;const y0=document.querySelector(sel)?.getBoundingClientRect().top;
@@ -2630,10 +2637,15 @@ function favClick(t){
     document.querySelector(sel+" [data-favmore]")?.focus({preventScroll:true});return;}
   if(t.dataset.fav){const id=t.dataset.fav;if(myState!=="ready"){toast($t("Logga in för att spara favoriter."));return;}const nt=C[id]&&isNat(C[id]);
     if(!nt&&!isFav(id)&&favList().length>=MAXFAV){toast($t("Du kan ha högst {0} favoritlag. Ta bort ett under Min fotboll först.",[MAXFAV]));return;}
-    mutate(d=>{if(nt)d.favNat=d.favNat===id?null:id;else d.favs=isFav(id)?favList().filter(x=>x!==id):[...favList(),id];});
+    if(nt&&!isFavNat(id)&&MY.favNat&&natExtra().length>=MAXNAT){toast($t("Du kan ha högst {0} extra landslag.",[MAXNAT]));return;}
+    mutate(d=>{if(nt){const ex=natExtra();if(d.favNat===id){d.favNat=ex[0]||null;d.favNats=ex.slice(1);}else if(ex.includes(id))d.favNats=ex.filter(x=>x!==id);else if(!d.favNat)d.favNat=id;else d.favNats=[...ex,id];}else d.favs=isFav(id)?favList().filter(x=>x!==id):[...favList(),id];});
     if(!nt)toast(isFav(id)?$t("{0} är nu ett favoritlag",[C[id].n]):$t("{0} är inte längre favoritlag",[C[id].n]));return;}
   if(t.dataset.favdel){const id=t.dataset.favdel;if(!favConfirm[id]){favConfirm[id]=1;t.textContent=$t("Tryck igen för att ta bort");setTimeout(()=>{delete favConfirm[id];},4000);return;}
     delete favConfirm[id];mutate(d=>{d.favs=favList().filter(x=>x!==id);});return;}
+  if(t.dataset.natadd){natAdd=true;renderMine();setTimeout(()=>document.getElementById("natXIn")?.focus(),0);return;}
+  if(t.dataset.natxcancel){natAdd=false;renderMine();return;}
+  if(t.dataset.natdel){const id=t.dataset.natdel;if(!favConfirm[id]){favConfirm[id]=1;t.textContent=$t("Tryck igen för att ta bort");setTimeout(()=>{delete favConfirm[id];},4000);return;}
+    delete favConfirm[id];mutate(d=>{d.favNats=natExtra().filter(x=>x!==id);});return;}
   if(t.dataset.natedit){natEdit=true;renderMine();setTimeout(()=>document.getElementById("natIn")?.focus(),0);return;}
   if(t.dataset.natcancel){natEdit=false;renderMine();return;}
   if(t.dataset.favonly){favOnly=!favOnly;renderMatches();return;}
@@ -3753,7 +3765,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-attphdel]"
 
 // ---------- säkerhetskopia ----------
 async function exportBackup(){const msg=t=>{const e=document.getElementById("csvMsg");if(e)e.textContent=t;};if(!dlNs){msg($t("Det går inte att spara filer i den här vyn."));return;}
-  const body={app:"Groundly",version:1,exported:new Date().toISOString(),attended:MY.attended,wishMatches:MY.wishMatches,wishClubs:MY.wishClubs,favs:MY.favs||[],favNat:MY.favNat||null,derbies:MY.derbies||[]};
+  const body={app:"Groundly",version:1,exported:new Date().toISOString(),attended:MY.attended,wishMatches:MY.wishMatches,wishClubs:MY.wishClubs,favs:MY.favs||[],favNat:MY.favNat||null,favNats:natExtra(),derbies:MY.derbies||[]};
   try{await dlNs.save({filename:`groundly-sakerhetskopia-${today()}.json`,data:JSON.stringify(body,null,1)});msg($t("Säkerhetskopian är sparad. Med Läs in kan du lägga tillbaka matcherna om något försvinner."));}
   catch(e){msg(e&&e.code==="declined"?"":$t("Det gick inte att spara filen här."));}}
 document.addEventListener("change",async e=>{if(e.target.id!=="restoreIn")return;const f=e.target.files&&e.target.files[0];if(!f)return;const msg=t=>{const el=document.getElementById("csvMsg");if(el)el.textContent=t;};
@@ -3787,7 +3799,7 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-priv
   if(t.id==="pvClose"||(t.id==="privacyOv"&&e.target===t)){document.getElementById("privacyOv").remove();return;}
   if(t.id==="pvWipe"){if(!wipeArm){wipeArm=true;t.textContent=$t("Tryck igen för att radera allt");return;}
     const photos=MY.attended.map(a=>a.photo).filter(p=>p&&PHID.test(p));const wasPub=!!MY.pub;
-    mutate(d=>{d.attended=[];d.wishMatches=[];d.wishClubs=[];d.favs=[];d.fav=null;d.favNat=null;d.derbies=[];d.pub=false;d.share=false;d.follows=[];});
+    mutate(d=>{d.attended=[];d.wishMatches=[];d.wishClubs=[];d.favs=[];d.fav=null;d.favNat=null;d.favNats=[];d.derbies=[];d.pub=false;d.share=false;d.follows=[];});
     if(photos.length)dropAssets(photos);if(wasPub&&dbNs&&myId){try{await dbNs.doc("stats/"+myId).delete();}catch(err){}}
     wipeArm=false;const m=document.getElementById("pvMsg");if(m)m.textContent=$t("Din logg och dina inställningar är raderade.");t.textContent=$t("Raderat");t.disabled=true;}});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){const o=document.getElementById("privacyOv");if(o)o.remove();}});
