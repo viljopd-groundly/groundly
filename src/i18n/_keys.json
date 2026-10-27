@@ -1485,6 +1485,7 @@
 "Skriv reportage",
 "Skriv resultatet som till exempel 2–1.",
 "Skriv vad du vill göra.",
+"Skrivet på {0}",
 "Skåne, Sverige",
 "Skånederbyt",
 "Sköld",
@@ -1878,6 +1879,8 @@
 "Östtysk mästare {0}",
 "Över 50 000",
 "Översätt",
+"Översätt med Google Translate",
+"Översättningen görs automatiskt av Google och det är inte säkert att allt blir rätt.",
 "Övriga Europa",
 "Övriga världen",
 "Övrigt"]
