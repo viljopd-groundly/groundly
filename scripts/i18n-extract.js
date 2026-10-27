@@ -24,6 +24,9 @@ for (const m of body.matchAll(/>([^<>]+)</g)) { const k = ent(m[1]).trim(); if (
 for (const m of body.matchAll(/\s(?:placeholder|aria-label|title|alt)="([^"]*)"/g)) { const k = ent(m[1]).trim(); if (/[A-Za-zÅÄÖåäö]{2,}/.test(k)) keys.add(k); }
 // nycklar som bara används dynamiskt (land- och stadsnamn ur datan)
 try { for (const k of JSON.parse(fs.readFileSync(path.join(ROOT, "src", "i18n", "_dyn.json"), "utf8"))) keys.add(k); } catch (e) {}
+// redaktionellt innehåll: derbyn, kultklubbar och speciella arenor
+try { const T = require(path.join(ROOT, "src", "tips.js")); (T.derbies || []).forEach(d => { keys.add(d[1]); keys.add(d[3]); keys.add(d[4]); }); (T.cult || []).forEach(c => keys.add(c[1])); (T.arenas || []).forEach(c => keys.add(c[1])); } catch (e) {}
+try { for (const [, , , note, pubs] of require(path.join(ROOT, "src", "pubseed.js"))) { if (note) keys.add(note); (pubs || []).forEach(p => { if (p[3]) keys.add(p[3]); }); } } catch (e) {}
 const all = [...keys].sort((a, b) => a.localeCompare(b, "sv"));
 fs.writeFileSync(path.join(ROOT, "src", "i18n", "_keys.json"), JSON.stringify(all, null, 0).replace(/","/g, '",\n"'));
 const langs = fs.readdirSync(path.join(ROOT, "src", "i18n")).filter(f => /^[a-z]{2}\.json$/.test(f)).map(f => f.slice(0, 2));
