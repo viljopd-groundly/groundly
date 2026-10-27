@@ -24,6 +24,10 @@
   --bg:#0c1611; --surface:#14231b; --fg:#e6efe9; --muted:#93a89b; --line:#26392e;
   --pitch:#5fcf8a; --pitch-soft:#173a26; --chalk:#1a2c22;
   --flood:#f2c14e; --flood-soft:#3a2f12; --two:#9db5e8; --two-soft:#1c2840; --three:#d3a6ea; --three-soft:#2f1f3a; --bad:#ff8a7a; color-scheme:dark}
+:root[data-theme="dusk"]{
+  --bg:#34453b; --surface:#3f5247; --fg:#eef4f0; --muted:#bccdc1; --line:#55695c;
+  --pitch:#7fdca4; --pitch-soft:#2f5239; --chalk:#475c4f;
+  --flood:#f2c14e; --flood-soft:#46391a; --two:#a8bfee; --two-soft:#28344d; --three:#d9b0ee; --three-soft:#3a2b45; --bad:#ff9a8c; color-scheme:dark}
 :root[data-theme="dim"]{
   --bg:#d3ddd6; --surface:#e6ece8; --fg:#10231a; --muted:#475b4f; --line:#b9c8be;
   --pitch:#1d6b3b; --pitch-soft:#c4e0cd; --chalk:#f7faf7;
@@ -565,6 +569,7 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 :root{--soft:color-mix(in srgb,var(--fg) 6%,transparent);--soft2:color-mix(in srgb,var(--fg) 10%,transparent);--shadow:0 1px 2px rgba(16,35,26,.06),0 3px 10px rgba(16,35,26,.05)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--soft:color-mix(in srgb,var(--fg) 8%,transparent);--soft2:color-mix(in srgb,var(--fg) 13%,transparent);--shadow:none}}
 :root[data-theme="dark"]{--soft:color-mix(in srgb,var(--fg) 8%,transparent);--soft2:color-mix(in srgb,var(--fg) 13%,transparent);--shadow:none}
+:root[data-theme="dusk"]{--soft:color-mix(in srgb,var(--fg) 8%,transparent);--soft2:color-mix(in srgb,var(--fg) 13%,transparent);--shadow:none}
 :root[data-theme="dim"]{--shadow:0 1px 2px rgba(16,35,26,.08)}
 :root[data-style="soft"] .card,:root[data-style="soft"] .match,:root[data-style="soft"] .tip,:root[data-style="soft"] .thread,:root[data-style="soft"] .stats div,:root[data-style="soft"] .mrow,:root[data-style="soft"] .citem,:root[data-style="soft"] .combo,:root[data-style="soft"] .bdg,:root[data-style="soft"] .prog,:root[data-style="soft"] .plan,:root[data-style="soft"] .passpage,:root[data-style="soft"] .teamhead,:root[data-style="soft"] .rep,:root[data-style="soft"] .search,:root[data-style="soft"] .modes{border-color:transparent;box-shadow:var(--shadow)}
 :root[data-style="soft"] .card.sel,:root[data-style="soft"] .thread.open,:root[data-style="soft"] .rep.open,:root[data-style="soft"] .bdg.on,:root[data-style="soft"] .steam.open{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow)}
@@ -603,7 +608,9 @@ footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:
 #favIn,#natIn,.addclub input,#obFavIn,#amHome,#amAway{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231d6b3b' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E")}
 #obHomeIn,#homeIn{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231d6b3b' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z'/%3E%3Ccircle cx='12' cy='9' r='2.5'/%3E%3C/svg%3E")}
 [data-theme="dark"] #favIn,[data-theme="dark"] #natIn,[data-theme="dark"] .addclub input,[data-theme="dark"] #obFavIn,[data-theme="dark"] #amHome,[data-theme="dark"] #amAway{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235fcf8a' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E")}
+[data-theme="dusk"] #favIn,[data-theme="dusk"] #natIn,[data-theme="dusk"] .addclub input,[data-theme="dusk"] #obFavIn,[data-theme="dusk"] #amHome,[data-theme="dusk"] #amAway{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235fcf8a' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E")}
 [data-theme="dark"] #obHomeIn,[data-theme="dark"] #homeIn{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235fcf8a' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z'/%3E%3Ccircle cx='12' cy='9' r='2.5'/%3E%3C/svg%3E")}
+[data-theme="dusk"] #obHomeIn,[data-theme="dusk"] #homeIn{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235fcf8a' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z'/%3E%3Ccircle cx='12' cy='9' r='2.5'/%3E%3C/svg%3E")}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #favIn,:root:not([data-theme="light"]) #natIn,:root:not([data-theme="light"]) .addclub input,:root:not([data-theme="light"]) #obFavIn,:root:not([data-theme="light"]) #amHome,:root:not([data-theme="light"]) #amAway{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235fcf8a' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E")}:root:not([data-theme="light"]) #obHomeIn,:root:not([data-theme="light"]) #homeIn{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235fcf8a' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z'/%3E%3Ccircle cx='12' cy='9' r='2.5'/%3E%3C/svg%3E")}}
 /* tydligare sökrutor */
 :root .search{border:1.5px solid color-mix(in srgb,var(--accent) 60%,var(--line))!important;background:color-mix(in srgb,var(--accent) 6%,var(--surface))!important;box-shadow:0 1px 3px rgba(0,0,0,.06)}
@@ -3810,7 +3817,7 @@ function feedbackReviewHtml(){if(!isMod)return"";const all=[];Object.entries(FEE
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-fbdone]");if(!t||!isMod||!dbNs)return;const done=[...new Set([...fbDone,t.dataset.fbdone])].slice(-1000);fbDone=done;renderMine();try{await dbNs.doc("mod/feedback").set({done});}catch(x){toast($t("Kunde inte spara."));}});
 
 // ---------- tema ----------
-const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dim",$t("Dämpat")],["dark",$t("Mörkt")]];
+const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dim",$t("Dämpat")],["dusk",$t("Halvmörkt")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
 let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 let theme="auto";try{const t=store.get("fk-theme");if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
