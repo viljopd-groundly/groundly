@@ -1267,7 +1267,7 @@ document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[da
 // När ett klick ritar om en lista (gilla, betyg, spara, sortering …) ersätts knappen av en ny kopia. Vi letar upp kopian
 // och scrollar så att den hamnar exakt där den gamla var. Avbryts om man själv scrollar eller byter sida.
 {let A=null;// "Visa fler" ska fälla ut under knappen, inte följa med knappen nedåt
- const SKIP=/^(bn|mode|open|teamview|tbl|near|mview|mysub|tips|editatt|mymore|limmore)$/;
+ const SKIP=/^(bn|mode|open|teamview|tbl|near|mview|mysub|tips|editatt|mymore|limmore|homemore|amore|cmore|arcmore|hopall|mlmore)$/;
  const selFor=el=>{if(el.id)return"#"+CSS.escape(el.id);for(const at of el.attributes){if(at.name.startsWith("data-")&&at.value!==""){const k=at.name.slice(5).replace(/-./g,x=>x[1].toUpperCase());if(SKIP.test(k))return null;return`[${at.name}="${CSS.escape(at.value)}"]`;}}return null;};
  const fix=()=>{if(!A)return;if(mode!==A.mode||Date.now()>A.until){A=null;return;}if(A.el.isConnected)return;
    const n=document.querySelector(A.sel);if(!n){return;}const top=n.getBoundingClientRect().top;const d=top-A.top;if(Math.abs(d)>1)window.scrollBy(0,d);A.el=n;A.top=n.getBoundingClientRect().top;};
@@ -3386,7 +3386,10 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
 // Hem: tre matcher i taget, "Visa fler" fäller ut resten
 const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false,wkOpen:false};
 const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
-document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;homeMore[k]=!homeMore[k];renderHome();});
+// "visa mer" på Hem: fäll ut under, skärmen står still. Fälls något ihop och rutans topp hamnat ovanför skärmen, skrolla till rutans topp.
+document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;const card=t.closest("article");const idx=card?[...card.parentElement.children].indexOf(card):-1;
+  homeMore[k]=!homeMore[k];renderHome();
+  if(!homeMore[k]&&idx>=0){const c=document.getElementById("homeBody")?.children[idx];if(c){const top=c.getBoundingClientRect().top;const tb=document.querySelector(".topbar,header");const off=(tb?tb.offsetHeight:0)+8;if(top<off)window.scrollBy(0,top-off);}}});
 function derbyHtml(){const all=derbyNext();const list=homeMore.derby?all:all.slice(0,3);if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">${$t("Nästa derby")}</div><p class="meta">${$t("Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.")}</p></article>`:"";
   return`<article class="tip"><div class="lbl">${$t("Nästa derby i varje land")}</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc($t(land))}</span></div>
     <div class="mmain"><b>${esc($t(d[1]))}</b><span class="meta">${esc(m.homeName)} – ${esc(m.awayName)} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div></div>`).join("")}</div>${moreBtn("derby",all.length)}</article>`;}
