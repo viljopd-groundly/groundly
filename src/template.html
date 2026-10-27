@@ -199,6 +199,13 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .mini[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--chalk)}
 .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 .btn:disabled[aria-pressed="true"]{opacity:1}
+.mymenu{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mtile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;color:inherit;font:inherit;cursor:pointer}
+.mtile b{font-family:var(--f-mono);font-size:24px;line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums;display:flex;align-items:center;min-height:26px}
+.mtile b .ic{width:22px;height:22px}
+.mtile span{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.mtile small{font-size:11px;color:var(--muted)}
+.mtile[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .stats div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;min-width:0}
 .stats b{display:block;font-family:var(--f-mono);font-size:24px;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.1}
@@ -1666,8 +1673,8 @@ async function forumClick(t){
 })();
 
 // ---------- min fotboll ----------
-let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",myRef=null,myQ=Promise.resolve(),myPending=0,myErr="",mySub="been",addingMatch=false;
-try{const ms=store.get("fk-mysub");if(ms==="wish"||ms==="challenges"||ms==="pass"||ms==="teams")mySub=ms;}catch(e){}
+let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",myRef=null,myQ=Promise.resolve(),myPending=0,myErr="",mySub="home",addingMatch=false;
+let arView="list";try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms))mySub=ms;}catch(e){}
 const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
   wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^u_[A-Za-z0-9_-]{6,40}$/.test(x)).slice(0,200):[]};}
@@ -1739,11 +1746,16 @@ function renderMine(){
   if(myState==="none"){el.innerHTML=`<div class="empty"><b>${$t("Logga in för att spara.")}</b><div>${$t("Dina matcher och klubbar sparas på ditt claude.ai-konto, så du behöver öppna sidan inloggad.")}</div></div>`;return;}
   const vm=visitedMap();const countries=new Set([...vm.keys()].map(id=>C[id]&&C[id].c).filter(Boolean));
   MY.attended.forEach(a=>{if(a.country)countries.add(a.country);});
-  const stats=[[MY.attended.length,$t("matcher")],[visitedStadiums().size,$t("arenor")],[countries.size,$t("länder")],[MY.wishMatches.length+MY.wishClubs.length,$t("på önskelistan")]];
-  let h=favCards()+natCard()+`<div class="stats">${stats.map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>
-   <div class="chips wrapchips" role="group" aria-label="${$t("Visa")}"><button class="chip" data-mysub="been" aria-pressed="${mySub==="been"}">${$t("Varit på")}</button><button class="chip" data-mysub="teams" aria-pressed="${mySub==="teams"}">${$t("Lag jag sett")}</button><button class="chip" data-mysub="wish" aria-pressed="${mySub==="wish"}">${$t("Vill besöka")}</button><button class="chip" data-mysub="challenges" aria-pressed="${mySub==="challenges"}">${$t("Utmaningar")}</button><button class="chip" data-mysub="pass" aria-pressed="${mySub==="pass"}">${$t("Arenapass")}</button></div>
+  const teamsN=new Set(MY.attended.flatMap(a=>[a.home||a.homeName,a.away||a.awayName]).filter(Boolean)).size;
+  const tiles=[["home",ic("heart"),$t("Översikt"),""],["been",MY.attended.length,$t("Matcher"),""],["teams",teamsN,$t("Lag"),""],
+    ["arenas",visitedStadiums().size,$t("Arenor"),countries.size?$tn(countries.size,"{n} land","{n} länder"):""],["wish",MY.wishMatches.length+MY.wishClubs.length,$t("Önskelista"),""],["challenges",ic("shield"),$t("Utmaningar"),""]];
+  let h=`<nav class="mymenu" aria-label="${$t("Min fotboll")}">${tiles.map(([k,n,l,s])=>`<button class="mtile" data-mysub="${k}" aria-pressed="${mySub===k}"><b>${n}</b><span>${l}</span>${s?`<small>${s}</small>`:""}</button>`).join("")}</nav>
    ${myErr?`<p class="err">${esc(myErr)}</p>`:""}`;
-  if(mySub==="been"){
+  const visNT=[...vm.entries()].filter(([id])=>C[id]&&isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
+  const vis=[...vm.entries()].filter(([id])=>C[id]&&!isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
+  if(mySub==="home"){
+    h+=favCards()+natCard();const st=myStatsHtml();h+=st||(MY.attended.length?"":`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><div class="actions"><button class="btn primary" data-mysub="been">${$t("+ Lägg till match")}</button></div>`);
+  }else if(mySub==="been"){
     if(pendingLogg())h+=`<p class="notice">${ic("offline")} ${$t("Du har ändringar som väntar på nät. De skickas automatiskt när kontakten är tillbaka.")} <button class="link strong" data-retrysave="1">${$t("Försök nu")}</button></p>`;
     h+=fixReviewHtml()+feedbackReviewHtml();
     h+=addingMatch?`<form class="compose" id="addMatchForm">
@@ -1769,9 +1781,6 @@ function renderMine(){
     if(myYear!=="all"&&myYear!=="old"&&!yCount[myYear])myYear="all";if(myYear==="old"&&!oldN)myYear="all";
     const att=myYear==="all"?attAll:myYear==="old"?attAll.filter(a=>!yTop.includes((a.date||"").slice(0,4))):attAll.filter(a=>(a.date||"").startsWith(myYear));
     const yearChips=attAll.length?`<div class="chips" role="group" aria-label="${$t("Visa år")}">${[["all",$t("Alla"),attAll.length],...yTop.map(y=>[y,y,yCount[y]]),...(oldN?[["old",$t("Tidigare"),oldN]]:[])].map(([k,l,n])=>`<button class="chip" data-myyear="${k}" aria-pressed="${myYear===k}">${l}<small>${n}</small></button>`).join("")}</div>`:"";
-    if(MY.attended.length){const pins=visitedPins();const reg=mapRegion||autoRegion(pins);
-      h+=`<div class="sechead"><h3 class="sec">${$t("Mina arenor på kartan")}</h3></div><div class="lmap"><div class="chips" role="group" aria-label="${$t("Karta")}">${[["se",$t("Sverige")],["eu",$t("Europa")],["world",$t("Världen")]].map(([k,l])=>`<button class="chip" data-mapr="${k}" aria-pressed="${reg===k}">${l}</button>`).join("")}</div><div id="liveMap" class="lmapbox"><p class="hint">${$t("Laddar kartan…")}</p></div><p class="hint" id="lmapInfo">${$t("Tryck på en nål för att se arenan.")}</p></div>`;}
-    h+=myStatsHtml();
     h+=`<div class="sechead"><h3 class="sec">${$t("Matcher jag varit på")}</h3>${MY.attended.length?`<div class="actions"><button class="btn small" data-exportcsv="1">${ic("download")} ${$t("Excel (CSV)")}</button><button class="btn small" data-backup="1">${ic("download")} ${$t("Säkerhetskopia")}</button><label class="btn small" for="restoreIn">${ic("upload")} ${$t("Läs in")}<input id="restoreIn" type="file" accept=".json,application/json" hidden></label></div>`:`<label class="btn small" for="restoreIn">${ic("upload")} ${$t("Läs in säkerhetskopia")}<input id="restoreIn" type="file" accept=".json,application/json" hidden></label>`}</div><p class="hint" id="csvMsg"></p>`+yearChips;
     const attShow=att.filter((a,i)=>i<MYMORE.att||a.id===editAtt||a.id===shareMatchId);
     h+=att.length?attShow.map(a=>`<div class="mrow">
@@ -1782,13 +1791,18 @@ function renderMine(){
       ${a.photo&&PHID.test(a.photo)?`<button class="attph" data-phview="${esc(a.photo)}" aria-label="${$t("Visa bilden från matchen")}">${phImg(a.photo)}</button>`:""}${attPhUp===a.id?`<p class="hint">${$t("Laddar upp bilden…")}</p>`:""}
       ${editAtt===a.id?editAttForm(a):""}<div class="pactions">${assetsNs?`<label class="link strong" for="attPh-${esc(a.id)}">${ic("image")} ${a.photo?$t("Byt bild"):$t("Lägg till bild")}<input id="attPh-${esc(a.id)}" data-attphoto="${esc(a.id)}" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic" hidden></label>${a.photo?`<button class="link" data-attphdel="${esc(a.id)}">${$t("Ta bort bild")}</button>`:""}`:""}<button class="link" data-editatt="${esc(a.id)}">${editAtt===a.id?$t("Stäng"):a.score?$t("Redigera"):$t("Lägg till resultat")}</button><button class="link strong" data-repfrom="${esc(a.id)}">${$t("Skriv reportage")}</button><button class="link strong" data-sharematch="${esc(a.id)}">${shareMatchId===a.id?$t("Stäng"):$t("Dela matchkort")}</button>${delBtn("att",a.id)}</div>${shareMatchId===a.id?`<div class="studio">${fmtChips()}${studioHtml("match",$t("Matchkort"))}</div>`:""}</div></div>`).join("")+moreBtns("att",att.length)
      :`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><p class="hint">${$t("Så här kan det se ut efter en säsong:")}</p>${exampleHtml()}`;
-    const visNT=[...vm.entries()].filter(([id])=>C[id]&&isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
-    const vis=[...vm.entries()].filter(([id])=>C[id]&&!isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
+  }else if(mySub==="arenas"){
+    h+=`<div class="chips" role="group" aria-label="${$t("Arenor")}"><button class="chip" data-arview="list" aria-pressed="${arView!=="pass"}">${$t("Karta och lista")}</button><button class="chip" data-arview="pass" aria-pressed="${arView==="pass"}">${$t("Arenapass")}</button></div>`;
+    if(arView==="pass")h+=renderPass();else{
+    if(MY.attended.length){const pins=visitedPins();const reg=mapRegion||autoRegion(pins);
+      h+=`<div class="sechead"><h3 class="sec">${$t("Mina arenor på kartan")}</h3></div><div class="lmap"><div class="chips" role="group" aria-label="${$t("Karta")}">${[["se",$t("Sverige")],["eu",$t("Europa")],["world",$t("Världen")]].map(([k,l])=>`<button class="chip" data-mapr="${k}" aria-pressed="${reg===k}">${l}</button>`).join("")}</div><div id="liveMap" class="lmapbox"><p class="hint">${$t("Laddar kartan…")}</p></div><p class="hint" id="lmapInfo">${$t("Tryck på en nål för att se arenan.")}</p></div>`;}
     h+=`<h3 class="sec">${$t("Klubbar och arenor jag besökt")}</h3>`;
     h+=vis.length?`<div class="clist">${vis.filter(([id],i)=>i<MYMORE.vis||id===visOpen).map(([id,d])=>{const c=C[id];const games=MY.attended.filter(x=>x.home===id||x.away===id||(c.s&&x.venue&&arenaKey(x.venue)===arenaKey(c.s)));const open=visOpen===id;return`<div class="citem${open?" open":""}"><div class="mmain"><button class="cname" data-visopen="${esc(id)}" aria-expanded="${open}">${esc(c.n)}</button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}${games.length?` · ${games.length} ${games.length===1?$t("match"):$t("matcher")}`:""}</div>
       ${open?(games.length?seenRowsHtml(games):`<p class="hint">${$t("Inga sparade matcher med {0} än. Klubben är markerad som besökt.",[esc(c.n)])}</p>`)+`<div class="actions"><button class="btn small" data-open="${esc(id)}">${$t("Visa klubben")}</button></div>`:""}${c.s&&ratingsState==="ready"?`<div class="pactions"><button class="link" data-rate="${esc(id)}">${myRating(c)?$t("Ändra arenabetyg"):$t("Betygsätt arenan")}</button></div>`:""}</div>${d.via?"":delBtn("vis",id)}</div>`;}).join("")}</div>${moreBtns("vis",vis.length)}`
      :`<div class="empty">${$t("Klubbar och arenor fylls på automatiskt när du loggar matcher, med rätt datum för varje besök.")}</div>`;
-    h+=`<h3 class="sec">${$t("Landslag jag sett")}</h3>`+(visNT.length?`<div class="clist">${visNT.slice(0,MYMORE.nt).map(([id,d])=>{const c=C[id];return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${crest(id,c.n,22)}${esc(c.n)}${favStar(id)}</button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}${d.date?" · "+esc(fmtDate(d.date)):""}</div><div class="pactions">${d.via?"":delBtn("vis",id)}</div></div></div>`;}).join("")}</div>${moreBtns("nt",visNT.length)}`:`<div class="empty">${$t("Logga en landskamp du sett med")} <b>${$t("+ Logga")}</b>${$t(", så hamnar landslagen här.")}</div>`);
+    }
+  }else if(mySub==="teams"){h+=renderSeenTeams();if(stKind!=="klubb"&&visNT.length)
+  h+=`<h3 class="sec">${$t("Landslag jag sett")}</h3>`+(visNT.length?`<div class="clist">${visNT.slice(0,MYMORE.nt).map(([id,d])=>{const c=C[id];return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${crest(id,c.n,22)}${esc(c.n)}${favStar(id)}</button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}${d.date?" · "+esc(fmtDate(d.date)):""}</div><div class="pactions">${d.via?"":delBtn("vis",id)}</div></div></div>`;}).join("")}</div>${moreBtns("nt",visNT.length)}`:`<div class="empty">${$t("Logga en landskamp du sett med")} <b>${$t("+ Logga")}</b>${$t(", så hamnar landslagen här.")}</div>`);
   }else if(mySub==="wish"){
     const wm=MY.wishMatches.slice().sort((a,b)=>(a.kickoff||a.dateFrom||"").localeCompare(b.kickoff||b.dateFrom||""));const now=Date.now();
     h+=`<h3 class="sec">${$t("Matcher jag vill gå på")}</h3>`;
@@ -1807,7 +1821,7 @@ function renderMine(){
      :`<div class="empty">${$t("Tryck")} <b>${$t("Vill besöka")}</b> ${$t("på ett klubbkort, eller lägg till en klubb här nedanför.")}</div>`;
     h+=`<h3 class="sec">${$t("Landslag jag vill se")}</h3>`+(wn.length?`<div class="clist">${wn.slice(0,lim("wn",3)).map(id=>{const c=C[id];return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${crest(id,c.n,22)}${esc(c.n)}${favStar(id)}</button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}</div><div class="pactions">${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>${limBtns("wn",wn.length,3)}`:`<div class="empty">${$t("Tryck")} <b>${$t("Vill besöka")}</b> ${$t("på ett landslag under fliken Landslag.")}</div>`);
     h+=addClubRow("wishClubAdd",$t("Lägg till på önskelistan"));
-  }else if(mySub==="teams"){h+=renderSeenTeams();}else if(mySub==="pass"){h+=renderPass();}else{h+=renderChallenges();}
+  }else{h+=renderChallenges();}
   el.innerHTML=h;afterMine();}
 function addClubRow(id,label){return`<form class="addclub" data-addclub="${id}"><label class="fld" for="${id}-in">${$t("Lägg till klubb eller landslag")}<input id="${id}-in" list="allClubs" maxlength="80" placeholder="${$t("Sök klubb eller landslag")}"></label><button class="btn small" type="submit">${label}</button></form>`;}
 
@@ -1819,7 +1833,8 @@ function myClick(t){
   if(t.dataset.stkind){stKind=t.dataset.stkind;store.set("fk-stkind",stKind);renderMine();return;}
   if(t.dataset.stsort){stSort=t.dataset.stsort;store.set("fk-stsort",stSort);renderMine();return;}
   if(t.dataset.myyear){myYear=t.dataset.myyear;MYMORE.att=3;renderMine();return;}
-  if(t.dataset.mysub){mySub=t.dataset.mysub;store.set("fk-mysub",mySub);renderMine();return;}
+  if(t.dataset.mysub){const was=mySub;mySub=t.dataset.mysub;store.set("fk-mysub",mySub);renderMine();if(was!==mySub){const m=document.querySelector(".mymenu");const tb=document.querySelector(".topbar");const off=(tb?tb.offsetHeight:0)+8;if(m&&m.getBoundingClientRect().top<off)window.scrollTo({top:Math.max(0,m.getBoundingClientRect().top+scrollY-off)});}return;}
+  if(t.dataset.arview){arView=t.dataset.arview;renderMine();return;}
   if(t.id==="amOpen"){addingMatch=true;fillVenueList();renderMine();setTimeout(()=>document.getElementById("amHome")?.focus(),0);return;}
   if(t.id==="amCancel"){addingMatch=false;renderMine();return;}
   if(t.dataset.wishm){const m=matchById(t.dataset.wishm);if(!m)return;mutate(d=>{d.wishMatches=isWishM(m._id)?d.wishMatches.filter(w=>w.id!==m._id):[...d.wishMatches,slim(m)];});return;}
@@ -1882,7 +1897,7 @@ document.addEventListener("toggle",e=>{if(e.target.classList&&e.target.classList
 const MYMORE={att:3,vis:3,nt:3};
 function moreBtns(k,total){const n=MYMORE[k];if(total<=3)return"";
   return`<div class="morerow">${n<total?`<button class="btn small" data-mymore="${k}">${$t("Visa fler ({0} till)",[total-Math.min(n,total)])}</button>`:""}${n>3?`<button class="btn small" data-myless="${k}">${$t("Visa färre")}</button>`:""}</div>`;}
-const isMyBtn=t=>t.dataset.mymore||t.dataset.myless||t.dataset.stcountry!==undefined||t.dataset.stleague!==undefined||t.dataset.myyear||t.dataset.mysub||t.dataset.stteam||t.dataset.visopen||t.dataset.stkind||t.dataset.stsort||t.id==="amOpen"||t.id==="amCancel"||t.dataset.wishm||t.dataset.attend||t.dataset.wmdone||t.dataset.visit||t.dataset.wishc||t.dataset.mydel;
+const isMyBtn=t=>t.dataset.mymore||t.dataset.myless||t.dataset.stcountry!==undefined||t.dataset.stleague!==undefined||t.dataset.myyear||t.dataset.mysub||t.dataset.arview||t.dataset.stteam||t.dataset.visopen||t.dataset.stkind||t.dataset.stsort||t.id==="amOpen"||t.id==="amCancel"||t.dataset.wishm||t.dataset.attend||t.dataset.wmdone||t.dataset.visit||t.dataset.wishc||t.dataset.mydel;
 document.addEventListener("submit",e=>{
   if(e.target.id==="addMatchForm"){e.preventDefault();const g=id=>document.getElementById(id).value.trim();
     const hn=g("amHome"),an=g("amAway"),date=g("amDate");if(!hn||!an||!date){myErr=$t("Fyll i hemmalag, bortalag och datum.");renderMine();return;}
@@ -2149,7 +2164,7 @@ async function fillScores(){if(fillBusy||fillDone||myState!=="ready"||!Array.isA
   const n=Object.keys(up).length;fillDone=true;if(!n)return;
   mutate(d=>{d.attended.forEach(a=>{if(!a.score&&up[a.id])a.score=up[a.id];});});toast($t("{0} {1} fylldes i automatiskt i din logg",[n,n===1?$t("resultat"):$t("resultat|pl")]),"check");}
 setTimeout(function tryFill(){if(myState==="ready"&&(FX_PAST||!FX_NEXT))fillScores();else setTimeout(tryFill,4000);},6000);
-function afterMine(){if(mySub==="been")drawLiveMap();if(mySub==="pass"){drawPass();}else if(mySub==="challenges"){drawMap();drawSeason();}else if(mySub==="been"&&shareMatchId){const a=MY.attended.find(z=>z.id===shareMatchId);if(a)drawMatch(a);}}
+function afterMine(){if(mySub==="arenas"&&arView!=="pass")drawLiveMap();if(mySub==="arenas"&&arView==="pass"){drawPass();}else if(mySub==="challenges"){drawMap();drawSeason();}else if(mySub==="been"&&shareMatchId){const a=MY.attended.find(z=>z.id===shareMatchId);if(a)drawMatch(a);}}
 
 // ---------- klick för de nya funktionerna ----------
 const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.tripfor||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard||t.dataset.sharecard;
@@ -2552,7 +2567,7 @@ function renderSeenTeams(){const all=seenTeams();const nClub=all.filter(t=>!t.na
   list.sort(stSort==="az"?(a,b)=>a.name.localeCompare(b.name,LANG):stSort==="last"?(a,b)=>b.last.localeCompare(a.last)||b.n-a.n:(a,b)=>b.n-a.n||b.last.localeCompare(a.last)||a.name.localeCompare(b.name,LANG));
   let h=`<div class="chips" role="group" aria-label="${$t("Typ av lag")}"${nNat&&nClub?"":" hidden"}>${[["alla",`${$t("Alla")} <small>${all.length}</small>`],["klubb",`${$t("Klubblag")} <small>${nClub}</small>`],["landslag",`${$t("Landslag")} <small>${nNat}</small>`]].map(([k,l])=>`<button class="chip" data-stkind="${k}" aria-pressed="${stKind===k}">${l}</button>`).join("")}</div>
     <div class="selrow">${filt}${sfilt}</div>${lfilt?`<div class="selrow">${lfilt}</div>`:""}`;
-  if(!all.length)return h+`<div class="empty">${$t("Här samlas alla lag du sett, både hemma- och bortalag. Lägg till matcher under")} <b>${$t("Varit på")}</b> ${$t("så fylls listan på.")}</div>`;
+  if(!all.length)return h+`<div class="empty">${$t("Här samlas alla lag du sett, både hemma- och bortalag. Lägg till matcher under")} <b>${$t("Matcher")}</b> ${$t("så fylls listan på.")}</div>`;
   if(!list.length)return h+`<div class="empty">${stKind==="landslag"?$t("Du har inte sparat någon landskamp än."):$t("Inga klubblag sparade än.")}</div>`;
   return h+`<p class="hint">${$t("{0} lag · tryck på ett lag för att se matcherna",[list.length])}</p><div class="clist">${list.filter((t,i)=>i<lim("st",5)||t.k===stOpen).map(t=>{const open=stOpen===t.k;return`<div class="citem steam${open?" open":""}"><button class="sthead" data-stteam="${esc(t.k)}" aria-expanded="${open}"><span class="crow">${t.id?crest(t.id,t.name,32):`<span class="crest" style="--c1:var(--bg);--c2:var(--line);width:32px;height:32px;font-size:11px;color:var(--muted)">${esc(crestInitials(t.name))}</span>`}<span class="mmain">
     <b class="stname">${esc(t.name)}${t.id?favStar(t.id):""}</b>
