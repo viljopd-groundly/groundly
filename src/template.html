@@ -2584,10 +2584,10 @@ function favCard(id,nat){const c=C[id];const r=favRecord(id);const up=dbState===
   const top=`<div class="lbl">${STAR(1)} ${nat?$t("Mitt landslag"):$t("Favoritlag")}</div><div class="favtop"><span class="crow">${crest(c.id,c.n,34)}<button class="cname" data-open="${esc(c.id)}">${esc(c.n)}</button></span>${nat?`<button class="link" data-natedit="1">${$t("Byt landslag")}</button>`:`<button class="link" data-favdel="${esc(c.id)}">${$t("Ta bort")}</button>`}</div>`;
   const when=up?esc(up.kickoff?dayLabel(dayKey(new Date(up.kickoff)))+" "+timeOf(up.kickoff):"spelas "+rangeTxt(up)):"";
   const tog=`<button class="link more" data-favmore="${esc(id)}" aria-expanded="${open}">${open?$t("Visa mindre"):$t("Visa mer")}</button>`;
-  if(!open)return`<div class="favcard mini${favTone(id)}">${top}
+  if(!open)return`<div class="favcard mini${favTone(id)}" data-favcard="${esc(id)}">${top}
     <div class="favsum">${up?`<span><b>${$t("Nästa match:")}</b> ${when} · ${esc(up.homeName)} – ${esc(up.awayName)}</span>`:""}<span class="meta">${$tn(r.games,"{n} sedd match","{n} sedda matcher")}${r.n?` · V ${r.w} · O ${r.d} · F ${r.l}`:""}</span></div>${tog}</div>`;
   const lucky=r.n?$t("När du är på plats har {0} vunnit {1} % av matcherna ({2} {3}, {4} {5}, {6} {7}).",[esc(c.n),Math.round(r.w/r.n*100),r.w,r.w===1?$t("vinst"):$t("vinster"),r.d,r.d===1?$t("oavgjord"):$t("oavgjorda"),r.l,r.l===1?$t("förlust"):$t("förluster")]):r.games?$t("Lägg till resultat på dina matcher så räknar appen ut om du är en lyckobringare."):$t("Spara matcher du sett med laget så räknar appen ut om du är en lyckobringare.");
-  return`<div class="favcard${favTone(id)}">${top}
+  return`<div class="favcard${favTone(id)}" data-favcard="${esc(id)}">${top}
     <div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}${c.l?" · "+esc(c.l):""}</div>
     <div>${up?`<b>${$t("Nästa match:")}</b> ${when} · ${esc(up.homeName)} – ${esc(up.awayName)} <span class="mp">${myBtns(up)}${hotelLink(up)}${tripLink(up)}${calLink(up)}</span>`:`<span class="meta">${$t("Ingen match i det inlagda schemat just nu.")}</span>`}</div>
     ${favSplit(id)}<div class="lucky">${lucky}</div>${tog}</div>`;}
@@ -2606,7 +2606,11 @@ document.addEventListener("submit",e=>{if(e.target.id!=="favForm")return;e.preve
 const isFavBtn=t=>t.dataset.favmore||t.dataset.fav||t.dataset.natedit||t.dataset.natcancel||t.dataset.favonly||t.dataset.favadd||t.dataset.favdel||t.dataset.favcancel;
 const favConfirm={};
 function favClick(t){
-  if(t.dataset.favmore){const id=t.dataset.favmore;favOpen.has(id)?favOpen.delete(id):favOpen.add(id);renderMine();return;}
+  if(t.dataset.favmore){const id=t.dataset.favmore;const sel=`[data-favcard="${CSS.escape(id)}"]`;const y0=document.querySelector(sel)?.getBoundingClientRect().top;
+    favOpen.has(id)?favOpen.delete(id):favOpen.add(id);renderMine();
+    // kortet står kvar där det var och fälls ut nedåt
+    const pin=()=>{const c=document.querySelector(sel);if(c&&y0!=null){const d=c.getBoundingClientRect().top-y0;if(Math.abs(d)>1)window.scrollBy(0,d);}};pin();requestAnimationFrame(pin);
+    document.querySelector(sel+" [data-favmore]")?.focus({preventScroll:true});return;}
   if(t.dataset.fav){const id=t.dataset.fav;if(myState!=="ready"){toast($t("Logga in för att spara favoriter."));return;}const nt=C[id]&&isNat(C[id]);
     if(!nt&&!isFav(id)&&favList().length>=MAXFAV){toast($t("Du kan ha högst {0} favoritlag. Ta bort ett under Min fotboll först.",[MAXFAV]));return;}
     mutate(d=>{if(nt)d.favNat=d.favNat===id?null:id;else d.favs=isFav(id)?favList().filter(x=>x!==id):[...favList(),id];});
