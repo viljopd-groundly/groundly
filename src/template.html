@@ -1634,7 +1634,7 @@ let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",my
 try{const ms=store.get("fk-mysub");if(ms==="wish"||ms==="challenges"||ms==="pass"||ms==="teams")mySub=ms;}catch(e){}
 const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
-  wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^u_[A-Za-z0-9_-]{6,40}$/.test(x)).slice(0,200):[]};}
+  wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^u_[A-Za-z0-9_-]{6,40}$/.test(x)).slice(0,200):[]};}
 const MAXFAV=6;
 const favList=()=>myState==="ready"&&MY&&Array.isArray(MY.favs)?MY.favs.filter(id=>C[id]):[];
 const isFav=id=>favList().includes(id);
@@ -1864,7 +1864,9 @@ async function startMine(db,uid){
   try{myRef=db.doc("data/users/"+uid+"/logg");}catch(e){myState="none";return;}
   myRef.onSnapshot(s=>{if(myPending>0)return;const server=s.exists?s.data():{};const pend=pendingLogg();
     // nytt konto (ingen logg sparad än): syns i topplistor och för vänner från start, går att välja bort
-    if(!s.exists&&!pend&&!myNewDone&&navigator.onLine!==false&&!(s.metadata&&s.metadata.fromCache)){myNewDone=true;setTimeout(()=>{try{mutate(d=>{if(d.pub===undefined||d.pub===false)d.pub=true;if(d.share===undefined||d.share===false)d.share=true;});setTimeout(()=>{try{syncStats();syncPublic();}catch(e){}},300);}catch(e){}},400);}
+    // alla konton syns i topplistor och för vänner från start (en gång per konto, flaggan vis2); går att välja bort efteråt
+    const fresh=!s.exists&&!pend;const data=s.exists?s.data():null;
+    if(!myNewDone&&navigator.onLine!==false&&!(s.metadata&&s.metadata.fromCache)&&(fresh||(data&&data.vis2!==true&&!pend))){myNewDone=true;setTimeout(()=>{try{const was=MY.pub&&MY.share;mutate(d=>{d.pub=true;d.share=true;d.vis2=true;});if(!fresh&&!was)toast($t("Du syns nu i topplistorna och för vänner. Du kan välja bort det under Min fotboll."));}catch(e){}},400);}
     if(pend&&(!server||!server.savedAt||String(pend.savedAt)>String(server.savedAt))){MY=normMy(pend);setTimeout(retryPending,500);}else{MY=normMy(server);if(pend)store.del(PENDING_KEY);}myState="ready";render();setTimeout(()=>{try{syncStats();}catch(e){}},800);},
     ()=>{myState="none";render();});}
 
