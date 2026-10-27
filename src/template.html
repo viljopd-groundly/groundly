@@ -3292,7 +3292,7 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   el.innerHTML=ob+remindHtml()+activityHtml()+homeOrder().filter(k=>homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
 // ---------- startsidan: vilka rutor som visas och i vilken ordning ----------
 // standard = kort startsida; resten slås på under Anpassa startsidan. Valen sparas på kontot (homeCfg) och i telefonen.
-const HOME_BLOCKS=[["hero","Veckans match",true],["mine","Din säsong",true],["weekend","Tips för helgen",true],["latest","Från communityn",true],["news","Nytt i appen",true],
+const HOME_BLOCKS=[["hero","Veckans match",true],["mine","Din säsong",true],["weekend","Tips för helgen",true],["latest","Från communityn",true],["news","Nytt i appen",false],
   ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["board","Topplistor",false],["hopper","Månadens groundhopper",false],["toparena","Månadens arena",false],["quiz","Quizledare",false],["invite","Tipsa en kompis",false]];
 const HOME_FN={hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
 function normHomeCfg(c){const keys=HOME_BLOCKS.map(x=>x[0]);if(!c||typeof c!=="object")return null;const order=Array.isArray(c.order)?c.order.filter((k,i,a)=>keys.includes(k)&&a.indexOf(k)===i):[];
