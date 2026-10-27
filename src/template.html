@@ -297,6 +297,9 @@ a.link{color:var(--muted)}
 .favtop .cname{font-family:var(--f-display);font-size:20px}
 .favcard.tone{border-color:var(--line);background:linear-gradient(90deg,var(--fc) 0 6px,var(--fc2) 6px 9px,transparent 9px),color-mix(in srgb,var(--fc) 7%,var(--surface));padding-left:22px}
 .favcard .crow{gap:10px}
+.favcard.mini{gap:4px;padding-top:10px;padding-bottom:8px}
+.favcard.mini .favtop .cname{font-size:18px}
+.favsum{display:flex;flex-direction:column;gap:2px;font-size:14px}
 .ic{width:1.1em;height:1.1em;vertical-align:-.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;overflow:visible}
 .ic.on{fill:currentColor}
 #fkToast .ic{margin-right:6px}
@@ -2558,7 +2561,7 @@ function renderSeenTeams(){const all=seenTeams();const nClub=all.filter(t=>!t.na
     <span class="stn"><b>${t.n}</b><span>${t.n===1?$t("match"):$t("matcher")}</span></span></button>
     ${open?`${seenRowsHtml(t.games)}${t.id?`<div class="actions"><button class="btn small" data-open="${esc(t.id)}">${$t("Visa {0}",[t.nat?$t("landslaget"):$t("klubben")])}</button></div>`:""}`:""}</div>`;}).join("")}</div>${limBtns("st",list.length,5)}`;}
 // ---------- favoritlag ----------
-let favOnly=false,favAdd=false,natEdit=false;
+let favOnly=false,favAdd=false,natEdit=false;const favOpen=new Set();
 const scoreOf=a=>{const m=/(\d+)\s*[–—-]\s*(\d+)/.exec(a.score||"");return m?[+m[1],+m[2]]:null;};
 function favRecord(f){const games=MY.attended.filter(a=>a.home===f||a.away===f);let w=0,d=0,l=0,n=0;
   games.forEach(a=>{const sc=scoreOf(a);if(!sc)return;n++;const[my,op]=a.home===f?sc:[sc[1],sc[0]];if(my>op)w++;else if(my===op)d++;else l++;});return{games:games.length,n,w,d,l};}
@@ -2577,12 +2580,17 @@ function favForm(nat,editing){const id=nat?"natForm":"favForm",inp=nat?"natIn":"
     <label class="fld" for="${inp}">${nat?$t("Välj ditt landslag"):$t("Välj en klubb")}<input id="${inp}" list="${nat?"allNats":"allClubs"}" maxlength="80" placeholder="${nat?"t.ex. Sverige":$t("t.ex. Jönköpings Södra IF")}"></label>
     ${nat?"":`<p class="hint">${$t("Du kan ha upp till {0} favoritlag. Varje lag får sina klubbfärger här.",[MAXFAV])}</p>`}
     <div class="actions"><button class="btn small primary" type="submit">${$t("Spara")}</button>${editing?`<button class="btn small" type="button" data-${nat?"natcancel":"favcancel"}="1">${$t("Avbryt")}</button>`:""}</div></form>`;}
-function favCard(id,nat){const c=C[id];const r=favRecord(id);const up=dbState==="ready"?upcomingFor(c.id)[0]:null;
+function favCard(id,nat){const c=C[id];const r=favRecord(id);const up=dbState==="ready"?upcomingFor(c.id)[0]:null;const open=favOpen.has(id);
+  const top=`<div class="lbl">${STAR(1)} ${nat?$t("Mitt landslag"):$t("Favoritlag")}</div><div class="favtop"><span class="crow">${crest(c.id,c.n,34)}<button class="cname" data-open="${esc(c.id)}">${esc(c.n)}</button></span>${nat?`<button class="link" data-natedit="1">${$t("Byt landslag")}</button>`:`<button class="link" data-favdel="${esc(c.id)}">${$t("Ta bort")}</button>`}</div>`;
+  const when=up?esc(up.kickoff?dayLabel(dayKey(new Date(up.kickoff)))+" "+timeOf(up.kickoff):"spelas "+rangeTxt(up)):"";
+  const tog=`<button class="link more" data-favmore="${esc(id)}" aria-expanded="${open}">${open?$t("Visa mindre"):$t("Visa mer")}</button>`;
+  if(!open)return`<div class="favcard mini${favTone(id)}">${top}
+    <div class="favsum">${up?`<span><b>${$t("Nästa match:")}</b> ${when} · ${esc(up.homeName)} – ${esc(up.awayName)}</span>`:""}<span class="meta">${$tn(r.games,"{n} sedd match","{n} sedda matcher")}${r.n?` · V ${r.w} · O ${r.d} · F ${r.l}`:""}</span></div>${tog}</div>`;
   const lucky=r.n?$t("När du är på plats har {0} vunnit {1} % av matcherna ({2} {3}, {4} {5}, {6} {7}).",[esc(c.n),Math.round(r.w/r.n*100),r.w,r.w===1?$t("vinst"):$t("vinster"),r.d,r.d===1?$t("oavgjord"):$t("oavgjorda"),r.l,r.l===1?$t("förlust"):$t("förluster")]):r.games?$t("Lägg till resultat på dina matcher så räknar appen ut om du är en lyckobringare."):$t("Spara matcher du sett med laget så räknar appen ut om du är en lyckobringare.");
-  return`<div class="favcard${favTone(id)}"><div class="lbl">${STAR(1)} ${nat?$t("Mitt landslag"):$t("Favoritlag")}</div><div class="favtop"><span class="crow">${crest(c.id,c.n,34)}<button class="cname" data-open="${esc(c.id)}">${esc(c.n)}</button></span>${nat?`<button class="link" data-natedit="1">${$t("Byt landslag")}</button>`:`<button class="link" data-favdel="${esc(c.id)}">${$t("Ta bort")}</button>`}</div>
+  return`<div class="favcard${favTone(id)}">${top}
     <div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}${c.l?" · "+esc(c.l):""}</div>
-    <div>${up?`<b>${$t("Nästa match:")}</b> ${esc(up.kickoff?dayLabel(dayKey(new Date(up.kickoff)))+" "+timeOf(up.kickoff):"spelas "+rangeTxt(up))} · ${esc(up.homeName)} – ${esc(up.awayName)} <span class="mp">${myBtns(up)}${hotelLink(up)}${tripLink(up)}${calLink(up)}</span>`:`<span class="meta">${$t("Ingen match i det inlagda schemat just nu.")}</span>`}</div>
-    ${favSplit(id)}<div class="lucky">${lucky}</div></div>`;}
+    <div>${up?`<b>${$t("Nästa match:")}</b> ${when} · ${esc(up.homeName)} – ${esc(up.awayName)} <span class="mp">${myBtns(up)}${hotelLink(up)}${tripLink(up)}${calLink(up)}</span>`:`<span class="meta">${$t("Ingen match i det inlagda schemat just nu.")}</span>`}</div>
+    ${favSplit(id)}<div class="lucky">${lucky}</div>${tog}</div>`;}
 function favCards(){const fl=favList();let h=fl.map(id=>favCard(id,false)).join("");
   if(!fl.length||favAdd)h+=favForm(false,favAdd&&fl.length>0);
   else if(fl.length<MAXFAV)h+=`<div class="actions"><button class="btn small" data-favadd="1">${$t("+ Lägg till favoritlag")}</button></div>`;
@@ -2595,9 +2603,10 @@ document.addEventListener("submit",e=>{if(e.target.id!=="favForm")return;e.preve
   if(!id||isNat(C[id])){myErr=$t("Hittade ingen klubb med det namnet i listan.");renderMine();return;}
   if(isFav(id)){favAdd=false;renderMine();return;}if(favList().length>=MAXFAV){myErr=$t("Du kan ha högst {0} favoritlag.",[MAXFAV]);renderMine();return;}
   favAdd=false;mutate(d=>{d.favs=[...favList(),id];});});
-const isFavBtn=t=>t.dataset.fav||t.dataset.natedit||t.dataset.natcancel||t.dataset.favonly||t.dataset.favadd||t.dataset.favdel||t.dataset.favcancel;
+const isFavBtn=t=>t.dataset.favmore||t.dataset.fav||t.dataset.natedit||t.dataset.natcancel||t.dataset.favonly||t.dataset.favadd||t.dataset.favdel||t.dataset.favcancel;
 const favConfirm={};
 function favClick(t){
+  if(t.dataset.favmore){const id=t.dataset.favmore;favOpen.has(id)?favOpen.delete(id):favOpen.add(id);renderMine();return;}
   if(t.dataset.fav){const id=t.dataset.fav;if(myState!=="ready"){toast($t("Logga in för att spara favoriter."));return;}const nt=C[id]&&isNat(C[id]);
     if(!nt&&!isFav(id)&&favList().length>=MAXFAV){toast($t("Du kan ha högst {0} favoritlag. Ta bort ett under Min fotboll först.",[MAXFAV]));return;}
     mutate(d=>{if(nt)d.favNat=d.favNat===id?null:id;else d.favs=isFav(id)?favList().filter(x=>x!==id):[...favList(),id];});
