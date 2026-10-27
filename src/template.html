@@ -1956,7 +1956,7 @@ function renderTopRated(){if(ratingsState==="loading")return`<div class="empty">
   const rows=[...map.values()].map(x=>({...x,a:arenaAgg(x.s)})).filter(x=>x.a.n>0).sort((p,q)=>(q.a.total??-1)-(p.a.total??-1)||q.a.n-p.a.n);
   if(!rows.length)return`<div class="empty"><b>${$t("Inga arenor har betyg än.")}</b><div>${$t("Markera en klubb du besökt och tryck")} <b>${$t("Betygsätt arenan")}</b> ${$t("på klubbkortet. Där kan du också rapportera tillgänglighet.")}</div></div>`;
   return rows.map((x,i)=>{const s=ratingSummary(x.a);return`<article class="tip"><div class="tip-head"><h2 class="name">${x.a.total!=null?i+1+". ":""}${esc(x.s)}</h2><span class="meta">${$t("{0}, {1} · {2} betyg",[esc($t(x.city)),esc($t(x.country)),x.a.n])}</span></div>
-    <div class="teams">${x.clubs.map(c=>`<button data-open="${esc(c.id)}">${crest(c.id,c.n,24)}${esc(c.n)}${favStar(c.id)}</button>`).join('<span class="vs">·</span>')}</div>${s.bars}${s.acc?`<div class="accs">${s.acc}</div>`:""}</article>`;}).join("");}
+    <div class="teams">${x.clubs.map(c=>`<button data-open="${esc(c.id)}">${crest(c.id,c.n,24)}${esc(c.n)}${favStar(c.id)}</button>`).join('<span class="vs">·</span>')}</div>${s.bars}${accDet(arenaKey(x.s),s.acc)}</article>`;}).join("");}
 
 // ---------- dubbelmatcher ----------
 let matchView="list";try{const mv=store.get("fk-mview");if((mv==="plan"&&AI_ON)||mv==="team")matchView=mv;}catch(e){}
@@ -2854,14 +2854,16 @@ function arenaList(){const toks=norm(aq)?norm(aq).split(" "):[];
   list.sort(aSort==="az"?az:aSort==="rate"?(p,q)=>(q.a.total??-1)-(p.a.total??-1)||q.a.n-p.a.n||(q.cap||0)-(p.cap||0):(p,q)=>(q.cap||0)-(p.cap||0)||az(p,q));
   return list;}
 function nextTxt(m){return m.kickoff?`${dayLong(dayKey(new Date(m.kickoff)))} kl ${timeOf(m.kickoff)}`:rangeTxt(m);}
-const ACC_OPEN=new Set();document.addEventListener("toggle",e=>{const d=e.target;if(d.classList&&d.classList.contains("accdet")){if(d.open)ACC_OPEN.add(d.dataset.acck);else ACC_OPEN.delete(d.dataset.acck);}},true);
+const ACC_OPEN=new Set();
+// tillgänglighet som går att fälla ut (Arenor och Tips → Bäst betyg)
+const accDet=(k,acc)=>acc?`<details class="accdet" data-acck="${esc(k)}"${ACC_OPEN.has(k)?" open":""}><summary>${ic("check")} ${$t("Tillgänglighet")} <span class="meta">${(acc.match(/class="acc /g)||[]).length} ${$t("uppgifter från besökare")}</span></summary><div class="accs">${acc}</div></details>`:"";document.addEventListener("toggle",e=>{const d=e.target;if(d.classList&&d.classList.contains("accdet")){if(d.open)ACC_OPEN.add(d.dataset.acck);else ACC_OPEN.delete(d.dataset.acck);}},true);
 function arenaCard(x){const s=ratingSummary(x.a);const up=arenaUpcoming(x);const c0=x.clubs[0];const pubs=pubList(c0).length;
   const shared=x.clubs.length>1;
   return`<article class="tip arena"><div class="tip-head"><h2 class="name">${esc(x.s)}</h2><span class="meta">${esc($t(x.city))}, ${esc($t(x.c))}</span></div>
    <div class="apills">${x.cap?`<span class="pill">${$t("{0} platser",[fmtCap(x.cap)])}</span>`:`<span class="pill">${$t("Kapacitet saknas")}</span>`}${(()=>{const sf=surfaceOf(x.clubs[0]);return sf?`<span class="pill">${esc(SURF_LBL[sf.v])}</span>`:"";})()}${shared?`<span class="pill ec">${$t("Delas av {0} klubbar",[x.clubs.length])}</span>`:""}${arenaVisited(x)?`<span class="pill t1">${$t("Besökt {0}",[OK])}</span>`:""}${x.a.n?`<span class="pill">${x.a.total!=null?STAR(1)+" "+dec(x.a.total)+" · ":""}${$t("{0} betyg",[x.a.n])}</span>`:""}</div>
    <div class="teams">${x.clubs.map(c=>`<button data-open="${esc(c.id)}">${crest(c.id,c.n,24)}${esc(c.n)}${favStar(c.id)}</button>`).join('<span class="vs">·</span>')}</div>
    ${up.length?`<div class="anext"><b>${$t("Nästa match:")}</b> ${esc(up[0].homeName)} – ${esc(up[0].awayName)}, ${esc(nextTxt(up[0]))}${up.length>1?` <span class="meta">${$t("(+{0} till i schemat)",[up.length-1])}</span>`:""}</div>`:""}
-   ${s.bars}${s.acc?`<details class="accdet" data-acck="${esc(x.k)}"${ACC_OPEN.has(x.k)?" open":""}><summary>${ic("check")} ${$t("Tillgänglighet")} <span class="meta">${(s.acc.match(/class="acc /g)||[]).length} ${$t("uppgifter från besökare")}</span></summary><div class="accs">${s.acc}</div></details>`:""}
+   ${s.bars}${accDet(x.k,s.acc)}
    <div class="actions"><button class="btn small" data-open="${esc(c0.id)}">${shared?$t("Visa arenafakta"):$t("Visa klubb och arenafakta")}</button><button class="btn small" data-tripfor="${esc(c0.id)}" aria-expanded="${tripOpen===c0.id}">${$t("Ta dig till arenan")}</button>${extLink(bookingUrl(x.s,x.city,up[0]?matchDate(up[0]):null),adLabel($t("Hotell")),"btn small")}${pubs?`<button class="btn small" data-open="${esc(c0.id)}">${$t("{0} pubtips",[pubs])}</button>`:""}</div>${tripOpen===c0.id?tripPanel(C[c0.id]):""}
   </article>`;}
 function renderArenas(){
