@@ -3302,7 +3302,7 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
   return`<article class="tip howto"><h2 class="name">${$t("Så funkar Groundly")}</h2>
-    <div class="itiles">${tile('data-gomode="matcher"',"calendar",$t("Planera & boka"),$t("Matcher, biljetter, hotell och resa"))}${tile('data-gomine="1"',"check",$t("Logga"),$t("Matcherna du sett och dina arenor"))}${tile('data-gomode="forum"',"chat",$t("Community"),$t("Fråga och tipsa andra i forumet"))}</div></article>`;}
+    <div class="itiles">${tile('data-gomode="matcher"',"calendar",$t("Planera & boka"),$t("Hitta matcher och boka biljett, hotell och resa via våra länkar"))}${tile('data-gomine="1"',"check",$t("Logga"),$t("Matcherna du sett och dina arenor"))}${tile('data-gomode="forum"',"chat",$t("Community"),$t("Fråga och tipsa andra i forumet"))}</div></article>`;}
 // ---------- startsidan: vilka rutor som visas och i vilken ordning ----------
 // standard = kort startsida; resten slås på under Anpassa startsidan. Valen sparas på kontot (homeCfg) och i telefonen.
 const HOME_BLOCKS=[["intro","Så funkar Groundly",true],["hero","Veckans match",true],["latest","Från communityn",true],["mine","Din säsong",true],["weekend","Tips för helgen",true],["news","Nytt i appen",false],
