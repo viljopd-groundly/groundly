@@ -994,7 +994,7 @@ const TAGLINES={sv:"Planera, boka & logga dina fotbollsresor",en:"Plan, book & l
 const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Reportage"),forum:$t("Forum"),mine:$t("Min fotboll")};
 let navPop=false,pendingJump=null,jumpFrom=null,topNav=false;
 // menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
-function goTop(m){topNav=true;try{setMode(m);}finally{topNav=false;}}
+function goTop(m){if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";arView="list";}topNav=true;try{setMode(m);}finally{topNav=false;}}
 function syncBack(){let b=document.getElementById("backPill");
   if(!b){document.body.insertAdjacentHTML("beforeend",`<button id="backPill" class="backpill" hidden></button>`);b=document.getElementById("backPill");b.onclick=()=>{if(clubStack.length){if(history.state&&history.state.cjump)history.back();else clubBack();return;}if(history.state&&history.state.jump)history.back();else if(jumpFrom)setMode(jumpFrom);};}
   const top=clubStack.length?clubStack[clubStack.length-1]:null;const on=!!top||!!(jumpFrom&&jumpFrom!==mode);b.hidden=!on;
@@ -1032,7 +1032,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMor
   if(b.id==="moreBack"){closeMore();return;}
   if(b.id==="bnMore"){const sh=document.getElementById("moreSheet");const open=sh.hidden;sh.hidden=!open;b.setAttribute("aria-expanded",String(open));return;}
   if(b.id==="bnLog"){closeMore();if(myState!=="ready"){goTop("mine");return;}openLogMatch(null,null);return;}
-  closeMore();if(b.dataset.bn!==mode)goTop(b.dataset.bn);window.scrollTo({top:0});},true);
+  closeMore();if(b.dataset.bn!==mode||b.dataset.bn==="mine")goTop(b.dataset.bn);window.scrollTo({top:0});},true);
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMore();});
 
 // ---------- clubs ----------
