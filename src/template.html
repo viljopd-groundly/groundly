@@ -3790,7 +3790,7 @@ const invUrl=src=>APP_URL+"?utm_source="+src+"&utm_medium=tipsa";
 function invText(){let t=$t("Kolla in Groundly – en app för att hitta matcher, planera fotbollsresor och logga arenorna man varit på.");
   try{if(myState==="ready"&&MY.attended.length){const n=passStamps().length;if(n>1)t=$t("Jag loggar mina fotbollsresor i Groundly – {0} arenor hittills! Hitta matcher, planera resor och samla dina egna arenor.",[n]);}}catch(e){}
   return t;}
-const INV_CH=[["fb","Facebook"],["wa","WhatsApp"],["sms","SMS"],["mail","E-post"],["x","X"],["copy",$t("Kopiera länk")]];
+const INV_CH=[["fb","Facebook"],["wa","WhatsApp"],["mail","E-post"],["x","X"],["copy",$t("Kopiera länk")]];
 // Med telefonens/datorns Dela-meny räcker Dela, SMS (bara mobil) och Kopiera länk.
 // Saknas Dela-menyn (t.ex. vissa datorwebbläsare) visas Facebook, WhatsApp, e-post och X i stället.
 const isPhone=()=>/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1);
