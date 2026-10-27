@@ -3890,11 +3890,21 @@ const ACCENTS=[["green",$t("Grön"),null],["orange",$t("Orange"),["#b4510b","#fb
   ["teal",$t("Petrol"),["#0b6e7a","#d2edf0","#5ccfdc","#143b40"]],["purple",$t("Lila"),["#6d3fa0","#ebe0f6","#c9a4f6","#2f2342"]],["red",$t("Röd"),["#a8261f","#f7dcd9","#ff8f85","#45201d"]]];
 let accent="green";try{const t=store.get("fk-accent");if(ACCENTS.some(x=>x[0]===t))accent=t;}catch(e){}
 const darkMq=window.matchMedia?matchMedia("(prefers-color-scheme: dark)"):null;
+// tonad bakgrund: lägets egna gråtoner får accentfärgens kulör men behåller ljushet och mättnad
+const TINT_V=["--bg","--surface","--fg","--muted","--line","--chalk"],ACC_HUE={orange:28,blue:214,teal:188,purple:272,red:6};
+let accTint=true;try{if(store.get("fk-acctint")==="0")accTint=false;}catch(e){}
+function hueShift(hex,h){const m=/^#([0-9a-f]{6})$/i.exec(hex);if(!m)return null;const n=parseInt(m[1],16),R=(n>>16&255)/255,G=(n>>8&255)/255,B=(n&255)/255;
+  const mx=Math.max(R,G,B),mn=Math.min(R,G,B),l=(mx+mn)/2,d=mx-mn,s=d?d/(1-Math.abs(2*l-1)):0;
+  const f=k=>{const kk=(k+h/30)%12,a=s*Math.min(l,1-l);return Math.round(255*(l-a*Math.max(-1,Math.min(kk-3,9-kk,1))));};
+  return"#"+[f(0),f(8),f(4)].map(x=>x.toString(16).padStart(2,"0")).join("");}
 function applyAccent(){const r=document.documentElement;const a=ACCENTS.find(x=>x[0]===accent);
-  if(!a||!a[2]){r.style.removeProperty("--accent");r.style.removeProperty("--accent-soft");r.removeAttribute("data-accent");return;}
+  [...TINT_V,"--accent","--accent-soft"].forEach(v=>r.style.removeProperty(v));
+  if(!a||!a[2]){r.removeAttribute("data-accent");return;}
   const dark=theme==="dark"||theme==="dusk"||(theme==="auto"&&darkMq&&darkMq.matches);
-  r.setAttribute("data-accent",accent);r.style.setProperty("--accent",dark?a[2][2]:a[2][0]);r.style.setProperty("--accent-soft",dark?a[2][3]:a[2][1]);}
+  r.setAttribute("data-accent",accent);r.style.setProperty("--accent",dark?a[2][2]:a[2][0]);r.style.setProperty("--accent-soft",dark?a[2][3]:a[2][1]);
+  if(accTint){const cs=getComputedStyle(r);TINT_V.forEach(v=>{const c=hueShift(cs.getPropertyValue(v).trim(),ACC_HUE[accent]);if(c)r.style.setProperty(v,c);});}}
 if(darkMq&&darkMq.addEventListener)darkMq.addEventListener("change",()=>applyAccent());
+document.addEventListener("change",e=>{if(e.target.id==="accTint"){accTint=e.target.checked;store.set("fk-acctint",accTint?"1":"0");applyAccent();}});
 let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 let theme="auto";try{const t=store.get("fk-theme");if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
 function applyTheme(){const r=document.documentElement;if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);applyAccent();
@@ -3949,6 +3959,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${sec($t("Utseende"),`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Accentfärg")}</div><div class="chips wrapchips">${ACCENTS.map(([k,l,c])=>`<button class="chip" data-accent-pick="${k}" aria-pressed="${accent===k}"><span class="swatch" style="background:${c?c[0]:"#1d6b3b"}" aria-hidden="true"></span>${l}</button>`).join("")}</div>
+     ${accent!=="green"?`<label class="setsw"><input type="checkbox" id="accTint"${accTint?" checked":""}><span><b>${$t("Tona bakgrunden i samma färg")}</b></span></label>`:""}
      <p class="hint">${$t("Ändrar färgen på knappar, länkar och markeringar.")}</p>`)}
    ${sec($t("Notiser"),NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")+`<p class="hint">${$t("Notiserna visas i appen. Appen skickar inga push-notiser till telefonen.")}</p>`)}
    ${sec($t("Hemort"),`<form class="homeform" id="setHome"><label class="fld" for="setHomeIn">${$t("Används för helgtips, avstånd och resor")}<input id="setHomeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button></form>`)}
