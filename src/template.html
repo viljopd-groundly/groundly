@@ -2180,7 +2180,7 @@ function afterMine(){if(mySub==="arenas"&&arView!=="pass")drawLiveMap();if(mySub
 // ---------- klick för de nya funktionerna ----------
 const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.tripfor||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard||t.dataset.sharecard;
 // hoppa direkt till det öppnade klubbkortet (sökrutan ovanför behöver inte synas)
-function scrollToCard(){const go=()=>{const el=document.querySelector('section[id^="v-"]:not([hidden]) .card.sel');if(!el){window.scrollTo({top:0});return;}
+function scrollToCard(sub){const go=()=>{const card=document.querySelector('section[id^="v-"]:not([hidden]) .card.sel');if(!card){window.scrollTo({top:0});return;}const el=(sub&&card.querySelector(sub))||card;
   const tb=document.querySelector(".topbar");const off=(tb?tb.getBoundingClientRect().height:0)+8;window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+window.scrollY-off)});};
   go();requestAnimationFrame(()=>{go();setTimeout(go,120);});}
 function openClubCard(id){if(!C[id])return;qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;}
@@ -2292,7 +2292,7 @@ function pubFormHtml(c){const f=pubForm||{crowd:""};
 function prepBlock(c){if(!c.s)return"";const pubs=pubList(c);const seed=SEEDMAP.get(arenaKey(c.s));const canTip=!!myId&&pubsState==="ready";
   return`<div class="prep" data-noclose="1"><h3>${$t("Inför matchen")}</h3>
    <div class="actions">${extLink(bookingUrl(c.s,c.city),adLabel($t("Hotell nära arenan")),"btn small")}${extLink(mapsSearch($t("pub nära {0}, {1}",[c.s,c.city])),$t("Pubar på kartan"),"btn small")}<button class="btn small" data-tripfor="${esc(c.id)}" aria-expanded="${tripOpen===c.id}">${$t("Ta dig till arenan")}</button></div>${tripOpen===c.id?tripPanel(c):""}
-   <h4>${$t("Pubtips före match")}</h4>
+   <h4 class="pubhd">${$t("Pubtips före match")}</h4>
    ${seed&&seed.note?`<p class="notice">${esc($t(seed.note))}</p>`:""}
    ${pubs.length?`<div class="pubs">${pubs.slice(0,lim("pub:"+c.id,5)).map(pubItem).join("")}</div>${limBtns("pub:"+c.id,pubs.length,5)}`:`<p class="meta">${$t("Inga pubtips än. Vet du var man tar en öl före match här?")}</p>`}
    ${seed?`<p class="hint">${$t("Redaktionens tips bygger på")} ${extLink(seed.url,esc(seed.src),"")}${$t(". Kontrollera öppettider och regler för bortafans inför besöket.")}</p>`:""}
@@ -2303,7 +2303,7 @@ function writePubs(mut){if(!pubsNs||!myId)return;const cur=JSON.parse(JSON.strin
   mut(cur);PUBS={...PUBS,[myId]:cur};pubMsg="";pubPending++;render();
   pubQ=pubQ.then(()=>pubsNs.doc("pubs/"+myId).set(cur)).catch(e=>{pubMsg=e&&e.code==="invalid_argument"?$t("Du har inte behörighet att spara tips på den här sidan."):$t("Kunde inte spara. Försök igen.");render();}).finally(()=>{pubPending--;});}
 function startPubs(db){pubsNs=db;if(!db){pubsState="none";return;}
-  db.collection("pubs").onSnapshot(s=>{if(pubPending>0)return;const o={};s.docs.forEach(d=>{o[d.id]=d.data();});PUBS=o;pubsState="ready";if(mode==="klubbar")render();},()=>{pubsState="none";});}
+  db.collection("pubs").onSnapshot(s=>{if(pubPending>0)return;const o={};s.docs.forEach(d=>{o[d.id]=d.data();});PUBS=o;pubsState="ready";if(mode==="klubbar"||mode==="landslag")render();},()=>{pubsState="none";});}
 const isPubBtn=t=>t.dataset.pubadd||t.dataset.pubcancel||t.dataset.pubcrowd!==undefined||t.dataset.pubvote||t.dataset.pubdel||t.dataset.pubhide;
 const confirmPub={};
 async function pubClick(t){
@@ -2939,7 +2939,7 @@ function arenaCard(x){const s=ratingSummary(x.a);const up=arenaUpcoming(x);const
    <div class="teams">${x.clubs.map(c=>`<button data-open="${esc(c.id)}">${crest(c.id,c.n,24)}${esc(c.n)}${favStar(c.id)}</button>`).join('<span class="vs">·</span>')}</div>
    ${up.length?`<div class="anext"><b>${$t("Nästa match:")}</b> ${esc(up[0].homeName)} – ${esc(up[0].awayName)}, ${esc(nextTxt(up[0]))}${up.length>1?` <span class="meta">${$t("(+{0} till i schemat)",[up.length-1])}</span>`:""}</div>`:""}
    ${s.bars}${accDet(x.k,s.acc)}
-   <div class="actions"><button class="btn small" data-open="${esc(c0.id)}">${shared?$t("Visa arenafakta"):$t("Visa klubb och arenafakta")}</button><button class="btn small" data-tripfor="${esc(c0.id)}" aria-expanded="${tripOpen===c0.id}">${$t("Ta dig till arenan")}</button>${extLink(bookingUrl(x.s,x.city,up[0]?matchDate(up[0]):null),adLabel($t("Hotell")),"btn small")}${pubs?`<button class="btn small" data-open="${esc(c0.id)}">${$t("{0} pubtips",[pubs])}</button>`:""}</div>${tripOpen===c0.id?tripPanel(C[c0.id]):""}
+   <div class="actions"><button class="btn small" data-open="${esc(c0.id)}">${shared?$t("Visa arenafakta"):$t("Visa klubb och arenafakta")}</button><button class="btn small" data-tripfor="${esc(c0.id)}" aria-expanded="${tripOpen===c0.id}">${$t("Ta dig till arenan")}</button>${extLink(bookingUrl(x.s,x.city,up[0]?matchDate(up[0]):null),adLabel($t("Hotell")),"btn small")}${pubs?`<button class="btn small" data-open="${esc(c0.id)}" data-topub="1">${$t("{0} pubtips",[pubs])}</button>`:""}</div>${tripOpen===c0.id?tripPanel(C[c0.id]):""}
   </article>`;}
 function renderArenas(){
   if(!COUNTRIES.some(([k])=>k===aCountry))aCountry="alla";
@@ -3032,7 +3032,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.mkind){mKind=t.dataset.mkind;store.set("fk-mkind",mKind);renderMatches();return;}
   if(t.dataset.gender){gender=t.dataset.gender;store.set("fk-gender",gender);render();return;}
   if(t.dataset.tier){const k=t.dataset.tier;if(k==="all")tiers.clear();else if(tiers.has(k))tiers.delete(k);else tiers.add(k);renderMatches();return;}
-  if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;const same=(isNat(C[id])?"landslag":"klubbar")===mode;if(same&&openClub&&openClub!==id){clubJump();}else pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");scrollToCard();return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");scrollToCard();return;}
+  if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;const same=(isNat(C[id])?"landslag":"klubbar")===mode;if(same&&openClub&&openClub!==id){clubJump();}else pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");scrollToCard();return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");scrollToCard(t.dataset.topub?".pubhd":null);return;}
   if(t.dataset.club){openClub=openClub===t.dataset.club?null:t.dataset.club;renderClubs();}});
 document.addEventListener("change",e=>{const id=e.target.id;
   if(id==="dFrom"&&e.target.value){dFrom=e.target.value;if(dTo<dFrom)dTo=dFrom;renderMatches();}
