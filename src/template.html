@@ -163,8 +163,6 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .mrow:has(#editAttForm),.mrow:has(.seasonimg){grid-template-columns:1fr}.mrow:has(#editAttForm)>.mmain,.mrow:has(.seasonimg)>.mmain{min-width:0}
 .cmore[hidden]{display:none!important}
 .lflag{display:inline-flex;vertical-align:-1px;margin-right:5px;width:16px;height:11px;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.12)}.lflag img,.lflag svg{width:100%;height:100%;object-fit:cover;display:block}.lflag span{font:700 8px/11px var(--f-mono);background:var(--line);width:100%;text-align:center}
-.trlink{display:inline-block;margin:4px 0 2px;font-size:13px}
-.trbox{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin:10px 0 4px}.trbox small{color:var(--muted);font-size:12px}
 .reprow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}.reprow>.ftop{flex:0 0 auto;max-width:100%}.reprow>.ftop>.btn{height:100%;white-space:nowrap}.reprow>.ftop:has(form),.reprow>.ftop:has(.place){flex:1 1 100%}.reprow>.search{flex:1 1 0;min-width:120px}.reprow>.search input{min-width:0;width:100%}.reprow>.search[hidden]{display:none}
 .compose{align-self:stretch;background:var(--surface);border:2px solid var(--accent);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:12px}
 .compose h2{font-family:var(--f-display);font-weight:600;font-size:19px;margin:0}
@@ -845,10 +843,6 @@ function $t(s,v){if(typeof s!=="string")return s==null?s:String(s);let r=I18N[s]
 const $tn=(n,one,many,v)=>$t(n===1?one:many,Object.assign({n},v||{}));
 // text ur datan med siffror (t.ex. meriter "13 ligatitlar (senast 2004)"): siffrorna blir {0}, {1} … i nyckeln
 function $tp(x){if(LANG==="sv"||typeof x!=="string")return x;const nums=[];const k=x.replace(/\d+/g,m=>{nums.push(m);return`{${nums.length-1}}`;});return I18N[k]!=null&&I18N[k]!==""?$t(k,nums):(I18N[x]||x);}
-// text som användare skrivit översätts inte av appen. Reportage har en knapp till Google Translate (alltid), forum och kommentarer en länk på andra språk än svenska
-function trLink(txt,big){if(!txt)return"";const u="https://translate.google.com/?sl=auto&tl="+(LANG==="nb"?"no":LANG)+"&op=translate&text="+encodeURIComponent(String(txt).slice(0,4500));
-  if(big)return`<div class="trbox"><a class="btn small" href="${u}" target="_blank" rel="noopener">${ic("globe")} ${$t("Översätt med Google Translate")}</a><small>${$t("Översättningen görs automatiskt av Google och det är inte säkert att allt blir rätt.")}</small></div>`;
-  if(LANG==="sv")return"";return`<a class="link trlink" href="${u}" target="_blank" rel="noopener">${$t("Översätt")}</a>`;}
 // liten flagga vid namnet som visar vilket språk texten skrevs på (äldre texter utan språk är svenska)
 const LFLAG={sv:"nt-se",nb:"nt-no",da:"nt-dk",fi:"nt-fi",is:"nt-is"};let _ln=null;
 const GBSVG='<svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="gbc"><path d="M0 0v30h60V0z"/></clipPath><g clip-path="url(#gbc)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>';
@@ -1556,7 +1550,7 @@ const who=uid=>uid===myId?$t("Du"):(NAMES[uid]||$t("Medlem"));
 function postHtml(p,isReply){const mine=p.uid===myId;const c=p.club&&C[p.club];
   return`<div class="post${isReply?" reply":""}">
     <div class="by"><b>${langFlag(p.lang)}${esc(who(p.uid))}</b><span>${esc(ago(p.at))}</span></div>
-    <div class="body">${esc(p.body)}</div>${trLink((p.title?p.title+"\n\n":"")+p.body)}
+    <div class="body">${esc(p.body)}</div>
     ${c?`<div><button class="btn small" data-open="${esc(c.id)}">${esc(c.n)}</button></div>`:""}
     ${mine||isMod?`<div class="pactions">${mine?`<button class="link" data-delpost="${esc(p.id)}">${$t("Ta bort")}</button>`:""}${isMod&&!mine?`<button class="link" data-hide="${esc(p.key)}">${$t("Dölj")}</button>`:""}</div>`:""}
   </div>`;}
@@ -3101,7 +3095,7 @@ function renderReports(namesOnly){
       ${open?`<div class="rbody">
         ${r.photos.length?`<div class="phgrid big">${r.photos.map((id,i)=>`<button class="phbtn" data-phview="${esc(id)}" aria-label="${$t("Visa bild {0} i större storlek",[i+1])}">${phImg(id)}</button>`).join("")}</div>`:""}
         ${matchBox(r)}
-        <div class="body">${esc(r.body)}</div>${trLink(r.title+"\n\n"+r.body+(r.tip?"\n\n"+r.tip:""),true)}
+        <div class="body">${esc(r.body)}</div>
         ${r.tip?`<div class="rtip"><b>${$t("Bästa tipset")}</b>${esc(r.tip)}</div>`:""}
         <div class="actions">${canWriteRep()?`<button class="btn small" data-replike="${esc(r.key)}" aria-pressed="${iLike(r.key)}">${likeInner(r.key)}</button>`:n?`<span class="meta">${ic("heart")} ${n}</span>`:""}
           ${c?`<button class="btn small" data-open="${esc(c.id)}">${$t("Visa {0}",[esc(c.n)])}</button>`:""}
@@ -3510,7 +3504,7 @@ function tipFeedback(type,id,club){const key=type+":"+id;const notes=tnState==="
   const cnt=notes.length;
   let h=`<div class="tipfb"><div class="actions">${mine}${tnState==="ready"?`<button class="btn small" data-tnopen="${esc(key)}" aria-expanded="${open}">${ic("chat")} ${cnt?`${cnt} ${cnt===1?$t("kommentar"):$t("kommentarer")}`:$t("Kommentera")}</button>`:""}</div>`;
   if(open){
-    h+=`<div class="tnlist">${notes.length?notes.map(n=>`<div class="tnrow"><div class="by"><b>${langFlag(n.lang)}${esc(who(n.uid))}</b><span>${esc(ago(n.at))}</span></div><div class="body">${esc(n.text)}</div>${trLink(n.text)}
+    h+=`<div class="tnlist">${notes.length?notes.map(n=>`<div class="tnrow"><div class="by"><b>${langFlag(n.lang)}${esc(who(n.uid))}</b><span>${esc(ago(n.at))}</span></div><div class="body">${esc(n.text)}</div>
       ${n.uid===myId||isMod?`<div class="pactions">${n.uid===myId?`<button class="link" data-tndel="${esc(n.id)}">${$t("Ta bort")}</button>`:""}${isMod&&n.uid!==myId?`<button class="link" data-tnhide="${esc(n.nkey)}">${$t("Dölj")}</button>`:""}</div>`:""}</div>`).join(""):`<p class="hint">${$t("Inga kommentarer än. Har du varit här? Dela ett kort tips.")}</p>`}</div>`;
     if(dbNs&&myId)h+=`<form class="tnform" data-tnkey="${esc(key)}"><label class="fld" for="tn-${esc(key)}">${$t("Din kommentar")}<textarea id="tn-${esc(key)}" data-tnd="${esc(key)}" rows="2" maxlength="280" required placeholder="${$t("t.ex. Stå på kortsidan, bäst stämning")}">${esc(tnDraft[key]||"")}</textarea></label>
       ${tnMsg?`<p class="err">${esc(tnMsg)}</p>`:""}<div class="actions"><button class="btn small primary" type="submit"${tnBusy?" disabled":""}>${$t("Skicka")}</button></div></form>`;
