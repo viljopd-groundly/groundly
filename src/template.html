@@ -1754,7 +1754,7 @@ function renderMine(){
   MY.attended.forEach(a=>{if(a.country)countries.add(a.country);});
   const teamsN=new Set(MY.attended.flatMap(a=>[a.home||a.homeName,a.away||a.awayName]).filter(Boolean)).size;
   const tiles=[["home",ic("heart"),$t("Favoritlag"),""],["been",MY.attended.length,$t("Matcher"),""],["teams",teamsN,$t("Lag"),""],
-    ["arenas",visitedStadiums().size,$t("Arenor"),countries.size?$tn(countries.size,"{n} land","{n} länder"):""],["wish",MY.wishMatches.length+MY.wishClubs.length,$t("Önskelista"),""],["challenges",ic("shield"),$t("Utmaningar"),""]];
+    ["arenas",visitedStadiums().size,$t("Arenor"),""],["wish",MY.wishMatches.length+MY.wishClubs.length,$t("Önskelista"),""],["challenges",ic("shield"),$t("Utmaningar"),""]];
   let h=`<nav class="mymenu" aria-label="${$t("Min fotboll")}">${tiles.map(([k,n,l,s])=>`<button class="mtile" data-mysub="${k}" aria-pressed="${mySub===k}"><b>${n}</b><span>${l}</span>${s?`<small>${s}</small>`:""}</button>`).join("")}</nav>
    ${myErr?`<p class="err">${esc(myErr)}</p>`:""}`;
   const visNT=[...vm.entries()].filter(([id])=>C[id]&&isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
