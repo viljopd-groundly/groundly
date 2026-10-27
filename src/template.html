@@ -166,6 +166,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 /* när en sparad match redigeras eller delas får rutan hela bredden (datumrutan hamnar ovanför) */
 .mrow:has(#editAttForm),.mrow:has(.seasonimg){grid-template-columns:1fr}.mrow:has(#editAttForm)>.mmain,.mrow:has(.seasonimg)>.mmain{min-width:0}
 .cmore[hidden]{display:none!important}
+.swatch{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
 .itiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}.itile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:12px 10px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}.itile .ic{width:20px;height:20px;color:var(--accent)}.itile b{font-size:14px}.itile small{font-size:12px;color:var(--muted);line-height:1.3}.itile:focus-visible{outline:2px solid var(--accent)}
 .homecust{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0 18px}
 .hclist{display:flex;flex-direction:column;gap:6px;margin:8px 0}.hcrow{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--line);border-radius:12px;padding:6px 8px 6px 10px;background:var(--surface)}
@@ -3884,9 +3885,19 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-fbdo
 // ---------- tema ----------
 const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dim",$t("Dämpat")],["dusk",$t("Halvmörkt")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
+// accentfärg: knappar, länkar, rubriker och markeringar. [ljust, ljus bakgrund, mörkt, mörk bakgrund]
+const ACCENTS=[["green",$t("Grön"),null],["orange",$t("Orange"),["#b4510b","#fbe3cf","#ffa057","#43291a"]],["blue",$t("Blå"),["#1f5fa8","#dbe7f7","#86b6ff","#1b2d48"]],
+  ["teal",$t("Petrol"),["#0b6e7a","#d2edf0","#5ccfdc","#143b40"]],["purple",$t("Lila"),["#6d3fa0","#ebe0f6","#c9a4f6","#2f2342"]],["red",$t("Röd"),["#a8261f","#f7dcd9","#ff8f85","#45201d"]]];
+let accent="green";try{const t=store.get("fk-accent");if(ACCENTS.some(x=>x[0]===t))accent=t;}catch(e){}
+const darkMq=window.matchMedia?matchMedia("(prefers-color-scheme: dark)"):null;
+function applyAccent(){const r=document.documentElement;const a=ACCENTS.find(x=>x[0]===accent);
+  if(!a||!a[2]){r.style.removeProperty("--accent");r.style.removeProperty("--accent-soft");r.removeAttribute("data-accent");return;}
+  const dark=theme==="dark"||theme==="dusk"||(theme==="auto"&&darkMq&&darkMq.matches);
+  r.setAttribute("data-accent",accent);r.style.setProperty("--accent",dark?a[2][2]:a[2][0]);r.style.setProperty("--accent-soft",dark?a[2][3]:a[2][1]);}
+if(darkMq&&darkMq.addEventListener)darkMq.addEventListener("change",()=>applyAccent());
 let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 let theme="auto";try{const t=store.get("fk-theme");if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
-function applyTheme(){const r=document.documentElement;if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);
+function applyTheme(){const r=document.documentElement;if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);applyAccent();
   const row=document.getElementById("themeRow");r.setAttribute("data-style",uiStyle);
   if(row)row.innerHTML=`<span class="tlbl">${$t("Färg")}</span>`+THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")+`<span class="tlbl">${$t("Stil")}</span>`+STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("");}
 applyTheme();
@@ -3936,7 +3947,9 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${sec($t("Logga"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
    ${sec($t("Utseende"),`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>
-     <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>`)}
+     <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>
+     <div class="lbl">${$t("Accentfärg")}</div><div class="chips wrapchips">${ACCENTS.map(([k,l,c])=>`<button class="chip" data-accent-pick="${k}" aria-pressed="${accent===k}"><span class="swatch" style="background:${c?c[0]:"#1d6b3b"}" aria-hidden="true"></span>${l}</button>`).join("")}</div>
+     <p class="hint">${$t("Ändrar färgen på knappar, länkar och markeringar.")}</p>`)}
    ${sec($t("Notiser"),NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")+`<p class="hint">${$t("Notiserna visas i appen. Appen skickar inga push-notiser till telefonen.")}</p>`)}
    ${sec($t("Hemort"),`<form class="homeform" id="setHome"><label class="fld" for="setHomeIn">${$t("Används för helgtips, avstånd och resor")}<input id="setHomeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button></form>`)}
    ${sec($t("Tipsa en kompis"),inviteBody())}
@@ -3945,7 +3958,8 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
   </div></div>`;}
 function openSettings(){setOpen=true;let ov=document.getElementById("setOv");const y=ov?ov.querySelector(".setbox").scrollTop:0;if(ov)ov.remove();document.body.insertAdjacentHTML("beforeend",settingsHtml());ov=document.getElementById("setOv");ov.querySelector(".setbox").scrollTop=y;}
 function closeSettings(){setOpen=false;document.getElementById("setOv")?.remove();}
-document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick]");if(!b)return;
+document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-accent-pick]");if(!b)return;
+  if(b.dataset.accentPick){accent=b.dataset.accentPick;store.set("fk-accent",accent);applyAccent();if(setOpen)openSettings();return;}
   if(b.id==="themeBtn"){openSettings();return;}
   if(b.id==="setClose"||(b.id==="setOv"&&e.target===b)){closeSettings();return;}
   if(b.id==="setOv")return;
