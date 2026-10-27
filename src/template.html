@@ -3261,9 +3261,10 @@ function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==
   return`<article class="tip hero"><div class="lbl">${$t("Veckans match")}</div>
     <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,40)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,40)}${esc(m.awayName)}${favStar(m.away)}</button></div>
     <div class="cd">${$t("{0} kl {1} ·",[esc(dayLabel(dayKey(new Date(m.kickoff)))),timeOf(m.kickoff)])} <b>${countdown(m.kickoff)}</b></div>
-    <div class="venue">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}</div><p>${why}</p>
+    <div class="venue">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}</div>
+    <button class="link more" data-homemore="hero" aria-expanded="${!!homeMore.hero}">${homeMore.hero?$t("Mindre om matchen"):$t("Mer om matchen")}</button>${homeMore.hero?`<p>${why}</p>
     <div class="actions">${tixMini(m,"btn small primary")}${hypeBtn(m)}${myBtns(m).replace(/class="mini"/g,'class="btn small"')}${hotelLink(m,"btn small")}${tripLink(m).replace('class="mini"','class="btn small"')}</div>
-    ${more.length?`<button class="link more" data-homemore="hot" aria-expanded="${!!homeMore.hot}">${homeMore.hot?$t("Dölj fler heta matcher"):$t("Fler heta matcher ({0})",[more.length])}</button>${homeMore.hot?`<div class="hmore">${more.map(x=>`<div class="hrow mrow"${mrowAttr(x)}><span class="num">${esc(dayLabel(dayKey(new Date(x.kickoff))))} ${timeOf(x.kickoff)}</span><span>${esc(x.homeName)} – ${esc(x.awayName)}${derbyOf(x)?` <span class="pill ec">${$t("Derby")}</span>`:""}${wPill(x)}</span></div>`).join("")}</div>`:""}`:""}</article>`;}
+    ${more.length?`<button class="link more" data-homemore="hot" aria-expanded="${!!homeMore.hot}">${homeMore.hot?$t("Dölj fler heta matcher"):$t("Fler heta matcher ({0})",[more.length])}</button>${homeMore.hot?`<div class="hmore">${more.map(x=>`<div class="hrow mrow"${mrowAttr(x)}><span class="num">${esc(dayLabel(dayKey(new Date(x.kickoff))))} ${timeOf(x.kickoff)}</span><span>${esc(x.homeName)} – ${esc(x.awayName)}${derbyOf(x)?` <span class="pill ec">${$t("Derby")}</span>`:""}${wPill(x)}</span></div>`).join("")}</div>`:""}`:""}`:""}</article>`;}
 function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl=favList();
   const nx=dbState==="ready"&&fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
   return`<article class="tip"><div class="sechead"><h2 class="name">${$t("Din säsong {0}",[YEAR])}</h2><button class="link strong" data-gomine="1">${$t("Min fotboll")}</button></div>
@@ -3383,7 +3384,7 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   if(dd<=0){if(!m.kickoff)return"i dag";const h=Math.max(0,Math.ceil((Date.parse(m.kickoff)-Date.now())/36e5));return h<=0?$t("pågår"):$t("{0} tim",[h]);}
   return`${dd} ${dd===1?$t("dag"):$t("dagar")}`;}
 // Hem: tre matcher i taget, "Visa fler" fäller ut resten
-const homeMore={wk:false,derby:false,news:false,hot:false,board:false};
+const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false,wkOpen:false};
 const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
 document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;homeMore[k]=!homeMore[k];renderHome();});
 function derbyHtml(){const all=derbyNext();const list=homeMore.derby?all:all.slice(0,3);if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">${$t("Nästa derby")}</div><p class="meta">${$t("Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.")}</p></article>`:"";
@@ -3402,10 +3403,13 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i
   const nowW=Date.now()-2*36e5;const list=MATCHES.filter(m=>m.kickoff?(mTs(m)>nowW&&koDay(m.kickoff)>=from&&koDay(m.kickoff)<=to):(m.dateFrom<=to&&m.dateTo>=from)).map(m=>{const ll=GEO[m.city];return{m,km:ll?roadKm(p.ll,ll):null};}).filter(x=>x.km!==null).sort((a,b)=>a.km-b.km);
   const near=list.filter(x=>x.km<=wkRadius*10);const pool=(near.length?near:list.slice(0,3)).slice(0,12);const show=homeMore.wk?pool:pool.slice(0,3);
   const chips=(UNIT==="mi"?[30,90,180].map(v=>Math.round(v/6.2137*1000)/1000):[5,15,30]).map(r=>`<button class="chip" data-wkr="${r}" aria-pressed="${radEq(wkRadius,r)}">${milU(r)}</button>`).join("");
+  const row=({m,km},full)=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${km<5?$t("i stan"):esc(milTxt(km))}</b><span>${m.kickoff?esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])+" "+timeOf(m.kickoff):$t("datum ej klart")}</span></div>
+      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div>${full?`<span class="mp">${tixMini(m)}${myBtns(m)}</span>`:""}</div>`;
+  if(!homeMore.wkOpen){const sum=near.length?$t("{0} matcher inom {1} {2}",[near.length,milU(wkRadius),label]):list.length?$t("Inget inom {0} {1}. Närmaste matcherna:",[milU(wkRadius),label]):$t("Inga matcher i det inlagda schemat {0}.",[label]);
+    return`<article class="tip"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><p class="meta">${sum}</p>${pool.length?`<div class="dlist">${row(pool[0],false)}</div>`:""}<button class="link more" data-homemore="wkOpen" aria-expanded="false">${$t("Visa alla och välj avstånd")}</button></article>`;}
   return`<article class="tip"><div class="sechead"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></div><div class="chips" role="group" aria-label="${$t("Avstånd")}">${chips}</div>
     ${!list.length?`<p class="meta">${$t("Inga matcher i det inlagda schemat {0}.",[label])}</p>`:!near.length?`<p class="meta">${$t("Inget inom {0} {1}. Närmaste matcherna:",[milU(wkRadius),label])}</p>`:""}
-    <div class="dlist">${show.map(({m,km})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${km<5?$t("i stan"):esc(milTxt(km))}</b><span>${m.kickoff?esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])+" "+timeOf(m.kickoff):"datum ej klart"}</span></div>
-      <div class="mmain"><b>${esc(m.homeName)} – ${esc(m.awayName)}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div><span class="mp">${tixMini(m)}${myBtns(m)}</span></div>`).join("")}</div>${moreBtn("wk",pool.length)}<p class="hint">${DIST_NOTE}</p></article>`;}
+    <div class="dlist">${show.map(x=>row(x,true)).join("")}</div>${moreBtn("wk",pool.length)}<p class="hint">${DIST_NOTE}</p><button class="link more" data-homemore="wkOpen" aria-expanded="true">${$t("Visa mindre")}</button></article>`;}
 // veckans fråga
 const POLLS=[
  [$t("Bästa ståplatsläktaren?"),[$t("Gula väggen, Dortmund"),"Millerntor, St. Pauli","Ostseestadion, Rostock","Celtic Park, Glasgow",$t("Någon i Sverige")]],
