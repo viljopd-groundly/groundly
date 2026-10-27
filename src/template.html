@@ -1281,7 +1281,7 @@ document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[da
 // När ett klick ritar om en lista (gilla, betyg, spara, sortering …) ersätts knappen av en ny kopia. Vi letar upp kopian
 // och scrollar så att den hamnar exakt där den gamla var. Avbryts om man själv scrollar eller byter sida.
 {let A=null;// "Visa fler" ska fälla ut under knappen, inte följa med knappen nedåt
- const SKIP=/^(bn|mode|open|teamview|tbl|near|mview|mysub|tips|editatt|mymore|limmore|homemore|amore|cmore|arcmore|hopall|mlmore)$/;
+ const SKIP=/^(bn|mode|open|teamview|tbl|near|mview|mysub|tips|editatt|mymore|limmore|homemore|amore|cmore|arcmore|hopall|mlmore|pubadd)$/;
  const selFor=el=>{if(el.id)return"#"+CSS.escape(el.id);for(const at of el.attributes){if(at.name.startsWith("data-")&&at.value!==""){const k=at.name.slice(5).replace(/-./g,x=>x[1].toUpperCase());if(SKIP.test(k))return null;return`[${at.name}="${CSS.escape(at.value)}"]`;}}return null;};
  const fix=()=>{if(!A)return;if(mode!==A.mode||Date.now()>A.until){A=null;return;}if(A.el.isConnected)return;
    const n=document.querySelector(A.sel);if(!n){return;}const top=n.getBoundingClientRect().top;const d=top-A.top;if(Math.abs(d)>1)window.scrollBy(0,d);A.el=n;A.top=n.getBoundingClientRect().top;};
@@ -1448,7 +1448,7 @@ async function legWrite(fn){if(!dbNs||!myId||legBusy)return false;legBusy=true;c
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-legends],#lgClose,#lgOv,[data-legvote],[data-legdel],[data-leghide],[data-legadd]");if(!t)return;
   if(t.id==="lgOv"&&e.target!==t)return;
   if(t.dataset.legends){openLegends(t.dataset.legends);return;}
-  if(t.dataset.legadd!==undefined){legAdding=t.dataset.legadd==="1";legMsg="";legRender();if(legAdding)setTimeout(()=>{const f=document.getElementById("legForm");if(f){f.n.focus();f.scrollIntoView({block:"nearest"});}},30);return;}
+  if(t.dataset.legadd!==undefined){legAdding=t.dataset.legadd==="1";legMsg="";legRender();if(legAdding)setTimeout(()=>{const f=document.getElementById("legForm");if(f){f.n.focus({preventScroll:true});f.scrollIntoView({block:"nearest"});}},30);return;}
   if(t.id==="lgClose"||t.id==="lgOv"){const o=document.getElementById("lgOv");if(o)o.remove();legOpen=null;return;}
   if(t.dataset.legvote){if(!dbNs||!myId)return;const k=t.dataset.legvote;const cur=LEGV[myId]&&Array.isArray(LEGV[myId].keys)?LEGV[myId].keys:[];const next=cur.includes(k)?cur.filter(x=>x!==k):[...cur,k].slice(-500);
     LEGV={...LEGV,[myId]:{keys:next}};legRender();try{await dbNs.doc("legvotes/"+myId).set({keys:next});}catch(err){toast($t("Kunde inte spara."));}return;}
@@ -1657,7 +1657,7 @@ document.addEventListener("submit",async e=>{
 document.addEventListener("input",e=>{const f=e.target.closest&&e.target.closest(".replyForm");if(f)replyDraft[f.dataset.replyto]=e.target.value;});
 const confirmDel={};
 async function forumClick(t){
-  if(t.id==="newPost"){composing=true;forumMsg="";renderForum();setTimeout(()=>document.getElementById("fTitle")?.focus(),0);return true;}
+  if(t.id==="newPost"){composing=true;forumMsg="";renderForum();setTimeout(()=>document.getElementById("fTitle")?.focus({preventScroll:true}),0);return true;}
   if(t.id==="cancelPost"){composeKind="fraga";composeClub="";composing=false;forumMsg="";renderForum();return true;}
   if(t.dataset.fkind){fKind=t.dataset.fkind;accClub=null;renderForum();return true;}
   if(t.dataset.thread){openThread=openThread===t.dataset.thread?null:t.dataset.thread;renderForum();return true;}
@@ -2202,7 +2202,7 @@ function featClick(t){
   if(t.dataset.rdel){if(!rateDelConfirm){rateDelConfirm=true;renderClubs();return;}const c=C[t.dataset.rdel];const mine={...((RATINGS[myId]&&RATINGS[myId].r)||{})};delete mine[arenaKey(c.s)];writeRatings(mine);return;}
   if(t.dataset.ryn){const[g,k,v]=t.dataset.ryn.split(":");rateDraft[g]=rateDraft[g]||{};if(v)rateDraft[g][k]=v;else delete rateDraft[g][k];
     t.parentElement.querySelectorAll("[data-ryn]").forEach(b=>{const p=b.dataset.ryn.split(":");b.setAttribute("aria-pressed",String((rateDraft[p[0]]&&rateDraft[p[0]][p[1]]||"")===p[2]));});return;}
-  if(t.dataset.homeedit){homeEdit=true;render();setTimeout(()=>document.getElementById("homeIn")?.focus(),0);return;}
+  if(t.dataset.homeedit){homeEdit=true;render();setTimeout(()=>document.getElementById("homeIn")?.focus({preventScroll:true}),0);return;}
   if(t.dataset.homecancel){homeEdit=false;render();return;}
   if(t.dataset.tripfor){const id=t.dataset.tripfor;const was=tripOpen===id;tripOpen=was?null:id;homeEdit=false;
     // öppna/stäng panelen där den står i stället för att rita om hela listan (då hoppade skärmen)
@@ -2307,7 +2307,10 @@ function startPubs(db){pubsNs=db;if(!db){pubsState="none";return;}
 const isPubBtn=t=>t.dataset.pubadd||t.dataset.pubcancel||t.dataset.pubcrowd!==undefined||t.dataset.pubvote||t.dataset.pubdel||t.dataset.pubhide;
 const confirmPub={};
 async function pubClick(t){
-  if(t.dataset.pubadd){pubOpen=t.dataset.pubadd;pubForm={crowd:""};pubMsg="";renderClubs();setTimeout(()=>document.getElementById("pfName")?.focus(),0);return;}
+  if(t.dataset.pubadd){const y0=t.getBoundingClientRect().top;pubOpen=t.dataset.pubadd;pubForm={crowd:""};pubMsg="";renderClubs();
+    // formuläret öppnas där knappen var; skärmen står still och flyttas bara om formuläret hamnar nedanför skärmen
+    requestAnimationFrame(()=>{const f=document.getElementById("pubForm");if(!f)return;const top=f.getBoundingClientRect().top;if(Math.abs(top-y0)>2)window.scrollBy(0,top-y0);
+      const r=f.getBoundingClientRect();if(r.top>innerHeight-140)window.scrollBy({top:r.top-(innerHeight-260),behavior:"smooth"});document.getElementById("pfName")?.focus({preventScroll:true});});return;}
   if(t.dataset.pubcancel){pubOpen=null;pubForm=null;pubMsg="";renderClubs();return;}
   if(t.dataset.pubcrowd!==undefined){pubForm={...(pubForm||{}),crowd:t.dataset.pubcrowd};renderClubs();return;}
   if(t.dataset.pubvote){const k=t.dataset.pubvote;writePubs(d=>{if(d.votes[k])delete d.votes[k];else d.votes[k]=true;});return;}
@@ -2649,14 +2652,14 @@ function favClick(t){
     if(!nt)toast(isFav(id)?$t("{0} är nu ett favoritlag",[C[id].n]):$t("{0} är inte längre favoritlag",[C[id].n]));return;}
   if(t.dataset.favdel){const id=t.dataset.favdel;if(!favConfirm[id]){favConfirm[id]=1;t.textContent=$t("Tryck igen för att ta bort");setTimeout(()=>{delete favConfirm[id];},4000);return;}
     delete favConfirm[id];mutate(d=>{d.favs=favList().filter(x=>x!==id);});return;}
-  if(t.dataset.natadd){natAdd=true;renderMine();setTimeout(()=>document.getElementById("natXIn")?.focus(),0);return;}
+  if(t.dataset.natadd){natAdd=true;renderMine();setTimeout(()=>document.getElementById("natXIn")?.focus({preventScroll:true}),0);return;}
   if(t.dataset.natxcancel){natAdd=false;renderMine();return;}
   if(t.dataset.natdel){const id=t.dataset.natdel;if(!favConfirm[id]){favConfirm[id]=1;t.textContent=$t("Tryck igen för att ta bort");setTimeout(()=>{delete favConfirm[id];},4000);return;}
     delete favConfirm[id];mutate(d=>{d.favNats=natExtra().filter(x=>x!==id);});return;}
-  if(t.dataset.natedit){natEdit=true;renderMine();setTimeout(()=>document.getElementById("natIn")?.focus(),0);return;}
+  if(t.dataset.natedit){natEdit=true;renderMine();setTimeout(()=>document.getElementById("natIn")?.focus({preventScroll:true}),0);return;}
   if(t.dataset.natcancel){natEdit=false;renderMine();return;}
   if(t.dataset.favonly){favOnly=!favOnly;renderMatches();return;}
-  if(t.dataset.favadd){favAdd=true;renderMine();setTimeout(()=>document.getElementById("favIn")?.focus(),0);return;}
+  if(t.dataset.favadd){favAdd=true;renderMine();setTimeout(()=>document.getElementById("favIn")?.focus({preventScroll:true}),0);return;}
   if(t.dataset.favcancel){favAdd=false;renderMine();return;}
 }
 // ---------- arenapass ----------
@@ -3392,7 +3395,7 @@ async function homeClick(t){
     if(gone.length)undoToast($t("Borttagen från Vill gå"),async()=>{mutate(d=>{d.wishMatches=putBack(d.wishMatches,gone);});});return;}
   if(t.dataset.gomode){setMode(t.dataset.gomode);window.scrollTo({top:0});return;}
   if(t.dataset.wkr){wkRadius=+t.dataset.wkr;renderHome();return;}
-  if(t.dataset.homeedit){homeEdit=true;renderHome();setTimeout(()=>document.getElementById("homeIn")?.focus(),0);return;}
+  if(t.dataset.homeedit){homeEdit=true;renderHome();setTimeout(()=>document.getElementById("homeIn")?.focus({preventScroll:true}),0);return;}
   if(t.dataset.vote!==undefined){if(!dbNs||!myId||voteBusy||!votesLoaded)return;const c=+t.dataset.vote;const w=isoWeek(new Date()).key;if(VOTES[myId]&&VOTES[myId].w===w)return;voteBusy=true;
     try{await dbNs.doc("votes/"+myId).set({w,c});VOTES={...VOTES,[myId]:{w,c}};}catch(e){toast($t("Kunde inte spara rösten."));}voteBusy=false;renderHome();return;}
   if(t.dataset.board){boardTab=t.dataset.board;renderHome();return;}
@@ -3695,7 +3698,7 @@ function fixReviewHtml(){if(!isMod||fixState!=="ready")return"";const open=fixAl
     :`<p class="hint">${$t("Inga nya förslag.")}</p>`}${FIX_APPLY.size?`<p class="hint">${$t("Grundår, arena, kapacitet, serie, stad, smeknamn, hemsida och biljettlänk ändras direkt när du godkänner. Färger och meriter skickar du till mig, så lägger jag in dem.")}</p>`:""}`;}
 const isFixBtn=t=>t.dataset.fixopen||t.dataset.fixok||t.dataset.fixdone;
 async function fixClick(t){
-  if(t.dataset.fixopen){const pre=t.dataset.fixfield||null;fixOpen=fixOpen===t.dataset.fixopen&&!pre?null:t.dataset.fixopen;fixField=pre;fixMsg="";render();if(fixOpen)setTimeout(()=>{const f=document.getElementById("fxF");if(f&&fixField)f.value=fixField;const v=document.getElementById("fxV");if(v){v.focus();v.scrollIntoView({block:"center"});}},30);return;}
+  if(t.dataset.fixopen){const pre=t.dataset.fixfield||null;fixOpen=fixOpen===t.dataset.fixopen&&!pre?null:t.dataset.fixopen;fixField=pre;fixMsg="";render();if(fixOpen)setTimeout(()=>{const f=document.getElementById("fxF");if(f&&fixField)f.value=fixField;const v=document.getElementById("fxV");if(v){v.focus({preventScroll:true});v.scrollIntoView({block:"center"});}},30);return;}
   const key=t.dataset.fixok||t.dataset.fixdone;const x=fixAll().find(y=>y.key===key);if(!x||!isMod||!dbNs)return;
   try{if(t.dataset.fixok){let v=x.value;if(x.field==="f"||x.field==="cap"){v=parseInt(String(v).replace(/[^\d]/g,""),10);if(!(v>0)){toast($t("Förslaget är inget tal, ändra för hand."));return;}}
       if(x.field==="tix"||x.field==="web"){v=String(v).trim();if(x.field==="web"&&!/^https?:\/\//.test(v))v="https://"+v;if(!/^https:\/\/[^\s"'<>]+$/.test(v)){toast($t("Länken måste börja med https://"));return;}}
