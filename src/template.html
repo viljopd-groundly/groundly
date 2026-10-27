@@ -199,6 +199,10 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .mini[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--chalk)}
 .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 .btn:disabled[aria-pressed="true"]{opacity:1}
+.bkup{margin-top:18px;border-top:1px solid var(--line);padding-top:10px}
+.bkup summary{cursor:pointer;color:var(--muted);font-size:14px;font-weight:600;padding:6px 0}
+.bkup[open] summary{color:inherit}
+.bkup .actions{margin-top:6px}
 .mymenu{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .mtile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;color:inherit;font:inherit;cursor:pointer}
 .mtile b{font-family:var(--f-mono);font-size:24px;line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums;display:flex;align-items:center;min-height:26px}
@@ -1674,7 +1678,7 @@ async function forumClick(t){
 
 // ---------- min fotboll ----------
 let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",myRef=null,myQ=Promise.resolve(),myPending=0,myErr="",mySub="home",addingMatch=false;
-let arView="list";window.groundlyOpenMod=()=>{mySub="mod";if(mode==="mine")renderMine();else setMode("mine");window.scrollTo({top:0});};try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms))mySub=ms;}catch(e){}
+let arView="list",bkupOpen=false;document.addEventListener("toggle",e=>{if(e.target&&e.target.id==="bkupBox")bkupOpen=e.target.open;},true);window.groundlyOpenMod=()=>{mySub="mod";if(mode==="mine")renderMine();else setMode("mine");window.scrollTo({top:0});};try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms))mySub=ms;}catch(e){}
 const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
   wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,favNats:(Array.isArray(d&&d.favNats)?d.favNats:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&isNat(C[x])&&x!==d.favNat&&a.indexOf(x)===i).slice(0,MAXNAT),pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^u_[A-Za-z0-9_-]{6,40}$/.test(x)).slice(0,200):[]};}
@@ -1785,7 +1789,7 @@ function renderMine(){
     if(myYear!=="all"&&myYear!=="old"&&!yCount[myYear])myYear="all";if(myYear==="old"&&!oldN)myYear="all";
     const att=myYear==="all"?attAll:myYear==="old"?attAll.filter(a=>!yTop.includes((a.date||"").slice(0,4))):attAll.filter(a=>(a.date||"").startsWith(myYear));
     const yearChips=attAll.length?`<div class="chips" role="group" aria-label="${$t("Visa år")}">${[["all",$t("Alla"),attAll.length],...yTop.map(y=>[y,y,yCount[y]]),...(oldN?[["old",$t("Tidigare"),oldN]]:[])].map(([k,l,n])=>`<button class="chip" data-myyear="${k}" aria-pressed="${myYear===k}">${l}<small>${n}</small></button>`).join("")}</div>`:"";
-    h+=`<div class="sechead"><h3 class="sec">${$t("Matcher jag varit på")}</h3>${MY.attended.length?`<div class="actions"><button class="btn small" data-exportcsv="1">${ic("download")} ${$t("Excel (CSV)")}</button><button class="btn small" data-backup="1">${ic("download")} ${$t("Säkerhetskopia")}</button><label class="btn small" for="restoreIn">${ic("upload")} ${$t("Läs in")}<input id="restoreIn" type="file" accept=".json,application/json" hidden></label></div>`:`<label class="btn small" for="restoreIn">${ic("upload")} ${$t("Läs in säkerhetskopia")}<input id="restoreIn" type="file" accept=".json,application/json" hidden></label>`}</div><p class="hint" id="csvMsg"></p>`+yearChips;
+    h+=`<div class="sechead"><h3 class="sec">${$t("Matcher jag varit på")}</h3></div>`+yearChips;
     const attShow=att.filter((a,i)=>i<MYMORE.att||a.id===editAtt||a.id===shareMatchId);
     h+=att.length?attShow.map(a=>`<div class="mrow">
       <div class="mdate">${esc(fmtDate(a.date))}</div>
@@ -1795,6 +1799,9 @@ function renderMine(){
       ${a.photo&&PHID.test(a.photo)?`<button class="attph" data-phview="${esc(a.photo)}" aria-label="${$t("Visa bilden från matchen")}">${phImg(a.photo)}</button>`:""}${attPhUp===a.id?`<p class="hint">${$t("Laddar upp bilden…")}</p>`:""}
       ${editAtt===a.id?editAttForm(a):""}<div class="pactions">${assetsNs?`<label class="link strong" for="attPh-${esc(a.id)}">${ic("image")} ${a.photo?$t("Byt bild"):$t("Lägg till bild")}<input id="attPh-${esc(a.id)}" data-attphoto="${esc(a.id)}" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic" hidden></label>${a.photo?`<button class="link" data-attphdel="${esc(a.id)}">${$t("Ta bort bild")}</button>`:""}`:""}<button class="link" data-editatt="${esc(a.id)}">${editAtt===a.id?$t("Stäng"):a.score?$t("Redigera"):$t("Lägg till resultat")}</button><button class="link strong" data-repfrom="${esc(a.id)}">${$t("Skriv reportage")}</button><button class="link strong" data-sharematch="${esc(a.id)}">${shareMatchId===a.id?$t("Stäng"):$t("Dela matchkort")}</button>${delBtn("att",a.id)}</div>${shareMatchId===a.id?`<div class="studio">${fmtChips()}${studioHtml("match",$t("Matchkort"))}</div>`:""}</div></div>`).join("")+moreBtns("att",att.length)
      :`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><p class="hint">${$t("Så här kan det se ut efter en säsong:")}</p>${exampleHtml()}`;
+    h+=`<details class="bkup" id="bkupBox"${bkupOpen?" open":""}><summary>${ic("download")} ${$t("Ladda ner och säkerhetskopiera")}</summary>
+      <p class="hint">${$t("Spara dina matcher som en fil, till exempel innan du byter telefon eller raderar kontot.")}</p>
+      <div class="actions">${MY.attended.length?`<button class="btn small" data-exportcsv="1">${ic("download")} ${$t("Excel (CSV)")}</button><button class="btn small" data-backup="1">${ic("download")} ${$t("Säkerhetskopia")}</button>`:""}<label class="btn small" for="restoreIn">${ic("upload")} ${$t("Läs in säkerhetskopia")}<input id="restoreIn" type="file" accept=".json,application/json" hidden></label></div><p class="hint" id="csvMsg"></p></details>`;
   }else if(mySub==="arenas"){
     h+=`<div class="chips" role="group" aria-label="${$t("Arenor")}"><button class="chip" data-arview="list" aria-pressed="${arView!=="pass"}">${$t("Karta och lista")}</button><button class="chip" data-arview="pass" aria-pressed="${arView==="pass"}">${$t("Arenapass")}</button></div>`;
     if(arView==="pass")h+=renderPass();else{

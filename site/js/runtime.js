@@ -299,7 +299,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   function confirmDelete(u) {
     dlg.innerHTML = `<div class="gdlg-card"><h2>Radera mitt konto?</h2>
       <p>Det här tar bort ditt konto och allt du har sparat eller skrivit: dina loggade matcher, favoriter, foruminlägg, reportage, kommentarer, legender, betyg och topplisteplatser. <b>Det går inte att ångra.</b></p>
-      <p>Vill du behålla dina matcher, spara först en säkerhetskopia under Min fotboll.</p>
+      <p>Vill du behålla dina matcher, spara först en säkerhetskopia under Min fotboll → Matcher, längst ner.</p>
       <label for="gDelOk">Skriv <b>RADERA</b> för att bekräfta</label><input id="gDelOk" autocomplete="off">
       <div class="msg" aria-live="polite"></div>
       <div class="row"><button class="btn" data-gx>Avbryt</button><button class="btn danger" data-gdelgo disabled>Radera kontot</button></div></div>`;
