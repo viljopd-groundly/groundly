@@ -161,6 +161,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .ftop{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
 /* när en sparad match redigeras eller delas får rutan hela bredden (datumrutan hamnar ovanför) */
 .mrow:has(#editAttForm),.mrow:has(.seasonimg){grid-template-columns:1fr}.mrow:has(#editAttForm)>.mmain,.mrow:has(.seasonimg)>.mmain{min-width:0}
+.cmore[hidden]{display:none!important}
 .reprow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}.reprow>.ftop{flex:0 0 auto;max-width:100%}.reprow>.ftop>.btn{height:100%;white-space:nowrap}.reprow>.ftop:has(form),.reprow>.ftop:has(.place){flex:1 1 100%}.reprow>.search{flex:1 1 0;min-width:120px}.reprow>.search input{min-width:0;width:100%}.reprow>.search[hidden]{display:none}
 .compose{align-self:stretch;background:var(--surface);border:2px solid var(--accent);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:12px}
 .compose h2{font-family:var(--f-display);font-weight:600;font-size:19px;margin:0}
@@ -1051,7 +1052,7 @@ function clubCard(c,isAi){const sel=openClub===c.id;
     ${isAi?"":`<dt>${$t("Nästa match")}</dt><dd>${up.length?`<ul class="nextlist">${up.map(m=>`<li><span class="nd">${esc(m.kickoff?shortDate(m.kickoff):rangeTxt(m))}</span>${m.kickoff?`<span class="nt">${esc(timeOf(m.kickoff))}</span>`:""}<span class="nm">${esc(m.homeName)} – ${esc(m.awayName)}</span></li>`).join("")}</ul>`:dbState==="ready"?$t("Inga matcher i schemat"):$t("Laddar schema…")}</dd>`}
    </dl>
    ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:"")+wishBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
-     return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">${$t("Lagets matcher")}</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>${favBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="${$t("Fler val")}">${more?$t("Färre"):$t("⋯ Mer")}</button>`:""}</div>${more&&extra?`<div class="cmore">${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
+     return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">${$t("Lagets matcher")}</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>${favBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="${$t("Fler val")}">${more?$t("Färre"):$t("⋯ Mer")}</button>`:""}</div>${extra?`<div class="cmore"${more?"":" hidden"}>${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
   return h+`</div>`;}
 let ntQ="",ntView="a";
 function cupArenaClub(name){const k=arenaKey(name);return Object.values(C).find(c=>c.s&&arenaKey(c.s)===k)||null;}
@@ -2889,7 +2890,10 @@ document.getElementById("cityClear").onclick=()=>{cityEl.value="";cityQ="";docum
 document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.target.closest("button,[data-club]");if(!t)return;
   if(!t.matches("button")&&e.target.closest("[data-noclose]"))return;
   if(t.dataset.cmore){clubLimit+=60;renderClubs();return;}
-  if(t.dataset.cardmore){cardMore=cardMore===t.dataset.cardmore?null:t.dataset.cardmore;renderClubs();return;}
+  if(t.dataset.cardmore){cardMore=cardMore===t.dataset.cardmore?null:t.dataset.cardmore;
+    // fäll ut/in på plats utan att rita om listan, så att skärmen står still
+    const on=cardMore===t.dataset.cardmore,box=t.closest(".actions")&&t.closest(".actions").nextElementSibling;
+    if(box&&box.classList.contains("cmore")){box.hidden=!on;t.setAttribute("aria-expanded",on);t.textContent=on?$t("Färre"):$t("⋯ Mer");}else renderClubs();return;}
   if(t.dataset.ntview){ntView=t.dataset.ntview;openClub=null;renderNat();return;}
   if(t.dataset.ntconf){ntConf=t.dataset.ntconf;store.set("fk-ntconf",ntConf);openClub=null;renderNat();return;}
   if(t.dataset.teampick){pickTeam(t.dataset.teampick);return;}
