@@ -1943,5 +1943,9 @@
  "Lägg till landslag": "Add national team",
  "Ladda ner och säkerhetskopiera": "Download and back up",
  "Spara dina matcher som en fil, till exempel innan du byter telefon eller raderar kontot.": "Save your matches as a file, for example before you change phones or delete your account.",
- "Varmt": "Warm"
+ "Varmt": "Warm",
+ "Textstorlek": "Text size",
+ "Större": "Larger",
+ "Störst": "Largest",
+ "Normal": "Normal"
 }
