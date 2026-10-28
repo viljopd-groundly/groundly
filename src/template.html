@@ -721,6 +721,20 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .topbar .blogo{width:38px;height:38px}
 .topbar:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--band);pointer-events:none}
 @media (min-width:761px){.topbar{overflow:hidden}}
+
+/* kalenderval */
+.calov{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;justify-content:center}
+.calpanel{background:var(--surface);color:var(--fg);width:100%;max-width:440px;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;box-shadow:0 -6px 24px rgba(0,0,0,.2)}
+@media (min-width:761px){.calov{align-items:center}.calpanel{border-radius:16px}}
+.calpanel h3{margin:0;font:700 calc(18px*var(--fs)) var(--f-display)}
+.calpanel .meta{margin:0 0 4px}
+.calopt{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;color:var(--fg);text-decoration:none;font-weight:600;background:var(--bg)}
+.calopt:hover,.calopt:focus-visible{border-color:var(--accent);outline:none}
+.calopt>b{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;color:#fff;font:800 15px var(--f-body);flex:0 0 auto}
+.calopt>b.gc{background:#1a73e8}.calopt>b.oc{background:#0f6cbd}.calopt>b.ac{background:var(--muted)}
+.calopt>b .ic{width:18px;height:18px}
+.calopt span{display:flex;flex-direction:column}
+.calopt small{font-weight:400;color:var(--muted);font-size:calc(12px*var(--fs))}
 </style>
 
 <div class="wrap">
@@ -2313,11 +2327,8 @@ function localParts(m){const tz=tzOf(m);if(!tz||!m.kickoff)return null;const key
 const localTimeTxt=m=>{const lp=localParts(m);if(!lp)return"";const own=timeOf(m.kickoff);return lp.time!==own?$t("lokal tid {0}",[lp.time]):"";};
 const matchDate=m=>{if(!m.kickoff)return m.dateFrom||null;const lp=localParts(m);if(lp)return lp.date;const ll=GEO[m.city];return new Date(Date.parse(m.kickoff)+(ll?ll[1]/15*36e5:0)).toISOString().slice(0,10);};
 const gcalStamp=d=>d.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
-function calUrl(m){if(!m.kickoff)return null;const st=new Date(m.kickoff),en=new Date(Date.parse(m.kickoff)+2*36e5);
-  const p=new URLSearchParams({action:"TEMPLATE",text:`${m.homeName} – ${m.awayName}`,dates:`${gcalStamp(st)}/${gcalStamp(en)}`,location:[m.venue,m.city,$t(m.country)].filter(Boolean).join(", "),details:`${m.comp||""}\nSparad via Groundly`});
-  return"https://calendar.google.com/calendar/render?"+p.toString();}
 // efter matchen behövs inte hotell, resa, kalender eller pepp – bara matchinfo och "Jag var där"
-const calLink=m=>{if(mPast(m))return"";const u=calUrl(m);return u?extLink(u,$t("Kalender"),"mini"):"";};
+const calLink=m=>{if(mPast(m)||!m.kickoff)return"";return calBtn({...m,city:m.city&&$t(m.city),country:m.country},"mini",$t("Kalender"));};
 const hotelLink=(m,cls="mini")=>m.city&&!mPast(m)?extLink(bookingUrl(m.venue,m.city,matchDate(m)),adLabel($t("Hotell")),cls):"";
 function pubList(c){const k=arenaKey(c.s);if(!k)return[];const out=[];const seed=SEEDMAP.get(k);
   if(seed)seed.pubs.forEach(([n,cr,w,t],i)=>out.push({key:`ed:${k}:${i}`,name:n,crowd:cr,walk:w,text:$t(t),ed:true}));
@@ -3806,14 +3817,40 @@ document.addEventListener("click",e=>{const g=e.target.closest("[data-lpin]");if
 document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.closest&&e.target.closest("[data-lpin]")){e.preventDefault();e.target.dispatchEvent(new MouseEvent("click",{bubbles:true}));}});
 
 // ---------- kalender ----------
-function calLinks(w){let g,os,oe,all=false;
-  if(w.kickoff){const st=new Date(w.kickoff);if(isNaN(st))return"";const en=new Date(st.getTime()+2*3600e3);const f=d=>d.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");g=`${f(st)}/${f(en)}`;os=st.toISOString();oe=en.toISOString();}
-  else if(w.dateFrom){const to=new Date((w.dateTo||w.dateFrom)+"T12:00:00Z");if(isNaN(to))return"";to.setUTCDate(to.getUTCDate()+1);const en=to.toISOString().slice(0,10);g=`${w.dateFrom.replace(/-/g,"")}/${en.replace(/-/g,"")}`;os=w.dateFrom;oe=en;all=true;}
-  else return"";
-  const t=`${w.homeName} – ${w.awayName}`,loc=[w.venue,$t(w.city)].filter(Boolean).join(", "),det=(w.comp?w.comp+". ":"")+(all?$t("Exakt avsparkstid är inte klar än. "):"")+$t("Sparad i Groundly."),E=encodeURIComponent;
-  const gl=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${E(t)}&dates=${g}&location=${E(loc)}&details=${E(det)}`;
-  const ol=`https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=${E(t)}&startdt=${E(os)}&enddt=${E(oe)}&location=${E(loc)}&body=${E(det)}${all?"&allday=true":""}`;
-  return`<a class="link strong" href="${esc(gl)}" target="_blank" rel="noopener">${ic("calendar")} ${$t("Google Kalender")}</a><a class="link" href="${esc(ol)}" target="_blank" rel="noopener">${$t("Outlook")}</a>`;}
+// En knapp "Kalender" som öppnar ett val: Google, Outlook eller Apple/annan kalender (.ics-fil).
+// Matcher med känd avspark blir två timmar långa, matcher utan tid blir heldag över datumspannet.
+const CALREG={};
+function calData(w){let st,en,all=false;
+  if(w.kickoff){st=new Date(w.kickoff);if(isNaN(st))return null;en=new Date(st.getTime()+2*36e5);}
+  else if(w.dateFrom){st=new Date(w.dateFrom+"T12:00:00Z");const to=new Date((w.dateTo||w.dateFrom)+"T12:00:00Z");if(isNaN(st)||isNaN(to))return null;to.setUTCDate(to.getUTCDate()+1);en=to;all=true;}
+  else return null;
+  return{t:`${w.homeName} – ${w.awayName}`,loc:[w.venue,w.city,w.country&&$t(w.country)].filter(Boolean).join(", "),det:(w.comp?w.comp+". ":"")+(all?$t("Exakt avsparkstid är inte klar än. "):"")+$t("Sparad i Groundly."),st,en,all};}
+function calBtn(w,cls,label){const d=calData(w);if(!d)return"";const k="c"+(d.t+d.st.toISOString()).split("").reduce((h,c)=>(h*31+c.charCodeAt(0))|0,7).toString(36);CALREG[k]=d;
+  return`<button type="button" class="${cls}" data-cal="${k}" aria-haspopup="dialog">${ic("calendar")} ${label||$t("Lägg till i kalender")}</button>`;}
+function calLinks(w){return calBtn({...w,city:w.city&&$t(w.city)},"link strong");}
+function calUrls(d){const E=encodeURIComponent,day=x=>x.toISOString().slice(0,10),g=d.all?`${day(d.st).replace(/-/g,"")}/${day(d.en).replace(/-/g,"")}`:`${gcalStamp(d.st)}/${gcalStamp(d.en)}`;
+  const os=d.all?day(d.st):d.st.toISOString(),oe=d.all?day(d.en):d.en.toISOString();
+  const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Groundly//SV","BEGIN:VEVENT","UID:"+gcalStamp(d.st)+"-"+Math.abs([...d.t].reduce((h,c)=>(h*31+c.charCodeAt(0))|0,7))+"@groundly","DTSTAMP:"+gcalStamp(new Date()),
+    d.all?"DTSTART;VALUE=DATE:"+day(d.st).replace(/-/g,""):"DTSTART:"+gcalStamp(d.st),d.all?"DTEND;VALUE=DATE:"+day(d.en).replace(/-/g,""):"DTEND:"+gcalStamp(d.en),
+    "SUMMARY:"+icsEsc(d.t),"LOCATION:"+icsEsc(d.loc),"DESCRIPTION:"+icsEsc(d.det),"END:VEVENT","END:VCALENDAR"].join("\r\n");
+  return{g:`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${E(d.t)}&dates=${g}&location=${E(d.loc)}&details=${E(d.det)}`,
+    o:`https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=${E(d.t)}&startdt=${E(os)}&enddt=${E(oe)}&location=${E(d.loc)}&body=${E(d.det)}${d.all?"&allday=true":""}`,
+    ics:"data:text/calendar;charset=utf-8,"+E(ics)};}
+const icsEsc=x=>String(x||"").replace(/\\/g,"\\\\").replace(/([,;])/g,"\\$1").replace(/\n/g,"\\n");
+function closeCal(){const o=document.getElementById("calOv");if(o)o.remove();}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-cal],#calOv,[data-calclose],#calOv a");if(!t)return;
+  if(t.dataset.cal){e.preventDefault();e.stopPropagation();const d=CALREG[t.dataset.cal];if(!d)return;closeCal();const u=calUrls(d);
+    const fn=d.t.replace(/[^\p{L}\p{N}]+/gu,"-").replace(/^-|-$/g,"").slice(0,60)||"match";
+    document.body.insertAdjacentHTML("beforeend",`<div id="calOv" class="calov" role="dialog" aria-modal="true" aria-label="${$t("Lägg till i kalender")}"><div class="calpanel">
+      <h3>${$t("Lägg till i kalender")}</h3><p class="meta">${esc(d.t)}</p>
+      <a class="calopt" href="${esc(u.g)}" target="_blank" rel="noopener"><b class="gc">G</b>${$t("Google Kalender")}</a>
+      <a class="calopt" href="${esc(u.o)}" target="_blank" rel="noopener"><b class="oc">O</b>${$t("Outlook")}</a>
+      <a class="calopt" href="${esc(u.ics)}" download="${esc(fn)}.ics"><b class="ac">${ic("calendar")}</b><span>${$t("Apple och andra kalendrar")}<small>${$t("Laddar ner en kalenderfil (.ics)")}</small></span></a>
+      <button class="btn" type="button" data-calclose="1">${$t("Avbryt")}</button></div></div>`);
+    document.querySelector("#calOv .calopt")?.focus({preventScroll:true});return;}
+  if(t.dataset.calclose||(t.id==="calOv"&&e.target===t)){closeCal();return;}
+  if(t.matches&&t.matches("#calOv a"))setTimeout(closeCal,300);},true);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElementById("calOv"))closeCal();});
 
 // ---------- bild på loggad match ----------
 let attPhUp=null;

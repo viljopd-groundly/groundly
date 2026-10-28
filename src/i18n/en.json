@@ -1951,5 +1951,8 @@
  "Ny här?": "New here?",
  "Tre saker du gör i appen. Tryck för att börja.": "Three things you do in the app. Tap to get started.",
  "Inga inlägg matchar ”{0}”.": "No posts match “{0}”.",
- "Sök i forumet": "Search the forum"
+ "Sök i forumet": "Search the forum",
+ "Lägg till i kalender": "Add to calendar",
+ "Apple och andra kalendrar": "Apple and other calendars",
+ "Laddar ner en kalenderfil (.ics)": "Downloads a calendar file (.ics)"
 }
