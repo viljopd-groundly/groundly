@@ -395,6 +395,7 @@ button{touch-action:manipulation}
 .rex{font-size:calc(14px*var(--fs));color:var(--fg);margin-top:2px;overflow-wrap:anywhere}
 .rbody{border-top:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:12px}
 .matchfs{border:1px solid var(--line);border-radius:12px;padding:10px 12px 12px;margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+.matchfs[hidden]{display:none}
 .matchfs legend{font-size:calc(12px*var(--fs));font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;padding:0 4px}
 .rmatch{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px}
 .rmatch div{background:var(--bg);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -3156,7 +3157,7 @@ async function resolveRepNames(ids){if(!userNs||!ids.length)return;try{const ps=
 function phImg(id,cls){return`<img class="rph ${cls||""}" src="${blobUrl(id)}" alt="${$t("Bild från resan")}" loading="lazy" decoding="async">`;}
 function repDateTxt(d){return d&&/^\d{4}-\d{2}-\d{2}$/.test(d)?new Date(d+"T12:00:00").toLocaleDateString(LOC,{day:"numeric",month:"long",year:"numeric"}):"";}
 
-function newDraft(o){return Object.assign({editing:null,draft:false,match:"",result:"",crowd:"",title:"",club:"",city:"",date:"",body:"",tip:"",photos:[],added:[],orig:[]},o||{});}
+function newDraft(o){return Object.assign({editing:null,draft:false,visit:false,match:"",result:"",crowd:"",title:"",club:"",city:"",date:"",body:"",tip:"",photos:[],added:[],orig:[]},o||{});}
 function composeHtml(){const d=repDraft;return`<form class="compose" id="repForm">
   <h2>${d.editing?$t("Redigera reportage"):$t("Nytt reportage")}</h2>
   <label class="fld" for="rTitle">${$t("Rubrik")}<input id="rTitle" data-rd="title" maxlength="120" required value="${esc(d.title)}" placeholder="${$t("t.ex. Regnig derbyhelg i Glasgow")}"></label>
@@ -3165,7 +3166,8 @@ function composeHtml(){const d=repDraft;return`<form class="compose" id="repForm
     <label class="fld" for="rCity">${$t("Stad")}<input id="rCity" data-rd="city" maxlength="60" value="${esc(d.city)}" placeholder="${$t("Fylls i från klubben")}"></label>
   </div>
   <label class="fld" for="rDate">${$t("Datum för resan")}<input id="rDate" data-rd="date" type="date" value="${esc(d.date)}"></label>
-  <fieldset class="matchfs"><legend>${$t("Matchen")}</legend>
+  <label class="setsw"><input type="checkbox" id="rVisit"${d.visit?" checked":""}><span><b>${$t("Arenabesök utan match")}</b><small>${$t("Till exempel en arenavisning eller ett besök när det inte spelades match. Då behöver du inte fylla i match och resultat.")}</small></span></label>
+  <fieldset class="matchfs" id="rMatchFs"${d.visit?" hidden":""}><legend>${$t("Matchen")}</legend>
     <label class="fld" for="rMatch">${$t("Match")}<input id="rMatch" data-rd="match" maxlength="100" value="${esc(d.match)}" placeholder="${$t("t.ex. Hansa Rostock – Dynamo Dresden")}"></label>
     <div class="row2">
       <label class="fld" for="rResult">${$t("Resultat")}<input id="rResult" data-rd="result" maxlength="12" value="${esc(d.result)}" placeholder="${$t("t.ex. 2–1")}"></label>
@@ -3187,7 +3189,7 @@ function renderRepPhotos(){const el=document.getElementById("repPh");if(!el||!re
     :`<p class="hint">${$t("Bilder kan inte laddas upp i den här visningen. Du kan publicera texten nu och lägga till bilder senare.")}</p>`);
   const sb=document.querySelector('#repForm button[type=submit]');if(sb){sb.disabled=repBusy||repUp>0;sb.textContent=repBusy?"Publicerar…":repUp?$t("Laddar upp bilder…"):d.editing&&!d.draft?$t("Spara ändringar"):$t("Publicera");}}
 
-function matchBox(r){const m=String(r.match||"").slice(0,100),res=String(r.result||"").slice(0,12),cr=Number.isFinite(+r.crowd)&&+r.crowd>0?Math.round(+r.crowd):0;
+function matchBox(r){if(r.visit)return"";const m=String(r.match||"").slice(0,100),res=String(r.result||"").slice(0,12),cr=Number.isFinite(+r.crowd)&&+r.crowd>0?Math.round(+r.crowd):0;
   if(!m&&!res&&!cr)return"";
   return`<div class="rmatch">${m?`<div><span>${$t("Match")}</span><b>${esc(m)}</b></div>`:""}${res?`<div><span>${$t("Resultat")}</span><b class="num">${esc(res)}</b></div>`:""}${cr?`<div><span>${$t("Publik")}</span><b class="num">${$t("ca {0}",[cr.toLocaleString(LOC)])}</b></div>`:""}</div>`;}
 let repQ="";
@@ -3221,11 +3223,11 @@ function renderReports(namesOnly){
   if(!reps.length&&repQ){el.innerHTML=`<div class="empty"><b>${$t("Inga reportage matchar ”{0}”.",[esc(repQ)])}</b><div>${$t("Prova ett annat ord, till exempel en stad, en klubb eller en arena.")}</div></div>`;return;}
   if(!reps.length){el.innerHTML=`<div class="empty"><b>${repSort==="mina"?$t("Du har inte skrivit något reportage än."):repClub?$t("Inga reportage om den här klubben än."):$t("Inga reportage än.")}</b><div>${$t("Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna. Lägg gärna till bilder.")}</div></div>`;return;}
   el.innerHTML=reps.filter((r,i)=>i<lim("rp",5)||r.key===repOpen).map(r=>{const c=r.club&&C[r.club];const open=repOpen===r.key;const n=likeCount(r.key);const mine=r.uid===myId;
-    const meta=[r.match&&r.result?`${String(r.match).slice(0,100)} ${String(r.result).slice(0,12)}`:c?c.n:"",r.city,repDateTxt(r.date)].filter(Boolean).join(" · ");
+    const meta=[r.visit&&c?(c.s||c.n):r.match&&r.result?`${String(r.match).slice(0,100)} ${String(r.result).slice(0,12)}`:c?c.n:"",r.city,repDateTxt(r.date)].filter(Boolean).join(" · ");
     return`<article class="rep${open?" open":""}">
       <button class="rhead" data-rep="${esc(r.key)}" aria-expanded="${open}">
         ${r.photos.length&&!open?`<span class="rcover">${phImg(r.photos[0])}${r.photos.length>1?`<span class="rcount">${$t("{0} bilder",[r.photos.length])}</span>`:""}</span>`:""}
-        <span class="rtxt">${r.draft?`<span class="pill ec draftpill">${$t("Utkast · syns bara för dig")}</span>`:""}<span class="rtitle">${esc(r.title)}</span>
+        <span class="rtxt">${r.draft?`<span class="pill ec draftpill">${$t("Utkast · syns bara för dig")}</span>`:""}${r.visit?`<span class="pill t3 draftpill">${$t("Arenabesök")}</span>`:""}<span class="rtitle">${esc(r.title)}</span>
         ${meta?`<span class="rmeta">${c?crest(c.id,c.n,20):""}${esc(meta)}</span>`:""}
         <span class="rmeta">${langFlag(r.lang)}${esc(who(r.uid))} · ${esc(ago(r.at))}<span class="lkn" data-lk="${esc(r.key)}">${n?` · ${ic("heart")} ${n}`:""}</span>${(()=>{const k=commentsFor(r.key).length;return k?` · ${k} ${k===1?$t("kommentar"):$t("kommentarer")}`:"";})()}</span>
         ${open?"":`<span class="rex">${esc(String(r.body).slice(0,160))}${String(r.body).length>160?"…":""}</span>`}</span>
@@ -3295,7 +3297,7 @@ async function repClick(t){
     try{await dbNs.doc("likes/"+myId).set({keys:next});}catch(e){LIKES={...LIKES,[myId]:prev};likesInPlace();toast($t("Kunde inte spara gillningen."));}
     likeBusy=false;return;}
   if(t.dataset.repedit){const r=(REP[myId]&&REP[myId].items||[]).find(x=>x.id===t.dataset.repedit);if(!r)return;const c=r.club&&C[r.club];
-    const ph=(r.photos||[]).filter(p=>PHID.test(p));startRepDraft({editing:r.id,draft:!!r.draft,match:r.match||"",result:r.result||"",crowd:r.crowd?String(r.crowd):"",title:r.title||"",club:c?c.n:"",city:r.city||"",date:r.date||"",body:r.body||"",tip:r.tip||"",photos:ph.slice(),orig:ph.slice()});return;}
+    const ph=(r.photos||[]).filter(p=>PHID.test(p));startRepDraft({editing:r.id,draft:!!r.draft,visit:!!r.visit,match:r.match||"",result:r.result||"",crowd:r.crowd?String(r.crowd):"",title:r.title||"",club:c?c.n:"",city:r.city||"",date:r.date||"",body:r.body||"",tip:r.tip||"",photos:ph.slice(),orig:ph.slice()});return;}
   if(t.dataset.repdel){const id=t.dataset.repdel;if(!confirmRepDel[id]){confirmRepDel[id]=1;t.textContent=$t("Tryck igen för att ta bort");setTimeout(()=>{delete confirmRepDel[id];},4000);return;}
     delete confirmRepDel[id];const r=(REP[myId]&&REP[myId].items||[]).find(x=>x.id===id);const ok=await writeReps(rs=>rs.filter(x=>x.id!==id));
     repOpen=null;renderReports();
@@ -3316,11 +3318,13 @@ document.addEventListener("error",e=>{const t=e.target;if(t&&t.tagName==="IMG"&&
 document.addEventListener("input",e=>{const k=e.target.dataset&&e.target.dataset.rd;if(k&&repDraft){repDraft[k]=e.target.value;
   if(k==="club"){const id=clubIdFromName(e.target.value);const ci=document.getElementById("rCity");if(id&&C[id].city&&ci&&!ci.value.trim()){ci.value=C[id].city;repDraft.city=C[id].city;}}}});
 document.addEventListener("change",e=>{if(e.target.id==="repFiles"){const fs=e.target.files;addRepFiles(fs?[...fs]:[]);e.target.value="";}});
+document.addEventListener("change",e=>{if(e.target.id!=="rVisit"||!repDraft)return;repDraft.visit=e.target.checked;const fs=document.getElementById("rMatchFs");if(fs)fs.hidden=repDraft.visit;});
 document.addEventListener("submit",async e=>{if(e.target.id!=="repForm")return;e.preventDefault();const d=repDraft;if(!d||repUp)return;
   const keep=!!(e.submitter&&e.submitter.dataset&&e.submitter.dataset.keepdraft);
   const title=d.title.trim(),body=d.body.trim();if(!title||!body){repMsg=$t("Fyll i både rubrik och berättelse.");renderReports(true);return;}
   const club=clubIdFromName(d.club);const date=/^\d{4}-\d{2}-\d{2}$/.test(d.date)?d.date:null;
-  const item={title:title.slice(0,120),club,city:(d.city.trim()||(club&&C[club].city)||"").slice(0,60),date,body:body.slice(0,6000),tip:d.tip.trim().slice(0,300),match:d.match.trim().slice(0,100),result:d.result.trim().slice(0,12),crowd:(n=>n>0&&n<300000?n:null)(parseInt(String(d.crowd).replace(/[^\d]/g,""),10)),photos:d.photos.slice(0,REP_MAXPH)};
+  if(d.visit){d.match="";d.result="";d.crowd="";}
+  const item={visit:!!d.visit,title:title.slice(0,120),club,city:(d.city.trim()||(club&&C[club].city)||"").slice(0,60),date,body:body.slice(0,6000),tip:d.tip.trim().slice(0,300),match:d.match.trim().slice(0,100),result:d.result.trim().slice(0,12),crowd:(n=>n>0&&n<300000?n:null)(parseInt(String(d.crowd).replace(/[^\d]/g,""),10)),photos:d.photos.slice(0,REP_MAXPH)};
   renderRepPhotos();
   if(d.editing){item.draft=keep&&d.draft;}
   const wasDraft=d.draft;const ok=await writeReps(rs=>d.editing?rs.map(x=>x.id===d.editing?{...x,...item,...(wasDraft&&!item.draft?{lang:LANG,at:new Date().toISOString()}:{}),edited:new Date().toISOString()}:x):[...rs,{id:newId(),...item,lang:LANG,at:new Date().toISOString()}].slice(-60));

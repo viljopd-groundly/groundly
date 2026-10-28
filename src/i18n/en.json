@@ -1954,5 +1954,8 @@
  "Sök i forumet": "Search the forum",
  "Lägg till i kalender": "Add to calendar",
  "Apple och andra kalendrar": "Apple and other calendars",
- "Laddar ner en kalenderfil (.ics)": "Downloads a calendar file (.ics)"
+ "Laddar ner en kalenderfil (.ics)": "Downloads a calendar file (.ics)",
+ "Arenabesök utan match": "Ground visit without a match",
+ "Arenabesök": "Ground visit",
+ "Till exempel en arenavisning eller ett besök när det inte spelades match. Då behöver du inte fylla i match och resultat.": "For example a stadium tour or a visit when there was no match. Then you don't need to fill in the match and result."
 }
