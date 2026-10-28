@@ -3362,7 +3362,9 @@ function remindHtml(){if(!notifOn("remind")||myState!=="ready"||!Array.isArray(M
 function renderHome(){const el=document.getElementById("homeBody");if(!el)return;try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
   const ids=Object.keys(STATS).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="hem")renderHome();}).catch(()=>{});
   const ob=onboardHtml();
-  el.innerHTML=ob+remindHtml()+activityHtml()+homeOrder().filter(k=>homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+  // nya användare (inte inloggade, inte klara med kom igång eller inga loggade matcher) får Så funkar Groundly överst, alltid
+  const fresh=myState!=="ready"||!MY.onboarded||!(MY.attended&&MY.attended.length);
+  el.innerHTML=(fresh?introHtml():"")+ob+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
   return`<article class="tip howto"><h2 class="name">${$t("Så funkar Groundly")}</h2>
