@@ -861,7 +861,12 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 
   <!-- Forum -->
   <section id="v-forum" hidden style="display:contents">
-    <div id="forumTop" class="ftop"></div>
+    <div class="reprow"><div id="forumTop" class="ftop"></div>
+    <label class="search" for="forumQ" id="forumSearch">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="forumQ" type="search" placeholder="Sök" aria-label="Sök i forumet" autocomplete="off" enterkeyhint="search">
+      <button class="clear" id="forumQClear" hidden>Rensa</button>
+    </label></div>
     <div class="chips wrapchips" role="group" aria-label="Kategori" id="forumChips"></div>
     <div class="list" id="forumList"></div>
   </section>
@@ -1629,6 +1634,9 @@ function postHtml(p,isReply){const mine=p.uid===myId;const c=p.club&&C[p.club];
     ${c?`<div><button class="btn small" data-open="${esc(c.id)}">${esc(c.n)}</button></div>`:""}
     ${mine||isMod?`<div class="pactions">${mine?`<button class="link" data-delpost="${esc(p.id)}">${$t("Ta bort")}</button>`:""}${isMod&&!mine?`<button class="link" data-hide="${esc(p.key)}">${$t("Dölj")}</button>`:""}</div>`:""}
   </div>`;}
+let forumQ="";
+{const qEl=document.getElementById("forumQ");let t;if(qEl){qEl.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{forumQ=qEl.value.trim();document.getElementById("forumQClear").hidden=!forumQ;renderForum(true);},150);});
+  document.getElementById("forumQClear").addEventListener("click",e=>{e.preventDefault();qEl.value="";forumQ="";e.currentTarget.hidden=true;renderForum(true);qEl.focus();});}}
 function renderForum(namesOnly){
   const el=document.getElementById("forumList");const top=document.getElementById("forumTop");
   document.getElementById("forumChips").innerHTML=[["alla",$t("Alla")],...KINDS].map(([k,l])=>`<button class="chip" data-fkind="${k}" aria-pressed="${fKind===k}">${l}</button>`).join("")+(accClub&&C[accClub]?`<button class="chip" data-accclear="1" aria-pressed="true" aria-label="${$t("Sluta filtrera på {0}",[esc(C[accClub].n)])}">${esc(C[accClub].n)} ${NO}</button>`:"");
@@ -1649,8 +1657,12 @@ function renderForum(namesOnly){
       ${forumMsg?`<p class="err">${esc(forumMsg)}</p>`:""}
       <div class="actions"><button class="btn primary" type="submit"${writeBusy?" disabled":""}>${writeBusy?"Publicerar…":$t("Publicera")}</button><button class="btn" type="button" id="cancelPost">${$t("Avbryt")}</button></div>
     </form>`;}
-  const posts=allPosts();const threads=posts.filter(p=>!p.parent&&p.title&&(fKind==="alla"||p.kind===fKind)&&(!accClub||p.club===accClub));
+  {const sw=document.getElementById("forumSearch");if(sw)sw.hidden=!!composing;}
+  const posts=allPosts();let threads=posts.filter(p=>!p.parent&&p.title&&(fKind==="alla"||p.kind===fKind)&&(!accClub||p.club===accClub));
   const replies={};posts.filter(p=>p.parent).forEach(p=>{(replies[p.parent]=replies[p.parent]||[]).push(p);});
+  // sökning: rubrik, text, svar, skribent och kopplad klubb
+  if(forumQ){const words=norm(forumQ).split(/\s+/).filter(Boolean);threads=threads.filter(t=>{const c=t.club&&C[t.club];const hay=norm([t.title,t.body,who(t.uid),c&&c.n,c&&c.city,KIND_L[t.kind],...(replies[t.key]||[]).flatMap(r=>[r.body,who(r.uid)])].filter(Boolean).join(" "));return words.every(w=>hay.includes(w));});
+    if(!threads.length){el.innerHTML=`<div class="empty"><b>${$t("Inga inlägg matchar ”{0}”.",[esc(forumQ)])}</b><div>${$t("Prova ett annat ord, till exempel en stad, en klubb eller en arena.")}</div></div>`;return;}}
   const last=t=>[t,...(replies[t.key]||[])].reduce((m,p)=>p.at>m?p.at:m,t.at);
   threads.sort((a,b)=>last(b).localeCompare(last(a)));
   const ids=[...new Set(posts.map(p=>p.uid))];if(!namesOnly)resolveNames(ids);
