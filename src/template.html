@@ -711,6 +711,16 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .tip.howto .itile{padding:11px 8px 10px}
 .tip.howto .itile small{color:rgba(255,255,255,.8)}
 .tip.howto .itile:focus-visible{outline:2px solid #f2c14e}
+
+/* startsidans rubrik och toppraden: tydligare, så att de håller emot den gröna Så funkar-rutan */
+.intro{padding:4px 0 2px}
+.intro .tagline{font:800 calc(25px*var(--fs))/1.15 var(--f-display);letter-spacing:-.02em;color:var(--fg);margin-top:4px;text-wrap:balance}
+.intro .tagline span{color:var(--accent)}
+.intro .sub{font-size:calc(15px*var(--fs));color:color-mix(in srgb,var(--fg) 78%,var(--bg));margin-top:6px;line-height:1.4}
+.wordmark{font-size:calc(25px*var(--fs))}
+.topbar .blogo{width:38px;height:38px}
+.topbar:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--band);pointer-events:none}
+@media (min-width:761px){.topbar{overflow:hidden}}
 </style>
 
 <div class="wrap">
@@ -1015,7 +1025,7 @@ const _tm=new Map();const timeOf=iso=>{let v=_tm.get(iso);if(v===undefined){cons
 // ---------- undertitel efter telefonens språk ----------
 const TAGLINES={sv:"Planera, boka & logga dina fotbollsresor",en:"Plan, book & log your football trips",nb:"Planlegg, bestill & logg fotballturer",no:"Planlegg, bestill & logg fotballturer",nn:"Planlegg, bestill & logg fotballturer",da:"Planlæg, book & log fodboldture",fi:"Suunnittele, varaa & tallenna futisreissut",is:"Skipuleggðu, bókaðu & skráðu fótboltaferðir",de:"Fußballreisen planen, buchen & loggen",nl:"Plan, boek & log je voetbaltrips",fr:"Planifie, réserve & note tes virées foot",es:"Planea, reserva y guarda viajes de fútbol",it:"Pianifica, prenota & registra trasferte",pt:"Planeia, reserva & regista viagens de futebol",pl:"Planuj, rezerwuj i zapisuj wyjazdy na mecze"};
 (()=>{try{const langs=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"en"]).map(l=>String(l).toLowerCase().split("-")[0]);
-  const l=TAGLINES[LANG]?LANG:"en";const el=document.getElementById("tagline");if(el){el.textContent=TAGLINES[l];el.lang=l;}}catch(e){}})();
+  const l=TAGLINES[LANG]?LANG:"en";const el=document.getElementById("tagline");if(el){const w=String(TAGLINES[l]).split(" "),last=w.pop();el.textContent=w.join(" ")+" ";const sp=document.createElement("span");sp.textContent=last;el.appendChild(sp);el.lang=l;}}catch(e){}})();
 // ---------- mode ----------
 // Tillbaka: hoppar man från en vy till en annan (t.ex. arena → landslag) sparas varifrån man kom,
 // så att mobilens bakåt-gest och knappen "Tillbaka till …" leder rätt.
