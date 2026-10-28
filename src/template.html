@@ -694,6 +694,23 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 #tipsList>.tip,#arenaList>.tip,#clubList>.card,#repList>.rep{content-visibility:auto;contain-intrinsic-size:auto 280px}
 .link.more{align-self:flex-start;margin-top:2px;font-weight:600;color:var(--accent)}
 .scorein{display:flex;align-items:center;gap:8px}.scorein .scnum{width:3.2em;text-align:center;font-size:calc(18px*var(--fs));font-weight:700}.scdash{font-weight:800;font-size:calc(20px*var(--fs));color:var(--fg)}
+
+/* Så funkar Groundly: egen, tydlig stil för nya användare (en planhalva i klubbgrönt) */
+:root:root .tip.howto{--hw1:#0f3b23;--hw2:#1f7543;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240' viewBox='0 0 400 240' fill='none' stroke='white' stroke-opacity='.12' stroke-width='2'%3E%3Cpath d='M300 0v240'/%3E%3Ccircle cx='300' cy='120' r='52'/%3E%3Ccircle cx='300' cy='120' r='3' fill='white' fill-opacity='.12'/%3E%3Cpath d='M400 60h-48v120h48'/%3E%3C/svg%3E") right -40px center/auto 125% no-repeat,linear-gradient(150deg,var(--hw1),var(--hw2));color:#fff;border:0;box-shadow:0 6px 20px rgba(15,59,35,.28);padding:16px 14px 14px;gap:6px}
+:root[data-theme="warm"] .tip.howto{--hw1:#6b2c06;--hw2:#b4510b}
+:root:root .tip.howto:before{display:none}
+.tip.howto .howeye{display:inline-block;align-self:flex-start;font:700 calc(11px*var(--fs)) var(--f-body);letter-spacing:.08em;text-transform:uppercase;background:#f2c14e;color:#3a2a05;padding:3px 9px;border-radius:99px}
+.tip.howto .name{color:#fff;font-size:calc(22px*var(--fs))}
+.tip.howto .howsub{margin:0;color:rgba(255,255,255,.82);font-size:calc(14px*var(--fs))}
+.tip.howto .itiles{counter-reset:hw;margin-top:8px}
+.tip.howto .itile{counter-increment:hw;position:relative;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;backdrop-filter:blur(2px);transition:background .15s}
+.tip.howto .itile:hover,.tip.howto .itile:active{background:rgba(255,255,255,.18)}
+.tip.howto .itile:after{content:counter(hw);position:absolute;top:8px;right:9px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font:700 11px/1 var(--f-mono);background:#f2c14e;color:#3a2a05}
+.tip.howto .itile .ic{color:#f2c14e}
+.tip.howto .itile b{color:#fff;font-size:calc(13.5px*var(--fs));overflow-wrap:normal;hyphens:manual}
+.tip.howto .itile{padding:11px 8px 10px}
+.tip.howto .itile small{color:rgba(255,255,255,.8)}
+.tip.howto .itile:focus-visible{outline:2px solid #f2c14e}
 </style>
 
 <div class="wrap">
@@ -3367,7 +3384,7 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   el.innerHTML=(fresh?introHtml():"")+ob+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
-  return`<article class="tip howto"><h2 class="name">${$t("Så funkar Groundly")}</h2>
+  return`<article class="tip howto"><div class="howeye">${$t("Ny här?")}</div><h2 class="name">${$t("Så funkar Groundly")}</h2><p class="howsub">${$t("Tre saker du gör i appen. Tryck för att börja.")}</p>
     <div class="itiles">${tile('data-gomode="matcher"',"calendar",$t("Planera & boka"),$t("Hitta matcher och boka biljett, hotell och resa via våra länkar"))}${tile('data-gomine="1"',"check",$t("Logga"),$t("Matcherna du sett och dina arenor"))}${tile('data-gomode="forum"',"chat",$t("Community"),$t("Fråga och tipsa andra i forumet"))}</div></article>`;}
 // ---------- startsidan: vilka rutor som visas och i vilken ordning ----------
 // standard = kort startsida; resten slås på under Anpassa startsidan. Valen sparas på kontot (homeCfg) och i telefonen.
