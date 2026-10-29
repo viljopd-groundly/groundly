@@ -763,6 +763,32 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 
 /* menyraden ska ligga still: ingen gummibandseffekt i den installerade appen */
 @media (display-mode:standalone){html,body{overscroll-behavior-y:none}}
+
+/* anmälan */
+.flagbtn{color:var(--muted)!important;font-weight:500!important}
+.flagdone{font-size:calc(12px*var(--fs))}
+.flagr{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.flagr legend{font-weight:600;margin-bottom:6px}
+.flagr .chk{display:flex;gap:8px;align-items:center}
+.flagq{font-style:italic}
+.pill.bad{background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad)}
+.forumrules{font-size:calc(13px*var(--fs));color:var(--muted);border-left:3px solid var(--accent-soft);padding-left:10px}
+
+/* namn och profiler */
+.ulink{all:unset;cursor:pointer;font-weight:inherit;color:inherit;border-bottom:1px dotted currentColor}
+.ulink:hover,.ulink:focus-visible{color:var(--accent);outline:none}
+button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
+.rby{font-size:calc(13px*var(--fs));color:var(--muted)}
+.byas{margin:0}
+.notice.byas{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.profbox{max-height:calc(100vh - 40px);overflow:auto}
+.profhead{display:flex;gap:12px;align-items:center}
+.profhead h2{margin:0}
+.pav{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--chalk);font:800 calc(20px*var(--fs)) var(--f-display);flex:0 0 auto}
+.proflist{display:flex;flex-direction:column;gap:6px}
+.plink{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:2px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.plink.static{cursor:default}
+.plink:not(.static):hover{border-color:var(--accent)}
 </style>
 
 <div class="wrap">
@@ -1678,10 +1704,10 @@ async function resolveNames(ids){if(!userNs||!ids.length)return;try{const ps=awa
 const who=uid=>uid===myId?$t("Du"):(NAMES[uid]||$t("Medlem"));
 function postHtml(p,isReply){const mine=p.uid===myId;const c=p.club&&C[p.club];
   return`<div class="post${isReply?" reply":""}">
-    <div class="by"><b>${langFlag(p.lang)}${esc(who(p.uid))}</b><span>${esc(ago(p.at))}</span></div>
+    <div class="by"><b>${langFlag(p.lang)}${userLink(p.uid)}</b><span>${esc(ago(p.at))}</span></div>
     <div class="body">${esc(p.body)}</div>
     ${c?`<div><button class="btn small" data-open="${esc(c.id)}">${esc(c.n)}</button></div>`:""}
-    ${mine||isMod?`<div class="pactions">${mine?`<button class="link" data-delpost="${esc(p.id)}">${$t("Ta bort")}</button>`:""}${isMod&&!mine?`<button class="link" data-hide="${esc(p.key)}">${$t("Dölj")}</button>`:""}</div>`:""}
+    <div class="pactions">${mine?`<button class="link" data-delpost="${esc(p.id)}">${$t("Ta bort")}</button>`:""}${isMod&&!mine?`<button class="link" data-hide="${esc(p.key)}">${$t("Dölj")}</button>`:""}${!isReply?shareLinkBtn("t",p.key,p.title):""}${flagBtn(p.key,p.uid,(p.title?p.title+": ":"")+p.body)}</div>
   </div>`;}
 let forumQ="";
 {const qEl=document.getElementById("forumQ");let t;if(qEl){qEl.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{forumQ=qEl.value.trim();document.getElementById("forumQClear").hidden=!forumQ;renderForum(true);},150);});
@@ -1697,7 +1723,7 @@ function renderForum(namesOnly){try{renderWriters();}catch(e){}
     if(canPost===false||!myId)top.innerHTML=`<div class="place"><span>${$t("Du kan läsa forumet. För att skriva behöver ägaren bjuda in dig till sidan med redigeringsrätt.")}</span></div>`;
     else if(!composing)top.innerHTML=`<button class="btn primary" id="newPost">${$t("+ Nytt inlägg")}</button>${forumMsg?`<p class="err">${esc(forumMsg)}</p>`:""}`;
     else top.innerHTML=`<form class="compose" id="composeForm">
-      <h2>${$t("Nytt inlägg")}</h2>
+      <h2>${$t("Nytt inlägg")}</h2>${byAsHtml()}
       <div class="chips" role="radiogroup" aria-label="${$t("Typ")}">${KINDS.map(([k,l],i)=>`<label class="chip"><input type="radio" name="fkindNew" value="${k}"${k===composeKind?" checked":""}> ${l}</label>`).join("")}</div>
       <label class="fld" for="fTitle">${$t("Rubrik")}<input id="fTitle" maxlength="120" required placeholder="${$t("t.ex. Bästa ståplatsen på Millerntor?")}"></label>
       <label class="fld" for="fBody">${$t("Text")}<textarea id="fBody" maxlength="2000" rows="4" required placeholder="${$t("Skriv din fråga eller ditt tips")}"></textarea></label>
@@ -1769,7 +1795,7 @@ async function forumClick(t){
 (async()=>{try{userNs=await window.claude?.use?.("user")??null;}catch(e){userNs=null}
   // can("data.write") gäller den låsta roten, inte det egna forumdokumentet – ett nekat skrivförsök avgör i stället
   if(userNs){try{myId=await userNs.id();isMod=await userNs.canEdit();}catch(e){}}
-  let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startSocial(db);startFeedback(db);
+  let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startSocial(db);startFeedback(db);loadMyName();
   if(!db){forumState="none";if(mode==="forum")renderForum();return;}
   db.collection("forum").onSnapshot(s=>{const f={};s.docs.forEach(d=>{f[d.id]=d.data();});FORUM=f;forumState="ready";try{actBadge();}catch(e){}if(mode==="forum")renderForum();else if(mode==="hem")renderHome();},()=>{forumState="none";if(mode==="forum")renderForum();});
   db.doc("mod/hidden").onSnapshot(s=>{HIDDEN=s.exists&&Array.isArray(s.data().keys)?s.data().keys:[];if(mode==="forum")renderForum();},()=>{});
@@ -2385,7 +2411,7 @@ function pubItem(p){const can=!!myId&&pubsState==="ready";
   return`<div class="pub"><div class="mmain"><div class="pname">${esc(p.name)}${p.crowd&&CROWD[p.crowd]?` <span class="pill ${p.crowd==="away"?"t2":p.crowd==="home"?"t1":""}">${CROWD[p.crowd]}</span>`:""}${p.ed?` <span class="pill">${$t("Redaktionens tips")}</span>`:""}</div>
     ${+p.walk>0?`<div class="venue">${$t("{0} min promenad till arenan",[+p.walk])}</div>`:""}${p.text?`<div class="ptext">${esc(p.text)}</div>`:""}</div>
     <div class="pact">${can?`<button class="mini" data-pubvote="${esc(p.key)}" aria-pressed="${p.mine}">${$t("Bra tips{0}",[p.votes?" · "+p.votes:""])}</button>`:p.votes?`<span class="meta">${$t("{0} gillar",[p.votes])}</span>`:""}
-    ${p.uid&&p.uid===myId?`<button class="link" data-pubdel="${esc(p.id)}">${$t("Ta bort")}</button>`:""}${isMod&&p.uid&&p.uid!==myId?`<button class="link" data-pubhide="${esc(p.key)}">${$t("Dölj")}</button>`:""}</div></div>`;}
+    ${p.uid&&p.uid===myId?`<button class="link" data-pubdel="${esc(p.id)}">${$t("Ta bort")}</button>`:""}${isMod&&p.uid&&p.uid!==myId?`<button class="link" data-pubhide="${esc(p.key)}">${$t("Dölj")}</button>`:""}${p.uid&&!p.ed?flagBtn("pub:"+p.key,p.uid,p.name+(p.text?": "+p.text:"")):""}</div></div>`;}
 function pubFormHtml(c){const f=pubForm||{crowd:""};
   return`<form class="compose" id="pubForm" data-pubfor="${esc(c.id)}" data-noclose="1"><h2>${$t("Tipsa om en pub nära {0}",[esc(c.s)])}</h2>
     <label class="fld" for="pfName">${$t("Pubens namn")}<input id="pfName" maxlength="80" required value="${esc(f.name||"")}" placeholder="${$t("t.ex. The Albert")}"></label>
@@ -3167,7 +3193,7 @@ function repActivity(){if(!myId)return null;
     if(!seen.l)seen.l=likes;Object.entries(likes).forEach(([k,n])=>{newL+=Math.max(0,n-((seen.l||{})[k]||0));});}
   let newF=[],threads=[];
   if(forumState==="ready"){const posts=allPosts();threads=posts.filter(p=>!p.parent&&p.uid===myId);const tk=new Set(threads.map(t=>t.key));
-    newF=posts.filter(p=>p.parent&&tk.has(p.parent)&&p.uid!==myId&&String(p.at)>seen.f&&!HIDDEN.includes("forum:"+p.key));}
+    newF=posts.filter(p=>p.parent&&tk.has(p.parent)&&p.uid!==myId&&String(p.at)>seen.f&&!HIDDEN.includes(p.key));}
   try{store.set("fk-repseen",JSON.stringify(seen));}catch(e){}
   return{newC,newL,newF,likes,mine,threads,seen};}
 function repSeen(part){const a=repActivity();if(!a)return;const now=new Date().toISOString();const s=a.seen;
@@ -3185,7 +3211,7 @@ function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{
 function commentsHtml(r){const cs=commentsFor(r.key);const ck="com:"+r.key,cn=lim(ck,3);
   return`<div class="rcomments"><h3 class="sec">${$t("Kommentarer")}${cs.length?` (${cs.length})`:""}</h3>
     ${cs.length>3?`<div class="morerow">${cn<cs.length?`<button class="btn small" data-limmore="${esc(ck)}" data-limbase="3">${$t("Visa tidigare kommentarer ({0})",[cs.length-cn])}</button>`:`<button class="btn small" data-limless="${esc(ck)}">${$t("Visa färre")}</button>`}</div>`:""}
-    ${cs.slice(-cn).map(c=>`<div class="rcom"><div class="rcomh"><b>${langFlag(c.lang)}${esc(who(c.uid))}</b> <span class="meta">· ${esc(ago(c.at))}</span>${c.uid===myId?`<button class="link" data-rcdel="${esc(c.id)}">${$t("Ta bort")}</button>`:isMod?`<button class="link" data-rchide="${esc(c.uid+":"+c.id)}">${$t("Dölj")}</button>`:""}</div><div class="rcomb">${esc(c.body)}</div></div>`).join("")||`<p class="meta">${$t("Inga kommentarer än.")}</p>`}
+    ${cs.slice(-cn).map(c=>`<div class="rcom"><div class="rcomh"><b>${langFlag(c.lang)}${userLink(c.uid)}</b> <span class="meta">· ${esc(ago(c.at))}</span>${c.uid===myId?`<button class="link" data-rcdel="${esc(c.id)}">${$t("Ta bort")}</button>`:isMod?`<button class="link" data-rchide="${esc(c.uid+":"+c.id)}">${$t("Dölj")}</button>`:""}${flagBtn("com:"+c.uid+":"+c.id,c.uid,c.body)}</div><div class="rcomb">${esc(c.body)}</div></div>`).join("")||`<p class="meta">${$t("Inga kommentarer än.")}</p>`}
     ${canWriteRep()?`<form class="rcform" data-rcform="${esc(r.key)}"><textarea name="b" maxlength="600" rows="2" placeholder="${$t("Skriv en kommentar…")}" aria-label="${$t("Skriv en kommentar")}" required></textarea><button class="btn small primary" type="submit"${commBusy?" disabled":""}>${$t("Skicka")}</button></form>`:`<button class="btn small" data-glogin>${$t("Logga in för att kommentera")}</button>`}</div>`;}
 async function writeComments(fn){if(!dbNs||!myId||commBusy)return false;commBusy=true;
   const cur=COMM[myId]&&Array.isArray(COMM[myId].items)?COMM[myId].items:[];const next=fn(cur.slice()).slice(-300);
@@ -3222,7 +3248,7 @@ function repDateTxt(d){return d&&/^\d{4}-\d{2}-\d{2}$/.test(d)?new Date(d+"T12:0
 
 function newDraft(o){return Object.assign({editing:null,draft:false,visit:false,match:"",result:"",crowd:"",title:"",club:"",city:"",date:"",body:"",tip:"",photos:[],added:[],orig:[]},o||{});}
 function composeHtml(){const d=repDraft;return`<form class="compose" id="repForm">
-  <h2>${d.editing?$t("Redigera reportage"):$t("Nytt reportage")}</h2>
+  <h2>${d.editing?$t("Redigera reportage"):$t("Nytt reportage")}</h2>${byAsHtml()}
   <label class="fld" for="rTitle">${$t("Rubrik")}<input id="rTitle" data-rd="title" maxlength="120" required value="${esc(d.title)}" placeholder="${$t("t.ex. Regnig derbyhelg i Glasgow")}"></label>
   <div class="row2">
     <label class="fld" for="rClub">${$t("Klubb eller arena")}<input id="rClub" data-rd="club" list="allClubs" value="${esc(d.club)}" placeholder="${$t("t.ex. Celtic")}"></label>
@@ -3297,13 +3323,14 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
       </button>
       ${open?`<div class="rbody">
         ${r.photos.length?`<div class="phgrid big">${r.photos.map((id,i)=>`<button class="phbtn" data-phview="${esc(id)}" aria-label="${$t("Visa bild {0} i större storlek",[i+1])}">${phImg(id)}</button>`).join("")}</div>`:""}
+        <div class="rby">${$t("Av")} ${langFlag(r.lang)}${userLink(r.uid)} · ${esc(ago(r.at))}</div>
         ${matchBox(r)}
         <div class="body">${esc(r.body)}</div>
         ${r.tip?`<div class="rtip"><b>${$t("Bästa tipset")}</b>${esc(r.tip)}</div>`:""}
         <div class="actions">${canWriteRep()?`<button class="btn small" data-replike="${esc(r.key)}" aria-pressed="${iLike(r.key)}">${likeInner(r.key)}</button>`:n?`<span class="meta">${ic("heart")} ${n}</span>`:""}
           ${c?`<button class="btn small" data-open="${esc(c.id)}">${$t("Visa {0}",[esc(c.n)])}</button>`:""}
-          ${c&&c.city&&!isNat(c)?`<button class="btn small" data-teamview="${esc(c.id)}">${$t("Lagets matcher")}</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button></div>
-        ${mine||isMod?`<div class="pactions">${mine?`<button class="link" data-repedit="${esc(r.id)}">${$t("Redigera")}</button><button class="link" data-repdel="${esc(r.id)}">${$t("Ta bort")}</button>`:""}${isMod&&!mine?`<button class="link" data-rephide="${esc(r.key)}">${$t("Dölj")}</button>`:""}</div>`:""}
+          ${c&&c.city&&!isNat(c)?`<button class="btn small" data-teamview="${esc(c.id)}">${$t("Lagets matcher")}</button>`:""}${c&&hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}${c?`<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>`:""}</div>
+        <div class="pactions">${mine?`<button class="link" data-repedit="${esc(r.id)}">${$t("Redigera")}</button><button class="link" data-repdel="${esc(r.id)}">${$t("Ta bort")}</button>`:""}${isMod&&!mine?`<button class="link" data-rephide="${esc(r.key)}">${$t("Dölj")}</button>`:""}${r.draft?"":shareLinkBtn("r",r.key,r.title)}${flagBtn("rep:"+r.key,r.uid,r.title+": "+r.body)}</div>
         ${commentsHtml(r)}
       </div>`:""}
     </article>`;}).join("")+limBtns("rp",reps.length,5);
@@ -3460,10 +3487,10 @@ function writersRank(){const m=new Date().toISOString().slice(0,7);const W={};co
   return Object.values(W).sort((a,b)=>b.pts-a.pts||b.rep-a.rep).slice(0,5);}
 const wDesc=w=>[w.rep?$tn(w.rep,"{n} reportage","{n} reportage|pl"):"",w.post?$tn(w.post,"{n} inlägg","{n} inlägg|pl"):""].filter(Boolean).join(" · ");
 function writersStrip(){const ws=writersRank();if(!ws.length)return"";const mon=new Date().toLocaleDateString(LOC,{month:"long"});
-  return`<div class="writers"><span class="wlbl">${ic("star")} ${$t("Månadens skribenter i {0}",[esc(mon)])}</span>${ws.slice(0,3).map((w,i)=>`<span class="wchip${w.uid===myId?" me":""}"><b>${i+1}</b>${esc(who(w.uid))}<small>${esc(wDesc(w))}</small></span>`).join("")}</div>`;}
+  return`<div class="writers"><span class="wlbl">${ic("star")} ${$t("Månadens skribenter i {0}",[esc(mon)])}</span>${ws.slice(0,3).map((w,i)=>`<button class="wchip${w.uid===myId?" me":""}" data-user="${esc(w.uid)}"><b>${i+1}</b>${esc(who(w.uid))}<small>${esc(wDesc(w))}</small></button>`).join("")}</div>`;}
 function writersHtml(){const ws=writersRank();const mon=new Date().toLocaleDateString(LOC,{month:"long"});
-  return`<article class="tip"><div class="lbl">${$t("Månadens skribenter")}</div>${ws.length?`<h2 class="name">${ic("star")} ${esc(who(ws[0].uid))}</h2><p class="meta" style="margin:0">${esc(wDesc(ws[0]))}</p>
-    ${ws.length>1?`<ol class="board" start="2">${ws.slice(1).map(w=>`<li class="${w.uid===myId?"me":""}"><span>${esc(who(w.uid))}</span><b>${w.pts}</b><small>${esc(wDesc(w))}</small></li>`).join("")}</ol>`:""}`
+  return`<article class="tip"><div class="lbl">${$t("Månadens skribenter")}</div>${ws.length?`<h2 class="name">${ic("star")} ${userLink(ws[0].uid)}</h2><p class="meta" style="margin:0">${esc(wDesc(ws[0]))}</p>
+    ${ws.length>1?`<ol class="board" start="2">${ws.slice(1).map(w=>`<li class="${w.uid===myId?"me":""}"><span>${userLink(w.uid)}</span><b>${w.pts}</b><small>${esc(wDesc(w))}</small></li>`).join("")}</ol>`:""}`
     :`<h2 class="name">${$t("Ledig plats i {0}",[esc(mon)])}</h2><p class="meta">${$t("Skriv ett reportage eller svara på en fråga i forumet så hamnar du här.")}</p>`}
     <p class="hint">${$t("Reportage ger 3 poäng, en ny forumtråd 2 och ett svar eller en kommentar 1. Räknas för {0}.",[esc(mon)])}</p>
     <div class="actions"><button class="btn small" data-gomode="reportage">${$t("Skriv reportage")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button></div></article>`;}
@@ -3500,7 +3527,7 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   const ob=onboardHtml();
   // nya användare (inte inloggade, inte klara med kom igång eller inga loggade matcher) får Så funkar Groundly överst, alltid
   const fresh=myState!=="ready"||!MY.onboarded||!(MY.attended&&MY.attended.length);
-  el.innerHTML=(fresh?introHtml(true):"")+ob+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+  el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+ob+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
   return`<article class="tip howto">${fresh?`<div class="howeye">${$t("Ny här?")}</div>`:""}<h2 class="name">${$t("Så funkar Groundly")}</h2><p class="howsub">${$t("Tre saker du gör i appen. Tryck för att börja.")}</p>
@@ -4034,7 +4061,7 @@ let FEEDBACK={},MYFB=null,fbDone=[],fbBusy=false;
 const FB_KINDS=[["bug",$t("Något är fel")],["idea",$t("Förslag")],["other",$t("Annat")]];
 function startFeedback(db){if(!db||!myId)return;
   db.doc("feedback/"+myId).onSnapshot(s=>{MYFB=s.exists?s.data():null;},()=>{});
-  if(isMod){db.collection("feedback").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});FEEDBACK=o;resolveNames(Object.keys(o).filter(id=>id!==myId&&!(id in NAMES)));if(mode==="mine")renderMine();},()=>{});
+  if(isMod){db.collection("feedback").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});FEEDBACK=o;resolveNames(Object.keys(o).filter(id=>id!==myId&&!(id in NAMES)));if(mode==="mine")renderMine();else if(mode==="hem")renderHome();},()=>{});
     db.doc("mod/feedback").onSnapshot(s=>{fbDone=s.exists&&Array.isArray(s.data().done)?s.data().done:[];if(mode==="mine")renderMine();},()=>{});}}
 function openFeedback(){const o=document.getElementById("fbOv");if(o)o.remove();
   document.body.insertAdjacentHTML("beforeend",`<div id="fbOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="fbT"><form class="compose askbox" id="fbForm">
@@ -4052,11 +4079,103 @@ document.addEventListener("submit",async e=>{if(e.target.id!=="fbForm")return;e.
   const items=(MYFB&&Array.isArray(MYFB.items)?MYFB.items:[]).slice(-49);items.push({id:newId(),kind:FB_KINDS.some(k=>k[0]===kind)?kind:"other",text:txt.slice(0,1000),view:mode,at:new Date().toISOString()});
   fbBusy=true;try{await dbNs.doc("feedback/"+myId).set({items});MYFB={items};document.getElementById("fbOv").remove();toast($t("Tack! Det har skickats."),"check");}
   catch(x){err.textContent=$t("Det gick inte att skicka just nu. Försök igen senare.");}finally{fbBusy=false;}});
+// ---------- anmäla innehåll ----------
+// Anmälan sparas som ett meddelande i användarens feedback-dokument (läses bara av moderatorer).
+const FLAG_R=[["spam",$t("Spam eller reklam")],["hate",$t("Kränkande eller hatiskt")],["illegal",$t("Olagligt innehåll")],["personal",$t("Personuppgifter om någon annan")],["other",$t("Annat")]];
+const flagged=new Set();
+function flagBtn(key,uid,txt){if(!key||(uid&&uid===myId))return"";const done=flagged.has(key)||(MYFB&&Array.isArray(MYFB.items)&&MYFB.items.some(x=>x&&x.kind==="flag"&&x.ref===key));
+  return done?`<span class="meta flagdone">${$t("Anmäld")}</span>`:`<button class="link flagbtn" data-flag="${esc(key)}" data-flagtxt="${esc(String(txt||"").slice(0,160))}">${$t("Anmäl")}</button>`;}
+function openFlag(key,txt){const o=document.getElementById("flagOv");if(o)o.remove();
+  document.body.insertAdjacentHTML("beforeend",`<div id="flagOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="flT"><form class="compose askbox" id="flagForm" data-key="${esc(key)}" data-txt="${esc(txt)}">
+    <h2 id="flT">${$t("Anmäl innehåll")}</h2>${txt?`<p class="meta flagq">”${esc(txt)}${txt.length>=160?"…":""}”</p>`:""}
+    <fieldset class="flagr"><legend>${$t("Vad är fel?")}</legend>${FLAG_R.map(([k,l],i)=>`<label class="chk"><input type="radio" name="flr" value="${k}"${i===0?" checked":""}> ${l}</label>`).join("")}</fieldset>
+    <label class="fld" for="flText">${$t("Mer information (valfritt)")}<textarea id="flText" rows="3" maxlength="500"></textarea></label>
+    <p class="hint">${$t("Anmälan går bara till moderatorerna, inte till den som skrev. Vi tittar på den så snart vi kan.")}</p><p class="err" id="flErr"></p>
+    <div class="actions"><button class="btn primary" type="submit">${$t("Skicka anmälan")}</button><button class="btn" type="button" id="flCancel">${$t("Avbryt")}</button></div></form></div>`);}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-flag],#flCancel,#flagOv");if(!t)return;
+  if(t.dataset&&t.dataset.flag){e.preventDefault();e.stopPropagation();if(!dbNs||!myId){toast($t("Logga in för att anmäla."));return;}openFlag(t.dataset.flag,t.dataset.flagtxt||"");return;}
+  if(t.id==="flCancel"||(t.id==="flagOv"&&e.target===t))document.getElementById("flagOv").remove();},true);
+document.addEventListener("submit",async e=>{if(e.target.id!=="flagForm")return;e.preventDefault();if(fbBusy)return;const f=e.target;const key=f.dataset.key;
+  const reason=(f.querySelector("input[name=flr]:checked")||{}).value||"other";const txt=document.getElementById("flText").value.trim();
+  const items=(MYFB&&Array.isArray(MYFB.items)?MYFB.items:[]).slice(-49);items.push({id:newId(),kind:"flag",ref:key,reason,text:txt.slice(0,500),excerpt:String(f.dataset.txt||"").slice(0,160),view:mode,at:new Date().toISOString()});
+  fbBusy=true;try{await dbNs.doc("feedback/"+myId).set({items});MYFB={items};flagged.add(key);document.getElementById("flagOv").remove();toast($t("Tack! Anmälan är skickad."),"check");render();}
+  catch(x){document.getElementById("flErr").textContent=$t("Det gick inte att skicka just nu. Försök igen senare.");}finally{fbBusy=false;}});
+function modAlertHtml(){if(!isMod)return"";let n=0;Object.entries(FEEDBACK).forEach(([u,d])=>(d&&Array.isArray(d.items)?d.items:[]).forEach(x=>{if(x&&x.kind==="flag"&&!fbDone.includes(u+":"+x.id))n++;}));
+  return n?`<article class="tip actcard"><div class="lbl">${ic("shield")} ${$t("Moderering")}</div><p style="margin:0"><b>${$tn(n,"{n} ny anmälan","{n} nya anmälningar")}</b> ${$t("väntar på dig.")}</p><div class="actions"><button class="btn small primary" data-gomodview="1">${$t("Visa anmälningar")}</button></div></article>`:"";}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-gomodview]");if(!t)return;mySub="mod";setMode("mine");renderMine();window.scrollTo({top:0});});
 function feedbackReviewHtml(){if(!isMod)return"";const all=[];Object.entries(FEEDBACK).forEach(([u,d])=>(d&&Array.isArray(d.items)?d.items:[]).forEach(x=>{if(x&&x.id&&x.text)all.push({...x,uid:u,key:u+":"+x.id});}));
-  const open=all.filter(x=>!fbDone.includes(x.key)).sort((a,b)=>String(b.at).localeCompare(String(a.at)));
-  return`<h3 class="sec">${$t("Tyck till från användare")} <span class="meta">${$t("(bara du ser detta)")}</span></h3>`+(open.length?`<div class="flist">${open.map(x=>`<div class="fitem fbitem"><div class="mmain"><div><span class="pill">${esc((FB_KINDS.find(k=>k[0]===x.kind)||FB_KINDS[2])[1])}</span> <b>${esc(who(x.uid))}</b> <span class="meta">${esc(ago(x.at))}${x.view?" · "+esc(x.view):""}</span></div><div class="mnote">${esc(x.text)}</div></div><button class="btn small" data-fbdone="${esc(x.key)}">${$t("Klar")}</button></div>`).join("")}</div>`:`<p class="meta">${$t("Inga nya meddelanden.")}</p>`);}
+  const open0=all.filter(x=>!fbDone.includes(x.key)).sort((a,b)=>String(b.at).localeCompare(String(a.at)));const flags=open0.filter(x=>x.kind==="flag"),open=open0.filter(x=>x.kind!=="flag");
+  const flagH=`<h3 class="sec">${$t("Anmälningar")} <span class="meta">${$t("(bara moderatorer ser detta)")}</span></h3>`+(flags.length?`<div class="flist">${flags.map(x=>`<div class="fitem fbitem flagitem"><div class="mmain"><div><span class="pill bad">${esc((FLAG_R.find(k=>k[0]===x.reason)||FLAG_R[4])[1])}</span> <span class="meta">${$t("från")} ${esc(who(x.uid))} · ${esc(ago(x.at))}</span></div>${x.excerpt?`<div class="mnote">”${esc(x.excerpt)}”</div>`:""}${x.text?`<div class="meta">${esc(x.text)}</div>`:""}${HIDDEN.includes(x.ref)?`<div class="meta">${ic("check")} ${$t("Dolt")}</div>`:""}</div><div class="actions">${HIDDEN.includes(x.ref)?"":`<button class="btn small primary" data-flaghide="${esc(x.ref)}" data-fbkey="${esc(x.key)}">${$t("Dölj innehållet")}</button>`}<button class="btn small" data-fbdone="${esc(x.key)}">${$t("Klar")}</button></div></div>`).join("")}</div>`:`<p class="meta">${$t("Inga nya anmälningar.")}</p>`);
+  return flagH+`<h3 class="sec">${$t("Tyck till från användare")} <span class="meta">${$t("(bara du ser detta)")}</span></h3>`+(open.length?`<div class="flist">${open.map(x=>`<div class="fitem fbitem"><div class="mmain"><div><span class="pill">${esc((FB_KINDS.find(k=>k[0]===x.kind)||FB_KINDS[2])[1])}</span> <b>${esc(who(x.uid))}</b> <span class="meta">${esc(ago(x.at))}${x.view?" · "+esc(x.view):""}</span></div><div class="mnote">${esc(x.text)}</div></div><button class="btn small" data-fbdone="${esc(x.key)}">${$t("Klar")}</button></div>`).join("")}</div>`:`<p class="meta">${$t("Inga nya meddelanden.")}</p>`);}
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-flaghide]");if(!t||!isMod||!dbNs)return;const k=t.dataset.flaghide;
+  try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,k])]});HIDDEN=[...new Set([...HIDDEN,k])];const done=[...new Set([...fbDone,t.dataset.fbkey])].slice(-1000);fbDone=done;await dbNs.doc("mod/feedback").set({done});toast($t("Innehållet är dolt."),"check");renderMine();}catch(x){toast($t("Kunde inte spara."));}});
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-fbdone]");if(!t||!isMod||!dbNs)return;const done=[...new Set([...fbDone,t.dataset.fbdone])].slice(-1000);fbDone=done;renderMine();try{await dbNs.doc("mod/feedback").set({done});}catch(x){toast($t("Kunde inte spara."));}});
 
+// ---------- namn och profiler ----------
+let MYNAME=null;
+async function loadMyName(){if(!userNs||!myId)return;try{const ps=await userNs.profiles([myId]);MYNAME=(ps[myId]&&ps[myId].name)||"";}catch(e){MYNAME="";}}
+const weakName=n=>!n||/^(supporter|medlem|member)$/i.test(n);
+function byAsHtml(){if(!myId)return"";const n=MYNAME;
+  return weakName(n)?`<div class="notice byas">${$t("Andra ser dig som ”{0}”. Välj ett namn som andra känner igen dig på.",[esc(n||$t("Medlem"))])} <button type="button" class="btn small primary" data-myname="1">${$t("Välj namn")}</button></div>`
+    :`<p class="meta byas">${$t("Du skriver som {0}",[`<b>${esc(n)}</b>`])} · <button type="button" class="link" data-myname="1">${$t("Ändra namn")}</button></p>`;}
+function userLink(uid){if(!uid)return esc($t("Medlem"));return`<button type="button" class="ulink" data-user="${esc(uid)}">${esc(who(uid))}</button>`;}
+function openNameDlg(){const o=document.getElementById("nameOv");if(o)o.remove();
+  document.body.insertAdjacentHTML("beforeend",`<div id="nameOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="nmT"><form class="compose askbox" id="nameForm">
+    <h2 id="nmT">${$t("Ditt namn i communityn")}</h2><p class="meta">${$t("Namnet visas vid dina inlägg, reportage och kommentarer. Förnamn, smeknamn eller ditt groundhoppernamn går bra.")}</p>
+    <label class="fld" for="nmIn">${$t("Namn")}<input id="nmIn" maxlength="40" required value="${esc(weakName(MYNAME)?"":MYNAME||"")}" autocomplete="nickname"></label><p class="err" id="nmErr"></p>
+    <div class="actions"><button class="btn primary" type="submit">${$t("Spara")}</button><button class="btn" type="button" id="nmCancel">${$t("Avbryt")}</button></div></form></div>`);
+  setTimeout(()=>document.getElementById("nmIn")?.focus(),30);}
+function profileHtml(uid){const me=uid===myId;const name=me?(MYNAME||$t("Du")):(NAMES[uid]||$t("Medlem"));const pd=PUBLIC[uid];
+  const reps=repState==="ready"?allReps().filter(r=>r.uid===uid&&!r.draft&&!HIDDEN.includes("rep:"+r.key)).sort((a,b)=>String(b.at).localeCompare(String(a.at))):[];
+  const ths=forumState==="ready"?allPosts().filter(p=>p.uid===uid&&!p.parent&&p.title&&!HIDDEN.includes(p.key)).sort((a,b)=>String(b.at).localeCompare(String(a.at))):[];
+  const nrep=forumState==="ready"?allPosts().filter(p=>p.uid===uid&&p.parent).length:0;
+  const fav=pd&&pd.fav&&C[pd.fav];const recent=pubRows(uid).slice(0,4);
+  const stats=[reps.length?$tn(reps.length,"{n} reportage","{n} reportage|pl"):"",ths.length+nrep?$tn(ths.length+nrep,"{n} inlägg","{n} inlägg|pl"):"",pd&&+pd.n>0?$t("{0} {1} · {2} arenor",[+pd.n,+pd.n===1?$t("match"):$t("matcher"),+pd.ar||0]):""].filter(Boolean).join(" · ");
+  return`<div class="compose askbox profbox"><div class="profhead"><span class="pav">${esc((name[0]||"?").toUpperCase())}</span><div><h2 id="prT">${esc(name)}</h2>${me?`<span class="meta">${$t("Det här är du")}</span>`:""}${fav?`<div class="meta">${crest(fav.id,fav.n,18)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}</div></div>
+    ${stats?`<p class="meta">${stats}</p>`:""}
+    ${reps.length?`<h3 class="sec">${$t("Reportage")}</h3><div class="proflist">${reps.slice(0,5).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${esc(ago(r.at))}</span></button>`).join("")}</div>`:""}
+    ${ths.length?`<h3 class="sec">${$t("Forumtrådar")}</h3><div class="proflist">${ths.slice(0,5).map(t=>`<button class="plink" data-upthread="${esc(t.key)}"><b>${esc(t.title)}</b><span class="meta">${esc(ago(t.at))}</span></button>`).join("")}</div>`:""}
+    ${recent.length?`<h3 class="sec">${$t("Senaste matcherna")}</h3><div class="proflist">${recent.map(r=>`<div class="plink static"><b>${esc(r.h)}${r.sc?` ${esc(r.sc)} `:" – "}${esc(r.a)}</b><span class="meta">${esc([r.v,fmtDate(r.d)].filter(Boolean).join(" · "))}</span></div>`).join("")}</div>`:""}
+    ${!reps.length&&!ths.length&&!recent.length?`<p class="meta">${me?$t("Du har inte skrivit något än."):$t("Har inte skrivit något än.")}</p>`:""}
+    <div class="actions">${me?`<button class="btn small" data-myname="1">${$t("Ändra namn")}</button>`:myState==="ready"&&myId?`<button class="btn small${isFollow(uid)?"":" primary"}" data-follow="${esc(uid)}" data-profrefresh="${esc(uid)}" aria-pressed="${isFollow(uid)}">${isFollow(uid)?$t("{0} Följer",[ic("check")]):$t("Följ")}</button>`:""}<button class="btn small" type="button" id="prClose">${$t("Stäng")}</button></div></div>`;}
+function openProfile(uid){const o=document.getElementById("profOv");if(o)o.remove();if(!(uid in NAMES)&&uid!==myId)resolveNames([uid]).then(()=>{if(document.getElementById("profOv"))openProfile(uid);});
+  document.body.insertAdjacentHTML("beforeend",`<div id="profOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="prT" data-uid="${esc(uid)}">${profileHtml(uid)}</div>`);}
+function goItem(kind,key){document.getElementById("profOv")?.remove();
+  if(kind==="r"){repOpen=key;repSort="nya";repClub=null;setMode("reportage");}else{openThread=key;fKind="alla";accClub=null;setMode("forum");}
+  deepJump={sel:kind==="r"?`[data-rep="${CSS.escape(key)}"]`:`[data-thread="${CSS.escape(key)}"]`,kind,until:Date.now()+8000};
+  const tick=()=>{if(!deepJump)return;const el=document.querySelector(deepJump.sel);if(el){const tb=document.querySelector(".topbar");window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-(tb?tb.offsetHeight:0)-12)});deepJump=null;return;}if(Date.now()<deepJump.until)setTimeout(tick,200);else deepJump=null;};requestAnimationFrame(tick);}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-user],[data-myname],[data-uprep],[data-upthread],#prClose,#profOv,#nmCancel,#nameOv");if(!t)return;
+  if(t.dataset.user){e.preventDefault();e.stopPropagation();openProfile(t.dataset.user);return;}
+  if(t.dataset.myname){e.preventDefault();e.stopPropagation();if(!userNs||!myId){toast($t("Logga in för att välja namn."));return;}document.getElementById("profOv")?.remove();openNameDlg();return;}
+  if(t.dataset.uprep){goItem("r",t.dataset.uprep);return;}
+  if(t.dataset.upthread){goItem("t",t.dataset.upthread);return;}
+  if(t.id==="prClose"||(t.id==="profOv"&&e.target===t)){document.getElementById("profOv").remove();return;}
+  if(t.id==="nmCancel"||(t.id==="nameOv"&&e.target===t)){document.getElementById("nameOv").remove();return;}},true);
+document.addEventListener("click",e=>{const t=e.target.closest("[data-profrefresh]");if(!t)return;const uid=t.dataset.profrefresh;setTimeout(()=>{if(document.getElementById("profOv"))openProfile(uid);},120);});
+document.addEventListener("submit",async e=>{if(e.target.id!=="nameForm")return;e.preventDefault();const v=document.getElementById("nmIn").value.trim();const er=document.getElementById("nmErr");
+  if(v.length<2){er.textContent=$t("Skriv minst två tecken.");return;}
+  try{const n=await userNs.setName(v);MYNAME=n;NAMES[myId]=n;document.getElementById("nameOv").remove();toast($t("Namnet är sparat."),"check");document.querySelectorAll(".byas").forEach(el=>{el.outerHTML=byAsHtml();});render();}
+  catch(x){er.textContent=$t("Det gick inte att spara just nu. Försök igen senare.");}});
+// ---------- länkar till enskilda reportage och forumtrådar ----------
+// ?r=<nyckel> öppnar ett reportage, ?t=<nyckel> en forumtråd. Nyckeln är författarens id + inläggets id.
+const linkFor=(k,v)=>{const u=new URL(location.origin+location.pathname);u.searchParams.set(k,v);return u.toString();};
+function shareLinkBtn(k,key,title){return`<button class="link strong sharelink" data-sharelink="${k}" data-sharekey="${esc(key)}" data-sharetitle="${esc(String(title||"").slice(0,120))}">${ic("share")} ${$t("Dela länk")}</button>`;}
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-sharelink]");if(!t)return;e.preventDefault();e.stopPropagation();
+  const url=linkFor(t.dataset.sharelink,t.dataset.sharekey),title=t.dataset.sharetitle||"Groundly";
+  if(navigator.share){try{await navigator.share({title,text:title+" – Groundly",url});}catch(err){}return;}
+  try{await navigator.clipboard.writeText(url);toast($t("Länken är kopierad."),"check");}catch(err){window.prompt($t("Kopiera länken:"),url);}},true);
+let deepJump=null;
+{const sp=new URLSearchParams(location.search);const r=sp.get("r"),th=sp.get("t");
+  if((r&&/^[\w-]+:[\w-]+$/.test(r))||(th&&/^[\w-]+:[\w-]+$/.test(th))){
+    deepJump={sel:r?`[data-rep="${CSS.escape(r)}"]`:`[data-thread="${CSS.escape(th)}"]`,kind:r?"r":"t",until:Date.now()+20000};
+    if(r){repOpen=r;repSort="nya";repClub=null;setTimeout(()=>setMode("reportage"),0);}else{openThread=th;fKind="alla";accClub=null;setTimeout(()=>setMode("forum"),0);}
+    sp.delete("r");sp.delete("t");try{history.replaceState(null,"",location.pathname+(sp.toString()?"?"+sp:""));}catch(e){}
+    const tick=()=>{if(!deepJump)return;const el=document.querySelector(deepJump.sel);
+      if(el){const tb=document.querySelector(".topbar");window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-(tb?tb.offsetHeight:0)-12)});deepJump=null;return;}
+      const ready=deepJump.kind==="r"?repState==="ready":forumState==="ready";
+      if(Date.now()>deepJump.until||(ready&&Date.now()>deepJump.until-14000)){toast(deepJump.kind==="r"?$t("Reportaget finns inte längre."):$t("Tråden finns inte längre."));deepJump=null;return;}
+      setTimeout(tick,300);};
+    setTimeout(tick,600);}}
 // ---------- tema ----------
 const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["warm",$t("Varmt")],["dim",$t("Dämpat")],["dusk",$t("Halvmörkt")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
@@ -4150,8 +4269,9 @@ function render(){
    :mode==="arenor"?`<div>${$t("Kapacitet enligt klubbdatan. Betyg och tillgänglighet kommer från besökare. Arenor som delas av flera klubbar visas en gång.")}</div>`
    :mode==="tips"?`<div>${$t("Urvalet och beskrivningarna är redaktionella tips. Nästa möte hämtas från det inlagda matchschemat.")}</div>`
    :mode==="hem"?`<div>${$t("Topplistorna visar bara antal, och bara för dem som inte valt bort det. Veckans match väljs bland derbyn, dina favoritlag och matcher andra peppar.")}</div>`
-   :mode==="reportage"?`<div>${$t("Reportagen och bilderna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja reportage. Lägg inte upp bilder på andra personer utan att de vet om det.")}</div>`
+   :mode==="reportage"?`<div>${$t("Reportagen och bilderna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja reportage. Lägg inte upp bilder på andra personer utan att de vet om det.")} ${$t("Ser du något som inte hör hemma här, tryck Anmäl.")}</div>`
    :mode==="mine"?`<div>${$t("Matcherna och listorna här syns bara för dig och följer med ditt claude.ai-konto.")}</div>`
+   :mode==="forum"?`<div class="forumrules"><b>${$t("Forumregler")}</b><br>${$t("Håll god ton och hjälp varandra. Spam, hat, olagligt innehåll och personuppgifter om andra tas bort. Ser du något som inte hör hemma här, tryck Anmäl.")}</div><div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; moderatorerna kan dölja inlägg.")}</div>`
    :`<div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; sidans ägare kan dölja inlägg.")}</div>`;
   document.getElementById("foot").insertAdjacentHTML("beforeend",`<div><button class="link" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button> · <button class="link" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button></div>`);
   if(mode==="klubbar"||mode==="landslag")renderClubs();else if(mode==="arenor")renderArenas();else if(mode==="matcher")renderMatches();else if(mode==="tabell")renderTable();else if(mode==="tips"||mode==="quiz")rerenderQuizHost();else if(mode==="mine")renderMine();else if(mode==="reportage")renderReports();else if(mode==="hem")renderHome();else renderForum();}

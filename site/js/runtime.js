@@ -75,26 +75,67 @@ async function boot() {
 
   // ---------- db ----------
   const LAZY = { forum: ["forum", "tips"], pubs: ["klubbar", "arenor", "landslag", "matcher", "tips"], tipnotes: ["tips", "mine"], fixes: ["mine"], comments: ["reportage"] };
-  const docSnap = s => ({ id: s.id, exists: s.exists(), data: () => s.data() });
+  // _u = senast ändrad (servertid). Används för att bara hämta det som ändrats sedan cachen byggdes.
+  // Fältet syns aldrig för appen; _gone markerar ett raderat konto tills cachen byggts om.
+  const CAN_DELTA = !!(F.query && F.where && F.serverTimestamp && F.Timestamp);
+  const clean = d => { if (!d || typeof d !== "object") return d; if (!("_u" in d) && !("_gone" in d)) return d; const x = { ...d }; delete x._u; delete x._gone; return x; };
+  const stamp = data => CAN_DELTA && data && typeof data === "object" ? { ...data, _u: F.serverTimestamp() } : data;
+  const docSnap = s => { const raw = s.exists() ? s.data() : undefined; const gone = !!(raw && raw._gone); return { id: s.id, exists: s.exists() && !gone, data: () => gone ? undefined : clean(raw) }; };
+  // ---------- cache + ändringar ----------
+  // Ett jobb (privata repot) bygger varannan timme en kopia av de gemensamma samlingarna i meta/cache (+ meta/cache-<namn>-<n>).
+  // Appen läser kopian (1–3 dokument) och lyssnar sedan bara på dokument som ändrats efter att den byggdes,
+  // i stället för att läsa alla dokument i varje samling vid varje start.
+  let idxP = null;
+  const cacheIndex = () => idxP || (idxP = (async () => {
+    if (!CAN_DELTA || window.GROUNDLY_NOCACHE) return null;
+    try { const s = await F.getDoc(F.doc(fs, "meta", "cache")); return s.exists() ? s.data() : null; } catch (e) { return null; }
+  })());
+  async function cacheBase(name) {
+    const idx = await cacheIndex(); const e = idx && idx.c && idx.c[name];
+    if (!e || !e.at) return null;
+    try {
+      let j = e.j;
+      if (!j && e.parts > 0) { const ps = await Promise.all(Array.from({ length: e.parts }, (_, i) => F.getDoc(F.doc(fs, "meta", `cache-${name}-${i}`)))); if (ps.some(p => !p.exists())) return null; j = ps.map(p => p.data().j || "").join(""); }
+      return { at: e.at, docs: JSON.parse(j || "{}") };
+    } catch (e2) { return null; }
+  }
+  function cached(name, ref, next, onErr, full) {
+    let off = null, dead = false;
+    (async () => {
+      const base = await cacheBase(name);
+      if (dead) return;
+      if (!base) { off = full(); return; }
+      const emit = delta => { const m = { ...base.docs }; for (const [id, d] of Object.entries(delta)) { if (d && d._gone) delete m[id]; else m[id] = clean(d); }
+        const docs = Object.entries(m).map(([id, d]) => ({ id, exists: true, data: () => JSON.parse(JSON.stringify(d)) })); next({ size: docs.length, empty: !docs.length, docs }); };
+      emit({});
+      const q = F.query(ref, F.where("_u", ">", F.Timestamp.fromMillis(Date.parse(base.at))));
+      off = F.onSnapshot(q, s => { const delta = {}; s.docs.forEach(d => { delta[d.id] = d.data(); }); emit(delta); },
+        () => { if (!dead) { try { off && off(); } catch (e) {} off = full(); } });
+    })();
+    return () => { dead = true; if (off) off(); };
+  }
+
   const db = {
     doc(path) {
       const ref = F.doc(fs, mapPath(path));
       return {
         id: ref.id,
-        async set(data) { try { await F.setDoc(ref, data); } catch (e) { throw mapErr(e); } },
-        async update(data) { try { await F.updateDoc(ref, data); } catch (e) { throw mapErr(e); } },
-        async delete() { try { await F.deleteDoc(ref); } catch (e) { throw mapErr(e); } },
+        async set(data) { try { await F.setDoc(ref, stamp(data)); } catch (e) { throw mapErr(e); } },
+        async update(data) { try { await F.updateDoc(ref, stamp(data)); } catch (e) { throw mapErr(e); } },
+        // gemensamma dokument tas inte bort direkt utan töms och märks, så att cachade kopior också försvinner
+        async delete() { try { if (CAN_DELTA && !/^(users|mod|meta|config)\//.test(ref.path)) await F.setDoc(ref, { _gone: true, _u: F.serverTimestamp() }); else await F.deleteDoc(ref); } catch (e) { throw mapErr(e); } },
         async get() { try { return docSnap(await F.getDoc(ref)); } catch (e) { throw mapErr(e); } },
         onSnapshot(next, onErr) { return F.onSnapshot(ref, s => next(docSnap(s)), e => onErr && onErr(mapErr(e))); }
       };
     },
     collection(name) {
       const ref = F.collection(fs, mapPath(name));
-      const wrap = s => ({ size: s.size, empty: s.empty, docs: s.docs.map(d => ({ id: d.id, exists: true, data: () => d.data() })) });
+      const wrap = s => { const docs = s.docs.filter(d => { const x = d.data(); return !(x && x._gone); }).map(d => ({ id: d.id, exists: true, data: () => clean(d.data()) })); return { size: docs.length, empty: !docs.length, docs }; };
       return {
         async get() { try { return wrap(await F.getDocs(ref)); } catch (e) { throw mapErr(e); } },
         onSnapshot(next, onErr) {
-          const sub = () => F.onSnapshot(ref, s => next(wrap(s)), e => onErr && onErr(mapErr(e)));
+          const full = () => F.onSnapshot(ref, s => next(wrap(s)), e => onErr && onErr(mapErr(e)));
+          const sub = () => cached(name, ref, next, onErr, full);
           // samlingar som bara behövs i vissa vyer hämtas först när man öppnar vyn (sparar läsningar)
           const need = LAZY[name];
           if (!need || need.includes(window.__gmode)) return sub();
@@ -115,6 +156,7 @@ async function boot() {
   const userNs = {
     async id() { return user ? user.uid : null; },
     async canEdit() { return isAdmin(); },
+    async setName(n) { const v = String(n || "").trim().slice(0, 40); if (!user || !v) throw err("invalid_argument"); await F.setDoc(profRef(user.uid), { name: v, at: new Date().toISOString() }); NAMES[user.uid] = v; return v; },
     async profiles(ids) {
       const out = {};
       await Promise.all([...new Set(ids)].slice(0, 200).map(async id => {
@@ -319,7 +361,8 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
             await A.reauthenticateWithCredential(cu, A.EmailAuthProvider.credential(cu.email, pw)); }
         }
         const uid = cu.uid;
-        for (const c of OWN) { try { await F.deleteDoc(F.doc(fs, c, uid)); } catch (e) {} }
+        // först ett "borttaget"-märke (syns i cachens ändringar), sedan raderas dokumentet helt
+        for (const c of OWN) { try { if (F.serverTimestamp && c !== "profiles" && c !== "feedback") await F.setDoc(F.doc(fs, c, uid), { _gone: true, _u: F.serverTimestamp() }); else await F.deleteDoc(F.doc(fs, c, uid)); } catch (e) { try { await F.deleteDoc(F.doc(fs, c, uid)); } catch (e2) {} } }
         try { await F.deleteDoc(F.doc(fs, "users", uid, "data", "logg")); } catch (e) {}
         await A.deleteUser(cu);
         try { localStorage.removeItem("fk-pending-logg"); } catch (e) {}
