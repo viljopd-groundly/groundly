@@ -789,6 +789,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .plink{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:2px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
 .plink.static{cursor:default}
 .plink:not(.static):hover{border-color:var(--accent)}
+.nextone{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}.nextone .nd{font-weight:600}
 </style>
 
 <div class="wrap">
@@ -1199,7 +1200,8 @@ function clubCard(c,isAi){const sel=openClub===c.id;
     ${c.nick?`<dt>${$t("Smeknamn")}</dt><dd>${esc(c.nick)}</dd>`:""}${webRow(c)}
     ${isAi?"":similarRow(c)}
     <dt>${$t("Meriter")}</dt><dd>${c.h&&c.h.length?`<ul>${c.h.map(x=>`<li>${esc($tp(x))}</li>`).join("")}</ul>`:$t("Inga större titlar")}</dd>
-    ${isAi?"":`<dt>${$t("Nästa match")}</dt><dd>${up.length?`<ul class="nextlist">${up.map(m=>`<li><span class="nd">${esc(m.kickoff?shortDate(m.kickoff):rangeTxt(m))}</span>${m.kickoff?`<span class="nt">${esc(timeOf(m.kickoff))}</span>`:""}<span class="nm">${esc(m.homeName)} – ${esc(m.awayName)}</span></li>`).join("")}</ul>`:dbState==="ready"?$t("Inga matcher i schemat"):$t("Laddar schema…")}</dd>`}
+    ${isAi?"":`<dt>${$t("Nästa match")}</dt><dd>${up.length?(m=>{const home=m.home===c.id||(!m.away&&m.homeName===c.n);const opp=home?m.awayName:m.homeName;
+      return`<div class="nextone"><span class="nd">${esc(m.kickoff?shortDate(m.kickoff):rangeTxt(m))}${m.kickoff?` · ${esc(timeOf(m.kickoff))}`:""}</span> <span class="nm">${home?$t("Hemma mot {0}",[esc(opp)]):$t("Borta mot {0}",[esc(opp)])}</span>${c.city?` <button class="link strong" data-teamview="${esc(c.id)}">${$t("Alla matcher →")}</button>`:""}</div>`;})(up[0]):dbState==="ready"?$t("Inga matcher i schemat"):$t("Laddar schema…")}</dd>`}
    </dl>
    ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:"")+wishBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
      return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">${$t("Lagets matcher")}</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>${favBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="${$t("Fler val")}">${more?$t("Färre"):$t("⋯ Mer")}</button>`:""}</div>${extra?`<div class="cmore"${more?"":" hidden"}>${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
@@ -1406,7 +1408,7 @@ document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[da
  const mo=new MutationObserver(()=>{if(A)requestAnimationFrame(fix);});mo.observe(document.getElementById("app")||document.body,{childList:true,subtree:true});
  document.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("button,[role=button],a,label,.chip");if(!el||el.closest("nav,.bnav,#fkUndo,#fkToast,.msheet"))return;
    const sel=selFor(el);if(!sel)return;A={el,sel,top:el.getBoundingClientRect().top,mode,until:Date.now()+2500};},true);
- const cancel=()=>{A=null;};["wheel","touchmove","keydown"].forEach(ev=>window.addEventListener(ev,cancel,{passive:true}));}
+ const cancel=()=>{A=null;};window.__keepCancel=cancel;["wheel","touchmove","keydown"].forEach(ev=>window.addEventListener(ev,cancel,{passive:true}));}
 let teamId=null;try{const t=store.get("fk-team");if(t)teamId=t;}catch(e){}
 function renderTeamView(){document.getElementById("matchCount").innerHTML="";const el=document.getElementById("matchList");
   if(!document.getElementById("teamIn")){el.innerHTML=`<label class="search" for="teamIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="teamIn" type="search" placeholder="${$t("Sök lag, t.ex. Hammarby eller Arsenal")}" autocomplete="off" enterkeyhint="search"></label><div class="sugg" id="teamSug" hidden></div><div id="teamRes" class="list"></div>`;
@@ -3165,7 +3167,14 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.gender){gender=t.dataset.gender;store.set("fk-gender",gender);render();return;}
   if(t.dataset.tier){const k=t.dataset.tier;if(k==="all")tiers.clear();else if(tiers.has(k))tiers.delete(k);else tiers.add(k);renderMatches();return;}
   if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;const same=(isNat(C[id])?"landslag":"klubbar")===mode;if(same&&openClub&&openClub!==id){clubJump();}else pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");scrollToCard();return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");scrollToCard(t.dataset.topub?".pubhd":null);return;}
-  if(t.dataset.club){openClub=openClub===t.dataset.club?null:t.dataset.club;renderClubs();}});
+  if(t.dataset.club){const id=t.dataset.club,closing=openClub===id;openClub=closing?null:id;renderClubs();
+    // stängs kortet när man läst långt ner: visa klubben överst i stället för att hamna längre ner i listan
+    if(closing){try{window.__keepCancel&&window.__keepCancel();}catch(e){}const card=document.querySelector(`section[id^="v-"]:not([hidden]) [data-club="${CSS.escape(id)}"]`);
+      if(card){const tb=document.querySelector(".topbar");const off=(tb?tb.getBoundingClientRect().height:0)+8;const top=card.getBoundingClientRect().top;
+        if(top<off||top>innerHeight-80){window.scrollTo({top:Math.max(0,top+scrollY-off)});
+          // korten ovanför har uppskattad höjd tills de ritas (content-visibility), så håll klubben på plats en kort stund
+          let stop=false;const halt=()=>{stop=true;};["wheel","touchstart","keydown"].forEach(ev=>window.addEventListener(ev,halt,{once:true,passive:true}));const until=Date.now()+900;
+          const pin=()=>{if(stop||!card.isConnected)return;const d=card.getBoundingClientRect().top-off;if(Math.abs(d)>2)window.scrollBy(0,d);if(Date.now()<until)requestAnimationFrame(pin);};requestAnimationFrame(pin);}}}}});
 document.addEventListener("change",e=>{const id=e.target.id;
   if(id==="dFrom"&&e.target.value){dFrom=e.target.value;if(dTo<dFrom)dTo=dFrom;renderMatches();}
   if(id==="dTo"&&e.target.value){dTo=e.target.value;if(dTo<dFrom)dFrom=dTo;renderMatches();}

@@ -2025,5 +2025,8 @@
  "{n} ny anmälan": "{n} new report",
  "{n} nya anmälningar": "{n} new reports",
  "väntar på dig.": "waiting for you.",
- "Visa anmälningar": "Show reports"
+ "Visa anmälningar": "Show reports",
+ "Hemma mot {0}": "Home vs {0}",
+ "Borta mot {0}": "Away at {0}",
+ "Alla matcher →": "All matches →"
 }
