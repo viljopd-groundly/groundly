@@ -696,6 +696,8 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .pdets{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:flex-start}.pdets{flex-wrap:nowrap}.pdets details{flex:1 1 0;min-width:0}.pdets .pseen summary{text-align:right}.pdets .pseen[open] summary{text-align:left}
 /* rita bara kort som syns på skärmen (snabbare långa listor) */
 #tipsList>.tip,#arenaList>.tip,#clubList>.card,#repList>.rep{content-visibility:auto;contain-intrinsic-size:auto 280px}
+/* det öppna kortet ritas alltid fullt, annars krymper sidan en bildruta när listan ritas om och skärmen hoppar */
+#clubList>.card.sel,#repList>.rep.open{content-visibility:visible;contain-intrinsic-size:none}
 .link.more{align-self:flex-start;margin-top:2px;font-weight:600;color:var(--accent)}
 .scorein{display:flex;align-items:center;gap:8px}.scorein .scnum{width:3.2em;text-align:center;font-size:calc(18px*var(--fs));font-weight:700}.scdash{font-weight:800;font-size:calc(20px*var(--fs));color:var(--fg)}
 
@@ -2349,7 +2351,10 @@ function afterMine(){if(mySub==="arenas"&&arView!=="pass")drawLiveMap();if(mySub
 const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.tripfor||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard||t.dataset.sharecard;
 // hoppa direkt till det öppnade klubbkortet (sökrutan ovanför behöver inte synas)
 function scrollToCard(sub){const go=()=>{const card=document.querySelector('section[id^="v-"]:not([hidden]) .card.sel');if(!card){window.scrollTo({top:0});return;}const el=(sub&&card.querySelector(sub))||card;
-  const tb=document.querySelector(".topbar");const off=(tb?tb.getBoundingClientRect().height:0)+8;window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+window.scrollY-off)});};
+  const tb=document.querySelector(".topbar");const off=(tb?tb.getBoundingClientRect().height:0)+8;const y=Math.max(0,el.getBoundingClientRect().top+window.scrollY-off);
+  // sidan är kort en stund efter vybytet (korten ovanför ritas först när de syns); se till att den räcker, annars hamnar man fel och hoppar sedan
+  if(document.documentElement.scrollHeight<y+innerHeight){document.body.style.minHeight=(y+innerHeight+40)+"px";clearTimeout(scrollToCard.t);scrollToCard.t=setTimeout(()=>{document.body.style.minHeight="";},700);}
+  window.scrollTo({top:y});};
   go();requestAnimationFrame(()=>{go();setTimeout(go,120);});}
 function openClubCard(id){if(!C[id])return;qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;}
 function featClick(t){
