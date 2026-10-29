@@ -736,11 +736,20 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .calopt>b .ic{width:18px;height:18px}
 .calopt span{display:flex;flex-direction:column}
 .calopt small{font-weight:400;color:var(--muted);font-size:calc(12px*var(--fs))}
+
+/* Community: växla mellan Forum och Reportage */
+.commtabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px}
+.commtabs button{all:unset;box-sizing:border-box;cursor:pointer;text-align:center;font:600 calc(15px*var(--fs)) var(--f-body);color:var(--muted);padding:9px 10px;border-radius:9px}
+.commtabs button[aria-current="true"]{background:var(--accent);color:var(--chalk)}
+.commtabs button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media (min-width:761px){.commtabs{display:none}}
 </style>
 
 <div class="wrap">
   <div class="modes" role="group" aria-label="Välj vy">
     <button class="mode" id="m-hem" data-mode="hem" aria-pressed="false">Hem</button>
+    <button class="mode" id="m-forum" data-mode="forum" aria-pressed="false">Forum</button>
+    <button class="mode" id="m-reportage" data-mode="reportage" aria-pressed="false">Reportage</button>
     <button class="mode" id="m-klubbar" data-mode="klubbar" aria-pressed="true">Klubbar</button>
     <button class="mode" id="m-landslag" data-mode="landslag" aria-pressed="false">Landslag</button>
     <button class="mode" id="m-arenor" data-mode="arenor" aria-pressed="false">Arenor</button>
@@ -748,8 +757,6 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
     <button class="mode" id="m-tabell" data-mode="tabell" aria-pressed="false">Tabeller</button>
     <button class="mode" id="m-tips" data-mode="tips" aria-pressed="false">Tips</button>
     <button class="mode" id="m-quiz" data-mode="quiz" aria-pressed="false">Quiz</button>
-    <button class="mode" id="m-reportage" data-mode="reportage" aria-pressed="false">Reportage</button>
-    <button class="mode" id="m-forum" data-mode="forum" aria-pressed="false">Forum</button>
     <button class="mode" id="m-mine" data-mode="mine" aria-pressed="false">Min fotboll</button>
   </div>
 
@@ -864,6 +871,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 
   <!-- Reportage -->
   <section id="v-reportage" hidden style="display:contents">
+    <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Reportage</button></div>
     <div class="reprow"><div id="repTop" class="ftop"></div>
     <label class="search" for="repQ" id="repSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -876,6 +884,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 
   <!-- Forum -->
   <section id="v-forum" hidden style="display:contents">
+    <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Reportage</button></div>
     <div class="reprow"><div id="forumTop" class="ftop"></div>
     <label class="search" for="forumQ" id="forumSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -891,7 +900,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></symbol><symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l4.3 3.1-1.6 5H9.3l-1.6-5z"/><path d="M12 7.5V3.2M16.3 10.6l4.3-1.4M14.7 15.6l2.6 3.7M9.3 15.6l-2.6 3.7M7.7 10.6 3.4 9.2"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol><symbol id="i-stadium" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9.5" ry="7"/><rect x="7" y="8.5" width="10" height="7" rx="1"/><path d="M12 8.5v7"/></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-3.9 0-7-2.8-7-6.6 0-3 1.8-5.2 3.4-6.9.4 1.6 1.3 2.7 2.4 3.2C10.6 7.4 12.1 4.5 14.5 3c-.2 2.6.9 4.5 2.4 6.1C18.2 10.6 19 12.3 19 14.4 19 18.2 15.9 21 12 21z"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.3-2.5 3.8"/><path d="M12 17.2v.1"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.7-2.5h6.6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.2" r="3.4"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20.5l1.4-4.3A7.5 7.5 0 1 1 20 12.5z"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/></symbol><symbol id="i-offline" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M8.5 16.5a5 5 0 0 1 7 0M5 13a10 10 0 0 1 4.2-2.4M19 13a10 10 0 0 0-2.1-1.5M2 9.5a14 14 0 0 1 4-2.6M22 9.5A14 14 0 0 0 11 6"/><path d="M12 20h.01"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3.5 8V6.5a1 1 0 0 1 1-1h15a1 1 0 0 1 1 1V8a2.5 2.5 0 0 0 0 5v1.5a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1V13a2.5 2.5 0 0 0 0-5z" transform="translate(0 1.5)"/><path d="M14 7v1.5M14 11v1.5M14 15v1.5"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M20.5 16l-5-5-8.5 8.5"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M4.5 19.5h15"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M4.5 19.5h15"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol><symbol id="i-mpin" viewBox="0 0 32 40" style="stroke:none"><path d="M16 1C8.3 1 2 7.2 2 14.8c0 10.2 12.3 23 13.1 23.8a1.3 1.3 0 0 0 1.8 0C17.7 37.8 30 25 30 14.8 30 7.2 23.7 1 16 1z" fill="var(--accent)" stroke="var(--surface)" stroke-width="2.5"/><circle cx="16" cy="14.6" r="5.6" fill="var(--chalk)"/></symbol><symbol id="i-table" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 9v11"/></g></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol></svg>
 <nav class="bnav" aria-label="Huvudmeny">
   <button class="bn" data-bn="hem" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Hem</span></button>
-  <button class="bn" data-bn="matcher" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Matcher</span></button>
+  <button class="bn" data-bn="community" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20.5l1.4-4.3A7.5 7.5 0 1 1 20 12.5z"/><path d="M8.5 11.5h7M8.5 14.5h4.5"/></svg><span>Community</span></button>
   <button class="bn bnlog" id="bnLog" aria-label="Logga en match"><b><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></b><span>Logga match</span></button>
   <button class="bn" data-bn="mine" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Min fotboll</span></button>
   <button class="bn" id="bnMore" aria-expanded="false" aria-controls="moreSheet"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span>Mer</span></button>
@@ -900,14 +909,13 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
   <div class="msback" id="moreBack"></div>
   <div class="mspanel" role="dialog" aria-label="Fler vyer">
     <div class="msgrid">
+      <button class="msi" data-bn="matcher"><b><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg></b><span>Matcher</span></button>
       <button class="msi" data-bn="klubbar"><b><svg class="ic" aria-hidden="true"><use href="#i-ball"/></svg></b><span>Klubbar</span></button>
       <button class="msi" data-bn="landslag"><b><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg></b><span>Landslag</span></button>
       <button class="msi" data-bn="tabell"><b><svg class="ic" aria-hidden="true"><use href="#i-table"/></svg></b><span>Tabeller</span></button>
       <button class="msi" data-bn="arenor"><b><svg class="ic" aria-hidden="true"><use href="#i-stadium"/></svg></b><span>Arenor</span></button>
       <button class="msi" data-bn="tips"><b><svg class="ic" aria-hidden="true"><use href="#i-flame"/></svg></b><span>Tips</span></button>
       <button class="msi" data-bn="quiz"><b><svg class="ic" aria-hidden="true"><use href="#i-help"/></svg></b><span>Quiz</span></button>
-      <button class="msi" data-bn="reportage"><b><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg></b><span>Reportage</span></button>
-      <button class="msi" data-bn="forum"><b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span>Forum</span></button>
     </div>
   </div>
 </div>
@@ -1082,15 +1090,19 @@ function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)repPopOrder=nu
 try{history.replaceState({m:mode,y:0},"");}catch(e){}window.__gmode=mode;
 document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>goTop(b.dataset.mode));
 // bottenmenyn
-const MORE_MODES=["tabell","klubbar","landslag","arenor","tips","quiz","reportage","forum"];
-function syncNav(){document.querySelectorAll("[data-bn]").forEach(b=>b.setAttribute("aria-current",String(b.dataset.bn===mode)));
+const MORE_MODES=["matcher","tabell","klubbar","landslag","arenor","tips","quiz"];
+// Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
+const isComm=m=>m==="forum"||m==="reportage";
+const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"forum";}catch(e){return"forum";}};
+function syncNav(){if(isComm(mode))try{store.set("fk-comm",mode);}catch(e){}document.querySelectorAll("[data-bn]").forEach(b=>b.setAttribute("aria-current",String(b.dataset.bn===mode||(b.dataset.bn==="community"&&isComm(mode)))));
   const more=document.getElementById("bnMore");if(more)more.setAttribute("aria-current",String(MORE_MODES.includes(mode)));}
 function closeMore(){const sh=document.getElementById("moreSheet");if(sh)sh.hidden=true;document.getElementById("bnMore")?.setAttribute("aria-expanded","false");}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMore,#bnLog,#moreBack");if(!b)return;
   if(b.id==="moreBack"){closeMore();return;}
   if(b.id==="bnMore"){const sh=document.getElementById("moreSheet");const open=sh.hidden;sh.hidden=!open;b.setAttribute("aria-expanded",String(open));return;}
   if(b.id==="bnLog"){closeMore();if(myState!=="ready"){goTop("mine");return;}openLogMatch(null,null);return;}
-  closeMore();if(b.dataset.bn!==mode||b.dataset.bn==="mine")goTop(b.dataset.bn);window.scrollTo({top:0});},true);
+  const to=b.dataset.bn==="community"?(isComm(mode)?mode:commLast()):b.dataset.bn;
+  closeMore();if(to!==mode||to==="mine")goTop(to);window.scrollTo({top:0});},true);
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMore();});
 
 // ---------- clubs ----------
