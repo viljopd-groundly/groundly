@@ -2058,5 +2058,10 @@
  "Visa vilka jag följer": "Show who I follow",
  "Då syns du som följare hos dem du följer, och du ser vilka som följer dig.": "You then appear as a follower of the people you follow, and you can see who follows you.",
  "Det syns nu vilka du följer.": "Who you follow is now visible.",
- "Det syns inte längre vilka du följer.": "Who you follow is no longer visible."
+ "Det syns inte längre vilka du följer.": "Who you follow is no longer visible.",
+ "Land (flagga vid ditt namn)": "Country (flag next to your name)",
+ "Visa ingen flagga": "Show no flag",
+ "Din profilbild är märket för ditt första favoritlag. Byt favoritlag under Min fotboll.": "Your profile picture is the crest of your first favourite team. Change favourite team under My football.",
+ "Ingen flagga visas vid ditt namn.": "No flag is shown next to your name.",
+ "Flaggan är sparad.": "The flag is saved."
 }
