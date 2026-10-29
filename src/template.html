@@ -790,6 +790,12 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .plink.static{cursor:default}
 .plink:not(.static):hover{border-color:var(--accent)}
 .nextone{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}.nextone .nd{font-weight:600}
+
+/* herr/dam på samma klubbkort */
+.cteams{grid-column:1/-1;display:inline-grid;grid-template-columns:1fr 1fr;gap:3px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px;justify-self:start;min-width:180px}
+.cteams button{all:unset;cursor:pointer;text-align:center;padding:6px 16px;border-radius:7px;font:600 calc(14px*var(--fs)) var(--f-body);color:var(--muted)}
+.cteams button[aria-pressed="true"]{background:var(--accent);color:var(--chalk)}
+.cteams button:focus-visible{outline:2px solid var(--accent)}
 </style>
 
 <div class="wrap">
@@ -1168,6 +1174,17 @@ let league="";
 function leagueCountry(){if(country!=="alla"&&country!=="övrigt"&&country!=="landslag")return country;const nq=norm(q);if(!nq)return null;const hit=COUNTRIES.find(([k,l])=>k!=="alla"&&k!=="övrigt"&&(norm(k)===nq||norm(l)===nq));return hit?hit[0]:null;}
 function leaguesIn(lc){const m=new Map();Object.values(C).forEach(c=>{if(isNat(c)||!c.l||!gOk(c))return;const save=country;country=lc;const ok=inCountry(c);country=save;if(ok&&!m.has(c.l))m.set(c.l,c.t);});
   return[...m.entries()].sort((a,b)=>((a[1]||99)-(b[1]||99))||a[0].localeCompare(b[0],LANG));}
+// herr- och damlag i samma klubb delar klubbkort (växel Herr | Dam). Lagen behåller sina egna id.
+let _pair=null;const cardTeam={};
+function pairOf(id){if(!_pair){_pair={};const nm=s=>norm(s).replace(/\b(dam|damer|women|ladies|femenino|femeni|feminine|feminines|frauen|femminile|wfc|lfc|kvinner)\b/g," ").replace(/\s+/g," ").trim();
+    const men=new Map();Object.values(C).forEach(c=>{if(!isNat(c)&&!isW(c)){const k=nm(c.n)+"|"+c.c;if(!men.has(k))men.set(k,c.id);}});
+    Object.values(C).forEach(c=>{if(isW(c)&&!isNat(c)){const m=men.get(nm(c.n)+"|"+c.c);if(m&&!_pair[m]){_pair[c.id]=m;_pair[m]=c.id;}}});}
+  return _pair[id]||null;}
+const groupId=id=>C[id]&&isW(C[id])&&pairOf(id)?pairOf(id):id;
+function clubGroups(list){const g=new Map();for(const c of list){const k=groupId(c.id);if(!g.has(k))g.set(k,[]);g.get(k).push(c.id);}
+  return[...g.entries()].map(([k,ids])=>{const pr=pairOf(k);let show;
+    if(openClub&&(openClub===k||openClub===pr))show=openClub;else if(cardTeam[k]&&(ids.includes(cardTeam[k])||gender==="alla"))show=cardTeam[k];else show=ids.includes(k)?k:ids[0];
+    return C[show];}).filter(Boolean);}
 function clubMatches(){const lc=leagueCountry();const byCountryQ=lc&&country!==lc;const nq=byCountryQ?"":norm(q);const toks=nq?nq.split(" "):[];
   const inLc=c=>{if(!byCountryQ)return inCountry(c);const save=country;country=lc;const ok=inCountry(c);country=save;return ok;};
   const list=Object.values(C).filter(c=>!isNat(c)&&gOk(c)&&inLc(c)&&(!league||c.l===league)&&toks.every(t=>clubHay(c).includes(t)));
@@ -1185,11 +1202,14 @@ function crest(id,name,size){size=size||40;const lg=LOGOS[id];const cls=`crest${
   const k=COLORS[id];const lbl=k?k[2]:crestInitials(name||(C[id]&&C[id].n));const c1=k?k[0]:"#d9e1dc",c2=k?k[1]:"#8a9a90";
   const fg=contrast(c1,c2)>=2.6?c2:(lum(c1)>.4?"#111111":"#ffffff");const fs=Math.round(size*(lbl.length<=2?.38:lbl.length===3?.31:.25));
   return`<span class="${cls}" aria-hidden="true" style="${st};--c1:${c1};--c2:${c2};color:${fg};font-size:${fs}px">${esc(lbl)}</span>`;}
-function clubCard(c,isAi){const sel=openClub===c.id;
+function clubCard(c,isAi){const sel=openClub===c.id;const pr=isAi?null:pairOf(c.id);const base=pr&&isW(c)?C[pr]:c;
+  if(pr&&isW(c)&&base!==c)c={...c,f:c.f||base.f,nick:c.nick||base.nick};// grundår och smeknamn delas med herrlaget
+  const shownName=pr?base.n:c.n;
   let h=`<div class="card${sel?" sel":""}" role="button" tabindex="0" aria-expanded="${sel}" data-club="${esc(c.id)}">
-   <div class="main crow">${crest(c.id,c.n,42)}<div class="ctxt"><p class="name">${esc(c.n)}${favStar(c.id)}</p><div class="meta">${esc([cityLbl(c),$t(c.c)].filter(Boolean).join(", "))}</div></div></div>
+   <div class="main crow">${crest(LOGOS[c.id]||!pr?c.id:base.id,shownName,42)}<div class="ctxt"><p class="name">${esc(shownName)}${favStar(c.id)}${pr&&!isW(c)&&isFav(pr)?favStar(pr):""}</p><div class="meta">${esc([cityLbl(c),$t(c.c)].filter(Boolean).join(", "))}</div></div></div>
    <div class="yr">${c.f?`<b>${c.f}</b><small>${$t("grundad")}</small>`:c.l==="U21-landslag"?"":`<small>${$t("grundår saknas")}</small>`}</div>
-   <div class="pills">${c.l==="Landslag"?`<span class="pill ec">${$t("Landslag")}</span>`:c.l==="U21-landslag"?`<span class="pill ec">U21</span>`:""}${c.l?tierPill(c.t,c.l):""}${isAi?`<span class="pill ai">${$t("Svar från Claude")}</span>`:""}${!isAi&&!c.v?`<span class="pill">${$t("Senast kända serie")}</span>`:""}${isAi?"":clubMyPills(c)+ratingPill(c)}</div>`;
+   <div class="pills">${c.l==="Landslag"?`<span class="pill ec">${$t("Landslag")}</span>`:c.l==="U21-landslag"?`<span class="pill ec">U21</span>`:""}${c.l?tierPill(c.t,c.l):""}${isAi?`<span class="pill ai">${$t("Svar från Claude")}</span>`:""}${!isAi&&!c.v?`<span class="pill">${$t("Senast kända serie")}</span>`:""}${isAi?"":clubMyPills(c)+ratingPill(c)}${pr&&!sel?`<span class="pill">${isW(c)?$t("Dam · även herr"):$t("Herr · även dam")}</span>`:""}</div>
+   ${pr&&sel?`<div class="cteams" role="group" aria-label="${$t("Lag")}"><button type="button" data-cteam="${esc(isW(c)?pr:c.id)}" aria-pressed="${!isW(c)}">${$t("Herr")}</button><button type="button" data-cteam="${esc(isW(c)?c.id:pr)}" aria-pressed="${isW(c)}">${$t("Dam")}</button></div>`:""}`;
   if(sel){const up=isAi?[]:upcomingFor(c.id);
    h+=`<dl class="detail">
     <dt>${$t("Grundad")}</dt><dd>${c.f?`<span class="num">${c.f}</span>`:$t("Ingen uppgift")}</dd>
@@ -1248,7 +1268,7 @@ function renderClubs(){if(mode==="landslag")return renderNat();genderChips("gClu
   const lc=leagueCountry();const lgs=lc?leaguesIn(lc):[];if(league&&!lgs.some(x=>x[0]===league))league="";
   document.getElementById("leagueW").hidden=lgs.length<2;
   if(lgs.length>=2)setSel("leagueSel",[["",$t("Alla serier")],...lgs.map(([l,t])=>[l,l+(t?$t(" (nivå {0})",[t]):"")])],league);
-  const list=clubMatches();
+  const list=clubGroups(clubMatches());
   document.getElementById("clubCount").innerHTML=`<b>${list.length}</b> ${country==="landslag"?"landslag":"klubbar"}${league?` i ${esc(league)}`:q?$t(" för ”{0}”",[esc(q)]):""}${league&&hasTable(league)?` <button class="btn small" data-tbl="${esc(league)}">${ic("table")} ${$t("Visa tabell")}</button>`:""}`;
   const lk=q+"|"+country+"|"+league+"|"+gender;if(lk!==clubLimitKey){clubLimitKey=lk;clubLimit=60;}
   let h=list.slice(0,clubLimit).map(c=>clubCard(c,false)).join("")+(list.length>clubLimit?`<button class="btn" data-cmore="1">${$t("Visa fler ({0} kvar)",[list.length-clubLimit])}</button>`:"");
@@ -3167,6 +3187,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.gender){gender=t.dataset.gender;store.set("fk-gender",gender);render();return;}
   if(t.dataset.tier){const k=t.dataset.tier;if(k==="all")tiers.clear();else if(tiers.has(k))tiers.delete(k);else tiers.add(k);renderMatches();return;}
   if(t.dataset.open){const id=t.dataset.open;if(!C[id])return;const same=(isNat(C[id])?"landslag":"klubbar")===mode;if(same&&openClub&&openClub!==id){clubJump();}else pendingJump=mode;if(isNat(C[id])){openClub=id;if(C[id].conf&&ntConf!=="alla"&&ntConf!==C[id].conf)ntConf="alla";const el=document.getElementById("ntq");el.value=C[id].n;ntQ=C[id].n;document.getElementById("ntqClear").hidden=false;setMode("landslag");scrollToCard();return;}qEl.value=C[id].n;q=C[id].n;country="alla";openClub=id;document.getElementById("qClear").hidden=false;setMode("klubbar");scrollToCard(t.dataset.topub?".pubhd":null);return;}
+  if(t.dataset.cteam){const id=t.dataset.cteam;if(!C[id])return;cardTeam[groupId(id)]=id;openClub=id;renderClubs();return;}
   if(t.dataset.club){const id=t.dataset.club,closing=openClub===id;openClub=closing?null:id;renderClubs();
     // stängs kortet när man läst långt ner: visa klubben överst i stället för att hamna längre ner i listan
     if(closing){try{window.__keepCancel&&window.__keepCancel();}catch(e){}const card=document.querySelector(`section[id^="v-"]:not([hidden]) [data-club="${CSS.escape(id)}"]`);
