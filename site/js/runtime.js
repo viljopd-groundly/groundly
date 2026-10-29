@@ -74,7 +74,7 @@ async function boot() {
   }
 
   // ---------- db ----------
-  const LAZY = { forum: ["forum", "tips"], pubs: ["klubbar", "arenor", "landslag", "matcher", "tips"], tipnotes: ["tips", "mine"], fixes: ["mine"], comments: ["reportage"] };
+  const LAZY = { forum: ["forum", "tips", "profil"], pubs: ["klubbar", "arenor", "landslag", "matcher", "tips"], tipnotes: ["tips", "mine"], fixes: ["mine"], comments: ["reportage"] };
   // _u = senast ändrad (servertid). Används för att bara hämta det som ändrats sedan cachen byggdes.
   // Fältet syns aldrig för appen; _gone markerar ett raderat konto tills cachen byggts om.
   const CAN_DELTA = !!(F.query && F.where && F.serverTimestamp && F.Timestamp);
