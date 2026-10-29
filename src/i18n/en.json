@@ -2029,5 +2029,8 @@
  "Hemma mot {0}": "Home vs {0}",
  "Borta mot {0}": "Away at {0}",
  "Alla matcher →": "All matches →",
- "Herr • Dam": "Men • Women"
+ "Herr • Dam": "Men • Women",
+ "Andra som varit här har också besökt": "Others who've been here also visited",
+ "{n} besökare": "{n} visitor",
+ "{n} besökare|pl": "{n} visitors"
 }

@@ -2558,20 +2558,20 @@ const CULTSET=new Set(TIPS.cult.map(x=>x[0]));
 // arenastorlek: liten <5 000, mindre 5 000–9 999, mellanstor 10 000–19 999, stor 20 000+
 const sizeClass=x=>!x?null:x<5000?"liten":x<10000?"mindre":x<20000?"mellanstor":"stor";
 const SIZE_LBL={liten:$t("Liten arena"),mindre:$t("Mindre arena"),mellanstor:$t("Mellanstor arena"),stor:$t("Stor arena")};
-function similarClubs(c){const k=arenaKey(c.s);const co={};
-  if(k)Object.values(RATINGS).forEach(d=>{const r=d&&d.r;if(!r||!r[k])return;Object.keys(r).forEach(k2=>{if(k2!==k)co[k2]=(co[k2]||0)+1;});});
-  const rivals=new Set();TIPS.derbies.forEach(d=>{if(d[2].includes(c.id))d[2].forEach(x=>rivals.add(x));});
-  const scored=Object.values(C).filter(o=>o.id!==c.id&&!isNat(o)&&!!isW(o)===!!isW(c)&&o.s!==c.s&&!rivals.has(o.id)).map(o=>{let s=0;const why=[];
-    if(CULTSET.has(c.id)&&CULTSET.has(o.id)){s+=5;why.push($t("Också en kultklubb"));}
-    const n=co[arenaKey(o.s)]||0;if(n){s+=2+n;why.push($t("{0} {1} har betygsatt båda arenorna",[n,n===1?$t("besökare"):$t("besökare|pl")]));}
-    if(o.l&&o.l===c.l){s+=1.5;why.push($t("Samma serie"));}else if(o.t&&o.t===c.t&&o.c===c.c){s+=0.7;why.push($t("Samma nivå i ")+o.c);}
-    const sz=sizeClass(c.cap);if(sz&&sz===sizeClass(o.cap)){s+=1;why.push($t("Båda har ")+SIZE_LBL[sz].toLowerCase());}
-    if(c.f&&o.f&&c.f<1905&&o.f<1905){s+=0.5;why.push($t("Anrik klubb från 1800-talet"));}
-    if(c.h&&o.h&&c.h.length===0&&o.h.length===0&&c.t>=2&&o.t>=2){s+=0.5;why.push($t("Underdog utan stora titlar"));}
-    return{o,s,why};}).filter(x=>x.s>=2).sort((a,b)=>b.s-a.s||a.o.n.localeCompare(b.o.n,LANG));
-  const out=[],perL={};for(const x of scored){const l=x.o.l||"?";if((perL[l]||0)>=2)continue;perL[l]=(perL[l]||0)+1;out.push(x);if(out.length>=4)break;}return out;}
+// "Andra som varit här har också besökt": arenor som samma personer betygsatt eller loggat (delade matcher).
+// Visas först när minst två personer varit på båda, så att förslagen bygger på riktiga besök.
+const SIM_MIN=2;
+let _akAlias=null;
+const canonAk=ak=>{if(!_akAlias){_akAlias={};Object.values(C).forEach(o=>{if(!o.s)return;const full=arenaKey(o.s),short=arenaKey(o.s.replace(/\s*\(.*?\)\s*/g," ").trim());if(short&&short!==full&&!_akAlias[short])_akAlias[short]=full;});}return _akAlias[ak]||ak;};
+function similarClubs(c){const k=arenaKey(c.s);if(!k)return[];const seen={};
+  const add=(uid,ak)=>{if(!ak)return;ak=canonAk(ak);(seen[uid]||(seen[uid]=new Set())).add(ak);};
+  Object.entries(RATINGS).forEach(([uid,d])=>{const r=d&&d.r;if(r)Object.keys(r).forEach(ak=>add(uid,ak));});
+  try{Object.keys(PUBLIC||{}).forEach(uid=>pubRows(uid).forEach(r=>add(uid,arenaKey(r.v))));}catch(e){}
+  const co={};Object.values(seen).forEach(set=>{if(!set.has(k))return;set.forEach(ak=>{if(ak!==k)co[ak]=(co[ak]||0)+1;});});
+  const byArena={};Object.values(C).forEach(o=>{if(!o.s||isNat(o))return;const ak=arenaKey(o.s);const cur=byArena[ak];if(!cur||(isW(cur)&&!isW(o))||((cur.t||9)>(o.t||9)&&isW(cur)===isW(o)))byArena[ak]=o;});
+  return Object.entries(co).filter(([ak,n])=>n>=SIM_MIN&&byArena[ak]).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([ak,n])=>({o:byArena[ak],n}));}
 function similarRow(c){if(isNat(c))return"";const list=similarClubs(c);if(!list.length)return"";
-  return`<dt>${$t("Liknande klubbar")}</dt><dd><div class="sims">${list.map(({o,why})=>`<button class="simbtn" data-open="${esc(o.id)}"><b>${esc(o.n)}</b><small>${esc(why.slice(0,2).join(" · "))}</small></button>`).join("")}</div></dd>`;}
+  return`<dt>${$t("Andra som varit här har också besökt")}</dt><dd><div class="sims">${list.map(({o,n})=>`<button class="simbtn" data-open="${esc(o.id)}"><b>${esc(o.s)}</b><small>${esc(o.n)} · ${$tn(n,"{n} besökare","{n} besökare|pl")}</small></button>`).join("")}</div></dd>`;}
 
 // ---------- arenasammanfattning ----------
 const SUM={};
