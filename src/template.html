@@ -367,6 +367,7 @@ button.stamp{cursor:pointer}
 .sechead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
 #fkToast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:calc(14px*var(--fs));max-width:calc(100% - 32px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
 #fkToast.on{opacity:1;transform:translate(-50%,0)}
+#fkUndo.offer{width:min(440px,calc(100% - 32px));box-sizing:border-box;z-index:70}#fkUndo.offer span{flex:1}#fkUndo .x{background:none!important;color:inherit!important;opacity:.7;font-size:20px;padding:0 8px!important}
 #fkUndo{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:6px 6px 6px 16px;border-radius:12px;font-size:calc(14px*var(--fs));max-width:calc(100% - 32px);display:flex;align-items:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:51;box-shadow:0 4px 18px rgba(0,0,0,.25)}
 #fkUndo.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 #fkUndo button{all:unset;cursor:pointer;font-weight:700;color:var(--bg);background:color-mix(in srgb,var(--bg) 18%,transparent);padding:8px 14px;border-radius:9px}
@@ -443,7 +444,9 @@ button{touch-action:manipulation}
 .pill.cultp{background:color-mix(in srgb,#e8ad00 18%,var(--surface));color:color-mix(in srgb,#b07a00 85%,var(--fg))}.pill.cultp .ic{width:11px;height:11px;vertical-align:-1px}
 .remind .rmrow{display:flex;flex-direction:column;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}.remind .rmrow:first-of-type{border-top:0;padding-top:2px}.remind .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
 .actdot{position:absolute;top:2px;right:calc(50% - 22px);min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#d64545;color:#fff;font:700 10px/17px var(--f-body);text-align:center;box-sizing:border-box;pointer-events:none}
-#bnMore,.msi[data-bn="reportage"],#m-reportage{position:relative}.msi .actdot{right:8px;top:6px}#m-reportage .actdot{right:-6px;top:-6px}
+#bnMore,.msi[data-bn="reportage"],#m-reportage,#m-forum,.bnav [data-bn="community"]{position:relative}.msi .actdot{right:8px;top:6px}#m-reportage .actdot,#m-forum .actdot{right:-6px;top:-6px}
+.commtabs button{position:relative}.commtabs .actdot{top:-6px;right:6px}
+.actcard .actrow.linkrow{cursor:pointer;display:block;width:100%;text-align:left;background:none;border-top:0;border-right:0;border-bottom:0;font-family:inherit;margin:0}.actrow.linkrow:hover i{text-decoration:underline}
 .actcard .actrow{font-size:calc(14px*var(--fs));color:var(--muted);border-left:3px solid var(--accent-soft);padding-left:9px}.actcard .actrow b{color:var(--fg)}.actcard .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
 .morerow{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
 .arcsea{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:11px 14px;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
@@ -743,6 +746,20 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .commtabs button[aria-current="true"]{background:var(--accent);color:var(--chalk)}
 .commtabs button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 @media (min-width:761px){.commtabs{display:none}}
+
+/* månadens skribenter */
+.writers{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:2px}
+.writers .wlbl{flex:1 1 100%;font-size:calc(12px*var(--fs));font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:5px}
+.writers .wlbl .ic{width:14px;height:14px;color:#c99a1e}
+.wchip{display:inline-flex;align-items:baseline;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:5px 11px 5px 5px;font-size:calc(14px*var(--fs));font-weight:600}
+.wchip b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#f2c14e;color:#3a2a05;font:700 11px/1 var(--f-mono);align-self:center}
+.wchip small{font-weight:400;color:var(--muted);font-size:calc(12px*var(--fs))}
+.wchip.me{border-color:var(--accent)}
+.commwriters:empty{display:none}
+
+.commline{font-size:calc(13px*var(--fs));color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.commline .ic{width:14px;height:14px;color:var(--accent)}
+@media (max-width:760px){#fkUndo.offer{bottom:calc(150px + env(safe-area-inset-bottom,0px))}}
 </style>
 
 <div class="wrap">
@@ -872,6 +889,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
   <!-- Reportage -->
   <section id="v-reportage" hidden style="display:contents">
     <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Reportage</button></div>
+    <div class="commwriters"></div>
     <div class="reprow"><div id="repTop" class="ftop"></div>
     <label class="search" for="repQ" id="repSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -885,6 +903,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
   <!-- Forum -->
   <section id="v-forum" hidden style="display:contents">
     <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Reportage</button></div>
+    <div class="commwriters"></div>
     <div class="reprow"><div id="forumTop" class="ftop"></div>
     <label class="search" for="forumQ" id="forumSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1147,7 +1166,7 @@ function clubCard(c,isAi){const sel=openClub===c.id;
     <dt>${$t("Serie")}</dt><dd>${c.l?esc(c.l)+(c.t?$t(" (nivå {0})",[c.t]):""):$t("Ingen uppgift")}${!isAi&&!c.v?` <span class="meta">${$t("– senast kända")}</span>`:""}</dd>
     ${seasonRows(c)}<dt>${$t("Hemmaarena")}</dt><dd>${c.s?esc(c.s):c.l==="U21-landslag"?$t("Varierande arenor runt om i landet"):$t("Ingen uppgift")}</dd>
     <dt>${$t("Kapacitet")}</dt><dd>${c.cap?`<span class="num">${fmtCap(c.cap)}</span> ${$t("platser")}`:$t("Ingen uppgift")}</dd>${surfaceRow(c)}
-    ${isAi?"":ratingRow(c)+travelRows(c)}
+    ${isAi?"":ratingRow(c)+travelRows(c)+commRow(c)}
     ${c.nick?`<dt>${$t("Smeknamn")}</dt><dd>${esc(c.nick)}</dd>`:""}${webRow(c)}
     ${isAi?"":similarRow(c)}
     <dt>${$t("Meriter")}</dt><dd>${c.h&&c.h.length?`<ul>${c.h.map(x=>`<li>${esc($tp(x))}</li>`).join("")}</ul>`:$t("Inga större titlar")}</dd>
@@ -1390,7 +1409,7 @@ function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36
   return`<div class="match mrow"${m._id?` data-mrow="${esc(m._id)}"`:""}>
    ${m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
    <div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(m.homeName)}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(m.awayName)}${favStar(m.away)}</button></div>
-   <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc($t(m.city))}, ${esc($t(m.country))}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>
+   <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc($t(m.city))}, ${esc($t(m.country))}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>${commLine(m)}
    <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?$t("I orten"):$t("{0} bort",[milTxt(km)])}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
   </div>`;}
 // ---------- serietabeller ----------
@@ -1664,7 +1683,7 @@ function postHtml(p,isReply){const mine=p.uid===myId;const c=p.club&&C[p.club];
 let forumQ="";
 {const qEl=document.getElementById("forumQ");let t;if(qEl){qEl.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{forumQ=qEl.value.trim();document.getElementById("forumQClear").hidden=!forumQ;renderForum(true);},150);});
   document.getElementById("forumQClear").addEventListener("click",e=>{e.preventDefault();qEl.value="";forumQ="";e.currentTarget.hidden=true;renderForum(true);qEl.focus();});}}
-function renderForum(namesOnly){
+function renderForum(namesOnly){try{renderWriters();}catch(e){}
   const el=document.getElementById("forumList");const top=document.getElementById("forumTop");
   document.getElementById("forumChips").innerHTML=[["alla",$t("Alla")],...KINDS].map(([k,l])=>`<button class="chip" data-fkind="${k}" aria-pressed="${fKind===k}">${l}</button>`).join("")+(accClub&&C[accClub]?`<button class="chip" data-accclear="1" aria-pressed="true" aria-label="${$t("Sluta filtrera på {0}",[esc(C[accClub].n)])}">${esc(C[accClub].n)} ${NO}</button>`:"");
   if(forumState==="none"){top.innerHTML="";el.innerHTML=`<div class="empty"><b>${$t("Forumet kan inte visas här.")}</b><div>${$t("Öppna sidan inloggad på claude.ai för att läsa och skriva.")}</div></div>`;return;}
@@ -1737,7 +1756,7 @@ async function forumClick(t){
   if(t.id==="newPost"){composing=true;forumMsg="";renderForum();setTimeout(()=>document.getElementById("fTitle")?.focus({preventScroll:true}),0);return true;}
   if(t.id==="cancelPost"){composeKind="fraga";composeClub="";composing=false;forumMsg="";renderForum();return true;}
   if(t.dataset.fkind){fKind=t.dataset.fkind;accClub=null;renderForum();return true;}
-  if(t.dataset.thread){openThread=openThread===t.dataset.thread?null:t.dataset.thread;renderForum();return true;}
+  if(t.dataset.thread){openThread=openThread===t.dataset.thread?null:t.dataset.thread;if(openThread&&openThread.startsWith(myId+":"))repSeen("forum");renderForum();return true;}
   if(t.dataset.delpost){const id=t.dataset.delpost;if(!confirmDel[id]){confirmDel[id]=1;t.textContent=$t("Tryck igen för att ta bort");setTimeout(()=>{delete confirmDel[id];},4000);return true;}
     delete confirmDel[id];let gone=[];await writeMine(ps=>{gone=ps.filter(p=>p.id===id||p.parent===myId+":"+id);return ps.filter(p=>p.id!==id&&p.parent!==myId+":"+id);});renderForum();
     if(gone.length)undoToast($t("Inlägget togs bort"),async()=>{await writeMine(ps=>putBack(ps,gone));renderForum();});return true;}
@@ -1749,7 +1768,7 @@ async function forumClick(t){
   if(userNs){try{myId=await userNs.id();isMod=await userNs.canEdit();}catch(e){}}
   let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startSocial(db);startFeedback(db);
   if(!db){forumState="none";if(mode==="forum")renderForum();return;}
-  db.collection("forum").onSnapshot(s=>{const f={};s.docs.forEach(d=>{f[d.id]=d.data();});FORUM=f;forumState="ready";if(mode==="forum")renderForum();else if(mode==="hem")renderHome();},()=>{forumState="none";if(mode==="forum")renderForum();});
+  db.collection("forum").onSnapshot(s=>{const f={};s.docs.forEach(d=>{f[d.id]=d.data();});FORUM=f;forumState="ready";try{actBadge();}catch(e){}if(mode==="forum")renderForum();else if(mode==="hem")renderHome();},()=>{forumState="none";if(mode==="forum")renderForum();});
   db.doc("mod/hidden").onSnapshot(s=>{HIDDEN=s.exists&&Array.isArray(s.data().keys)?s.data().keys:[];if(mode==="forum")renderForum();},()=>{});
 })();
 
@@ -1786,7 +1805,9 @@ function saveMy(){if(!myRef){myErr=$t("Logga in på claude.ai för att spara.");
     .catch(e=>{if(e&&(e.code==="invalid_argument"||e.code==="quota_exceeded")){store.del(PENDING_KEY);myErr=e.code==="invalid_argument"?$t("Du har inte behörighet att spara på den här sidan. Be ägaren bjuda in dig så att du kan använda sidan."):$t("Det finns inte plats för fler sparade saker just nu.");toast(myErr);}
       else toast($t("Ingen kontakt just nu. Ändringen är sparad i telefonen och skickas när du har nät."));render();})
     .finally(()=>{setTimeout(()=>{myPending--;},2500);});}
-function mutate(fn){myErr="";fn(MY);if(Array.isArray(MY.favs))MY.fav=MY.favs[0]||null;saveMy();render();setTimeout(()=>{try{syncStats();}catch(e){}try{syncPublic();}catch(e){}},400);}
+const SEEN_ATT=new Set();
+function mutate(fn){myErr="";(MY.attended||[]).forEach(a=>SEEN_ATT.add(a.id));fn(MY);
+  {const added=(MY.attended||[]).filter(a=>a&&!SEEN_ATT.has(a.id));added.forEach(a=>SEEN_ATT.add(a.id));if(added.length===1)setTimeout(()=>offerReport(added[0].id),1800);}if(Array.isArray(MY.favs))MY.fav=MY.favs[0]||null;saveMy();render();setTimeout(()=>{try{syncStats();}catch(e){}try{syncPublic();}catch(e){}},400);}
 const ic=(n,c)=>`<svg class="ic${c?" "+c:""}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 const STAR=on=>ic("star",on?"on":""),OK=ic("check"),NO=ic("x");
 function toast(msg,icon){let el=document.getElementById("fkToast");if(!el){el=document.createElement("div");el.id="fkToast";el.setAttribute("role","status");document.body.appendChild(el);}el.innerHTML=(icon?ic(icon):"")+esc(msg);el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),3500);}
@@ -1797,10 +1818,18 @@ window.addEventListener("unhandledrejection",e=>showErr(e.reason&&e.reason.messa
 // "Borttaget · Ångra" i 10 sekunder efter att något tagits bort
 function undoToast(msg,undo,after){let el=document.getElementById("fkUndo");if(!el){el=document.createElement("div");el.id="fkUndo";el.setAttribute("role","status");document.body.appendChild(el);}
   if(undoToast.fin)undoToast.fin();clearTimeout(undoToast.t);
-  el.innerHTML=`<span>${esc(msg)}</span><button type="button">${$t("Ångra")}</button>`;el.classList.add("on");let done=false;
+  el.classList.remove("offer");el.innerHTML=`<span>${esc(msg)}</span><button type="button">${$t("Ångra")}</button>`;el.classList.add("on");let done=false;
   const fin=()=>{if(done)return;done=true;el.classList.remove("on");undoToast.fin=null;if(after)try{after();}catch(e){}};undoToast.fin=fin;
   el.querySelector("button").onclick=async()=>{if(done)return;done=true;clearTimeout(undoToast.t);el.classList.remove("on");undoToast.fin=null;try{await undo();toast($t("Återställt"),"check");}catch(e){toast($t("Kunde inte ångra."));}};
   undoToast.t=setTimeout(fin,10000);}
+// efter en loggad match: fråga om man vill berätta om resan (reportaget får matchen ifylld)
+function offerReport(id){const a=MY.attended.find(x=>x.id===id);if(!a||!canWriteRep()||(a.date&&a.date>today()))return;
+  let el=document.getElementById("fkUndo");if(!el){el=document.createElement("div");el.id="fkUndo";el.setAttribute("role","status");document.body.appendChild(el);}
+  if(undoToast.fin)undoToast.fin();clearTimeout(undoToast.t);
+  el.classList.add("offer");el.innerHTML=`<span>${$t("Vill du berätta om resan?")}</span><button type="button">${$t("Skriv reportage")}</button><button type="button" class="x" aria-label="${$t("Stäng")}">×</button>`;el.classList.add("on");
+  const fin=()=>{el.classList.remove("on");setTimeout(()=>el.classList.remove("offer"),300);undoToast.fin=null;};undoToast.fin=fin;
+  const [go,x]=el.querySelectorAll("button");go.onclick=()=>{clearTimeout(undoToast.t);fin();draftFromAtt(id);};x.onclick=()=>{clearTimeout(undoToast.t);fin();};
+  undoToast.t=setTimeout(fin,9000);}
 const putBack=(xs,gone)=>{const have=new Set(xs.map(x=>x&&x.id));return[...xs,...gone.filter(g=>g&&!have.has(g.id))];};
 const matchById=id=>MATCHES.find(m=>m._id===id);
 const slim=m=>({id:m._id,home:m.home||null,away:m.away||null,homeName:m.homeName,awayName:m.awayName,kickoff:m.kickoff||null,dateFrom:m.dateFrom||null,dateTo:m.dateTo||null,venue:m.venue||null,city:m.city||null,country:m.country||null,comp:m.comp||null});
@@ -3124,22 +3153,31 @@ function allReps(){const out=[];Object.entries(REP).forEach(([uid,d])=>{(d&&Arra
 // kommentarer: var och en sparar sina egna i comments/{uid}.items = [{id, rep:"ägare:reportageId", body, at}]
 // ---------- nytt på mina reportage (kommentarer och gillningar sedan jag senast tittade) ----------
 var likesLoaded=false;
-function repActivity(){if(!myId||repState!=="ready"||!likesLoaded)return null;const mine=(REP[myId]&&Array.isArray(REP[myId].items)?REP[myId].items:[]).filter(r=>r&&r.id&&!r.draft).map(r=>({key:myId+":"+r.id,title:r.title}));
-  if(!mine.length)return null;const keys=new Set(mine.map(r=>r.key));
-  const likes={};Object.entries(LIKES).forEach(([uid,d])=>{if(uid===myId||!d||!Array.isArray(d.keys))return;d.keys.forEach(k=>{if(keys.has(k))likes[k]=(likes[k]||0)+1;});});
-  const coms=[];Object.entries(COMM).forEach(([uid,d])=>{if(uid===myId)return;(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&keys.has(c.rep)&&c.at)coms.push({...c,uid});});});
+// Aktivitet i communityn: kommentarer och gillningar på mina reportage, och svar i mina forumtrådar.
+function repActivity(){if(!myId)return null;
   let seen=null;try{seen=JSON.parse(store.get("fk-repseen")||"null");}catch(e){}
-  if(!seen){seen={c:new Date().toISOString(),l:likes};try{store.set("fk-repseen",JSON.stringify(seen));}catch(e){}}
-  const newC=coms.filter(c=>String(c.at)>seen.c);let newL=0;Object.entries(likes).forEach(([k,n])=>{newL+=Math.max(0,n-((seen.l||{})[k]||0));});
-  return{newC,newL,likes,mine};}
-function repSeen(){const a=repActivity();if(!a)return;try{store.set("fk-repseen",JSON.stringify({c:new Date().toISOString(),l:a.likes}));}catch(e){}actBadge();}
-function actBadge(){const a=notifOn("act")?repActivity():null;const n=a?a.newC.length+a.newL:0;
-  for(const el of [document.getElementById("bnMore"),document.querySelector('.msi[data-bn="reportage"]'),document.getElementById("m-reportage")]){if(!el)continue;let d=el.querySelector(".actdot");
-    if(n&&!d){d=document.createElement("span");d.className="actdot";el.appendChild(d);}if(d){if(n)d.textContent=n>9?"9+":n;else d.remove();}}}
-function activityHtml(){if(!notifOn("act"))return"";const a=repActivity();if(!a||!(a.newC.length+a.newL))return"";
-  const parts=[a.newC.length?`${a.newC.length} ${a.newC.length===1?$t("ny kommentar"):$t("nya kommentarer")}`:"",a.newL?`${a.newL} ${a.newL===1?$t("ny gillning"):$t("nya gillningar")}`:""].filter(Boolean).join($t(" och "));
+  const now=new Date().toISOString();if(!seen)seen={c:now,l:null,f:now};if(!seen.f)seen.f=seen.c||now;
+  let mine=[],likes={},newC=[],newL=0;
+  if(repState==="ready"&&likesLoaded){mine=(REP[myId]&&Array.isArray(REP[myId].items)?REP[myId].items:[]).filter(r=>r&&r.id&&!r.draft).map(r=>({key:myId+":"+r.id,title:r.title}));const keys=new Set(mine.map(r=>r.key));
+    Object.entries(LIKES).forEach(([uid,d])=>{if(uid===myId||!d||!Array.isArray(d.keys))return;d.keys.forEach(k=>{if(keys.has(k))likes[k]=(likes[k]||0)+1;});});
+    Object.entries(COMM).forEach(([uid,d])=>{if(uid===myId)return;(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&keys.has(c.rep)&&c.at&&String(c.at)>seen.c)newC.push({...c,uid});});});
+    if(!seen.l)seen.l=likes;Object.entries(likes).forEach(([k,n])=>{newL+=Math.max(0,n-((seen.l||{})[k]||0));});}
+  let newF=[],threads=[];
+  if(forumState==="ready"){const posts=allPosts();threads=posts.filter(p=>!p.parent&&p.uid===myId);const tk=new Set(threads.map(t=>t.key));
+    newF=posts.filter(p=>p.parent&&tk.has(p.parent)&&p.uid!==myId&&String(p.at)>seen.f&&!HIDDEN.includes("forum:"+p.key));}
+  try{store.set("fk-repseen",JSON.stringify(seen));}catch(e){}
+  return{newC,newL,newF,likes,mine,threads,seen};}
+function repSeen(part){const a=repActivity();if(!a)return;const now=new Date().toISOString();const s=a.seen;
+  if(!part||part==="rep"){s.c=now;s.l=a.likes;}if(!part||part==="forum")s.f=now;try{store.set("fk-repseen",JSON.stringify(s));}catch(e){}actBadge();}
+function actBadge(){const a=notifOn("act")?repActivity():null;const nr=a?a.newC.length+a.newL:0,nf=a?a.newF.length:0;
+  for(const [el,n] of [[document.querySelector('.bnav [data-bn="community"]'),nr+nf],[document.getElementById("m-reportage"),nr],[document.getElementById("m-forum"),nf],[document.querySelector('.commtabs [data-bn="reportage"]'),nr],[document.querySelector('.commtabs [data-bn="forum"]'),nf]]){if(!el)continue;let d=el.querySelector(".actdot");
+    if(n&&!d){d=document.createElement("span");d.className="actdot";el.appendChild(d);}if(d){if(n)d.textContent=n>9?"9+":n;else d.remove();}}
+  document.querySelectorAll('section:not([hidden]) .commtabs').forEach(()=>{});}
+function activityHtml(){if(!notifOn("act"))return"";const a=repActivity();if(!a||!(a.newC.length+a.newL+a.newF.length))return"";
+  const parts=[a.newF.length?`${a.newF.length} ${a.newF.length===1?$t("nytt svar i forumet"):$t("nya svar i forumet")}`:"",a.newC.length?`${a.newC.length} ${a.newC.length===1?$t("ny kommentar"):$t("nya kommentarer")}`:"",a.newL?`${a.newL} ${a.newL===1?$t("ny gillning"):$t("nya gillningar")}`:""].filter(Boolean).join(", ").replace(/, ([^,]*)$/,$t(" och ")+"$1");
+  const fr=a.newF.slice(-2).map(p=>{const t=a.threads.find(x=>x.key===p.parent);return`<button class="actrow linkrow" data-gothread="${esc(p.parent)}"><b>${esc(who(p.uid))}</b> ${$t("svarade på")} <i>${esc((t&&t.title)||$t("din tråd"))}</i>: ${esc(String(p.body).slice(0,90))}${String(p.body).length>90?"…":""}</button>`;}).join("");
   const last=a.newC.slice(-2).map(c=>`<div class="actrow"><b>${esc(who(c.uid))}</b> ${$t("om")} <i>${esc((a.mine.find(r=>r.key===c.rep)||{}).title||$t("ditt reportage"))}</i>: ${esc(String(c.body).slice(0,90))}${String(c.body).length>90?"…":""}</div>`).join("");
-  return`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Nytt på dina reportage")}</div><p style="margin:0"><b>${parts}</b> ${$t("sedan du senast tittade.")}</p>${last}<div class="actions"><button class="btn small primary" data-gomyrep="1">${$t("Visa mina reportage")}</button><button class="btn small" data-actseen="1">${$t("Markera som läst")}</button></div></article>`;}
+  return`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Nytt för dig i communityn")}</div><p style="margin:0"><b>${parts}</b> ${$t("sedan du senast tittade.")}</p>${fr}${last}<div class="actions">${a.newF.length?`<button class="btn small primary" data-gothread="${esc(a.newF[a.newF.length-1].parent)}">${$t("Läs svaren")}</button>`:""}${a.newC.length+a.newL?`<button class="btn small${a.newF.length?"":" primary"}" data-gomyrep="1">${$t("Visa mina reportage")}</button>`:""}<button class="btn small" data-actseen="1">${$t("Markera som läst")}</button></div></article>`;}
 function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&c.id&&c.rep===key&&c.body&&!HIDDEN.includes("com:"+uid+":"+c.id))out.push({...c,uid});});});return out.sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
 function commentsHtml(r){const cs=commentsFor(r.key);const ck="com:"+r.key,cn=lim(ck,3);
   return`<div class="rcomments"><h3 class="sec">${$t("Kommentarer")}${cs.length?` (${cs.length})`:""}</h3>
@@ -3161,6 +3199,16 @@ const likeInner=key=>{const n=likeCount(key);return`${ic("heart",iLike(key)?"on"
 // uppdatera gilla-knappar och hjärtan där de står, utan att rita om listan (då laddas bilder och märken om och sidan hoppar)
 function likesInPlace(){document.querySelectorAll("[data-replike]").forEach(b=>{const k=b.dataset.replike;b.setAttribute("aria-pressed",iLike(k));b.innerHTML=likeInner(k);});
   document.querySelectorAll(".lkn[data-lk]").forEach(x=>{const n=likeCount(x.dataset.lk);x.innerHTML=n?` · ${ic("heart")} ${n}`:"";});}
+// antal reportage och forumtrådar per klubb (byggs om bara när datan ändras)
+let _cc={rep:null,fo:null,m:null};
+function commCount(id){if(!id)return null;if(_cc.rep!==REP||_cc.fo!==FORUM||!_cc.m){const m={};const g=k=>m[k]||(m[k]={r:0,f:0});
+    if(repState==="ready")allReps().forEach(r=>{if(!r.draft&&r.club)g(r.club).r++;});if(forumState==="ready")allPosts().forEach(p=>{if(!p.parent&&p.title&&p.club)g(p.club).f++;});_cc={rep:REP,fo:FORUM,m};}
+  return _cc.m[id]||null;}
+function commLinks(id){const n=commCount(id);if(!n)return"";
+  return[n.r?`<button class="link strong" data-repclub="${esc(id)}">${$tn(n.r,"{n} reportage","{n} reportage|pl")}</button>`:"",n.f?`<button class="link strong" data-forumclub="${esc(id)}">${$tn(n.f,"{n} forumtråd","{n} forumtrådar")}</button>`:""].filter(Boolean).join(" · ");}
+function commRow(c){const l=commLinks(c.id);
+  return`<dt>${$t("Community")}</dt><dd>${l?`${ic("chat")} ${l}`:`<span class="meta">${$t("Ingen har skrivit om {0} än.",[esc(c.n)])}</span>`}${canWriteRep()?` <button class="link" data-repnewclub="${esc(c.id)}">${l?$t("Skriv reportage"):$t("Skriv det första reportaget")}</button>`:""}</dd>`;}
+function commLine(m){const id=m.home&&C[m.home]?m.home:null;const l=id&&commLinks(id);return l?`<div class="commline">${ic("chat")} ${l}</div>`:"";}
 function repsFor(id){return repState==="ready"?allReps().filter(r=>r.club===id).length:0;}
 const canWriteRep=()=>!!(dbNs&&myId&&canRep!==false);
 function repBtn(c){const n=repsFor(c.id);return n?`<button class="btn small" data-repclub="${esc(c.id)}">${$t("Reportage ({0})",[n])}</button>`:"";}
@@ -3207,7 +3255,7 @@ function matchBox(r){if(r.visit)return"";const m=String(r.match||"").slice(0,100
 let repQ="";
 {const qEl=document.getElementById("repQ");let t;if(qEl){qEl.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{repQ=qEl.value.trim();document.getElementById("repQClear").hidden=!repQ;renderReports(true);},150);});
   document.getElementById("repQClear").addEventListener("click",e=>{e.preventDefault();qEl.value="";repQ="";e.currentTarget.hidden=true;renderReports(true);qEl.focus();});}}
-function renderReports(namesOnly){
+function renderReports(namesOnly){try{renderWriters();}catch(e){}
   // behåll påbörjade kommentarer om listan ritas om (t.ex. när någon annan kommenterar)
   const ae=document.activeElement,cf=ae&&ae.closest&&ae.closest("[data-rcform]"),keep=cf?{k:cf.dataset.rcform,s:ae.selectionStart}:null;
   const keepAll=[...document.querySelectorAll("[data-rcform] textarea")].map(t=>[t.closest("[data-rcform]").dataset.rcform,t.value]).filter(x=>x[1]);
@@ -3290,12 +3338,14 @@ function draftFromAtt(id){const a=MY.attended.find(x=>x.id===id);if(!a)return;co
   startRepDraft({match:`${a.homeName} – ${a.awayName}`,result:a.score||"",title:`${a.homeName}–${a.awayName}`,club:c?c.n:"",city:a.city||(c?c.city:""),date:a.date||"",body:a.note||""});}
 
 const confirmRepDel={};
-const isRepBtn=t=>t.id==="repNew"||t.id==="repCancel"||t.dataset.repsort||t.dataset.repclubclear||t.dataset.rep||t.dataset.replike||t.dataset.repedit||t.dataset.repdel||t.dataset.rephide||t.dataset.phdel!==undefined||t.dataset.phview||t.dataset.repclub||t.dataset.repfrom||t.id==="phClose";
+const isRepBtn=t=>t.id==="repNew"||t.id==="repCancel"||t.dataset.repsort||t.dataset.repclubclear||t.dataset.rep||t.dataset.replike||t.dataset.repedit||t.dataset.repdel||t.dataset.rephide||t.dataset.phdel!==undefined||t.dataset.phview||t.dataset.repclub||t.dataset.forumclub||t.dataset.repnewclub||t.dataset.repfrom||t.id==="phClose";
 async function repClick(t){
   if(t.id==="repNew"){startRepDraft();return;}
   if(t.id==="repCancel"){const d=repDraft;repDraft=null;repMsg="";renderReports();if(d)dropAssets(d.added);return;}
-  if(t.dataset.repsort){repSort=t.dataset.repsort;repPopOrder=null;if(repSort==="mina")repSeen();renderReports();return;}
+  if(t.dataset.repsort){repSort=t.dataset.repsort;repPopOrder=null;if(repSort==="mina")repSeen("rep");renderReports();return;}
   if(t.dataset.repclubclear){repClub=null;renderReports();return;}
+  if(t.dataset.forumclub){fKind="alla";accClub=t.dataset.forumclub;openThread=null;setMode("forum");window.scrollTo({top:0});return;}
+  if(t.dataset.repnewclub){const c=C[t.dataset.repnewclub];if(c)startRepDraft({club:c.n,city:c.city||""});return;}
   if(t.dataset.repclub){repClub=t.dataset.repclub;repSort="nya";repOpen=null;setMode("reportage");window.scrollTo({top:0});return;}
   if(t.dataset.repfrom){draftFromAtt(t.dataset.repfrom);return;}
   if(t.dataset.rep){repOpen=repOpen===t.dataset.rep?null:t.dataset.rep;renderReports(true);return;}
@@ -3399,6 +3449,22 @@ function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl
   return`<article class="tip"><div class="sechead"><h2 class="name">${$t("Din säsong {0}",[YEAR])}</h2><button class="link strong" data-gomine="1">${$t("Min fotboll")}</button></div>
     <div class="stats"><div><b>${s.matches}</b><span>${$t("matcher")}</span></div><div><b>${s.arenas}</b><span>${$t("arenor")}</span></div><div><b>${s.countries}</b><span>${$t("länder")}</span></div><div><b>${s.nat}</b><span>${$t("landskamper")}</span></div></div>
     ${nx?`<div class="anext"><b>${$t("Nästa för dina lag:")}</b> ${esc(dayLabel(dayKey(new Date(nx.kickoff))))} ${timeOf(nx.kickoff)}<br>${esc(nx.homeName)} – ${esc(nx.awayName)}</div>`:fl.length?"":`<p class="hint">${$t("Välj favoritlag under Min fotboll så visas deras nästa match här.")}</p>`}</article>`;}
+// Månadens skribenter: reportage 3 p, ny forumtråd 2 p, svar i forumet och kommentar 1 p (bara den här månaden)
+function writersRank(){const m=new Date().toISOString().slice(0,7);const W={};const add=(uid,k,pts)=>{if(!uid)return;const w=W[uid]||(W[uid]={uid,rep:0,post:0,pts:0});w[k]++;w.pts+=pts;};
+  if(repState==="ready")allReps().forEach(r=>{if(!r.draft&&String(r.at).startsWith(m))add(r.uid,"rep",3);});
+  if(forumState==="ready")allPosts().forEach(p=>{if(String(p.at).startsWith(m))add(p.uid,"post",p.parent?1:2);});
+  Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&String(c.at).startsWith(m))add(uid,"post",1);});});
+  return Object.values(W).sort((a,b)=>b.pts-a.pts||b.rep-a.rep).slice(0,5);}
+const wDesc=w=>[w.rep?$tn(w.rep,"{n} reportage","{n} reportage|pl"):"",w.post?$tn(w.post,"{n} inlägg","{n} inlägg|pl"):""].filter(Boolean).join(" · ");
+function writersStrip(){const ws=writersRank();if(!ws.length)return"";const mon=new Date().toLocaleDateString(LOC,{month:"long"});
+  return`<div class="writers"><span class="wlbl">${ic("star")} ${$t("Månadens skribenter i {0}",[esc(mon)])}</span>${ws.slice(0,3).map((w,i)=>`<span class="wchip${w.uid===myId?" me":""}"><b>${i+1}</b>${esc(who(w.uid))}<small>${esc(wDesc(w))}</small></span>`).join("")}</div>`;}
+function writersHtml(){const ws=writersRank();const mon=new Date().toLocaleDateString(LOC,{month:"long"});
+  return`<article class="tip"><div class="lbl">${$t("Månadens skribenter")}</div>${ws.length?`<h2 class="name">${ic("star")} ${esc(who(ws[0].uid))}</h2><p class="meta" style="margin:0">${esc(wDesc(ws[0]))}</p>
+    ${ws.length>1?`<ol class="board" start="2">${ws.slice(1).map(w=>`<li class="${w.uid===myId?"me":""}"><span>${esc(who(w.uid))}</span><b>${w.pts}</b><small>${esc(wDesc(w))}</small></li>`).join("")}</ol>`:""}`
+    :`<h2 class="name">${$t("Ledig plats i {0}",[esc(mon)])}</h2><p class="meta">${$t("Skriv ett reportage eller svara på en fråga i forumet så hamnar du här.")}</p>`}
+    <p class="hint">${$t("Reportage ger 3 poäng, en ny forumtråd 2 och ett svar eller en kommentar 1. Räknas för {0}.",[esc(mon)])}</p>
+    <div class="actions"><button class="btn small" data-gomode="reportage">${$t("Skriv reportage")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button></div></article>`;}
+function renderWriters(){document.querySelectorAll(".commwriters").forEach(el=>{const h=writersStrip();if(el.innerHTML!==h)el.innerHTML=h;});}
 function latestHtml(){const parts=[];
   if(repState==="ready"){const reps=allReps().filter(r=>!r.draft);const last=reps.slice().sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0];
     const ym=new Date().toISOString().slice(0,7);const pop=reps.filter(r=>String(r.at).startsWith(ym)).map(r=>({r,n:likeCount(r.key)})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
@@ -3411,6 +3477,7 @@ function latestHtml(){const parts=[];
     const card=(t,lbl,extra)=>`<button class="hcard" data-homethread="${esc(t.key)}"><span class="htxt"><span class="lbl">${lbl}</span><b>${esc(t.title)}</b><span class="meta">${esc(KIND_L[t.kind]||$t("Inlägg"))} · ${esc(who(t.uid))} · ${esc(ago(lastAt(t)))}${extra||""}</span></span></button>`;
     if(last)parts.push(card(last,$t("Senast i forumet")));if(hot&&(!last||hot.t.key!==last.key))parts.push(card(hot.t,$t("Hetast i forumet denna månad"),$t(" · {0} svar",[hot.n])));}
   return`<article class="tip community"><div class="lbl">${$t("Community och forum")}</div><h2 class="name">${$t("Från communityn")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras reportage.")}</p>${parts.length?`<div class="hgrid">${parts.join("")}</div>`:""}
+    ${writersStrip()}
     <div class="actions"><button class="btn small primary" data-gomode="forum">${ic("chat")} ${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs reportage")}</button></div></article>`;}
 function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().toISOString().slice(0,7);const cnt={};
   Object.values(RATINGS).forEach(d=>{Object.entries((d&&d.r)||{}).forEach(([k,r])=>{if(r&&String(r.at||"").startsWith(ym))cnt[k]=(cnt[k]||0)+1;});});
@@ -3438,8 +3505,8 @@ function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" $
 // ---------- startsidan: vilka rutor som visas och i vilken ordning ----------
 // standard = kort startsida; resten slås på under Anpassa startsidan. Valen sparas på kontot (homeCfg) och i telefonen.
 const HOME_BLOCKS=[["intro","Så funkar Groundly",true],["hero","Veckans match",true],["latest","Från communityn",true],["mine","Din säsong",true],["weekend","Tips för helgen",true],["news","Nytt i appen",false],
-  ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["board","Topplistor",false],["hopper","Månadens groundhopper",false],["toparena","Månadens arena",false],["quiz","Quizledare",false],["invite","Tipsa en kompis",false]];
-const HOME_FN={intro:()=>introHtml(),hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
+  ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["board","Topplistor",false],["hopper","Månadens groundhopper",false],["writers","Månadens skribenter",false],["toparena","Månadens arena",false],["quiz","Quizledare",false],["invite","Tipsa en kompis",false]];
+const HOME_FN={intro:()=>introHtml(),hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),writers:()=>writersHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
 function normHomeCfg(c){const keys=HOME_BLOCKS.map(x=>x[0]);if(!c||typeof c!=="object")return null;const order=Array.isArray(c.order)?c.order.filter((k,i,a)=>keys.includes(k)&&a.indexOf(k)===i):[];
   const on={};if(c.on&&typeof c.on==="object")keys.forEach(k=>{if(typeof c.on[k]==="boolean")on[k]=c.on[k];});return{order,on};}
 function homeCfg(){if(myState==="ready"&&MY.homeCfg)return MY.homeCfg;try{return normHomeCfg(JSON.parse(store.get("fk-homecfg")||"null"))||{order:[],on:{}};}catch(e){return{order:[],on:{}};}}
@@ -3466,10 +3533,11 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-homecust],
   if(t.dataset.hcreset){saveHomeCfg({order:[],on:{}});openHomeCust();return;}
   if(t.dataset.hcmv){const k=t.dataset.hcmv,dir=+t.dataset.dir;const o=homeOrder();const i=o.indexOf(k),j=i+dir;if(j<0||j>=o.length)return;[o[i],o[j]]=[o[j],o[i]];const c=homeCfg();saveHomeCfg({order:o,on:{...c.on}});openHomeCust();}});
 document.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.hcon)return;const c=homeCfg();saveHomeCfg({order:homeOrder(),on:{...c.on,[t.dataset.hcon]:t.checked}});openHomeCust();});
-const isHomeBtn=t=>t.dataset.wmno||t.dataset.gomyrep||t.dataset.actseen||t.dataset.vote!==undefined||t.dataset.wkr||t.dataset.gomode||(t.dataset.homeedit&&mode==="hem")||t.dataset.board||t.dataset.pub!==undefined||t.dataset.hype||t.dataset.homerep||t.dataset.homethread||t.dataset.gomine||t.dataset.goquiz||t.dataset.gorep;
+const isHomeBtn=t=>t.dataset.wmno||t.dataset.gomyrep||t.dataset.gothread||t.dataset.actseen||t.dataset.vote!==undefined||t.dataset.wkr||t.dataset.gomode||(t.dataset.homeedit&&mode==="hem")||t.dataset.board||t.dataset.pub!==undefined||t.dataset.hype||t.dataset.homerep||t.dataset.homethread||t.dataset.gomine||t.dataset.goquiz||t.dataset.gorep;
 async function homeClick(t){
-  if(t.dataset.gomyrep){repSort="mina";repPopOrder=null;repClub=null;repOpen=null;setMode("reportage");window.scrollTo({top:0});repSeen();return;}
+  if(t.dataset.gomyrep){repSort="mina";repPopOrder=null;repClub=null;repOpen=null;setMode("reportage");window.scrollTo({top:0});repSeen("rep");return;}
   if(t.dataset.actseen){repSeen();renderHome();return;}
+  if(t.dataset.gothread){const k=t.dataset.gothread;fKind="alla";accClub=null;openThread=k;setMode("forum");repSeen("forum");requestAnimationFrame(()=>{const b=document.querySelector(`[data-thread="${CSS.escape(k)}"]`);const tb=document.querySelector(".topbar");if(b)window.scrollTo({top:Math.max(0,b.getBoundingClientRect().top+scrollY-(tb?tb.offsetHeight:0)-12)});});return;}
   if(t.dataset.wmno){const id=t.dataset.wmno;let gone=[];mutate(d=>{gone=d.wishMatches.filter(w=>w.id===id);d.wishMatches=d.wishMatches.filter(w=>w.id!==id);});
     if(gone.length)undoToast($t("Borttagen från Vill gå"),async()=>{mutate(d=>{d.wishMatches=putBack(d.wishMatches,gone);});});return;}
   if(t.dataset.gomode){setMode(t.dataset.gomode);window.scrollTo({top:0});return;}
@@ -4003,7 +4071,7 @@ let logoPick="stadion";try{const l=store.get("fk-logo");if(BRAND_LOGOS.some(x=>x
 function applyLogo(){const src=`logos/${logoPick}.png`;const im=document.getElementById("brandLogo");if(im&&im.getAttribute("src")!==src)im.setAttribute("src",src);
   const fl=document.getElementById("favLink");if(fl)fl.setAttribute("href",src);}
 applyLogo();
-const NOTIF=[["remind",$t("Påminn mig att logga matcher jag ville gå på"),$t("Rutan Var du där? på Hem efter matchen")],["act",$t("Nytt på mina reportage"),$t("Röd siffra och ruta på Hem när någon kommenterar eller gillar")]];
+const NOTIF=[["remind",$t("Påminn mig att logga matcher jag ville gå på"),$t("Rutan Var du där? på Hem efter matchen")],["act",$t("Nytt i communityn"),$t("Röd siffra och ruta på Hem när någon svarar i dina forumtrådar eller kommenterar och gillar dina reportage")]];
 const notifOn=k=>store.get("fk-n-"+k)!=="0";
 let setOpen=false;
 // ---------- tipsa en kompis ----------
