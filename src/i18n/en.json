@@ -494,7 +494,6 @@
  "Friggegatan 9, nära arenan. Ligger bäst till för Nya Ullevi.": "Friggegatan 9, near the ground. Best placed for Nya Ullevi.",
  "Fråga": "Question",
  "Fråga Claude om ”{0}”": "Ask Claude about ”{0}”",
- "Fråga och tipsa andra i forumet": "Ask and share tips in the forum",
  "Fråga om tillgängligheten i forumet": "Ask about accessibility in the forum",
  "Fråga, tipsa och inspireras av andra i forumet": "Ask, share tips and get inspired by others in the forum",
  "Frågor och tips från andra som reser på fotboll": "Questions and tips from others who travel to football",
@@ -970,7 +969,6 @@
  "Matcher jag vill gå på": "Matches I want to go to",
  "Matcher per ort, datum och avstånd · tider i din tidszon": "Matches by town, date and distance · times in your time zone",
  "Matcher, tider och resultat hämtas varje natt från API-Football och openfootball (CC0)": "Matches, times and results are fetched every night from API-Football and openfootball (CC0)",
- "Matcherna du sett och dina arenor": "The matches you've seen and your grounds",
  "Matcherna måste ligga nära varandra med tillräckligt mellanrum. Prova fler dagar, ett större avstånd eller töm ortfältet för att söka i hela världen.": "The matches must be close to each other with enough time in between. Try more days, a larger distance or clear the town field to search the whole world.",
  "Matcherna och listorna här syns bara för dig och följer med ditt Groundly-konto.": "The matches and lists here are only visible to you and follow your Groundly account.",
  "Matchinfo": "Match info",
@@ -2068,5 +2066,7 @@
  "Hela {0}": "All of {0}",
  "Övriga": "Other",
  "Möt. Upptäck. Upplev.": "Connect. Discover. Experience.",
- "Ett globalt fotbollscommunity där du träffar likasinnade, delar matchupplevelser, hittar nya matcher och upptäcker ditt nästa fotbollsäventyr.": "A global football community where you meet like-minded fans, share match experiences, find new matches and discover your next football adventure."
+ "Ett globalt fotbollscommunity där du träffar likasinnade, delar matchupplevelser, hittar nya matcher och upptäcker ditt nästa fotbollsäventyr.": "A global football community where you meet like-minded fans, share match experiences, find new matches and discover your next football adventure.",
+ "Spara matcherna du sett, betygsätt arenor och följ din statistik": "Save the matches you have seen, rate grounds and follow your stats",
+ "Fråga, tipsa och läs reportage från andra som reser på fotboll": "Ask, share tips and read stories from others who travel to football"
 }
