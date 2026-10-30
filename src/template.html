@@ -1187,8 +1187,8 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMore();});
 const CONF_KONT={UEFA:"Europa",CONMEBOL:"Sydamerika",CONCACAF:"Nordamerika",AFC:"Asien",CAF:"Afrika",OFC:"Oceanien"};
 const KONT=[["Europa",$t("Europa")],["Nordamerika",$t("Nordamerika")],["Sydamerika",$t("Sydamerika")],["Asien",$t("Asien")],["Afrika",$t("Afrika")],["Oceanien",$t("Oceanien")]];
 // geografisk världsdel (inte fotbollsförbund): utgår från förbundet och rättar de länder som spelar i en annan världsdels förbund.
-// Länder som ligger i två världsdelar räknas dit huvudstaden ligger (Ankara, Astana, Tbilisi m.fl. i Asien, Moskva i Europa).
-const GEO_KONT={Australien:"Oceanien",Israel:"Asien",Kazakstan:"Asien",Armenien:"Asien",Azerbajdzjan:"Asien",Georgien:"Asien",Cypern:"Asien",Turkiet:"Asien",
+// Länder i två världsdelar räknas dit huvudstaden ligger (Astana, Tbilisi m.fl. i Asien, Moskva i Europa); Turkiet och Cypern räknas till Europa.
+const GEO_KONT={Australien:"Oceanien",Israel:"Asien",Kazakstan:"Asien",Armenien:"Asien",Azerbajdzjan:"Asien",Georgien:"Asien",Cypern:"Europa",Turkiet:"Europa",
   Surinam:"Sydamerika",Guyana:"Sydamerika",Ryssland:"Europa",Monaco:"Europa",Liechtenstein:"Europa",Vatikanstaten:"Europa"};
 let _kont=null;const kontOf=land=>{if(!_kont){_kont={};Object.values(C).forEach(c=>{if(c.l==="Landslag"&&c.conf&&CONF_KONT[c.conf])_kont[c.c]=CONF_KONT[c.conf];});Object.assign(_kont,GEO_KONT);}return _kont[land]||null;};
 // ligans hemland (flest klubbar), så att t.ex. Monaco syns under Frankrike och Cardiff under England också
