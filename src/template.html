@@ -1185,8 +1185,12 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMore();});
 // ---------- clubs ----------
 // Länder grupperade per världsdel (från landslagens förbund). Värdet "kont:Europa" visar hela världsdelen.
 const CONF_KONT={UEFA:"Europa",CONMEBOL:"Sydamerika",CONCACAF:"Nordamerika",AFC:"Asien",CAF:"Afrika",OFC:"Oceanien"};
-const KONT=[["Europa",$t("Europa")],["Nordamerika",$t("Nord- och Centralamerika")],["Sydamerika",$t("Sydamerika")],["Asien",$t("Asien")],["Afrika",$t("Afrika")],["Oceanien",$t("Oceanien")]];
-let _kont=null;const kontOf=land=>{if(!_kont){_kont={Monaco:"Europa",Liechtenstein:"Europa"};Object.values(C).forEach(c=>{if(c.l==="Landslag"&&c.conf&&CONF_KONT[c.conf])_kont[c.c]=CONF_KONT[c.conf];});}return _kont[land]||null;};
+const KONT=[["Europa",$t("Europa")],["Nordamerika",$t("Nordamerika")],["Sydamerika",$t("Sydamerika")],["Asien",$t("Asien")],["Afrika",$t("Afrika")],["Oceanien",$t("Oceanien")]];
+// geografisk världsdel (inte fotbollsförbund): utgår från förbundet och rättar de länder som spelar i en annan världsdels förbund.
+// Länder som ligger i två världsdelar räknas dit huvudstaden ligger (Ankara, Astana, Tbilisi m.fl. i Asien, Moskva i Europa).
+const GEO_KONT={Australien:"Oceanien",Israel:"Asien",Kazakstan:"Asien",Armenien:"Asien",Azerbajdzjan:"Asien",Georgien:"Asien",Cypern:"Asien",Turkiet:"Asien",
+  Surinam:"Sydamerika",Guyana:"Sydamerika",Ryssland:"Europa",Monaco:"Europa",Liechtenstein:"Europa",Vatikanstaten:"Europa"};
+let _kont=null;const kontOf=land=>{if(!_kont){_kont={};Object.values(C).forEach(c=>{if(c.l==="Landslag"&&c.conf&&CONF_KONT[c.conf])_kont[c.c]=CONF_KONT[c.conf];});Object.assign(_kont,GEO_KONT);}return _kont[land]||null;};
 // ligans hemland (flest klubbar), så att t.ex. Monaco syns under Frankrike och Cardiff under England också
 let _lgc=null;const lgHome=l=>{if(!_lgc){const m={};Object.values(C).forEach(c=>{if(!c.l||isNat(c))return;(m[c.l]=m[c.l]||{})[c.c]=(m[c.l][c.c]||0)+1;});_lgc={};for(const[l,o]of Object.entries(m))_lgc[l]=Object.entries(o).sort((a,b)=>b[1]-a[1])[0][0];}return _lgc[l]||null;};
 let _clist=null;
