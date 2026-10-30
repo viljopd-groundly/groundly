@@ -241,17 +241,6 @@
    ]
   },
   {
-   "country": "Andorra",
-   "fetched": "2026-10-30T09:15:54.457Z",
-   "all": [
-    "312 | 1a Divisió | League",
-    "313 | 2a Divisió | League",
-    "655 | Copa Constitució | Cup",
-    "809 | Super Cup | Cup"
-   ],
-   "leagues": []
-  },
-  {
    "country": "Armenia",
    "fetched": "2026-10-30T09:15:54.839Z",
    "all": [
@@ -4792,12 +4781,6 @@
    ]
   },
   {
-   "country": "North-Macedonia",
-   "fetched": "2026-10-30T09:16:09.514Z",
-   "all": [],
-   "leagues": []
-  },
-  {
    "country": "Northern-Ireland",
    "fetched": "2026-10-30T09:16:09.894Z",
    "all": [
@@ -6900,6 +6883,456 @@
         "city": "Cwmafan",
         "capacity": 1000,
         "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Macedonia",
+   "fetched": "2026-10-30T09:16:50.208Z",
+   "all": [
+    "371 | First League | League",
+    "372 | Second League | League",
+    "756 | Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 371,
+     "name": "First League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-08-07",
+       "2017-05-31",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-08-12",
+       "2018-05-20",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-11",
+       "2019-05-26",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-10",
+       "2020-04-05",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-08",
+       "2021-05-16",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-08",
+       "2022-05-22",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-06",
+       "2023-05-14",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-06",
+       "2024-05-26",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-11",
+       "2025-05-25",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-08",
+       "2026-05-31",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-24",
+       "2026-12-12",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 574,
+       "name": "Vardar Skopje",
+       "founded": 1947,
+       "venue": {
+        "name": "Toše Proeski Arena",
+        "city": "Skopje",
+        "capacity": 32580,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 609,
+       "name": "Shkendija",
+       "founded": 1979,
+       "venue": {
+        "name": "Ecolog Arena",
+        "city": "Tetovo",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4331,
+       "name": "Sileks",
+       "founded": 1965,
+       "venue": {
+        "name": "Gradski stadion Kratovo",
+        "city": "Kratovo",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4332,
+       "name": "Skopje",
+       "founded": 1960,
+       "venue": {
+        "name": "Stadion Železarnica",
+        "city": "Skopje",
+        "capacity": 4000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4333,
+       "name": "Bregalnica Štip",
+       "founded": 1921,
+       "venue": {
+        "name": "Gradski Stadion",
+        "city": "Štip",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4346,
+       "name": "Struga",
+       "founded": 2015,
+       "venue": {
+        "name": "Gradska Plaža Stadium",
+        "city": "Struga",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4348,
+       "name": "Tikveš",
+       "founded": 1930,
+       "venue": {
+        "name": "Gradski Stadion",
+        "city": "Kavadarci",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19753,
+       "name": "Aresimi",
+       "founded": null,
+       "venue": {
+        "name": "Igralište Golema Rečica",
+        "city": "Tetovo",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22153,
+       "name": "Bashkimi Kumanovo",
+       "founded": null,
+       "venue": {
+        "name": "Stadion FK Bashkimi",
+        "city": "Kumanovo",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 24781,
+       "name": "Shkëndija Haraçinë",
+       "founded": null,
+       "venue": {
+        "name": "Hasanbeg Arena",
+        "city": "Skopje",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Andorra",
+   "fetched": "2026-10-30T09:16:51.577Z",
+   "all": [
+    "312 | 1a Divisió | League",
+    "313 | 2a Divisió | League",
+    "655 | Copa Constitució | Cup",
+    "809 | Super Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 312,
+     "name": "1a Divisió",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-09-18",
+       "2012-04-22",
+       true,
+       false
+      ],
+      [
+       2012,
+       "2012-09-23",
+       "2013-04-21",
+       true,
+       false
+      ],
+      [
+       2013,
+       "2013-09-22",
+       "2014-05-04",
+       true,
+       false
+      ],
+      [
+       2014,
+       "2014-09-21",
+       "2015-05-03",
+       true,
+       false
+      ],
+      [
+       2015,
+       "2015-09-27",
+       "2016-05-08",
+       true,
+       false
+      ],
+      [
+       2016,
+       "2016-09-18",
+       "2017-05-21",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-09-17",
+       "2018-05-13",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-09-16",
+       "2019-05-19",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-09-15",
+       "2020-08-01",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-11-29",
+       "2021-06-02",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-19",
+       "2022-06-01",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-11",
+       "2023-05-31",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-16",
+       "2024-05-29",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-14",
+       "2025-05-28",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-10-11",
+       "2026-05-27",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-05",
+       "2027-05-16",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 591,
+       "name": "FC Santa Coloma",
+       "founded": 1986,
+       "venue": {
+        "name": "Centre d'Entrenament de la FAF 1",
+        "city": "Santa Coloma",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3342,
+       "name": "Inter Club d'Escaldes",
+       "founded": null,
+       "venue": {
+        "name": "Centre d'Entrenament de la FAF 1",
+        "city": "Santa Coloma",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3344,
+       "name": "Ordino",
+       "founded": null,
+       "venue": {
+        "name": "Centre d'Entrenament de la FAF 1",
+        "city": "Santa Coloma",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3345,
+       "name": "Atlètic Club d'Escaldes",
+       "founded": null,
+       "venue": {
+        "name": "Camp de Futbol d'Aixovall",
+        "city": "Sant Julià de Lòria",
+        "capacity": 899,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3346,
+       "name": "Carroi",
+       "founded": 2014,
+       "venue": {
+        "name": "Camp de Futbol d'Aixovall",
+        "city": "Sant Julià de Lòria",
+        "capacity": 899,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3352,
+       "name": "Penya Encarnada",
+       "founded": null,
+       "venue": {
+        "name": "Centre d'Entrenament de la FAF 1",
+        "city": "Santa Coloma",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3353,
+       "name": "Ranger's",
+       "founded": null,
+       "venue": {
+        "name": "Camp de Futbol d'Aixovall",
+        "city": "Sant Julià de Lòria",
+        "capacity": 899,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 3354,
+       "name": "Sporting Escaldes",
+       "founded": null,
+       "venue": {
+        "name": "Camp de Futbol d'Ordino",
+        "city": "Ordino",
+        "capacity": 200,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 19195,
+       "name": "Esperança d'Andorra",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27343,
+       "name": "Casa de Portugal",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
        }
       }
      ]
