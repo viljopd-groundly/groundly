@@ -1183,19 +1183,35 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMor
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMore();});
 
 // ---------- clubs ----------
-const COUNTRIES=[["alla",$t("Alla")],["Sverige",$t("Sverige")],["Norge",$t("Norge")],["Danmark",$t("Danmark")],["Finland",$t("Finland")],["Island",$t("Island")],["England",$t("England")],["Spanien",$t("Spanien")],["Italien",$t("Italien")],["Tyskland",$t("Tyskland")],["Frankrike",$t("Frankrike")],["Skottland",$t("Skottland")],["Nederländerna",$t("Nederländerna")],["Belgien",$t("Belgien")],["Portugal",$t("Portugal")],["Polen",$t("Polen")],["Europa",$t("Övriga Europa")],["USA",$t("Nordamerika")],["Sydamerika",$t("Sydamerika")],["Asien",$t("Asien & Oceanien")],["Afrika",$t("Afrika")],["övrigt",$t("Övriga världen")]];
-const NORDEN=new Set(["Norge","Danmark","Finland","Island"]);
-const REGIONS={Sydamerika:new Set(["Argentina","Brasilien","Uruguay","Chile","Colombia"]),Asien:new Set(["Japan","Sydkorea","Saudiarabien","Australien","Nya Zeeland"]),Afrika:new Set(["Egypten","Marocko","Sydafrika"]),Europa:new Set(["Österrike","Schweiz","Liechtenstein","Tjeckien","Turkiet","Grekland","Kroatien","Serbien","Ungern","Irland","Nordirland","Albanien","Armenien","Azerbajdzjan","Belarus","Bosnien och Hercegovina","Bulgarien","Cypern","Estland","Färöarna","Georgien","Gibraltar","Israel","Kazakstan","Kosovo","Lettland","Litauen","Luxemburg","Malta","Moldavien","Montenegro","Nordmakedonien","Rumänien","Ryssland","San Marino","Slovakien","Slovenien","Ukraina"])};
-// Wales och Andorra: klubbarna i engelska och spanska ligor visas under England och Spanien, de i hemlandets egen liga under Övriga Europa
-const OWNLG={"Cymru Premier":1,"Primera Divisió (Andorra)":1};
-const MAIN=new Set(["Sverige","England","Spanien","Italien","Tyskland","Frankrike","USA","Kanada","Mexiko","Monaco","Norge","Danmark","Finland","Island","Nederländerna","Belgien","Portugal","Polen","Skottland","Wales","Andorra",...Object.values(REGIONS).flatMap(r=>[...r])]);
-function inCountry(c){if(country==="alla")return true;if(country==="landslag")return c.l==="Landslag";if(isNat(c)&&country==="övrigt")return false;if(country==="USA")return c.c==="USA"||c.c==="Kanada"||c.c==="Mexiko";if(country==="Frankrike")return c.c==="Frankrike"||c.c==="Monaco";if(country==="övrigt")return !MAIN.has(c.c);if(country==="Norden")return NORDEN.has(c.c);if(country==="Europa"&&OWNLG[c.l])return true;if(REGIONS[country])return REGIONS[country].has(c.c);if(country==="England")return c.c==="England"||(c.c==="Wales"&&!OWNLG[c.l]);if(country==="Spanien")return c.c==="Spanien"||(c.c==="Andorra"&&!OWNLG[c.l]);return c.c===country;}
+// Länder grupperade per världsdel (från landslagens förbund). Värdet "kont:Europa" visar hela världsdelen.
+const CONF_KONT={UEFA:"Europa",CONMEBOL:"Sydamerika",CONCACAF:"Nordamerika",AFC:"Asien",CAF:"Afrika",OFC:"Oceanien"};
+const KONT=[["Europa",$t("Europa")],["Nordamerika",$t("Nord- och Centralamerika")],["Sydamerika",$t("Sydamerika")],["Asien",$t("Asien")],["Afrika",$t("Afrika")],["Oceanien",$t("Oceanien")]];
+let _kont=null;const kontOf=land=>{if(!_kont){_kont={Monaco:"Europa",Liechtenstein:"Europa"};Object.values(C).forEach(c=>{if(c.l==="Landslag"&&c.conf&&CONF_KONT[c.conf])_kont[c.c]=CONF_KONT[c.conf];});}return _kont[land]||null;};
+// ligans hemland (flest klubbar), så att t.ex. Monaco syns under Frankrike och Cardiff under England också
+let _lgc=null;const lgHome=l=>{if(!_lgc){const m={};Object.values(C).forEach(c=>{if(!c.l||isNat(c))return;(m[c.l]=m[c.l]||{})[c.c]=(m[c.l][c.c]||0)+1;});_lgc={};for(const[l,o]of Object.entries(m))_lgc[l]=Object.entries(o).sort((a,b)=>b[1]-a[1])[0][0];}return _lgc[l]||null;};
+let _clist=null;
+function countryList(){if(_clist)return _clist;const has=new Set();Object.values(C).forEach(c=>{if(!isNat(c)&&c.c)has.add(c.c);});
+  const first=["Sverige","Norge","Danmark","Finland","Island","England","Skottland","Spanien","Italien","Tyskland","Frankrike"];
+  const groups=KONT.map(([k,l])=>{const lands=[...has].filter(x=>kontOf(x)===k).sort((a,b)=>{const fa=first.indexOf(a),fb=first.indexOf(b);if(fa!==fb){if(fa<0)return 1;if(fb<0)return -1;return fa-fb;}return $t(a).localeCompare($t(b),LANG);});
+    return lands.length?{g:l,o:[["kont:"+k,$t("Hela {0}",[l])],...lands.map(x=>[x,$t(x)])]}:null;}).filter(Boolean);
+  const rest=[...has].filter(x=>!kontOf(x)).sort();
+  if(rest.length)groups.push({g:$t("Övriga"),o:rest.map(x=>[x,$t(x)])});
+  return _clist=groups;}
+const COUNTRY_OPTS=()=>[["alla",$t("Alla länder")],...countryList()];
+// platt ordning (tabeller sorteras efter den)
+const COUNTRIES=new Proxy([],{get(t,p){const flat=[["alla",$t("Alla")],...countryList().flatMap(g=>g.o.filter(([k])=>!k.startsWith("kont:")))];return typeof flat[p]==="function"?flat[p].bind(flat):flat[p];}});
+// gamla val (före världsdelarna) som kan finnas sparade
+const OLD_CTRY={Europa:"kont:Europa",USA:"kont:Nordamerika",Sydamerika:"kont:Sydamerika",Asien:"kont:Asien",Afrika:"kont:Afrika","övrigt":"alla",Norden:"kont:Europa"};
+const validCountry=v=>v==="alla"||v==="landslag"||(String(v).startsWith("kont:")&&KONT.some(([k])=>"kont:"+k===v))||countryList().some(g=>g.o.some(([k])=>k===v));
+function inCountry(c){if(country==="alla")return true;if(country==="landslag")return c.l==="Landslag";if(isNat(c))return false;
+  if(country.startsWith("kont:"))return kontOf(c.c)===country.slice(5);
+  return c.c===country||(!!c.l&&lgHome(c.l)===country);}
 // "Florida (Uruguay)" visas som "Florida" när landet står bredvid
 const cityLbl=c=>$t(String(c.city||"").replace(" ("+c.c+")",""));
 function clubHay(c){return c._h||(c._h=norm([c.n,c.a,c.city,c.c,c.s,c.nick].join(" ")));}
 // serier i valt land (landschip eller sökning på landets namn)
 let league="";
-function leagueCountry(){if(country!=="alla"&&country!=="övrigt"&&country!=="landslag")return country;const nq=norm(q);if(!nq)return null;const hit=COUNTRIES.find(([k,l])=>k!=="alla"&&k!=="övrigt"&&(norm(k)===nq||norm(l)===nq));return hit?hit[0]:null;}
+function leagueCountry(){if(country.startsWith("kont:"))return null;if(country!=="alla"&&country!=="övrigt"&&country!=="landslag")return country;const nq=norm(q);if(!nq)return null;const hit=COUNTRIES.find(([k,l])=>k!=="alla"&&k!=="övrigt"&&(norm(k)===nq||norm(l)===nq));return hit?hit[0]:null;}
 function leaguesIn(lc){const m=new Map();Object.values(C).forEach(c=>{if(isNat(c)||!c.l||!gOk(c))return;const save=country;country=lc;const ok=inCountry(c);country=save;if(ok&&!m.has(c.l))m.set(c.l,c.t);});
   return[...m.entries()].sort((a,b)=>((a[1]||99)-(b[1]||99))||a[0].localeCompare(b[0],LANG));}
 // herr- och damlag i samma klubb delar klubbkort (växel Herr | Dam). Lagen behåller sina egna id.
@@ -1288,7 +1304,7 @@ document.addEventListener("change",e=>{const t=e.target;
   else if(t.id==="ntConfSel"){ntConf=t.value;store.set("fk-ntconf",ntConf);openClub=null;renderNat();}
   else if(t.id==="aSortSel"){aSort=t.value;store.set("fk-asort",aSort);aLimit=40;renderArenas();}});
 function renderClubs(){if(mode==="landslag")return renderNat();genderChips("gClubs");
-  setSel("countrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?$t("Alla länder"):l]),country);
+  if(OLD_CTRY[country])country=OLD_CTRY[country];if(!validCountry(country))country="alla";setSel("countrySel",COUNTRY_OPTS(),country);
   const lc=leagueCountry();const lgs=lc?leaguesIn(lc):[];if(league&&!lgs.some(x=>x[0]===league))league="";
   document.getElementById("leagueW").hidden=lgs.length<2;
   if(lgs.length>=2)setSel("leagueSel",[["",$t("Alla serier")],...lgs.map(([l,t])=>[l,l+(t?$t(" (nivå {0})",[t]):"")])],league);
@@ -3100,7 +3116,7 @@ const arenaHasAcc=a=>ACC.some(([k])=>a.acc[k].y||a.acc[k].n);
 const AFILT=[["up",$t("Kommande matcher")],["acc",$t("Tillgänglighetsinfo")],["rated",$t("Har betyg")],["vis",$t("Besökta")],["notv",$t("Inte besökta")]];
 const ASORT=[["cap",$t("Störst först")],["rate",$t("Bäst betyg")],["az",$t("A–Ö")]];
 function arenaList(){const toks=norm(aq)?norm(aq).split(" "):[];
-  let list=arenas().filter(x=>inCountry({c:x.c})&&toks.every(t=>x.hay.includes(t)));
+  let list=arenas().filter(x=>inCountry({c:x.c,l:x.clubs&&x.clubs[0]&&x.clubs[0].l})&&toks.every(t=>x.hay.includes(t)));
   list=list.map(x=>({...x,a:arenaAgg(x.s)}));
   if(aFilt.has("up"))list=list.filter(x=>arenaUpcoming(x).length);
   if(aFilt.has("acc"))list=list.filter(x=>arenaHasAcc(x.a));
@@ -3124,8 +3140,8 @@ function arenaCard(x){const s=ratingSummary(x.a);const up=arenaUpcoming(x);const
    <div class="actions"><button class="btn small" data-open="${esc(c0.id)}">${shared?$t("Visa arenafakta"):$t("Visa klubb och arenafakta")}</button><button class="btn small" data-tripfor="${esc(c0.id)}" aria-expanded="${tripOpen===c0.id}">${$t("Ta dig till arenan")}</button>${extLink(bookingUrl(x.s,x.city,up[0]?matchDate(up[0]):null),adLabel($t("Hotell")),"btn small")}${pubs?`<button class="btn small" data-open="${esc(c0.id)}" data-topub="1">${$t("{0} pubtips",[pubs])}</button>`:""}</div>${tripOpen===c0.id?tripPanel(C[c0.id]):""}
   </article>`;}
 function renderArenas(){
-  if(!COUNTRIES.some(([k])=>k===aCountry))aCountry="alla";
-  setSel("aCountrySel",COUNTRIES.map(([k,l])=>[k,k==="alla"?$t("Alla länder"):l]),aCountry);
+  if(OLD_CTRY[aCountry])aCountry=OLD_CTRY[aCountry];if(!validCountry(aCountry))aCountry="alla";
+  setSel("aCountrySel",COUNTRY_OPTS(),aCountry);
   setSel("aSortSel",ASORT,aSort);document.getElementById("aSortSel").classList.remove("on");
   document.getElementById("aFiltChips").innerHTML=AFILT.filter(([k])=>(k!=="notv"&&k!=="vis")||myState==="ready").map(([k,l])=>`<button class="chip" data-afilt="${k}" aria-pressed="${aFilt.has(k)}">${l}</button>`).join("");
   const sv=country;country=aCountry;let list;try{list=arenaList();}finally{country=sv;}
