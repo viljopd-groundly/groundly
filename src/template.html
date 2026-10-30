@@ -1553,7 +1553,9 @@ function renderTable(){const ls=tblLeagues(true);if(!ls.length)return;
   for(const nm of ["standings","players"])if(!xdP[nm])loadXD(nm).then(()=>{if(mode==="tabell")renderTable();});
   if(!tblLeague||!ls.some(x=>x.l===tblLeague)){const fl=favList().map(id=>C[id]).filter(Boolean);const f=fl.find(c=>ls.some(x=>x.l===c.l));tblLeague=f?f.l:(ls.find(x=>x.l==="Allsvenskan")||ls[0]).l;}
   const cur=ls.find(x=>x.l===tblLeague);const countries=[...new Set(ls.map(x=>x.c))];
-  setSel("tblCSel",countries.map(c=>[c,c]),cur.c);{const inC=ls.filter(x=>x.c===cur.c),mh=inC.filter(x=>!x.w),wd=inC.filter(x=>x.w);
+  {const has=new Set(countries),grp=countryList().map(g=>({g:g.g,o:g.o.filter(([k])=>has.has(k))})).filter(g=>g.o.length),seen=new Set(grp.flatMap(g=>g.o.map(o=>o[0])));
+    // länderna grupperade per världsdel, som i klubblistan
+    const rest=countries.filter(c=>!seen.has(c));if(rest.length)grp.push({g:$t("Övriga"),o:rest.map(c=>[c,$t(c)])});setSel("tblCSel",grp,cur.c);}{const inC=ls.filter(x=>x.c===cur.c),mh=inC.filter(x=>!x.w),wd=inC.filter(x=>x.w);
     // Herr överst, sedan Dam (rubrikerna går inte att välja)
     setSel("tblLSel",mh.length&&wd.length?[{g:$t("Herr"),o:mh.map(x=>[x.l,x.l])},{g:$t("Dam"),o:wd.map(x=>[x.l,x.l])}]:inC.map(x=>[x.l,x.l]),tblLeague);}
   document.getElementById("tblCSel").classList.remove("on");document.getElementById("tblLSel").classList.remove("on");
