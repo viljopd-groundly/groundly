@@ -759,6 +759,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .wchip b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#f2c14e;color:#3a2a05;font:700 11px/1 var(--f-mono);align-self:center}
 .wchip small{font-weight:400;color:var(--muted);font-size:calc(12px*var(--fs))}
 .wchip.me{border-color:var(--accent)}
+.wchip{align-items:center}.wchip .wflag{width:18px;height:13px;border-radius:2px;object-fit:cover;box-shadow:0 0 0 1px var(--line)}
 .commwriters:empty{display:none}
 
 .commline{font-size:calc(13px*var(--fs));color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap}
@@ -3578,8 +3579,10 @@ function writersRank(){const m=new Date().toISOString().slice(0,7);const W={};co
   Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&String(c.at).startsWith(m))add(uid,"post",1);});});
   return Object.values(W).sort((a,b)=>b.pts-a.pts||b.rep-a.rep).slice(0,5);}
 const wDesc=w=>[w.rep?$tn(w.rep,"{n} reportage","{n} reportage|pl"):"",w.post?$tn(w.post,"{n} inlägg","{n} inlägg|pl"):""].filter(Boolean).join(" · ");
+// månadens skribenter: bara placering, liten flagga och namn (klubbmärke och beskrivning gjorde raden rörig)
+function wFlag(uid){const cc=uid===myId?myCc():(PROF[uid]||{}).cc;const fl=cc&&FLAGS[cc];return fl?`<img class="wflag" src="${fl}" alt="" title="${esc(C[cc]?$t(C[cc].n):"")}">`:"";}
 function writersStrip(){const ws=writersRank();if(!ws.length)return"";const mon=new Date().toLocaleDateString(LOC,{month:"long"});
-  return`<div class="writers"><span class="wlbl">${ic("star")} ${$t("Månadens skribenter i {0}",[esc(mon)])}</span>${ws.slice(0,3).map((w,i)=>`<button class="wchip${w.uid===myId?" me":""}" data-user="${esc(w.uid)}"><b>${i+1}</b>${avatar(w.uid,20)}${esc(who(w.uid))}<small>${esc(wDesc(w))}</small></button>`).join("")}</div>`;}
+  return`<div class="writers"><span class="wlbl">${ic("star")} ${$t("Månadens skribenter i {0}",[esc(mon)])}</span>${ws.slice(0,3).map((w,i)=>`<button class="wchip${w.uid===myId?" me":""}" data-user="${esc(w.uid)}" title="${esc(wDesc(w))}"><b>${i+1}</b>${wFlag(w.uid)}${esc(who(w.uid))}</button>`).join("")}</div>`;}
 function writersHtml(){const ws=writersRank();const mon=new Date().toLocaleDateString(LOC,{month:"long"});
   return`<article class="tip"><div class="lbl">${$t("Månadens skribenter")}</div>${ws.length?`<h2 class="name">${ic("star")} ${userLink(ws[0].uid)}</h2><p class="meta" style="margin:0">${esc(wDesc(ws[0]))}</p>
     ${ws.length>1?`<ol class="board" start="2">${ws.slice(1).map(w=>`<li class="${w.uid===myId?"me":""}"><span>${userLink(w.uid)}</span><b>${w.pts}</b><small>${esc(wDesc(w))}</small></li>`).join("")}</ol>`:""}`
