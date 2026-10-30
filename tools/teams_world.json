@@ -1,59 +1,852 @@
 {
- "fetched": "2026-10-30T10:04:51.112Z",
+ "fetched": "2026-10-30T10:06:04.092Z",
  "countries": [
   {
-   "country": "Afghanistan",
-   "fetched": "2026-10-30T10:04:27.847Z",
-   "all": [],
-   "leagues": []
-  },
-  {
    "country": "Bahrain",
-   "fetched": "2026-10-30T10:04:28.301Z",
+   "fetched": "2026-10-30T10:05:29.999Z",
    "all": [
     "417 | Premier League | League",
     "485 | Federation Cup | Cup",
     "1049 | King's Cup | Cup",
     "1109 | Super Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 417,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-09-08",
+       "2017-05-13",
+       false,
+       true
+      ],
+      [
+       2017,
+       "2017-09-09",
+       "2018-04-21",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-09-16",
+       "2019-05-04",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-09-20",
+       "2020-10-26",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-12-08",
+       "2021-05-26",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-25",
+       "2022-05-14",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-11",
+       "2023-05-30",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-22",
+       "2024-05-31",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-21",
+       "2025-06-09",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-11",
+       "2026-05-30",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-27",
+       "2026-11-29",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5479,
+       "name": "Al Najma",
+       "founded": 1943,
+       "venue": {
+        "name": "Stād al-Bahrayn al-Watanī (Bahrain National Stadium)",
+        "city": "Riffa",
+        "capacity": 35580,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5482,
+       "name": "Al Riffa",
+       "founded": 1953,
+       "venue": {
+        "name": "Stād al-Bahrayn al-Watanī (Bahrain National Stadium)",
+        "city": "Riffa",
+        "capacity": 35580,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5483,
+       "name": "Al-Hidd",
+       "founded": null,
+       "venue": {
+        "name": "Stād al-Bahrayn al-Watanī (Bahrain National Stadium)",
+        "city": "Riffa",
+        "capacity": 35580,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5485,
+       "name": "East Riffa",
+       "founded": 1958,
+       "venue": {
+        "name": "Al-Ahli Stadium",
+        "city": "Manama",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5486,
+       "name": "Malkiya",
+       "founded": 1968,
+       "venue": {
+        "name": "Stād al-Bahrayn al-Watanī (Bahrain National Stadium)",
+        "city": "Riffa",
+        "capacity": 35580,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5487,
+       "name": "Manama",
+       "founded": 1946,
+       "venue": {
+        "name": "Stād al-Bahrayn al-Watanī (Bahrain National Stadium)",
+        "city": "Riffa",
+        "capacity": 35580,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5488,
+       "name": "Muharraq",
+       "founded": 1928,
+       "venue": {
+        "name": "Stād al-Bahrayn al-Watanī (Bahrain National Stadium)",
+        "city": "Riffa",
+        "capacity": 35580,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5580,
+       "name": "Al Ahli",
+       "founded": 1936,
+       "venue": {
+        "name": "Stād al-Bahrayn al-Watanī (Bahrain National Stadium)",
+        "city": "Riffa",
+        "capacity": 35580,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10234,
+       "name": "Al Ittifaq Maqaba",
+       "founded": null,
+       "venue": {
+        "name": "Madinet Hamad Stadium",
+        "city": "Hamad Town",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10238,
+       "name": "Sitra",
+       "founded": 0,
+       "venue": {
+        "name": "Khalifa Sports City Stadium",
+        "city": "al-Manāma (Manama)",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17666,
+       "name": "Khalidiya",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 20386,
+       "name": "A'Ali",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Bangladesh",
-   "fetched": "2026-10-30T10:04:28.779Z",
+   "fetched": "2026-10-30T10:05:31.534Z",
    "all": [
     "398 | Premier League | League",
     "811 | Federation Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 398,
+     "name": "Premier League",
+     "season": 2027,
+     "seasons": [
+      [
+       2016,
+       "2016-07-24",
+       "2016-12-31",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-07-28",
+       "2018-01-13",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-01-18",
+       "2019-08-03",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-13",
+       "2020-07-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-01-13",
+       "2021-08-10",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-03",
+       "2022-07-27",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2022-12-09",
+       "2023-07-22",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2023-12-22",
+       "2024-05-29",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2024-11-29",
+       "2025-05-29",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2025-09-26",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2027,
+       "2026-09-18",
+       "2027-01-22",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5009,
+       "name": "Abahani",
+       "founded": 1972,
+       "venue": {
+        "name": "Comilla Stadium",
+        "city": "Comilla",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5011,
+       "name": "Arambagh",
+       "founded": 1958,
+       "venue": {
+        "name": "Mymensingh Stadium",
+        "city": "Mymensingh",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5012,
+       "name": "Bashundhara Kings",
+       "founded": 2013,
+       "venue": {
+        "name": "Bashundhara Kings Arena",
+        "city": "Dhaka",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5013,
+       "name": "Brothers Union",
+       "founded": 1949,
+       "venue": {
+        "name": "Shaheed Bir Sreshtho Flight Lieutenant Matiur Rahman Stadium",
+        "city": "Munshiganj",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5014,
+       "name": "Mohammedan Dhaka",
+       "founded": 1936,
+       "venue": {
+        "name": "Comilla Stadium",
+        "city": "Comilla",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5017,
+       "name": "Rahmatgonj MFS",
+       "founded": 1933,
+       "venue": {
+        "name": "Shaheed Bir Sreshtho Flight Lieutenant Matiur Rahman Stadium",
+        "city": "Munshiganj",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10106,
+       "name": "Bangladesh Police",
+       "founded": null,
+       "venue": {
+        "name": "Mymensingh Stadium",
+        "city": "Mymensingh",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20780,
+       "name": "Fortis",
+       "founded": 2020,
+       "venue": {
+        "name": "Bashundhara Kings Arena",
+        "city": "Dhaka",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25415,
+       "name": "Dhaka Wanderers",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25416,
+       "name": "Fakirerpool",
+       "founded": null,
+       "venue": {
+        "name": "Shahid Barkat Stadium",
+        "city": "Gazipur",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26882,
+       "name": "PWD Sports Club",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28428,
+       "name": "Chattogram",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28429,
+       "name": "City Club",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Bhutan",
-   "fetched": "2026-10-30T10:04:29.887Z",
+   "fetched": "2026-10-30T10:05:32.488Z",
    "all": [
     "413 | Super League | League",
     "1031 | Premier League | League"
    ],
-   "leagues": []
-  },
-  {
-   "country": "Brunei",
-   "fetched": "2026-10-30T10:04:30.343Z",
-   "all": [],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 1031,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2023,
+       "2023-07-19",
+       "2023-12-09",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-05-11",
+       "2024-10-20",
+       false,
+       true
+      ],
+      [
+       2025,
+       "2025-04-19",
+       "2025-10-31",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-05-02",
+       "2026-10-08",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5433,
+       "name": "Bhutan U19",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 5590,
+       "name": "Tensung",
+       "founded": 2016,
+       "venue": {
+        "name": "Changlimithang Stadium",
+        "city": "Thimphu",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5591,
+       "name": "Thimphu",
+       "founded": 2015,
+       "venue": {
+        "name": "Changlimithang National Stadium",
+        "city": "Thimphu",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5592,
+       "name": "Thimphu City",
+       "founded": 2011,
+       "venue": {
+        "name": "Changlimithang Stadium",
+        "city": "Thimphu",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5593,
+       "name": "Transport United",
+       "founded": 2000,
+       "venue": {
+        "name": "Changlimithang Stadium",
+        "city": "Thimphu",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 9426,
+       "name": "Paro",
+       "founded": null,
+       "venue": {
+        "name": "Woochu Sports Arena",
+        "city": "Paro",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 19005,
+       "name": "RTC",
+       "founded": null,
+       "venue": {
+        "name": "RTC Football Ground",
+        "city": "Thimphu",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 19007,
+       "name": "Ugyen Academy",
+       "founded": null,
+       "venue": {
+        "name": "Ugyen Academy Football Field",
+        "city": "Khuruthang",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21277,
+       "name": "Tsirang",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27725,
+       "name": "Drukpa",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Cambodia",
-   "fetched": "2026-10-30T10:04:30.798Z",
+   "fetched": "2026-10-30T10:05:33.397Z",
    "all": [
     "410 | C-League | League",
     "1174 | Hun Sen Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 410,
+     "name": "C-League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-02-19",
+       "2016-09-10",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-02-18",
+       "2017-12-30",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-03-03",
+       "2018-09-30",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-03-16",
+       "2019-11-02",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-02-15",
+       "2020-10-25",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-06",
+       "2021-12-11",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-03-05",
+       "2022-12-03",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-05",
+       "2024-05-12",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-10",
+       "2025-05-18",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-09",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-05",
+       "2027-02-28",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5385,
+       "name": "Angkor Tiger",
+       "founded": 2012,
+       "venue": {
+        "name": "Akihiro Kato Stadium",
+        "city": "Siem Reap",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5387,
+       "name": "Boeung Ket",
+       "founded": null,
+       "venue": {
+        "name": "Cambodia Airways Stadium",
+        "city": "Phnom Penh",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5389,
+       "name": "Kirivong Sok Sen Chey",
+       "founded": null,
+       "venue": {
+        "name": "Kirivong Sok Sen Chey Stadium",
+        "city": "Krong Doun Kaev",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5391,
+       "name": "National Defense",
+       "founded": null,
+       "venue": {
+        "name": "Army Stadium",
+        "city": "Phnom Penh",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5394,
+       "name": "Phnom Penh Crown",
+       "founded": 2001,
+       "venue": {
+        "name": "RSN Stadium",
+        "city": "Phnom Penh",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5396,
+       "name": "Svay Rieng",
+       "founded": 1997,
+       "venue": {
+        "name": "Sports Complex Svay Rieng",
+        "city": "Svay Rieng",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5397,
+       "name": "Visakha",
+       "founded": null,
+       "venue": {
+        "name": "Prince Stadium",
+        "city": "Phnom Penh",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5566,
+       "name": "NagaWorld",
+       "founded": 2001,
+       "venue": {
+        "name": "Olympic Stadium",
+        "city": "Phnom Penh",
+        "capacity": 70000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 21735,
+       "name": "Dangkor Senchey",
+       "founded": 2016,
+       "venue": {
+        "name": "Olympic Stadium",
+        "city": "Phnom Penh",
+        "capacity": 70000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 24520,
+       "name": "Life Sihanoukville",
+       "founded": 2023,
+       "venue": {
+        "name": "Life University Stadium",
+        "city": "Krong Preah Sihanouk",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26303,
+       "name": "Kompong Dewa",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "China",
-   "fetched": "2026-10-30T10:04:31.259Z",
+   "fetched": "2026-10-30T10:05:34.322Z",
    "all": [
     "169 | Super League | League",
     "170 | League One | League",
@@ -61,25 +854,450 @@
     "929 | League Two | League",
     "972 | Super Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 169,
+     "name": "Super League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-03-04",
+       "2016-10-30",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-03-03",
+       "2017-11-04",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-03-02",
+       "2018-11-11",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-03-01",
+       "2019-12-01",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-07-25",
+       "2020-11-22",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-04-20",
+       "2022-01-12",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-06-03",
+       "2022-12-17",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-04-15",
+       "2023-11-04",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-03-01",
+       "2024-11-02",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-02-22",
+       "2025-11-22",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-03-06",
+       "2026-11-08",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 830,
+       "name": "Beijing Guoan",
+       "founded": 1992,
+       "venue": {
+        "name": "Workers' Stadium",
+        "city": "Beijing",
+        "capacity": 68000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 833,
+       "name": "Shanghai Shenhua",
+       "founded": 1993,
+       "venue": {
+        "name": "Shanghai Stadium",
+        "city": "Shanghai",
+        "capacity": 56842,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 836,
+       "name": "SHANGHAI SIPG",
+       "founded": 2005,
+       "venue": {
+        "name": "Yuanshen Sports Centre Stadium",
+        "city": "Shanghai",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 837,
+       "name": "Tianjin Teda",
+       "founded": 1957,
+       "venue": {
+        "name": "Tianjin Olympic Center Stadium",
+        "city": "Tianjin",
+        "capacity": 54696,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 840,
+       "name": "Henan Jianye",
+       "founded": 1994,
+       "venue": {
+        "name": "Zhengzhou Hanghai Stadium",
+        "city": "Zhengzhou",
+        "capacity": 29000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 844,
+       "name": "Shandong Luneng",
+       "founded": 1988,
+       "venue": {
+        "name": "Jinan Olympic Sports Center Stadium",
+        "city": "Ji&apos;nan",
+        "capacity": 56808,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 848,
+       "name": "Hangzhou Greentown",
+       "founded": 1998,
+       "venue": {
+        "name": "Yellow Dragon Sports Center Stadium",
+        "city": "Hangzhou",
+        "capacity": 52672,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1431,
+       "name": "Qingdao Jonoon",
+       "founded": 1990,
+       "venue": {
+        "name": "Qingdao Youth Football Stadium",
+        "city": "Qingdao",
+        "capacity": 50000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5648,
+       "name": "Chengdu Better City",
+       "founded": null,
+       "venue": {
+        "name": "Chengdu Phoenix Mountain Sports Park",
+        "city": "Chengdu",
+        "capacity": 60000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5684,
+       "name": "Shenyang Urban",
+       "founded": null,
+       "venue": {
+        "name": "Wuhua Olympic Sports Center Huitang Stadium",
+        "city": "Wuhua",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5686,
+       "name": "Sichuan Jiuniu",
+       "founded": 2006,
+       "venue": {
+        "name": "Wuhua Hengpi Football Town",
+        "city": "Dongguan",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5695,
+       "name": "Wuhan Three Towns",
+       "founded": 2013,
+       "venue": {
+        "name": "Wuhan Sports Center Stadium",
+        "city": "Wuhan",
+        "capacity": 54357,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17265,
+       "name": "Qingdao Youth Island",
+       "founded": 2007,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 21262,
+       "name": "Chongqing Tongliang Long",
+       "founded": null,
+       "venue": {
+        "name": "Tongliang Long Stadium",
+        "city": "Chongqing",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21263,
+       "name": "Dalian Zhixing",
+       "founded": 2021,
+       "venue": {
+        "name": "Jinzhou Stadium",
+        "city": "Dalian",
+        "capacity": 30776,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21265,
+       "name": "Yunnan Yukun",
+       "founded": 2021,
+       "venue": {
+        "name": "Yuxi plateau Sports Center Stadium",
+        "city": "Yuxi",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Chinese-Taipei",
-   "fetched": "2026-10-30T10:04:31.722Z",
+   "fetched": "2026-10-30T10:05:35.250Z",
    "all": [
     "589 | Taiwan Football Premier League | League"
    ],
-   "leagues": []
-  },
-  {
-   "country": "Guam",
-   "fetched": "2026-10-30T10:04:32.185Z",
-   "all": [],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 589,
+     "name": "Taiwan Football Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2017,
+       "2017-01-07",
+       "2017-11-25",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-04-15",
+       "2018-10-08",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-04-14",
+       "2019-12-01",
+       false,
+       false
+      ],
+      [
+       2020,
+       "2020-04-12",
+       "2020-11-29",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-04-11",
+       "2021-12-19",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-04-17",
+       "2022-11-27",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-04-16",
+       "2023-12-10",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-04-14",
+       "2024-12-01",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-17",
+       "2026-05-30",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-13",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8028,
+       "name": "Hang Yuen",
+       "founded": null,
+       "venue": {
+        "name": "Tainan Football Field",
+        "city": "Tainan",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8048,
+       "name": "Tatung",
+       "founded": 1969,
+       "venue": {
+        "name": "Taipei Municipal Stadium",
+        "city": "Taipei",
+        "capacity": 21000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9427,
+       "name": "Taipower",
+       "founded": 1979,
+       "venue": {
+        "name": "Kaohsiung National Stadium",
+        "city": "Gaoxiong",
+        "capacity": 55000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12542,
+       "name": "Taichung Futuro",
+       "founded": null,
+       "venue": {
+        "name": "Hsinchu County Second Stadium",
+        "city": "Zhubei City",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12543,
+       "name": "Tainan City",
+       "founded": null,
+       "venue": {
+        "name": "Tainan Municipal Stadium",
+        "city": "Tainan",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 18841,
+       "name": "AC Taipei",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26332,
+       "name": "Taichung Rock FC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28419,
+       "name": "Kaohsiung",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Hong-Kong",
-   "fetched": "2026-10-30T10:04:32.640Z",
+   "fetched": "2026-10-30T10:05:36.297Z",
    "all": [
     "381 | HKFA 1st Division | League",
     "380 | Premier League | League",
@@ -90,11 +1308,254 @@
     "1199 | League Cup | Cup",
     "1209 | Guangdong - Hong Kong Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 380,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-09-03",
+       "2012-05-20",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-08-31",
+       "2013-05-05",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-08-30",
+       "2014-05-11",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-09-12",
+       "2015-05-09",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-09-12",
+       "2016-05-07",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-08-26",
+       "2017-05-06",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-08-25",
+       "2018-05-13",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-31",
+       "2019-05-19",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-30",
+       "2020-10-11",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-11-21",
+       "2021-05-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-23",
+       "2022-05-01",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-27",
+       "2023-05-07",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-19",
+       "2024-05-26",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-30",
+       "2025-05-25",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-29",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-21",
+       "2027-05-22",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4207,
+       "name": "Warriors",
+       "founded": null,
+       "venue": {
+        "name": "Tseung Kwan O Sports Ground",
+        "city": "Hong Kong",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4451,
+       "name": "Eastern",
+       "founded": 1932,
+       "venue": {
+        "name": "Mong Kok Stadium",
+        "city": "Hong Kong",
+        "capacity": 6664,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4453,
+       "name": "Kitchee",
+       "founded": 1931,
+       "venue": {
+        "name": "Mong Kok Stadium",
+        "city": "Hong Kong",
+        "capacity": 6664,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4456,
+       "name": "Southern District",
+       "founded": 2002,
+       "venue": {
+        "name": "Aberdeen Sports Ground",
+        "city": "Hong Kong",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4457,
+       "name": "Wofoo Tai Po",
+       "founded": 2002,
+       "venue": {
+        "name": "Tai Po Sports Ground",
+        "city": "Tai Po",
+        "capacity": 3200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4462,
+       "name": "Hong Kong FC",
+       "founded": 1886,
+       "venue": {
+        "name": "Hong Kong Football Club Stadium",
+        "city": "Hong Kong",
+        "capacity": 3829,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4467,
+       "name": "Eastern District",
+       "founded": 2002,
+       "venue": {
+        "name": "Happy Valley Recreation Ground #1",
+        "city": "Hong Kong",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4471,
+       "name": "Shatin",
+       "founded": 1982,
+       "venue": {
+        "name": "Ma On Shan Recreation Ground",
+        "city": "Hong Kong",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 6401,
+       "name": "North District",
+       "founded": 2003,
+       "venue": {
+        "name": "North District Sports Ground",
+        "city": "North District",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20392,
+       "name": "Kowloon City",
+       "founded": 2004,
+       "venue": {
+        "name": "Sham Shui Po Sports Ground",
+        "city": "Kowloon",
+        "capacity": 2194,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26471,
+       "name": "BC Rangers",
+       "founded": 1960,
+       "venue": {
+        "name": "Hammer Hill Road Sports Ground",
+        "city": "Hong Kong",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "India",
-   "fetched": "2026-10-30T10:04:33.094Z",
+   "fetched": "2026-10-30T10:05:37.416Z",
    "all": [
     "323 | Indian Super League | League",
     "324 | I-League | League",
@@ -104,52 +1565,1342 @@
     "1020 | Calcutta Premier Division | League",
     "1201 | IFA Shield | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 323,
+     "name": "Indian Super League",
+     "season": 2026,
+     "seasons": [
+      [
+       2018,
+       "2018-09-29",
+       "2019-03-17",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-10-20",
+       "2020-03-14",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-11-20",
+       "2021-03-13",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-11-19",
+       "2022-03-20",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-10-07",
+       "2023-03-18",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-21",
+       "2024-05-04",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-13",
+       "2025-04-12",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2026-02-14",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-10-10",
+       "2027-01-17",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 3462,
+       "name": "Churchill Brothers",
+       "founded": 1988,
+       "venue": {
+        "name": "Pandit Jawaharlal Nehru Stadium",
+        "city": "Margao",
+        "capacity": 27300,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3466,
+       "name": "Minerva Punjab",
+       "founded": 2005,
+       "venue": {
+        "name": "Jawaharlal Nehru Stadium",
+        "city": "New Delhi",
+        "capacity": 78000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3472,
+       "name": "Bengaluru",
+       "founded": 2013,
+       "venue": {
+        "name": "Sree Kanteerava Stadium",
+        "city": "Bangalore",
+        "capacity": 28001,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3473,
+       "name": "Chennaiyin",
+       "founded": 2014,
+       "venue": {
+        "name": "Jawaharlal Nehru Stadium",
+        "city": "Chennai",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3475,
+       "name": "Goa",
+       "founded": 2014,
+       "venue": {
+        "name": "Pandit Jawaharlal Nehru Stadium",
+        "city": "Margao",
+        "capacity": 27300,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3477,
+       "name": "Kerala Blasters",
+       "founded": 2014,
+       "venue": {
+        "name": "Jawaharlal Nehru International Stadium",
+        "city": "Kochi",
+        "capacity": 75000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3478,
+       "name": "Mumbai City",
+       "founded": 2014,
+       "venue": {
+        "name": "Mumbai Football Arena",
+        "city": "Mumbai",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3479,
+       "name": "NorthEast United",
+       "founded": 2014,
+       "venue": {
+        "name": "Indira Gandhi Athletic Stadium",
+        "city": "Guwahati",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7177,
+       "name": "Odisha",
+       "founded": 2014,
+       "venue": {
+        "name": "Kalinga Stadium",
+        "city": "Bhubaneswar",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15516,
+       "name": "ATK Mohun Bagan",
+       "founded": 2020,
+       "venue": {
+        "name": "Vivekananda Yuba Bharati Krirangan Stadium",
+        "city": "Kolkata",
+        "capacity": 120000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21137,
+       "name": "East Bengal II",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 22595,
+       "name": "Inter Kashi",
+       "founded": 2023,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26963,
+       "name": "SC Delhi",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Indonesia",
-   "fetched": "2026-10-30T10:04:33.559Z",
+   "fetched": "2026-10-30T10:05:38.337Z",
    "all": [
     "274 | Liga 1 | League",
     "718 | Piala Indonesia | Cup",
     "275 | Liga 2 | League",
     "924 | Piala Presiden | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 274,
+     "name": "Liga 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2017,
+       "2016-11-13",
+       "2017-11-12",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-03-23",
+       "2018-12-09",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-05-15",
+       "2019-12-22",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-29",
+       "2021-02-28",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-27",
+       "2022-03-31",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-23",
+       "2023-04-22",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-01",
+       "2024-05-31",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-09",
+       "2025-05-25",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-08",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-04",
+       "2027-06-05",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2438,
+       "name": "Arema FC",
+       "founded": 1987,
+       "venue": {
+        "name": "Stadion Kanjuruhan",
+        "city": "Kepanjen",
+        "capacity": 44912,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2441,
+       "name": "PSM Makassar",
+       "founded": 1915,
+       "venue": {
+        "name": "Stadion Gelora B.J. Habibie",
+        "city": "Lompoe",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2442,
+       "name": "Pusamania Borneo",
+       "founded": 2014,
+       "venue": {
+        "name": "Stadion Segiri",
+        "city": "Samarinda",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2443,
+       "name": "Bhayangkara FC",
+       "founded": 2016,
+       "venue": {
+        "name": "Stadion Wibawa Mukti",
+        "city": "Cikarang",
+        "capacity": 28778,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2444,
+       "name": "Persepam Madura Utd",
+       "founded": 1986,
+       "venue": {
+        "name": "Gelora Madura Ratu Pamelingan Stadium",
+        "city": "Pamekasan",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2445,
+       "name": "Persib Bandung",
+       "founded": 1933,
+       "venue": {
+        "name": "Stadion Si Jalak Harupat",
+        "city": "Soreang",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2446,
+       "name": "Persebaya Surabaya",
+       "founded": 1927,
+       "venue": {
+        "name": "Stadion Gelora Bung Tomo",
+        "city": "Surabaya",
+        "capacity": 55000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2448,
+       "name": "Bali United",
+       "founded": 1989,
+       "venue": {
+        "name": "Stadion Kapten I Wayan Dipta",
+        "city": "Gianyar",
+        "capacity": 25312,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3882,
+       "name": "PSS Sleman",
+       "founded": 1976,
+       "venue": {
+        "name": "Stadion Maguwoharjo",
+        "city": "Yogyakarta",
+        "capacity": 50000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4235,
+       "name": "PSIM Yogyakarta",
+       "founded": 1929,
+       "venue": {
+        "name": "Stadion Mandala Krida",
+        "city": "Yogyakarta",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4241,
+       "name": "Persik Kediri",
+       "founded": 1950,
+       "venue": {
+        "name": "Stadion Brawijaya",
+        "city": "Kediri",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4244,
+       "name": "Persita",
+       "founded": 1953,
+       "venue": {
+        "name": "Stadion Utama Gelora Bung Karno",
+        "city": "Jakarta",
+        "capacity": 88083,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10134,
+       "name": "Persija",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Patriot",
+        "city": "Bekasi",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11132,
+       "name": "Persijap",
+       "founded": 1954,
+       "venue": {
+        "name": "Stadion Gelora Bumi Kartini",
+        "city": "Jepara",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17902,
+       "name": "Dewa United",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 22409,
+       "name": "Java United",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 24993,
+       "name": "Isenmulang Kalteng",
+       "founded": 2020,
+       "venue": {
+        "name": "Stadion Maladi Sriwedari",
+        "city": "Surakarta",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26645,
+       "name": "Garudayaksa",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Iran",
-   "fetched": "2026-10-30T10:04:34.024Z",
+   "fetched": "2026-10-30T10:05:39.269Z",
    "all": [
     "290 | Persian Gulf Pro League | League",
     "291 | Azadegan League | League",
     "495 | Hazfi Cup | Cup",
     "905 | Super Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 290,
+     "name": "Persian Gulf Pro League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-07-25",
+       "2017-05-04",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-27",
+       "2018-04-27",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-26",
+       "2019-05-16",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-22",
+       "2021-07-11",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-11-06",
+       "2021-07-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-19",
+       "2022-06-08",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-12",
+       "2023-05-18",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-09",
+       "2024-05-31",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-15",
+       "2025-05-15",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-18",
+       "2026-07-22",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-14",
+       "2026-11-08",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2703,
+       "name": "Aluminium Arak",
+       "founded": null,
+       "venue": {
+        "name": "Imam Khomeini Stadium",
+        "city": "Arak",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2713,
+       "name": "Fajr Sepasi",
+       "founded": 1988,
+       "venue": {
+        "name": "Hafezieh Stadium",
+        "city": "Shiraz",
+        "capacity": 22460,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2714,
+       "name": "Gol Gohar",
+       "founded": null,
+       "venue": {
+        "name": "Gol Gohar Sport Complex",
+        "city": "Sirjan",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2716,
+       "name": "Kheybar Khorramabad",
+       "founded": 1984,
+       "venue": {
+        "name": "Takhti Stadium",
+        "city": "Khorramabad",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2717,
+       "name": "Malavan",
+       "founded": 1969,
+       "venue": {
+        "name": "Takhti Stadium (Ebtedaye khiabane)",
+        "city": "Bandar-e-Anzalī",
+        "capacity": 15559,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2719,
+       "name": "Nassaji Mazandaran",
+       "founded": null,
+       "venue": {
+        "name": "Vatani Stadium",
+        "city": "Ghaemshahr",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2733,
+       "name": "Esteghlal FC",
+       "founded": 1945,
+       "venue": {
+        "name": "Azadi Stadium",
+        "city": "Teheran",
+        "capacity": 100000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2734,
+       "name": "Foolad FC",
+       "founded": 1986,
+       "venue": {
+        "name": "Shohadaye Foolad Khoozestan",
+        "city": "Ahvaz",
+        "capacity": 30655,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2737,
+       "name": "Tractor Sazi",
+       "founded": 1970,
+       "venue": {
+        "name": "Bonyan Diesel Stadium",
+        "city": "Tabriz",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2738,
+       "name": "ZOB Ahan",
+       "founded": 1969,
+       "venue": {
+        "name": "Foolad Shahr Stadium",
+        "city": "Fuladshahr",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2739,
+       "name": "Esteghlal Khuzestan",
+       "founded": 2011,
+       "venue": {
+        "name": "Foolad Sport Complex",
+        "city": "Ahwaz",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2741,
+       "name": "Paykan",
+       "founded": 1967,
+       "venue": {
+        "name": "Shahid Dastgerdi Stadium",
+        "city": "Teheran",
+        "capacity": 8250,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2742,
+       "name": "Persepolis FC",
+       "founded": 1963,
+       "venue": {
+        "name": "Azadi Stadium",
+        "city": "Teheran",
+        "capacity": 100000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2743,
+       "name": "Sanat Naft",
+       "founded": null,
+       "venue": {
+        "name": "Takhti Stadium",
+        "city": "Abadan",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2744,
+       "name": "Sepahan FC",
+       "founded": 1953,
+       "venue": {
+        "name": "Naghsh-e-Jahan Stadium",
+        "city": "Isfahan",
+        "capacity": 75000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10388,
+       "name": "Mes Shahr-e Babak",
+       "founded": null,
+       "venue": {
+        "name": "Shohada Mes Shahrbabak Stadium",
+        "city": "Shahrbabak",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 18159,
+       "name": "Shams Azar Qazvin",
+       "founded": null,
+       "venue": {
+        "name": "Sardare Azadegan Stadium",
+        "city": "Qazvin",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20299,
+       "name": "Chadormalu SC",
+       "founded": null,
+       "venue": {
+        "name": "Nasiri Stadium",
+        "city": "Yazd",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Iraq",
-   "fetched": "2026-10-30T10:04:35.056Z",
+   "fetched": "2026-10-30T10:05:40.194Z",
    "all": [
     "542 | Iraqi League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 542,
+     "name": "Iraqi League",
+     "season": 2026,
+     "seasons": [
+      [
+       2020,
+       "2020-02-16",
+       "2020-04-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2020-10-25",
+       "2021-07-28",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-20",
+       "2022-06-30",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-10-09",
+       "2023-07-21",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-10-26",
+       "2024-07-24",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-20",
+       "2025-07-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-13",
+       "2026-06-08",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-14",
+       "2027-05-28",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8009,
+       "name": "Al Quwa Al Jawiya",
+       "founded": 1931,
+       "venue": {
+        "name": "Al-Shaab Stadium",
+        "city": "Baghdād",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8010,
+       "name": "Al Zawra'a",
+       "founded": 1969,
+       "venue": {
+        "name": "Al-Zawraa Stadium",
+        "city": "Baghdād",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11064,
+       "name": "Al Kahrabaa",
+       "founded": 2001,
+       "venue": {
+        "name": "Al-Zawraa Stadium",
+        "city": "Baghdād",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11065,
+       "name": "Al Minaa Basra",
+       "founded": 1931,
+       "venue": {
+        "name": "Basra International Stadium",
+        "city": "al-Baṣra (Basra)",
+        "capacity": 65000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11067,
+       "name": "Al Talaba",
+       "founded": 1977,
+       "venue": {
+        "name": "Al-Madina International Stadium",
+        "city": "Baghdad",
+        "capacity": 32000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11070,
+       "name": "Erbil",
+       "founded": 1968,
+       "venue": {
+        "name": "Franso Hariri Stadium",
+        "city": "Erbil",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11071,
+       "name": "Naft",
+       "founded": 1979,
+       "venue": {
+        "name": "Al-Madina International Stadium",
+        "city": "Baghdad",
+        "capacity": 32000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11074,
+       "name": "Naft Maysan",
+       "founded": null,
+       "venue": {
+        "name": "Maysan International Stadium",
+        "city": "Al Amarah",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15544,
+       "name": "Al Karkh",
+       "founded": 1963,
+       "venue": {
+        "name": "Al Saher Ahmed Radhi Stadium",
+        "city": "Baghdād",
+        "capacity": 5150,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15547,
+       "name": "Zakho",
+       "founded": 0,
+       "venue": {
+        "name": "Zakho International Stadium",
+        "city": "Zakho",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20463,
+       "name": "Duhok",
+       "founded": 1970,
+       "venue": {
+        "name": "Dohuk Stadium",
+        "city": "Dohuk",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20464,
+       "name": "Karbala",
+       "founded": 1985,
+       "venue": {
+        "name": "Karbala Stadium",
+        "city": "Karbala",
+        "capacity": 9000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25061,
+       "name": "Diyala",
+       "founded": 1957,
+       "venue": {
+        "name": "Al Ba'quba Stadium",
+        "city": "Ba&apos;quba",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25062,
+       "name": "Newroz",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25063,
+       "name": "Al-Karma",
+       "founded": 2020,
+       "venue": {
+        "name": "Al Ramadi Stadium",
+        "city": "Ar Ramādī (Ramadi)",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26598,
+       "name": "Mosul",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26600,
+       "name": "Gharraf",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28222,
+       "name": "Al-Jolan SC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28223,
+       "name": "Ghaz Al Shamal",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28571,
+       "name": "Al Shorta",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Jordan",
-   "fetched": "2026-10-30T10:04:35.891Z",
+   "fetched": "2026-10-30T10:05:41.112Z",
    "all": [
     "387 | League | League",
     "816 | Shield Cup | Cup",
     "838 | Super Cup | Cup",
     "863 | Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 387,
+     "name": "League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-08-05",
+       "2012-05-06",
+       true,
+       false
+      ],
+      [
+       2012,
+       "2012-08-21",
+       "2013-05-05",
+       true,
+       false
+      ],
+      [
+       2013,
+       "2013-09-13",
+       "2014-05-25",
+       true,
+       false
+      ],
+      [
+       2014,
+       "2014-09-12",
+       "2015-05-07",
+       true,
+       false
+      ],
+      [
+       2015,
+       "2015-09-11",
+       "2016-04-30",
+       true,
+       false
+      ],
+      [
+       2016,
+       "2016-10-28",
+       "2017-05-06",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-09-07",
+       "2018-05-11",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-08-24",
+       "2019-05-09",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2020-03-05",
+       "2021-01-16",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-04-08",
+       "2021-11-04",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-04-08",
+       "2022-11-04",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-03",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-08",
+       "2025-05-03",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-31",
+       "2026-05-07",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-03",
+       "2026-11-28",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4530,
+       "name": "Al Buqa'a",
+       "founded": null,
+       "venue": {
+        "name": "Petra Field",
+        "city": "Amman",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4531,
+       "name": "Al Faisaly",
+       "founded": null,
+       "venue": {
+        "name": "Amman International Stadium",
+        "city": "Amman",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4532,
+       "name": "Al Hussein",
+       "founded": null,
+       "venue": {
+        "name": "Al Hasan Stadium",
+        "city": "Irbid",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4533,
+       "name": "Al Jazeera",
+       "founded": null,
+       "venue": {
+        "name": "Petra Field",
+        "city": "Amman",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4534,
+       "name": "Al Ramtha",
+       "founded": 1966,
+       "venue": {
+        "name": "Prince Hashim Stadium",
+        "city": "Al Ramtha",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4535,
+       "name": "Al Salt",
+       "founded": null,
+       "venue": {
+        "name": "Prince Hussein Bin Abdullah Sports Complex",
+        "city": "As-Salt",
+        "capacity": 4000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4537,
+       "name": "Al Wihdat",
+       "founded": null,
+       "venue": {
+        "name": "King Abdullah International Stadium",
+        "city": "Amman",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4539,
+       "name": "Shabab Al Ordon",
+       "founded": 2002,
+       "venue": {
+        "name": "Amman International Stadium",
+        "city": "Amman",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17472,
+       "name": "Al Arabi",
+       "founded": null,
+       "venue": {
+        "name": "Municipal Stadium",
+        "city": "Irbid",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 22188,
+       "name": "Doqarah",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Kuwait",
-   "fetched": "2026-10-30T10:04:36.342Z",
+   "fetched": "2026-10-30T10:05:42.301Z",
    "all": [
     "330 | Premier League | League",
     "331 | Division 1 | League",
@@ -157,45 +2908,1144 @@
     "720 | Emir Cup | Cup",
     "820 | Crown Prince Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 330,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-12-30",
+       "2012-06-01",
+       false,
+       true
+      ],
+      [
+       2012,
+       "2012-09-14",
+       "2013-04-19",
+       false,
+       true
+      ],
+      [
+       2013,
+       "2013-08-30",
+       "2014-04-26",
+       false,
+       true
+      ],
+      [
+       2014,
+       "2014-08-22",
+       "2015-05-10",
+       false,
+       true
+      ],
+      [
+       2015,
+       "2015-10-15",
+       "2016-04-29",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-09-28",
+       "2017-05-25",
+       false,
+       true
+      ],
+      [
+       2017,
+       "2017-09-14",
+       "2018-04-14",
+       false,
+       true
+      ],
+      [
+       2018,
+       "2018-08-26",
+       "2019-05-09",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-09-14",
+       "2020-08-31",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-15",
+       "2021-05-17",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-11-19",
+       "2022-04-26",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-25",
+       "2023-05-31",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-24",
+       "2024-05-28",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-08",
+       "2025-05-15",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-12",
+       "2026-06-29",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-25",
+       "2027-05-30",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 3532,
+       "name": "Al Arabi",
+       "founded": 1960,
+       "venue": {
+        "name": "Ali Sabah Al Salem Stadium",
+        "city": "Madīnat al-Kuwayt (Kuwait City)",
+        "capacity": 23000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3533,
+       "name": "Al Fahaheel",
+       "founded": 1964,
+       "venue": {
+        "name": "Al Ahmadi Stadium",
+        "city": "Al Ahmadi",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3534,
+       "name": "Al Jahra",
+       "founded": 1966,
+       "venue": {
+        "name": "Al Shabab Mubarak Alaiar Stadium",
+        "city": "Al Jahra",
+        "capacity": 17000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3535,
+       "name": "Al Kuwait",
+       "founded": 1960,
+       "venue": {
+        "name": "Kuwait Sporting Club Stadium",
+        "city": "Kuwait City",
+        "capacity": 18500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3536,
+       "name": "Al Nasar",
+       "founded": 1965,
+       "venue": {
+        "name": "Ali Al-Salem Al-Sabah Stadium",
+        "city": "Ardiyah",
+        "capacity": 17000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3537,
+       "name": "Al Qadsia",
+       "founded": 1960,
+       "venue": {
+        "name": "Mohammed Al-Hammad Stadium",
+        "city": "Madīnat al-Kuwayt (Kuwait City)",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3538,
+       "name": "Al Salmiyah",
+       "founded": 1964,
+       "venue": {
+        "name": "Thamir Stadium",
+        "city": "Kuwait City",
+        "capacity": 16105,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3539,
+       "name": "Al Tadhamon",
+       "founded": 1965,
+       "venue": {
+        "name": "Al-Farwaniya Stadium (Al-Tadhamon Stadium)",
+        "city": "Ardiyah",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3540,
+       "name": "Kazma",
+       "founded": 1964,
+       "venue": {
+        "name": "Al-Sadaqua Walsalam Stadium",
+        "city": "Kuwait City",
+        "capacity": 21500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3541,
+       "name": "Al Shabab",
+       "founded": 1963,
+       "venue": {
+        "name": "Al Ahmadi Stadium",
+        "city": "Al Ahmadi",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3542,
+       "name": "Al Sahel",
+       "founded": 1967,
+       "venue": {
+        "name": "Al Sahel Stadium",
+        "city": "Abu Halifa",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3543,
+       "name": "Al Sulaibikhat",
+       "founded": 1972,
+       "venue": {
+        "name": "Al-Salibikhaet Stadium",
+        "city": "Madīnat al-Kuwayt (Kuwait City)",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Kyrgyzstan",
-   "fetched": "2026-10-30T10:04:36.801Z",
+   "fetched": "2026-10-30T10:05:43.255Z",
    "all": [
     "569 | Premier League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 569,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-03-11",
+       "2016-10-29",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-04-08",
+       "2017-10-21",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-04-07",
+       "2018-11-06",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-04-06",
+       "2019-11-05",
+       false,
+       false
+      ],
+      [
+       2020,
+       "2020-03-06",
+       "2020-10-06",
+       true,
+       false
+      ],
+      [
+       2021,
+       "2021-03-16",
+       "2021-11-06",
+       true,
+       false
+      ],
+      [
+       2022,
+       "2022-03-05",
+       "2022-11-15",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-04-02",
+       "2023-11-05",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-03-28",
+       "2024-11-28",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-03-04",
+       "2025-11-08",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-03-01",
+       "2026-11-04",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8022,
+       "name": "Alay",
+       "founded": null,
+       "venue": {
+        "name": "Ahmatbek Suyumbayev atyndagy Stadion",
+        "city": "Osh",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8026,
+       "name": "Dordoi Bishkek",
+       "founded": 1988,
+       "venue": {
+        "name": "Stadion Dordoy",
+        "city": "Bishkek",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12234,
+       "name": "Abdish-Ata",
+       "founded": 2000,
+       "venue": {
+        "name": "Stadion Sportkompleks Abdysh-Ata",
+        "city": "Kant",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12235,
+       "name": "Alga",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Dordoy",
+        "city": "Bishkek",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12236,
+       "name": "Ilbirs",
+       "founded": null,
+       "venue": {
+        "name": "Futboln'yi Centr FFKR",
+        "city": "Bishkek",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12238,
+       "name": "Kara-Balta",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Manas",
+        "city": "Kara-Balta",
+        "capacity": 4500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12240,
+       "name": "Neftchi",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Neftyannik Kochkor-Ata",
+        "city": "Kochkor-Ata",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 18731,
+       "name": "Talant",
+       "founded": 2020,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 21167,
+       "name": "Muras United",
+       "founded": 2023,
+       "venue": {
+        "name": "Stadion Kurmanbek",
+        "city": "Jalal-Abad",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21168,
+       "name": "OshMU Aldier",
+       "founded": 2022,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25764,
+       "name": "Asiagoal",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25765,
+       "name": "Bars",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25766,
+       "name": "Bishkek City",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25767,
+       "name": "Ozgon",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27432,
+       "name": "Asia Talas",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27550,
+       "name": "Toktogul",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Laos",
-   "fetched": "2026-10-30T10:04:37.262Z",
+   "fetched": "2026-10-30T10:05:44.173Z",
    "all": [
     "647 | Lao League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 647,
+     "name": "Lao League",
+     "season": 2026,
+     "seasons": [
+      [
+       2020,
+       "2020-07-11",
+       "2020-10-11",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-27",
+       "2021-07-31",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-03-12",
+       "2022-08-20",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-18",
+       "2023-08-06",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-14",
+       "2025-03-01",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-16",
+       "2026-03-07",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-10-10",
+       "2026-12-17",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8032,
+       "name": "Lao Toyota",
+       "founded": 2013,
+       "venue": {
+        "name": "Laos National Stadium",
+        "city": "Vientiane",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9425,
+       "name": "Master 7",
+       "founded": null,
+       "venue": {
+        "name": "Lao National Stadium KM16",
+        "city": "Vientiane",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 14094,
+       "name": "Ezra",
+       "founded": null,
+       "venue": {
+        "name": "Lane Xang Stadium",
+        "city": "NongHai Village",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 14096,
+       "name": "Viengchanh",
+       "founded": null,
+       "venue": {
+        "name": "Vientiane Province Military Command Stadium",
+        "city": "Viengkham",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16493,
+       "name": "Lao Army",
+       "founded": null,
+       "venue": {
+        "name": "Army Stadium KM5",
+        "city": "Vientiane",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 18750,
+       "name": "Champasak United",
+       "founded": 2008,
+       "venue": {
+        "name": "Champasak Stadium",
+        "city": "Pakse",
+        "capacity": 11000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21015,
+       "name": "Luangprabang FC",
+       "founded": 2022,
+       "venue": {
+        "name": "Luang Prabang Stadium",
+        "city": "Luang Prabang",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21016,
+       "name": "Namtha United",
+       "founded": null,
+       "venue": {
+        "name": "Luang Namtha Provincial Stadium",
+        "city": "Luang Namtha",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26367,
+       "name": "Salavan United",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26368,
+       "name": "Savannakhet",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28451,
+       "name": "Oudomxay Entremets",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Lebanon",
-   "fetched": "2026-10-30T10:04:37.725Z",
+   "fetched": "2026-10-30T10:05:45.094Z",
    "all": [
     "390 | Premier League | League",
     "967 | Cup | Cup",
     "1018 | Federation Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 390,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-10-22",
+       "2012-05-04",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-09-28",
+       "2013-06-16",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-09-21",
+       "2014-05-18",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-09-26",
+       "2015-05-10",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-10-16",
+       "2016-05-19",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-09-09",
+       "2017-04-23",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-09-15",
+       "2018-04-15",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-09-21",
+       "2019-04-21",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-09-20",
+       "2020-01-18",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-03",
+       "2021-04-24",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-11",
+       "2022-05-06",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-02",
+       "2023-03-12",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-04",
+       "2024-06-30",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-20",
+       "2025-07-19",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-19",
+       "2026-08-01",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-10-08",
+       "2026-12-20",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4567,
+       "name": "Al Ahed",
+       "founded": 1966,
+       "venue": {
+        "name": "Al Ahed Stadium",
+        "city": "Bayrūt (Beirut)",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4568,
+       "name": "Al Akhaa Al Ahli",
+       "founded": null,
+       "venue": {
+        "name": "Al Ahed Stadium",
+        "city": "Beirut",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4569,
+       "name": "Al Ansar",
+       "founded": null,
+       "venue": {
+        "name": "Beirut Municipal Stadium",
+        "city": "Bayrūt (Beirut)",
+        "capacity": 22500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4570,
+       "name": "Al Nejmeh",
+       "founded": 1945,
+       "venue": {
+        "name": "Camille Chamoun Sports City Stadium",
+        "city": "Bayrūt (Beirut)",
+        "capacity": 48837,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4573,
+       "name": "Safa",
+       "founded": 1939,
+       "venue": {
+        "name": "Al Safa SC Stadium",
+        "city": "Bayrūt (Beirut)",
+        "capacity": 4000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4576,
+       "name": "Shabab Al Sahel",
+       "founded": 1966,
+       "venue": {
+        "name": "Al Ahed Stadium",
+        "city": "Bayrūt (Beirut)",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4577,
+       "name": "Tadamon Sour",
+       "founded": 1946,
+       "venue": {
+        "name": "Al Ansar Stadium",
+        "city": "Bayrūt (Beirut)",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4578,
+       "name": "Tripoli SC",
+       "founded": 2000,
+       "venue": {
+        "name": "Tripoli Municipal Stadium",
+        "city": "Tarabulus",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11879,
+       "name": "Al Hikma",
+       "founded": 1943,
+       "venue": {
+        "name": "Bourj Hammoud Stadium",
+        "city": "Bayrūt (Beirut)",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11880,
+       "name": "Al Mabarrah",
+       "founded": 1980,
+       "venue": {
+        "name": "Al Mabarrah Stadium",
+        "city": "Bayrūt (Beirut)",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22812,
+       "name": "Reyady Abaseya",
+       "founded": null,
+       "venue": {
+        "name": "Abbas Naser Stadium",
+        "city": "Aabbasiyyeh",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 26399,
+       "name": "Jwaaya FC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Macao",
-   "fetched": "2026-10-30T10:04:38.552Z",
+   "fetched": "2026-10-30T10:05:46.011Z",
    "all": [
     "969 | Primeira Divisão | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 969,
+     "name": "Primeira Divisão",
+     "season": 2026,
+     "seasons": [
+      [
+       2023,
+       "2023-03-04",
+       "2023-07-30",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-02-22",
+       "2024-08-03",
+       false,
+       true
+      ],
+      [
+       2025,
+       "2025-02-19",
+       "2025-08-10",
+       false,
+       false
+      ],
+      [
+       2026,
+       "2026-01-17",
+       "2026-07-26",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 9420,
+       "name": "CPK",
+       "founded": null,
+       "venue": {
+        "name": "University of Science and Technology Stadium (MUST)",
+        "city": "Taipa",
+        "capacity": 1684,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21195,
+       "name": "Cheng Fung",
+       "founded": null,
+       "venue": {
+        "name": "Macau Olympic Complex Stadium",
+        "city": "Taipa",
+        "capacity": 16272,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21196,
+       "name": "Hang Sai",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 21201,
+       "name": "Benfica",
+       "founded": null,
+       "venue": {
+        "name": "University of Science and Technology Stadium (MUST)",
+        "city": "Taipa",
+        "capacity": 1684,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 23061,
+       "name": "Jia Hua",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 23062,
+       "name": "Universidade de Macau",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25715,
+       "name": "Chiba",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25716,
+       "name": "Shao Jiang",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27371,
+       "name": "Gorilla of the Universe",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27372,
+       "name": "Artilheiros",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Malaysia",
-   "fetched": "2026-10-30T10:04:39.026Z",
+   "fetched": "2026-10-30T10:05:46.949Z",
    "all": [
     "278 | Super League | League",
     "279 | Premier League | League",
@@ -203,86 +4053,1835 @@
     "500 | FA Cup | Cup",
     "1170 | MFL Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 278,
+     "name": "Super League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-02-13",
+       "2016-10-22",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-01-20",
+       "2017-10-28",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-02-03",
+       "2018-07-29",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-02-01",
+       "2019-07-21",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-28",
+       "2020-10-10",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-05",
+       "2021-08-08",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-03-04",
+       "2022-09-17",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-24",
+       "2023-12-17",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-05-10",
+       "2025-04-26",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-08",
+       "2026-05-15",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-21",
+       "2027-05-20",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2502,
+       "name": "Negeri Sembilan",
+       "founded": 1923,
+       "venue": {
+        "name": "Stadium Tuanku Abdul Rahman",
+        "city": "Seremban",
+        "capacity": 45000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2504,
+       "name": "Penang",
+       "founded": 1921,
+       "venue": {
+        "name": "Stadium Bandar Raya Pulau Pinang",
+        "city": "George Town",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2505,
+       "name": "Sabah FA",
+       "founded": 1963,
+       "venue": {
+        "name": "Likas Stadium",
+        "city": "Kota Kinabalu",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2517,
+       "name": "Kuala Lumpur FA",
+       "founded": 2020,
+       "venue": {
+        "name": "Kuala Lumpur Football Stadium",
+        "city": "Kuala Lumpur",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2518,
+       "name": "Terengganu",
+       "founded": 1972,
+       "venue": {
+        "name": "Sultan Mizan Zainal Abidin Stadium",
+        "city": "Kuala Terengganu",
+        "capacity": 50000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2523,
+       "name": "Johor Darul Takzim FC",
+       "founded": 1972,
+       "venue": {
+        "name": "Stadium Sultan Ibrahim Larkin",
+        "city": "Iskandar Puteri (Nusajaya)",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2526,
+       "name": "Selangor",
+       "founded": 1936,
+       "venue": {
+        "name": "MBPJ Stadium",
+        "city": "Petaling Jaya",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4202,
+       "name": "DPMM FC Brunei",
+       "founded": null,
+       "venue": {
+        "name": "Stadium Sultan Hassanal Bolkiah",
+        "city": "Bandar Seri Begawan",
+        "capacity": 28000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10108,
+       "name": "Kuching FA",
+       "founded": 2015,
+       "venue": {
+        "name": "Old Stadium Negeri Sarawak",
+        "city": "Kuching",
+        "capacity": 26000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10430,
+       "name": "Imigresen",
+       "founded": null,
+       "venue": {
+        "name": "Negeri Pulau Pinang Stadium",
+        "city": "Pulau Pinang",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21038,
+       "name": "Melaka",
+       "founded": 2022,
+       "venue": {
+        "name": "Stadium Hang Jebat",
+        "city": "Melaka",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 27373,
+       "name": "Kelantan Red Warrior FC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Maldives",
-   "fetched": "2026-10-30T10:04:39.879Z",
+   "fetched": "2026-10-30T10:05:47.855Z",
    "all": [
     "855 | Dhivehi Premier League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 855,
+     "name": "Dhivehi Premier League",
+     "season": 2023,
+     "seasons": [
+      [
+       2021,
+       "2020-12-13",
+       "2021-05-02",
+       true,
+       false
+      ],
+      [
+       2022,
+       "2022-02-16",
+       "2022-08-01",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-05-08",
+       "2023-12-05",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8038,
+       "name": "TC Sports Club",
+       "founded": null,
+       "venue": {
+        "name": "National Football Stadium (Maldives)",
+        "city": "Malé, North Malé Atoll, Kaafu Atoll",
+        "capacity": 11850,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8044,
+       "name": "Maziya",
+       "founded": null,
+       "venue": {
+        "name": "National Football Stadium (Maldives)",
+        "city": "Malé, North Malé Atoll, Kaafu Atoll",
+        "capacity": 11850,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9422,
+       "name": "Eagles",
+       "founded": 1983,
+       "venue": {
+        "name": "National Football Stadium (Maldives)",
+        "city": "Malé, North Malé Atoll, Kaafu Atoll",
+        "capacity": 11850,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16958,
+       "name": "Green Streets",
+       "founded": 2010,
+       "venue": {
+        "name": "National Football Stadium (Maldives)",
+        "city": "Malé, North Malé Atoll, Kaafu Atoll",
+        "capacity": 11850,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16959,
+       "name": "Super United Sports",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 16960,
+       "name": "United Victory",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 16961,
+       "name": "Valencia",
+       "founded": 1979,
+       "venue": {
+        "name": "National Football Stadium (Maldives)",
+        "city": "Malé, North Malé Atoll, Kaafu Atoll",
+        "capacity": 11850,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21312,
+       "name": "Buru",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Mongolia",
-   "fetched": "2026-10-30T10:04:40.337Z",
+   "fetched": "2026-10-30T10:05:48.769Z",
    "all": [
     "764 | Premier League | League",
     "1131 | Super Cup | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 764,
+     "name": "Premier League",
+     "season": 2027,
+     "seasons": [
+      [
+       2020,
+       "2020-07-01",
+       "2020-09-27",
+       true,
+       false
+      ],
+      [
+       2021,
+       "2021-08-01",
+       "2021-10-03",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2021-11-03",
+       "2022-07-03",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2022-08-23",
+       "2023-07-02",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2023-08-05",
+       "2024-06-30",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2024-08-16",
+       "2025-07-19",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2025-09-20",
+       "2026-07-06",
+       true,
+       true
+      ],
+      [
+       2027,
+       "2026-09-12",
+       "2026-11-13",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8027,
+       "name": "Erchim",
+       "founded": 1994,
+       "venue": {
+        "name": "Erchim Club Football Pitch",
+        "city": "Ulaanbaatar",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 16185,
+       "name": "Deren",
+       "founded": 2008,
+       "venue": {
+        "name": "Football Centre MFF",
+        "city": "Ulan Bator (Ulaanbaatar)",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 16854,
+       "name": "Ulaanbaatar",
+       "founded": null,
+       "venue": {
+        "name": "Football Centre MFF",
+        "city": "Ulan Bator (Ulaanbaatar)",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 18104,
+       "name": "Khovd",
+       "founded": null,
+       "venue": {
+        "name": "Football Centre MFF",
+        "city": "Ulan Bator (Ulaanbaatar)",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 22067,
+       "name": "Central Stallions",
+       "founded": null,
+       "venue": {
+        "name": "Football Centre MFF",
+        "city": "Ulan Bator (Ulaanbaatar)",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 24722,
+       "name": "Hunters",
+       "founded": null,
+       "venue": {
+        "name": "Football Centre MFF",
+        "city": "Ulan Bator (Ulaanbaatar)",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 26667,
+       "name": "Ulaangom City",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26669,
+       "name": "Khovd Western",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28430,
+       "name": "Amtat FC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Myanmar",
-   "fetched": "2026-10-30T10:04:40.799Z",
+   "fetched": "2026-10-30T10:05:49.681Z",
    "all": [
     "588 | National League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 588,
+     "name": "National League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-01-15",
+       "2011-10-05",
+       false,
+       false
+      ],
+      [
+       2012,
+       "2012-01-07",
+       "2012-09-09",
+       false,
+       false
+      ],
+      [
+       2013,
+       "2013-01-05",
+       "2013-08-05",
+       false,
+       false
+      ],
+      [
+       2014,
+       "2014-02-01",
+       "2014-09-28",
+       false,
+       false
+      ],
+      [
+       2015,
+       "2015-01-10",
+       "2015-10-31",
+       false,
+       false
+      ],
+      [
+       2016,
+       "2016-01-09",
+       "2016-08-21",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-01-14",
+       "2017-10-29",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-01-11",
+       "2018-09-23",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-01-12",
+       "2019-09-15",
+       false,
+       false
+      ],
+      [
+       2020,
+       "2020-01-10",
+       "2020-10-01",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-06-25",
+       "2022-11-06",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-21",
+       "2023-10-29",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-06",
+       "2025-02-16",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-15",
+       "2026-03-21",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-28",
+       "2026-12-21",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8013,
+       "name": "Yangon United",
+       "founded": 2009,
+       "venue": {
+        "name": "Yangon United Sports Complex",
+        "city": "Yangon",
+        "capacity": 3500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8015,
+       "name": "Shan United",
+       "founded": 2005,
+       "venue": {
+        "name": "Taunggyi Stadium",
+        "city": "Taunggyi",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8017,
+       "name": "Yadanarbon",
+       "founded": 2009,
+       "venue": {
+        "name": "Bahtoo Memorial Stadium",
+        "city": "Mandalay",
+        "capacity": 17000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12523,
+       "name": "Ayeyawady United",
+       "founded": 2009,
+       "venue": {
+        "name": "Pathein Stadium",
+        "city": "Pathein",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12525,
+       "name": "Hantharwady United",
+       "founded": 2009,
+       "venue": {
+        "name": "Grand Royal Stadium",
+        "city": "Bago",
+        "capacity": 4000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12526,
+       "name": "I.S.P.E",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 12528,
+       "name": "Sagaing United",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 12532,
+       "name": "Dagon",
+       "founded": 2009,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 12533,
+       "name": "GFA",
+       "founded": null,
+       "venue": {
+        "name": "Bogyoke Aung San Stadium",
+        "city": "Yangon",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19048,
+       "name": "Myawady",
+       "founded": 2009,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 24091,
+       "name": "Thitsar Arman",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28338,
+       "name": "Yangon Royals",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Nepal",
-   "fetched": "2026-10-30T10:04:41.262Z",
+   "fetched": "2026-10-30T10:05:50.909Z",
    "all": [
     "590 | A Division | League"
    ],
-   "leagues": []
-  },
-  {
-   "country": "North-Korea",
-   "fetched": "2026-10-30T10:04:41.736Z",
-   "all": [],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 590,
+     "name": "A Division",
+     "season": 2023,
+     "seasons": [
+      [
+       2019,
+       "2019-12-14",
+       "2020-02-15",
+       true,
+       false
+      ],
+      [
+       2021,
+       "2021-11-19",
+       "2022-02-24",
+       true,
+       false
+      ],
+      [
+       2023,
+       "2023-03-03",
+       "2023-06-10",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8033,
+       "name": "Manang Marshyangdi",
+       "founded": 1954,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8049,
+       "name": "Three Star",
+       "founded": 1974,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12547,
+       "name": "Armed Police Force",
+       "founded": null,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12550,
+       "name": "Friends Club",
+       "founded": null,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12551,
+       "name": "Himalayan Sherpa",
+       "founded": 2006,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12552,
+       "name": "Jawalakhel",
+       "founded": null,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12553,
+       "name": "Machhindra",
+       "founded": 1973,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12554,
+       "name": "Nepal Army",
+       "founded": null,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12555,
+       "name": "Nepal Police",
+       "founded": 1952,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12556,
+       "name": "New Road Team",
+       "founded": 1934,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12557,
+       "name": "Sankata",
+       "founded": 1954,
+       "venue": {
+        "name": "Dashrath Rangasala",
+        "city": "Kathmandu",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 18106,
+       "name": "Satdobato",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 20879,
+       "name": "Church Boys",
+       "founded": 2009,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 20880,
+       "name": "Khumaltar",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Oman",
-   "fetched": "2026-10-30T10:04:42.189Z",
+   "fetched": "2026-10-30T10:05:51.817Z",
    "all": [
     "406 | Professional League | League",
     "726 | Sultan Cup | Cup",
     "944 | Super Cup | Cup",
     "1197 | FA Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 406,
+     "name": "Professional League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-09-25",
+       "2012-05-21",
+       true,
+       false
+      ],
+      [
+       2012,
+       "2012-10-04",
+       "2013-05-22",
+       true,
+       false
+      ],
+      [
+       2013,
+       "2013-09-13",
+       "2014-05-16",
+       true,
+       false
+      ],
+      [
+       2014,
+       "2014-09-11",
+       "2015-05-25",
+       true,
+       false
+      ],
+      [
+       2015,
+       "2015-09-13",
+       "2016-04-24",
+       true,
+       false
+      ],
+      [
+       2016,
+       "2016-09-17",
+       "2017-05-19",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-09-13",
+       "2018-06-03",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-08-17",
+       "2019-05-28",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-09-14",
+       "2020-11-01",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-12-17",
+       "2021-04-08",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-16",
+       "2022-05-14",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-18",
+       "2023-05-19",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-17",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-15",
+       "2025-05-25",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-16",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-30",
+       "2026-12-05",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2878,
+       "name": "Al Nasr",
+       "founded": 1972,
+       "venue": {
+        "name": "Al-Saada Stadium",
+        "city": "Salalah",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5327,
+       "name": "Al-Nahda",
+       "founded": 2003,
+       "venue": {
+        "name": "Al Nahdha Stadium",
+        "city": "Al-Buraimi",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5329,
+       "name": "Al-Shabab",
+       "founded": 2003,
+       "venue": {
+        "name": "Al-Seeb Stadium",
+        "city": "Seeb",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5330,
+       "name": "Dhofar",
+       "founded": 1972,
+       "venue": {
+        "name": "Al-Saada Stadium",
+        "city": "Salalah",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5334,
+       "name": "Oman Club",
+       "founded": 1942,
+       "venue": {
+        "name": "Sultan Qaboos Sport Complex",
+        "city": "Masqaṭ (Muscat)",
+        "capacity": 39000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5335,
+       "name": "Saham",
+       "founded": 1972,
+       "venue": {
+        "name": "Sohar Regional Sports Complex",
+        "city": "Sohar",
+        "capacity": 19000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5336,
+       "name": "Sohar",
+       "founded": 1972,
+       "venue": {
+        "name": "Sohar Regional Sports Complex",
+        "city": "Sohar",
+        "capacity": 19000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5337,
+       "name": "Sur",
+       "founded": 1969,
+       "venue": {
+        "name": "Sur Sports Complex",
+        "city": "Sur",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7504,
+       "name": "Al Seeb",
+       "founded": 0,
+       "venue": {
+        "name": "Al-Seeb Stadium",
+        "city": "Seeb",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7505,
+       "name": "Bahla",
+       "founded": 1972,
+       "venue": {
+        "name": "Nizwa Sports Complex",
+        "city": "Nizwa",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7506,
+       "name": "Fanja",
+       "founded": null,
+       "venue": {
+        "name": "Al-Seeb Stadium",
+        "city": "Seeb",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11384,
+       "name": "Al Musannah",
+       "founded": 1972,
+       "venue": {
+        "name": "Al-Seeb Stadium",
+        "city": "Seeb",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15960,
+       "name": "Ibri",
+       "founded": 0,
+       "venue": {
+        "name": "Ibri Youth Complex",
+        "city": "Ibri",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15962,
+       "name": "Smail",
+       "founded": 0,
+       "venue": {
+        "name": "Al-Seeb Stadium",
+        "city": "Seeb",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Pakistan",
-   "fetched": "2026-10-30T10:04:43.089Z",
+   "fetched": "2026-10-30T10:05:52.730Z",
    "all": [
     "868 | Premier League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 868,
+     "name": "Premier League",
+     "season": 2021,
+     "seasons": [
+      [
+       2021,
+       "2021-08-14",
+       "2021-12-30",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 17667,
+       "name": "Humma",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 17668,
+       "name": "KRL",
+       "founded": 1995,
+       "venue": {
+        "name": "KRL Stadium",
+        "city": "Rawalpindi",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17669,
+       "name": "Karachi United",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 17670,
+       "name": "Lyallpur",
+       "founded": null,
+       "venue": {
+        "name": "Model Town Football Academy Ground",
+        "city": "Lahore",
+        "capacity": 1500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17671,
+       "name": "Muslim",
+       "founded": null,
+       "venue": {
+        "name": "Govt High School Stadium",
+        "city": "Chaman",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17672,
+       "name": "PCAA",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 17673,
+       "name": "Pakistan Air Force",
+       "founded": null,
+       "venue": {
+        "name": "PAF Complex",
+        "city": "Islamabad",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17674,
+       "name": "Pakistan Army",
+       "founded": null,
+       "venue": {
+        "name": "Army Stadium",
+        "city": "Rawalpindi",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17675,
+       "name": "Pakistan Navy",
+       "founded": 1948,
+       "venue": {
+        "name": "Naval Sports Complex",
+        "city": "Quetta",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17676,
+       "name": "SNGPL",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 17677,
+       "name": "SSGC",
+       "founded": null,
+       "venue": {
+        "name": "KPT Stadium",
+        "city": "Karachi",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17678,
+       "name": "WAPDA",
+       "founded": null,
+       "venue": {
+        "name": "Garhi Shahu's Railway Stadium",
+        "city": "Lahore",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Palestine",
-   "fetched": "2026-10-30T10:04:43.785Z",
+   "fetched": "2026-10-30T10:05:53.634Z",
    "all": [
     "586 | West Bank Premier League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 586,
+     "name": "West Bank Premier League",
+     "season": 2023,
+     "seasons": [
+      [
+       2011,
+       "2011-09-02",
+       "2012-04-21",
+       false,
+       false
+      ],
+      [
+       2012,
+       "2012-08-31",
+       "2013-05-04",
+       false,
+       false
+      ],
+      [
+       2013,
+       "2013-09-10",
+       "2014-03-29",
+       false,
+       false
+      ],
+      [
+       2014,
+       "2014-09-13",
+       "2015-05-05",
+       false,
+       false
+      ],
+      [
+       2015,
+       "2015-09-12",
+       "2016-05-24",
+       false,
+       false
+      ],
+      [
+       2016,
+       "2016-09-16",
+       "2017-05-06",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-09-22",
+       "2018-04-30",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-08-30",
+       "2019-05-10",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-09-26",
+       "2020-06-23",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-30",
+       "2021-04-12",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-14",
+       "2022-04-16",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-09",
+       "2023-03-06",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-17",
+       "2023-10-07",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8029,
+       "name": "Hilal Al-Quds",
+       "founded": 1972,
+       "venue": {
+        "name": "Faisal Al-Husseini International Stadium",
+        "city": "Al-Ram",
+        "capacity": 12500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8046,
+       "name": "Shabab Al Khaleel",
+       "founded": 1943,
+       "venue": {
+        "name": "Hussein Bin Ali Stadium",
+        "city": "Hebron",
+        "capacity": 8000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12480,
+       "name": "Ahli Al-Khalil",
+       "founded": null,
+       "venue": {
+        "name": "Hussein Bin Ali Stadium",
+        "city": "Hebron",
+        "capacity": 8000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12482,
+       "name": "Al-Birah Institution",
+       "founded": null,
+       "venue": {
+        "name": "Faisal Al-Husseini International Stadium",
+        "city": "Al-Ram",
+        "capacity": 12500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12484,
+       "name": "Jabal Al Mukaber",
+       "founded": null,
+       "venue": {
+        "name": "Faisal Al-Husseini International Stadium",
+        "city": "Al-Ram",
+        "capacity": 12500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12485,
+       "name": "Markez Balata",
+       "founded": null,
+       "venue": {
+        "name": "Municipal Stadium Nablus",
+        "city": "Nablus",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12487,
+       "name": "Shabab Alsamu",
+       "founded": 1976,
+       "venue": {
+        "name": "Hussein Bin Ali Stadium",
+        "city": "Hebron",
+        "capacity": 8000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12488,
+       "name": "Taraji Wadi Al-Nes",
+       "founded": null,
+       "venue": {
+        "name": "Al Khodor Stadium (Greens Stadium)",
+        "city": "Joret Al-Shama&apos;a",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12489,
+       "name": "Thaqafi Tulkarem",
+       "founded": null,
+       "venue": {
+        "name": "Jamal Ghanem Stadium",
+        "city": "Tulkarm",
+        "capacity": 4000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12491,
+       "name": "Shabab Al-Dhahiriya",
+       "founded": null,
+       "venue": {
+        "name": "Dora International Stadium",
+        "city": "Hebron",
+        "capacity": 18000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 22151,
+       "name": "Al-Sawahreh",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 22152,
+       "name": "Shabab Al-Obaideya",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Philippines",
-   "fetched": "2026-10-30T10:04:44.237Z",
+   "fetched": "2026-10-30T10:05:54.536Z",
    "all": [
     "765 | PFL | League",
     "867 | Copa Paulino Alcantara | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 765,
+     "name": "PFL",
+     "season": 2027,
+     "seasons": [
+      [
+       2020,
+       "2020-10-28",
+       "2020-11-12",
+       true,
+       false
+      ],
+      [
+       2022,
+       "2022-08-07",
+       "2023-06-11",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-04-06",
+       "2024-07-14",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2024-09-28",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2025-08-30",
+       "2026-05-30",
+       true,
+       true
+      ],
+      [
+       2027,
+       "2026-08-31",
+       "2026-12-05",
+       false,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8030,
+       "name": "Kaya",
+       "founded": 1996,
+       "venue": {
+        "name": "Mckinley Hill Football Field",
+        "city": "Taguig",
+        "capacity": 4500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 16190,
+       "name": "Azkals",
+       "founded": 2020,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 16191,
+       "name": "Maharlika",
+       "founded": 2020,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 16192,
+       "name": "Mendiola",
+       "founded": 1991,
+       "venue": {
+        "name": "Aboitiz Pitch",
+        "city": "Lipa",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 16193,
+       "name": "Stallion",
+       "founded": 2001,
+       "venue": {
+        "name": "Mckinley Hill Football Field",
+        "city": "Taguig",
+        "capacity": 4500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 18265,
+       "name": "Dynamic Herb Cebu",
+       "founded": 2021,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 21576,
+       "name": "Manila Digger",
+       "founded": 2018,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 21578,
+       "name": "Philippine Army",
+       "founded": 1960,
+       "venue": {
+        "name": "Mckinley Hill Football Field",
+        "city": "Taguig",
+        "capacity": 4500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 21580,
+       "name": "Tuloy",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 22754,
+       "name": "Davao Aguilas",
+       "founded": 2017,
+       "venue": {
+        "name": "Davao del Norte Sports and Tourism Complex",
+        "city": "Tagum City",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Qatar",
-   "fetched": "2026-10-30T10:04:44.705Z",
+   "fetched": "2026-10-30T10:05:55.444Z",
    "all": [
     "306 | Second Division | League",
     "305 | Stars League | League",
@@ -291,43 +5890,954 @@
     "825 | Qatar Cup | Cup",
     "824 | Emir Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 305,
+     "name": "Stars League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-09-16",
+       "2012-04-13",
+       false,
+       true
+      ],
+      [
+       2012,
+       "2012-09-15",
+       "2013-04-18",
+       false,
+       true
+      ],
+      [
+       2013,
+       "2013-09-13",
+       "2014-04-11",
+       false,
+       true
+      ],
+      [
+       2014,
+       "2014-08-21",
+       "2015-04-16",
+       false,
+       true
+      ],
+      [
+       2015,
+       "2015-09-11",
+       "2016-04-16",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-09-15",
+       "2017-04-15",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-09-15",
+       "2018-04-08",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-04",
+       "2019-04-17",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-21",
+       "2020-08-20",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-03",
+       "2021-05-04",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-11",
+       "2022-03-19",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-01",
+       "2023-05-09",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-16",
+       "2024-04-26",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-09",
+       "2025-04-18",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-14",
+       "2026-05-08",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-20",
+       "2026-12-03",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2893,
+       "name": "Al Shahaniya",
+       "founded": 1996,
+       "venue": {
+        "name": "Al Seliah Stadium",
+        "city": "Ar-Rayyan",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2895,
+       "name": "Al Sadd",
+       "founded": 1969,
+       "venue": {
+        "name": "Jassim Bin Hamad Stadium (Al-Sadd Stadium)",
+        "city": "Doha",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2896,
+       "name": "Al Ahli Doha",
+       "founded": 1950,
+       "venue": {
+        "name": "Hamad bin Khalifa Stadium",
+        "city": "Doha",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2897,
+       "name": "Al-Rayyan SC",
+       "founded": 1967,
+       "venue": {
+        "name": "Jassim Bin Hamad Stadium (Al-Sadd Stadium)",
+        "city": "ad-Dōha (Doha)",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2898,
+       "name": "Al-Sailiya",
+       "founded": 1995,
+       "venue": {
+        "name": "Hamad bin Khalifa Stadium (Al-Ahli Stadium)",
+        "city": "Doha",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2900,
+       "name": "Al Wakrah",
+       "founded": 1959,
+       "venue": {
+        "name": "Saoud Bin Abdulrahman Stadium (Al-Wakrah Stadium)",
+        "city": "Al-Wakra",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2903,
+       "name": "Al-Gharafa",
+       "founded": 1979,
+       "venue": {
+        "name": "Thani Bin Jassim Stadium (Al-Gharafah Stadium)",
+        "city": "Doha",
+        "capacity": 24826,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2904,
+       "name": "Al-Duhail SC",
+       "founded": 1938,
+       "venue": {
+        "name": "Abdullah bin Nasser bin Khalifa Stadium",
+        "city": "Doha",
+        "capacity": 10221,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2905,
+       "name": "Al-Arabi SC",
+       "founded": 1952,
+       "venue": {
+        "name": "Grand Hamad Stadium (Al-Arabi Stadium)",
+        "city": "Doha",
+        "capacity": 13000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2907,
+       "name": "Qatar SC",
+       "founded": null,
+       "venue": {
+        "name": "Suheim Bin Hamad Stadium (Qatar SC Stadium)",
+        "city": "Doha",
+        "capacity": 13000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2916,
+       "name": "Al Shamal",
+       "founded": 1980,
+       "venue": {
+        "name": "Al-Khwar Stadium",
+        "city": "Al-Khor",
+        "capacity": 45330,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7527,
+       "name": "Lusail City",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Singapore",
-   "fetched": "2026-10-30T10:04:45.171Z",
+   "fetched": "2026-10-30T10:05:56.370Z",
    "all": [
     "505 | League Cup | Cup",
     "368 | Premier League | League",
     "959 | Cup | Cup"
    ],
-   "leagues": []
-  },
-  {
-   "country": "Sri-Lanka",
-   "fetched": "2026-10-30T10:04:45.646Z",
-   "all": [],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 368,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-02-13",
+       "2016-10-26",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-02-26",
+       "2017-11-18",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-03-31",
+       "2018-10-09",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-03-02",
+       "2019-09-29",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-29",
+       "2020-12-05",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-13",
+       "2021-09-11",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-25",
+       "2022-10-15",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-24",
+       "2023-08-27",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-05-10",
+       "2025-05-25",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-23",
+       "2026-05-10",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-11",
+       "2027-05-16",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4200,
+       "name": "Albirex Niigata S",
+       "founded": 2004,
+       "venue": {
+        "name": "Jurong East Stadium",
+        "city": "Singapore",
+        "capacity": 2700,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4201,
+       "name": "Balestier Khalsa",
+       "founded": 1898,
+       "venue": {
+        "name": "Bishan Stadium",
+        "city": "Singapore",
+        "capacity": 6254,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4203,
+       "name": "Geylang International",
+       "founded": 1973,
+       "venue": {
+        "name": "Town Square at Our Tampines Hub",
+        "city": "Singapore",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4204,
+       "name": "Home United",
+       "founded": 1995,
+       "venue": {
+        "name": "Bishan Stadium",
+        "city": "Singapore",
+        "capacity": 6254,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4205,
+       "name": "Hougang United",
+       "founded": 2006,
+       "venue": {
+        "name": "Hougang Stadium",
+        "city": "Singapore",
+        "capacity": 3400,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4206,
+       "name": "Tampines Rovers",
+       "founded": 1945,
+       "venue": {
+        "name": "Town Square at Our Tampines Hub",
+        "city": "Singapore",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4208,
+       "name": "Young Lions",
+       "founded": 2002,
+       "venue": {
+        "name": "Jurong West Stadium",
+        "city": "Singapore",
+        "capacity": 3178,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10077,
+       "name": "Tanjong Pagar",
+       "founded": null,
+       "venue": {
+        "name": "Jurong East Stadium",
+        "city": "Singapore",
+        "capacity": 2700,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Syria",
-   "fetched": "2026-10-30T10:04:46.099Z",
+   "fetched": "2026-10-30T10:05:57.273Z",
    "all": [
     "425 | Premier League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 425,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2017,
+       "2017-10-20",
+       "2018-05-16",
+       false,
+       true
+      ],
+      [
+       2018,
+       "2018-09-21",
+       "2019-05-18",
+       false,
+       true
+      ],
+      [
+       2019,
+       "2019-10-20",
+       "2020-07-18",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-21",
+       "2021-05-10",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-13",
+       "2022-05-07",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-02",
+       "2023-02-17",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-22",
+       "2024-04-27",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-10-25",
+       "2025-07-12",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-12-18",
+       "2026-07-01",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-10-09",
+       "2026-12-28",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8019,
+       "name": "Al Ittihad",
+       "founded": 1949,
+       "venue": {
+        "name": "Ri'ayet al-Shabab Stadium",
+        "city": "Aleppo",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8035,
+       "name": "Al Wahda",
+       "founded": 1928,
+       "venue": {
+        "name": "Tishreen Stadium",
+        "city": "Damascus",
+        "capacity": 12000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8040,
+       "name": "Jaish",
+       "founded": 1947,
+       "venue": {
+        "name": "Al-Fayhaa Stadium",
+        "city": "Damascus",
+        "capacity": 13500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9111,
+       "name": "Al Karama",
+       "founded": 1928,
+       "venue": {
+        "name": "Khaled bin Walid Stadium",
+        "city": "Ḥimṣ (Homs)",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9112,
+       "name": "Al Nawaeir",
+       "founded": 1945,
+       "venue": {
+        "name": "Al Baladi Stadium",
+        "city": "Hama",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9113,
+       "name": "Al Taliya",
+       "founded": 1941,
+       "venue": {
+        "name": "Al Baladi Stadium",
+        "city": "Hama",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9114,
+       "name": "Foutoua",
+       "founded": null,
+       "venue": {
+        "name": "Al Baladi Stadium",
+        "city": "Deir ez-Zor",
+        "capacity": 13000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9115,
+       "name": "Hottin",
+       "founded": 1945,
+       "venue": {
+        "name": "Al Basil Stadium",
+        "city": "Latakia",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9117,
+       "name": "Tishreen",
+       "founded": 1947,
+       "venue": {
+        "name": "Al Basil Stadium",
+        "city": "Latakia",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9118,
+       "name": "Wathba",
+       "founded": 1937,
+       "venue": {
+        "name": "Khaled bin Walid Stadium",
+        "city": "Homs",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9123,
+       "name": "Shorta",
+       "founded": 1947,
+       "venue": {
+        "name": "Al-Fayhaa Stadium",
+        "city": "Damascus",
+        "capacity": 13500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15301,
+       "name": "Horriya",
+       "founded": null,
+       "venue": {
+        "name": "Al Jalaa Stadium",
+        "city": "Damascus",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 27269,
+       "name": "Damascus Al-Ahli",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28525,
+       "name": "Qamishli",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Tajikistan",
-   "fetched": "2026-10-30T10:04:46.987Z",
+   "fetched": "2026-10-30T10:05:58.178Z",
    "all": [
     "571 | Vysshaya Liga | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 571,
+     "name": "Vysshaya Liga",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-04-13",
+       "2011-12-28",
+       false,
+       false
+      ],
+      [
+       2012,
+       "2012-04-07",
+       "2012-11-29",
+       false,
+       false
+      ],
+      [
+       2013,
+       "2013-04-06",
+       "2013-11-17",
+       false,
+       false
+      ],
+      [
+       2014,
+       "2014-04-12",
+       "2014-11-16",
+       false,
+       false
+      ],
+      [
+       2015,
+       "2015-04-09",
+       "2015-11-22",
+       false,
+       false
+      ],
+      [
+       2016,
+       "2016-04-07",
+       "2016-11-14",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-03-05",
+       "2017-11-27",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-03-10",
+       "2018-11-11",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-04-06",
+       "2019-11-04",
+       false,
+       false
+      ],
+      [
+       2020,
+       "2020-04-05",
+       "2020-10-04",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-04-04",
+       "2021-12-05",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-04-02",
+       "2022-11-27",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-04-01",
+       "2023-12-10",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-04-06",
+       "2024-11-10",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-03-07",
+       "2025-12-12",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-03-06",
+       "2026-11-07",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8012,
+       "name": "Istiqlol",
+       "founded": 2007,
+       "venue": {
+        "name": "Republican Central Stadium",
+        "city": "Dushanbe",
+        "capacity": 24000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8031,
+       "name": "Khujand",
+       "founded": 1953,
+       "venue": {
+        "name": "Stadion 20-letie Nezavisimosti",
+        "city": "Khujand",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8041,
+       "name": "Khosilot Farkhor",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Farkhar",
+        "city": "Parkhar",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12261,
+       "name": "CSKA Pomir",
+       "founded": 1950,
+       "venue": {
+        "name": "Stadion Politekhnikum (CSKA MO RT)",
+        "city": "Dushanbe",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12264,
+       "name": "Istaravshan",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Rodnik",
+        "city": "Nay",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12265,
+       "name": "Khatlon",
+       "founded": 1960,
+       "venue": {
+        "name": "Vaxş-Arena",
+        "city": "Kurgan-Tyube",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12268,
+       "name": "Regar-TadAZ",
+       "founded": 1975,
+       "venue": {
+        "name": "TALCO Arena",
+        "city": "Tursunzoda",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12270,
+       "name": "Barki Tajik",
+       "founded": null,
+       "venue": {
+        "name": "Republican Central Stadium",
+        "city": "Dushanbe",
+        "capacity": 24000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12271,
+       "name": "Parvoz",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Furudgokh",
+        "city": "Ghafurov",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12272,
+       "name": "Ravshan",
+       "founded": null,
+       "venue": {
+        "name": "Stadion im. Langari Langarieva",
+        "city": "Kulyab",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16494,
+       "name": "Eskhata",
+       "founded": null,
+       "venue": {
+        "name": "Stadion 20-letie Nezavisimosti",
+        "city": "Khujand",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 27266,
+       "name": "Sardor Tursunzoda",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Thailand",
-   "fetched": "2026-10-30T10:04:47.451Z",
+   "fetched": "2026-10-30T10:05:59.091Z",
    "all": [
     "296 | Thai League 1 | League",
     "297 | Thai League 2 | League",
@@ -335,26 +6845,458 @@
     "873 | Thai Champions Cup | Cup",
     "898 | League Cup | Cup"
    ],
-   "leagues": []
-  },
-  {
-   "country": "Timor-Leste",
-   "fetched": "2026-10-30T10:04:48.193Z",
-   "all": [],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 296,
+     "name": "Thai League 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-03-17",
+       "2012-10-28",
+       false,
+       false
+      ],
+      [
+       2013,
+       "2013-03-02",
+       "2013-11-03",
+       false,
+       true
+      ],
+      [
+       2014,
+       "2014-02-22",
+       "2014-11-02",
+       false,
+       true
+      ],
+      [
+       2015,
+       "2015-02-13",
+       "2015-12-13",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-03-05",
+       "2016-10-30",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-02-11",
+       "2017-11-18",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-02-09",
+       "2018-10-07",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-02-22",
+       "2019-10-26",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-14",
+       "2021-03-28",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-02",
+       "2022-05-20",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-12",
+       "2023-05-14",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-11",
+       "2024-06-16",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-10",
+       "2025-04-27",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-15",
+       "2026-05-10",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-04",
+       "2027-05-30",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2769,
+       "name": "BG Pathum United",
+       "founded": 2006,
+       "venue": {
+        "name": "BG Stadium",
+        "city": "Pathum Thani",
+        "capacity": 16014,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2770,
+       "name": "Bangkok United",
+       "founded": 1988,
+       "venue": {
+        "name": "Thammasat Stadium",
+        "city": "Pathum Thani",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2771,
+       "name": "Chiangrai United",
+       "founded": 2009,
+       "venue": {
+        "name": "Singha Chiangrai Stadium",
+        "city": "Chiang Rai",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2772,
+       "name": "Chonburi FC",
+       "founded": 1997,
+       "venue": {
+        "name": "Chonburi Daikin Stadium",
+        "city": "Chonburi",
+        "capacity": 8680,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2776,
+       "name": "Ratchaburi",
+       "founded": 2004,
+       "venue": {
+        "name": "Dragon Solar Park",
+        "city": "Ratchaburi",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2780,
+       "name": "Buriram United",
+       "founded": 1970,
+       "venue": {
+        "name": "Chang Arena",
+        "city": "Buriram",
+        "capacity": 32600,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2783,
+       "name": "Sukhothai FC",
+       "founded": 2009,
+       "venue": {
+        "name": "Thung Talay Luang Stadium",
+        "city": "Sukhothai",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2789,
+       "name": "Port FC",
+       "founded": 1967,
+       "venue": {
+        "name": "PAT Stadium",
+        "city": "Bangkok",
+        "capacity": 12308,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2791,
+       "name": "Prachuap",
+       "founded": null,
+       "venue": {
+        "name": "Sam Ao Stadium",
+        "city": "Prachuap Khiri Khan",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2797,
+       "name": "Rayong FC",
+       "founded": 2008,
+       "venue": {
+        "name": "WHA Rayong Stadium",
+        "city": "Rayong",
+        "capacity": 7500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2803,
+       "name": "Ayutthaya FC",
+       "founded": 2016,
+       "venue": {
+        "name": "Ayutthaya Stadium",
+        "city": "Ayutthaya",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 6572,
+       "name": "Lamphun Warrior",
+       "founded": 2011,
+       "venue": {
+        "name": "Lamphun Warriors Stadium",
+        "city": "Lamphun",
+        "capacity": 5179,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 6582,
+       "name": "Pattani",
+       "founded": 2009,
+       "venue": {
+        "name": "Rainbow Stadium",
+        "city": "Pattani",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10088,
+       "name": "Uthai Thani",
+       "founded": 2010,
+       "venue": {
+        "name": "Uthai Thani Province Stadium",
+        "city": "Uthai Thani",
+        "capacity": 5500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15282,
+       "name": "Rasi Salai United",
+       "founded": null,
+       "venue": {
+        "name": "Sisaket Provincial Stadium",
+        "city": "Nong Khrok",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 18395,
+       "name": "Sisaket United",
+       "founded": null,
+       "venue": {
+        "name": "Sri Nakhon Lamduan Stadium",
+        "city": "Sisaket",
+        "capacity": 16614,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Turkmenistan",
-   "fetched": "2026-10-30T10:04:48.967Z",
+   "fetched": "2026-10-30T10:05:59.984Z",
    "all": [
     "636 | Ýokary Liga | League",
     "829 | Youth League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 636,
+     "name": "Ýokary Liga",
+     "season": 2026,
+     "seasons": [
+      [
+       2020,
+       "2020-03-06",
+       "2020-11-28",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-20",
+       "2021-12-19",
+       true,
+       false
+      ],
+      [
+       2022,
+       "2022-08-02",
+       "2022-12-20",
+       true,
+       false
+      ],
+      [
+       2023,
+       "2023-04-14",
+       "2023-12-27",
+       true,
+       false
+      ],
+      [
+       2024,
+       "2024-03-03",
+       "2024-12-17",
+       true,
+       false
+      ],
+      [
+       2025,
+       "2025-03-04",
+       "2025-12-20",
+       true,
+       false
+      ],
+      [
+       2026,
+       "2026-04-04",
+       "2026-12-19",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8020,
+       "name": "Ahal",
+       "founded": 1989,
+       "venue": {
+        "name": "Ahal Stadium",
+        "city": "Abadan",
+        "capacity": 4000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8023,
+       "name": "Altyn Asyr",
+       "founded": 2008,
+       "venue": {
+        "name": "Saparmyrat Türkmenbaşy Adyndaky Olimpiýa Stadiony",
+        "city": "Ashgabat",
+        "capacity": 45000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8039,
+       "name": "Nebitci",
+       "founded": 1960,
+       "venue": {
+        "name": "Balkanabat Stadiony",
+        "city": "Balkanabat",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12903,
+       "name": "Şagadam",
+       "founded": null,
+       "venue": {
+        "name": "Türkmenbaşy Stadium",
+        "city": "Türkmenbaşy",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13157,
+       "name": "Köpetdag Aşgabat",
+       "founded": 1947,
+       "venue": {
+        "name": "Köpetdag Stadium",
+        "city": "Ashgabat",
+        "capacity": 26503,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13158,
+       "name": "Merw",
+       "founded": 1991,
+       "venue": {
+        "name": "Mary Stadiony",
+        "city": "Mary",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13159,
+       "name": "Aşgabat",
+       "founded": 2006,
+       "venue": {
+        "name": "Sportkompleks Gökje",
+        "city": "Ashgabat",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 21232,
+       "name": "Arkadag",
+       "founded": null,
+       "venue": {
+        "name": "Ahal merkezi sport toplumy",
+        "city": "Arkadag şäheri",
+        "capacity": 10000,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "United-Arab-Emirates",
-   "fetched": "2026-10-30T10:04:49.435Z",
+   "fetched": "2026-10-30T10:06:00.914Z",
    "all": [
     "301 | Pro League | League",
     "303 | Division 1 | League",
@@ -363,37 +7305,1051 @@
     "896 | Super Cup | Cup",
     "1218 | Pro League U23 | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 301,
+     "name": "Pro League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-10-15",
+       "2012-05-27",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-09-23",
+       "2013-05-29",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-09-14",
+       "2014-05-11",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-09-15",
+       "2015-05-10",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-08-19",
+       "2016-05-08",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-09-16",
+       "2017-05-13",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-09-15",
+       "2018-04-29",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-30",
+       "2019-05-26",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-09-19",
+       "2020-05-28",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-16",
+       "2021-05-15",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-19",
+       "2022-05-26",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-02",
+       "2023-05-26",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-18",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-23",
+       "2025-05-25",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-16",
+       "2026-05-16",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-14",
+       "2026-12-30",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2865,
+       "name": "Al Ain",
+       "founded": 1968,
+       "venue": {
+        "name": "Hazza Bin Zayed Stadium",
+        "city": "Al-&apos;Ayn (Al Ain)",
+        "capacity": 25174,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2869,
+       "name": "Hatta SC",
+       "founded": 1981,
+       "venue": {
+        "name": "Hamdan Bin Rashid Stadium",
+        "city": "Hatta",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2870,
+       "name": "Shabab Al Ahli Dubai",
+       "founded": 1958,
+       "venue": {
+        "name": "Rashid Stadium",
+        "city": "Dubai",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2871,
+       "name": "Al-Jazira",
+       "founded": 1974,
+       "venue": {
+        "name": "Mohammed Bin Zayed Stadium",
+        "city": "Abu Dhabi",
+        "capacity": 42056,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2872,
+       "name": "Al-Wasl FC",
+       "founded": 1960,
+       "venue": {
+        "name": "Zabeel Stadium",
+        "city": "Dubai",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2873,
+       "name": "Al-Dhafra",
+       "founded": 2000,
+       "venue": {
+        "name": "Al Dhafra Stadium",
+        "city": "Madinat Zaid",
+        "capacity": 5020,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2874,
+       "name": "Sharjah FC",
+       "founded": 1966,
+       "venue": {
+        "name": "Sharjah Stadium",
+        "city": "Sharjah",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2875,
+       "name": "Al Wahda FC",
+       "founded": 1974,
+       "venue": {
+        "name": "Al Nahyan Stadium",
+        "city": "Abu Dhabi",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2876,
+       "name": "Al-Ittihad Kalba",
+       "founded": null,
+       "venue": {
+        "name": "Ittihad Kalba Club Stadium",
+        "city": "Kalba",
+        "capacity": 6000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2877,
+       "name": "Baniyas SC",
+       "founded": null,
+       "venue": {
+        "name": "Baniyas Stadium",
+        "city": "Abu Dhabi",
+        "capacity": 9570,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2879,
+       "name": "Ajman",
+       "founded": 1974,
+       "venue": {
+        "name": "Ajman Stadium",
+        "city": "Ajman",
+        "capacity": 5537,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4912,
+       "name": "Khorfakkan",
+       "founded": 1981,
+       "venue": {
+        "name": "Saqr bin Mohammad al Qassimi Stadium",
+        "city": "Khor Fakkan",
+        "capacity": 2880,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 10155,
+       "name": "Al Nasr",
+       "founded": 1945,
+       "venue": {
+        "name": "Al Maktoum Stadium",
+        "city": "Dubai",
+        "capacity": 15058,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22321,
+       "name": "Dubai United",
+       "founded": 0,
+       "venue": {
+        "name": "Dubai Sports City Football Academy",
+        "city": "Dubayy (Dubai)",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Uzbekistan",
-   "fetched": "2026-10-30T10:04:49.894Z",
+   "fetched": "2026-10-30T10:06:01.816Z",
    "all": [
     "369 | Super League | League",
     "802 | Cup | Cup",
     "830 | Super Cup | Cup",
     "1075 | Pro League A | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 369,
+     "name": "Super League",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-03-15",
+       "2012-11-21",
+       false,
+       true
+      ],
+      [
+       2013,
+       "2013-03-02",
+       "2013-11-08",
+       false,
+       true
+      ],
+      [
+       2014,
+       "2014-03-15",
+       "2014-11-07",
+       false,
+       true
+      ],
+      [
+       2015,
+       "2015-03-12",
+       "2015-11-21",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-03-05",
+       "2016-11-23",
+       false,
+       true
+      ],
+      [
+       2017,
+       "2017-03-03",
+       "2017-11-25",
+       false,
+       true
+      ],
+      [
+       2018,
+       "2018-03-01",
+       "2018-11-30",
+       false,
+       true
+      ],
+      [
+       2019,
+       "2019-03-08",
+       "2019-12-01",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-27",
+       "2020-12-15",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-09",
+       "2021-12-02",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-03-02",
+       "2022-11-25",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-03-03",
+       "2023-12-05",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-03-01",
+       "2024-12-09",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-03-07",
+       "2025-12-16",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-02-27",
+       "2026-12-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 3695,
+       "name": "Lokomotiv",
+       "founded": 2002,
+       "venue": {
+        "name": "Stadion Lokomotiv",
+        "city": "Tashkent",
+        "capacity": 9400,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4209,
+       "name": "Andijan",
+       "founded": 1964,
+       "venue": {
+        "name": "Bobur Arena",
+        "city": "Andijan",
+        "capacity": 19820,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4210,
+       "name": "Bunyodkor",
+       "founded": 2005,
+       "venue": {
+        "name": "Milliy Stadion",
+        "city": "Tashkent",
+        "capacity": 34000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4211,
+       "name": "Buxoro",
+       "founded": 1960,
+       "venue": {
+        "name": "Tukimachi Stadioni",
+        "city": "Bukhara",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4212,
+       "name": "Kokand-1912",
+       "founded": 1912,
+       "venue": {
+        "name": "Markaziy Stadion",
+        "city": "Kokand",
+        "capacity": 12278,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4213,
+       "name": "Mash'al",
+       "founded": 1991,
+       "venue": {
+        "name": "Stadion im. Bahrom Vafoyev",
+        "city": "Mubarek",
+        "capacity": 11000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4215,
+       "name": "Nasaf",
+       "founded": 1978,
+       "venue": {
+        "name": "Markaziy Stadion",
+        "city": "Qarshi",
+        "capacity": 21000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4216,
+       "name": "Navbahor",
+       "founded": 1974,
+       "venue": {
+        "name": "Markaziy Stadion",
+        "city": "Namangan",
+        "capacity": 35325,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4217,
+       "name": "Neftchi",
+       "founded": 1960,
+       "venue": {
+        "name": "Stadion Istiqlol",
+        "city": "Fergana",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4219,
+       "name": "Olmaliq",
+       "founded": 2004,
+       "venue": {
+        "name": "Stadion Metallurg",
+        "city": "Almalyk",
+        "capacity": 12500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4220,
+       "name": "Pakhtakor",
+       "founded": 1956,
+       "venue": {
+        "name": "Paxtakor Markaziy Stadion",
+        "city": "Tashkent",
+        "capacity": 54170,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4221,
+       "name": "Qizilqum",
+       "founded": 1967,
+       "venue": {
+        "name": "Yoshlar Sport Majmuasi",
+        "city": "Navoiy",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4223,
+       "name": "Sogdiana",
+       "founded": 1970,
+       "venue": {
+        "name": "So'g'diyona Sport Majmuasi",
+        "city": "Jizzax",
+        "capacity": 11750,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4224,
+       "name": "Dinamo Samarqand",
+       "founded": 1960,
+       "venue": {
+        "name": "Stadion Dinamo",
+        "city": "Samarqand",
+        "capacity": 13800,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4225,
+       "name": "Surkhon",
+       "founded": null,
+       "venue": {
+        "name": "Markaziy Stadion",
+        "city": "Termiz",
+        "capacity": 9214,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16381,
+       "name": "Xorazm",
+       "founded": 1972,
+       "venue": {
+        "name": "Stadion Xorazm",
+        "city": "Urgench",
+        "capacity": 15382,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Vietnam",
-   "fetched": "2026-10-30T10:04:50.653Z",
+   "fetched": "2026-10-30T10:06:02.726Z",
    "all": [
     "340 | V.League 1 | League",
     "341 | Cup | Cup",
     "637 | V.League 2 | League",
     "831 | Super Cup | Cup"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 340,
+     "name": "V.League 1",
+     "season": 2027,
+     "seasons": [
+      [
+       2012,
+       "2011-12-31",
+       "2012-08-19",
+       false,
+       true
+      ],
+      [
+       2013,
+       "2013-03-02",
+       "2013-08-31",
+       false,
+       true
+      ],
+      [
+       2014,
+       "2014-01-11",
+       "2014-08-24",
+       false,
+       true
+      ],
+      [
+       2015,
+       "2015-01-04",
+       "2015-09-20",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-02-20",
+       "2016-09-18",
+       false,
+       true
+      ],
+      [
+       2017,
+       "2017-01-07",
+       "2017-11-25",
+       false,
+       true
+      ],
+      [
+       2018,
+       "2018-03-10",
+       "2018-10-08",
+       false,
+       true
+      ],
+      [
+       2019,
+       "2019-02-21",
+       "2019-10-23",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-03-06",
+       "2020-11-08",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-01-15",
+       "2021-05-09",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-25",
+       "2022-11-19",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-03",
+       "2023-08-27",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2023-10-20",
+       "2024-07-06",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2024-09-14",
+       "2025-06-27",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2025-08-15",
+       "2026-06-12",
+       true,
+       true
+      ],
+      [
+       2027,
+       "2026-09-04",
+       "2026-12-25",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 3669,
+       "name": "Da Nang",
+       "founded": 1976,
+       "venue": {
+        "name": "Sân Vận Động Hòa Xuân",
+        "city": "Đà Nẵng (Da Nang)",
+        "capacity": 20500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3670,
+       "name": "Ha Noi",
+       "founded": 2006,
+       "venue": {
+        "name": "Sân vận động Hàng Đẫy (Hang Day Stadium)",
+        "city": "Hà Nội (Hanoi)",
+        "capacity": 22500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3671,
+       "name": "Hai Phong",
+       "founded": 1899,
+       "venue": {
+        "name": "Sân vận động Lạch Tray (Lach Tray Stadium)",
+        "city": "Hai Phong",
+        "capacity": 28000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3672,
+       "name": "Ho Chi Minh",
+       "founded": 1975,
+       "venue": {
+        "name": "Sân vận động Thống Nhất (Thong Nhat Stadium)",
+        "city": "Thành phố Hồ Chí Minh (Ho Chi Minh City)",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3673,
+       "name": "Hoang Anh Gia Lai",
+       "founded": 2002,
+       "venue": {
+        "name": "Sân vận động Plei Cu (Pleiku Stadium)",
+        "city": "Plei Cu (Pleiku)",
+        "capacity": 13000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3674,
+       "name": "Nam Dinh",
+       "founded": 1965,
+       "venue": {
+        "name": "Sân vận động Thiên Trường (Thien Truong Stadium)",
+        "city": "Nam Dinh",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3678,
+       "name": "Song Lam Nghe An",
+       "founded": 1979,
+       "venue": {
+        "name": "Sân vận động Vinh (Vinh Stadium)",
+        "city": "Vinh",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3680,
+       "name": "Thanh Hóa",
+       "founded": null,
+       "venue": {
+        "name": "Sân vận động Thanh Hóa",
+        "city": "Thanh Hóa",
+        "capacity": 14000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3681,
+       "name": "Viettel",
+       "founded": null,
+       "venue": {
+        "name": "Sân vận động quốc gia Mỹ Đình (Mỹ Đình National Stadium)",
+        "city": "Hà Nội (Hanoi)",
+        "capacity": 40192,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9161,
+       "name": "Bình Phước",
+       "founded": 2006,
+       "venue": {
+        "name": "Sân vận động Bình Phước (Binh Phuoc Stadium)",
+        "city": "Bình Phước",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9167,
+       "name": "Phu Dong",
+       "founded": null,
+       "venue": {
+        "name": "Sân vận động Ninh Bình (Ninh Binh Stadium)",
+        "city": "Ninh Bình",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11134,
+       "name": "Hồng Lĩnh Hà Tĩnh",
+       "founded": null,
+       "venue": {
+        "name": "Sân Vận động tỉnh Hà Tĩnh",
+        "city": "Hà Tĩnh",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16400,
+       "name": "Công An Nhân Dân",
+       "founded": null,
+       "venue": {
+        "name": "Sân vận động Hàng Đẫy (Hang Day Stadium)",
+        "city": "Hanoi",
+        "capacity": 22500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26601,
+       "name": "Bắc Ninh",
+       "founded": null,
+       "venue": {
+        "name": "SVĐ Việt Yên",
+        "city": "Việt Yên",
+        "capacity": 7500,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "country": "Yemen",
-   "fetched": "2026-10-30T10:04:51.112Z",
+   "fetched": "2026-10-30T10:06:03.644Z",
    "all": [
     "1079 | Yemeni League | League"
    ],
-   "leagues": []
+   "leagues": [
+    {
+     "id": 1079,
+     "name": "Yemeni League",
+     "season": 2023,
+     "seasons": [
+      [
+       2023,
+       "2023-10-01",
+       "2024-02-11",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 21107,
+       "name": "Fahman",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 23352,
+       "name": "Al Ahli San'a",
+       "founded": null,
+       "venue": {
+        "name": "Ali Muhsen Al-Muraisi Stadium",
+        "city": "Sana&apos;a",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 23353,
+       "name": "Al Hilal Hudayda",
+       "founded": null,
+       "venue": {
+        "name": "Al Ulufi Stadium",
+        "city": "Al Hudaydah",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 23354,
+       "name": "Al Ittihad Ibb",
+       "founded": null,
+       "venue": {
+        "name": "22 May Stadium",
+        "city": "Ibb",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 23355,
+       "name": "Al Saqr",
+       "founded": 1969,
+       "venue": {
+        "name": "Al Saqr Stadium",
+        "city": "Ta&apos;izz",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 23356,
+       "name": "Al Sha'ab Hadhramaut",
+       "founded": null,
+       "venue": {
+        "name": "Al Shahet Stadium",
+        "city": "Ash Shihr",
+        "capacity": 3000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 23357,
+       "name": "Al Sha'ab Ibb",
+       "founded": null,
+       "venue": {
+        "name": "22 May Stadium",
+        "city": "Ibb",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 23358,
+       "name": "Al Wahda San'a",
+       "founded": null,
+       "venue": {
+        "name": "Ali Muhsen Al-Muraisi Stadium",
+        "city": "Sana&apos;a",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 23359,
+       "name": "Salam",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 23360,
+       "name": "Samaon",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 23361,
+       "name": "Taliat Taiz",
+       "founded": null,
+       "venue": {
+        "name": "Al Shohada Stadium",
+        "city": "Taiz",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 23362,
+       "name": "Tdamn Hadramawt",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 23363,
+       "name": "Yarmuk al Rawda",
+       "founded": null,
+       "venue": {
+        "name": "Ali Muhsen Al-Muraisi Stadium",
+        "city": "Sana&apos;a",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 23364,
+       "name": "Al Urooba",
+       "founded": null,
+       "venue": {
+        "name": "Al Sha'ab San'a Stadium",
+        "city": "Sana&apos;a",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      }
+     ]
+    }
+   ]
   }
  ]
 }
