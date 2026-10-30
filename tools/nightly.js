@@ -88,6 +88,16 @@ const API=[
  ["Süper Lig","Turkiet","Turkey",1,"tr.1",/^s(u|ü)per lig$/],["Super League (Grekland)","Grekland","Greece",1,"gr.1",/^super league 1$/],["HNL","Kroatien","Croatia",1,"hr.1",/^hnl$/],
  ["Superliga (Serbien)","Serbien","Serbia",1,"rs.1",/^super liga$/],["NB I","Ungern","Hungary",1,"hu.1",/^nb i$/],["Premier Division (Irland)","Irland","Ireland",1,"ie.1",/^premier division$/],
  ["Liga MX","Mexiko","Mexico",1,"mx.1",/^liga mx$/],
+ ["Kategoria Superiore","Albanien","Albania",1,"al.1",/^superliga$/],["Primera Divisió (Andorra)","Andorra","Andorra",1,"ad.1",/^1a divisi/],["Premier League (Armenien)","Armenien","Armenia",1,"am.1",/^premier league$/],
+ ["Premjer Liqa","Azerbajdzjan","Azerbaijan",1,"az.1",/^premyer liqa$/],["Premier League (Belarus)","Belarus","Belarus",1,"by.1",/^premier league$/],["Premijer liga (Bosnien)","Bosnien och Hercegovina","Bosnia",1,"ba.1",/^premijer liga$/],
+ ["Parva liga","Bulgarien","Bulgaria",1,"bg.1",/^first league$/],["First Division (Cypern)","Cypern","Cyprus",1,"cy.1",/^1\. division$/],["Meistriliiga","Estland","Estonia",1,"ee.1",/^meistriliiga$/],
+ ["Betri deildin","Färöarna","Faroe-Islands",1,"fo.1",/^meistaradeildin$/],["Erovnuli Liga","Georgien","Georgia",1,"ge.1",/^erovnuli liga$/],["Gibraltar Football League","Gibraltar","Gibraltar",1,"gi.1",/^premier division$/],
+ ["Ligat HaAl","Israel","Israel",1,"il.1",/^ligat ha'?al$/],["Premier League (Kazakstan)","Kazakstan","Kazakhstan",1,"kz.1",/^premier league$/],["Superliga (Kosovo)","Kosovo","Kosovo",1,"xk.1",/^superliga$/],
+ ["Virslīga","Lettland","Latvia",1,"lv.1",/^virsliga$/],["A lyga","Litauen","Lithuania",1,"lt.1",/^a lyga$/],["BGL Ligue","Luxemburg","Luxembourg",1,"lu.1",/^national division$/],
+ ["Premier League (Malta)","Malta","Malta",1,"mt.1",/^premier league$/],["Super Liga (Moldavien)","Moldavien","Moldova",1,"md.1",/^super liga$/],["Prva liga (Montenegro)","Montenegro","Montenegro",1,"me.1",/^first league$/],
+ ["Prva liga (Nordmakedonien)","Nordmakedonien","Macedonia",1,"mk.1",/^first league$/],["NIFL Premiership","Nordirland","Northern-Ireland",1,"nir.1",/^premiership$/],["Liga I","Rumänien","Romania",1,"ro.1",/^liga i$/],
+ ["Premjer-liga (Ryssland)","Ryssland","Russia",1,"ru.1",/^premier league$/],["Campionato Sammarinese","San Marino","San-Marino",1,"sm.1",/^campionato/],["Niké liga","Slovakien","Slovakia",1,"sk.1",/^super liga$/],
+ ["PrvaLiga (Slovenien)","Slovenien","Slovenia",1,"si.1",/^1\. snl$/],["Premjer-liha","Ukraina","Ukraine",1,"ua.1",/^premier league$/],["Cymru Premier","Wales","Wales",1,"wal.1",/^premier league$/],
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}
