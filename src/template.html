@@ -813,6 +813,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .uflag{position:absolute;right:-3px;bottom:-3px;width:max(12px,calc(var(--s)*.44));height:max(12px,calc(var(--s)*.44));object-fit:cover;border-radius:50%;box-shadow:0 0 0 2px var(--surface),0 1px 2px rgba(0,0,0,.25)}
 .profhead .uav{margin-right:0}
 .wchip .uav{margin:0 2px 0 0;align-self:center}
+.rep.repediting{padding:0;border:0;background:none;box-shadow:none}.rep.repediting:before{display:none}
 </style>
 
 <div class="wrap">
@@ -3302,7 +3303,7 @@ function phImg(id,cls){return`<img class="rph ${cls||""}" src="${blobUrl(id)}" a
 function repDateTxt(d){return d&&/^\d{4}-\d{2}-\d{2}$/.test(d)?new Date(d+"T12:00:00").toLocaleDateString(LOC,{day:"numeric",month:"long",year:"numeric"}):"";}
 
 function newDraft(o){return Object.assign({editing:null,draft:false,visit:false,match:"",result:"",crowd:"",title:"",club:"",city:"",date:"",body:"",tip:"",photos:[],added:[],orig:[]},o||{});}
-function composeHtml(){const d=repDraft;return`<form class="compose" id="repForm">
+function composeHtml(){const d=repDraft;return`<form class="compose" id="repForm"${d.editing?` data-edit="${esc(d.editing)}"`:""}>
   <h2>${d.editing?$t("Redigera reportage"):$t("Nytt reportage")}</h2>${byAsHtml()}
   <label class="fld" for="rTitle">${$t("Rubrik")}<input id="rTitle" data-rd="title" maxlength="120" required value="${esc(d.title)}" placeholder="${$t("t.ex. Regnig derbyhelg i Glasgow")}"></label>
   <div class="row2">
@@ -3353,9 +3354,12 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
   if(sig!==repTopSig){repTopSig=sig;
     if(!canWriteRep())top.innerHTML=`<div class="place"><span>${$t("Du kan läsa reportagen. För att skriva behöver ägaren bjuda in dig till sidan.")}</span></div>`;
     else if(!repDraft)top.innerHTML=`<button class="btn primary" id="repNew">${$t("+ Skriv reportage")}</button>`;
+    else if(repDraft.editing)top.innerHTML="";
     else{top.innerHTML=composeHtml();renderRepPhotos();}}
   else if(repDraft){const er=document.getElementById("repErr");if(er)er.textContent=repMsg;renderRepPhotos();}
   else if(canWriteRep())top.innerHTML=`<button class="btn primary" id="repNew">${$t("+ Skriv reportage")}</button>${repMsg?`<p class="err">${esc(repMsg)}</p>`:""}`;
+  // redigering sker på plats i reportaget; listan ritas inte om medan formuläret är öppet
+  if(repDraft&&repDraft.editing){const f=document.getElementById("repForm");if(f&&f.dataset.edit===repDraft.editing&&el.contains(f))return;}
   let reps=allReps();const ids=[...new Set([...reps.map(r=>r.uid),...Object.keys(COMM)])];if(!namesOnly)resolveRepNames(ids);
   if(repSort==="mina")reps=reps.filter(r=>r.uid===myId);
   if(repClub)reps=reps.filter(r=>r.club===repClub);
@@ -3366,7 +3370,7 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
   else reps.sort((a,b)=>String(b.at).localeCompare(String(a.at)));
   if(!reps.length&&repQ){el.innerHTML=`<div class="empty"><b>${$t("Inga reportage matchar ”{0}”.",[esc(repQ)])}</b><div>${$t("Prova ett annat ord, till exempel en stad, en klubb eller en arena.")}</div></div>`;return;}
   if(!reps.length){el.innerHTML=`<div class="empty"><b>${repSort==="mina"?$t("Du har inte skrivit något reportage än."):repClub?$t("Inga reportage om den här klubben än."):$t("Inga reportage än.")}</b><div>${$t("Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna. Lägg gärna till bilder.")}</div></div>`;return;}
-  el.innerHTML=reps.filter((r,i)=>i<lim("rp",5)||r.key===repOpen).map(r=>{const c=r.club&&C[r.club];const open=repOpen===r.key;const n=likeCount(r.key);const mine=r.uid===myId;
+  el.innerHTML=reps.filter((r,i)=>i<lim("rp",5)||r.key===repOpen).map(r=>{if(repDraft&&repDraft.editing&&r.uid===myId&&r.id===repDraft.editing)return`<article class="rep open repediting" data-repedit-art="${esc(r.key)}">${composeHtml()}</article>`;const c=r.club&&C[r.club];const open=repOpen===r.key;const n=likeCount(r.key);const mine=r.uid===myId;
     const meta=[r.visit&&c?(c.s||c.n):r.match&&r.result?`${String(r.match).slice(0,100)} ${String(r.result).slice(0,12)}`:c?c.n:"",r.city,repDateTxt(r.date)].filter(Boolean).join(" · ");
     return`<article class="rep${open?" open":""}">
       <button class="rhead" data-rep="${esc(r.key)}" aria-expanded="${open}">
@@ -3417,7 +3421,14 @@ async function addRepFiles(files){if(!assetsNs||!repDraft)return;const d=repDraf
     catch(e){repMsg=e&&e.code==="too_large"?$t("En bild var för stor."):e&&e.code==="unsupported_type"?$t("Bildformatet stöds inte. Använd JPEG eller PNG."):e&&e.code==="quota_or_state"?$t("Lagringsutrymmet för bilder är fullt."):e&&e.code==="rate_limited"?$t("För många uppladdningar på kort tid. Vänta en stund."):$t("En bild kunde inte laddas upp.");}
     finally{repUp--;renderRepPhotos();const er=document.getElementById("repErr");if(er)er.textContent=repMsg;}}}
 
-function startRepDraft(o){repDraft=newDraft(o);repMsg="";repTopSig="";repClub=null;repSort="nya";if(mode!=="reportage")setMode("reportage");else renderReports();
+function startRepDraft(o){
+  // redigera: formuläret öppnas där reportaget ligger, och skärmen står kvar
+  if(o&&o.editing&&mode==="reportage"){const key=myId+":"+o.editing;const art=document.querySelector(`[data-rep="${CSS.escape(key)}"]`)?.closest("article");const y0=art?art.getBoundingClientRect().top:null;
+    repDraft=newDraft(o);repMsg="";repTopSig="";repOpen=key;renderReports();renderRepPhotos();
+    const a2=document.querySelector(`[data-repedit-art="${CSS.escape(key)}"]`);if(a2){const tb=document.querySelector(".topbar");const off=(tb?tb.getBoundingClientRect().height:0)+8;const top=a2.getBoundingClientRect().top;
+      const want=y0!=null&&y0>=off?y0:off;if(Math.abs(top-want)>2)window.scrollBy(0,top-want);}
+    document.getElementById("rTitle")?.focus({preventScroll:true});return;}
+  repDraft=newDraft(o);repMsg="";repTopSig="";repClub=null;repSort="nya";if(mode!=="reportage")setMode("reportage");else renderReports();
   window.scrollTo({top:0});setTimeout(()=>document.getElementById("rTitle")?.focus(),0);}
 function draftFromAtt(id){const a=MY.attended.find(x=>x.id===id);if(!a)return;const c=a.home&&C[a.home];
   startRepDraft({match:`${a.homeName} – ${a.awayName}`,result:a.score||"",title:`${a.homeName}–${a.awayName}`,club:c?c.n:"",city:a.city||(c?c.city:""),date:a.date||"",body:a.note||""});}
