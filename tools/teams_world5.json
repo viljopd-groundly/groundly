@@ -1,0 +1,6607 @@
+{
+ "fetched": "2026-10-30T09:52:35.403Z",
+ "countries": [
+  {
+   "country": "Algeria",
+   "fetched": "2026-10-30T09:52:02.054Z",
+   "all": [
+    "186 | Ligue 1 | League",
+    "187 | Ligue 2 | League",
+    "514 | Coupe Nationale | Cup",
+    "516 | Super Cup | Cup",
+    "515 | U21 League 1 | League",
+    "832 | Coupe de la Ligue | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 186,
+     "name": "Ligue 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-09-06",
+       "2012-05-19",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-09-07",
+       "2013-05-21",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-08-24",
+       "2014-05-24",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-08-15",
+       "2015-05-29",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-08-13",
+       "2016-05-27",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-08-19",
+       "2017-06-14",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-08-25",
+       "2018-05-19",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-10",
+       "2019-05-26",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-15",
+       "2020-03-16",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-11-27",
+       "2021-08-28",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-22",
+       "2022-06-14",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-26",
+       "2023-07-04",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-15",
+       "2024-06-08",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-19",
+       "2025-06-21",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-21",
+       "2026-06-06",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-03",
+       "2027-05-29",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 904,
+       "name": "CR Belouizdad",
+       "founded": 1962,
+       "venue": {
+        "name": "Stade du 5 Juillet 1962",
+        "city": "Algiers",
+        "capacity": 80200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 905,
+       "name": "ES Setif",
+       "founded": 1958,
+       "venue": {
+        "name": "Stade du 8 Mai 1945",
+        "city": "Sétif",
+        "capacity": 25000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 906,
+       "name": "MC Alger",
+       "founded": 1921,
+       "venue": {
+        "name": "Stade Ali-la-Pointe",
+        "city": "Douera",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 907,
+       "name": "MC Oran",
+       "founded": 1946,
+       "venue": {
+        "name": "Stade Olympique d'Oran",
+        "city": "Bir El Djir",
+        "capacity": 40143,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 909,
+       "name": "US Biskra",
+       "founded": 1934,
+       "venue": {
+        "name": "Stade 18 Février",
+        "city": "Biskra",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 910,
+       "name": "USM Alger",
+       "founded": 1937,
+       "venue": {
+        "name": "Stade du 5 Juillet 1962",
+        "city": "Algiers",
+        "capacity": 80200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 911,
+       "name": "CS Constantine",
+       "founded": 1898,
+       "venue": {
+        "name": "Stade Mohamed-Hamlaoui",
+        "city": "Constantine",
+        "capacity": 50000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 914,
+       "name": "JS Saoura",
+       "founded": 2008,
+       "venue": {
+        "name": "Stade du 20 Août 1955",
+        "city": "Bechar",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 918,
+       "name": "JS Kabylie",
+       "founded": 1946,
+       "venue": {
+        "name": "Stade du 1er Novembre 1954",
+        "city": "Tizi-Ouzou",
+        "capacity": 25000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 931,
+       "name": "ASO Chlef",
+       "founded": 1947,
+       "venue": {
+        "name": "Stade Mohamed Boumezrag",
+        "city": "Chlef",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 10715,
+       "name": "Témouchent",
+       "founded": null,
+       "venue": {
+        "name": "Stade Oucief Omar SIKI",
+        "city": "Aïn Témouchent",
+        "capacity": 12000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 10752,
+       "name": "Khenchela",
+       "founded": null,
+       "venue": {
+        "name": "Stade Hamam Ammar",
+        "city": "Khenchela",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 10777,
+       "name": "MB Rouisset",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 10780,
+       "name": "Olympique Akbou",
+       "founded": null,
+       "venue": {
+        "name": "Stade de l'Unité Maghrébine",
+        "city": "Béjaïa",
+        "capacity": 19000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 10792,
+       "name": "Ben Aknoun",
+       "founded": null,
+       "venue": {
+        "name": "Stade Ben Aknoun",
+        "city": "Ben Aknoun",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 20699,
+       "name": "JS El Biar",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Angola",
+   "fetched": "2026-10-30T09:52:02.996Z",
+   "all": [
+    "397 | Girabola | League",
+    "1192 | Super Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 397,
+     "name": "Girabola",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-03-03",
+       "2012-11-04",
+       true,
+       false
+      ],
+      [
+       2013,
+       "2013-02-26",
+       "2013-11-03",
+       true,
+       false
+      ],
+      [
+       2014,
+       "2014-02-21",
+       "2014-11-05",
+       true,
+       false
+      ],
+      [
+       2015,
+       "2015-02-11",
+       "2015-10-10",
+       true,
+       false
+      ],
+      [
+       2016,
+       "2016-02-19",
+       "2016-09-23",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-02-10",
+       "2017-11-03",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-10-27",
+       "2019-05-19",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-02-10",
+       "2018-09-02",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-08-16",
+       "2020-05-03",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-12-26",
+       "2021-07-31",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-01",
+       "2022-05-22",
+       true,
+       false
+      ],
+      [
+       2022,
+       "2022-09-24",
+       "2023-05-27",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-15",
+       "2024-06-01",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-10",
+       "2025-05-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-16",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-21",
+       "2027-05-15",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4913,
+       "name": "1º de Agosto",
+       "founded": 1977,
+       "venue": {
+        "name": "Estádio 11 de Novembro",
+        "city": "Luanda",
+        "capacity": 48500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4914,
+       "name": "1º de Maio",
+       "founded": null,
+       "venue": {
+        "name": "Estádio Municipal Edelfride Palhares da Costa",
+        "city": "Benguela",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4915,
+       "name": "Académica do Lobito",
+       "founded": null,
+       "venue": {
+        "name": "Estádio do Buraco",
+        "city": "Lobito",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4918,
+       "name": "Desportivo Huíla",
+       "founded": 1955,
+       "venue": {
+        "name": "Estádio Provincial da Huíla (Ferroviário)",
+        "city": "Lubango",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4920,
+       "name": "Interclube",
+       "founded": 1953,
+       "venue": {
+        "name": "Estádio Joaquim Dinis",
+        "city": "Luanda",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4921,
+       "name": "Bravos do Maquis FC",
+       "founded": 1983,
+       "venue": {
+        "name": "Estádio das Mangueiras",
+        "city": "Saurimo",
+        "capacity": 7000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4922,
+       "name": "Petro de Luanda",
+       "founded": 1980,
+       "venue": {
+        "name": "Estádio 11 de Novembro",
+        "city": "Luanda",
+        "capacity": 48500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4924,
+       "name": "Recreativo do Libolo",
+       "founded": 1942,
+       "venue": {
+        "name": "Estádio Municipal de Calulo",
+        "city": "Calulo",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4925,
+       "name": "Sagrada Esperança",
+       "founded": null,
+       "venue": {
+        "name": "Estádio Quintalão",
+        "city": "Dundo",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4926,
+       "name": "Sporting de Cabinda",
+       "founded": null,
+       "venue": {
+        "name": "Estádio Municipal do Tafe",
+        "city": "Cabinda",
+        "capacity": 9000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4929,
+       "name": "Kabuscorp",
+       "founded": 1994,
+       "venue": {
+        "name": "Estádio Municipal dos Coqueiros",
+        "city": "Luanda",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4930,
+       "name": "Recreativo da Caála",
+       "founded": 1944,
+       "venue": {
+        "name": "Estádio Mártires da Canhala",
+        "city": "Caála",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 6383,
+       "name": "Wiliete",
+       "founded": null,
+       "venue": {
+        "name": "Estádio Nacional de OMBAKA",
+        "city": "Benguela",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17987,
+       "name": "CD Lunda-Sul",
+       "founded": 2020,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 22359,
+       "name": "São Salvador",
+       "founded": 2001,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28229,
+       "name": "FC Luanda",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Botswana",
+   "fetched": "2026-10-30T09:52:04.870Z",
+   "all": [
+    "412 | Premier League | League"
+   ],
+   "leagues": [
+    {
+     "id": 412,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-10-07",
+       "2017-05-27",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-09-23",
+       "2018-05-23",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-08-18",
+       "2019-05-25",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-08-31",
+       "2020-02-29",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-30",
+       "2022-05-24",
+       true,
+       false
+      ],
+      [
+       2022,
+       "2022-10-22",
+       "2023-06-03",
+       true,
+       false
+      ],
+      [
+       2023,
+       "2023-10-07",
+       "2024-06-01",
+       true,
+       false
+      ],
+      [
+       2024,
+       "2024-09-21",
+       "2025-05-24",
+       true,
+       false
+      ],
+      [
+       2025,
+       "2025-08-15",
+       "2026-05-30",
+       true,
+       false
+      ],
+      [
+       2026,
+       "2026-08-28",
+       "2027-05-22",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5416,
+       "name": "BDF XI",
+       "founded": null,
+       "venue": {
+        "name": "SSKB-Stadium",
+        "city": "Gaborone",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5419,
+       "name": "Centre Chiefs",
+       "founded": 1972,
+       "venue": {
+        "name": "Botswana National Stadium",
+        "city": "Gaborone",
+        "capacity": 22500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5420,
+       "name": "Extension Gunners",
+       "founded": 1962,
+       "venue": {
+        "name": "Lobatse Stadium",
+        "city": "Lobatse",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5421,
+       "name": "Gaborone United",
+       "founded": 1967,
+       "venue": {
+        "name": "Botswana National Stadium",
+        "city": "Gaborone",
+        "capacity": 22500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5422,
+       "name": "Galaxy",
+       "founded": null,
+       "venue": {
+        "name": "Galaxy Stadium",
+        "city": "Jwaneng",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5425,
+       "name": "Orapa United",
+       "founded": null,
+       "venue": {
+        "name": "Itekeng Stadium",
+        "city": "Orapa",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5426,
+       "name": "Police XI",
+       "founded": null,
+       "venue": {
+        "name": "Otse Stadium",
+        "city": "Otse",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5427,
+       "name": "Prisons XI",
+       "founded": null,
+       "venue": {
+        "name": "Botswana Police College Stadium",
+        "city": "Otse",
+        "capacity": 1500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5431,
+       "name": "Township Rollers",
+       "founded": 1961,
+       "venue": {
+        "name": "Botswana National Stadium",
+        "city": "Gaborone",
+        "capacity": 22500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5597,
+       "name": "TAFIC",
+       "founded": null,
+       "venue": {
+        "name": "Francistown Stadium",
+        "city": "Francistown",
+        "capacity": 27000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5602,
+       "name": "Nico United",
+       "founded": null,
+       "venue": {
+        "name": "Selebi-Phikwe Stadium",
+        "city": "Selebi-Phikwe",
+        "capacity": 9000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 6386,
+       "name": "Morupule Wanderers",
+       "founded": null,
+       "venue": {
+        "name": "Serowe Stadium",
+        "city": "Serowe",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 18122,
+       "name": "Sua Flamingoes",
+       "founded": null,
+       "venue": {
+        "name": "Sowa Town Council Stadium",
+        "city": "Sowa",
+        "capacity": 1500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22563,
+       "name": "Matebele",
+       "founded": null,
+       "venue": {
+        "name": "BPSC Stadium",
+        "city": "Gaborone",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 28287,
+       "name": "Enesia",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28296,
+       "name": "Tonota",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Burkina-Faso",
+   "fetched": "2026-10-30T09:52:05.829Z",
+   "all": [
+    "423 | Ligue 1 | League"
+   ],
+   "leagues": [
+    {
+     "id": 423,
+     "name": "Ligue 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-08-16",
+       "2020-05-23",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-09-18",
+       "2021-06-20",
+       true,
+       false
+      ],
+      [
+       2021,
+       "2021-09-25",
+       "2022-05-08",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-16",
+       "2023-05-20",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-01",
+       "2024-05-17",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-10-04",
+       "2025-05-23",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-21",
+       "2026-05-16",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-18",
+       "2026-11-01",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 6430,
+       "name": "Rahimo",
+       "founded": null,
+       "venue": {
+        "name": "Stade Wobi",
+        "city": "Bobo-Dioulasso",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8072,
+       "name": "Salitas",
+       "founded": null,
+       "venue": {
+        "name": "Stade du 4 Août",
+        "city": "Ouagadougou",
+        "capacity": 60000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8111,
+       "name": "SONABEL",
+       "founded": 1990,
+       "venue": {
+        "name": "Stade Dr Issoufou Joseph Conombo",
+        "city": "Ouagadougou",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8561,
+       "name": "RCK",
+       "founded": null,
+       "venue": {
+        "name": "Stade du 4 Août",
+        "city": "Ouagadougou",
+        "capacity": 60000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8563,
+       "name": "ASFA-Yennenga",
+       "founded": 1947,
+       "venue": {
+        "name": "Stade Dr Issoufou Joseph Conombo",
+        "city": "Ouagadougou",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8564,
+       "name": "ASFB",
+       "founded": null,
+       "venue": {
+        "name": "Stade Wobi",
+        "city": "Bobo-Dioulasso",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8566,
+       "name": "Majestic",
+       "founded": null,
+       "venue": {
+        "name": "Stade Régional Manga",
+        "city": "Manga",
+        "capacity": 2500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8570,
+       "name": "USFA",
+       "founded": 1962,
+       "venue": {
+        "name": "Stade Dr Issoufou Joseph Conombo",
+        "city": "Ouagadougou",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13978,
+       "name": "Douanes",
+       "founded": null,
+       "venue": {
+        "name": "Stade Dr Issoufou Joseph Conombo",
+        "city": "Ouagadougou",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17923,
+       "name": "Vitesse",
+       "founded": null,
+       "venue": {
+        "name": "Stade Wobi",
+        "city": "Bobo-Dioulasso",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20029,
+       "name": "Réal du Faso",
+       "founded": null,
+       "venue": {
+        "name": "Stade Dr Issoufou Joseph Conombo",
+        "city": "Ouagadougou",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22017,
+       "name": "Sporting Cascades",
+       "founded": null,
+       "venue": {
+        "name": "Stade Banfora",
+        "city": "Banfora",
+        "capacity": 6000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 25180,
+       "name": "Comoé",
+       "founded": 1985,
+       "venue": {
+        "name": "Stade Banfora",
+        "city": "Banfora",
+        "capacity": 6000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 26633,
+       "name": "CFFEB",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28437,
+       "name": "FocuSport",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28438,
+       "name": "Maya",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Burundi",
+   "fetched": "2026-10-30T09:52:06.763Z",
+   "all": [
+    "566 | Ligue A | League"
+   ],
+   "leagues": [
+    {
+     "id": 566,
+     "name": "Ligue A",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-08-10",
+       "2020-06-24",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-05",
+       "2021-05-23",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-14",
+       "2022-05-21",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-12",
+       "2023-05-17",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-18",
+       "2024-05-04",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-23",
+       "2025-05-07",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-15",
+       "2026-05-10",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-14",
+       "2026-12-13",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4447,
+       "name": "Aigle Noir",
+       "founded": null,
+       "venue": {
+        "name": "Stade Peace Park Progress",
+        "city": "Makamba",
+        "capacity": 23000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8070,
+       "name": "Rukinzo",
+       "founded": null,
+       "venue": {
+        "name": "Stade Intwari",
+        "city": "Bujumbura",
+        "capacity": 22000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8092,
+       "name": "Olympic Star",
+       "founded": null,
+       "venue": {
+        "name": "Stade Municipal",
+        "city": "Muyinga",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8104,
+       "name": "Le Messager Ngozi",
+       "founded": 2005,
+       "venue": {
+        "name": "Stade Urukundo",
+        "city": "Mwumba",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12177,
+       "name": "Bumamuru",
+       "founded": null,
+       "venue": {
+        "name": "Stade Urunani",
+        "city": "Buganda",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12179,
+       "name": "Flambeau du Centre",
+       "founded": null,
+       "venue": {
+        "name": "Stade Ingoma",
+        "city": "Gitega",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12180,
+       "name": "Inter Star",
+       "founded": null,
+       "venue": {
+        "name": "Stade Intwari",
+        "city": "Bujumbura",
+        "capacity": 22000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12181,
+       "name": "Kayanza United",
+       "founded": null,
+       "venue": {
+        "name": "Stade Municipal",
+        "city": "Muyinga",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12184,
+       "name": "Musongati",
+       "founded": null,
+       "venue": {
+        "name": "Stade Ingoma",
+        "city": "Gitega",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12185,
+       "name": "Ngozi City",
+       "founded": null,
+       "venue": {
+        "name": "Stade Urukundo",
+        "city": "Mwumba",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12186,
+       "name": "Vital'O",
+       "founded": null,
+       "venue": {
+        "name": "Stade Intwari",
+        "city": "Bujumbura",
+        "capacity": 22000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 14270,
+       "name": "Muzinga",
+       "founded": null,
+       "venue": {
+        "name": "Stade Intwari",
+        "city": "Bujumbura",
+        "capacity": 22000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 24755,
+       "name": "Royal Vision",
+       "founded": null,
+       "venue": {
+        "name": "Stade Urunani",
+        "city": "Buganda",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 28129,
+       "name": "Young Star",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28130,
+       "name": "Panthere Noir",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28131,
+       "name": "Never Give Up Academy",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Cameroon",
+   "fetched": "2026-10-30T09:52:07.972Z",
+   "all": [
+    "411 | Elite One | League",
+    "813 | Elite Two | League",
+    "1166 | Super Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 411,
+     "name": "Elite One",
+     "season": 2027,
+     "seasons": [
+      [
+       2016,
+       "2016-01-30",
+       "2016-09-11",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-02-25",
+       "2017-10-01",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-02-11",
+       "2018-07-29",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-02-02",
+       "2019-06-09",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2019-10-18",
+       "2020-04-25",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2020-11-01",
+       "2021-09-23",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-03-16",
+       "2022-07-04",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2022-10-15",
+       "2023-05-24",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2023-09-27",
+       "2024-04-21",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2024-12-07",
+       "2025-07-06",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-01-24",
+       "2026-07-01",
+       true,
+       true
+      ],
+      [
+       2027,
+       "2026-10-17",
+       "2027-05-16",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5398,
+       "name": "APEJES Academy",
+       "founded": 2006,
+       "venue": {
+        "name": "Stade de Ngoa Ekélé",
+        "city": "Yaoundé",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5400,
+       "name": "Colombe",
+       "founded": null,
+       "venue": {
+        "name": "Stade Annexe 1 Omnisport",
+        "city": "Yaoundé",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5401,
+       "name": "Cotonsport",
+       "founded": 1986,
+       "venue": {
+        "name": "Stade Omnisport Roumdé Adjia",
+        "city": "Garoua",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5409,
+       "name": "PWD Bamenda",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 5410,
+       "name": "Stade Renard",
+       "founded": null,
+       "venue": {
+        "name": "Stade Municipal de Mélong",
+        "city": "Mélong",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5414,
+       "name": "Unisport Bafang",
+       "founded": 1959,
+       "venue": {
+        "name": "Stade Municipal Ngadjui Kamga Gaston",
+        "city": "Bafang",
+        "capacity": 5000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 5556,
+       "name": "Aigle Royal",
+       "founded": null,
+       "venue": {
+        "name": "Stade du CENAJES",
+        "city": "Dschang",
+        "capacity": 2000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 5560,
+       "name": "Canon",
+       "founded": null,
+       "venue": {
+        "name": "Stade Omnisport Ahmadou Ahidjo",
+        "city": "Yaoundé",
+        "capacity": 38509,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5564,
+       "name": "Panthère",
+       "founded": null,
+       "venue": {
+        "name": "Stade Municipal de Bangangté",
+        "city": "Bangangté",
+        "capacity": 2000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 16524,
+       "name": "Dynamo de Douala",
+       "founded": 1948,
+       "venue": {
+        "name": "Stade de la Réunification",
+        "city": "Douala",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20799,
+       "name": "Aigle Royal de Moungo",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 20800,
+       "name": "Victoria United",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25430,
+       "name": "Union Abong-Mbang",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28568,
+       "name": "Gazelle",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Congo-DR",
+   "fetched": "2026-10-30T09:52:09.824Z",
+   "all": [
+    "424 | Ligue 1 | League"
+   ],
+   "leagues": [
+    {
+     "id": 424,
+     "name": "Ligue 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-08-16",
+       "2020-03-29",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-10-02",
+       "2021-06-27",
+       true,
+       false
+      ],
+      [
+       2021,
+       "2021-09-15",
+       "2022-06-17",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-10-08",
+       "2023-06-28",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-23",
+       "2024-05-29",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-10-04",
+       "2025-07-22",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-10-22",
+       "2026-06-20",
+       true,
+       false
+      ],
+      [
+       2026,
+       "2026-10-20",
+       "2027-12-24",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 6435,
+       "name": "TP Mazembe",
+       "founded": 1939,
+       "venue": {
+        "name": "Stade du TP Mazembe",
+        "city": "Lubumbashi",
+        "capacity": 18500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 6437,
+       "name": "Vita Club",
+       "founded": 1935,
+       "venue": {
+        "name": "Stade Tata Raphaël",
+        "city": "Kinshasa",
+        "capacity": 30000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8064,
+       "name": "Maniema Union",
+       "founded": null,
+       "venue": {
+        "name": "Stade Joseph Kabila Kabange",
+        "city": "Kindu",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8077,
+       "name": "Étoile du Congo",
+       "founded": null,
+       "venue": {
+        "name": "Stade Alphonse Massamba-Débat",
+        "city": "Brazzaville",
+        "capacity": 33037,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8112,
+       "name": "Sanga Balende",
+       "founded": null,
+       "venue": {
+        "name": "Stade Kashala Bonzola",
+        "city": "Mbuji-Mayi",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8571,
+       "name": "Don Bosco",
+       "founded": null,
+       "venue": {
+        "name": "Stade Frédéric Kibassa Maliba",
+        "city": "Lubumbashi",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8572,
+       "name": "Simba",
+       "founded": null,
+       "venue": {
+        "name": "Stade Manika",
+        "city": "Kolwezi",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8574,
+       "name": "Dauphins Noirs",
+       "founded": null,
+       "venue": {
+        "name": "Stade des Volcans",
+        "city": "Goma",
+        "capacity": 9000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 8576,
+       "name": "Lubumbashi Sport",
+       "founded": 1926,
+       "venue": {
+        "name": "Stade Frédéric Kibassa Maliba",
+        "city": "Lubumbashi",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8578,
+       "name": "Saint Eloi Lupopo",
+       "founded": 1939,
+       "venue": {
+        "name": "Stade Frédéric Kibassa Maliba",
+        "city": "Lubumbashi",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10007,
+       "name": "Rangers",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 15285,
+       "name": "Blessing",
+       "founded": 2006,
+       "venue": {
+        "name": "Stade Dominique Diur",
+        "city": "Kolwezi",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 15286,
+       "name": "JSK",
+       "founded": null,
+       "venue": {
+        "name": "Stade Tata Raphaël",
+        "city": "Kinshasa",
+        "capacity": 30000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 17764,
+       "name": "Etoile de Kivu",
+       "founded": null,
+       "venue": {
+        "name": "Stade de la Concorde",
+        "city": "Bukavu",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20468,
+       "name": "Céleste",
+       "founded": null,
+       "venue": {
+        "name": "Stade des Martyrs de la Pentecôte",
+        "city": "Kinshasa",
+        "capacity": 100000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 21622,
+       "name": "Tanganyika",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 24105,
+       "name": "Anges Verts",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 24107,
+       "name": "Malole",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 24108,
+       "name": "New Jack",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26885,
+       "name": "FC Mk de Kinshasa",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26886,
+       "name": "CS Manika",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26887,
+       "name": "AS New Soger",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27053,
+       "name": "Saint-Luc",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27229,
+       "name": "FC Renaissance",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28512,
+       "name": "Butras",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28513,
+       "name": "Novakin",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Ethiopia",
+   "fetched": "2026-10-30T09:52:11.679Z",
+   "all": [
+    "363 | Premier League | League",
+    "1228 | Ethiopia Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 363,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2015,
+       "2015-10-28",
+       "2016-06-29",
+       true,
+       false
+      ],
+      [
+       2016,
+       "2016-11-12",
+       "2017-06-24",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-11-04",
+       "2018-07-16",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-10-27",
+       "2019-07-07",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-12-01",
+       "2020-06-14",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-12-12",
+       "2021-05-27",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-17",
+       "2022-06-28",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-30",
+       "2023-07-08",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-10-01",
+       "2024-06-30",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-20",
+       "2025-06-28",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-10-18",
+       "2026-06-21",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-10-10",
+       "2027-05-29",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4110,
+       "name": "Adama Kenema",
+       "founded": 1993,
+       "venue": {
+        "name": "Adama Stadium",
+        "city": "Nazreth",
+        "capacity": 4000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4111,
+       "name": "Awassa Kenema",
+       "founded": null,
+       "venue": {
+        "name": "Hawassa Stadium",
+        "city": "Hawassa",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4112,
+       "name": "Bahardar",
+       "founded": null,
+       "venue": {
+        "name": "Bahir Dar Stadium",
+        "city": "Bahir Dar",
+        "capacity": 60000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4116,
+       "name": "Ethiopia Bunna",
+       "founded": 1975,
+       "venue": {
+        "name": "Addis Ababa Stadium",
+        "city": "Addis Abeba",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4117,
+       "name": "Fasil Ketema",
+       "founded": 1960,
+       "venue": {
+        "name": "Fasiledes Stadium",
+        "city": "Gondar",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4119,
+       "name": "Kedus Giorgis",
+       "founded": 1935,
+       "venue": {
+        "name": "Addis Ababa Stadium",
+        "city": "Addis Abeba",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4120,
+       "name": "Mekelakeya",
+       "founded": null,
+       "venue": {
+        "name": "Addis Ababa Stadium",
+        "city": "Addis Abeba",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4123,
+       "name": "Sidama Bunna",
+       "founded": null,
+       "venue": {
+        "name": "Yirgalem Stadium",
+        "city": "Yirgalem",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4124,
+       "name": "Welayta Dicha",
+       "founded": null,
+       "venue": {
+        "name": "Wolaita Soddo Stadium",
+        "city": "Wolaita Sodo",
+        "capacity": 1000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 4125,
+       "name": "Welwalo Adigrat Uni",
+       "founded": null,
+       "venue": {
+        "name": "Adigrat Stadium",
+        "city": "Adigrat",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4127,
+       "name": "Mebrat Hayl",
+       "founded": 1962,
+       "venue": {
+        "name": "Addis Ababa Stadium",
+        "city": "Addis Abeba",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4130,
+       "name": "Ethiopia Nigd Bank",
+       "founded": null,
+       "venue": {
+        "name": "Addis Ababa Stadium",
+        "city": "Addis Abeba",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 9983,
+       "name": "Hadiya Hosaena",
+       "founded": null,
+       "venue": {
+        "name": "Hossana Stadium",
+        "city": "Hosaena",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20030,
+       "name": "Ethiopian Medhin",
+       "founded": null,
+       "venue": {
+        "name": "Abebe Bikila Stadium",
+        "city": "Addis Ababa",
+        "capacity": 30000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 26880,
+       "name": "Sheger Ketema",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26881,
+       "name": "Negelle Arsi",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28446,
+       "name": "Halaba Ketema",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28447,
+       "name": "Gamo Chencha",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Ghana",
+   "fetched": "2026-10-30T09:52:14.477Z",
+   "all": [
+    "570 | Premier League | League",
+    "966 | Cup | Cup",
+    "1144 | Super Cup | Cup",
+    "1196 | Division One League | League"
+   ],
+   "leagues": [
+    {
+     "id": 570,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2010-09-05",
+       "2011-06-15",
+       true,
+       false
+      ],
+      [
+       2012,
+       "2011-10-09",
+       "2012-06-06",
+       true,
+       false
+      ],
+      [
+       2013,
+       "2012-10-06",
+       "2013-06-23",
+       true,
+       false
+      ],
+      [
+       2014,
+       "2013-09-15",
+       "2014-06-04",
+       true,
+       false
+      ],
+      [
+       2015,
+       "2015-01-18",
+       "2015-09-13",
+       true,
+       false
+      ],
+      [
+       2016,
+       "2016-02-20",
+       "2016-09-18",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-02-12",
+       "2017-10-22",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-03-17",
+       "2018-06-23",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-12-29",
+       "2020-07-19",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-11-14",
+       "2021-07-18",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-29",
+       "2022-07-31",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-09",
+       "2023-06-09",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-15",
+       "2024-06-15",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-06",
+       "2025-06-07",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-12",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-05",
+       "2027-05-29",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4450,
+       "name": "Dreams",
+       "founded": 2009,
+       "venue": {
+        "name": "Dawu Sports Stadium",
+        "city": "Accra",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 6411,
+       "name": "Asante Kotoko",
+       "founded": 1935,
+       "venue": {
+        "name": "Baba Yara Stadium",
+        "city": "Kumasi",
+        "capacity": 45000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8056,
+       "name": "Ashanti Gold",
+       "founded": 1978,
+       "venue": {
+        "name": "Len Clay Stadium",
+        "city": "Obuasi",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8079,
+       "name": "Aduana Stars",
+       "founded": 1985,
+       "venue": {
+        "name": "Agyeman Badu Stadium",
+        "city": "Dormaa Ahenkro",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 8099,
+       "name": "Bechem United",
+       "founded": 1966,
+       "venue": {
+        "name": "Bechem Park",
+        "city": "Bechem",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12244,
+       "name": "Berekum Chelsea",
+       "founded": 2000,
+       "venue": {
+        "name": "Golden City Park",
+        "city": "Berekum",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12249,
+       "name": "Hearts of Oak",
+       "founded": 1911,
+       "venue": {
+        "name": "Accra Sports Stadium",
+        "city": "Accra",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12251,
+       "name": "Karela",
+       "founded": 2013,
+       "venue": {
+        "name": "Naa Sheriga Sports Complex",
+        "city": "Nalerigu",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12255,
+       "name": "Medeama",
+       "founded": 2002,
+       "venue": {
+        "name": "TNA Park",
+        "city": "Tarkwa",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13882,
+       "name": "Heart of Lions",
+       "founded": 2002,
+       "venue": {
+        "name": "Kpandu Stadium",
+        "city": "Kpandu",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17993,
+       "name": "Bibiani Gold Stars",
+       "founded": null,
+       "venue": {
+        "name": "Bibiani Park",
+        "city": "Bibiani",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20022,
+       "name": "Samartex",
+       "founded": null,
+       "venue": {
+        "name": "Nsenkyire Sports Arena",
+        "city": "Samreboi",
+        "capacity": 1500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21071,
+       "name": "Debibi United",
+       "founded": 2015,
+       "venue": {
+        "name": "Presby Park",
+        "city": "Debibi",
+        "capacity": 1000,
+        "surface": null
+       }
+      },
+      {
+       "id": 21093,
+       "name": "Swedru All Blacks",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 22763,
+       "name": "Basake Holy Stars",
+       "founded": 1998,
+       "venue": {
+        "name": "Crosby Awuah Memorial Stadium",
+        "city": "Nzema Anyinase",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22782,
+       "name": "Vision",
+       "founded": null,
+       "venue": {
+        "name": "Nii Adjei Kraku II Sports Complex",
+        "city": "Tema",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 22783,
+       "name": "Young Apostles",
+       "founded": null,
+       "venue": {
+        "name": "Wenchi Sports Stadium",
+        "city": "Wenchi",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26805,
+       "name": "Port City",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Ivory-Coast",
+   "fetched": "2026-10-30T09:52:16.338Z",
+   "all": [
+    "386 | Ligue 1 | League"
+   ],
+   "leagues": [
+    {
+     "id": 386,
+     "name": "Ligue 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-11-19",
+       "2017-07-03",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-10-14",
+       "2018-06-03",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-09-07",
+       "2019-05-05",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-08-17",
+       "2020-03-08",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2021-03-27",
+       "2021-06-26",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-11-20",
+       "2022-06-30",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-10",
+       "2023-06-11",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-10-07",
+       "2024-06-01",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-20",
+       "2025-05-19",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-16",
+       "2026-05-24",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-26",
+       "2026-11-01",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4511,
+       "name": "AFAD",
+       "founded": 2005,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4512,
+       "name": "ASEC Mimosas",
+       "founded": 1948,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4516,
+       "name": "Bouaké",
+       "founded": 2004,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4520,
+       "name": "SOA",
+       "founded": 1932,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4521,
+       "name": "San-Pédro",
+       "founded": 2004,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4525,
+       "name": "Stade d'Abidjan",
+       "founded": 1936,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 6346,
+       "name": "SOL",
+       "founded": null,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 16588,
+       "name": "Stella",
+       "founded": 1953,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 18179,
+       "name": "Korhogo",
+       "founded": null,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 22583,
+       "name": "Mouna",
+       "founded": null,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 22584,
+       "name": "Zoman",
+       "founded": null,
+       "venue": {
+        "name": "Stade Robert Champroux",
+        "city": "Abidjan",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 25587,
+       "name": "ISCA",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26340,
+       "name": "ES Agboville",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26341,
+       "name": "US Tchologo",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28441,
+       "name": "Adiake",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28442,
+       "name": "Yamoussoukro",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Kenya",
+   "fetched": "2026-10-30T09:52:17.268Z",
+   "all": [
+    "276 | FKF Premier League | League",
+    "277 | Super League | League",
+    "971 | Shield Cup | Cup",
+    "1193 | Super Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 276,
+     "name": "FKF Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-02-11",
+       "2012-11-10",
+       true,
+       false
+      ],
+      [
+       2013,
+       "2013-02-24",
+       "2013-11-09",
+       true,
+       false
+      ],
+      [
+       2014,
+       "2014-02-15",
+       "2014-11-08",
+       true,
+       false
+      ],
+      [
+       2015,
+       "2015-02-21",
+       "2015-11-01",
+       true,
+       false
+      ],
+      [
+       2016,
+       "2016-02-13",
+       "2016-11-19",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-03-11",
+       "2017-12-24",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-12-08",
+       "2019-06-02",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-02-03",
+       "2018-10-07",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-08-30",
+       "2020-05-24",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-11-28",
+       "2021-07-24",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-25",
+       "2022-06-11",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-10-01",
+       "2023-06-17",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-26",
+       "2024-07-14",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-24",
+       "2025-06-22",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-19",
+       "2026-10-06",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-04",
+       "2027-05-16",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2459,
+       "name": "Posta Rangers FC",
+       "founded": null,
+       "venue": {
+        "name": "Thika Municipal Stadium",
+        "city": "Thika",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2460,
+       "name": "Bandari",
+       "founded": 1985,
+       "venue": {
+        "name": "Mbaraki Sports Club",
+        "city": "Mombasa",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2462,
+       "name": "Homeboyz",
+       "founded": null,
+       "venue": {
+        "name": "Bukhungu Stadium",
+        "city": "Kakamega",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2463,
+       "name": "Mathare United",
+       "founded": 1994,
+       "venue": {
+        "name": "Moi International Sports Centre",
+        "city": "Nairobi",
+        "capacity": 60000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2467,
+       "name": "GOR Mahia",
+       "founded": 1968,
+       "venue": {
+        "name": "Nyayo National Stadium",
+        "city": "Nairobi",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2472,
+       "name": "AFC Leopards",
+       "founded": 1964,
+       "venue": {
+        "name": "Nyayo National Stadium",
+        "city": "Nairobi",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2474,
+       "name": "Ulinzi Stars",
+       "founded": 2003,
+       "venue": {
+        "name": "Afraha Stadium",
+        "city": "Nakuru",
+        "capacity": 8200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2475,
+       "name": "Tusker",
+       "founded": 1970,
+       "venue": {
+        "name": "Ruaraka Stadium",
+        "city": "Nairobi",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2476,
+       "name": "KCB",
+       "founded": null,
+       "venue": {
+        "name": "Kenyatta Stadium",
+        "city": "Machakos",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2485,
+       "name": "Kenya Police",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 19476,
+       "name": "APS Bomet",
+       "founded": null,
+       "venue": {
+        "name": "Bomet Stadium",
+        "city": "Bomet",
+        "capacity": 37000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19483,
+       "name": "Mara Sugar",
+       "founded": null,
+       "venue": {
+        "name": "Green Stadium",
+        "city": "Awendo",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19484,
+       "name": "Migori Youth",
+       "founded": 1982,
+       "venue": {
+        "name": "Migori Stadium",
+        "city": "Migori",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19485,
+       "name": "Mombasa Elite",
+       "founded": null,
+       "venue": {
+        "name": "Mbaraki Sports Club",
+        "city": "Mombasa",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19486,
+       "name": "Murang'a SEAL",
+       "founded": null,
+       "venue": {
+        "name": "SportPesa Arena",
+        "city": "Murang&apos;a",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19489,
+       "name": "Shabana",
+       "founded": null,
+       "venue": {
+        "name": "Raila Odinga Homa Bay Stadium",
+        "city": "Homa Bay",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22231,
+       "name": "Nairobi United",
+       "founded": null,
+       "venue": {
+        "name": "Nyayo National Stadium",
+        "city": "Nairobi",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 24667,
+       "name": "3K",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Lesotho",
+   "fetched": "2026-10-30T09:52:18.208Z",
+   "all": [
+    "962 | Premier League | League"
+   ],
+   "leagues": [
+    {
+     "id": 962,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2022,
+       "2022-09-17",
+       "2023-04-29",
+       true,
+       false
+      ],
+      [
+       2023,
+       "2023-10-07",
+       "2024-05-18",
+       true,
+       false
+      ],
+      [
+       2024,
+       "2024-09-21",
+       "2025-05-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-13",
+       "2026-05-16",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-22",
+       "2026-10-25",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 6426,
+       "name": "Matlama",
+       "founded": 1932,
+       "venue": {
+        "name": "Pitso Ground",
+        "city": "Maseru",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15563,
+       "name": "Bantu",
+       "founded": null,
+       "venue": {
+        "name": "Mohale's Hoek DiFA Ground, Difa Mohale's HOEK",
+        "city": "Mohale&apos;s Hoek",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20976,
+       "name": "LCS",
+       "founded": null,
+       "venue": {
+        "name": "LCS-Field",
+        "city": "Maseru",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20977,
+       "name": "LDF",
+       "founded": null,
+       "venue": {
+        "name": "Ratjomose Stadium",
+        "city": "Maseru",
+        "capacity": 1000,
+        "surface": null
+       }
+      },
+      {
+       "id": 20978,
+       "name": "LMPS",
+       "founded": null,
+       "venue": {
+        "name": "PTC Ground Europa",
+        "city": "Maseru",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20979,
+       "name": "Lifofane",
+       "founded": null,
+       "venue": {
+        "name": "Butha-Buthe Field",
+        "city": "Butha-Buthe",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20980,
+       "name": "Lijabatho",
+       "founded": null,
+       "venue": {
+        "name": "Thabeng High School Ground",
+        "city": "Morija",
+        "capacity": 1000,
+        "surface": null
+       }
+      },
+      {
+       "id": 20981,
+       "name": "Linare",
+       "founded": null,
+       "venue": {
+        "name": "Maputsoe DiFA Stadium",
+        "city": "Maputsoe",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 20982,
+       "name": "Lioli",
+       "founded": 1934,
+       "venue": {
+        "name": "Lioli Football Stadium",
+        "city": "Teyateyaneng",
+        "capacity": 1000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 20984,
+       "name": "Machokha",
+       "founded": null,
+       "venue": {
+        "name": "LCS-Field",
+        "city": "Maseru",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20985,
+       "name": "Manonyane",
+       "founded": null,
+       "venue": {
+        "name": "Nyakosoba Ground",
+        "city": "Nyakosoba",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25064,
+       "name": "Limkokwing University",
+       "founded": null,
+       "venue": {
+        "name": "Bambatha Tšita Sports Arena",
+        "city": "Maseru",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25065,
+       "name": "Majantja",
+       "founded": null,
+       "venue": {
+        "name": "Mohale's Hoek DiFA Ground, Difa Mohale's HOEK",
+        "city": "Mohale&apos;s Hoek",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25066,
+       "name": "Mzamane",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26611,
+       "name": "Members",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28600,
+       "name": "Villa",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Liberia",
+   "fetched": "2026-10-30T09:52:19.140Z",
+   "all": [
+    "760 | LFA First Division | League"
+   ],
+   "leagues": [
+    {
+     "id": 760,
+     "name": "LFA First Division",
+     "season": 2026,
+     "seasons": [
+      [
+       2020,
+       "2020-11-04",
+       "2021-05-16",
+       true,
+       false
+      ],
+      [
+       2021,
+       "2021-11-03",
+       "2022-04-17",
+       true,
+       false
+      ],
+      [
+       2022,
+       "2022-08-31",
+       "2023-04-22",
+       true,
+       false
+      ],
+      [
+       2023,
+       "2023-09-06",
+       "2024-04-10",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-10-16",
+       "2025-03-30",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-10-18",
+       "2026-05-24",
+       true,
+       false
+      ],
+      [
+       2026,
+       "2026-10-17",
+       "2026-10-29",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4048,
+       "name": "Discoveries",
+       "founded": 2017,
+       "venue": {
+        "name": "Samuel Kanyon Doe Practice Pitch",
+        "city": "Monrovia",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 6425,
+       "name": "LPRC Oilers",
+       "founded": 0,
+       "venue": {
+        "name": "TUSA Sport Field",
+        "city": "Monrovia",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8062,
+       "name": "LISCR",
+       "founded": 1995,
+       "venue": {
+        "name": "Antoinette Tubman Stadium",
+        "city": "Monrovia",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16143,
+       "name": "BEA Mountain",
+       "founded": 0,
+       "venue": {
+        "name": "Antoinette Tubman Stadium",
+        "city": "Monrovia",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16144,
+       "name": "Freeport",
+       "founded": 0,
+       "venue": {
+        "name": "David Kuyon Sport Stadium",
+        "city": "Gbarnga",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16146,
+       "name": "NPA Anchors",
+       "founded": null,
+       "venue": {
+        "name": "Antoinette Tubman Stadium",
+        "city": "Monrovia",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 16151,
+       "name": "Watanga",
+       "founded": 1997,
+       "venue": {
+        "name": "Samuel Kanyon Doe Practice Pitch",
+        "city": "Monrovia",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 18110,
+       "name": "Heaven Eleven",
+       "founded": 0,
+       "venue": {
+        "name": "Antoinette Tubman Stadium",
+        "city": "Monrovia",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22358,
+       "name": "Paynesville",
+       "founded": 2013,
+       "venue": {
+        "name": "Samuel Kanyon Doe Practice Pitch",
+        "city": "Monrovia",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25191,
+       "name": "Black Man Warrior",
+       "founded": 2020,
+       "venue": {
+        "name": "D. Tweh Field",
+        "city": "Monrovia",
+        "capacity": 3000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 25192,
+       "name": "Fassell",
+       "founded": 0,
+       "venue": {
+        "name": "Nancy B. Doe Sports Stadium",
+        "city": "Kakata",
+        "capacity": 9500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 25193,
+       "name": "Shaita",
+       "founded": 2017,
+       "venue": {
+        "name": "Samuel Kanyon Doe Practice Pitch",
+        "city": "Monrovia",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26907,
+       "name": "Wologizi",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26908,
+       "name": "Borough",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26909,
+       "name": "Downtown",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26910,
+       "name": "Gardnersville",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28535,
+       "name": "Golden Dream",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28536,
+       "name": "District 17",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Malawi",
+   "fetched": "2026-10-30T09:52:21.023Z",
+   "all": [
+    "391 | Super League | League"
+   ],
+   "leagues": [
+    {
+     "id": 391,
+     "name": "Super League",
+     "season": 2026,
+     "seasons": [
+      [
+       2018,
+       "2018-12-02",
+       "2018-12-24",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-08-04",
+       "2019-08-18",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-11-28",
+       "2021-10-08",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2022-03-19",
+       "2022-11-05",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-04-15",
+       "2023-11-12",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-04-06",
+       "2024-11-10",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-04-05",
+       "2025-12-27",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-04-25",
+       "2027-02-20",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4583,
+       "name": "Be Forward Wanderers",
+       "founded": 1962,
+       "venue": {
+        "name": "Kamuzu Stadium",
+        "city": "Blantyre",
+        "capacity": 40000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4584,
+       "name": "Blue Eagles",
+       "founded": null,
+       "venue": {
+        "name": "Nankhaka Stadium",
+        "city": "Lilongwe",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4585,
+       "name": "Chitipa United",
+       "founded": null,
+       "venue": {
+        "name": "Mzuzu Stadium",
+        "city": "Mzuzu",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4588,
+       "name": "Kamuzu Barracks",
+       "founded": null,
+       "venue": {
+        "name": "Dedza Stadium",
+        "city": "Dedza",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4589,
+       "name": "Karonga United",
+       "founded": 1995,
+       "venue": {
+        "name": "Karonga Stadium",
+        "city": "Karonga",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4593,
+       "name": "Moyale Barracks",
+       "founded": null,
+       "venue": {
+        "name": "Mzuzu Stadium",
+        "city": "Mzuzu",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4597,
+       "name": "Silver Strikers",
+       "founded": null,
+       "venue": {
+        "name": "Bingu National Stadium",
+        "city": "Lilongwe",
+        "capacity": 41100,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4599,
+       "name": "Nyasa Big Bullets",
+       "founded": null,
+       "venue": {
+        "name": "Kamuzu Stadium",
+        "city": "Blantyre",
+        "capacity": 40000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4601,
+       "name": "Red Lions",
+       "founded": null,
+       "venue": {
+        "name": "ZACC Ground",
+        "city": "Zomba",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11125,
+       "name": "CIVO United",
+       "founded": null,
+       "venue": {
+        "name": "CIVO Stadium",
+        "city": "Lilongwe",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11127,
+       "name": "MAFCO",
+       "founded": null,
+       "venue": {
+        "name": "Chitowe Stadium",
+        "city": "Nkhotakota",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 18747,
+       "name": "Dedza Dynamos",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 23427,
+       "name": "Creck",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25893,
+       "name": "Ekhaya",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27655,
+       "name": "Masters FC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27656,
+       "name": "Mitundu Baptist",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Mauritania",
+   "fetched": "2026-10-30T09:52:22.866Z",
+   "all": [
+    "762 | Premier League | League"
+   ],
+   "leagues": [
+    {
+     "id": 762,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2020,
+       "2020-11-20",
+       "2021-06-19",
+       false,
+       false
+      ],
+      [
+       2021,
+       "2021-09-24",
+       "2022-07-01",
+       false,
+       false
+      ],
+      [
+       2022,
+       "2022-10-14",
+       "2023-06-13",
+       false,
+       false
+      ],
+      [
+       2023,
+       "2023-09-15",
+       "2024-06-05",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-14",
+       "2025-05-30",
+       false,
+       true
+      ],
+      [
+       2025,
+       "2025-10-03",
+       "2026-05-25",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-10-10",
+       "2027-01-16",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 6427,
+       "name": "Nouadhibou",
+       "founded": null,
+       "venue": {
+        "name": "Stade Municipal de Nouadhibou",
+        "city": "Nouadhibou",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8071,
+       "name": "SNIM",
+       "founded": null,
+       "venue": {
+        "name": "Stade Cansado",
+        "city": "Nouadhibou",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 15521,
+       "name": "Tevragh-Zeïne",
+       "founded": 2005,
+       "venue": {
+        "name": "Stade Cheikha Ould Boïdiya",
+        "city": "Nouakchott",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 16164,
+       "name": "Armée",
+       "founded": null,
+       "venue": {
+        "name": "Stade Olympique de Nouakchott",
+        "city": "Nouakchott",
+        "capacity": 40000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 16169,
+       "name": "Kaédi",
+       "founded": null,
+       "venue": {
+        "name": "Stade de Kaédi",
+        "city": "Kaédi",
+        "capacity": 5000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 16171,
+       "name": "Kédia",
+       "founded": null,
+       "venue": {
+        "name": "Stade Municipal",
+        "city": "Zouérate",
+        "capacity": 1000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 16172,
+       "name": "Nouakchott King's",
+       "founded": null,
+       "venue": {
+        "name": "Stade Cheikha Ould Boïdiya",
+        "city": "Nouakchott",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 16175,
+       "name": "Police",
+       "founded": null,
+       "venue": {
+        "name": "Stade Olympique de Nouakchott",
+        "city": "Nouakchott",
+        "capacity": 40000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 17924,
+       "name": "AC Douane",
+       "founded": null,
+       "venue": {
+        "name": "Stade Cheikha Ould Boïdiya",
+        "city": "Nouakchott",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 20469,
+       "name": "Chemal",
+       "founded": 2022,
+       "venue": {
+        "name": "Stade Cheikha Ould Boïdiya",
+        "city": "Nouakchott",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 20470,
+       "name": "Gendrim",
+       "founded": null,
+       "venue": {
+        "name": "Stade Cheikha Ould Boïdiya",
+        "city": "Nouakchott",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 21987,
+       "name": "Pompiers",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 24798,
+       "name": "N'Zidane",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26812,
+       "name": "Nouakchott Academie",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Nigeria",
+   "fetched": "2026-10-30T09:52:25.680Z",
+   "all": [
+    "399 | NPFL | League",
+    "1231 | Federation Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 399,
+     "name": "NPFL",
+     "season": 2027,
+     "seasons": [
+      [
+       2016,
+       "2016-02-20",
+       "2016-10-02",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-01-14",
+       "2017-09-09",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-01-13",
+       "2018-09-30",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-01-13",
+       "2019-06-12",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2019-11-03",
+       "2020-05-31",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2020-12-27",
+       "2021-08-08",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2021-12-17",
+       "2022-07-17",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-01-08",
+       "2023-06-11",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2023-09-17",
+       "2024-06-09",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2024-08-31",
+       "2025-05-25",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2025-08-22",
+       "2026-05-24",
+       true,
+       true
+      ],
+      [
+       2027,
+       "2026-08-28",
+       "2027-05-30",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5171,
+       "name": "Abia Warriors",
+       "founded": 2003,
+       "venue": {
+        "name": "Umuahia Township Stadium",
+        "city": "Umuahia",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5173,
+       "name": "Bendel Insurance",
+       "founded": null,
+       "venue": {
+        "name": "Uniben Sport Complex",
+        "city": "Benin City",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5176,
+       "name": "Enugu Rangers",
+       "founded": 1970,
+       "venue": {
+        "name": "Awka City Stadium",
+        "city": "Awka",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5177,
+       "name": "Enyimba",
+       "founded": 1976,
+       "venue": {
+        "name": "Enyimba International Stadium",
+        "city": "Aba",
+        "capacity": 25500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5183,
+       "name": "Kano Pillars",
+       "founded": 1990,
+       "venue": {
+        "name": "Sani Abacha Stadium",
+        "city": "Kano",
+        "capacity": 16000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5184,
+       "name": "Katsina United",
+       "founded": null,
+       "venue": {
+        "name": "Muhammadu Dikko Stadium",
+        "city": "Katsina",
+        "capacity": 35000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5185,
+       "name": "Kwara United",
+       "founded": 1997,
+       "venue": {
+        "name": "Kwara Sports Complex",
+        "city": "Ilorin",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5188,
+       "name": "Nasarawa United",
+       "founded": null,
+       "venue": {
+        "name": "Jos International Stadium",
+        "city": "Jos",
+        "capacity": 44000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5189,
+       "name": "Niger Tornadoes",
+       "founded": 1970,
+       "venue": {
+        "name": "Lokoja Confluence Stadium",
+        "city": "Lokoja",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5190,
+       "name": "Plateau United",
+       "founded": null,
+       "venue": {
+        "name": "Jos International Stadium",
+        "city": "Jos",
+        "capacity": 44000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5192,
+       "name": "Rivers United",
+       "founded": 2016,
+       "venue": {
+        "name": "Yakubu Gowon Stadium",
+        "city": "Port Harcourt",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5504,
+       "name": "Shooting Stars",
+       "founded": 1950,
+       "venue": {
+        "name": "Adamasingba Stadium",
+        "city": "Ibadan",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5508,
+       "name": "Warri Wolves",
+       "founded": null,
+       "venue": {
+        "name": "Warri Township Stadium",
+        "city": "Warri",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20809,
+       "name": "Doma United",
+       "founded": 1994,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 22585,
+       "name": "Sporting Lagos",
+       "founded": 2022,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 24512,
+       "name": "Ikorodu City",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26400,
+       "name": "Barau FC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 26401,
+       "name": "Kun Khalifat FC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28168,
+       "name": "Inter Lagos",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28169,
+       "name": "Ranchers Bees",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Rwanda",
+   "fetched": "2026-10-30T09:52:26.612Z",
+   "all": [
+    "405 | National Soccer League | League"
+   ],
+   "leagues": [
+    {
+     "id": 405,
+     "name": "National Soccer League",
+     "season": 2026,
+     "seasons": [
+      [
+       2018,
+       "2018-10-19",
+       "2019-06-01",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-10-04",
+       "2020-05-31",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-12-04",
+       "2021-06-23",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-30",
+       "2022-05-30",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-19",
+       "2023-05-19",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-18",
+       "2024-05-12",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-15",
+       "2025-05-18",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-12",
+       "2026-05-31",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-04",
+       "2027-05-29",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5237,
+       "name": "Al Hilal Omdurman",
+       "founded": 1930,
+       "venue": {
+        "name": "Al-Hilal Stadium",
+        "city": "Omdurman (Umm Durman)",
+        "capacity": 25000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5239,
+       "name": "Al Merreikh",
+       "founded": 1908,
+       "venue": {
+        "name": "Al-Merreikh Stadium",
+        "city": "Omdurman",
+        "capacity": 43645,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5309,
+       "name": "APR",
+       "founded": 1993,
+       "venue": {
+        "name": "Kigali Pelé Stadium",
+        "city": "Kigali",
+        "capacity": 22000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5310,
+       "name": "AS Kigali",
+       "founded": null,
+       "venue": {
+        "name": "Stade Régional de Nyamirambo",
+        "city": "Kigali",
+        "capacity": 22000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5311,
+       "name": "Amagaju",
+       "founded": null,
+       "venue": {
+        "name": "Nyagisenyi Stadium",
+        "city": "Gikongoro",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5312,
+       "name": "Bugesera",
+       "founded": null,
+       "venue": {
+        "name": "Bugesera Stadium",
+        "city": "Nyamata",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5314,
+       "name": "Etincelles",
+       "founded": null,
+       "venue": {
+        "name": "Stade Umuganda",
+        "city": "Gisenyi",
+        "capacity": 5200,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5315,
+       "name": "Gicumbi",
+       "founded": null,
+       "venue": {
+        "name": "Gicumbi Stadium",
+        "city": "Byumba",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5317,
+       "name": "Kiyovu Sports",
+       "founded": 1976,
+       "venue": {
+        "name": "Stade Mumena",
+        "city": "Kigali",
+        "capacity": 1200,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5318,
+       "name": "Marines",
+       "founded": null,
+       "venue": {
+        "name": "Stade Umuganda",
+        "city": "Gisenyi",
+        "capacity": 5200,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5320,
+       "name": "Mukura",
+       "founded": null,
+       "venue": {
+        "name": "Stade Huye",
+        "city": "Butare",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5321,
+       "name": "Musanze",
+       "founded": null,
+       "venue": {
+        "name": "Ubworoherane Football Stadium",
+        "city": "Musanze",
+        "capacity": 4000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5322,
+       "name": "Police",
+       "founded": null,
+       "venue": {
+        "name": "Kigali Pelé Stadium",
+        "city": "Kigali",
+        "capacity": 22000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5323,
+       "name": "Rayon Sports",
+       "founded": 1965,
+       "venue": {
+        "name": "Kigali Pelé Stadium",
+        "city": "Kigali",
+        "capacity": 22000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5324,
+       "name": "Sunrise",
+       "founded": null,
+       "venue": {
+        "name": "Golgotha Stadium",
+        "city": "Nyagatare",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7574,
+       "name": "Gasogi United",
+       "founded": null,
+       "venue": {
+        "name": "Stade Régional de Nyamirambo",
+        "city": "Kigali",
+        "capacity": 22000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 15560,
+       "name": "Gorilla",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 18056,
+       "name": "Etoile de l'Est",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Senegal",
+   "fetched": "2026-10-30T09:52:27.534Z",
+   "all": [
+    "403 | Ligue 1 | League"
+   ],
+   "leagues": [
+    {
+     "id": 403,
+     "name": "Ligue 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-11-04",
+       "2017-06-24",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-11-25",
+       "2018-06-17",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-11-03",
+       "2019-05-19",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-12-07",
+       "2020-03-08",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2021-01-02",
+       "2021-07-18",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-11-20",
+       "2022-06-11",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-10-15",
+       "2023-07-30",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-10-28",
+       "2024-06-08",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-10-19",
+       "2025-06-26",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-11-01",
+       "2026-06-04",
+       true,
+       false
+      ],
+      [
+       2026,
+       "2026-10-17",
+       "2026-10-25",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5285,
+       "name": "Casa Sport",
+       "founded": 1969,
+       "venue": {
+        "name": "Stade Aline Sitoé Diatta",
+        "city": "Ziguinchor",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5287,
+       "name": "Gorée",
+       "founded": 1933,
+       "venue": {
+        "name": "Stade Demba Diop",
+        "city": "Dakar",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5288,
+       "name": "Génération Foot",
+       "founded": null,
+       "venue": {
+        "name": "Stade Djiby Diagne",
+        "city": "Deni Biram Ndao",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5289,
+       "name": "Jaraaf",
+       "founded": 1969,
+       "venue": {
+        "name": "Stade Demba Diop",
+        "city": "Dakar",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5290,
+       "name": "La Linguère",
+       "founded": 1969,
+       "venue": {
+        "name": "Stade Mawade Wade",
+        "city": "Saint-Louis",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5293,
+       "name": "Pikine",
+       "founded": 1970,
+       "venue": {
+        "name": "Stade Alassane Djigo",
+        "city": "Pikine",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5295,
+       "name": "Stade de Mbour",
+       "founded": null,
+       "venue": {
+        "name": "Stade Caroline Faye",
+        "city": "Mbour",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5296,
+       "name": "Teungueth",
+       "founded": null,
+       "venue": {
+        "name": "Stade Amadou Barry",
+        "city": "Guédiawaye",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5552,
+       "name": "Diambars",
+       "founded": 2003,
+       "venue": {
+        "name": "Stade Fodé Wade",
+        "city": "Saly",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 5553,
+       "name": "Guédiawaye",
+       "founded": 1993,
+       "venue": {
+        "name": "Stade Amadou Barry",
+        "city": "Guédiawaye",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5554,
+       "name": "Ouakam",
+       "founded": 1951,
+       "venue": {
+        "name": "Stade Demba Diop",
+        "city": "Dakar",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 13172,
+       "name": "DSC",
+       "founded": null,
+       "venue": {
+        "name": "Stade Léopold Sédar Senghor",
+        "city": "Dakar",
+        "capacity": 80000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25067,
+       "name": "AJEL",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25068,
+       "name": "HLM",
+       "founded": 1991,
+       "venue": {
+        "name": "Stade Demba Diop",
+        "city": null,
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 25070,
+       "name": "Wally Daan",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28349,
+       "name": "Essamaye",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Tanzania",
+   "fetched": "2026-10-30T09:52:30.274Z",
+   "all": [
+    "567 | Ligi kuu Bara | League"
+   ],
+   "leagues": [
+    {
+     "id": 567,
+     "name": "Ligi kuu Bara",
+     "season": 2026,
+     "seasons": [
+      [
+       2015,
+       "2015-09-12",
+       "2016-05-21",
+       false,
+       false
+      ],
+      [
+       2016,
+       "2016-08-20",
+       "2017-05-20",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-08-26",
+       "2018-05-28",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2019-05-28",
+       "2019-05-28",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-05-28",
+       "2020-07-26",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-06",
+       "2021-07-18",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-27",
+       "2022-06-26",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-15",
+       "2023-06-16",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-15",
+       "2024-06-08",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-16",
+       "2025-07-08",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-17",
+       "2026-07-16",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-14",
+       "2027-05-16",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5370,
+       "name": "Young Africans",
+       "founded": 1935,
+       "venue": {
+        "name": "Azam Complex Stadium",
+        "city": "Mbagala",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 6432,
+       "name": "Simba",
+       "founded": 1936,
+       "venue": {
+        "name": "KMC Stadium",
+        "city": "Dar es Salaam",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8057,
+       "name": "Azam",
+       "founded": 2007,
+       "venue": {
+        "name": "Azam Complex Stadium",
+        "city": "Mbagala",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12189,
+       "name": "Coastal Union",
+       "founded": null,
+       "venue": {
+        "name": "Mkwakwani Stadium",
+        "city": "Tanga",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12190,
+       "name": "JKT Tanzania",
+       "founded": null,
+       "venue": {
+        "name": "Black Rhino Academy Stadium",
+        "city": "Karatu",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12191,
+       "name": "Kagera Sugar",
+       "founded": null,
+       "venue": {
+        "name": "Kaitaba Stadium",
+        "city": "Bukoba",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12194,
+       "name": "Mbeya City",
+       "founded": null,
+       "venue": {
+        "name": "Sokoine Stadium",
+        "city": "Mbeya",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12197,
+       "name": "Namungo",
+       "founded": null,
+       "venue": {
+        "name": "Majaliwa Stadium",
+        "city": "Ruangwa",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12199,
+       "name": "Polisi Tanzania",
+       "founded": null,
+       "venue": {
+        "name": "Jamhuri Stadium Morogoro",
+        "city": "Morogoro",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 14345,
+       "name": "Dodoma Jiji",
+       "founded": 2017,
+       "venue": {
+        "name": "Jamhuri Stadium",
+        "city": "Dodoma",
+        "capacity": 30000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17752,
+       "name": "Geita Gold",
+       "founded": null,
+       "venue": {
+        "name": "Nyankumbu Stadium",
+        "city": "Geita",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19838,
+       "name": "Fountain Gate",
+       "founded": 2022,
+       "venue": {
+        "name": "Liti Stadium",
+        "city": "Singida",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 22175,
+       "name": "Tabora United",
+       "founded": null,
+       "venue": {
+        "name": "Ali Hassan Mwinyi Stadium",
+        "city": "Tabora",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22176,
+       "name": "Mashujaa",
+       "founded": null,
+       "venue": {
+        "name": "Lake Tanganyika Stadium",
+        "city": "Kigoma",
+        "capacity": 3500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 24353,
+       "name": "Singida Black Stars",
+       "founded": null,
+       "venue": {
+        "name": "Liti Stadium",
+        "city": "Singida",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 24707,
+       "name": "Pamba Jiji",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Tunisia",
+   "fetched": "2026-10-30T09:52:32.134Z",
+   "all": [
+    "202 | Ligue 1 | League",
+    "511 | Cup | Cup",
+    "828 | Ligue 2 | League",
+    "1194 | Super Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 202,
+     "name": "Ligue 1",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-11-04",
+       "2012-10-03",
+       false,
+       true
+      ],
+      [
+       2012,
+       "2012-11-10",
+       "2013-05-29",
+       false,
+       true
+      ],
+      [
+       2013,
+       "2013-09-15",
+       "2014-05-13",
+       false,
+       true
+      ],
+      [
+       2014,
+       "2014-08-13",
+       "2015-06-02",
+       false,
+       true
+      ],
+      [
+       2015,
+       "2015-09-12",
+       "2016-06-12",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-09-08",
+       "2017-05-21",
+       false,
+       true
+      ],
+      [
+       2017,
+       "2017-08-15",
+       "2018-05-10",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-08-18",
+       "2019-06-15",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-08-24",
+       "2020-09-13",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-12-06",
+       "2021-05-12",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-16",
+       "2022-06-30",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-10-07",
+       "2023-06-29",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-19",
+       "2024-06-20",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-28",
+       "2025-05-17",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-09",
+       "2026-05-13",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-22",
+       "2027-01-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 980,
+       "name": "ES Tunis",
+       "founded": 1919,
+       "venue": {
+        "name": "Stade olympique Hammadi-Agrebi",
+        "city": "Radès",
+        "capacity": 65000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 981,
+       "name": "CA Bizertin",
+       "founded": 1928,
+       "venue": {
+        "name": "Stade du 15 Octobre",
+        "city": "Banzart",
+        "capacity": 16000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 983,
+       "name": "CS Sfaxien",
+       "founded": 1928,
+       "venue": {
+        "name": "Stade Taïeb Mhiri",
+        "city": "Safāqis",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 984,
+       "name": "ES Metlaoui",
+       "founded": 1950,
+       "venue": {
+        "name": "Stade Municipal de Métlaoui",
+        "city": "Métlaoui",
+        "capacity": 4000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 986,
+       "name": "US Ben Guerdane",
+       "founded": 1945,
+       "venue": {
+        "name": "Stade de Ben Guerdane",
+        "city": "Ben Gardane",
+        "capacity": 6500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 988,
+       "name": "Club Africain",
+       "founded": 1920,
+       "venue": {
+        "name": "Stade Olympique de Radès",
+        "city": "Radès",
+        "capacity": 65000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 989,
+       "name": "ES Zarzis",
+       "founded": 1934,
+       "venue": {
+        "name": "Complexe Sportif Abdessalem Kazouz",
+        "city": "Zarzis",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 990,
+       "name": "ES Sahel",
+       "founded": 1925,
+       "venue": {
+        "name": "Stade Olympique de Sousse",
+        "city": "Sousse (Sūsah)",
+        "capacity": 28000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 991,
+       "name": "Stade Tunisien",
+       "founded": 1948,
+       "venue": {
+        "name": "Stade Hédi-Enneifer",
+        "city": "Le Bardo",
+        "capacity": 9000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 992,
+       "name": "US Monastirienne",
+       "founded": 1923,
+       "venue": {
+        "name": "Stade Mustapha Ben Jannet",
+        "city": "Monastir",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1191,
+       "name": "CS Hammam-Lif",
+       "founded": 1944,
+       "venue": {
+        "name": "Hammam-Lif Gazon",
+        "city": "Hammam-Lif",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10368,
+       "name": "AS Marsa",
+       "founded": null,
+       "venue": {
+        "name": "Stade Abdelaziz Chtioui",
+        "city": "La Marsa",
+        "capacity": 7000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10609,
+       "name": "ES Hammam-Sousse",
+       "founded": 1954,
+       "venue": {
+        "name": "Stade Municipale Bou Ali-Lahouar",
+        "city": "Hammam-Sousse",
+        "capacity": 6500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10625,
+       "name": "Olympique Béja",
+       "founded": 1929,
+       "venue": {
+        "name": "Stade Boujemâa Lekmiti",
+        "city": "Béja",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13358,
+       "name": "Progrès Sakiet Eddaïer",
+       "founded": null,
+       "venue": {
+        "name": "Stade Municipal Sakiet Eddaier",
+        "city": "Sakiet Eddaïer",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 18284,
+       "name": "Jeunesse Sportive Omrane",
+       "founded": 1943,
+       "venue": {
+        "name": "Complexe sportif Taieb ben Ammar El Omrane",
+        "city": "Tunis",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Uganda",
+   "fetched": "2026-10-30T09:52:33.074Z",
+   "all": [
+    "585 | Premier League | League"
+   ],
+   "leagues": [
+    {
+     "id": 585,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-09-24",
+       "2013-05-10",
+       false,
+       false
+      ],
+      [
+       2013,
+       "2013-08-20",
+       "2014-05-09",
+       false,
+       false
+      ],
+      [
+       2014,
+       "2014-09-19",
+       "2015-05-19",
+       false,
+       false
+      ],
+      [
+       2015,
+       "2015-08-22",
+       "2016-05-27",
+       false,
+       false
+      ],
+      [
+       2016,
+       "2016-08-19",
+       "2017-05-20",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-09-12",
+       "2018-05-25",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-09-28",
+       "2019-05-04",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-08-29",
+       "2020-05-23",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-12-03",
+       "2021-06-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-10-15",
+       "2022-05-14",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-30",
+       "2023-05-27",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-15",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-13",
+       "2025-05-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-26",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-28",
+       "2026-12-24",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 6422,
+       "name": "KCCA",
+       "founded": 1965,
+       "venue": {
+        "name": "MTN Omondi Stadium",
+        "city": "Kampala",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 8114,
+       "name": "Vipers",
+       "founded": 1969,
+       "venue": {
+        "name": "St. Mary's Stadium",
+        "city": "Kitende",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12449,
+       "name": "BUL",
+       "founded": null,
+       "venue": {
+        "name": "Lugazi FC Stadium",
+        "city": "Najjembe",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12452,
+       "name": "Express",
+       "founded": 1958,
+       "venue": {
+        "name": "Hamz Stadium",
+        "city": "Kampala",
+        "capacity": 15000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12454,
+       "name": "Maroons",
+       "founded": null,
+       "venue": {
+        "name": "Luzira Maximum Prisons Stadium",
+        "city": "Kampala",
+        "capacity": 1000,
+        "surface": "sand pitch"
+       }
+      },
+      {
+       "id": 12455,
+       "name": "Mbarara City",
+       "founded": null,
+       "venue": {
+        "name": "Kakyeka Stadium",
+        "city": "Mbarara",
+        "capacity": 1500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12457,
+       "name": "SC Villa",
+       "founded": 1975,
+       "venue": {
+        "name": "Betway Muteesa II Stadium",
+        "city": "Kampala",
+        "capacity": 20200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12459,
+       "name": "URA",
+       "founded": 1997,
+       "venue": {
+        "name": "Mehta Stadium",
+        "city": "Lugazi",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12461,
+       "name": "Police",
+       "founded": 1965,
+       "venue": {
+        "name": "MTN Omondi Stadium",
+        "city": "Kampala",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 12466,
+       "name": "UPDF",
+       "founded": 2017,
+       "venue": {
+        "name": "Bombo Stadium",
+        "city": "Bombo",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 15562,
+       "name": "Kitara",
+       "founded": null,
+       "venue": {
+        "name": "The Royals Park",
+        "city": "Butema",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20297,
+       "name": "Blacks Power",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 22699,
+       "name": "NEC",
+       "founded": null,
+       "venue": {
+        "name": "MTN Omondi Stadium",
+        "city": "Kampala",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 24776,
+       "name": "Lugazi",
+       "founded": null,
+       "venue": {
+        "name": "Lugazi FC Stadium",
+        "city": "Najjembe",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26700,
+       "name": "Entebbe UPPC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28318,
+       "name": "Ntugasaze",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28319,
+       "name": "Kataka",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28320,
+       "name": "Kigezi HomeBoyz",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Zambia",
+   "fetched": "2026-10-30T09:52:34.004Z",
+   "all": [
+    "400 | Super League | League"
+   ],
+   "leagues": [
+    {
+     "id": 400,
+     "name": "Super League",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-03-24",
+       "2012-11-11",
+       false,
+       false
+      ],
+      [
+       2013,
+       "2013-03-16",
+       "2013-11-17",
+       false,
+       false
+      ],
+      [
+       2014,
+       "2014-03-15",
+       "2014-11-23",
+       false,
+       false
+      ],
+      [
+       2015,
+       "2015-03-14",
+       "2015-11-18",
+       false,
+       false
+      ],
+      [
+       2016,
+       "2016-03-12",
+       "2016-12-10",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-04-08",
+       "2017-12-02",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-03-17",
+       "2018-10-28",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-01-27",
+       "2019-06-29",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-30",
+       "2021-06-27",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-11",
+       "2022-04-30",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-20",
+       "2023-05-27",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-19",
+       "2024-05-18",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-17",
+       "2025-05-17",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-16",
+       "2026-05-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-10-03",
+       "2027-01-24",
+       true,
+       false
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5199,
+       "name": "Green Buffaloes",
+       "founded": null,
+       "venue": {
+        "name": "Edwin Imboela Stadium",
+        "city": "Lusaka",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5200,
+       "name": "Green Eagles",
+       "founded": null,
+       "venue": {
+        "name": "Eagles Ground",
+        "city": "Choma",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5201,
+       "name": "Kabwe Warriors",
+       "founded": null,
+       "venue": {
+        "name": "Godfrey Chitalu Stadium",
+        "city": "Kabwe",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5205,
+       "name": "Man Utd Zambia Academy",
+       "founded": null,
+       "venue": {
+        "name": "Nakambala Stadium",
+        "city": "Mazabuka",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5206,
+       "name": "Mufulira Wanderers",
+       "founded": 1953,
+       "venue": {
+        "name": "Shinde Stadium",
+        "city": "Mufulira",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5207,
+       "name": "NAPSA Stars",
+       "founded": null,
+       "venue": {
+        "name": "REIZ Arena",
+        "city": "Lusaka",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5209,
+       "name": "Nkana",
+       "founded": 1935,
+       "venue": {
+        "name": "Nkana Stadium",
+        "city": "Kitwe",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5210,
+       "name": "Nkwazi",
+       "founded": 1978,
+       "venue": {
+        "name": "Edwin Imboela Stadium",
+        "city": "Lusaka",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5211,
+       "name": "Power Dynamos",
+       "founded": null,
+       "venue": {
+        "name": "Arthur Davies Stadium",
+        "city": "Kitwe",
+        "capacity": 15500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5213,
+       "name": "Red Arrows",
+       "founded": null,
+       "venue": {
+        "name": "Nkoloma Stadium",
+        "city": "Lusaka",
+        "capacity": 7500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5214,
+       "name": "ZESCO United",
+       "founded": 1974,
+       "venue": {
+        "name": "Levy Mwanawasa Stadium",
+        "city": "Ndola",
+        "capacity": 49800,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5215,
+       "name": "Zanaco",
+       "founded": 1969,
+       "venue": {
+        "name": "Sunset Stadium",
+        "city": "Lusaka",
+        "capacity": 20000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5511,
+       "name": "Nchanga Rangers",
+       "founded": 1960,
+       "venue": {
+        "name": "Nchanga Stadium",
+        "city": "Chingola",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5514,
+       "name": "Konkola Blades",
+       "founded": 1956,
+       "venue": {
+        "name": "Konkola Stadium",
+        "city": "Chililabombwe",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 7455,
+       "name": "Kansanshi Dynamos",
+       "founded": null,
+       "venue": {
+        "name": "Lumwana Football Pitch",
+        "city": "Lumwana",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 11273,
+       "name": "Roan United",
+       "founded": null,
+       "venue": {
+        "name": "Kafubu Stadium",
+        "city": "Luanshya",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21875,
+       "name": "Mutondo Stars",
+       "founded": null,
+       "venue": {
+        "name": "Arthur Davies Stadium",
+        "city": "Kitwe",
+        "capacity": 15500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21876,
+       "name": "Trident",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28278,
+       "name": "Chirundu Utd",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28279,
+       "name": "Makeni All Stars",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Zimbabwe",
+   "fetched": "2026-10-30T09:52:34.939Z",
+   "all": [
+    "401 | Premier Soccer League | League"
+   ],
+   "leagues": [
+    {
+     "id": 401,
+     "name": "Premier Soccer League",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-04-01",
+       "2016-11-26",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-04-01",
+       "2017-11-25",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-03-17",
+       "2018-11-24",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-03-29",
+       "2019-12-11",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-11-05",
+       "2022-11-13",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-03-18",
+       "2023-11-26",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-03-09",
+       "2024-11-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-02-28",
+       "2025-11-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-03-06",
+       "2026-11-08",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 5217,
+       "name": "Bulawayo Chiefs",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 5218,
+       "name": "CAPS United",
+       "founded": 1973,
+       "venue": {
+        "name": "National Sports Stadium",
+        "city": "Harare",
+        "capacity": 60000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5220,
+       "name": "Chicken Inn",
+       "founded": 1997,
+       "venue": {
+        "name": "Luveve Stadium",
+        "city": "Bulawayo",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5221,
+       "name": "Dynamos",
+       "founded": 1963,
+       "venue": {
+        "name": "National Sports Stadium",
+        "city": "Harare",
+        "capacity": 60000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5223,
+       "name": "Herentals",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 5224,
+       "name": "Highlanders",
+       "founded": 1926,
+       "venue": {
+        "name": "Barbourfields Stadium",
+        "city": "Bulawayo",
+        "capacity": 32000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5226,
+       "name": "Kariba",
+       "founded": null,
+       "venue": {
+        "name": "Nyamhunga Stadium",
+        "city": "Kariba",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5227,
+       "name": "Manica Diamonds",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 5229,
+       "name": "Ngezi Platinum",
+       "founded": null,
+       "venue": {
+        "name": "Baobab Stadium",
+        "city": "Ngezi",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5230,
+       "name": "Platinum",
+       "founded": 1995,
+       "venue": {
+        "name": "Mandava Stadium",
+        "city": "Zvishavane",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 5231,
+       "name": "TelOne",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 5232,
+       "name": "Triangle United",
+       "founded": 1972,
+       "venue": {
+        "name": "Gibbo Stadium",
+        "city": "Triangle",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21055,
+       "name": "Simba Bhora",
+       "founded": 2008,
+       "venue": {
+        "name": "Wadzanai Stadium",
+        "city": "Shamva",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25734,
+       "name": "MWOS",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25735,
+       "name": "Scotland Mabvuku",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27273,
+       "name": "Agama",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27274,
+       "name": "Hardrock",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27275,
+       "name": "Hunters",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

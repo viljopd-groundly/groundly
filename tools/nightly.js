@@ -99,6 +99,14 @@ const API=[
  ["Premjer-liga (Ryssland)","Ryssland","Russia",1,"ru.1",/^premier league$/],["Campionato Sammarinese","San Marino","San-Marino",1,"sm.1",/^campionato/],["Niké liga","Slovakien","Slovakia",1,"sk.1",/^super liga$/],
  ["PrvaLiga (Slovenien)","Slovenien","Slovenia",1,"si.1",/^1\. snl$/],["Premjer-liha","Ukraina","Ukraine",1,"ua.1",/^premier league$/],["Cymru Premier","Wales","Wales",1,"wal.1",/^premier league$/],
  ["National League (Nya Zeeland)","Nya Zeeland","New-Zealand",1,"nz.1",/^national league - national$/],["National Football League (Fiji)","Fiji","Fiji",1,"fj.1",/^national football league$/],
+ ["Ligue 1 (Algeriet)","Algeriet","Algeria",1,"dz.1",/^ligue 1$/],["Girabola","Angola","Angola",1,"ao.1",/^girabola$/],["Premier League (Botswana)","Botswana","Botswana",1,"bw.1",/^premier league$/],
+ ["Ligue 1 (Burkina Faso)","Burkina Faso","Burkina-Faso",1,"bf.1",/^ligue 1$/],["Ligue A (Burundi)","Burundi","Burundi",1,"bi.1",/^ligue a$/],["Elite One","Kamerun","Cameroon",1,"cm.1",/^elite one$/],
+ ["Linafoot","DR Kongo","Congo-DR",1,"cd.1",/^ligue 1$/],["Premier League (Etiopien)","Etiopien","Ethiopia",1,"et.1",/^premier league$/],["Premier League (Ghana)","Ghana","Ghana",1,"gh.1",/^premier league$/],
+ ["Ligue 1 (Elfenbenskusten)","Elfenbenskusten","Ivory-Coast",1,"ci.1",/^ligue 1$/],["FKF Premier League","Kenya","Kenya",1,"ke.1",/^fkf premier league$/],["Premier League (Lesotho)","Lesotho","Lesotho",1,"ls.1",/^premier league$/],
+ ["LFA First Division","Liberia","Liberia",1,"lr.1",/^lfa first division$/],["Super League (Malawi)","Malawi","Malawi",1,"mw.1",/^super league$/],["Super D1 (Mauretanien)","Mauretanien","Mauritania",1,"mr.1",/^premier league$/],
+ ["NPFL","Nigeria","Nigeria",1,"ng.1",/^npfl$/],["Rwanda Premier League","Rwanda","Rwanda",1,"rw.1",/^national soccer league$/],["Ligue 1 (Senegal)","Senegal","Senegal",1,"sn.1",/^ligue 1$/],
+ ["Ligi Kuu Bara","Tanzania","Tanzania",1,"tz.1",/^ligi kuu bara$/],["Ligue 1 (Tunisien)","Tunisien","Tunisia",1,"tn.1",/^ligue 1$/],["Premier League (Uganda)","Uganda","Uganda",1,"ug.1",/^premier league$/],
+ ["Super League (Zambia)","Zambia","Zambia",1,"zm.1",/^super league$/],["Premier Soccer League (Zimbabwe)","Zimbabwe","Zimbabwe",1,"zw.1",/^premier soccer league$/],
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}
