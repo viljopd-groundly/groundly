@@ -229,3 +229,4 @@ module.exports.push(...require("./clubs_mls2.js"));
 module.exports.push(...require("./clubs_world.js"));
 module.exports.push(...require("./clubs_europe.js"));
 module.exports.push(...require("./clubs_africa.js"));
+module.exports.push(...require("./clubs_ncam.js"));

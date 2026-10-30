@@ -1,0 +1,1851 @@
+{
+ "fetched": "2026-10-30T10:00:32.871Z",
+ "countries": [
+  {
+   "country": "Canada",
+   "fetched": "2026-10-30T10:00:01.242Z",
+   "all": [
+    "259 | Canadian Championship | Cup",
+    "258 | Canadian Soccer League | League",
+    "260 | Pacific Coast Soccer League | League",
+    "479 | Canadian Premier League | League",
+    "923 | League 1 Ontario | League",
+    "1182 | Northern Super League | League"
+   ],
+   "leagues": [
+    {
+     "id": 479,
+     "name": "Canadian Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2020,
+       "2020-08-14",
+       "2020-09-19",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-06-26",
+       "2021-12-05",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-04-07",
+       "2022-10-30",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-04-15",
+       "2023-10-28",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-04-13",
+       "2024-11-09",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-04-05",
+       "2025-11-09",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-04-04",
+       "2026-11-07",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2619,
+       "name": "Cavalry FC",
+       "founded": 2018,
+       "venue": {
+        "name": "ATCO Field",
+        "city": "Calgary, Alberta",
+        "capacity": 7052,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2621,
+       "name": "HFX Wanderers FC",
+       "founded": 2018,
+       "venue": {
+        "name": "Wanderers Grounds",
+        "city": "Halifax, Nova Scotia",
+        "capacity": 6500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2622,
+       "name": "Pacific FC",
+       "founded": 2018,
+       "venue": {
+        "name": "Starlight Stadium",
+        "city": "Victoria, British Columbia",
+        "capacity": 6000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2623,
+       "name": "York United",
+       "founded": 2018,
+       "venue": {
+        "name": "York Lions Stadium",
+        "city": "Toronto, Ontario",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3830,
+       "name": "Forge",
+       "founded": 2017,
+       "venue": {
+        "name": "Hamilton Stadium",
+        "city": "Hamilton",
+        "capacity": 40000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10169,
+       "name": "Atlético Ottawa",
+       "founded": 2020,
+       "venue": {
+        "name": "TD Place Stadium",
+        "city": "Ottawa, Ontario",
+        "capacity": 28826,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 20881,
+       "name": "Vancouver FC",
+       "founded": null,
+       "venue": {
+        "name": "Willoughby Community Park at the Langley Events Centre",
+        "city": "Langley, British Columbia",
+        "capacity": 6600,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 27461,
+       "name": "Supra du Quebec",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Costa-Rica",
+   "fetched": "2026-10-30T10:00:02.895Z",
+   "all": [
+    "162 | Primera División | League",
+    "163 | Liga de Ascenso | League",
+    "864 | Supercopa | Cup",
+    "958 | Copa Costa Rica | Cup",
+    "1167 | Recopa | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 162,
+     "name": "Primera División",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-07-17",
+       "2017-05-21",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-29",
+       "2018-05-20",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-22",
+       "2019-05-16",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-21",
+       "2020-06-30",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-15",
+       "2021-05-27",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-27",
+       "2022-07-06",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-19",
+       "2023-05-28",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-26",
+       "2024-05-26",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-20",
+       "2025-05-27",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-25",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-24",
+       "2026-11-29",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 815,
+       "name": "CS Herediano",
+       "founded": 1921,
+       "venue": {
+        "name": "Estadio Eladio Rosabal Cordero",
+        "city": "Heredia",
+        "capacity": 8700,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 816,
+       "name": "Deportivo Saprissa",
+       "founded": 1935,
+       "venue": {
+        "name": "Estadio Ricardo Saprissa Aymá",
+        "city": "San Juan de Tíbás (San José)",
+        "capacity": 23112,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 819,
+       "name": "Perez Zeledon",
+       "founded": 1962,
+       "venue": {
+        "name": "Estadio Municipal Pérez Zeledón",
+        "city": "San Isidro de El General",
+        "capacity": 6000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 820,
+       "name": "CS Cartagines",
+       "founded": 1906,
+       "venue": {
+        "name": "Estadio José Rafael Fello Meza",
+        "city": "Cartago",
+        "capacity": 13500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 822,
+       "name": "LD Alajuelense",
+       "founded": 1919,
+       "venue": {
+        "name": "Estadio Alejandro Morera Soto",
+        "city": "Alajuela",
+        "capacity": 17895,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 823,
+       "name": "San Carlos",
+       "founded": 1965,
+       "venue": {
+        "name": "Estadio Carlos Ugalde Álvarez",
+        "city": "Ciudad Quesada",
+        "capacity": 6200,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2045,
+       "name": "Puntarenas FC",
+       "founded": 2004,
+       "venue": {
+        "name": "Estadio Municipal de Puntarenas Miguel Ángel Lito Pérez Treacy",
+        "city": "Puntarenas",
+        "capacity": 4105,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2047,
+       "name": "Sporting San Jose",
+       "founded": null,
+       "venue": {
+        "name": "Estadio Ernesto Rohrmoser Lahmann",
+        "city": "San José",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17377,
+       "name": "Escorpiones Belén",
+       "founded": 2021,
+       "venue": {
+        "name": "Polideportivo de Bélen",
+        "city": "San Antonio de Belén",
+        "capacity": 4403,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 24391,
+       "name": "Inter San Carlos",
+       "founded": null,
+       "venue": {
+        "name": "Estadio de Pital",
+        "city": "Pital",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Honduras",
+   "fetched": "2026-10-30T10:00:04.325Z",
+   "all": [
+    "234 | Liga Nacional | League"
+   ],
+   "leagues": [
+    {
+     "id": 234,
+     "name": "Liga Nacional",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-08-07",
+       "2012-05-20",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-07-29",
+       "2013-05-19",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-08-11",
+       "2014-05-04",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-08-02",
+       "2015-05-24",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-08-01",
+       "2016-05-22",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-07-30",
+       "2017-05-28",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-30",
+       "2018-05-19",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-28",
+       "2019-06-02",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-27",
+       "2020-04-23",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-27",
+       "2021-05-20",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-08",
+       "2022-05-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-31",
+       "2023-05-28",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-29",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-27",
+       "2025-05-25",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-23",
+       "2026-05-24",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-01",
+       "2026-11-21",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 1050,
+       "name": "CD Marathon",
+       "founded": 1925,
+       "venue": {
+        "name": "Estadio Yankel Rosenthal",
+        "city": "San Pedro Sula",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1051,
+       "name": "CD Olimpia",
+       "founded": 1912,
+       "venue": {
+        "name": "Estadio José de la Paz Herrera Uclés",
+        "city": "Tegucigalpa",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1053,
+       "name": "Juticalpa",
+       "founded": 2004,
+       "venue": {
+        "name": "Estadio Juan Ramón Brevé Vargas",
+        "city": "Juticalpa",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1055,
+       "name": "CD Motagua",
+       "founded": 1928,
+       "venue": {
+        "name": "Estadio José de la Paz Herrera Uclés",
+        "city": "Tegucigalpa",
+        "capacity": 35000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1057,
+       "name": "Platense FC",
+       "founded": 1960,
+       "venue": {
+        "name": "Estadio Excelsior",
+        "city": "Puerto Cortés",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1058,
+       "name": "Real Espana",
+       "founded": 1929,
+       "venue": {
+        "name": "Estadio Francisco Morazán",
+        "city": "San Pedro Sula",
+        "capacity": 26781,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 1059,
+       "name": "Lobos Upnfm",
+       "founded": 2010,
+       "venue": {
+        "name": "Estadio Emilio Williams Agasse",
+        "city": "Choluteca",
+        "capacity": 8000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 11685,
+       "name": "Atlético Choloma",
+       "founded": 0,
+       "venue": {
+        "name": "Estadio Municipal Rubén Deras",
+        "city": "Choloma",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19456,
+       "name": "Olancho",
+       "founded": 2010,
+       "venue": {
+        "name": "Estadio Juan Ramón Brevé Vargas",
+        "city": "Juticalpa",
+        "capacity": 22000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 21858,
+       "name": "Génesis",
+       "founded": 0,
+       "venue": {
+        "name": "Estadio Roberto Suazo Córdova",
+        "city": "La Paz",
+        "capacity": 25000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 28005,
+       "name": "Atletico Independiente",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28541,
+       "name": "Estrella Roja",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "El-Salvador",
+   "fetched": "2026-10-30T10:00:06.858Z",
+   "all": [
+    "370 | Primera Division | League",
+    "1219 | Copa Presidente | League"
+   ],
+   "leagues": [
+    {
+     "id": 370,
+     "name": "Primera Division",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-07-30",
+       "2012-05-06",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-07-14",
+       "2013-05-26",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-08-04",
+       "2014-05-25",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-08-02",
+       "2015-05-24",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-08-01",
+       "2016-05-29",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-07-29",
+       "2017-05-21",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-29",
+       "2018-05-20",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-28",
+       "2019-05-26",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-27",
+       "2020-05-09",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-10-10",
+       "2021-05-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-01",
+       "2022-05-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-09",
+       "2023-05-20",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-13",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-27",
+       "2025-05-23",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-20",
+       "2026-05-25",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-25",
+       "2026-11-21",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4299,
+       "name": "Alianza",
+       "founded": 1958,
+       "venue": {
+        "name": "Estadio Cuscatlán",
+        "city": "San Salvador",
+        "capacity": 45925,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4302,
+       "name": "FAS",
+       "founded": 1947,
+       "venue": {
+        "name": "Estadio Óscar Alberto Quiteño",
+        "city": "Santa Ana",
+        "capacity": 15000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4303,
+       "name": "Firpo",
+       "founded": 1923,
+       "venue": {
+        "name": "Estadio Sergio Torres Rivera",
+        "city": "Usulután",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4304,
+       "name": "Isidro Metapán",
+       "founded": 2000,
+       "venue": {
+        "name": "Estadio Jorge Calero Suárez",
+        "city": "Metapán",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4306,
+       "name": "Municipal Limeño",
+       "founded": 1949,
+       "venue": {
+        "name": "Estadio Dr. Ramón Flores Berríos",
+        "city": "Santa Rosa de Lima",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4310,
+       "name": "Águila",
+       "founded": 1956,
+       "venue": {
+        "name": "Estadio Juan Francisco Barraza",
+        "city": "San Miguel",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19763,
+       "name": "Platense",
+       "founded": 0,
+       "venue": {
+        "name": "Estadio Antonio Toledo Valle",
+        "city": "Zacatecoluca",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22157,
+       "name": "Fuerte San Francisco",
+       "founded": 0,
+       "venue": {
+        "name": "Estadio Correcaminos",
+        "city": "San Francisco Gotera",
+        "capacity": 12000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 24530,
+       "name": "Cacahuatique",
+       "founded": 0,
+       "venue": {
+        "name": "Estadio Municipal Chapeltique",
+        "city": "Chapeltique",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26154,
+       "name": "Inter",
+       "founded": 0,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28018,
+       "name": "Atletico Balboa",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 28019,
+       "name": "Inca Aruba",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Panama",
+   "fetched": "2026-10-30T10:00:07.864Z",
+   "all": [
+    "304 | Liga Panameña de Fútbol | League"
+   ],
+   "leagues": [
+    {
+     "id": 304,
+     "name": "Liga Panameña de Fútbol",
+     "season": 2026,
+     "seasons": [
+      [
+       2017,
+       "2017-07-15",
+       "2018-05-20",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-28",
+       "2019-06-01",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-27",
+       "2019-12-09",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-01-25",
+       "2020-12-20",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-02-18",
+       "2021-12-12",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-05",
+       "2022-11-13",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-01-14",
+       "2023-12-09",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-01-20",
+       "2024-11-30",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-01-18",
+       "2025-11-29",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-01-17",
+       "2026-11-08",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2881,
+       "name": "Alianza FC",
+       "founded": 1963,
+       "venue": {
+        "name": "Estadio Rommel Fernández Gutiérrez",
+        "city": "Ciudad de Panamá",
+        "capacity": 45000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2882,
+       "name": "CD Arabe Unido",
+       "founded": 1994,
+       "venue": {
+        "name": "Estadio Armando Dely Valdés",
+        "city": "Colón",
+        "capacity": 4500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2883,
+       "name": "Plaza Amador",
+       "founded": 1955,
+       "venue": {
+        "name": "Estadio Prof. Javier Cruz",
+        "city": "Ciudad de Panamá",
+        "capacity": 2400,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2885,
+       "name": "Tauro FC",
+       "founded": 1984,
+       "venue": {
+        "name": "Estadio Rommel Fernández Gutiérrez",
+        "city": "Ciudad de Panamá",
+        "capacity": 45000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2887,
+       "name": "San Francisco FC",
+       "founded": 1971,
+       "venue": {
+        "name": "Estadio Agustín Muquita Sánchez",
+        "city": "La Chorrera",
+        "capacity": 3040,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2888,
+       "name": "Deportivo Universitario",
+       "founded": 1974,
+       "venue": {
+        "name": "Nuevo Estadio Maracaná de Panamá",
+        "city": "Ciudad de Panamá",
+        "capacity": 5500,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2889,
+       "name": "Sporting San Miguelito",
+       "founded": 1989,
+       "venue": {
+        "name": "Estadio Los Andes",
+        "city": "San Miguelito",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 2890,
+       "name": "Independiente de La Chorrera",
+       "founded": 1982,
+       "venue": {
+        "name": "Estadio Agustín Muquita Sánchez",
+        "city": "La Chorrera",
+        "capacity": 3040,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 15619,
+       "name": "Herrera",
+       "founded": null,
+       "venue": {
+        "name": "Estadio Los Milagros",
+        "city": "Chitre",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 15620,
+       "name": "Veraguas",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 20788,
+       "name": "UMECIT",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 27364,
+       "name": "Union Cocle",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Nicaragua",
+   "fetched": "2026-10-30T10:00:08.874Z",
+   "all": [
+    "396 | Primera Division | League",
+    "565 | Liga Primera U20 | League",
+    "1187 | Copa Nicaragua | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 396,
+     "name": "Primera Division",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-08-07",
+       "2017-05-21",
+       false,
+       true
+      ],
+      [
+       2017,
+       "2017-07-29",
+       "2018-06-02",
+       false,
+       true
+      ],
+      [
+       2018,
+       "2018-08-25",
+       "2019-06-02",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-28",
+       "2020-05-10",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-01",
+       "2021-05-30",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-31",
+       "2022-05-22",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-09",
+       "2023-05-21",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-29",
+       "2024-06-02",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-03",
+       "2025-05-30",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-17",
+       "2026-05-24",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-18",
+       "2026-10-30",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4641,
+       "name": "Diriangén",
+       "founded": 1917,
+       "venue": {
+        "name": "Estadio Cacique Diriangén",
+        "city": "Diriamba",
+        "capacity": 8500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4644,
+       "name": "Managua",
+       "founded": 2006,
+       "venue": {
+        "name": "Estadio Nacional de Fútbol",
+        "city": "Managua",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4645,
+       "name": "Real Estelí",
+       "founded": 1960,
+       "venue": {
+        "name": "Estadio Independencia",
+        "city": "Estelí",
+        "capacity": 4800,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4647,
+       "name": "UNAN Managua",
+       "founded": null,
+       "venue": {
+        "name": "Estadio Nacional de Fútbol (UNAN)",
+        "city": "Managua",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 4648,
+       "name": "Walter Ferretti",
+       "founded": 1987,
+       "venue": {
+        "name": "Estadio Nacional de Fútbol (UNAN)",
+        "city": "Managua",
+        "capacity": 20000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 10160,
+       "name": "Jalapa",
+       "founded": 2011,
+       "venue": {
+        "name": "Estadio Alejandro Ramos Turcio",
+        "city": "Jalapa",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 17135,
+       "name": "H&H Export",
+       "founded": 2018,
+       "venue": {
+        "name": "Estadio Carlos Fonseca Amador",
+        "city": "Matagalpa",
+        "capacity": 1800,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 19159,
+       "name": "Matagalpa",
+       "founded": null,
+       "venue": {
+        "name": "Estadio Carlos Fonseca Amador",
+        "city": "Matagalpa",
+        "capacity": 1800,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 24510,
+       "name": "Rancho Santana",
+       "founded": null,
+       "venue": {
+        "name": "Campo Fun Limon",
+        "city": "El Limón Dos",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 28553,
+       "name": "San Marcos",
+       "founded": null,
+       "venue": {
+        "name": "Estadio Olímpico de San Marcos",
+        "city": "San Marcos",
+        "capacity": 3000,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Jamaica",
+   "fetched": "2026-10-30T10:00:14.257Z",
+   "all": [
+    "322 | Premier League | League"
+   ],
+   "leagues": [
+    {
+     "id": 322,
+     "name": "Premier League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-09-11",
+       "2012-05-07",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-09-02",
+       "2013-05-12",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-09-15",
+       "2014-05-20",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-09-07",
+       "2015-06-02",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-09-06",
+       "2016-05-01",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-09-03",
+       "2017-06-06",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-09-24",
+       "2018-04-24",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-09-16",
+       "2019-04-30",
+       false,
+       true
+      ],
+      [
+       2019,
+       "2019-09-01",
+       "2020-03-29",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2021-06-26",
+       "2021-10-02",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2022-01-16",
+       "2022-07-03",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-10-23",
+       "2023-06-12",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-10-22",
+       "2024-05-19",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-15",
+       "2025-05-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-24",
+       "2026-05-25",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-13",
+       "2026-10-27",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 3436,
+       "name": "Arnett Gardens",
+       "founded": 1977,
+       "venue": {
+        "name": "Stadium East",
+        "city": "Kingston",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3437,
+       "name": "Cavalier",
+       "founded": 1962,
+       "venue": {
+        "name": "Drax Hall Sports Complex",
+        "city": "Saint Ann&apos;s Bay",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3438,
+       "name": "Dunbeholden",
+       "founded": null,
+       "venue": {
+        "name": "Anthony Spaulding Sports Complex",
+        "city": "Kingston",
+        "capacity": 2200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3440,
+       "name": "Humble Lions",
+       "founded": 1974,
+       "venue": {
+        "name": "Effortville Community Centre",
+        "city": "May Pen",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3441,
+       "name": "Montego Bay United",
+       "founded": 1972,
+       "venue": {
+        "name": "Catherine Hall Sports Complex",
+        "city": "Montego Bay",
+        "capacity": 9000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3442,
+       "name": "Mount Pleasant Academy",
+       "founded": null,
+       "venue": {
+        "name": "Stadium East",
+        "city": "Kingston",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3443,
+       "name": "Portmore United",
+       "founded": null,
+       "venue": {
+        "name": "Anthony Spaulding Sports Complex",
+        "city": "Kingston",
+        "capacity": 2200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3445,
+       "name": "Tivoli Gardens",
+       "founded": 1970,
+       "venue": {
+        "name": "Stadium East",
+        "city": "Kingston",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 3447,
+       "name": "Waterhouse",
+       "founded": 1968,
+       "venue": {
+        "name": "Anthony Spaulding Sports Complex",
+        "city": "Kingston",
+        "capacity": 2200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 6407,
+       "name": "Molynes United",
+       "founded": null,
+       "venue": {
+        "name": "Stadium East",
+        "city": "Kingston",
+        "capacity": 3000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20597,
+       "name": "Chapelton",
+       "founded": null,
+       "venue": {
+        "name": "Anthony Spaulding Sports Complex",
+        "city": "Kingston",
+        "capacity": 2200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 22606,
+       "name": "Treasure Beach",
+       "founded": null,
+       "venue": {
+        "name": "Treasure Beach Sports Complex",
+        "city": "Treasure Beach",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 25020,
+       "name": "Racing United",
+       "founded": null,
+       "venue": {
+        "name": "Anthony Spaulding Sports Complex",
+        "city": "Kingston",
+        "capacity": 2200,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 28416,
+       "name": "Tru-Juice",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Trinidad-And-Tobago",
+   "fetched": "2026-10-30T10:00:15.767Z",
+   "all": [
+    "591 | Pro League | League"
+   ],
+   "leagues": [
+    {
+     "id": 591,
+     "name": "Pro League",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-09-09",
+       "2012-03-30",
+       false,
+       true
+      ],
+      [
+       2012,
+       "2012-09-14",
+       "2013-05-11",
+       false,
+       true
+      ],
+      [
+       2013,
+       "2013-09-13",
+       "2014-05-21",
+       false,
+       true
+      ],
+      [
+       2014,
+       "2014-09-26",
+       "2015-05-05",
+       false,
+       true
+      ],
+      [
+       2015,
+       "2015-09-25",
+       "2016-05-21",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-09-30",
+       "2017-02-05",
+       false,
+       true
+      ],
+      [
+       2017,
+       "2017-06-09",
+       "2017-11-29",
+       false,
+       true
+      ],
+      [
+       2018,
+       "2018-08-10",
+       "2018-12-08",
+       false,
+       true
+      ],
+      [
+       2019,
+       "2019-12-13",
+       "2020-03-21",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-03-10",
+       "2023-06-17",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2023-11-24",
+       "2024-05-21",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2024-12-06",
+       "2025-06-01",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2025-10-24",
+       "2026-04-06",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 8005,
+       "name": "Central",
+       "founded": null,
+       "venue": {
+        "name": "Ato Boldon Stadium",
+        "city": "Couva, San Fernando",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12559,
+       "name": "Police",
+       "founded": 1975,
+       "venue": {
+        "name": "Manny Ramjohn Stadium",
+        "city": "Marabella, San Fernando",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12560,
+       "name": "Ath­let­ic Club",
+       "founded": 1888,
+       "venue": {
+        "name": "Larry Gomes Stadium",
+        "city": "Malabar, Arima",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12561,
+       "name": "Club Sando",
+       "founded": 1991,
+       "venue": {
+        "name": "Ato Boldon Stadium",
+        "city": "Couva, San Fernando",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12562,
+       "name": "Cunupia",
+       "founded": null,
+       "venue": {
+        "name": "Larry Gomes Stadium",
+        "city": "Malabar, Arima",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12563,
+       "name": "Defence Force",
+       "founded": 1974,
+       "venue": {
+        "name": "Hasely Crawford Stadium",
+        "city": "Port of Spain",
+        "capacity": 27000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12564,
+       "name": "La Horquetta Rangers",
+       "founded": null,
+       "venue": {
+        "name": "Hasely Crawford Stadium",
+        "city": "Port of Spain",
+        "capacity": 27000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12565,
+       "name": "Morvant Caledonia United",
+       "founded": 1979,
+       "venue": {
+        "name": "Hasely Crawford Stadium",
+        "city": "Port of Spain",
+        "capacity": 27000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12566,
+       "name": "Point Fortin",
+       "founded": null,
+       "venue": {
+        "name": "Mahaica Oval",
+        "city": "Point Fortin",
+        "capacity": 2500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 12567,
+       "name": "San Juan Jabloteh",
+       "founded": 1974,
+       "venue": {
+        "name": "Hasely Crawford Stadium",
+        "city": "Port of Spain",
+        "capacity": 27000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20974,
+       "name": "Prison Service",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      },
+      {
+       "id": 25276,
+       "name": "Phoenix",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -64,7 +64,7 @@ N = {
  556: ["Qarabağ", "Baku"], 627: ["Qəbələ", "Qabala"], 648: ["Zirə", "Zira"], 666: ["Şamaxı", "Baku"], 2270: ["Neftçi Baku", "Baku"], 5490: ["Kəpəz", "Ganja"],
  5499: ["Turan Tovuz", "Tovuz"], 5503: ["Sumqayıt", "Sumgait"], 5570: ["İmişli", "Saatlı"], 11238: ["Araz-Naxçıvan", "Nachitjevan"], 25318: ["Safa Baku", "Baku"],
  # Belarus
- 380: ["FK Minsk", "Minsk"], 382: ["Vitebsk", "Vitebsk"], 384: ["Dnepr Mogilev", "Mogiljov"], 385: ["Torpedo Zjodino", "Zjodino"], 386: ["Dinamo Brest", "Brest"],
+ 380: ["FK Minsk", "Minsk"], 382: ["Vitebsk", "Vitebsk"], 384: ["Dnepr Mogilev", "Mogiljov"], 385: ["Torpedo Zjodino", "Zjodino"], 386: ["Dinamo Brest", "Brest (Belarus)"],
  387: ["Neman Grodno", "Grodno"], 388: ["BATE Borisov", "Borisov"], 389: ["FK Gomel", "Gomel"], 391: ["Isloch Minsk", "Molodetjno"], 394: ["Dinamo Minsk", "Minsk"],
  750: ["Naftan Novopolotsk", "Novopolotsk"], 751: ["Slavia Mozyr", "Mozyr"], 3383: ["Baranovitji", "Baranovitji"], 3384: ["Belshina Bobrujsk", "Bobrujsk"],
  7808: ["ML Vitebsk", "Rogatjov"], 9419: ["Arsenal Dzerzjinsk", "Dzerzjinsk"],
@@ -186,7 +186,7 @@ GEO = {
  "Santa Coloma": [42.49, 1.50], "Sant Julià de Lòria": [42.46, 1.49], "Ordino": [42.56, 1.53], "Andorra la Vella": [42.51, 1.52],
  "Jerevan": [40.18, 44.51], "Kapan": [39.21, 46.41], "Armavir": [40.15, 44.04], "Gyumri": [40.79, 43.85], "Charentsavan": [40.40, 44.64],
  "Baku": [40.41, 49.87], "Qabala": [40.98, 47.85], "Zira": [40.36, 50.29], "Ganja": [40.68, 46.36], "Tovuz": [40.99, 45.63], "Sumgait": [40.59, 49.67], "Saatlı": [39.93, 48.37], "Nachitjevan": [39.21, 45.41],
- "Minsk": [53.90, 27.56], "Vitebsk": [55.19, 30.20], "Mogiljov": [53.90, 30.33], "Zjodino": [54.10, 28.33], "Brest": [52.10, 23.69], "Grodno": [53.68, 23.83], "Borisov": [54.23, 28.50],
+ "Minsk": [53.90, 27.56], "Vitebsk": [55.19, 30.20], "Mogiljov": [53.90, 30.33], "Zjodino": [54.10, 28.33], "Brest (Belarus)": [52.10, 23.69], "Grodno": [53.68, 23.83], "Borisov": [54.23, 28.50],
  "Gomel": [52.43, 30.99], "Molodetjno": [54.31, 26.85], "Novopolotsk": [55.53, 28.60], "Mozyr": [52.05, 29.25], "Baranovitji": [53.13, 26.01], "Bobrujsk": [53.14, 29.22], "Rogatjov": [53.09, 30.05], "Dzerzjinsk": [53.68, 27.14],
  "Mostar": [43.34, 17.81], "Široki Brijeg": [43.38, 17.59], "Sarajevo": [43.86, 18.41], "Bijeljina": [44.76, 19.21], "Zenica": [44.20, 17.91], "Banja Luka": [44.77, 17.19], "Doboj": [44.73, 18.09],
  "Razgrad": [43.53, 26.52], "Plovdiv": [42.14, 24.75], "Sofia": [42.70, 23.32], "Ruse": [43.85, 25.97], "Varna": [43.21, 27.91], "Vratsa": [43.21, 23.56], "Kardzjali": [41.65, 25.37],

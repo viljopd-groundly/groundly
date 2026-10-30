@@ -41,7 +41,7 @@ module.exports=[
 ["by-vitebsk", "Vitebsk", "vitebsk fc vitebsk", "Belarus", "Vitebsk", 1960, "Premier League (Belarus)", 1, "Stadyen Central'ny Vitsyebski", 8144, "", [], 1],
 ["by-dneprmogilev", "Dnepr Mogilev", "dnepr mogilev fc dnepr mogilev", "Belarus", "Mogiljov", 1960, "Premier League (Belarus)", 1, "Stadyen Spartak", 7350, "", [], 1],
 ["by-torpedozjodi", "Torpedo Zjodino", "torpedo zjodino torpedo zhodino", "Belarus", "Zjodino", 1961, "Premier League (Belarus)", 1, "Stadyen Tarpeda", 6524, "", [], 1],
-["by-dinamobrest", "Dinamo Brest", "dinamo brest", "Belarus", "Brest", 1960, "Premier League (Belarus)", 1, "Stadyen DASK Brestski", 10169, "", [], 1],
+["by-dinamobrest", "Dinamo Brest", "dinamo brest", "Belarus", "Brest (Belarus)", 1960, "Premier League (Belarus)", 1, "Stadyen DASK Brestski", 10169, "", [], 1],
 ["by-nemangrodno", "Neman Grodno", "neman grodno neman", "Belarus", "Grodno", 1964, "Premier League (Belarus)", 1, "Stadion Neman", 9000, "", [], 1],
 ["by-bateborisov", "BATE Borisov", "bate borisov", "Belarus", "Borisov", 1973, "Premier League (Belarus)", 1, "Borisov Arena", 13141, "", [], 1],
 ["by-gomel", "FK Gomel", "fk gomel fc gomel", "Belarus", "Gomel", 1959, "Premier League (Belarus)", 1, "Stadyen Central'ny", 14307, "", [], 1],

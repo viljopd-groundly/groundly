@@ -107,6 +107,10 @@ const API=[
  ["NPFL","Nigeria","Nigeria",1,"ng.1",/^npfl$/],["Rwanda Premier League","Rwanda","Rwanda",1,"rw.1",/^national soccer league$/],["Ligue 1 (Senegal)","Senegal","Senegal",1,"sn.1",/^ligue 1$/],
  ["Ligi Kuu Bara","Tanzania","Tanzania",1,"tz.1",/^ligi kuu bara$/],["Ligue 1 (Tunisien)","Tunisien","Tunisia",1,"tn.1",/^ligue 1$/],["Premier League (Uganda)","Uganda","Uganda",1,"ug.1",/^premier league$/],
  ["Super League (Zambia)","Zambia","Zambia",1,"zm.1",/^super league$/],["Premier Soccer League (Zimbabwe)","Zimbabwe","Zimbabwe",1,"zw.1",/^premier soccer league$/],
+ ["Canadian Premier League","Kanada","Canada",1,"ca.1",/^canadian premier league$/],["Primera División (Costa Rica)","Costa Rica","Costa-Rica",1,"cr.1",/^primera divisi.n$/],
+ ["Liga Nacional (Honduras)","Honduras","Honduras",1,"hn.1",/^liga nacional$/],["Primera División (El Salvador)","El Salvador","El-Salvador",1,"sv.1",/^primera division$/],
+ ["Liga Panameña de Fútbol","Panama","Panama",1,"pa.1",/^liga paname/],["Primera División (Nicaragua)","Nicaragua","Nicaragua",1,"ni.1",/^primera division$/],
+ ["Jamaica Premier League","Jamaica","Jamaica",1,"jm.1",/^premier league$/],["TT Premier League","Trinidad och Tobago","Trinidad-And-Tobago",1,"tt.1",/^pro league$/],
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}
