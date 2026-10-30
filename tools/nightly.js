@@ -111,6 +111,16 @@ const API=[
  ["Liga Nacional (Honduras)","Honduras","Honduras",1,"hn.1",/^liga nacional$/],["Primera División (El Salvador)","El Salvador","El-Salvador",1,"sv.1",/^primera division$/],
  ["Liga Panameña de Fútbol","Panama","Panama",1,"pa.1",/^liga paname/],["Primera División (Nicaragua)","Nicaragua","Nicaragua",1,"ni.1",/^primera division$/],
  ["Jamaica Premier League","Jamaica","Jamaica",1,"jm.1",/^premier league$/],["TT Premier League","Trinidad och Tobago","Trinidad-And-Tobago",1,"tt.1",/^pro league$/],
+ ["Bahraini Premier League","Bahrain","Bahrain",1,"bh.1",/^premier league$/],["Bangladesh Premier League","Bangladesh","Bangladesh",1,"bd.1",/^premier league$/],["Bhutan Premier League","Bhutan","Bhutan",1,"bt.1",/^premier league$/],
+ ["Cambodian Premier League","Kambodja","Cambodia",1,"kh.1",/^c-league$/],["Chinese Super League","Kina","China",1,"cn.1",/^super league$/],["Taiwan Football Premier League","Taiwan","Chinese-Taipei",1,"tw.1",/^taiwan football premier league$/],
+ ["Hong Kong Premier League","Hongkong","Hong-Kong",1,"hk.1",/^premier league$/],["Indian Super League","Indien","India",1,"in.1",/^indian super league$/],["Super League (Indonesien)","Indonesien","Indonesia",1,"id.1",/^liga 1$/],
+ ["Persian Gulf Pro League","Iran","Iran",1,"ir.1",/^persian gulf pro league$/],["Iraq Stars League","Irak","Iraq",1,"iq.1",/^iraqi league$/],["Jordanian Pro League","Jordanien","Jordan",1,"jo.1",/^league$/],
+ ["Kuwait Premier League","Kuwait","Kuwait",1,"kw.1",/^premier league$/],["Kyrgyz Premier League","Kirgizistan","Kyrgyzstan",1,"kg.1",/^premier league$/],["Lao League 1","Laos","Laos",1,"la.1",/^lao league$/],
+ ["Lebanese Premier League","Libanon","Lebanon",1,"lb.1",/^premier league$/],["Malaysia Super League","Malaysia","Malaysia",1,"my.1",/^super league$/],["Mongolian Premier League","Mongoliet","Mongolia",1,"mn.1",/^premier league$/],
+ ["Myanmar National League","Myanmar","Myanmar",1,"mm.1",/^national league$/],["Oman Professional League","Oman","Oman",1,"om.1",/^professional league$/],["Qatar Stars League","Qatar","Qatar",1,"qa.1",/^stars league$/],
+ ["Singapore Premier League","Singapore","Singapore",1,"sg.1",/^premier league$/],["Syrian Premier League","Syrien","Syria",1,"sy.1",/^premier league$/],["Tajikistan Higher League","Tadzjikistan","Tajikistan",1,"tj.1",/^vysshaya liga$/],
+ ["Thai League 1","Thailand","Thailand",1,"th.1",/^thai league 1$/],["UAE Pro League","Förenade Arabemiraten","United-Arab-Emirates",1,"ae.1",/^pro league$/],["Uzbekistan Super League","Uzbekistan","Uzbekistan",1,"uz.1",/^super league$/],
+ ["V.League 1","Vietnam","Vietnam",1,"vn.1",/^v.league 1$/],
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}
