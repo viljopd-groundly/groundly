@@ -56,3 +56,4 @@ Object.assign(module.exports,require("./geo_europe.js"));
 Object.assign(module.exports,require("./geo_africa.js"));
 Object.assign(module.exports,require("./geo_ncam.js"));
 Object.assign(module.exports,require("./geo_asia.js"));
+Object.assign(module.exports,require("./geo_sam.js"));

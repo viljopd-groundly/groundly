@@ -121,6 +121,8 @@ const API=[
  ["Singapore Premier League","Singapore","Singapore",1,"sg.1",/^premier league$/],["Syrian Premier League","Syrien","Syria",1,"sy.1",/^premier league$/],["Tajikistan Higher League","Tadzjikistan","Tajikistan",1,"tj.1",/^vysshaya liga$/],
  ["Thai League 1","Thailand","Thailand",1,"th.1",/^thai league 1$/],["UAE Pro League","Förenade Arabemiraten","United-Arab-Emirates",1,"ae.1",/^pro league$/],["Uzbekistan Super League","Uzbekistan","Uzbekistan",1,"uz.1",/^super league$/],
  ["V.League 1","Vietnam","Vietnam",1,"vn.1",/^v.league 1$/],
+ ["Liga 1 (Peru)","Peru","Peru",1,"pe.1",/^primera divisi.n$/],["LigaPro (Ecuador)","Ecuador","Ecuador",1,"ec.1",/^liga pro$/],["Primera División (Paraguay)","Paraguay","Paraguay",1,"py.1",/^division profesional - clausura$/],
+ ["Apertura (Paraguay)","Paraguay","Paraguay",1,"py.1a",/^division profesional - apertura$/],["División Profesional (Bolivia)","Bolivia","Bolivia",1,"bo.1",/^primera divisi.n$/],["Liga FUTVE","Venezuela","Venezuela",1,"ve.1",/^primera divisi.n$/],
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}
