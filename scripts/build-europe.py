@@ -5,6 +5,8 @@
 import json, os, re, unicodedata, subprocess
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 W = json.load(open(os.path.join(ROOT, "tools", "teams_world3.json"), encoding="utf8"))
+# Oceanien (Nya Zeeland och Fiji; övriga OFC-länders ligor finns inte i API-Football)
+W["countries"] += json.load(open(os.path.join(ROOT, "tools", "teams_world4.json"), encoding="utf8"))["countries"]
 
 # API-land + liga -> (vårt land, vårt liganamn, id-prefix). Liganamnen måste vara unika i appen.
 LEAGUES = {
@@ -38,6 +40,8 @@ LEAGUES = {
  ("Slovenia", "1. SNL"): ("Slovenien", "PrvaLiga (Slovenien)", "si"),
  ("Ukraine", "Premier League"): ("Ukraina", "Premjer-liha", "ua"),
  ("Wales", "Premier League"): ("Wales", "Cymru Premier", "wal"),
+ ("New-Zealand", "National League - National"): ("Nya Zeeland", "National League (Nya Zeeland)", "nz"),
+ ("Fiji", "National Football League"): ("Fiji", "National Football League (Fiji)", "fj"),
 }
 # klubbar som redan finns i appen (API-id -> vårt id); de får bara kopplingen till API-laget
 EXISTING = {656: "slo", 550: "sha", 13976: "sbh"}
@@ -162,10 +166,17 @@ N = {
  362: ["Llandudno", "Llandudno"], 2188: ["Ammanford", "Ammanford"], 2191: ["Penybont", "Bridgend"], 2194: ["Haverfordwest County", "Haverfordwest"],
  2201: ["Briton Ferry Llansawel", "Briton Ferry"], 2202: ["Cambrian & Clydach", "Clydach Vale"], 4909: ["Airbus UK Broughton", "Broughton"], 5611: ["Colwyn Bay", "Colwyn Bay"],
  5614: ["Flint Town United", "Flint"], 6459: ["Holywell Town", "Holywell"], 6479: ["Trefelin", "Cwmafan"],
+ # Nya Zeeland
+ 2535: ["Wellington Phoenix Reserves", "Lower Hutt"], 2537: ["Auckland City", "Auckland"], 13977: ["Eastern Suburbs", "Auckland"], 20642: ["Napier City Rovers", "Napier"],
+ 20646: ["Wellington Olympic", "Wellington"], 20649: ["Auckland United", "Auckland"], 20650: ["Birkenhead United", "Auckland"], 20651: ["Cashmere Technical", "Christchurch"],
+ 20662: ["Ferrymead Bays", "Christchurch"], 20672: ["Miramar Rangers", "Wellington"], 26722: ["Auckland FC Reserves", "Auckland"],
+ # Fiji
+ 4382: ["Ba FC", "Ba"], 4383: ["Labasa FC", "Labasa"], 4384: ["Lautoka FC", "Lautoka"], 4385: ["Nadi FC", "Nadi"], 4386: ["Nasinu FC", "Suva"], 4387: ["Rewa FC", "Nausori"],
+ 4388: ["Suva FC", "Suva"], 4389: ["Tavua FC", "Tavua"], 4392: ["Nadroga FC", "Sigatoka"], 10078: ["Navua FC", "Navua"],
 }
 
 # grundår där API:t saknar uppgift (bara säkra uppgifter)
-FOUNDED = {6231: 1923, 634: 1912, 2585: 2011, 648: 2014, 5490: 1959, 3499: 1949, 3501: 1948, 10017: 1945, 698: 1912, 10125: 1925, 16130: 1975, 16132: 1965,
+FOUNDED = {20642: 1973, 20646: 1953, 20650: 1960, 20651: 1912, 20662: 1970, 20672: 1907, 6231: 1923, 634: 1912, 2585: 2011, 648: 2014, 5490: 1959, 3499: 1949, 3501: 1948, 10017: 1945, 698: 1912, 10125: 1925, 16130: 1975, 16132: 1965,
  16133: 1966, 16134: 2007, 16137: 2013, 4510: 2000, 4552: 1962, 4562: 1968, 4132: 1974, 12733: 1947, 4135: 1967, 2271: 1994, 3744: 1922, 6786: 2018, 6822: 2015,
  5298: 1979, 5299: 1966, 5300: 1962, 5301: 1974, 5305: 1966, 5306: 1968, 5307: 1948, 5308: 1964, 3627: 2012, 6496: 2016, 17161: 2005, 17162: 2017, 6459: 1893, 4378: 1972, 6230: 2015}
 
@@ -211,6 +222,8 @@ GEO = {
  "Kyiv": [50.45, 30.52], "Lviv": [49.84, 24.03], "Odesa": [46.48, 30.72], "Kovalivka": [50.17, 30.52], "Charkiv": [49.99, 36.23], "Tjernivtsi": [48.29, 25.94], "Kryvyj Rih": [47.91, 33.39], "Zjytomyr": [50.25, 28.66],
  "Lutsk": [50.75, 25.33], "Ternopil": [49.55, 25.59], "Tjerkasy": [49.44, 32.06],
  "Cardiff": [51.48, -3.18], "Oswestry": [52.86, -3.05], "Caernarfon": [53.14, -4.27], "Flint": [53.24, -3.13], "Barry": [51.40, -3.27], "Llandudno": [53.32, -3.83], "Ammanford": [51.79, -3.99], "Bridgend": [51.50, -3.58],
+ "Lower Hutt": [-41.21, 174.90], "Auckland": [-36.85, 174.76], "Napier": [-39.49, 176.91], "Wellington": [-41.29, 174.78], "Christchurch": [-43.53, 172.64],
+ "Ba": [-17.53, 177.68], "Labasa": [-16.43, 179.38], "Lautoka": [-17.62, 177.45], "Nadi": [-17.80, 177.42], "Suva": [-18.14, 178.44], "Nausori": [-18.03, 178.53], "Tavua": [-17.44, 177.86], "Sigatoka": [-18.14, 177.51], "Navua": [-18.22, 178.17],
  "Haverfordwest": [51.80, -4.97], "Briton Ferry": [51.63, -3.82], "Clydach Vale": [51.62, -3.47], "Broughton": [53.17, -2.99], "Colwyn Bay": [53.29, -3.73], "Holywell": [53.27, -3.22], "Cwmafan": [51.61, -3.77],
 }
 

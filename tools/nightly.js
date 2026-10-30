@@ -98,6 +98,7 @@ const API=[
  ["Prva liga (Nordmakedonien)","Nordmakedonien","Macedonia",1,"mk.1",/^first league$/],["NIFL Premiership","Nordirland","Northern-Ireland",1,"nir.1",/^premiership$/],["Liga I","Rumänien","Romania",1,"ro.1",/^liga i$/],
  ["Premjer-liga (Ryssland)","Ryssland","Russia",1,"ru.1",/^premier league$/],["Campionato Sammarinese","San Marino","San-Marino",1,"sm.1",/^campionato/],["Niké liga","Slovakien","Slovakia",1,"sk.1",/^super liga$/],
  ["PrvaLiga (Slovenien)","Slovenien","Slovenia",1,"si.1",/^1\. snl$/],["Premjer-liha","Ukraina","Ukraine",1,"ua.1",/^premier league$/],["Cymru Premier","Wales","Wales",1,"wal.1",/^premier league$/],
+ ["National League (Nya Zeeland)","Nya Zeeland","New-Zealand",1,"nz.1",/^national league - national$/],["National Football League (Fiji)","Fiji","Fiji",1,"fj.1",/^national football league$/],
  ["Champions League","*","World","CUP","uefa.cl",/^uefa champions league$/],["Europa League","*","World","CUP","uefa.el",/^uefa europa league$/],["Conference League","*","World","CUP","uefa.ecl",/^uefa (europa )?conference league$/]];
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}

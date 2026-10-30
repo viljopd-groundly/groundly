@@ -1,0 +1,404 @@
+{
+ "fetched": "2026-10-30T09:47:47.537Z",
+ "countries": [
+  {
+   "country": "New-Zealand",
+   "fetched": "2026-10-30T09:47:47.119Z",
+   "all": [
+    "280 | Premiership | League",
+    "954 | National League - Central | League",
+    "955 | National League - National | League",
+    "956 | National League - Northern | League",
+    "957 | National League - Southern | League",
+    "1056 | National League - Championship - Final | League",
+    "1127 | Chatham Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 955,
+     "name": "National League - National",
+     "season": 2026,
+     "seasons": [
+      [
+       2022,
+       "2022-10-01",
+       "2022-11-27",
+       false,
+       true
+      ],
+      [
+       2023,
+       "2023-09-23",
+       "2023-11-19",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-28",
+       "2025-12-07",
+       false,
+       true
+      ],
+      [
+       2025,
+       "2025-09-27",
+       "2025-12-07",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-26",
+       "2026-12-06",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2535,
+       "name": "Wellington Phoenix II",
+       "founded": 2014,
+       "venue": {
+        "name": "Fraser Park",
+        "city": "Lower Hutt",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 2537,
+       "name": "Auckland City",
+       "founded": 2004,
+       "venue": {
+        "name": "Kiwitea Street",
+        "city": "Auckland",
+        "capacity": 5000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 13977,
+       "name": "Eastern Suburbs",
+       "founded": 1934,
+       "venue": {
+        "name": "Madills Farm",
+        "city": "Kohimarama",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20642,
+       "name": "Napier City Rovers",
+       "founded": null,
+       "venue": {
+        "name": "Bluewater Stadium (Park Island)",
+        "city": "Napier",
+        "capacity": 4000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20646,
+       "name": "Wellington Olympic",
+       "founded": null,
+       "venue": {
+        "name": "Wakefield Park 1",
+        "city": "Wellington",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       }
+      },
+      {
+       "id": 20649,
+       "name": "Auckland United",
+       "founded": 2020,
+       "venue": {
+        "name": "Keith Hay Park F1",
+        "city": "Auckland",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20650,
+       "name": "Birkenhead United",
+       "founded": null,
+       "venue": {
+        "name": "Shepherds Park",
+        "city": "Auckland",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20651,
+       "name": "Cashmere Technical",
+       "founded": null,
+       "venue": {
+        "name": "Garrick Memorial Park",
+        "city": "Christchurch",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20662,
+       "name": "Ferrymead Bays",
+       "founded": null,
+       "venue": {
+        "name": "Ferrymead Park",
+        "city": "Christchurch",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 20672,
+       "name": "Miramar",
+       "founded": null,
+       "venue": {
+        "name": "David Farrington Park",
+        "city": "Wellington",
+        "capacity": 2000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 26722,
+       "name": "Auckland FC 2",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "country": "Fiji",
+   "fetched": "2026-10-30T09:47:05.361Z",
+   "all": [
+    "376 | National Football League | League"
+   ],
+   "leagues": [
+    {
+     "id": 376,
+     "name": "National Football League",
+     "season": 2025,
+     "seasons": [
+      [
+       2013,
+       "2012-09-16",
+       "2012-09-23",
+       true,
+       false
+      ],
+      [
+       2014,
+       "2014-09-13",
+       "2014-09-21",
+       true,
+       false
+      ],
+      [
+       2015,
+       "2015-06-13",
+       "2015-07-04",
+       true,
+       false
+      ],
+      [
+       2016,
+       "2016-11-06",
+       "2016-11-13",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-08-12",
+       "2017-08-26",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-08-25",
+       "2018-09-16",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-09-01",
+       "2019-09-15",
+       false,
+       false
+      ],
+      [
+       2020,
+       "2020-02-01",
+       "2020-11-01",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-06",
+       "2021-09-26",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-02-13",
+       "2022-09-11",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-25",
+       "2023-09-10",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-02-18",
+       "2024-09-29",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-02-22",
+       "2025-09-21",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4382,
+       "name": "Ba",
+       "founded": 1935,
+       "venue": {
+        "name": "Govind Park",
+        "city": "Ba",
+        "capacity": 13500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4383,
+       "name": "Labasa",
+       "founded": 1942,
+       "venue": {
+        "name": "Subrail Park",
+        "city": "Labasa, Vanua Levu",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4384,
+       "name": "Lautoka",
+       "founded": 1934,
+       "venue": {
+        "name": "Churchill Park",
+        "city": "Lautoka",
+        "capacity": 18000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4385,
+       "name": "Nadi",
+       "founded": 1938,
+       "venue": {
+        "name": "Prince Charles Park",
+        "city": "Nadi",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4386,
+       "name": "Nasinu",
+       "founded": 1976,
+       "venue": {
+        "name": "ANZ Stadium",
+        "city": "Suva",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4387,
+       "name": "Rewa",
+       "founded": 1928,
+       "venue": {
+        "name": "Vodafone Ratu Cakobau Park",
+        "city": "Nausori",
+        "capacity": 8000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4388,
+       "name": "Suva",
+       "founded": 1928,
+       "venue": {
+        "name": "HFC Bank Stadium",
+        "city": "Suva",
+        "capacity": 10000,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4389,
+       "name": "Tavua",
+       "founded": 1942,
+       "venue": {
+        "name": "Garvey Park",
+        "city": "Tavua",
+        "capacity": 4500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 4392,
+       "name": "Nadroga",
+       "founded": 1938,
+       "venue": {
+        "name": "Lawaqa Park",
+        "city": "Sigatoka",
+        "capacity": 11500,
+        "surface": "grass"
+       }
+      },
+      {
+       "id": 10078,
+       "name": "Navua",
+       "founded": 1943,
+       "venue": {
+        "name": "Thompson Park",
+        "city": "Navua, Viti Levu",
+        "capacity": 1000,
+        "surface": "grass"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
