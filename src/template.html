@@ -761,6 +761,8 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .wchip.me{border-color:var(--accent)}
 .wchip{align-items:center}.wchip .wflag{width:18px;height:13px;border-radius:2px;object-fit:cover;box-shadow:0 0 0 1px var(--line)}
 .commwriters:empty{display:none}
+.commwriters{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.tip.community .writers{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 
 .commline{font-size:calc(13px*var(--fs));color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .commline .ic{width:14px;height:14px;color:var(--accent)}
@@ -949,7 +951,6 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
   <!-- Reportage -->
   <section id="v-reportage" hidden style="display:contents">
     <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Reportage</button></div>
-    <div class="commwriters"></div>
     <div class="reprow"><div id="repTop" class="ftop"></div>
     <label class="search" for="repQ" id="repSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -958,12 +959,12 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
     </label></div>
     <div class="chips" role="group" aria-label="Visa" id="repChips"></div>
     <div class="list" id="repList"></div>
+    <div class="commwriters"></div>
   </section>
 
   <!-- Forum -->
   <section id="v-forum" hidden style="display:contents">
     <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Reportage</button></div>
-    <div class="commwriters"></div>
     <div class="reprow"><div id="forumTop" class="ftop"></div>
     <label class="search" for="forumQ" id="forumSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -972,6 +973,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
     </label></div>
     <div class="chips wrapchips" role="group" aria-label="Kategori" id="forumChips"></div>
     <div class="list" id="forumList"></div>
+    <div class="commwriters"></div>
   </section>
 
   <footer id="foot"></footer>
@@ -3602,8 +3604,8 @@ function latestHtml(){const parts=[];
     const card=(t,lbl,extra)=>`<button class="hcard" data-homethread="${esc(t.key)}"><span class="htxt"><span class="lbl">${lbl}</span><b>${esc(t.title)}</b><span class="meta">${esc(KIND_L[t.kind]||$t("Inlägg"))} · ${esc(who(t.uid))} · ${esc(ago(lastAt(t)))}${extra||""}</span></span></button>`;
     if(last)parts.push(card(last,$t("Senast i forumet")));if(hot&&(!last||hot.t.key!==last.key))parts.push(card(hot.t,$t("Hetast i forumet denna månad"),$t(" · {0} svar",[hot.n])));}
   return`<article class="tip community"><div class="lbl">${$t("Community och forum")}</div><h2 class="name">${$t("Från communityn")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras reportage.")}</p>${parts.length?`<div class="hgrid">${parts.join("")}</div>`:""}
-    ${writersStrip()}
-    <div class="actions"><button class="btn small primary" data-gomode="forum">${ic("chat")} ${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs reportage")}</button></div></article>`;}
+    <div class="actions"><button class="btn small primary" data-gomode="forum">${ic("chat")} ${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs reportage")}</button></div>
+    ${writersStrip()}</article>`;}
 function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().toISOString().slice(0,7);const cnt={};
   Object.values(RATINGS).forEach(d=>{Object.entries((d&&d.r)||{}).forEach(([k,r])=>{if(r&&String(r.at||"").startsWith(ym))cnt[k]=(cnt[k]||0)+1;});});
   const best=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];if(!best)return"";const x=arenas().find(a=>a.k===best[0]);if(!x)return"";
