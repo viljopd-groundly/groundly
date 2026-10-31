@@ -3933,7 +3933,7 @@ function arcHtml(){if(!ARC.open)return"";const ix=ARC.index||[];
     const done=isAtt(mid)||MY.attended.some(a=>a.date===r[2]&&a.homeName===(H[1]&&C[H[1]]?C[H[1]].n:H[0]));
     return`<div class="drow"><div class="dcd"><b>${esc(fmtDate(r[2]))}</b><span>${esc(r[7]||(r[0]===ti?$t("Hemma"):$t("Borta")))}</span></div>
       <div class="mmain"><b>${esc(H[1]&&C[H[1]]?C[H[1]].n:H[0])} <span class="num">${esc(sc)}</span> ${esc(A[1]&&C[A[1]]?C[A[1]].n:A[0])}</b><span class="meta">${esc((arcNeutral(ARC.code,ARC.season,r)||[])[0]||venueAt(H[1],r[2])||[H[2],H[3]].filter(Boolean).join(", ")||$t("Arena saknas, fyll i efteråt"))}</span></div>
-      <button class="mini" data-arcadd="${i}" aria-pressed="${done}"${done?" disabled":""}>${done?$t("Sparad {0}",[OK]):$t("Jag var där")}</button></div>`;}).join("");
+      <button class="mini" data-arcadd="${i}" aria-pressed="${done}"${done?` title="${$t("Tryck för att ta bort")}"`:""}>${done?$t("Var där {0}",[OK]):$t("Jag var där")}</button></div>`;}).join("");
   return h+`</div></div>`;}
 // ---- sök lag i arkivet: alla säsonger där laget finns (archive/teams.json) ----
 function arcTeamHtml(){const c=ARC.tid&&C[ARC.tid];
@@ -3954,9 +3954,13 @@ function arcRowHtml(d,code,season,r,i,ti){const H=d.t[r[0]],A=d.t[r[1]];const sc
   const done=isAtt(mid)||MY.attended.some(a=>a.date===r[2]&&a.homeName===(H[1]&&C[H[1]]?C[H[1]].n:H[0]));
   return`<div class="drow"><div class="dcd"><b>${esc(fmtDate(r[2]))}</b><span>${esc(r[7]||(r[0]===ti?$t("Hemma"):$t("Borta")))}</span></div>
     <div class="mmain"><b>${esc(H[1]&&C[H[1]]?C[H[1]].n:H[0])} <span class="num">${esc(sc)}</span> ${esc(A[1]&&C[A[1]]?C[A[1]].n:A[0])}</b><span class="meta">${esc((arcNeutral(code,season,r)||[])[0]||venueAt(H[1],r[2])||[H[2],H[3]].filter(Boolean).join(", ")||$t("Arena saknas, fyll i efteråt"))}</span></div>
-    <button class="mini" data-arcadd2="${esc(code+"|"+season+"|"+i)}" aria-pressed="${done}"${done?" disabled":""}>${done?$t("Sparad {0}",[OK]):$t("Jag var där")}</button></div>`;}
+    <button class="mini" data-arcadd2="${esc(code+"|"+season+"|"+i)}" aria-pressed="${done}"${done?` title="${$t("Tryck för att ta bort")}"`:""}>${done?$t("Var där {0}",[OK]):$t("Jag var där")}</button></div>`;}
 function arcAdd(i){arcAddFrom(ARC.data,ARC.code,ARC.season,i);}
 function arcAddFrom(d,code,season,i){if(!d||myState!=="ready")return;const r=d.m[i];if(!r)return;const H=d.t[r[0]],A=d.t[r[1]];const hc=H[1]&&C[H[1]],ac=A[1]&&C[A[1]];
+  // redan sparad: ett tryck till tar bort den (om man tryckte fel), med Ångra
+  const mid0=`arc:${code}:${season}:${i}`,hn=hc?hc.n:H[0];const same=a=>a.mid===mid0||(a.date===r[2]&&a.homeName===hn);
+  if(MY.attended.some(same)){let gone=[];mutate(x=>{gone=x.attended.filter(same);x.attended=x.attended.filter(a=>!same(a));});
+    undoToast($t("Matchen togs bort"),async()=>{mutate(x=>{x.attended=putBack(x.attended,gone);});});return;}
   const cup=d.tier==="EC"||d.tier==="CUP";const nv=arcNeutral(code,season,r);const sc=r[4]!=null?`${r[4]}–${r[5]}`:null;
   mutate(x=>{x.attended.push({id:newId(),mid:`arc:${code}:${season}:${i}`,home:hc?H[1]:null,away:ac?A[1]:null,homeName:hc?hc.n:H[0],awayName:ac?ac.n:A[0],date:r[2],score:sc,note:r[6]?$t("Straffar {0}",[r[6].replace("-","–")]):"",
     ...(nv?{venue:nv[0],city:nv[1],country:nv[2]}:{venue:hc?venueAt(H[1],r[2]):(H[2]||null),city:hc?hc.city:(H[3]||null),country:hc?hc.c:(d.c||null)}),comp:cup?`${d.l}${r[7]?" · "+r[7]:""}`:d.l});});
