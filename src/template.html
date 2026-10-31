@@ -829,7 +829,9 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 html:root[data-look="ticket"]{--bg:#E6ECF2;--surface:#FFFFFF;--fg:#18213D;--muted:#5B6683;--line:#C9D2DE;--chalk:#FFFFFF;
   --accent:#9A6400;--accent-soft:#F6E7C1;--pitch:#1F5E43;--pitch-soft:#D6E9DF;--soft:color-mix(in srgb,#18213D 6%,transparent);--soft2:color-mix(in srgb,#18213D 11%,transparent);
   --f-display:"GL Shoulders","Arial Narrow",sans-serif;--f-body:"GL Public",system-ui,sans-serif;--r:6px;--shadow:0 1px 0 #C9D2DE;color-scheme:light}
-html:root[data-look="ticket"] body{background-color:var(--bg);background-image:repeating-radial-gradient(circle at 120% -10%,transparent 0 9px,rgba(24,33,61,.035) 9px 10px);background-attachment:fixed}
+/* biljettmönstret ligger i ett eget fast lager som ritas en gång, i stället för fast bakgrund som målades om vid varje scroll (laggade på iPhone) */
+html:root[data-look="ticket"] body{background:var(--bg)}
+html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;transform:translateZ(0);background-image:repeating-radial-gradient(circle at 120% -10%,transparent 0 9px,var(--guil,rgba(24,33,61,.035)) 9px 10px)}
 :root[data-look="ticket"] .name,:root[data-look="ticket"] .tip h2.name,:root[data-look="ticket"] .wordmark,:root[data-look="ticket"] .intro .tagline,:root[data-look="ticket"] .teams.big{text-transform:uppercase;font-weight:800;letter-spacing:.005em}
 :root[data-look="ticket"] .tip h2.name{font-size:calc(26px*var(--fs));line-height:1}
 :root[data-look="ticket"] .intro .tagline{font-size:calc(48px*var(--fs));line-height:.9}
@@ -868,7 +870,7 @@ html:root[data-look="atlas"]{--bg:#EDF0E4;--surface:#FAFBF7;--fg:#22332C;--muted
 :root[data-look="atlas"] .bnlog span{color:var(--fg)}
 /* mörka varianter av utseendena */
 html:root[data-look="ticket"][data-theme="dark"]{--bg:#121A30;--surface:#1C2642;--fg:#E8EDF5;--muted:#9AA6C0;--line:#2E3A5C;--chalk:#1C2642;--accent:#F2B84B;--accent-soft:#3A2E14;--pitch:#5FCF8A;--pitch-soft:#173A26;--soft:color-mix(in srgb,#E8EDF5 8%,transparent);--soft2:color-mix(in srgb,#E8EDF5 13%,transparent);--shadow:none;color-scheme:dark}
-html:root[data-look="ticket"][data-theme="dark"] body{background-image:repeating-radial-gradient(circle at 120% -10%,transparent 0 9px,rgba(232,237,245,.035) 9px 10px)}
+html:root[data-look="ticket"][data-theme="dark"]{--guil:rgba(232,237,245,.035)}
 :root[data-look="ticket"][data-theme="dark"] .btn.primary,:root[data-look="ticket"][data-theme="dark"] .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#18213D}
 :root[data-look="ticket"][data-theme="dark"] .bnlog b{color:#18213D}
 :root[data-look="ticket"][data-theme="dark"] .bnav,:root[data-look="ticket"][data-theme="dark"] .tip.howto{background:#0C1324}
@@ -884,6 +886,8 @@ html:root[data-look][data-acc="green"]{--accent:#1F7A45;--accent-soft:#D6EDDD}ht
 html:root[data-look][data-acc="blue"]{--accent:#1F6F8B;--accent-soft:#D5E8EF}html:root[data-look][data-acc="blue"][data-theme="dark"]{--accent:#5EC3DD;--accent-soft:#173540}
 html:root[data-look][data-acc="purple"]{--accent:#6D3FB0;--accent-soft:#E6DCF5}html:root[data-look][data-acc="purple"][data-theme="dark"]{--accent:#B79CF0;--accent-soft:#2C2340}
 .accdot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 1px var(--line)}
+/* toppraden: ogenomskinlig i stället för suddig glaseffekt, som annars räknas om vid varje scrollsteg */
+:root[data-look] .topbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--bg)}
 /* din fotbollskarta (bara i Atlasen) */
 .gmap{display:none}
 :root[data-look="atlas"] .gmap{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
