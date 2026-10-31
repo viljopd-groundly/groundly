@@ -825,7 +825,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 @font-face{font-family:"GL Familjen";src:url(fonts/Familjen.woff) format("woff");font-weight:400 700;font-display:swap}
 /* --- Biljetten: matchbiljett och matchprogram --- */
 html:root[data-look="ticket"]{--bg:#E6ECF2;--surface:#FFFFFF;--fg:#18213D;--muted:#5B6683;--line:#C9D2DE;--chalk:#FFFFFF;
-  --accent:#C4122F;--accent-soft:#F4C6D2;--pitch:#1F5E43;--pitch-soft:#D6E9DF;--soft:color-mix(in srgb,#18213D 6%,transparent);--soft2:color-mix(in srgb,#18213D 11%,transparent);
+  --accent:#9A6400;--accent-soft:#F6E7C1;--pitch:#1F5E43;--pitch-soft:#D6E9DF;--soft:color-mix(in srgb,#18213D 6%,transparent);--soft2:color-mix(in srgb,#18213D 11%,transparent);
   --f-display:"GL Shoulders","Arial Narrow",sans-serif;--f-body:"GL Public",system-ui,sans-serif;--r:6px;--shadow:0 1px 0 #C9D2DE;color-scheme:light}
 html:root[data-look="ticket"] body{background-color:var(--bg);background-image:repeating-radial-gradient(circle at 120% -10%,transparent 0 9px,rgba(24,33,61,.035) 9px 10px);background-attachment:fixed}
 :root[data-look="ticket"] .name,:root[data-look="ticket"] .tip h2.name,:root[data-look="ticket"] .wordmark,:root[data-look="ticket"] .intro .tagline,:root[data-look="ticket"] .teams.big{text-transform:uppercase;font-weight:800;letter-spacing:.005em}
@@ -850,7 +850,7 @@ html:root[data-look="ticket"] body{background-color:var(--bg);background-image:r
 :root[data-look="ticket"] .bnlog b{background:var(--accent);border-color:var(--bg)}:root[data-look="ticket"] .bnlog span{color:#fff}
 /* --- Atlasen: groundhopparens karta --- */
 html:root[data-look="atlas"]{--bg:#EDF0E4;--surface:#FAFBF7;--fg:#22332C;--muted:#5F6E64;--line:#C8D2B4;--chalk:#FAFBF7;
-  --accent:#B8336A;--accent-soft:#F3DCE6;--pitch:#2E6B4F;--pitch-soft:#DCE8DA;--soft:color-mix(in srgb,#22332C 6%,transparent);--soft2:color-mix(in srgb,#22332C 11%,transparent);
+  --accent:#1F6F8B;--accent-soft:#D5E8EF;--pitch:#2E6B4F;--pitch-soft:#DCE8DA;--soft:color-mix(in srgb,#22332C 6%,transparent);--soft2:color-mix(in srgb,#22332C 11%,transparent);
   --f-display:"GL Familjen",system-ui,sans-serif;--f-body:"GL Familjen",system-ui,sans-serif;--r:18px;--shadow:none;color-scheme:light}
 :root[data-look="atlas"] .name,:root[data-look="atlas"] .wordmark,:root[data-look="atlas"] .intro .tagline{font-weight:700;letter-spacing:-.025em}
 :root[data-look="atlas"] .intro .tagline{font-size:calc(34px*var(--fs));line-height:1.02}
@@ -865,14 +865,15 @@ html:root[data-look="atlas"]{--bg:#EDF0E4;--surface:#FAFBF7;--fg:#22332C;--muted
 :root[data-look="atlas"] .bnlog b>*{transform:rotate(-45deg)}
 :root[data-look="atlas"] .bnlog span{color:var(--fg)}
 /* mörka varianter av utseendena */
-html:root[data-look="ticket"][data-theme="dark"]{--bg:#121A30;--surface:#1C2642;--fg:#E8EDF5;--muted:#9AA6C0;--line:#2E3A5C;--chalk:#1C2642;--accent:#FF5A6E;--accent-soft:#3A1F33;--pitch:#5FCF8A;--pitch-soft:#173A26;--soft:color-mix(in srgb,#E8EDF5 8%,transparent);--soft2:color-mix(in srgb,#E8EDF5 13%,transparent);--shadow:none;color-scheme:dark}
+html:root[data-look="ticket"][data-theme="dark"]{--bg:#121A30;--surface:#1C2642;--fg:#E8EDF5;--muted:#9AA6C0;--line:#2E3A5C;--chalk:#1C2642;--accent:#F2B84B;--accent-soft:#3A2E14;--pitch:#5FCF8A;--pitch-soft:#173A26;--soft:color-mix(in srgb,#E8EDF5 8%,transparent);--soft2:color-mix(in srgb,#E8EDF5 13%,transparent);--shadow:none;color-scheme:dark}
 html:root[data-look="ticket"][data-theme="dark"] body{background-image:repeating-radial-gradient(circle at 120% -10%,transparent 0 9px,rgba(232,237,245,.035) 9px 10px)}
-:root[data-look="ticket"][data-theme="dark"] .btn.primary,:root[data-look="ticket"][data-theme="dark"] .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-look="ticket"][data-theme="dark"] .btn.primary,:root[data-look="ticket"][data-theme="dark"] .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#18213D}
+:root[data-look="ticket"][data-theme="dark"] .bnlog b{color:#18213D}
 :root[data-look="ticket"][data-theme="dark"] .bnav,:root[data-look="ticket"][data-theme="dark"] .tip.howto{background:#0C1324}
 :root[data-look="ticket"][data-theme="dark"] .tip.hero{background:var(--surface)}
-html:root[data-look="atlas"][data-theme="dark"]{--bg:#17211C;--surface:#1F2B25;--fg:#E7EDE6;--muted:#9FB0A4;--line:#34453B;--chalk:#1F2B25;--accent:#E2649A;--accent-soft:#3B2230;--pitch:#6FCF97;--pitch-soft:#1E3A2A;--soft:color-mix(in srgb,#E7EDE6 8%,transparent);--soft2:color-mix(in srgb,#E7EDE6 13%,transparent);color-scheme:dark}
+html:root[data-look="atlas"][data-theme="dark"]{--bg:#17211C;--surface:#1F2B25;--fg:#E7EDE6;--muted:#9FB0A4;--line:#34453B;--chalk:#1F2B25;--accent:#5EC3DD;--accent-soft:#173540;--pitch:#6FCF97;--pitch-soft:#1E3A2A;--soft:color-mix(in srgb,#E7EDE6 8%,transparent);--soft2:color-mix(in srgb,#E7EDE6 13%,transparent);color-scheme:dark}
 :root[data-look="atlas"][data-theme="dark"] .tip.howto{background:#0F1713}
-:root[data-look="atlas"][data-theme="dark"] .bnlog b{background:var(--accent)}
+:root[data-look="atlas"][data-theme="dark"] .bnlog b{background:var(--accent);color:#17211C}
 /* din fotbollskarta (bara i Atlasen) */
 .gmap{display:none}
 :root[data-look="atlas"] .gmap{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
