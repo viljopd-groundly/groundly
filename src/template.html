@@ -819,6 +819,57 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .profhead .uav{margin-right:0}
 .wchip .uav{margin:0 2px 0 0;align-self:center}
 .rep.repediting{padding:0;border:0;background:none;box-shadow:none}.rep.repediting:before{display:none}
+/* ===== Utseenden (Inställningar → Utseende → Utseende). Ligger sist så att de vinner över färg och stil. ===== */
+@font-face{font-family:"GL Shoulders";src:url(fonts/BigShoulders.woff) format("woff");font-weight:100 900;font-display:swap}
+@font-face{font-family:"GL Public";src:url(fonts/PublicSans.woff) format("woff");font-weight:100 900;font-display:swap}
+@font-face{font-family:"GL Familjen";src:url(fonts/Familjen.woff) format("woff");font-weight:400 700;font-display:swap}
+/* --- Biljetten: matchbiljett och matchprogram --- */
+html:root[data-look="ticket"]{--bg:#E6ECF2;--surface:#FFFFFF;--fg:#18213D;--muted:#5B6683;--line:#C9D2DE;--chalk:#FFFFFF;
+  --accent:#C4122F;--accent-soft:#F4C6D2;--pitch:#1F5E43;--pitch-soft:#D6E9DF;--soft:color-mix(in srgb,#18213D 6%,transparent);--soft2:color-mix(in srgb,#18213D 11%,transparent);
+  --f-display:"GL Shoulders","Arial Narrow",sans-serif;--f-body:"GL Public",system-ui,sans-serif;--r:6px;--shadow:0 1px 0 #C9D2DE;color-scheme:light}
+html:root[data-look="ticket"] body{background-color:var(--bg);background-image:repeating-radial-gradient(circle at 120% -10%,transparent 0 9px,rgba(24,33,61,.035) 9px 10px);background-attachment:fixed}
+:root[data-look="ticket"] .name,:root[data-look="ticket"] .tip h2.name,:root[data-look="ticket"] .wordmark,:root[data-look="ticket"] .intro .tagline,:root[data-look="ticket"] .teams.big{text-transform:uppercase;font-weight:800;letter-spacing:.005em}
+:root[data-look="ticket"] .tip h2.name{font-size:calc(26px*var(--fs));line-height:1}
+:root[data-look="ticket"] .intro .tagline{font-size:calc(48px*var(--fs));line-height:.9}
+:root[data-look="ticket"] .intro .tagline span{color:inherit}
+:root[data-look="ticket"] .wordmark{font-size:calc(28px*var(--fs))}
+:root[data-look="ticket"] .lbl{text-transform:none;letter-spacing:0;color:var(--accent);font-weight:700}
+:root[data-look="ticket"] .intro .kicker{text-transform:none;letter-spacing:0;font-family:var(--f-body);color:var(--accent)}
+:root[data-look="ticket"] .btn.primary{background:var(--fg);border-color:var(--fg);color:#fff}
+:root[data-look="ticket"] .btn{border-radius:4px}
+:root[data-look="ticket"] .chip[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:#fff}
+/* Veckans match blir en biljett: urklipp i kanterna och perforering */
+:root[data-look="ticket"] .tip.hero{position:relative;border:0;background:#fff;box-shadow:var(--shadow);overflow:visible;
+  -webkit-mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat}
+:root[data-look="ticket"] .tip.hero>.lbl{padding-bottom:16px;border-bottom:2px dashed var(--line);margin:0 -14px 4px;padding-left:14px}
+:root[data-look="ticket"] .tip.hero .teams.big{font-size:calc(30px*var(--fs))}
+:root[data-look="ticket"] .tip.howto{background:var(--fg)}
+:root[data-look="ticket"] .bnav{background:var(--fg);border-top:0;box-shadow:none}
+:root[data-look="ticket"] .bn{color:#C9D2DE}:root[data-look="ticket"] .bn[aria-current="true"]{color:#fff}
+:root[data-look="ticket"] .bnlog b{background:var(--accent);border-color:var(--bg)}:root[data-look="ticket"] .bnlog span{color:#fff}
+/* --- Atlasen: groundhopparens karta --- */
+html:root[data-look="atlas"]{--bg:#EDF0E4;--surface:#FAFBF7;--fg:#22332C;--muted:#5F6E64;--line:#C8D2B4;--chalk:#FAFBF7;
+  --accent:#B8336A;--accent-soft:#F3DCE6;--pitch:#2E6B4F;--pitch-soft:#DCE8DA;--soft:color-mix(in srgb,#22332C 6%,transparent);--soft2:color-mix(in srgb,#22332C 11%,transparent);
+  --f-display:"GL Familjen",system-ui,sans-serif;--f-body:"GL Familjen",system-ui,sans-serif;--r:18px;--shadow:none;color-scheme:light}
+:root[data-look="atlas"] .name,:root[data-look="atlas"] .wordmark,:root[data-look="atlas"] .intro .tagline{font-weight:700;letter-spacing:-.025em}
+:root[data-look="atlas"] .intro .tagline{font-size:calc(34px*var(--fs));line-height:1.02}
+:root[data-look="atlas"] .intro .tagline span{color:inherit}
+:root[data-look="atlas"] .lbl{text-transform:none;letter-spacing:0;color:var(--accent);font-weight:700}
+:root[data-look="atlas"] .intro .kicker{text-transform:none;letter-spacing:0;font-family:var(--f-body);color:var(--accent)}
+:root[data-look="atlas"] .tip,:root[data-look="atlas"] .card{box-shadow:none}
+:root[data-look="atlas"] .btn{border-radius:12px}
+:root[data-look="atlas"] .tip.howto{background:var(--fg)}
+:root[data-look="atlas"] .bnav{background:var(--surface);box-shadow:none}
+:root[data-look="atlas"] .bnlog b{background:var(--fg);border-radius:16px;transform:rotate(45deg);border-color:var(--bg)}
+:root[data-look="atlas"] .bnlog b>*{transform:rotate(-45deg)}
+:root[data-look="atlas"] .bnlog span{color:var(--fg)}
+/* din fotbollskarta (bara i Atlasen) */
+.gmap{display:none}
+:root[data-look="atlas"] .gmap{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.gmap svg{display:block;width:100%;height:auto}
+.gmap .gtally{padding:12px 16px 14px;border-top:1px solid var(--line);font-size:calc(15px*var(--fs))}
+.gmap .gtally .actions{margin-top:10px}
 </style>
 
 <div class="wrap">
@@ -3624,7 +3675,27 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   const ob=onboardHtml();
   // nya användare (inte inloggade, inte klara med kom igång eller inga loggade matcher) får Så funkar Groundly överst, alltid
   const fresh=myState!=="ready"||!MY.onboarded||!(MY.attended&&MY.attended.length);
-  el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+ob+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+  el.innerHTML=(fresh?introHtml(true):"")+groundMapHtml()+modAlertHtml()+ob+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+// ---------- din fotbollskarta (utseendet Atlasen) ----------
+// arenorna du loggat, i den ordning du besökte dem, med en streckad rutt mellan dem
+function groundMapHtml(){if(look!=="atlas")return"";const W=366,H=220,P=28;
+  const vis=myState==="ready"?[...visitedMap().entries()]:[];
+  const pts=vis.map(([id,v])=>{const c=C[id];const ll=c&&GEO[c.city];return ll?{id,c,ll,date:v.date}:null;}).filter(Boolean).slice(-40);
+  const lands=new Set(pts.map(p=>p.c.c));
+  const deco=`<g fill="none" stroke="var(--line)" stroke-width="1.2"><path d="M14 40 C70 12 140 30 170 58 S260 88 300 50 350 30 366 40"/><path d="M0 72 C50 46 120 60 160 90 S250 120 300 86 350 70 366 76"/><path d="M8 104 C60 88 110 102 150 120 S240 142 290 116 340 102 366 112"/><ellipse cx="250" cy="150" rx="42" ry="20"/><ellipse cx="250" cy="150" rx="24" ry="11"/><ellipse cx="86" cy="170" rx="30" ry="14"/></g>`;
+  let body="";
+  if(pts.length){let la0=Infinity,la1=-Infinity,lo0=Infinity,lo1=-Infinity;pts.forEach(p=>{la0=Math.min(la0,p.ll[0]);la1=Math.max(la1,p.ll[0]);lo0=Math.min(lo0,p.ll[1]);lo1=Math.max(lo1,p.ll[1]);});
+    const k=Math.cos((la0+la1)/2*Math.PI/180);let sx=Math.max((lo1-lo0)*k,3),sy=Math.max(la1-la0,2);const sc=Math.min((W-2*P)/sx,(H-2*P)/sy);
+    const cx=(lo0+lo1)/2,cy=(la0+la1)/2;const xy=ll=>[W/2+(ll[1]-cx)*k*sc,H/2-(ll[0]-cy)*sc];
+    const P2=pts.map(p=>({...p,xy:xy(p.ll)}));
+    const route=P2.length>1?`<polyline points="${P2.map(p=>p.xy.map(v=>v.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round" stroke-linejoin="round"/>`:"";
+    const dots=P2.map((p,i)=>`<circle cx="${p.xy[0].toFixed(1)}" cy="${p.xy[1].toFixed(1)}" r="${i===P2.length-1?7:5.5}" fill="var(--accent)" stroke="var(--surface)" stroke-width="2.5"/>`).join("");
+    const lab=[];P2.slice().reverse().forEach(p=>{if(lab.length>=6)return;if(lab.some(q=>Math.hypot(q.xy[0]-p.xy[0],q.xy[1]-p.xy[1])<46||q.c.city===p.c.city))return;lab.push(p);});
+    const labels=lab.map(p=>{const right=p.xy[0]<W-90;return`<text x="${(p.xy[0]+(right?10:-10)).toFixed(1)}" y="${(p.xy[1]+4).toFixed(1)}" text-anchor="${right?"start":"end"}" font-size="11" font-weight="700" fill="var(--fg)">${esc(cityLbl(p.c))}</text>`;}).join("");
+    body=route+dots+labels;}
+  const txt=pts.length?$tn(pts.length,"Du har varit på {n} arena","Du har varit på {n} arenor")+" "+$tn(lands.size,"i {n} land.","i {n} länder."):$t("Din fotbollskarta fylls i när du loggar matcher du sett.");
+  return`<article class="gmap" aria-label="${$t("Din fotbollskarta")}"><svg viewBox="0 0 ${W} ${H}" font-family="var(--f-body)" role="img" aria-hidden="true"><rect width="${W}" height="${H}" fill="var(--surface)"/>${deco}${body}</svg>
+    <div class="gtally">${txt}${pts.length?"":`<div class="actions"><button class="btn small primary" data-gomine="1">${$t("Logga en match")}</button></div>`}</div></article>`;}
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
   return`<article class="tip howto">${fresh?`<div class="howeye">${$t("Ny här?")}</div>`:""}<h2 class="name">${$t("Så funkar Groundly")}</h2><p class="howsub">${$t("Tre saker du gör i appen. Tryck för att börja.")}</p>
@@ -4320,10 +4391,13 @@ let deepJump=null;
 // ---------- tema ----------
 const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["warm",$t("Varmt")],["dim",$t("Dämpat")],["dusk",$t("Halvmörkt")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
+const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")]];let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
 const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
 let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 let theme="auto";try{const t=store.get("fk-theme");if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
-function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);
+function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
+  // Biljetten och Atlasen har egna ljusa färger, så färgvalet gäller bara Groundly-utseendet
+  if(look!=="std"){r.setAttribute("data-look",look);r.setAttribute("data-theme","light");}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
   const row=document.getElementById("themeRow");r.setAttribute("data-style",uiStyle);
   if(row)row.innerHTML=`<span class="tlbl">${$t("Färg")}</span>`+THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")+`<span class="tlbl">${$t("Stil")}</span>`+STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("");}
 applyTheme();
@@ -4372,7 +4446,8 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${sec($t("Avstånd"),`<div class="chips wrapchips">${[["auto",$t("Automatiskt")],["mil","mil"],["km","km"],["mi","miles"]].map(([k,l])=>`<button class="chip" data-unit-pick="${k}" aria-pressed="${unitPick===k}">${l}</button>`).join("")}</div><p class="hint">${$t("Automatiskt väljer efter ditt land: mil i Sverige och Norge, miles i Storbritannien och USA, annars km.")}</p>`)}
    ${sec($t("Logga"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
-   ${sec($t("Utseende"),`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>
+   ${sec($t("Utseende"),`<div class="lbl">${$t("Utseende")}</div><div class="chips wrapchips">${LOOKS.map(([k,l])=>`<button class="chip" data-look-pick="${k}" aria-pressed="${look===k}">${l}</button>`).join("")}</div>
+     ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>`:`<p class="hint">${$t("Biljetten och Atlasen har egna färger. Välj Groundly för att byta färg eller mörkt läge.")}</p>`}
      <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Textstorlek")}</div><div class="chips wrapchips">${FSIZES.map(([k,l],i)=>`<button class="chip" data-fs-pick="${k}" aria-pressed="${fsize===k}" style="font-size:${[14,16,18][i]}px">${l}</button>`).join("")}</div>`)}
    ${sec($t("Notiser"),NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")+`<p class="hint">${$t("Notiserna visas i appen. Appen skickar inga push-notiser till telefonen.")}</p>`)}
@@ -4383,12 +4458,13 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
   </div></div>`;}
 function openSettings(){setOpen=true;let ov=document.getElementById("setOv");const y=ov?ov.querySelector(".setbox").scrollTop:0;if(ov)ov.remove();document.body.insertAdjacentHTML("beforeend",settingsHtml());ov=document.getElementById("setOv");ov.querySelector(".setbox").scrollTop=y;}
 function closeSettings(){setOpen=false;document.getElementById("setOv")?.remove();}
-document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick]");if(!b)return;
+document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-look-pick]");if(!b)return;
   if(b.dataset.fsPick){fsize=b.dataset.fsPick;store.set("fk-fs",fsize);applyTheme();if(setOpen){const ov=document.querySelector("#setOv .sheet,#setOv > *");const y=ov?ov.scrollTop:0;openSettings();const o2=document.querySelector("#setOv .sheet,#setOv > *");if(o2)o2.scrollTop=y;}return;}
   if(b.id==="themeBtn"){openSettings();return;}
   if(b.id==="setClose"||(b.id==="setOv"&&e.target===b)){closeSettings();return;}
   if(b.id==="setOv")return;
   if(b.dataset.logoPick){logoPick=b.dataset.logoPick;store.set("fk-logo",logoPick);applyLogo();openSettings();return;}
+  if(b.dataset.lookPick){look=b.dataset.lookPick;store.set("fk-look",look);applyTheme();if(mode==="hem")renderHome();if(setOpen)openSettings();return;}
   if(b.dataset.stylePick){uiStyle=b.dataset.stylePick;store.set("fk-style",uiStyle);applyTheme();if(setOpen)openSettings();return;}
   theme=b.dataset.themePick;store.set("fk-theme",theme);applyTheme();if(setOpen)openSettings();},true);
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&setOpen)closeSettings();});
