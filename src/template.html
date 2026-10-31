@@ -839,7 +839,7 @@ html:root[data-look="ticket"] body{background-color:var(--bg);background-image:r
 :root[data-look="ticket"] .btn{border-radius:4px}
 :root[data-look="ticket"] .chip[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:#fff}
 /* Veckans match blir en biljett: urklipp i kanterna och perforering */
-:root[data-look="ticket"] .tip.hero{position:relative;border:0;background:#fff;box-shadow:var(--shadow);overflow:visible;
+:root[data-look="ticket"] .tip.hero{position:relative;border:0;background:var(--surface);box-shadow:var(--shadow);overflow:visible;
   -webkit-mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat;
   mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat}
 :root[data-look="ticket"] .tip.hero>.lbl{padding-bottom:16px;border-bottom:2px dashed var(--line);margin:0 -14px 4px;padding-left:14px}
@@ -864,6 +864,15 @@ html:root[data-look="atlas"]{--bg:#EDF0E4;--surface:#FAFBF7;--fg:#22332C;--muted
 :root[data-look="atlas"] .bnlog b{background:var(--fg);border-radius:16px;transform:rotate(45deg);border-color:var(--bg)}
 :root[data-look="atlas"] .bnlog b>*{transform:rotate(-45deg)}
 :root[data-look="atlas"] .bnlog span{color:var(--fg)}
+/* mörka varianter av utseendena */
+html:root[data-look="ticket"][data-theme="dark"]{--bg:#121A30;--surface:#1C2642;--fg:#E8EDF5;--muted:#9AA6C0;--line:#2E3A5C;--chalk:#1C2642;--accent:#FF5A6E;--accent-soft:#3A1F33;--pitch:#5FCF8A;--pitch-soft:#173A26;--soft:color-mix(in srgb,#E8EDF5 8%,transparent);--soft2:color-mix(in srgb,#E8EDF5 13%,transparent);--shadow:none;color-scheme:dark}
+html:root[data-look="ticket"][data-theme="dark"] body{background-image:repeating-radial-gradient(circle at 120% -10%,transparent 0 9px,rgba(232,237,245,.035) 9px 10px)}
+:root[data-look="ticket"][data-theme="dark"] .btn.primary,:root[data-look="ticket"][data-theme="dark"] .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-look="ticket"][data-theme="dark"] .bnav,:root[data-look="ticket"][data-theme="dark"] .tip.howto{background:#0C1324}
+:root[data-look="ticket"][data-theme="dark"] .tip.hero{background:var(--surface)}
+html:root[data-look="atlas"][data-theme="dark"]{--bg:#17211C;--surface:#1F2B25;--fg:#E7EDE6;--muted:#9FB0A4;--line:#34453B;--chalk:#1F2B25;--accent:#E2649A;--accent-soft:#3B2230;--pitch:#6FCF97;--pitch-soft:#1E3A2A;--soft:color-mix(in srgb,#E7EDE6 8%,transparent);--soft2:color-mix(in srgb,#E7EDE6 13%,transparent);color-scheme:dark}
+:root[data-look="atlas"][data-theme="dark"] .tip.howto{background:#0F1713}
+:root[data-look="atlas"][data-theme="dark"] .bnlog b{background:var(--accent)}
 /* din fotbollskarta (bara i Atlasen) */
 .gmap{display:none}
 :root[data-look="atlas"] .gmap{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
@@ -4392,15 +4401,16 @@ let deepJump=null;
 const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["warm",$t("Varmt")],["dim",$t("Dämpat")],["dusk",$t("Halvmörkt")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
 const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")]];let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
+const LOOK_THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dark",$t("Mörkt")]];let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
 const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
 let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 let theme="auto";try{const t=store.get("fk-theme");if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
 function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
   // Biljetten och Atlasen har egna ljusa färger, så färgvalet gäller bara Groundly-utseendet
-  if(look!=="std"){r.setAttribute("data-look",look);r.setAttribute("data-theme","light");}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
+  if(look!=="std"){r.setAttribute("data-look",look);const dk=lookTheme==="dark"||(lookTheme==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);r.setAttribute("data-theme",dk?"dark":"light");}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
   const row=document.getElementById("themeRow");r.setAttribute("data-style",uiStyle);
   if(row)row.innerHTML=`<span class="tlbl">${$t("Färg")}</span>`+THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")+`<span class="tlbl">${$t("Stil")}</span>`+STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("");}
-applyTheme();
+applyTheme();try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(look!=="std"&&lookTheme==="auto")applyTheme();});}catch(e){}
 // ---------- inställningar: logga, utseende, notiser, hemort ----------
 const BRAND_LOGOS=[["stadion",$t("Stadion")],["enkel",$t("Stadion ljus")],["premium",$t("Stadion premium")],["cirkel",$t("Cirkel")],["cirkel-orange",$t("Cirkel orange")],["skold",$t("Sköld")],
   ["boll",$t("Boll")],["boll-orange",$t("Boll orange")],["plats",$t("Kartnål")],["g-gron",$t("G grön")],["g-orange","G orange"],["dynamisk","G i farten"]];
@@ -4447,7 +4457,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${sec($t("Logga"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
    ${sec($t("Utseende"),`<div class="lbl">${$t("Utseende")}</div><div class="chips wrapchips">${LOOKS.map(([k,l])=>`<button class="chip" data-look-pick="${k}" aria-pressed="${look===k}">${l}</button>`).join("")}</div>
-     ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>`:`<p class="hint">${$t("Biljetten och Atlasen har egna färger. Välj Groundly för att byta färg eller mörkt läge.")}</p>`}
+     ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>`:`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${LOOK_THEMES.map(([k,l])=>`<button class="chip" data-looktheme-pick="${k}" aria-pressed="${lookTheme===k}">${l}</button>`).join("")}</div>`}
      <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Textstorlek")}</div><div class="chips wrapchips">${FSIZES.map(([k,l],i)=>`<button class="chip" data-fs-pick="${k}" aria-pressed="${fsize===k}" style="font-size:${[14,16,18][i]}px">${l}</button>`).join("")}</div>`)}
    ${sec($t("Notiser"),NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")+`<p class="hint">${$t("Notiserna visas i appen. Appen skickar inga push-notiser till telefonen.")}</p>`)}
@@ -4458,12 +4468,13 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
   </div></div>`;}
 function openSettings(){setOpen=true;let ov=document.getElementById("setOv");const y=ov?ov.querySelector(".setbox").scrollTop:0;if(ov)ov.remove();document.body.insertAdjacentHTML("beforeend",settingsHtml());ov=document.getElementById("setOv");ov.querySelector(".setbox").scrollTop=y;}
 function closeSettings(){setOpen=false;document.getElementById("setOv")?.remove();}
-document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-look-pick]");if(!b)return;
+document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-look-pick],[data-looktheme-pick]");if(!b)return;
   if(b.dataset.fsPick){fsize=b.dataset.fsPick;store.set("fk-fs",fsize);applyTheme();if(setOpen){const ov=document.querySelector("#setOv .sheet,#setOv > *");const y=ov?ov.scrollTop:0;openSettings();const o2=document.querySelector("#setOv .sheet,#setOv > *");if(o2)o2.scrollTop=y;}return;}
   if(b.id==="themeBtn"){openSettings();return;}
   if(b.id==="setClose"||(b.id==="setOv"&&e.target===b)){closeSettings();return;}
   if(b.id==="setOv")return;
   if(b.dataset.logoPick){logoPick=b.dataset.logoPick;store.set("fk-logo",logoPick);applyLogo();openSettings();return;}
+  if(b.dataset.lookthemePick){lookTheme=b.dataset.lookthemePick;store.set("fk-looktheme",lookTheme);applyTheme();if(setOpen)openSettings();return;}
   if(b.dataset.lookPick){look=b.dataset.lookPick;store.set("fk-look",look);applyTheme();if(mode==="hem")renderHome();if(setOpen)openSettings();return;}
   if(b.dataset.stylePick){uiStyle=b.dataset.stylePick;store.set("fk-style",uiStyle);applyTheme();if(setOpen)openSettings();return;}
   theme=b.dataset.themePick;store.set("fk-theme",theme);applyTheme();if(setOpen)openSettings();},true);
