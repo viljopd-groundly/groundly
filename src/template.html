@@ -696,6 +696,8 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .pdets{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:flex-start}.pdets{flex-wrap:nowrap}.pdets details{flex:1 1 0;min-width:0}.pdets .pseen summary{text-align:right}.pdets .pseen[open] summary{text-align:left}
 /* rita bara kort som syns på skärmen (snabbare långa listor) */
 #tipsList>.tip,#arenaList>.tip,#clubList>.card,#repList>.rep{content-visibility:auto;contain-intrinsic-size:auto 280px}
+/* matchlistan: rader utanför skärmen räknas inte om när man scrollar (det laggade) */
+#matchList>.mrow{content-visibility:auto;contain-intrinsic-size:auto 92px}
 /* det öppna kortet ritas alltid fullt, annars krymper sidan en bildruta när listan ritas om och skärmen hoppar */
 #clubList>.card.sel,#repList>.rep.open{content-visibility:visible;contain-intrinsic-size:none}
 .link.more{align-self:flex-start;margin-top:2px;font-weight:600;color:var(--accent)}
@@ -1533,7 +1535,7 @@ function mlMore(n){const q=MLQ;if(!q||!q.el.isConnected)return;const old=documen
   let h="",c=0;while(q.i<q.items.length&&c<n){const it=q.items[q.i++];if(typeof it==="string")h+=it;else{h+=matchRow(it[0],q.now,q.km?it[1]:-1);c++;q.left--;}}
   if(q.i<q.items.length)h+=`<div id="mlMore" class="mlmore"><button class="btn small" data-mlmore="1">${$t("Visa fler matcher ({0} till)",[q.left])}</button></div>`;
   q.el.insertAdjacentHTML("beforeend",h);
-  const sen=document.getElementById("mlMore");if(sen&&"IntersectionObserver"in window){if(!mlIO)mlIO=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))requestAnimationFrame(()=>mlMore(60));},{rootMargin:"900px 0px"});mlIO.disconnect();mlIO.observe(sen);}}
+  const sen=document.getElementById("mlMore");if(sen&&"IntersectionObserver"in window){if(!mlIO)mlIO=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))(window.requestIdleCallback||(f=>setTimeout(f,16)))(()=>mlMore(25),{timeout:120});},{rootMargin:"1600px 0px"});mlIO.disconnect();mlIO.observe(sen);}}
 document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[data-mlmore]"))mlMore(100);});
 // ---------- håll kvar det man tryckte på (inget hopp när listan ritas om) ----------
 // När ett klick ritar om en lista (gilla, betyg, spara, sortering …) ersätts knappen av en ny kopia. Vi letar upp kopian
