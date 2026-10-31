@@ -874,6 +874,14 @@ html:root[data-look="ticket"][data-theme="dark"] body{background-image:repeating
 html:root[data-look="atlas"][data-theme="dark"]{--bg:#17211C;--surface:#1F2B25;--fg:#E7EDE6;--muted:#9FB0A4;--line:#34453B;--chalk:#1F2B25;--accent:#5EC3DD;--accent-soft:#173540;--pitch:#6FCF97;--pitch-soft:#1E3A2A;--soft:color-mix(in srgb,#E7EDE6 8%,transparent);--soft2:color-mix(in srgb,#E7EDE6 13%,transparent);color-scheme:dark}
 :root[data-look="atlas"][data-theme="dark"] .tip.howto{background:#0F1713}
 :root[data-look="atlas"][data-theme="dark"] .bnlog b{background:var(--accent);color:#17211C}
+/* egen färg på detaljerna i Biljetten och Atlasen */
+html:root[data-look][data-acc="red"]{--accent:#C4122F;--accent-soft:#F8D7DC}html:root[data-look][data-acc="red"][data-theme="dark"]{--accent:#FF6B6B;--accent-soft:#3D1C1F}
+html:root[data-look][data-acc="orange"]{--accent:#B45309;--accent-soft:#FBE3CC}html:root[data-look][data-acc="orange"][data-theme="dark"]{--accent:#FFA552;--accent-soft:#3D2A16}
+html:root[data-look][data-acc="gold"]{--accent:#9A6400;--accent-soft:#F6E7C1}html:root[data-look][data-acc="gold"][data-theme="dark"]{--accent:#F2B84B;--accent-soft:#3A2E14}
+html:root[data-look][data-acc="green"]{--accent:#1F7A45;--accent-soft:#D6EDDD}html:root[data-look][data-acc="green"][data-theme="dark"]{--accent:#5FD18E;--accent-soft:#173A26}
+html:root[data-look][data-acc="blue"]{--accent:#1F6F8B;--accent-soft:#D5E8EF}html:root[data-look][data-acc="blue"][data-theme="dark"]{--accent:#5EC3DD;--accent-soft:#173540}
+html:root[data-look][data-acc="purple"]{--accent:#6D3FB0;--accent-soft:#E6DCF5}html:root[data-look][data-acc="purple"][data-theme="dark"]{--accent:#B79CF0;--accent-soft:#2C2340}
+.accdot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 1px var(--line)}
 /* din fotbollskarta (bara i Atlasen) */
 .gmap{display:none}
 :root[data-look="atlas"] .gmap{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
@@ -4402,12 +4410,14 @@ let deepJump=null;
 const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["warm",$t("Varmt")],["dim",$t("Dämpat")],["dusk",$t("Halvmörkt")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
 const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")]];let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
+const ACCS=[["std",$t("Standard"),""],["red",$t("Röd"),"#C4122F"],["orange",$t("Orange"),"#B45309"],["gold",$t("Guld"),"#9A6400"],["green",$t("Grön"),"#1F7A45"],["blue",$t("Blå"),"#1F6F8B"],["purple",$t("Lila"),"#6D3FB0"]];let acc="std";try{const t=store.get("fk-acc");if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
 const LOOK_THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dark",$t("Mörkt")]];let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
 const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
 let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 let theme="auto";try{const t=store.get("fk-theme");if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
 function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
   // Biljetten och Atlasen har egna ljusa färger, så färgvalet gäller bara Groundly-utseendet
+  if(look!=="std"&&acc!=="std")r.setAttribute("data-acc",acc);else r.removeAttribute("data-acc");
   if(look!=="std"){r.setAttribute("data-look",look);const dk=lookTheme==="dark"||(lookTheme==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);r.setAttribute("data-theme",dk?"dark":"light");}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
   const row=document.getElementById("themeRow");r.setAttribute("data-style",uiStyle);
   if(row)row.innerHTML=`<span class="tlbl">${$t("Färg")}</span>`+THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")+`<span class="tlbl">${$t("Stil")}</span>`+STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("");}
@@ -4457,8 +4467,9 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${sec($t("Avstånd"),`<div class="chips wrapchips">${[["auto",$t("Automatiskt")],["mil","mil"],["km","km"],["mi","miles"]].map(([k,l])=>`<button class="chip" data-unit-pick="${k}" aria-pressed="${unitPick===k}">${l}</button>`).join("")}</div><p class="hint">${$t("Automatiskt väljer efter ditt land: mil i Sverige och Norge, miles i Storbritannien och USA, annars km.")}</p>`)}
    ${sec($t("Logga"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
-   ${sec($t("Utseende"),`<div class="lbl">${$t("Utseende")}</div><div class="chips wrapchips">${LOOKS.map(([k,l])=>`<button class="chip" data-look-pick="${k}" aria-pressed="${look===k}">${l}</button>`).join("")}</div>
-     ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>`:`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${LOOK_THEMES.map(([k,l])=>`<button class="chip" data-looktheme-pick="${k}" aria-pressed="${lookTheme===k}">${l}</button>`).join("")}</div>`}
+   ${sec($t("Utseende"),`<div class="lbl">${$t("Tema")}</div><div class="chips wrapchips">${LOOKS.map(([k,l])=>`<button class="chip" data-look-pick="${k}" aria-pressed="${look===k}">${l}</button>`).join("")}</div>
+     ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>`:`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${LOOK_THEMES.map(([k,l])=>`<button class="chip" data-looktheme-pick="${k}" aria-pressed="${lookTheme===k}">${l}</button>`).join("")}</div>
+     <div class="lbl">${$t("Detaljer")}</div><div class="chips wrapchips">${ACCS.map(([k,l,c])=>`<button class="chip" data-acc-pick="${k}" aria-pressed="${acc===k}">${c?`<span class="accdot" style="background:${c}"></span>`:""}${l}</button>`).join("")}</div>`}
      <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Textstorlek")}</div><div class="chips wrapchips">${FSIZES.map(([k,l],i)=>`<button class="chip" data-fs-pick="${k}" aria-pressed="${fsize===k}" style="font-size:${[14,16,18][i]}px">${l}</button>`).join("")}</div>`)}
    ${sec($t("Notiser"),NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")+`<p class="hint">${$t("Notiserna visas i appen. Appen skickar inga push-notiser till telefonen.")}</p>`)}
@@ -4469,12 +4480,13 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
   </div></div>`;}
 function openSettings(){setOpen=true;let ov=document.getElementById("setOv");const y=ov?ov.querySelector(".setbox").scrollTop:0;if(ov)ov.remove();document.body.insertAdjacentHTML("beforeend",settingsHtml());ov=document.getElementById("setOv");ov.querySelector(".setbox").scrollTop=y;}
 function closeSettings(){setOpen=false;document.getElementById("setOv")?.remove();}
-document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-look-pick],[data-looktheme-pick]");if(!b)return;
+document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-look-pick],[data-looktheme-pick],[data-acc-pick]");if(!b)return;
   if(b.dataset.fsPick){fsize=b.dataset.fsPick;store.set("fk-fs",fsize);applyTheme();if(setOpen){const ov=document.querySelector("#setOv .sheet,#setOv > *");const y=ov?ov.scrollTop:0;openSettings();const o2=document.querySelector("#setOv .sheet,#setOv > *");if(o2)o2.scrollTop=y;}return;}
   if(b.id==="themeBtn"){openSettings();return;}
   if(b.id==="setClose"||(b.id==="setOv"&&e.target===b)){closeSettings();return;}
   if(b.id==="setOv")return;
   if(b.dataset.logoPick){logoPick=b.dataset.logoPick;store.set("fk-logo",logoPick);applyLogo();openSettings();return;}
+  if(b.dataset.accPick){acc=b.dataset.accPick;store.set("fk-acc",acc);applyTheme();if(setOpen)openSettings();return;}
   if(b.dataset.lookthemePick){lookTheme=b.dataset.lookthemePick;store.set("fk-looktheme",lookTheme);applyTheme();if(setOpen)openSettings();return;}
   if(b.dataset.lookPick){look=b.dataset.lookPick;store.set("fk-look",look);applyTheme();if(mode==="hem")renderHome();if(setOpen)openSettings();return;}
   if(b.dataset.stylePick){uiStyle=b.dataset.stylePick;store.set("fk-style",uiStyle);applyTheme();if(setOpen)openSettings();return;}

@@ -2076,5 +2076,14 @@
  "Du har varit på {n} arena": "You have been to {n} ground",
  "Du har varit på {n} arenor": "You have been to {n} grounds",
  "i {n} land.": "in {n} country.",
- "i {n} länder.": "in {n} countries."
+ "i {n} länder.": "in {n} countries.",
+ "Standard": "Default",
+ "Röd": "Red",
+ "Orange": "Orange",
+ "Guld": "Gold",
+ "Grön": "Green",
+ "Blå": "Blue",
+ "Lila": "Purple",
+ "Detaljer": "Details",
+ "Tema": "Theme"
 }
