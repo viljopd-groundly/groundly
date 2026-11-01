@@ -588,6 +588,14 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
   .msback{position:absolute;inset:0;background:rgba(0,0,0,.35)}
   .mspanel{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:18px 18px 0 0;padding:16px 16px calc(84px + env(safe-area-inset-bottom,0px))}
   .msgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  body:has(.msheet:not([hidden])) .backpill{display:none!important}
+  .plist{display:flex;flex-direction:column;gap:8px}
+  .pitem{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;background:var(--bg);color:var(--fg)}
+  .pitem>b{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--chalk)}
+  .pitem>b .ic{width:22px;height:22px}
+  .pitem strong{display:block;font:700 calc(16px*var(--fs)) var(--f-body)}
+  .pitem small{display:block;font-size:calc(13px*var(--fs));color:var(--muted);margin-top:2px}
+  .pitem:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .msi{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;border-radius:12px;background:var(--bg);font:600 calc(12px*var(--fs)) var(--f-body);color:var(--fg);text-align:center}
   .msi b{font-size:calc(22px*var(--fs));line-height:1}
   .msi[aria-current="true"]{background:var(--accent-soft);color:var(--accent)}
@@ -1053,10 +1061,20 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
 <nav class="bnav" aria-label="Huvudmeny">
   <button class="bn" data-bn="hem" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Hem</span></button>
   <button class="bn" data-bn="community" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20.5l1.4-4.3A7.5 7.5 0 1 1 20 12.5z"/><path d="M8.5 11.5h7M8.5 14.5h4.5"/></svg><span>Community</span></button>
-  <button class="bn bnlog" id="bnLog" aria-label="Logga en match"><b><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></b><span>Logga match</span></button>
+  <button class="bn bnlog" id="bnLog" aria-label="Skapa: logga match, skriv reportage eller fråga i forumet" aria-expanded="false" aria-controls="plusSheet"><b><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></b><span>Skapa</span></button>
   <button class="bn" data-bn="mine" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Min fotboll</span></button>
   <button class="bn" id="bnMore" aria-expanded="false" aria-controls="moreSheet"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span>Mer</span></button>
 </nav>
+<div class="msheet" id="plusSheet" hidden>
+  <div class="msback" id="plusBack"></div>
+  <div class="mspanel" role="dialog" aria-label="Skapa">
+    <div class="plist">
+      <button class="pitem" data-plus="log"><b><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></b><span><strong>Logga match</strong><small>En match du har sett, med resultat och arena</small></span></button>
+      <button class="pitem" data-plus="rep"><b><svg class="ic" aria-hidden="true"><use href="#i-pencil"/></svg></b><span><strong>Skriv reportage</strong><small>Berätta om resan, arenan och stämningen</small></span></button>
+      <button class="pitem" data-plus="ask"><b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span><strong>Fråga i forumet</strong><small>Få tips om arenor, biljetter och pubar</small></span></button>
+    </div>
+  </div>
+</div>
 <div class="msheet" id="moreSheet" hidden>
   <div class="msback" id="moreBack"></div>
   <div class="mspanel" role="dialog" aria-label="Fler vyer">
@@ -1250,14 +1268,20 @@ const isComm=m=>m==="forum"||m==="reportage";
 const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"forum";}catch(e){return"forum";}};
 function syncNav(){if(isComm(mode))try{store.set("fk-comm",mode);}catch(e){}document.querySelectorAll("[data-bn]").forEach(b=>b.setAttribute("aria-current",String(b.dataset.bn===mode||(b.dataset.bn==="community"&&isComm(mode)))));
   const more=document.getElementById("bnMore");if(more)more.setAttribute("aria-current",String(MORE_MODES.includes(mode)));}
-function closeMore(){const sh=document.getElementById("moreSheet");if(sh)sh.hidden=true;document.getElementById("bnMore")?.setAttribute("aria-expanded","false");}
+function closePlus(){const sh=document.getElementById("plusSheet");if(sh)sh.hidden=true;document.getElementById("bnLog")?.setAttribute("aria-expanded","false");}
+// plusmenyn: logga match, skriv reportage eller fråga i forumet
+document.addEventListener("click",e=>{const b=e.target.closest("[data-plus],#plusBack");if(!b)return;closePlus();if(b.id==="plusBack")return;const k=b.dataset.plus;
+  if(k==="log"){if(myState!=="ready"){goTop("mine");return;}openLogMatch(null,null);return;}
+  if(k==="rep"){goTop("reportage");window.scrollTo({top:0});setTimeout(()=>{try{startRepDraft();}catch(x){}},0);return;}
+  if(k==="ask"){goTop("forum");window.scrollTo({top:0});composing=true;forumMsg="";renderForum();setTimeout(()=>document.getElementById("fTitle")?.focus({preventScroll:true}),0);}},true);
+function closeMore(){closePlus();const sh=document.getElementById("moreSheet");if(sh)sh.hidden=true;document.getElementById("bnMore")?.setAttribute("aria-expanded","false");}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMore,#bnLog,#moreBack");if(!b)return;
   if(b.id==="moreBack"){closeMore();return;}
   if(b.id==="bnMore"){const sh=document.getElementById("moreSheet");const open=sh.hidden;sh.hidden=!open;b.setAttribute("aria-expanded",String(open));return;}
-  if(b.id==="bnLog"){closeMore();if(myState!=="ready"){goTop("mine");return;}openLogMatch(null,null);return;}
+  if(b.id==="bnLog"){const sh=document.getElementById("plusSheet");const open=sh.hidden;closeMore();if(open){sh.hidden=false;b.setAttribute("aria-expanded","true");}return;}
   const to=b.dataset.bn==="community"?(isComm(mode)?mode:commLast()):b.dataset.bn;
   closeMore();if(to!==mode||to==="mine")goTop(to);window.scrollTo({top:0});},true);
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMore();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMore();closePlus();}});
 
 // ---------- clubs ----------
 // Länder grupperade per världsdel (från landslagens förbund). Värdet "kont:Europa" visar hela världsdelen.

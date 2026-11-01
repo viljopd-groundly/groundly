@@ -2109,5 +2109,11 @@
  "Alla mina säsonger": "All my seasons",
  "Säsongskort för alla säsonger": "Season card for all seasons",
  "Bocka av alla arenor i en serie, en efter en. Delar flera klubbar arena räknas den bara en gång. Från början visas de två högsta serierna i ditt land; lägg till fler under Välj serier.": "Tick off every ground in a league, one by one. A ground shared by several clubs only counts once. You start with the top two leagues in your country; add more under Choose leagues.",
- "{0} mål": "{0} goals"
+ "{0} mål": "{0} goals",
+ "Skapa": "Create",
+ "Skapa: logga match, skriv reportage eller fråga i forumet": "Create: log a match, write a story or ask in the forum",
+ "Fråga i forumet": "Ask in the forum",
+ "En match du har sett, med resultat och arena": "A match you have seen, with score and ground",
+ "Berätta om resan, arenan och stämningen": "Tell others about the trip, the ground and the atmosphere",
+ "Få tips om arenor, biljetter och pubar": "Get tips on grounds, tickets and pubs"
 }
