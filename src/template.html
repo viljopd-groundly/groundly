@@ -2466,23 +2466,32 @@ async function drawMatch(a){if(!document.getElementById("img-match"))return;awai
   publishCard("match",cv,$t("Jag var på {0} {1} {2}{3}, {4}. Match nr {5}{6}!",[a.homeName,a.score||"–",a.awayName,a.venue?$t(" på ")+a.venue:"",a.date,f.n,f.newArena?$t(" och en ny arena"):""]),`match-${a.date}.png`);}
 
 // karta över besökta arenor
-async function drawMap(){if(!document.getElementById("img-map"))return;await fontsReady();await loadMaps();if(!MAPS.eu.path)return;const[cv,x,W,H]=newCanvas();const st=shareFmt==="story";
+async function drawMap(){if(!document.getElementById("img-map"))return;await fontsReady();await shouldersReady();await loadMaps();if(!MAPS.eu.path)return;const[cv,x,W,H]=newCanvas();const st=shareFmt==="story";
   const allPins=visitedPins();const reg=mapRegion||autoRegion(allPins);const R=MAPS[reg];const ct=countriesSeen().size;const isSe=reg==="se";const pins=isSe?allPins.filter(p=>p.c==="Sverige"):allPins;
-  frame(x,W,H);const T=st?220:150;
-  x.fillStyle=CC.MU;x.font=`700 30px ${F_M}`;x.fillText(isSe?"MINA ARENOR I SVERIGE":reg==="eu"?"MINA ARENOR I EUROPA":$t("MINA ARENOR I VÄRLDEN"),96,T);
-  x.fillStyle=CC.AC;x.font=`700 150px ${F_M}`;const nTxt=String(pins.length);x.fillText(nTxt,90,T+160);const nw=x.measureText(nTxt).width;
-  x.fillStyle=CC.FG;x.font=`800 50px ${F_D}`;x.fillText(pins.length===1?$t("arena"):$t("arenor"),110+nw,T+100);x.fillStyle=CC.MU;x.font=`600 34px ${F_B}`;x.fillText(isSe?`av ${seArenaTotal()} svenska i appen`:`${ct} ${ct===1?"land":$t("länder")}`,112+nw,T+150);
-  const bx=70,by=T+210,bw=W-140,bh=H-by-(st?230:190);
-  x.save();rrect(x,bx,by,bw,bh,24);x.clip();x.fillStyle=CC.SEA;x.fillRect(bx,by,bw,bh);
-  const sc=Math.min(bw/R.w,bh/R.h);
-  const ox=bx+(bw-R.w*sc)/2,oy=by+(bh-R.h*sc)/2;
-  x.save();x.translate(ox,oy);x.scale(sc,sc);if(R.path2){x.globalAlpha=.4;x.fillStyle=CC.LAND;x.fill(new Path2D(R.path2));x.globalAlpha=1;}x.fillStyle=CC.LAND;x.fill(new Path2D(R.path));x.restore();
-  let outside=isSe?allPins.length-pins.length:0;pins.forEach(p=>{if(!inRegion(p.ll,R)){outside++;return;}const[px,py]=projPin(p.ll,R);const X=ox+px*sc,Y=oy+py*sc;
-    x.fillStyle=CC.BG;x.beginPath();x.arc(X,Y,16,0,Math.PI*2);x.fill();x.fillStyle=CC.AC;x.beginPath();x.arc(X,Y,11,0,Math.PI*2);x.fill();});
+  // samma stil som säsongskortet: mörkgrön botten, kartan på en stor biljett och uppgifterna på små biljetter under
+  x.fillStyle=SK.BG;x.fillRect(0,0,W,H);const P=60;const regL=isSe?$t("Sverige"):reg==="eu"?$t("Europa"):$t("Världen");
+  const hy=(st?110:70)+(st?160:126);x.fillStyle=SK.PAPER;x.font=`800 ${st?150:120}px ${F_T}`;x.textAlign="left";x.fillText($t("MINA ARENOR"),P+20,hy);
+  x.textAlign="right";x.fillStyle="#A9C1B0";x.font=`600 30px ${F_B}`;x.fillText(regL,W-P-20,hy-6);x.textAlign="left";
+  const top=st?330:250,small=st?230:200,gap=22,bottom=H-(st?170:130);const mh=bottom-top-gap-small;
+  // kartbiljetten
+  const sw=74,bx=P,by=top,bw=W-2*P;x.save();rrect(x,bx,by,bw,mh,16);x.clip();x.fillStyle="#E4E9DF";x.fillRect(bx,by,bw,mh);x.fillStyle=SK.STUBS[0];x.fillRect(bx,by,sw,mh);
+  const mx=bx+sw+16,my=by+16,mw=bw-sw-32,mhh=mh-32;const sc=Math.min(mw/R.w,mhh/R.h);const ox=mx+(mw-R.w*sc)/2,oy=my+(mhh-R.h*sc)/2;
+  x.save();x.translate(ox,oy);x.scale(sc,sc);if(R.path2){x.fillStyle="#C9D6C6";x.fill(new Path2D(R.path2));}x.fillStyle="#9DB8A3";x.fill(new Path2D(R.path));x.restore();
+  let outside=isSe?allPins.length-pins.length:0;const maxN=Math.max(1,...pins.map(p=>p.n));
+  pins.slice().sort((a,b)=>a.n-b.n).forEach(p=>{if(!inRegion(p.ll,R)){outside++;return;}const[px,py]=projPin(p.ll,R);const X=ox+px*sc,Y=oy+py*sc;const r=9+7*(p.n/maxN);
+    x.fillStyle=SK.PAPER;x.beginPath();x.arc(X,Y,r+5,0,Math.PI*2);x.fill();x.fillStyle=SK.INK;x.beginPath();x.arc(X,Y,r,0,Math.PI*2);x.fill();x.fillStyle=SK.ACC;x.beginPath();x.arc(X,Y,r*.42,0,Math.PI*2);x.fill();});
   x.restore();
-  if(!pins.length){x.fillStyle=CC.FG;x.font=`600 36px ${F_B}`;x.textAlign="center";x.fillText($t("Logga matcher du varit på så fylls kartan på"),W/2,by+bh/2);x.textAlign="left";}
-  if(outside){x.fillStyle=CC.MU;x.font=`600 30px ${F_B}`;x.textAlign="right";x.fillText(isSe?$t("+ {0} utanför Sverige",[outside]):$t("+ {0} utanför kartan",[outside]),bx+bw,by+bh+50);x.textAlign="left";}
-  brand(x,W,H);
+  x.fillStyle=SK.BG;[by,by+mh].forEach(cy=>{x.beginPath();x.arc(bx+sw,cy,13,0,Math.PI*2);x.fill();});x.strokeStyle=SK.PERF;x.lineWidth=4;x.setLineDash([10,9]);x.beginPath();x.moveTo(bx+sw,by+18);x.lineTo(bx+sw,by+mh-18);x.stroke();x.setLineDash([]);
+  x.save();x.translate(bx+sw/2+11,by+mh/2);x.rotate(-Math.PI/2);x.fillStyle=SK.PAPER;x.textAlign="center";x.font=`800 32px ${F_T}`;x.fillText($t("KARTA"),0,0);x.restore();
+  if(!pins.length){x.fillStyle=SK.INK;x.font=`600 34px ${F_B}`;x.textAlign="center";x.fillText($t("Logga matcher du varit på så fylls kartan på"),bx+sw+(bw-sw)/2,by+mh/2);x.textAlign="left";}
+  if(outside){x.fillStyle=SK.INKM;x.font=`600 26px ${F_B}`;x.textAlign="right";x.fillText(isSe?$t("+ {0} utanför Sverige",[outside]):$t("+ {0} utanför kartan",[outside]),bx+bw-24,by+mh-24);x.textAlign="left";}
+  // små biljetter: antal arenor och oftast/senast
+  const top1=pins.slice().sort((a,b)=>b.n-a.n)[0];const ty=by+mh+gap,tw=(bw-gap)/2;
+  drawTicket(x,{k:$t("Arenor"),n:pins.length,sub:isSe?$t("av {0} svenska i appen",[seArenaTotal()]):$tn(ct,"i {n} land","i {n} länder")},bx,ty,tw,small,SK.STUBS[2],{});
+  if(top1&&top1.n>1)drawTicket(x,{k:$t("Stamarena"),n:top1.n,sub:$t("besök på {0}",[top1.s])},bx+tw+gap,ty,tw,small,SK.STUBS[4],{});
+  else if(pins.length){const lands=[...new Set(pins.map(p=>p.c).filter(Boolean))];await flagsReady();const imgs={};await Promise.all(lands.slice(0,6).map(async l=>{const id=ntIdOf(l);if(id&&FLAGS[id])imgs[l]=await imgOf(FLAGS[id]);}));
+    drawTicket(x,{k:$t("Länder"),n:lands.length,flags:lands.slice(0,6)},bx+tw+gap,ty,tw,small,SK.STUBS[4],imgs);}
+  x.fillStyle=SK.ACC;x.font=`800 50px ${F_T}`;x.textAlign="right";x.fillText("GROUNDLY",W-P-20,H-(st?90:64));x.textAlign="left";
   publishCard("map",cv,(isSe?$t("Mina arenor i Sverige: {0} av {1}.\n",[pins.length,seArenaTotal()]):$t("Mina arenor: {0} arenor i {1} länder.\n",[pins.length,ct]))+pins.map(p=>p.s).join(", "),`mina-arenor.png`);}
 
 function renderChallenges(){const vs=visitedStadiums();
