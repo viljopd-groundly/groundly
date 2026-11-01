@@ -2249,10 +2249,16 @@ function venueMeta(name){const k=arenaKey(name);if(!k)return null;const x=arenas
 document.addEventListener("input",e=>{if(e.target.id!=="amHome"&&e.target.id!=="amAway")return;const el=document.getElementById("amDerby");if(!el)return;
   const h=clubIdFromName(document.getElementById("amHome").value),a=clubIdFromName(document.getElementById("amAway").value);const dd=derbyOfAtt({home:h,away:a});
   el.innerHTML=dd?`<span class="pill ec">${ic("flame")} ${$t("Det här är {0}",[esc(dd[1])])}</span>`:"";});
-document.addEventListener("input",e=>{const id=e.target.id;const pre=id==="amHome"?"am":id==="amVenue"?"am":id==="eaVenue"?"ea":null;if(!pre)return;
-  const el=k=>document.getElementById(pre+k);const setIf=(k,v)=>{const x=el(k);if(x&&v&&!x.value.trim())x.value=v;};
-  if(id==="amHome"){const cid=clubIdFromName(e.target.value);if(cid&&C[cid].s){setIf("Venue",C[cid].s);setIf("City",C[cid].city);setIf("Country",C[cid].c);}return;}
-  const m=venueMeta(e.target.value);if(m){setIf("City",m.city);setIf("Country",m.country);}});
+// arena, ort och land fylls i av sig själv. Det man skrivit själv rörs inte; det som fyllts i automatiskt följer med när man byter lag.
+document.addEventListener("input",e=>{const id=e.target.id;if(/^(am|ea)(Venue|City|Country)$/.test(id))e.target.dataset.auto="";
+  const pre=/^am(Home|Away|Date)$/.test(id)||id==="amVenue"?"am":id==="eaVenue"?"ea":null;if(!pre)return;
+  const el=k=>document.getElementById(pre+k);const put=(k,v)=>{const x=el(k);if(!x)return;if(x.value.trim()&&x.dataset.auto!=="1")return;x.value=v||"";x.dataset.auto=v?"1":"";};
+  if(id==="amVenue"||id==="eaVenue"){const m=venueMeta(e.target.value);if(m){put("City",m.city);put("Country",m.country);}return;}
+  const g=k=>(el(k)||{}).value||"";const h=clubIdFromName(g("Home")),a=clubIdFromName(g("Away")),d=g("Date");
+  // matchen i schemat först (cupfinaler och landskamper kan spelas på annan ort), annars hemmalagets arena
+  const m=h&&a&&d?MATCHES.find(m=>m.home===h&&m.away===a&&(m.kickoff?koDay(m.kickoff):m.dateFrom)===d):null;const hc=h&&C[h];
+  const ven=(m&&m.venue)||(hc&&(venueAt(h,d)||hc.s))||"",city=(m&&m.city)||(hc&&hc.city)||"",land=(m&&m.country)||(hc&&!isNat(hc)?hc.c:hc&&hc.c)||"";
+  if(id==="amAway"&&!m)return;put("Venue",ven);put("City",city?$t(city):"");put("Country",land);});
 const myRating=c=>{const k=arenaKey(c.s);return k&&myId&&RATINGS[myId]&&RATINGS[myId].r?RATINGS[myId].r[k]||null:null;};
 const canRate=c=>!!c.s&&!!myId&&ratingsState==="ready"&&visitedStadiums().has(c.s);
 function ratingSummary(a){
