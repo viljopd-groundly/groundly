@@ -3085,21 +3085,35 @@ function renderPass(){const st=passStamps();
       return`<${x.club?`button data-open="${esc(x.club)}"`:"div"} class="stamp" style="--sc:var(${col});--rot:${rot}deg" title="${esc(x.last||x.s)}"><span class="st-city">${esc(x.city||"")}</span><b>${esc(x.s)}</b><span class="st-date">${esc(d)}</span>${x.visits>1?`<span class="st-n">${$t("{0} besök",[x.visits])}</span>`:""}</${x.club?"button":"div"}>`;}).join("")}</div></section>`;}).join("");
   h+=`<h3 class="sec">${$t("Dela passet")}</h3>${fmtChips()}${studioHtml("pass",$t("Mitt arenapass"))}`;
   return h;}
-async function drawPass(){if(!document.getElementById("img-pass"))return;await fontsReady();const[cv,x,W,H]=newCanvas();const st=shareFmt==="story";
-  const stamps=passStamps().sort((a,b)=>(b.date||"").localeCompare(a.date||""));const countries=new Set(stamps.map(s=>s.country)).size;
-  frame(x,W,H);const T=st?220:150;x.fillStyle=CC.MU;x.font=`700 30px ${F_M}`;x.fillText("MITT ARENAPASS",96,T);
-  x.fillStyle=CC.AC;x.font=`700 150px ${F_M}`;const n=String(stamps.length);x.fillText(n,90,T+160);const nw=x.measureText(n).width;
-  x.fillStyle=CC.FG;x.font=`800 50px ${F_D}`;x.fillText(stamps.length===1?$t("arena"):$t("arenor"),110+nw,T+100);x.fillStyle=CC.MU;x.font=`600 34px ${F_B}`;x.fillText(`${countries} ${countries===1?"land":$t("länder")}`,112+nw,T+150);
-  const cols=3,rows=st?4:3,R=135,gx=(W-180)/cols,top=T+250,gy=st?300:290;const cols3=["#8fe0ad","#9db5e8","#f2c14e","#d3a6ea"];
-  stamps.slice(0,cols*rows).forEach((s,i)=>{const cx=90+gx*(i%cols)+gx/2,cy=top+gy*Math.floor(i/cols)+R;const col=cols3[hashStr(s.country)%cols3.length];
-    x.save();x.translate(cx,cy);x.rotate(((hashStr(s.s)%11)-5)*Math.PI/180);x.strokeStyle=col;x.fillStyle=col;x.lineWidth=6;x.beginPath();x.arc(0,0,R,0,Math.PI*2);x.stroke();x.lineWidth=2;x.beginPath();x.arc(0,0,R-14,0,Math.PI*2);x.stroke();
-    x.textAlign="center";x.font=`700 22px ${F_M}`;x.fillText(fitText(x,(s.city||"").toUpperCase(),700,F_M,22,16,R*1.5),0,-40);
-    const words=String(s.s).split(" ");let l1="",l2="";x.font=`800 30px ${F_D}`;for(const w of words){if(!l2&&x.measureText((l1+" "+w).trim()).width<=R*1.6)l1=(l1+" "+w).trim();else l2=(l2+" "+w).trim();}if(!l1){l1=l2;l2="";}
-    x.fillText(fitText(x,l1,800,F_D,30,20,R*1.6),0,l2?6:14);if(l2)x.fillText(fitText(x,l2,800,F_D,30,20,R*1.5),0,40);
-    x.font=`600 20px ${F_M}`;x.fillText(s.date?s.date.slice(0,4):"",0,l2?78:56);x.restore();});
-  if(stamps.length>cols*rows){x.fillStyle=CC.MU;x.font=`600 30px ${F_B}`;x.textAlign="right";x.fillText($t("+ {0} till",[stamps.length-cols*rows]),W-96,H-96);x.textAlign="left";}
-  if(!stamps.length){x.fillStyle=CC.FG;x.font=`600 36px ${F_B}`;x.fillText($t("Inga stämplar än"),96,top+100);}
-  brand(x,W,H);publishCard("pass",cv,$t("Mitt arenapass: {0} arenor i {1} länder.\n",[stamps.length,countries])+stamps.map(s=>s.s+(s.city?` (${s.city})`:"")).join(", "),"mitt-arenapass.png");}
+// arenapasset i samma biljettstil som säsongskortet och Mina arenor: stämplarna på en stor biljett, antal och länder på små biljetter under
+async function drawPass(){if(!document.getElementById("img-pass"))return;await fontsReady();await shouldersReady();const[cv,x,W,H]=newCanvas();const st=shareFmt==="story";
+  const stamps=passStamps().sort((a,b)=>(b.date||"").localeCompare(a.date||""));const lands=[...new Set(stamps.map(s=>s.country).filter(Boolean))];
+  x.fillStyle=SK.BG;x.fillRect(0,0,W,H);const P=60;const hy=(st?110:70)+(st?160:126);
+  x.fillStyle=SK.PAPER;x.font=`800 ${st?150:120}px ${F_T}`;x.textAlign="left";x.fillText($t("ARENAPASS"),P+20,hy);
+  x.textAlign="right";x.fillStyle="#A9C1B0";x.font=`600 30px ${F_B}`;x.fillText($t("Mina stämplar"),W-P-20,hy-6);x.textAlign="left";
+  const top=st?330:250,small=st?230:200,gap=22,bottom=H-(st?170:130);const mh=bottom-top-gap-small;const sw=74,bx=P,by=top,bw=W-2*P;
+  // stora biljetten med stämplarna
+  x.save();rrect(x,bx,by,bw,mh,16);x.clip();x.fillStyle=SK.PAPER;x.fillRect(bx,by,bw,mh);x.fillStyle=SK.STUBS[0];x.fillRect(bx,by,sw,mh);x.restore();
+  x.fillStyle=SK.BG;[by,by+mh].forEach(cy=>{x.beginPath();x.arc(bx+sw,cy,13,0,Math.PI*2);x.fill();});x.strokeStyle=SK.PERF;x.lineWidth=4;x.setLineDash([10,9]);x.beginPath();x.moveTo(bx+sw,by+18);x.lineTo(bx+sw,by+mh-18);x.stroke();x.setLineDash([]);
+  x.save();x.translate(bx+sw/2+11,by+mh/2);x.rotate(-Math.PI/2);x.fillStyle=SK.PAPER;x.textAlign="center";x.font=`800 32px ${F_T}`;x.fillText($t("STÄMPLAR"),0,0);x.restore();
+  const inks=["#2E5E43","#8A6B2E","#1E2A23","#4A7D5F","#5B4A8A"];const ax=bx+sw+20,aw=bw-sw-40,ah=mh-40;const maxN=st?16:12,n=Math.min(stamps.length,maxN);
+  // antal kolumner väljs så att stämplarna blir så stora som möjligt och fyller biljetten
+  let cols=3,best=0;for(let c=1;c<=5;c++){const r=Math.max(1,Math.ceil(n/c));const sz=Math.min(aw/c,ah/r);if(sz>best){best=sz;cols=c;}}
+  const rows=Math.max(1,Math.ceil(n/cols)),cw=aw/cols,rh=ah/rows,R=Math.min(150,Math.min(cw,rh)/2-14);const landIx=l=>Math.max(0,lands.indexOf(l));
+  stamps.slice(0,n).forEach((s,i)=>{const cx=ax+cw*(i%cols)+cw/2,cy=by+20+rh*Math.floor(i/cols)+rh/2;const col=inks[landIx(s.country)%inks.length];
+    x.save();x.translate(cx,cy);x.rotate(((hashStr(s.s)%11)-5)*Math.PI/180);x.globalAlpha=.9;x.strokeStyle=col;x.fillStyle=col;x.lineWidth=5;x.beginPath();x.arc(0,0,R,0,Math.PI*2);x.stroke();x.lineWidth=2;x.beginPath();x.arc(0,0,R-10,0,Math.PI*2);x.stroke();
+    x.textAlign="center";x.font=`700 ${Math.round(R*.17)}px ${F_B}`;x.fillText(fitText(x,(s.city||"").toUpperCase(),700,F_B,Math.round(R*.17),12,R*1.4),0,-R*.38);
+    const words=String(s.s).split(" ");let l1="",l2="";const fs=Math.round(R*.27);x.font=`800 ${fs}px ${F_T}`;for(const w of words){if(!l2&&x.measureText((l1+" "+w).trim()).width<=R*1.5)l1=(l1+" "+w).trim();else l2=(l2+" "+w).trim();}if(!l1){l1=l2;l2="";}
+    x.fillText(fitText(x,l1.toUpperCase(),800,F_T,fs,14,R*1.5),0,l2?R*.02:R*.1);if(l2)x.fillText(fitText(x,l2.toUpperCase(),800,F_T,fs,14,R*1.4),0,R*.3);
+    x.font=`700 ${Math.round(R*.16)}px ${F_B}`;x.fillText(s.date?s.date.slice(0,4):"",0,l2?R*.6:R*.5);x.restore();});
+  if(stamps.length>n){x.fillStyle=SK.INKM;x.font=`600 26px ${F_B}`;x.textAlign="right";x.fillText($t("+ {0} till",[stamps.length-n]),bx+bw-24,by+mh-22);x.textAlign="left";}
+  if(!stamps.length){x.fillStyle=SK.INK;x.font=`600 34px ${F_B}`;x.textAlign="center";x.fillText($t("Inga stämplar än"),bx+sw+(bw-sw)/2,by+mh/2);x.textAlign="left";}
+  // små biljetter
+  const ty=by+mh+gap,tw=(bw-gap)/2;drawTicket(x,{k:$t("Arenor"),n:stamps.length,sub:$tn(lands.length,"i {n} land","i {n} länder")},bx,ty,tw,small,SK.STUBS[2],{});
+  if(lands.length){await flagsReady();const imgs={};await Promise.all(lands.slice(0,6).map(async l=>{const id=ntIdOf(l);if(id&&FLAGS[id])imgs[l]=await imgOf(FLAGS[id]);}));
+    drawTicket(x,{k:$t("Länder"),n:lands.length,flags:lands.slice(0,6)},bx+tw+gap,ty,tw,small,SK.STUBS[4],imgs);}
+  x.fillStyle=SK.ACC;x.font=`800 50px ${F_T}`;x.textAlign="right";x.fillText("GROUNDLY",W-P-20,H-(st?90:64));x.textAlign="left";
+  publishCard("pass",cv,$t("Mitt arenapass: {0} arenor i {1} länder.\n",[stamps.length,lands.length])+stamps.map(s=>s.s+(s.city?` (${s.city})`:"")).join(", "),"mitt-arenapass.png");}
 
 // ---------- fotbollsquiz ----------
 let QUIZ=null,quizMode="mix",quizLevel="medel",QSCORES={},quizState="loading",quizNs=null,QNAMES={},quizSaved="",qBoardTab="week",qCodeErr="";
