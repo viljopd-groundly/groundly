@@ -1451,7 +1451,6 @@
  "Tryck": "Tap",
  "Tryck igen för att radera allt": "Tap again to delete everything",
  "Tryck igen för att ta bort": "Tap again to remove",
- "Tryck på en nål för att se arenan.": "Tap a pin to see the ground.",
  "Tränare": "Manager",
  "Träskända": "Järvenpää",
  "Tröja i klubbens färger": "Shirt in the club's colours",
@@ -1869,7 +1868,6 @@
  "{0} {1} i rad": "{0} {1} in a row",
  "{0} {1} i schemat · {2} hemma · {3} borta": "{0} {1} in the schedule · {2} home · {3} away",
  "{0} {1} om tillgängligheten här i forumet": "{0} {1} about accessibility here in the forum",
- "{0} {1} på kartan{2}. Tryck på en nål för att se arenan.": "{0} {1} on the map{2}. Tap a pin to see the ground.",
  "{0} {1} · {2} arenor": "{0} {1} · {2} grounds",
  "{0} {1}{2}. Ny fråga varje måndag.": "{0} {1}{2}. New question every Monday.",
  "{0} · nivå {1}": "{0} · tier {1}",
@@ -2157,5 +2155,7 @@
  "Tio frågor om EM: vinnare, värdländer, finalister och skytteligavinnare.": "Ten questions on the Euros: winners, hosts, finalists and top scorers.",
  "ARENAPASS": "GROUND PASS",
  "Mina stämplar": "My stamps",
- "STÄMPLAR": "STAMPS"
+ "STÄMPLAR": "STAMPS",
+ "Tryck på en prick för att se arenan.": "Tap a dot to see the ground.",
+ "{0} {1} på kartan{2}. Tryck på en prick för att se arenan.": "{0} {1} on the map{2}. Tap a dot to see the ground."
 }
