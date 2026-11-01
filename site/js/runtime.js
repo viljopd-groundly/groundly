@@ -235,7 +235,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   .gacc-btn .mod{position:absolute;right:-2px;bottom:-2px;width:16px;height:16px;border-radius:50%;background:#c58b00;color:#fff;display:grid;place-items:center;border:2px solid var(--surface,#fff)}
   .gacc-btn{position:relative}
   .gdlg-card .role{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13px;padding:4px 10px;border-radius:999px;background:#fff3cc;color:#6b4b00;margin:0 0 12px}
-  .gacc-btn .dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--accent,#1d6b3b);color:#fff;font-size:12px}
+  .gacc-btn .dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--accent,#1d6b3b);color:var(--chalk,#fff);font-size:12px}
   .gdlg{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(0,0,0,.45);padding:16px}
   .gdlg[hidden]{display:none}
   .gdlg-card{width:min(420px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--surface,#fff);color:var(--fg,#111);border-radius:16px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,.25);font:15px/1.45 var(--f-body,system-ui)}

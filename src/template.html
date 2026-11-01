@@ -884,7 +884,8 @@ html:root[data-look][data-acc="orange"]{--accent:#B45309;--accent-soft:#FBE3CC}h
 html:root[data-look][data-acc="gold"]{--accent:#9A6400;--accent-soft:#F6E7C1}html:root[data-look][data-acc="gold"][data-theme="dark"]{--accent:#F2B84B;--accent-soft:#3A2E14}
 html:root[data-look][data-acc="green"]{--accent:#1F7A45;--accent-soft:#D6EDDD}html:root[data-look][data-acc="green"][data-theme="dark"]{--accent:#5FD18E;--accent-soft:#173A26}
 html:root[data-look][data-acc="blue"]{--accent:#1F6F8B;--accent-soft:#D5E8EF}html:root[data-look][data-acc="blue"][data-theme="dark"]{--accent:#5EC3DD;--accent-soft:#173540}
-html:root[data-look][data-acc="purple"]{--accent:#6D3FB0;--accent-soft:#E6DCF5}html:root[data-look][data-acc="purple"][data-theme="dark"]{--accent:#B79CF0;--accent-soft:#2C2340}
+/* vit: vita detaljer i mörkt läge; i ljust läge blir de i textfärgen eftersom vitt inte syns på ljus botten */
+html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mix(in srgb,var(--fg) 10%,transparent)}html:root[data-look][data-acc="white"][data-theme="dark"]{--accent:#FFFFFF;--accent-soft:color-mix(in srgb,#FFFFFF 12%,transparent)}
 .accdot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 1px var(--line)}
 /* toppraden: ogenomskinlig i stället för suddig glaseffekt, som annars räknas om vid varje scrollsteg */
 :root[data-look] .topbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--bg)}
@@ -4483,7 +4484,7 @@ let deepJump=null;
 const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["warm",$t("Varmt")],["dim",$t("Dämpat")],["dusk",$t("Halvmörkt")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
 const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")]];let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
-const ACCS=[["std",$t("Standard"),""],["red",$t("Röd"),"#C4122F"],["orange",$t("Orange"),"#B45309"],["gold",$t("Guld"),"#9A6400"],["green",$t("Grön"),"#1F7A45"],["blue",$t("Blå"),"#1F6F8B"],["purple",$t("Lila"),"#6D3FB0"]];let acc="std";try{const t=store.get("fk-acc");if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
+const ACCS=[["std",$t("Standard"),""],["red",$t("Röd"),"#C4122F"],["orange",$t("Orange"),"#B45309"],["gold",$t("Guld"),"#9A6400"],["green",$t("Grön"),"#1F7A45"],["blue",$t("Blå"),"#1F6F8B"],["white",$t("Vit"),"#FFFFFF"]];let acc="std";try{let t=store.get("fk-acc");if(t==="purple")t="white";if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
 const LOOK_THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dark",$t("Mörkt")]];let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
 const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
 let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
