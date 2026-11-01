@@ -2157,5 +2157,7 @@
  "Mina stämplar": "My stamps",
  "STÄMPLAR": "STAMPS",
  "Tryck på en prick för att se arenan.": "Tap a dot to see the ground.",
- "{0} {1} på kartan{2}. Tryck på en prick för att se arenan.": "{0} {1} on the map{2}. Tap a dot to see the ground."
+ "{0} {1} på kartan{2}. Tryck på en prick för att se arenan.": "{0} {1} on the map{2}. Tap a dot to see the ground.",
+ "Dela kartan": "Share the map",
+ "Kartan ovan som en bild att dela. Välj Sverige, Europa eller Världen ovanför kartan.": "The map above as an image to share. Choose Sweden, Europe or World above the map."
 }
