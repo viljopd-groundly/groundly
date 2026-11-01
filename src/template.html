@@ -339,6 +339,27 @@ a.link{color:var(--muted)}
 .hb small{font-size:calc(12px*var(--fs));color:var(--muted);font-variant-numeric:tabular-nums}
 .lucky{font-size:calc(14px*var(--fs));background:var(--accent-soft);border-radius:8px;padding:8px 10px}
 .lucky b{font-family:var(--f-mono)}
+/* arenapasset: passidor i papper med stämplar i olika former */
+.ppage{background:#F4F0E4;background-image:repeating-radial-gradient(circle at 110% -20%,transparent 0 11px,rgba(46,94,67,.05) 11px 12px);color:#1E2A23;border-radius:14px;padding:14px 14px 18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 0 rgba(0,0,0,.08),0 6px 18px rgba(0,0,0,.06);position:relative}
+.pphead{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:4px 10px}
+.pphead img{width:30px;height:22px;object-fit:cover;border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.pphead b{font:800 calc(20px*var(--fs))/1.1 "GL Shoulders","Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.02em}
+.pphead span{font-size:calc(12px*var(--fs));color:#68705F}
+.ppbar{grid-column:1/-1;display:block;height:4px;border-radius:2px;background:rgba(30,42,35,.1);overflow:hidden}.ppbar i{display:block;height:100%;background:#2E6B4A}
+.pstamps{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:16px 10px;padding:4px 2px}
+.pst{all:unset;box-sizing:border-box;cursor:pointer;color:var(--ink);transform:rotate(var(--rot));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:3px;padding:12px 10px;min-height:96px;position:relative;
+  border:3px solid var(--ink);opacity:.9;mix-blend-mode:multiply;
+  -webkit-mask:radial-gradient(circle at 25% 30%,#000 50%,rgba(0,0,0,.78) 75%);mask:radial-gradient(circle at 25% 30%,#000 50%,rgba(0,0,0,.78) 75%)}
+.pst:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.pst.ps0{border-radius:50%;aspect-ratio:1;box-shadow:inset 0 0 0 3px #F4F0E4,inset 0 0 0 5px var(--ink)}
+.pst.ps1{border-radius:8px;box-shadow:inset 0 0 0 4px #F4F0E4,inset 0 0 0 5px var(--ink)}
+.pst.ps2{border-radius:50%/42%;box-shadow:inset 0 0 0 3px #F4F0E4,inset 0 0 0 4px var(--ink)}
+.pst.ps3{border:0;clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);background:var(--ink);color:#F4F0E4;mix-blend-mode:normal;opacity:.88}
+.pst .pc{font:700 calc(9px*var(--fs)) var(--f-body);text-transform:uppercase;letter-spacing:.08em;opacity:.85;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pst b{font:800 calc(14px*var(--fs))/1.02 "GL Shoulders","Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.01em;overflow-wrap:break-word;max-width:100%}.pst.long b{font-size:calc(11px*var(--fs));letter-spacing:0}.pst.xlong b{font-size:calc(9.5px*var(--fs))}
+.pst .pd{font:700 calc(9px*var(--fs)) var(--f-body);letter-spacing:.06em;border-top:1.5px solid currentColor;padding-top:3px;margin-top:2px}
+.pst .pn{background:var(--ink);color:#F4F0E4;font:800 10px/1 var(--f-body);padding:3px 6px;border-radius:999px;margin-top:2px}
+.pst.ps3 .pn{background:#F4F0E4;color:var(--ink)}
 .passhead{display:flex;align-items:baseline;gap:10px}
 .passhead b{font-family:var(--f-mono);font-size:calc(40px*var(--fs));color:var(--accent);line-height:1}
 .passhead span{color:var(--muted)}
@@ -3089,10 +3110,12 @@ function renderPass(){const st=passStamps();
   const countries=[...byC.entries()].sort((a,b)=>b[1].length-a[1].length||a[0].localeCompare(b[0],LANG));
   const totalIn=cn=>new Set(Object.values(C).filter(c=>c.c===cn&&c.s).map(c=>c.s)).size;
   let h=`<div class="passhead"><b>${st.length}</b><span>${$t("{0} från {1} {2}",[st.length===1?$t("stämpel"):$t("stämplar"),countries.length,countries.length===1?$t("land"):$t("länder")])}</span></div>`;
-  h+=countries.map(([cn,list],ci)=>{const col=STAMP_COLORS[ci%STAMP_COLORS.length];const tot=totalIn(cn);
-    return`<section class="passpage"><div class="ptop"><b>${esc($t(cn))}</b><span>${list.length}${tot?$t(" av {0} arenor i appen",[tot]):""}</span></div><div class="stamps">${list.sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(x=>{const rot=(hashStr(x.s)%11)-5;
-      const d=x.date?fmtDate(x.date):"";
-      return`<${x.club?`button data-open="${esc(x.club)}"`:"div"} class="stamp" style="--sc:var(${col});--rot:${rot}deg" title="${esc(x.last||x.s)}"><span class="st-city">${esc(x.city||"")}</span><b>${esc(x.s)}</b><span class="st-date">${esc(d)}</span>${x.visits>1?`<span class="st-n">${$t("{0} besök",[x.visits])}</span>`:""}</${x.club?"button":"div"}>`;}).join("")}</div></section>`;}).join("");
+  // passidor i papper med en stämpel per arena. Formen varierar (rund, rektangel, oval, åttkant) och bläcket tar klubbens färg när den finns.
+  const INKS=["#2E5E43","#8A5A1E","#1F4E79","#7A1F34","#3F3A75"];const dark=h=>{const r=hexRgb(h);return r&&(.299*r[0]+.587*r[1]+.114*r[2])<150;};
+  h+=countries.map(([cn,list],ci)=>{const tot=totalIn(cn);const nt=ntIdOf(cn);const fl=nt&&FLAGS[nt];
+    return`<section class="ppage"><div class="pphead">${fl?`<img src="${fl}" alt="">`:""}<b>${esc($t(cn))}</b><span>${list.length}${tot?$t(" av {0} arenor i appen",[tot]):""}</span>${tot?`<i class="ppbar"><i style="width:${Math.min(100,list.length/tot*100)}%"></i></i>`:""}</div><div class="pstamps">${list.sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(x=>{const hs=hashStr(x.s);const rot=(hs%13)-6;
+      const k=x.club&&COLORS[x.club];const ink=k&&dark(k[0])?k[0]:k&&dark(k[1])?k[1]:INKS[ci%INKS.length];const d=x.date?new Date(x.date+"T12:00:00").toLocaleDateString(LOC,{day:"numeric",month:"short",year:"numeric"}).toUpperCase():"";
+      return`<${x.club?`button data-open="${esc(x.club)}"`:"div"} class="pst ps${hs%4}${(lw=>lw>14?" long xlong":lw>11?" long":"")(Math.max(...String(x.s).split(/\s+/).map(w=>w.length)))}" style="--ink:${ink};--rot:${rot}deg" title="${esc(x.last||x.s)}"><span class="pc">${esc(x.city||"")}</span><b>${esc(x.s)}</b><span class="pd">${esc(d)}</span>${x.visits>1?`<span class="pn">${$t("{0} besök",[x.visits])}</span>`:""}</${x.club?"button":"div"}>`;}).join("")}</div></section>`;}).join("");
   h+=`<h3 class="sec">${$t("Dela passet")}</h3>${fmtChips()}${studioHtml("pass",$t("Mitt arenapass"))}`;
   return h;}
 // arenapasset i samma biljettstil som säsongskortet och Mina arenor: stämplarna på en stor biljett, antal och länder på små biljetter under
@@ -3110,8 +3133,10 @@ async function drawPass(){if(!document.getElementById("img-pass"))return;await f
   // antal kolumner väljs så att stämplarna blir så stora som möjligt och fyller biljetten
   let cols=3,best=0;for(let c=1;c<=5;c++){const r=Math.max(1,Math.ceil(n/c));const sz=Math.min(aw/c,ah/r);if(sz>best){best=sz;cols=c;}}
   const rows=Math.max(1,Math.ceil(n/cols)),cw=aw/cols,rh=ah/rows,R=Math.min(150,Math.min(cw,rh)/2-14);const landIx=l=>Math.max(0,lands.indexOf(l));
-  stamps.slice(0,n).forEach((s,i)=>{const cx=ax+cw*(i%cols)+cw/2,cy=by+20+rh*Math.floor(i/cols)+rh/2;const col=inks[landIx(s.country)%inks.length];
-    x.save();x.translate(cx,cy);x.rotate(((hashStr(s.s)%11)-5)*Math.PI/180);x.globalAlpha=.9;x.strokeStyle=col;x.fillStyle=col;x.lineWidth=5;x.beginPath();x.arc(0,0,R,0,Math.PI*2);x.stroke();x.lineWidth=2;x.beginPath();x.arc(0,0,R-10,0,Math.PI*2);x.stroke();
+  stamps.slice(0,n).forEach((s,i)=>{const cx=ax+cw*(i%cols)+cw/2,cy=by+20+rh*Math.floor(i/cols)+rh/2;const k=s.club&&COLORS[s.club];const dk=h=>{const r=hexRgb(h);return r&&(.299*r[0]+.587*r[1]+.114*r[2])<150;};const col=k&&dk(k[0])?k[0]:k&&dk(k[1])?k[1]:inks[landIx(s.country)%inks.length];const shp=hashStr(s.s)%3;
+    // samma stämpelformer och klubbfärger som i appen: rund, rektangel eller oval med dubbel kant
+    x.save();x.translate(cx,cy);x.rotate(((hashStr(s.s)%11)-5)*Math.PI/180);x.globalAlpha=.9;x.strokeStyle=col;x.fillStyle=col;
+    const ring=(d,lw)=>{x.lineWidth=lw;x.beginPath();if(shp===1)rrect(x,-R+d,-R*.8+d,2*(R-d),1.6*(R-d),14);else if(shp===2)x.ellipse(0,0,R-d,R*.78-d,0,0,Math.PI*2);else x.arc(0,0,R-d,0,Math.PI*2);x.stroke();};ring(0,5);ring(10,2);
     x.textAlign="center";x.font=`700 ${Math.round(R*.17)}px ${F_B}`;x.fillText(fitText(x,(s.city||"").toUpperCase(),700,F_B,Math.round(R*.17),12,R*1.4),0,-R*.38);
     const words=String(s.s).split(" ");let l1="",l2="";const fs=Math.round(R*.27);x.font=`800 ${fs}px ${F_T}`;for(const w of words){if(!l2&&x.measureText((l1+" "+w).trim()).width<=R*1.5)l1=(l1+" "+w).trim();else l2=(l2+" "+w).trim();}if(!l1){l1=l2;l2="";}
     x.fillText(fitText(x,l1.toUpperCase(),800,F_T,fs,14,R*1.5),0,l2?R*.02:R*.1);if(l2)x.fillText(fitText(x,l2.toUpperCase(),800,F_T,fs,14,R*1.4),0,R*.3);
