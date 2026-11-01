@@ -447,7 +447,7 @@ button{touch-action:manipulation}
 .actdot{position:absolute;top:2px;right:calc(50% - 22px);min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#d64545;color:#fff;font:700 10px/17px var(--f-body);text-align:center;box-sizing:border-box;pointer-events:none}
 #bnMore,.msi[data-bn="reportage"],#m-reportage,#m-forum,.bnav [data-bn="community"]{position:relative}.msi .actdot{right:8px;top:6px}#m-reportage .actdot,#m-forum .actdot{right:-6px;top:-6px}
 .commtabs button{position:relative}.commtabs .actdot{top:-6px;right:6px}
-.actcard .actrow.linkrow{cursor:pointer;display:block;width:100%;text-align:left;background:none;border-top:0;border-right:0;border-bottom:0;font-family:inherit;margin:0}.actrow.linkrow:hover i{text-decoration:underline}
+.actcard .actrow.linkrow{cursor:pointer;display:block;width:100%;text-align:left;background:none;border-top:0;border-right:0;border-bottom:0;font-family:inherit;margin:0}@media (hover:hover){.actrow.linkrow:hover i{text-decoration:underline}}
 .actcard .actrow{font-size:calc(14px*var(--fs));color:var(--muted);border-left:3px solid var(--accent-soft);padding-left:9px}.actcard .actrow b{color:var(--fg)}.actcard .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
 .morerow{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
 .arcsea{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:11px 14px;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
@@ -713,7 +713,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .tip.howto .howsub{margin:0;color:rgba(255,255,255,.82);font-size:calc(14px*var(--fs))}
 .tip.howto .itiles{counter-reset:hw;margin-top:8px}
 .tip.howto .itile{counter-increment:hw;position:relative;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;backdrop-filter:blur(2px);transition:background .15s}
-.tip.howto .itile:hover,.tip.howto .itile:active{background:rgba(255,255,255,.18)}
+.tip.howto .itile:active{background:rgba(255,255,255,.18)}@media (hover:hover){.tip.howto .itile:hover{background:rgba(255,255,255,.18)}}
 .tip.howto .itile:after{content:counter(hw);position:absolute;top:8px;right:9px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font:700 11px/1 var(--f-mono);background:#f2c14e;color:#3a2a05}
 .tip.howto .itile .ic{color:#f2c14e}
 .tip.howto .itile b{color:#fff;font-size:calc(13.5px*var(--fs));overflow-wrap:normal;hyphens:manual}
@@ -740,7 +740,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .calpanel h3{margin:0;font:700 calc(18px*var(--fs)) var(--f-display)}
 .calpanel .meta{margin:0 0 4px}
 .calopt{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;color:var(--fg);text-decoration:none;font-weight:600;background:var(--bg)}
-.calopt:hover,.calopt:focus-visible{border-color:var(--accent);outline:none}
+.calopt:focus-visible{border-color:var(--accent);outline:none}@media (hover:hover){.calopt:hover{border-color:var(--accent)}}
 .calopt>b{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;color:#fff;font:800 15px var(--f-body);flex:0 0 auto}
 .calopt>b.gc{background:#1a73e8}.calopt>b.oc{background:#0f6cbd}.calopt>b.ac{background:var(--muted)}
 .calopt>b .ic{width:18px;height:18px}
@@ -786,7 +786,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 
 /* namn och profiler */
 .ulink{all:unset;cursor:pointer;font-weight:inherit;color:inherit;border-bottom:1px dotted currentColor}
-.ulink:hover,.ulink:focus-visible{color:var(--accent);outline:none}
+.ulink:focus-visible{color:var(--accent);outline:none}@media (hover:hover){.ulink:hover{color:var(--accent)}}
 button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .rby{font-size:calc(13px*var(--fs));color:var(--muted)}
 .byas{margin:0}
@@ -798,7 +798,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .proflist{display:flex;flex-direction:column;gap:6px}
 .plink{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:2px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
 .plink.static{cursor:default}
-.plink:not(.static):hover{border-color:var(--accent)}
+@media (hover:hover){.plink:not(.static):hover{border-color:var(--accent)}}
 .nextone{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}.nextone .nd{font-weight:600}
 
 /* herr/dam på samma klubbkort */
