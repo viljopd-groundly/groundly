@@ -2380,6 +2380,13 @@ function seasonData(){const all=seasonYear==="all";const yr=String(seasonYear);c
   const y0=att.length?att[att.length-1].date.slice(0,4):yr,y1=att.length?att[0].date.slice(0,4):yr;const label=all?(y0===y1?y0:`${y0}–${y1}`):yr;
   return{yr,all,label,att,ar:ar.size,ct:ct.size};}
 function seasonText(){const d=seasonData();return $t("Min fotbollssäsong {0}: {1} matcher, {2} arenor, {3} länder.\n",[d.label,d.att.length,d.ar,d.ct])+d.att.slice(0,10).map(a=>`${fmtDate(a.date)} ${a.homeName} ${a.score||"–"} ${a.awayName}${a.venue?" ("+a.venue+")":""}`).join("\n");}
+// standardserier under Arenor per serie: de två högsta herrserierna i ditt land (bara en om landet bara har en).
+// Landet tas från profilens land, annars favoritlaget, annars telefonens region; annars Sverige.
+function homeCountry(){const cc=myState==="ready"&&MY&&MY.cc&&MY.cc!=="none"?MY.cc:null;if(cc&&C[cc])return C[cc].c;const f=favList().map(id=>C[id]).find(c=>c&&!isNat(c));if(f)return f.c;
+  try{const reg=(new Intl.Locale(navigator.language||"sv-SE").maximize().region||"").toUpperCase();const hit=Object.entries(CISO).find(([,v])=>v===reg);if(hit)return hit[0];}catch(e){}return"Sverige";}
+function defArLeagues(){const all=tblLeagues(true).filter(x=>!x.w);const pick=c=>{const ls=all.filter(x=>x.c===c).sort((a,b)=>a.t-b.t);if(!ls.length)return[];const tiers=[...new Set(ls.map(x=>x.t))].slice(0,2);
+  // samma nivå delad i flera serier (t.ex. Ettan Norra/Södra) tas bara med om det är nivå 1 eller 2 och då högst två serier totalt
+  return ls.filter(x=>tiers.includes(x.t)).slice(0,2).map(x=>x.l);};const r=pick(homeCountry());return r.length?r:pick("Sverige");}
 // säsongskort: en biljett per uppgift. Bara uppgifter som inte är 0 visas; saknas något tar nästa i listan platsen.
 // stubbarna i en dämpad grön skala, biljetterna i papper
 const SK={BG:"#163423",PAPER:"#F2EEE3",INK:"#17291F",INKM:"#68705F",PERF:"#CFC8B5",STUBS:["#2E5E43","#3B6E51","#4A7D5F","#5B8C6E","#6F9A7F","#82A890","#5B8C6E","#4A7D5F"],ACC:"#E9C46A",W:"#2E6B4A",D:"#B9B19A",L:"#1E2A23"};
@@ -2508,14 +2515,14 @@ function renderChallenges(){const vs=visitedStadiums();
   h+=`<h3 class="sec">${$t("Min karta")}</h3><p class="hint">${$t("Alla arenor du besökt. Dela den som bild.")}</p>
    <div class="chips" role="group" aria-label="${$t("Karta")}">${[["se","Sverige"],["eu","Europa"],["world",$t("Världen")]].map(([k,l])=>`<button class="chip" data-mapr="${k}" aria-pressed="${reg===k}">${l}</button>`).join("")}</div>${fmtChips()}${studioHtml("map",$t("Karta över besökta arenor"))}`;
   // vilka serier som visas väljer man själv (sparas på kontot); standard = de stora serierna
-  const allL=tblLeagues();const sel=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.some(x=>x.l===l)):LEAGUES;
+  const allL=tblLeagues();const sel=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.some(x=>x.l===l)):defArLeagues();
   const lg=sel.map(l=>{const ar=leagueArenas(l);const miss=[...ar.entries()].filter(([s])=>!vs.has(s)).map(([,c])=>c);const seen=[...ar.entries()].filter(([s])=>vs.has(s)).map(([,c])=>c);return{l,total:ar.size,done:ar.size-miss.length,miss,seen};}).filter(x=>x.total).sort((a,b)=>b.done/b.total-a.done/a.total||b.total-a.total);
   {const ns=natSeen();const all=Object.values(C).filter(c=>c.l==="Landslag"&&c.conf==="UEFA").sort((a,b)=>a.n.localeCompare(b.n,LANG));const miss=all.filter(c=>!ns.has(c.id));
    h+=`<h3 class="sec">${$t("Europas landslag")}</h3><p class="hint">${$t("Se alla 55 landslag i UEFA spela, hemma eller borta. Ett landslag räknas när du har loggat en landskamp med laget.")}</p>
    <div class="prog"><div class="ptop"><b>${$t("Landslag sedda")}</b><span>${all.length-miss.length}/${all.length}</span></div><span class="rbar"><i style="width:${(all.length-miss.length)/all.length*100}%"></i></span>
    ${ns.size?`<div class="natflags">${[...ns].filter(id=>C[id].conf==="UEFA").map(id=>`<button class="link" data-open="${esc(id)}" title="${esc(C[id].n)}">${crest(id,C[id].n,26)}</button>`).join("")}</div>`:""}
    ${miss.length?`<details><summary>${$t("Kvar att se ({0})",[miss.length])}</summary><div class="miss">${miss.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.n)}</button> <span class="meta">${esc(c.s||"")}</span>`).join("<br>")}</div></details>`:`<small class="meta">${$t("Alla 55 landslag sedda!")}</small>`}</div>`;}
-  h+=`<h3 class="sec">${$t("Arenor per serie")}</h3><p class="hint">${$t("Bocka av alla arenor i en serie, en efter en. Delar flera klubbar arena räknas den bara en gång.")}</p>
+  h+=`<h3 class="sec">${$t("Arenor per serie")}</h3><p class="hint">${$t("Bocka av alla arenor i en serie, en efter en. Delar flera klubbar arena räknas den bara en gång. Från början visas de två högsta serierna i ditt land; lägg till fler under Välj serier.")}</p>
    <details class="arsel"${arSelOpen?" open":""}><summary>${$t("Välj serier ({0} valda)",[sel.length])}</summary>
    ${(()=>{const dr=arDraft||sel;return[...new Set(allL.map(x=>x.c))].map(cn=>`<div class="lbl">${esc($t(cn))}</div><div class="chips wrapchips">${allL.filter(x=>x.c===cn).map(x=>`<button class="chip" data-arsel="${esc(x.l)}" aria-pressed="${dr.includes(x.l)}">${esc(x.l)}</button>`).join("")}</div>`).join("");})()}
    <div class="actions"><button class="btn small primary" data-arsel-save="1">${$t("Spara")}</button><button class="btn small" data-arsel-reset="1">${$t("Standardurval")}</button></div></details>
@@ -2580,10 +2587,10 @@ function featClick(t){
     if(!was&&C[id]){const row=t.closest(".actions");if(row){row.insertAdjacentHTML("afterend",tripPanel(C[id]));t.setAttribute("aria-expanded","true");}else renderClubs();}return;}
   if(t.dataset.year){seasonYear=t.dataset.year==="all"?"all":+t.dataset.year;renderMine();return;}
   if(t.dataset.fmt){shareFmt=t.dataset.fmt;store.set("fk-fmt",shareFmt);renderMine();return;}
-  if(t.dataset.arsel){const allL=tblLeagues().map(x=>x.l);if(!arDraft)arDraft=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.includes(l)):LEAGUES.slice();
+  if(t.dataset.arsel){const allL=tblLeagues().map(x=>x.l);if(!arDraft)arDraft=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.includes(l)):defArLeagues();
     const l=t.dataset.arsel;arDraft=arDraft.includes(l)?arDraft.filter(x=>x!==l):[...arDraft,l];t.setAttribute("aria-pressed",String(arDraft.includes(l)));return;}
-  if(t.dataset.arselReset){arDraft=LEAGUES.slice();document.querySelectorAll(".arsel [data-arsel]").forEach(b=>b.setAttribute("aria-pressed",String(arDraft.includes(b.dataset.arsel))));return;}
-  if(t.dataset.arselSave){const d=arDraft;arDraft=null;arSelOpen=false;if(d){const same=d.length===LEAGUES.length&&d.every(l=>LEAGUES.includes(l));mutate(x=>{if(same)delete x.arSel;else x.arSel=d;});}else renderMine();toast($t("Urvalet är sparat."));return;}
+  if(t.dataset.arselReset){arDraft=defArLeagues();document.querySelectorAll(".arsel [data-arsel]").forEach(b=>b.setAttribute("aria-pressed",String(arDraft.includes(b.dataset.arsel))));return;}
+  if(t.dataset.arselSave){const d=arDraft;arDraft=null;arSelOpen=false;if(d){const DL=defArLeagues();const same=d.length===DL.length&&d.every(l=>DL.includes(l));mutate(x=>{if(same)delete x.arSel;else x.arSel=d;});}else renderMine();toast($t("Urvalet är sparat."));return;}
   if(t.dataset.mapr){mapRegion=t.dataset.mapr;store.set("fk-mapr",mapRegion);renderMine();return;}
   if(t.dataset.sharematch){shareMatchId=shareMatchId===t.dataset.sharematch?null:t.dataset.sharematch;renderMine();return;}
   if(t.dataset.sharecard){const id=t.dataset.sharecard,S=STUDIO[id];if(!S)return;
