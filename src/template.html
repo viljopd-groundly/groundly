@@ -2411,7 +2411,7 @@ function seasonStats(){const d=seasonData();const att=d.att;const yr=d.yr;
   return{d,goals,best,newAr,countries,clubs:clubs.size,nat,fav,favM,form,derbies,dbl,topAr};}
 function seasonTickets(S){const d=S.d,T=[];const pl=(n,a,b)=>n===1?a:b;
   if(!d.att.length)return T;
-  T.push({k:$t("Matcher"),n:d.att.length,wide:true,sub:S.goals?$t("{0} mål på läktaren",[S.goals]):$t("{0} på läktaren",[pl(d.att.length,$t("match"),$t("matcher"))]),
+  T.push({k:$t("Matcher"),n:d.att.length,wide:true,sub:S.goals?$t("{0} mål",[S.goals]):"",
     right:S.best?{lbl:$t("Mest målrika matchen"),big:String(S.best.score).replace("-","–"),sm:`${S.best.homeName} – ${S.best.awayName}`}:null});
   T.push({k:$t("Arenor"),n:d.ar,sub:S.newAr.length?$t("Ny i år: {0}",[S.newAr[0]]):S.topAr?$t("Oftast: {0}",[S.topAr[0]]):""});
   if(S.countries.length)T.push({k:$t("Länder"),n:S.countries.length,flags:S.countries.slice(0,8)});
