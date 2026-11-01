@@ -2382,7 +2382,7 @@ function seasonStats(){const d=seasonData();const att=d.att;const yr=d.yr;
 function seasonTickets(S){const d=S.d,T=[];const pl=(n,a,b)=>n===1?a:b;
   if(!d.att.length)return T;
   T.push({k:$t("Matcher"),n:d.att.length,wide:true,sub:S.goals?$t("{0} mål på läktaren",[S.goals]):$t("{0} på läktaren",[pl(d.att.length,$t("match"),$t("matcher"))]),
-    right:S.best?{lbl:$t("Bästa matchen"),big:String(S.best.score).replace("-","–"),sm:`${S.best.homeName} – ${S.best.awayName}`}:null});
+    right:S.best?{lbl:$t("Mest målrika matchen"),big:String(S.best.score).replace("-","–"),sm:`${S.best.homeName} – ${S.best.awayName}`}:null});
   T.push({k:$t("Arenor"),n:d.ar,sub:S.newAr.length?$t("Ny i år: {0}",[S.newAr[0]]):S.topAr?$t("Oftast: {0}",[S.topAr[0]]):""});
   if(S.countries.length)T.push({k:$t("Länder"),n:S.countries.length,flags:S.countries.slice(0,8)});
   if(S.favM.length)T.push({k:$t("Favoritlaget"),n:S.favM.length,wide:true,sub:$t("{0} på plats",[C[S.fav].n]),form:S.form.slice(-10),crest:S.fav});
