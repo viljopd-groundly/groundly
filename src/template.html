@@ -2374,9 +2374,12 @@ function rrect(x,X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,
 function publishCard(id,cv,text,filename){STUDIO[id]={cv,text,filename};const img=document.getElementById("img-"+id);if(img){img.src=cv.toDataURL("image/png");img.className="seasonimg "+shareFmt;}}
 
 // säsongskort
-function seasonData(){const yr=String(seasonYear);const att=MY.attended.filter(a=>a.date.startsWith(yr)).sort((a,b)=>b.date.localeCompare(a.date));
-  const ar=new Set(att.map(a=>a.venue||a.homeName));const ct=new Set(att.map(a=>a.country).filter(Boolean));return{yr,att,ar:ar.size,ct:ct.size};}
-function seasonText(){const d=seasonData();return $t("Min fotbollssäsong {0}: {1} matcher, {2} arenor, {3} länder.\n",[d.yr,d.att.length,d.ar,d.ct])+d.att.slice(0,10).map(a=>`${fmtDate(a.date)} ${a.homeName} ${a.score||"–"} ${a.awayName}${a.venue?" ("+a.venue+")":""}`).join("\n");}
+// seasonYear="all" ger ett kort för alla säsonger; rubriken blir då första–senaste året
+function seasonData(){const all=seasonYear==="all";const yr=String(seasonYear);const att=MY.attended.filter(a=>all||a.date.startsWith(yr)).sort((a,b)=>b.date.localeCompare(a.date));
+  const ar=new Set(att.map(a=>a.venue||a.homeName));const ct=new Set(att.map(a=>a.country).filter(Boolean));
+  const y0=att.length?att[att.length-1].date.slice(0,4):yr,y1=att.length?att[0].date.slice(0,4):yr;const label=all?(y0===y1?y0:`${y0}–${y1}`):yr;
+  return{yr,all,label,att,ar:ar.size,ct:ct.size};}
+function seasonText(){const d=seasonData();return $t("Min fotbollssäsong {0}: {1} matcher, {2} arenor, {3} länder.\n",[d.label,d.att.length,d.ar,d.ct])+d.att.slice(0,10).map(a=>`${fmtDate(a.date)} ${a.homeName} ${a.score||"–"} ${a.awayName}${a.venue?" ("+a.venue+")":""}`).join("\n");}
 // säsongskort: en biljett per uppgift. Bara uppgifter som inte är 0 visas; saknas något tar nästa i listan platsen.
 // stubbarna i en dämpad grön skala, biljetterna i papper
 const SK={BG:"#163423",PAPER:"#F2EEE3",INK:"#17291F",INKM:"#68705F",PERF:"#CFC8B5",STUBS:["#2E5E43","#3B6E51","#4A7D5F","#5B8C6E","#6F9A7F","#82A890","#5B8C6E","#4A7D5F"],ACC:"#E9C46A",W:"#2E6B4A",D:"#B9B19A",L:"#1E2A23"};
@@ -2390,7 +2393,7 @@ function seasonStats(){const d=seasonData();const att=d.att;const yr=d.yr;
   const goals=att.reduce((n,a)=>{const g=goalsOf(a.score);return n+(g?g[0]+g[1]:0);},0);
   const best=att.filter(a=>goalsOf(a.score)).slice().sort((p,q)=>{const a=goalsOf(p.score),b=goalsOf(q.score);return(b[0]+b[1])-(a[0]+a[1])||q.date.localeCompare(p.date);})[0]||null;
   const key=a=>a.venue||a.homeName;const firstSeen={};MY.attended.slice().sort((p,q)=>p.date.localeCompare(q.date)).forEach(a=>{const k=key(a);if(!(k in firstSeen))firstSeen[k]=a.date;});
-  const newAr=[...new Set(att.map(key))].filter(k=>String(firstSeen[k]).startsWith(yr));
+  const newAr=d.all?[]:[...new Set(att.map(key))].filter(k=>String(firstSeen[k]).startsWith(yr));
   const countries=[...new Set(att.map(a=>a.country).filter(Boolean))];
   const clubs=new Set();att.forEach(a=>[a.home,a.away].forEach(id=>{if(id&&C[id]&&!isNat(C[id]))clubs.add(id);}));
   const nat=att.filter(a=>[a.home,a.away].some(id=>id&&C[id]&&isNat(C[id])));
@@ -2434,8 +2437,8 @@ function drawTicket(x,t,X,Y,w,h,col,imgs){const sw=74,r=16;
     x.fillStyle=k[1]||"#fff";x.textAlign="center";x.fillText(fitText(x,k[2]||crestInitials(C[t.crest].n),800,F_T,46,24,R*1.6),cx,cy+15);x.textAlign="left";}}
 async function drawSeason(){if(!document.getElementById("img-season"))return;await fontsReady();await shouldersReady();const[cv,x,W,H]=newCanvas();const st=shareFmt==="story";const S=seasonStats();
   x.fillStyle=SK.BG;x.fillRect(0,0,W,H);const P=60;
-  x.fillStyle=SK.PAPER;x.font=`800 ${st?190:150}px ${F_T}`;x.textAlign="left";x.fillText(S.d.yr,P+20,(st?110:70)+(st?160:126));
-  x.textAlign="right";x.fillStyle="#A9C1B0";x.font=`600 30px ${F_B}`;x.fillText($t("Min fotbollssäsong"),W-P-20,(st?110:70)+(st?150:118));x.textAlign="left";
+  const subT=S.d.all?$t("Alla mina säsonger"):$t("Min fotbollssäsong");x.font=`600 30px ${F_B}`;const subW=x.measureText(subT).width;x.fillStyle=SK.PAPER;x.textAlign="left";x.fillText(fitText(x,S.d.label,800,F_T,st?190:150,70,W-2*P-40-subW-30),P+20,(st?110:70)+(st?160:126));
+  x.textAlign="right";x.fillStyle="#A9C1B0";x.font=`600 30px ${F_B}`;x.fillText(subT,W-P-20,(st?110:70)+(st?150:118));x.textAlign="left";
   const top=st?330:250,bottom=H-(st?170:130);
   const T=seasonTickets(S);
   if(!T.length){x.fillStyle=SK.PAPER;x.font=`800 54px ${F_D}`;x.fillText($t("Inga matcher sparade än"),P+20,top+80);x.fillStyle="#A9C1B0";x.font=`600 32px ${F_B}`;x.fillText($t("Logga matcherna du ser så fylls kortet."),P+20,top+140);}
@@ -2443,7 +2446,7 @@ async function drawSeason(){if(!document.getElementById("img-season"))return;awa
     const rows=packTickets(T,st?6:4);const gap=22,rh=Math.min(st?230:210,(bottom-top-gap*(rows.length-1))/rows.length);let y=top;let ci=0;
     rows.forEach(row=>{const w=row.length===1?W-2*P:(W-2*P-gap)/2;row.forEach((t,j)=>{drawTicket(x,t,P+j*(w+gap),y,w,rh,SK.STUBS[ci++%SK.STUBS.length],imgs);});y+=rh+gap;});}
   x.fillStyle=SK.ACC;x.font=`800 50px ${F_T}`;x.textAlign="right";x.fillText("GROUNDLY",W-P-20,H-(st?90:64));x.textAlign="left";
-  publishCard("season",cv,seasonText(),`min-fotbollssasong-${S.d.yr}.png`);}
+  publishCard("season",cv,seasonText(),`min-fotbollssasong-${S.d.all?"alla":S.d.yr}.png`);}
 
 // matchkort i biljettstil
 function matchFacts(a){const all=MY.attended.slice().sort((p,q)=>p.date.localeCompare(q.date)||p.id.localeCompare(q.id));const n=all.findIndex(z=>z.id===a.id)+1;
@@ -2519,9 +2522,9 @@ function renderChallenges(){const vs=visitedStadiums();
    ${!lg.length?`<p class="meta">${$t("Inga serier valda.")}</p>`:""}`;
   h+=lg.map(x=>`<div class="prog"><div class="ptop"><b>${esc(x.l)}</b><span>${x.done}/${x.total}</span></div><span class="rbar"><i style="width:${x.done/x.total*100}%"></i></span><div class="pdets">${x.miss.length?`<details><summary>${$t("Kvar att besöka ({0})",[x.miss.length])}</summary><div class="miss">${x.miss.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.s)}</button> <span class="meta">${esc(c.n)}</span>`).join("<br>")}</div></details>`:`<small class="meta">${$t("Alla arenor besökta!")}</small>`}${x.seen.length?`<details class="pseen"><summary>${$t("Besökta ({0})",[x.seen.length])}</summary><div class="miss">${x.seen.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.s)}</button> <span class="meta">${esc(c.n)}</span>`).join("<br>")}</div></details>`:""}</div></div>`).join("");
   const years=[...new Set([new Date().getFullYear(),...MY.attended.map(a=>+a.date.slice(0,4))])].filter(Boolean).sort((a,b)=>b-a);
-  if(!years.includes(seasonYear))seasonYear=years[0];
+  if(seasonYear!=="all"&&!years.includes(seasonYear))seasonYear=years[0];
   h+=`<h3 class="sec">${$t("Säsongskort")}</h3><p class="hint">${$t("Årets matcher i en bild att dela.")}</p>
-   <div class="chips" role="group" aria-label="${$t("År")}">${years.map(y=>`<button class="chip" data-year="${y}" aria-pressed="${seasonYear===y}">${y}</button>`).join("")}</div>${fmtChips()}${studioHtml("season",$t("Säsongskort för ")+seasonYear)}`;
+   <div class="chips" role="group" aria-label="${$t("År")}">${years.length>1?`<button class="chip" data-year="all" aria-pressed="${seasonYear==="all"}">${$t("Alla")}</button>`:""}${years.map(y=>`<button class="chip" data-year="${y}" aria-pressed="${seasonYear===y}">${y}</button>`).join("")}</div>${fmtChips()}${studioHtml("season",seasonYear==="all"?$t("Säsongskort för alla säsonger"):$t("Säsongskort för ")+seasonYear)}`;
   return h;}
 // fyll i resultat som saknas i loggen när resultatet finns i arkivet eller i matchschemat (t.ex. matcher sparade före avspark)
 let fillBusy=false,fillDone=false;
@@ -2575,7 +2578,7 @@ function featClick(t){
     // öppna/stäng panelen där den står i stället för att rita om hela listan (då hoppade skärmen)
     document.querySelectorAll(".trip[data-tripof]").forEach(x=>x.remove());document.querySelectorAll("[data-tripfor]").forEach(b=>b.setAttribute("aria-expanded","false"));
     if(!was&&C[id]){const row=t.closest(".actions");if(row){row.insertAdjacentHTML("afterend",tripPanel(C[id]));t.setAttribute("aria-expanded","true");}else renderClubs();}return;}
-  if(t.dataset.year){seasonYear=+t.dataset.year;renderMine();return;}
+  if(t.dataset.year){seasonYear=t.dataset.year==="all"?"all":+t.dataset.year;renderMine();return;}
   if(t.dataset.fmt){shareFmt=t.dataset.fmt;store.set("fk-fmt",shareFmt);renderMine();return;}
   if(t.dataset.arsel){const allL=tblLeagues().map(x=>x.l);if(!arDraft)arDraft=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.includes(l)):LEAGUES.slice();
     const l=t.dataset.arsel;arDraft=arDraft.includes(l)?arDraft.filter(x=>x!==l):[...arDraft,l];t.setAttribute("aria-pressed",String(arDraft.includes(l)));return;}
