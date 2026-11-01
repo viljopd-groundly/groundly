@@ -3103,7 +3103,7 @@ async function drawPass(){if(!document.getElementById("img-pass"))return;await f
 
 // ---------- fotbollsquiz ----------
 let QUIZ=null,quizMode="mix",quizLevel="medel",QSCORES={},quizState="loading",quizNs=null,QNAMES={},quizSaved="",qBoardTab="week",qCodeErr="";
-const QCATS=[["mix",$t("Blandat")],["klubb",$t("Klubblag")],["landslag",$t("Landslag")],["flagga",$t("Flaggor")],["geo",$t("Geografi")],["arena",$t("Arenor")],["sverige",$t("Svensk fotboll")],["cup",$t("VM & EM")],["vm",$t("VM")],["em",$t("EM")]];
+const QCATS=[["mix",$t("Blandat")],["klubb",$t("Klubblag")],["landslag",$t("Landslag")],["flagga",$t("Flaggor")],["geo",$t("Geografi")],["arena",$t("Arenor")],["sverige",$t("Svensk fotboll")],["cup",$t("VM & EM")],["vm",$t("VM")],["em",$t("EM")],["vm_d","VM dam"],["em_d","EM dam"],["cup_d","VM & EM dam"],["vm_a","VM herr och dam"],["em_a","EM herr och dam"],["cup_a","VM & EM herr och dam"]];
 const QLEVELS=[["latt",$t("Lätt")],["medel",$t("Medel")],["svar",$t("Svår")]];
 try{const qm=store.get("fk-qcat");if(QCATS.some(([k])=>k===qm))quizMode=qm;const ql=store.get("fk-qlevel");if(QLEVELS.some(([k])=>k===ql))quizLevel=ql;}catch(e){}
 // slump som kan seedas, så att dagens quiz och utmaningskoder ger samma frågor för alla
@@ -3185,11 +3185,13 @@ function makeQ0(type,pool,cat){
 function uniqBy(arr,f){const m=new Map();arr.forEach(x=>{const k=f(x);if(!m.has(k))m.set(k,x);});return[...m.values()];}
 // bygger en omgång; med seed blir den likadan för alla
 function genQuiz(cat,lvl,n,seed){const prev=qrand;qrand=seed==null?Math.random:seededRand(seed);
-  try{const pool=quizPool(cat,lvl);const isCup=cat==="cup"||cat==="vm"||cat==="em";const types=isCup?CUP_TYPES[lvl]||CUP_TYPES.medel:QTYPES[cat]||QTYPES.mix;const qs=[],seen=new Set(),used=new Map();let g=0;
+  try{const pool=quizPool(cat,lvl);const isCup=/^(cup|vm|em)(_[da])?$/.test(cat);const types=isCup?CUP_TYPES[lvl]||CUP_TYPES.medel:QTYPES[cat]||QTYPES.mix;const qs=[],seen=new Set(),used=new Map();let g=0;
     while(qs.length<n&&g++<600){const ty=types[Math.floor(qrand()*types.length)];if(new Set(types).size>1&&(used.get(ty)||0)>=Math.max(3,Math.ceil(n/2)))continue;const q=isCup?cupQ(ty,lvl,cat):makeQ(ty,pool,cat);const qk=q&&q.q+"|"+q.a;
       // högst en fråga per turnering (annars kan t.ex. "Var spelades VM 1998?" och "Vem vann VM 1998?" båda ha svaret Frankrike).
       // Samma svar på olika turneringar är okej, t.ex. Spanien som vinnare av både EM 2008 och 2012.
-      if(!q||seen.has(qk)||(q.key&&seen.has("k|"+q.key))||new Set(q.opts).size!==q.opts.length)continue;seen.add(qk);if(q.key)seen.add("k|"+q.key);used.set(ty,(used.get(ty)||0)+1);qs.push(q);}
+      // finns det för få turneringar (t.ex. bara nio dam-VM) tillåts en andra fråga om samma turnering efter ett tag, men aldrig med samma svar
+      const kk=q&&q.key?"k|"+q.key:null,kc=kk?(used.get(kk)||0):0;
+      if(!q||seen.has(qk)||(kk&&kc&&(g<300||kc>=2||seen.has(kk+"|"+q.a)))||new Set(q.opts).size!==q.opts.length)continue;seen.add(qk);if(kk){used.set(kk,kc+1);seen.add(kk+"|"+q.a);}used.set(ty,(used.get(ty)||0)+1);qs.push(q);}
     return qs;}finally{qrand=prev;}}
 // ---------- VM & EM: vinnare, finalist, värd, skyttekung och finalresultat ----------
 // [turnering, år, värd, vinnare, finalist, finalresultat, skyttekung (null när flera delade), mål]
@@ -3215,22 +3217,39 @@ const TOURN=[
  ["EM",2008,"Österrike och Schweiz","Spanien","Tyskland","1–0","David Villa",4],["EM",2012,"Polen och Ukraina","Spanien","Italien","4–0",null,0],
  ["EM",2016,"Frankrike","Portugal","Frankrike","1–0 e.f.","Antoine Griezmann",6],["EM",2020,"elva länder i Europa","Italien","England","1–1, 3–2 på straffar",null,0],
  ["EM",2024,"Tyskland","Spanien","England","2–1",null,0]];
+// damernas VM och EM (sista fältet 1 = dam). Värd null när turneringen saknade en värd (1984 och 1995 spelades hemma och borta).
+const TOURN_W=[
+ ["VM",1991,"Kina","USA","Norge","2–1","Michelle Akers",10,1],["VM",1995,"Sverige","Norge","Tyskland","2–0","Ann Kristin Aarønes",6,1],
+ ["VM",1999,"USA","USA","Kina","0–0, 5–4 på straffar",null,0,1],["VM",2003,"USA","Tyskland","Sverige","2–1 golden goal","Birgit Prinz",7,1],
+ ["VM",2007,"Kina","Tyskland","Brasilien","2–0","Marta",7,1],["VM",2011,"Tyskland","Japan","USA","2–2, 3–1 på straffar","Homare Sawa",5,1],
+ ["VM",2015,"Kanada","USA","Japan","5–2",null,0,1],["VM",2019,"Frankrike","USA","Nederländerna","2–0",null,0,1],
+ ["VM",2023,"Australien och Nya Zeeland","Spanien","England","1–0","Hinata Miyazawa",5,1],
+ ["EM",1984,null,"Sverige","England","1–0, 0–1, 4–3 på straffar","Pia Sundhage",4,1],["EM",1987,"Norge","Norge","Sverige","2–1","Trude Stendal",3,1],
+ ["EM",1989,"Västtyskland","Västtyskland","Norge","4–1",null,0,1],["EM",1991,"Danmark","Tyskland","Norge","3–1 e.f.","Heidi Mohr",4,1],
+ ["EM",1993,"Italien","Norge","Italien","1–0","Susan Mackensie",2,1],["EM",1995,null,"Tyskland","Sverige","3–2","Lena Videkull",3,1],
+ ["EM",1997,"Norge och Sverige","Tyskland","Italien","2–0",null,0,1],["EM",2001,"Tyskland","Tyskland","Sverige","1–0 golden goal",null,0,1],
+ ["EM",2005,"England","Tyskland","Norge","3–1","Inka Grings",4,1],["EM",2009,"Finland","Tyskland","England","6–2","Inka Grings",6,1],
+ ["EM",2013,"Sverige","Tyskland","Norge","1–0","Lotta Schelin",5,1],["EM",2017,"Nederländerna","Nederländerna","Danmark","4–2","Jodie Taylor",5,1],
+ ["EM",2022,"England","England","Tyskland","2–1 e.f.",null,0,1],["EM",2025,"Schweiz","England","Spanien","1–1, 3–1 på straffar","Esther González",4,1]];
 // lätt: bara vinnare och värdland från 1990 och framåt. medel: från 1966, också skyttekung, finalist och år. svår: alla år från 1930 (inga resultatfrågor, för svårt).
 const CUP_TYPES={latt:["winner","winner","winner","host","host","runner"],medel:["winner","winner","host","scorer","runner","year"],svar:["winner","host","scorer","scorer","runner","year"]};
-function cupQ(type,lvl,cat){const k=qLvlIdx(lvl);const SRC=cat==="vm"?TOURN.filter(c=>c[0]==="VM"):cat==="em"?TOURN.filter(c=>c[0]==="EM"):TOURN;const base=SRC.filter(c=>k===0?c[1]>=(cat==="em"?1980:1990):k===1?c[1]>=1966:true);const pk=a=>a[Math.floor(qrand()*a.length)];
+function cupQ(type,lvl,cat){const k=qLvlIdx(lvl);const[tour,g]=String(cat).split("_");// g: undefined = herr, d = dam, a = båda
+  const ALL=g==="d"?TOURN_W:g==="a"?TOURN.concat(TOURN_W):TOURN;const SRC=tour==="vm"?ALL.filter(c=>c[0]==="VM"):tour==="em"?ALL.filter(c=>c[0]==="EM"):ALL;
+  const base=SRC.filter(c=>c[8]?(k===0?c[1]>=(c[0]==="EM"?1995:1991):true):(k===0?c[1]>=(tour==="em"?1980:1990):k===1?c[1]>=1966:true));const pk=a=>a[Math.floor(qrand()*a.length)];
   // T = turneringen i löptext ("VM 1994"; engelska "the 1994 World Cup" / "Euro 2016"), T0 = utan "the" ("1994 World Cup final")
-  const T0=c=>LANG==="en"?(c[0]==="VM"?`${c[1]} World Cup`:`Euro ${c[1]}`):`${c[0]} ${c[1]}`,T=c=>LANG==="en"&&c[0]==="VM"?"the "+T0(c):T0(c);const cap=x=>x?x[0].toUpperCase()+x.slice(1):x;const L=x=>$t(x),LL=a=>a.map(L);const teams=[...new Set((k===0?base:SRC).flatMap(c=>[c[3],c[4]]))];const OLDN=new Set(["Sovjetunionen","Västtyskland","Jugoslavien","Tjeckoslovakien"]),NEWN=new Set(["Tyskland","Kroatien","Tjeckien","Ukraina","Ryssland"]);
+  const TN=c=>LANG==="en"?(c[0]==="VM"?(c[8]?"Women's World Cup":"World Cup"):(c[8]?"Women's Euro":"Euros")):(c[8]?"dam-":"")+c[0];
+  const T0=c=>LANG==="en"?(c[0]==="VM"?`${c[1]} ${c[8]?"Women's ":""}World Cup`:`${c[8]?"Women's ":""}Euro ${c[1]}`):`${c[8]?"dam-":""}${c[0]} ${c[1]}`,T=c=>LANG==="en"&&c[0]==="VM"?"the "+T0(c):T0(c);const cap=x=>x?x[0].toUpperCase()+x.slice(1):x;const L=x=>$t(x),LL=a=>a.map(L);const teams=[...new Set((k===0?base:SRC).flatMap(c=>[c[3],c[4]]))];const OLDN=new Set(["Sovjetunionen","Västtyskland","Jugoslavien","Tjeckoslovakien"]),NEWN=new Set(["Tyskland","Kroatien","Tjeckien","Ukraina","Ryssland"]);
   // fel svar som fanns som land det året (inte Sovjetunionen i EM 2024 eller Kroatien i VM 1974)
   const fits=(x,yr)=>yr>=1992?!OLDN.has(x):yr<1990?!NEWN.has(x):true;let curYr=0;
   const others=(a,pool)=>pickN([...new Set(pool)].filter(x=>x!==a&&(!curYr||fits(x,curYr))),3);
-  if(type==="winner"){const c=pk(base);curYr=c[1];const w=others(c[3],[c[4],...teams]);if(w.length<3)return null;return{key:c[0]+c[1],q:$t("Vem vann {0}?",[T(c)]),a:L(c[3]),opts:shuffle(LL([c[3],...w])),ex:$t("{0} vann {1} och slog {2} i finalen.",[L(c[3]),T(c),L(c[4])])};}
-  if(type==="runner"){const c=pk(base);curYr=c[1];const w=others(c[4],[c[3],...teams]);return{key:c[0]+c[1],q:$t("Vem förlorade finalen i {0}?",[T0(c)]),a:L(c[4]),opts:shuffle(LL([c[4],...w])),ex:$t("{0} förlorade mot {1} i finalen.",[L(c[4]),L(c[3])])};}
-  if(type==="host"){const c=pk(base);const w=others(c[2],(k===0?base:SRC).map(x=>x[2]));return{key:c[0]+c[1],q:$t("Var spelades {0}?",[T(c)]),a:L(c[2]),opts:shuffle(LL([c[2],...w])),ex:cap($t("{0} spelades i {1}.",[T(c),L(c[2])]))};}
+  if(type==="winner"){const c=pk(base);curYr=c[1];const w=others(c[3],[c[4],...teams]);if(w.length<3)return null;return{key:c[0]+c[1]+(c[8]?"d":""),q:$t("Vem vann {0}?",[T(c)]),a:L(c[3]),opts:shuffle(LL([c[3],...w])),ex:$t("{0} vann {1} och slog {2} i finalen.",[L(c[3]),T(c),L(c[4])])};}
+  if(type==="runner"){const c=pk(base);curYr=c[1];const w=others(c[4],[c[3],...teams]);return{key:c[0]+c[1]+(c[8]?"d":""),q:$t("Vem förlorade finalen i {0}?",[T0(c)]),a:L(c[4]),opts:shuffle(LL([c[4],...w])),ex:$t("{0} förlorade mot {1} i finalen.",[L(c[4]),L(c[3])])};}
+  if(type==="host"){const c=pk(base.filter(x=>x[2]));if(!c)return null;const w=others(c[2],(k===0?base:SRC).map(x=>x[2]).filter(Boolean));return{key:c[0]+c[1]+(c[8]?"d":""),q:$t("Var spelades {0}?",[T(c)]),a:L(c[2]),opts:shuffle(LL([c[2],...w])),ex:cap($t("{0} spelades i {1}.",[T(c),L(c[2])]))};}
   if(type==="scorer"){const c=pk(base.filter(x=>x[6]));if(!c)return null;const w=others(c[6],SRC.filter(x=>x[6]&&x[6]!==c[6]).map(x=>x[6]));
-    return{key:c[0]+c[1],q:$t("Vem vann skytteligan i {0}?",[T(c)]),a:c[6],opts:shuffle([c[6],...w]),ex:$t("{0} gjorde {1} mål i {2}.",[c[6],c[7],T(c)])};}
-  if(type==="final"){const c=pk(base);const w=others(c[5],SRC.map(x=>x[5]));return{key:c[0]+c[1],q:$t("Vad slutade finalen i {0} mellan {1} och {2}?",[T0(c),L(c[3]),L(c[4])]),a:c[5],opts:shuffle([c[5],...w]),ex:$t("{0} vann finalen {1}.",[L(c[3]),c[5]])};}
-  if(type==="year"){const c=pk(base.filter(x=>TOURN.filter(y=>y[0]===x[0]&&y[3]===x[3]).length===1));if(!c)return null;const w=others(String(c[1]),TOURN.filter(x=>x[0]===c[0]).map(x=>String(x[1])));
-    return{key:c[0]+c[1],q:$t("Vilket år vann {0} {1}?",[L(c[3]),$t(c[0])]),a:String(c[1]),opts:shuffle([String(c[1]),...w]),ex:$t("{0} vann {1} {2}, enda gången hittills.",[L(c[3]),$t(c[0]),c[1]])};}
+    return{key:c[0]+c[1]+(c[8]?"d":""),q:$t("Vem vann skytteligan i {0}?",[T(c)]),a:c[6],opts:shuffle([c[6],...w]),ex:$t("{0} gjorde {1} mål i {2}.",[c[6],c[7],T(c)])};}
+  if(type==="final"){const c=pk(base);const w=others(c[5],SRC.map(x=>x[5]));return{key:c[0]+c[1]+(c[8]?"d":""),q:$t("Vad slutade finalen i {0} mellan {1} och {2}?",[T0(c),L(c[3]),L(c[4])]),a:c[5],opts:shuffle([c[5],...w]),ex:$t("{0} vann finalen {1}.",[L(c[3]),c[5]])};}
+  if(type==="year"){const c=pk(base.filter(x=>SRC.filter(y=>y[0]===x[0]&&!y[8]===!x[8]&&y[3]===x[3]).length===1));if(!c)return null;const w=others(String(c[1]),SRC.filter(x=>x[0]===c[0]&&!x[8]===!c[8]).map(x=>String(x[1])));
+    return{key:c[0]+c[1]+(c[8]?"d":""),q:$t("Vilket år vann {0} {1}?",[L(c[3]),TN(c)]),a:String(c[1]),opts:shuffle([String(c[1]),...w]),ex:$t("{0} vann {1} {2}, enda gången hittills.",[L(c[3]),TN(c),c[1]])};}
   return null;}
 // utmaningskod: kategori, nivå och seed i sex tecken
 function makeCode(cat,lvl,seed){return(QCATS.findIndex(x=>x[0]===cat).toString(36)+qLvlIdx(lvl).toString(36)+seed.toString(36).padStart(4,"0")).toUpperCase();}
@@ -3240,7 +3259,8 @@ function startNormal(cat,lvl,seed,fromCode){seed=seed??Math.floor(Math.random()*
 function startDaily(){const td=today();const qs=genQuiz("flagga","medel",5,strSeed("groundly-daily-"+td));QUIZ={qs,i:0,score:0,picked:null,done:false,kind:"daily",cat:"flagga",lvl:"medel",day:td};quizSaved="";}
 // quizet är bara flaggor (enklast och roligast); de andra kategorierna finns kvar för gamla utmaningskoder
 const QMODES=["flagga","vm","em","cup"];const qMode=()=>QMODES.includes(quizMode)?quizMode:"flagga";
-function newQuiz(){startNormal(qMode(),quizLevel);}
+let qGender="h";try{const g=store.get("fk-qgen");if(g==="h"||g==="d"||g==="a")qGender=g;}catch(e){}
+function newQuiz(){const m=qMode();startNormal(m==="flagga"||qGender==="h"?m:m+"_"+qGender,quizLevel);}
 function renderQuizTab(){const el=document.getElementById("quizList");if(el)el.innerHTML=renderQuiz();}
 function rerenderQuizHost(){if(mode==="quiz")renderQuizTab();else if(mode==="tips")renderTips();}
 const qName=uid=>uid===myId?"Du":(QNAMES[uid]||(typeof NAMES!=="undefined"&&NAMES[uid])||$t("Spelare"));
@@ -3262,7 +3282,7 @@ function renderQuiz(){loadFlags43();
   const modes=`<div class="chips wrapchips" role="group" aria-label="${$t("Frågor om")}">${QCATS.map(([k,l])=>`<button class="chip" data-qmode="${k}" aria-pressed="${quizMode===k}">${l}</button>`).join("")}</div>`;
   const levels=`<div class="chips" role="group" aria-label="${$t("Svårighetsgrad")}">${QLEVELS.map(([k,l])=>`<button class="chip" data-qlevel="${k}" aria-pressed="${quizLevel===k}">${l}</button>`).join("")}</div>`;
   const mine=myId&&QSCORES[myId];
-  if(!QUIZ)return dailyCard()+`<article class="tip quiz"><h2 class="name">${$t("Fotbollsquiz")}</h2><div class="chips" role="group" aria-label="${$t("Quiz")}">${[["flagga",$t("Flaggor")],["vm",$t("VM")],["em",$t("EM")],["cup",LANG==="en"?"Both":$t("VM & EM")]].map(([k,l])=>`<button class="chip" data-qmode="${k}" aria-pressed="${qMode()===k}">${l}</button>`).join("")}</div><p>${qMode()==="cup"?$t("Tio frågor om alla VM sedan 1930 och alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar."):qMode()==="vm"?$t("Tio frågor om alla VM sedan 1930: vinnare, värdländer, finalister och skyttekungar."):qMode()==="em"?$t("Tio frågor om alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar."):$t("Tio flaggor. Vilket landslag hör flaggan till?")}</p><p class="meta">${$t("Svårighetsgrad")}</p>${levels}
+  if(!QUIZ)return dailyCard()+`<article class="tip quiz"><h2 class="name">${$t("Fotbollsquiz")}</h2><div class="chips" role="group" aria-label="${$t("Quiz")}">${[["flagga",$t("Flaggor")],["vm",$t("VM")],["em",$t("EM")],["cup",LANG==="en"?"Both":$t("VM & EM")]].map(([k,l])=>`<button class="chip" data-qmode="${k}" aria-pressed="${qMode()===k}">${l}</button>`).join("")}</div>${qMode()==="flagga"?"":`<div class="chips" role="group" aria-label="${$t("Herr eller dam")}">${[["h",$t("Herr")],["d",$t("Dam")],["a",$t("Båda")]].map(([k,l])=>`<button class="chip" data-qgen="${k}" aria-pressed="${qGender===k}">${l}</button>`).join("")}</div>`}<p>${qMode()==="cup"?$t("Tio frågor om VM och EM: vinnare, värdländer, finalister och skyttekungar."):qMode()==="vm"?$t("Tio frågor om VM: vinnare, värdländer, finalister och skyttekungar."):qMode()==="em"?$t("Tio frågor om EM: vinnare, värdländer, finalister och skyttekungar."):$t("Tio flaggor. Vilket landslag hör flaggan till?")}</p><p class="meta">${$t("Svårighetsgrad")}</p>${levels}
     <div class="actions"><button class="btn primary" data-qstart="1">${$t("Starta quiz")}</button></div>${mine&&+mine.best>=0&&mine.played?`<p class="meta">${$t("Ditt bästa: {0}/10",[+mine.best])}</p>`:""}
     <form class="qcode" id="qCodeForm"><label class="fld" for="qCodeIn">${$t("Har du fått en kod från en kompis?")}<input id="qCodeIn" maxlength="8" autocomplete="off" autocapitalize="characters" placeholder="${$t("31K7QA")}"></label><button class="btn" type="submit">${$t("Spela koden")}</button></form>${qCodeErr?`<p class="err">${esc(qCodeErr)}</p>`:""}</article>
     <article class="tip"><h2 class="name">${$t("Topplista")}</h2>${quizBoard()||`<p class="meta">${$t("Topplistan visas när du är inloggad.")}</p>`}</article>`;
@@ -3297,8 +3317,9 @@ function startQuiz(db){quizNs=db;if(!db){quizState="none";return;}
   db.collection("quiz").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});QSCORES=o;quizState="ready";if(mode==="hem")renderHome();
     const ids=Object.keys(o).filter(id=>id!==myId&&!(id in QNAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{QNAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="quiz")renderQuizTab();}).catch(()=>{});
     if(mode==="quiz"&&(!QUIZ||QUIZ.done))renderQuizTab();},()=>{quizState="none";});}
-const isQuizBtn=t=>t.dataset.qmode||t.dataset.qlevel||t.dataset.qstart||t.dataset.qdaily||t.dataset.qboard||t.dataset.qopt!==undefined||t.dataset.qnext||t.dataset.qcopy||t.dataset.qshare||t.dataset.qhome;
+const isQuizBtn=t=>t.dataset.qmode||t.dataset.qlevel||t.dataset.qstart||t.dataset.qdaily||t.dataset.qboard||t.dataset.qopt!==undefined||t.dataset.qnext||t.dataset.qcopy||t.dataset.qshare||t.dataset.qgen||t.dataset.qhome;
 function quizClick(t){
+  if(t.dataset.qgen){qGender=t.dataset.qgen;store.set("fk-qgen",qGender);rerenderQuizHost();return;}
   if(t.dataset.qmode){quizMode=t.dataset.qmode;store.set("fk-qcat",quizMode);rerenderQuizHost();return;}
   if(t.dataset.qlevel){quizLevel=t.dataset.qlevel;store.set("fk-qlevel",quizLevel);rerenderQuizHost();return;}
   if(t.dataset.qboard){qBoardTab=t.dataset.qboard;rerenderQuizHost();return;}

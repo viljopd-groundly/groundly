@@ -2134,11 +2134,8 @@
  "{0} vann finalen {1}.": "{0} won the final {1}.",
  "Vilket år vann {0} {1}?": "In which year did {0} win the {1}?",
  "{0} vann {1} {2}, enda gången hittills.": "{0} won the {1} in {2}, their only title so far.",
- "Tio frågor om alla VM sedan 1930 och alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on every World Cup since 1930 and every Euros since 1960: winners, hosts, finalists and top scorers.",
  "VM": "World Cup",
  "EM": "Euros",
- "Tio frågor om alla VM sedan 1930: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on every World Cup since 1930: winners, hosts, finalists and top scorers.",
- "Tio frågor om alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on every Euros since 1960: winners, hosts, finalists and top scorers.",
  "Länken är kopierad. Skicka den till en kompis.": "Link copied. Send it to a friend.",
  "Jag fick {0} av {1} rätt i Groundlys quiz. Klarar du samma frågor? Tryck på länken eller skriv koden {2} under Quiz.": "I got {0} out of {1} right in the Groundly quiz. Can you beat me on the same questions? Tap the link or enter the code {2} under Quiz.",
  "Västtyskland": "West Germany",
@@ -2150,5 +2147,12 @@
  "Belgien och Nederländerna": "Belgium and the Netherlands",
  "Österrike och Schweiz": "Austria and Switzerland",
  "Polen och Ukraina": "Poland and Ukraine",
- "elva länder i Europa": "eleven countries across Europe"
+ "elva länder i Europa": "eleven countries across Europe",
+ "Båda": "Both",
+ "Kina": "China",
+ "Australien och Nya Zeeland": "Australia and New Zealand",
+ "Norge och Sverige": "Norway and Sweden",
+ "Tio frågor om VM och EM: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on World Cups and Euros: winners, hosts, finalists and top scorers.",
+ "Tio frågor om VM: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on the World Cup: winners, hosts, finalists and top scorers.",
+ "Tio frågor om EM: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on the Euros: winners, hosts, finalists and top scorers."
 }
