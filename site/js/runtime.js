@@ -74,7 +74,7 @@ async function boot() {
   }
 
   // ---------- db ----------
-  const LAZY = { forum: ["forum", "tips", "profil"], pubs: ["klubbar", "arenor", "landslag", "matcher", "tips"], tipnotes: ["tips", "mine"], fixes: ["mine"], comments: ["reportage"] };
+  const LAZY = { forum: ["forum", "tips", "profil", "hem"], pubs: ["klubbar", "arenor", "landslag", "matcher", "tips"], tipnotes: ["tips", "mine"], fixes: ["mine"], comments: ["reportage"] };
   // _u = senast ändrad (servertid). Används för att bara hämta det som ändrats sedan cachen byggdes.
   // Fältet syns aldrig för appen; _gone markerar ett raderat konto tills cachen byggts om.
   const CAN_DELTA = !!(F.query && F.where && F.serverTimestamp && F.Timestamp);
@@ -136,7 +136,7 @@ async function boot() {
         onSnapshot(next, onErr) {
           const full = () => F.onSnapshot(ref, s => next(wrap(s)), e => onErr && onErr(mapErr(e)));
           const sub = () => cached(name, ref, next, onErr, full);
-          // samlingar som bara behövs i vissa vyer hämtas först när man öppnar vyn (sparar läsningar)
+          // samlingar som bara behövs i vissa vyer hämtas först när man öppnar vyn (sparar läsningar). Forumet behövs på Hem (rutan Community), så det hämtas direkt.
           const need = LAZY[name];
           if (!need || need.includes(window.__gmode)) return sub();
           let off = null, dead = false;
