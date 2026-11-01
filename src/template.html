@@ -2054,7 +2054,7 @@ function renderMine(){
       <label class="fld" for="amVenue">${$t("Arena")}<input id="amVenue" list="allVenues" maxlength="80" placeholder="${$t("t.ex. Vapenvallen eller Bergshamra IP")}"></label>
       <div class="row2"><label class="fld" for="amCity">${$t("Ort")}<input id="amCity" maxlength="60" placeholder="${$t("t.ex. Huskvarna")}"></label>
       <label class="fld" for="amCountry">${$t("Land")}<input id="amCountry" list="allCountries" maxlength="40" placeholder="${$t("Sverige")}"></label></div>
-      <label class="fld" for="amComp">${$t("Serie eller turnering (valfritt)")}<input id="amComp" maxlength="60" placeholder="${$t("t.ex. Division 3 Sydvästra Götaland")}"></label>
+      <label class="fld" for="amComp">${$t("Serie eller turnering (valfritt)")}<input id="amComp" list="allComps" maxlength="60" placeholder="${$t("t.ex. Division 3 Sydvästra Götaland")}"></label>
       </fieldset>
       <label class="fld" for="amNote">${$t("Anteckning (valfritt)")}<textarea id="amNote" rows="2" maxlength="500" placeholder="${$t("Stämning, sällskap, vad du åt…")}"></textarea></label>
       <p class="hint" id="amDerby"></p><p class="hint">${$t("Finns inte laget i listan går det bra att skriva namnet ändå. För lag i appen fylls arenan i automatiskt; för lägre serier skriver du arenan själv.")}</p>
@@ -2228,11 +2228,22 @@ function visitedStadiums(){const s=new Set();if(myState!=="ready")return s;visit
   const keys=new Set([...s].map(x=>arenaKey(x)));MY.attended.forEach(a=>{if(a.venue){const k=arenaKey(a.venue);if(k&&!keys.has(k)){keys.add(k);s.add(a.venue);}}});return s;}
 // arenaförslag och autoifyllnad när man loggar en match
 let venueListFor=null;
-function fillVenueList(){const sig=MY.attended.length;if(venueListFor===sig&&document.getElementById("allVenues"))return;venueListFor=sig;
+function fillVenueList(){const sig=MY.attended.length+":"+MATCHES.length;if(venueListFor===sig&&document.getElementById("allVenues"))return;venueListFor=sig;
   const names=new Set();arenas().forEach(x=>names.add(x.s));MY.attended.forEach(a=>{if(a.venue)names.add(a.venue);});
   let dl=document.getElementById("allVenues");if(!dl){document.body.insertAdjacentHTML("beforeend",'<datalist id="allVenues"></datalist><datalist id="allCountries"></datalist>');dl=document.getElementById("allVenues");
     document.getElementById("allCountries").innerHTML=[...new Set(Object.values(C).map(c=>c.c).filter(Boolean))].sort((a,b)=>a.localeCompare(b,LANG)).map(c=>`<option value="${esc(c)}">`).join("");}
-  dl.innerHTML=[...names].sort((a,b)=>a.localeCompare(b,LANG)).map(n=>`<option value="${esc(n)}">`).join("");}
+  dl.innerHTML=[...names].sort((a,b)=>a.localeCompare(b,LANG)).map(n=>`<option value="${esc(n)}">`).join("");
+  // serier och turneringar: alla serier i appen, cuperna i matchschemat och det man själv skrivit förut
+  const comps=new Set();Object.values(C).forEach(c=>{if(c.l&&!isNat(c)&&c.l!=="Non-league")comps.add(c.l);});MATCHES.forEach(m=>{if(m.comp)comps.add(m.comp);});MY.attended.forEach(a=>{if(a.comp)comps.add(a.comp);});
+  let cl=document.getElementById("allComps");if(!cl){document.body.insertAdjacentHTML("beforeend",'<datalist id="allComps"></datalist>');cl=document.getElementById("allComps");}
+  cl.innerHTML=[...comps].sort((a,b)=>a.localeCompare(b,LANG)).map(n=>`<option value="${esc(n)}">`).join("");}
+// serien fylls i av sig själv när lagen och datumet är valda (matchen i schemat först, annars hemmalagets serie). Skriver man själv rörs den inte.
+function guessComp(pre){const g=k=>(document.getElementById(pre+k)||{}).value||"";const h=clubIdFromName(g("Home")),a=clubIdFromName(g("Away")),d=g("Date");
+  if(h&&a&&d){const m=MATCHES.find(m=>m.home===h&&m.away===a&&(m.kickoff?koDay(m.kickoff):m.dateFrom)===d);if(m&&m.comp)return m.comp;}
+  const ch=h&&C[h],ca=a&&C[a];if(ch&&isNat(ch)&&ca&&isNat(ca))return"";if(ch&&ch.l&&!isNat(ch))return ch.l;if(ca&&ca.l&&!isNat(ca))return ca.l;return"";}
+document.addEventListener("input",e=>{const id=e.target.id;if(id==="amComp"||id==="eaComp"){e.target.dataset.auto="";return;}
+  const pre=/^am(Home|Away|Date)$/.test(id)?"am":null;if(!pre)return;const el=document.getElementById(pre+"Comp");if(!el)return;
+  if(el.value.trim()&&el.dataset.auto!=="1")return;const v=guessComp(pre);el.value=v;el.dataset.auto=v?"1":"";});
 function venueMeta(name){const k=arenaKey(name);if(!k)return null;const x=arenas().find(y=>y.k===k);if(x)return{city:x.city,country:x.c};
   const a=MY.attended.slice().reverse().find(z=>z.venue&&arenaKey(z.venue)===k);return a?{city:a.city||"",country:a.country||""}:null;}
 document.addEventListener("input",e=>{if(e.target.id!=="amHome"&&e.target.id!=="amAway")return;const el=document.getElementById("amDerby");if(!el)return;
@@ -3214,7 +3225,7 @@ function editAttForm(a){return`<form class="compose" id="editAttForm" data-att="
       <label class="fld" for="eaVenue">${$t("Arena")}<input id="eaVenue" list="allVenues" maxlength="80" placeholder="${$t("t.ex. Vapenvallen eller Bergshamra IP")}" value="${esc(a.venue||"")}"></label>
       <div class="row2"><label class="fld" for="eaCity">${$t("Ort")}<input id="eaCity" maxlength="60" placeholder="${$t("t.ex. Huskvarna")}" value="${esc(a.city||"")}"></label>
       <label class="fld" for="eaCountry">${$t("Land")}<input id="eaCountry" list="allCountries" maxlength="40" placeholder="${$t("Sverige")}" value="${esc(a.country||"")}"></label></div>
-      <label class="fld" for="eaComp">${$t("Serie eller turnering (valfritt)")}<input id="eaComp" maxlength="60" placeholder="${$t("t.ex. Division 3 Sydvästra Götaland")}" value="${esc(a.comp||"")}"></label>
+      <label class="fld" for="eaComp">${$t("Serie eller turnering (valfritt)")}<input id="eaComp" list="allComps" maxlength="60" placeholder="${$t("t.ex. Division 3 Sydvästra Götaland")}" value="${esc(a.comp||"")}"></label>
       </fieldset>
   <label class="fld" for="eaWith">${$t("Sällskap")}<input id="eaWith" maxlength="120" placeholder="${$t("t.ex. Pelle, Anna")}" value="${esc(a.with||"")}"></label>
   <label class="fld" for="eaNote">${$t("Anteckning")}<textarea id="eaNote" rows="2" maxlength="500">${esc(a.note||"")}</textarea></label>
