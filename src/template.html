@@ -2242,7 +2242,7 @@ function guessComp(pre){const g=k=>(document.getElementById(pre+k)||{}).value||"
   if(h&&a&&d){const m=MATCHES.find(m=>m.home===h&&m.away===a&&(m.kickoff?koDay(m.kickoff):m.dateFrom)===d);if(m&&m.comp)return m.comp;}
   const ch=h&&C[h],ca=a&&C[a];if(ch&&isNat(ch)&&ca&&isNat(ca))return"";if(ch&&ch.l&&!isNat(ch))return ch.l;if(ca&&ca.l&&!isNat(ca))return ca.l;return"";}
 document.addEventListener("input",e=>{const id=e.target.id;if(id==="amComp"||id==="eaComp"){e.target.dataset.auto="";return;}
-  const pre=/^am(Home|Away|Date)$/.test(id)?"am":null;if(!pre)return;const el=document.getElementById(pre+"Comp");if(!el)return;
+  const pre=/^am(Home|Away|Date)$/.test(id)?"am":/^ea(Home|Away|Date)$/.test(id)?"ea":null;if(!pre)return;const el=document.getElementById(pre+"Comp");if(!el)return;
   if(el.value.trim()&&el.dataset.auto!=="1")return;const v=guessComp(pre);el.value=v;el.dataset.auto=v?"1":"";});
 function venueMeta(name){const k=arenaKey(name);if(!k)return null;const x=arenas().find(y=>y.k===k);if(x)return{city:x.city,country:x.c};
   const a=MY.attended.slice().reverse().find(z=>z.venue&&arenaKey(z.venue)===k);return a?{city:a.city||"",country:a.country||""}:null;}
@@ -2251,14 +2251,14 @@ document.addEventListener("input",e=>{if(e.target.id!=="amHome"&&e.target.id!=="
   el.innerHTML=dd?`<span class="pill ec">${ic("flame")} ${$t("Det här är {0}",[esc(dd[1])])}</span>`:"";});
 // arena, ort och land fylls i av sig själv. Det man skrivit själv rörs inte; det som fyllts i automatiskt följer med när man byter lag.
 document.addEventListener("input",e=>{const id=e.target.id;if(/^(am|ea)(Venue|City|Country)$/.test(id))e.target.dataset.auto="";
-  const pre=/^am(Home|Away|Date)$/.test(id)||id==="amVenue"?"am":id==="eaVenue"?"ea":null;if(!pre)return;
+  const pre=/^am(Home|Away|Date)$/.test(id)||id==="amVenue"?"am":/^ea(Home|Away|Date)$/.test(id)||id==="eaVenue"?"ea":null;if(!pre)return;
   const el=k=>document.getElementById(pre+k);const put=(k,v)=>{const x=el(k);if(!x)return;if(x.value.trim()&&x.dataset.auto!=="1")return;x.value=v||"";x.dataset.auto=v?"1":"";};
   if(id==="amVenue"||id==="eaVenue"){const m=venueMeta(e.target.value);if(m){put("City",m.city);put("Country",m.country);}return;}
   const g=k=>(el(k)||{}).value||"";const h=clubIdFromName(g("Home")),a=clubIdFromName(g("Away")),d=g("Date");
   // matchen i schemat först (cupfinaler och landskamper kan spelas på annan ort), annars hemmalagets arena
   const m=h&&a&&d?MATCHES.find(m=>m.home===h&&m.away===a&&(m.kickoff?koDay(m.kickoff):m.dateFrom)===d):null;const hc=h&&C[h];
   const ven=(m&&m.venue)||(hc&&(venueAt(h,d)||hc.s))||"",city=(m&&m.city)||(hc&&hc.city)||"",land=(m&&m.country)||(hc&&!isNat(hc)?hc.c:hc&&hc.c)||"";
-  if(id==="amAway"&&!m)return;put("Venue",ven);put("City",city?$t(city):"");put("Country",land);});
+  if((id==="amAway"||id==="eaAway"||(pre==="ea"&&id==="eaDate"))&&!m)return;put("Venue",ven);put("City",city?$t(city):"");put("Country",land);});
 const myRating=c=>{const k=arenaKey(c.s);return k&&myId&&RATINGS[myId]&&RATINGS[myId].r?RATINGS[myId].r[k]||null:null;};
 const canRate=c=>!!c.s&&!!myId&&ratingsState==="ready"&&visitedStadiums().has(c.s);
 function ratingSummary(a){
@@ -3225,13 +3225,15 @@ document.addEventListener("submit",e=>{if(e.target.id!=="qCodeForm")return;e.pre
 // ---------- redigera sparade matcher och export ----------
 let editAtt=null;
 function editAttForm(a){return`<form class="compose" id="editAttForm" data-att="${esc(a.id)}"><h2>${$t("Redigera matchen")}</h2>
+  <div class="row2"><label class="fld" for="eaHome">${$t("Hemmalag")}<input id="eaHome" list="allClubs" required maxlength="80" value="${esc(a.homeName||"")}"></label>
+  <label class="fld" for="eaAway">${$t("Bortalag")}<input id="eaAway" list="allClubs" required maxlength="80" value="${esc(a.awayName||"")}"></label></div>
   <div class="row2"><label class="fld" for="eaDate">${$t("Datum")}<input id="eaDate" type="date" required max="${today()}" value="${esc(a.date)}"></label>
   <label class="fld" for="eaScoreH">${$t("Resultat (hemma–borta)")}${scoreFields("eaScore",a.score||"",false)}</label></div>
       <fieldset class="matchfs"><legend>${$t("Arena och serie")}</legend>
-      <label class="fld" for="eaVenue">${$t("Arena")}<input id="eaVenue" list="allVenues" maxlength="80" placeholder="${$t("t.ex. Vapenvallen eller Bergshamra IP")}" value="${esc(a.venue||"")}"></label>
-      <div class="row2"><label class="fld" for="eaCity">${$t("Ort")}<input id="eaCity" maxlength="60" placeholder="${$t("t.ex. Huskvarna")}" value="${esc(a.city||"")}"></label>
-      <label class="fld" for="eaCountry">${$t("Land")}<input id="eaCountry" list="allCountries" maxlength="40" placeholder="${$t("Sverige")}" value="${esc(a.country||"")}"></label></div>
-      <label class="fld" for="eaComp">${$t("Serie eller turnering (valfritt)")}<input id="eaComp" list="allComps" maxlength="60" placeholder="${$t("t.ex. Division 3 Sydvästra Götaland")}" value="${esc(a.comp||"")}"></label>
+      <label class="fld" for="eaVenue">${$t("Arena")}<input id="eaVenue" data-auto="1" list="allVenues" maxlength="80" placeholder="${$t("t.ex. Vapenvallen eller Bergshamra IP")}" value="${esc(a.venue||"")}"></label>
+      <div class="row2"><label class="fld" for="eaCity">${$t("Ort")}<input id="eaCity" data-auto="1" maxlength="60" placeholder="${$t("t.ex. Huskvarna")}" value="${esc(a.city||"")}"></label>
+      <label class="fld" for="eaCountry">${$t("Land")}<input id="eaCountry" data-auto="1" list="allCountries" maxlength="40" placeholder="${$t("Sverige")}" value="${esc(a.country||"")}"></label></div>
+      <label class="fld" for="eaComp">${$t("Serie eller turnering (valfritt)")}<input id="eaComp" data-auto="1" list="allComps" maxlength="60" placeholder="${$t("t.ex. Division 3 Sydvästra Götaland")}" value="${esc(a.comp||"")}"></label>
       </fieldset>
   <label class="fld" for="eaWith">${$t("Sällskap")}<input id="eaWith" maxlength="120" placeholder="${$t("t.ex. Pelle, Anna")}" value="${esc(a.with||"")}"></label>
   <label class="fld" for="eaNote">${$t("Anteckning")}<textarea id="eaNote" rows="2" maxlength="500">${esc(a.note||"")}</textarea></label>
@@ -3239,7 +3241,10 @@ function editAttForm(a){return`<form class="compose" id="editAttForm" data-att="
 document.addEventListener("submit",e=>{if(e.target.id!=="editAttForm")return;e.preventDefault();const id=e.target.dataset.att;const g=k=>document.getElementById(k).value.trim();
   const date=g("eaDate");if(!date){myErr=$t("Fyll i ett datum.");renderMine();return;}let score=g("eaScore").replace(/\s*[-—]\s*/,"–").slice(0,12);
   if(score&&!/^\d+–\d+$/.test(score)){myErr=$t("Skriv resultatet som till exempel 2–1.");renderMine();return;}
-  editAtt=null;mutate(d=>{const a=d.attended.find(x=>x.id===id);if(!a)return;a.date=date;a.score=score||null;a.with=g("eaWith").slice(0,120);a.note=g("eaNote").slice(0,500);a.venue=g("eaVenue").slice(0,80)||null;a.city=g("eaCity").slice(0,60)||null;a.country=g("eaCountry").slice(0,40)||null;a.comp=g("eaComp").slice(0,60)||null;});});
+  const hn=g("eaHome"),an=g("eaAway");if(!hn||!an){myErr=$t("Fyll i hemmalag, bortalag och datum.");renderMine();return;}const hid=clubIdFromName(hn),aid=clubIdFromName(an);
+  editAtt=null;mutate(d=>{const a=d.attended.find(x=>x.id===id);if(!a)return;
+    // byter man lag gäller inte längre kopplingen till matchen i schemat eller arkivet
+    if(hn!==a.homeName||an!==a.awayName){a.home=hid||null;a.away=aid||null;a.homeName=hid?C[hid].n:hn.slice(0,80);a.awayName=aid?C[aid].n:an.slice(0,80);a.mid=null;}a.date=date;a.score=score||null;a.with=g("eaWith").slice(0,120);a.note=g("eaNote").slice(0,500);a.venue=g("eaVenue").slice(0,80)||null;a.city=g("eaCity").slice(0,60)||null;a.country=g("eaCountry").slice(0,40)||null;a.comp=g("eaComp").slice(0,60)||null;});});
 function csvCell(v){v=v==null?"":String(v);return/[";\n]/.test(v)?`"${v.replace(/"/g,'""')}"`:v;}
 async function exportCsv(){const rows=[[$t("Datum"),$t("Hemmalag"),$t("Bortalag"),$t("Resultat"),$t("Arena"),$t("Stad"),$t("Land"),$t("Turnering"),$t("Sällskap"),$t("Anteckning")]];
   MY.attended.slice().sort((a,b)=>a.date.localeCompare(b.date)).forEach(a=>rows.push([a.date,a.homeName,a.awayName,a.score,a.venue,a.city,a.country,a.comp,a.with,a.note]));
