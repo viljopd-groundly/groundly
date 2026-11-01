@@ -3760,7 +3760,7 @@ function latestHtml(){const parts=[];
     const ym=new Date().toISOString().slice(0,7);const hot=th.map(t=>({t,n:ps.filter(p=>p.parent===t.key&&String(p.at).startsWith(ym)).length})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
     const card=(t,lbl,extra)=>`<button class="hcard" data-homethread="${esc(t.key)}"><span class="htxt"><span class="lbl">${lbl}</span><b>${esc(t.title)}</b><span class="meta">${esc(KIND_L[t.kind]||$t("Inlägg"))} · ${esc(who(t.uid))} · ${esc(ago(lastAt(t)))}${extra||""}</span></span></button>`;
     if(last)parts.push(card(last,$t("Senast i forumet")));if(hot&&(!last||hot.t.key!==last.key))parts.push(card(hot.t,$t("Hetast i forumet denna månad"),$t(" · {0} svar",[hot.n])));}
-  return`<article class="tip community"><div class="lbl">${$t("Community och forum")}</div><h2 class="name">${$t("Från communityn")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras reportage.")}</p>${parts.length?`<div class="hgrid">${parts.join("")}</div>`:""}
+  return`<article class="tip community"><h2 class="name">${$t("Community och forum")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras reportage.")}</p>${parts.length?`<div class="hgrid">${parts.join("")}</div>`:""}
     <div class="actions"><button class="btn small primary" data-gomode="forum">${ic("chat")} ${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs reportage")}</button></div>
     ${writersStrip()}</article>`;}
 function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().toISOString().slice(0,7);const cnt={};
