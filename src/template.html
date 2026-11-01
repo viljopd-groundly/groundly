@@ -2474,13 +2474,13 @@ async function drawMap(){if(!document.getElementById("img-map"))return;await fon
   x.textAlign="right";x.fillStyle="#A9C1B0";x.font=`600 30px ${F_B}`;x.fillText(regL,W-P-20,hy-6);x.textAlign="left";
   const top=st?330:250,small=st?230:200,gap=22,bottom=H-(st?170:130);const mh=bottom-top-gap-small;
   // kartbiljetten
-  const sw=74,bx=P,by=top,bw=W-2*P;x.save();rrect(x,bx,by,bw,mh,16);x.clip();x.fillStyle="#E4E9DF";x.fillRect(bx,by,bw,mh);x.fillStyle=SK.STUBS[0];x.fillRect(bx,by,sw,mh);
+  const sw=74,bx=P,by=top,bw=W-2*P;x.save();rrect(x,bx,by,bw,mh,16);x.clip();x.fillStyle="#E4E9DF";x.fillRect(bx,by,bw,mh);x.save();x.beginPath();x.rect(bx+sw,by,bw-sw,mh);x.clip();
   const mx=bx+sw+16,my=by+16,mw=bw-sw-32,mhh=mh-32;const sc=Math.min(mw/R.w,mhh/R.h);const ox=mx+(mw-R.w*sc)/2,oy=my+(mhh-R.h*sc)/2;
   x.save();x.translate(ox,oy);x.scale(sc,sc);if(R.path2){x.fillStyle="#C9D6C6";x.fill(new Path2D(R.path2));}x.fillStyle="#9DB8A3";x.fill(new Path2D(R.path));x.restore();
   let outside=isSe?allPins.length-pins.length:0;const maxN=Math.max(1,...pins.map(p=>p.n));
   pins.slice().sort((a,b)=>a.n-b.n).forEach(p=>{if(!inRegion(p.ll,R)){outside++;return;}const[px,py]=projPin(p.ll,R);const X=ox+px*sc,Y=oy+py*sc;const r=9+7*(p.n/maxN);
     x.fillStyle=SK.PAPER;x.beginPath();x.arc(X,Y,r+5,0,Math.PI*2);x.fill();x.fillStyle=SK.INK;x.beginPath();x.arc(X,Y,r,0,Math.PI*2);x.fill();x.fillStyle=SK.ACC;x.beginPath();x.arc(X,Y,r*.42,0,Math.PI*2);x.fill();});
-  x.restore();
+  x.restore();x.fillStyle=SK.STUBS[0];x.fillRect(bx,by,sw,mh);x.restore();
   x.fillStyle=SK.BG;[by,by+mh].forEach(cy=>{x.beginPath();x.arc(bx+sw,cy,13,0,Math.PI*2);x.fill();});x.strokeStyle=SK.PERF;x.lineWidth=4;x.setLineDash([10,9]);x.beginPath();x.moveTo(bx+sw,by+18);x.lineTo(bx+sw,by+mh-18);x.stroke();x.setLineDash([]);
   x.save();x.translate(bx+sw/2+11,by+mh/2);x.rotate(-Math.PI/2);x.fillStyle=SK.PAPER;x.textAlign="center";x.font=`800 32px ${F_T}`;x.fillText($t("KARTA"),0,0);x.restore();
   if(!pins.length){x.fillStyle=SK.INK;x.font=`600 34px ${F_B}`;x.textAlign="center";x.fillText($t("Logga matcher du varit på så fylls kartan på"),bx+sw+(bw-sw)/2,by+mh/2);x.textAlign="left";}
