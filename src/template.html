@@ -3187,7 +3187,8 @@ function uniqBy(arr,f){const m=new Map();arr.forEach(x=>{const k=f(x);if(!m.has(
 function genQuiz(cat,lvl,n,seed){const prev=qrand;qrand=seed==null?Math.random:seededRand(seed);
   try{const pool=quizPool(cat,lvl);const isCup=cat==="cup"||cat==="vm"||cat==="em";const types=isCup?CUP_TYPES[lvl]||CUP_TYPES.medel:QTYPES[cat]||QTYPES.mix;const qs=[],seen=new Set(),used=new Map();let g=0;
     while(qs.length<n&&g++<600){const ty=types[Math.floor(qrand()*types.length)];if(new Set(types).size>1&&(used.get(ty)||0)>=Math.max(3,Math.ceil(n/2)))continue;const q=isCup?cupQ(ty,lvl,cat):makeQ(ty,pool,cat);const qk=q&&q.q+"|"+q.a;
-      if(!q||seen.has(qk)||new Set(q.opts).size!==q.opts.length)continue;seen.add(qk);used.set(ty,(used.get(ty)||0)+1);qs.push(q);}
+      // samma rätta svar får inte komma två gånger i ett quiz (t.ex. Brasilien som vinnare av både VM 1970 och 2002)
+      if(!q||seen.has(qk)||seen.has("a|"+q.a)||new Set(q.opts).size!==q.opts.length)continue;seen.add(qk);seen.add("a|"+q.a);used.set(ty,(used.get(ty)||0)+1);qs.push(q);}
     return qs;}finally{qrand=prev;}}
 // ---------- VM & EM: vinnare, finalist, värd, skyttekung och finalresultat ----------
 // [turnering, år, värd, vinnare, finalist, finalresultat, skyttekung (null när flera delade), mål]
@@ -3214,7 +3215,7 @@ const TOURN=[
  ["EM",2016,"Frankrike","Portugal","Frankrike","1–0 e.f.","Antoine Griezmann",6],["EM",2020,"elva länder i Europa","Italien","England","1–1, 3–2 på straffar",null,0],
  ["EM",2024,"Tyskland","Spanien","England","2–1",null,0]];
 // lätt: bara vinnare och värdland från 1990 och framåt. medel: från 1966, också skyttekung, finalist och år. svår: alla år från 1930 (inga resultatfrågor, för svårt).
-const CUP_TYPES={latt:["winner","winner","winner","host"],medel:["winner","winner","host","scorer","runner","year"],svar:["winner","host","scorer","scorer","runner","year"]};
+const CUP_TYPES={latt:["winner","winner","winner","host","host","runner"],medel:["winner","winner","host","scorer","runner","year"],svar:["winner","host","scorer","scorer","runner","year"]};
 function cupQ(type,lvl,cat){const k=qLvlIdx(lvl);const SRC=cat==="vm"?TOURN.filter(c=>c[0]==="VM"):cat==="em"?TOURN.filter(c=>c[0]==="EM"):TOURN;const base=SRC.filter(c=>k===0?c[1]>=1990:k===1?c[1]>=1966:true);const pk=a=>a[Math.floor(qrand()*a.length)];
   const T=c=>`${$t(c[0])} ${c[1]}`;const teams=[...new Set((k===0?base:SRC).flatMap(c=>[c[3],c[4]]))];const OLDN=new Set(["Sovjetunionen","Västtyskland","Jugoslavien","Tjeckoslovakien"]),NEWN=new Set(["Tyskland","Kroatien","Tjeckien","Ukraina","Ryssland"]);
   // fel svar som fanns som land det året (inte Sovjetunionen i EM 2024 eller Kroatien i VM 1974)
