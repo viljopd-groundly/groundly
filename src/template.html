@@ -3194,8 +3194,9 @@ function makeCode(cat,lvl,seed){return(QCATS.findIndex(x=>x[0]===cat).toString(3
 function parseCode(s){s=String(s||"").trim().toUpperCase().replace(/[^0-9A-Z]/g,"");if(s.length!==6)return null;const ci=parseInt(s[0],36),li=parseInt(s[1],36),seed=parseInt(s.slice(2),36);
   if(!QCATS[ci]||!QLEVELS[li]||isNaN(seed))return null;return{cat:QCATS[ci][0],lvl:QLEVELS[li][0],seed,code:s};}
 function startNormal(cat,lvl,seed,fromCode){seed=seed??Math.floor(Math.random()*1679616);const qs=genQuiz(cat,lvl,10,seed);QUIZ={qs,i:0,score:0,picked:null,done:false,kind:fromCode?"challenge":"normal",cat,lvl,code:makeCode(cat,lvl,seed)};quizSaved="";}
-function startDaily(){const td=today();const qs=genQuiz("mix","medel",5,strSeed("groundly-daily-"+td));QUIZ={qs,i:0,score:0,picked:null,done:false,kind:"daily",cat:"mix",lvl:"medel",day:td};quizSaved="";}
-function newQuiz(){startNormal(quizMode,quizLevel);}
+function startDaily(){const td=today();const qs=genQuiz("flagga","medel",5,strSeed("groundly-daily-"+td));QUIZ={qs,i:0,score:0,picked:null,done:false,kind:"daily",cat:"flagga",lvl:"medel",day:td};quizSaved="";}
+// quizet är bara flaggor (enklast och roligast); de andra kategorierna finns kvar för gamla utmaningskoder
+function newQuiz(){startNormal("flagga",quizLevel);}
 function renderQuizTab(){const el=document.getElementById("quizList");if(el)el.innerHTML=renderQuiz();}
 function rerenderQuizHost(){if(mode==="quiz")renderQuizTab();else if(mode==="tips")renderTips();}
 const qName=uid=>uid===myId?"Du":(QNAMES[uid]||(typeof NAMES!=="undefined"&&NAMES[uid])||$t("Spelare"));
@@ -3209,7 +3210,7 @@ function quizBoard(){if(quizState!=="ready")return"";const wk=isoWeek(new Date()
   return tabs+(rows.length?`<ol class="board">${rows.map(([uid,s,x])=>`<li class="${uid===myId?"me":""}"><span>${esc(qName(uid))}</span><b>${s}/${max}</b><small>${esc(x)}</small></li>`).join("")}</ol>`:`<p class="meta">${qBoardTab==="today"?$t("Ingen har spelat dagens quiz än."):qBoardTab==="week"?$t("Ingen har spelat den här veckan än. Bli först!"):$t("Ingen har spelat än. Bli först på topplistan!")}</p>`)+(sub?`<p class="meta">${sub}</p>`:"");}
 function dailyCard(){const td=today();const mine=myId&&QSCORES[myId];const played=mine&&mine.daily&&mine.daily.d===td;const y=dayKey(new Date(Date.now()-864e5));
   const streak=mine&&(mine.lastDaily===td||mine.lastDaily===y)?+mine.streak||0:0;
-  return`<article class="tip quiz daily"><div class="lbl">${ic("calendar")} ${$t("Dagens quiz · {0}",[esc(fmtDate(td))])}</div><h2 class="name">${$t("Fem frågor, samma för alla idag")}</h2>
+  return`<article class="tip quiz daily"><div class="lbl">${ic("calendar")} ${$t("Dagens quiz · {0}",[esc(fmtDate(td))])}</div><h2 class="name">${$t("Fem flaggor, samma för alla idag")}</h2>
     ${played?`<p>${$t("Du fick")} <b>${$t("{0} av 5",[+mine.daily.s])}</b> ${$t("idag. Nya frågor i morgon.")}</p>`:`<p>${$t("Spela en gång per dag och håll igång din svit.")}</p>`}
     ${streak?`<p class="streak">${ic("flame","on")} ${$t("{0} {1} i rad",[streak,streak===1?$t("dag"):$t("dagar")])}</p>`:""}
     ${played?"":`<div class="actions"><button class="btn primary" data-qdaily="1">${$t("Spela dagens quiz")}</button></div>`}</article>`;}
@@ -3217,7 +3218,7 @@ function renderQuiz(){loadFlags43();
   const modes=`<div class="chips wrapchips" role="group" aria-label="${$t("Frågor om")}">${QCATS.map(([k,l])=>`<button class="chip" data-qmode="${k}" aria-pressed="${quizMode===k}">${l}</button>`).join("")}</div>`;
   const levels=`<div class="chips" role="group" aria-label="${$t("Svårighetsgrad")}">${QLEVELS.map(([k,l])=>`<button class="chip" data-qlevel="${k}" aria-pressed="${quizLevel===k}">${l}</button>`).join("")}</div>`;
   const mine=myId&&QSCORES[myId];
-  if(!QUIZ)return dailyCard()+`<article class="tip quiz"><h2 class="name">${$t("Fotbollsquiz")}</h2><p>${$t("Tio frågor. Välj vad du vill bli frågad om:")}</p>${modes}<p class="meta">${$t("Svårighetsgrad")}</p>${levels}
+  if(!QUIZ)return dailyCard()+`<article class="tip quiz"><h2 class="name">${$t("Flaggquiz")}</h2><p>${$t("Tio flaggor. Vilket landslag hör flaggan till?")}</p><p class="meta">${$t("Svårighetsgrad")}</p>${levels}
     <div class="actions"><button class="btn primary" data-qstart="1">${$t("Starta quiz")}</button></div>${mine&&+mine.best>=0&&mine.played?`<p class="meta">${$t("Ditt bästa: {0}/10",[+mine.best])}</p>`:""}
     <form class="qcode" id="qCodeForm"><label class="fld" for="qCodeIn">${$t("Har du fått en kod från en kompis?")}<input id="qCodeIn" maxlength="8" autocomplete="off" autocapitalize="characters" placeholder="${$t("31K7QA")}"></label><button class="btn" type="submit">${$t("Spela koden")}</button></form>${qCodeErr?`<p class="err">${esc(qCodeErr)}</p>`:""}</article>
     <article class="tip"><h2 class="name">${$t("Topplista")}</h2>${quizBoard()||`<p class="meta">${$t("Topplistan visas när du är inloggad.")}</p>`}</article>`;
@@ -4606,7 +4607,7 @@ document.addEventListener("submit",e=>{if(e.target.id!=="setHome")return;e.preve
 
 // ---------- render ----------
 function render(){
-  const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Testa dina kunskaper om klubbar, landslag, arenor och derbyn"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
+  const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
   {const sb=document.getElementById("sub");if(mode==="hem"){sb.textContent=$t("Ett fotbollscommunity där du träffar likasinnade, delar matchupplevelser, hittar nya matcher och upptäcker ditt nästa fotbollsäventyr.");const kk=document.getElementById("kicker");if(kk)kk.textContent=$t("Möt. Upptäck. Upplev.");}else sb.textContent=SUB[mode];}
   {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Reportage"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
    const intro=document.getElementById("intro");if(intro)intro.hidden=mode!=="hem";}
@@ -4614,7 +4615,7 @@ function render(){
    ?`<div>${$t("Serie anges för säsongen 2026/27 där den är kontrollerad mot aktuella spelscheman; övriga visas som senast kända.")}</div>${AI_ON?`<div>${$t("Klubbar utanför listan slås upp av Claude och kan innehålla fel.")}</div>`:""}<div>${$t("Flaggor från flag-icons av Panayiotis Lipiridis (MIT-licens).")}</div>`
    :mode==="matcher"?`<div>${$t("Matcher, tider och resultat hämtas varje natt från API-Football och openfootball (CC0)")}${FX_UPDATED?$t(", senast {0}",[esc(fmtDate(FX_UPDATED.slice(0,10)))]):""}${$t(". Avsparkstider kan flyttas, så kontrollera med klubben innan du reser.")}</div><div>${$t("Avstånd räknas fågelvägen mellan orterna.")}</div>`
    :mode==="tabell"?`<div>${$t("Officiella tabeller och spelarstatistik hämtas varje natt från API-Football. Saknas en officiell tabell räknas den fram ur resultaten i appen och märks som uträknad; då ingår inte poängavdrag eller särskilda regler.")}</div>`
-   :mode==="quiz"?`<div>${$t("Frågorna skapas från appens klubb- och arenadata.")}</div>`
+   :mode==="quiz"?`<div>${$t("Flaggorna kommer från flag-icons av Panayiotis Lipiridis (MIT-licens).")}</div>`
    :mode==="landslag"?`<div>${$t("Grundår avser förbundet. Flaggor från flag-icons av Panayiotis Lipiridis (MIT-licens).")}</div>`
    :mode==="arenor"?`<div>${$t("Kapacitet enligt klubbdatan. Betyg och tillgänglighet kommer från besökare. Arenor som delas av flera klubbar visas en gång.")}</div>`
    :mode==="tips"?`<div>${$t("Urvalet och beskrivningarna är redaktionella tips. Nästa möte hämtas från det inlagda matchschemat.")}</div>`
