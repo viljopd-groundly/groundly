@@ -265,12 +265,32 @@ dd{overflow-wrap:anywhere}
 .leg{display:grid;grid-template-columns:58px minmax(0,1fr);gap:10px;align-items:start}
 .lt{font-family:var(--f-mono);font-weight:700;font-size:calc(16px*var(--fs));background:var(--fg);color:var(--bg);border-radius:8px;text-align:center;padding:7px 0;font-variant-numeric:tabular-nums}
 .hop{margin-left:28px;font-size:calc(12px*var(--fs));color:var(--muted);border-left:2px dashed var(--line);padding:4px 0 4px 38px}
-.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.bdg{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:5px}
-.bdg.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-.bdg b{font-family:var(--f-mono);font-size:calc(24px*var(--fs));color:var(--accent);line-height:1}
-.bdg span{font-weight:600;font-size:calc(14px*var(--fs))}
-.bdg small{font-size:calc(12px*var(--fs));color:var(--muted)}
+.trsum{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.trsum .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.trsum .top b{font:800 calc(28px*var(--fs))/1 var(--f-display);color:var(--accent)}
+.trsum .top small{color:var(--muted);font-size:calc(13px*var(--fs))}
+.trsum .rbar{margin:10px 0 12px}
+.seals{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:3px 3px 2px;margin:0 -3px}.seals::-webkit-scrollbar{display:none}
+.seal{flex:0 0 66px;text-align:center;font-size:calc(11px*var(--fs));line-height:1.2;color:var(--muted)}
+.seal i{width:54px;height:54px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;background:var(--flood-soft);color:var(--flood);border:2px dashed var(--flood);box-shadow:0 0 0 3px var(--flood-soft);font:800 16px/1 var(--f-display);font-style:normal}
+.seal.new i{background:var(--flood);color:var(--surface);border-color:var(--surface);box-shadow:0 0 0 3px var(--flood)}
+.seal em{display:block;font-style:normal;font-weight:700;color:var(--flood)}
+.trlist{display:grid;gap:8px}
+.trc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center}
+.trc.zero{opacity:.62}
+.trc .ico{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.trc.zero .ico{background:var(--line);color:var(--muted)}
+.trc .ico svg{width:22px;height:22px}
+.trc b{font-weight:700;display:block}
+.trc .lvl{display:block;font-size:calc(13px*var(--fs));color:var(--flood);font-weight:600}
+.trc.zero .lvl{color:var(--muted);font-weight:400}
+.trc .dots{display:flex;gap:4px;margin-top:7px}
+.trc .dots span{flex:1;text-align:center;font-size:calc(10px*var(--fs));color:var(--muted)}
+.trc .dots span:before{content:"";display:block;height:6px;border-radius:4px;background:var(--line);margin-bottom:3px}
+.trc .dots span.on{color:var(--accent);font-weight:700}.trc .dots span.on:before{background:var(--accent)}
+.trc .n{font:800 calc(22px*var(--fs))/1 var(--f-display);color:var(--accent);text-align:right}
+.trc.zero .n{color:var(--muted)}
+.trc .n small{display:block;font:400 calc(11px*var(--fs)) var(--f-body,inherit);color:var(--muted);margin-top:4px;white-space:nowrap}
 .prog{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;gap:6px}
 .ptop{display:flex;justify-content:space-between;gap:8px;font-size:calc(14px*var(--fs))}
 .ptop span{font-family:var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
@@ -641,8 +661,8 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 :root[data-theme="dusk"]{--soft:color-mix(in srgb,var(--fg) 8%,transparent);--soft2:color-mix(in srgb,var(--fg) 13%,transparent);--shadow:none}
 :root[data-theme="dim"]{--shadow:0 1px 2px rgba(16,35,26,.08)}
 :root[data-theme="warm"]{--soft:color-mix(in srgb,#7a4a1e 7%,transparent);--soft2:color-mix(in srgb,#7a4a1e 12%,transparent);--shadow:0 1px 2px rgba(60,35,15,.07),0 3px 10px rgba(60,35,15,.06)}
-:root[data-style="soft"] .card,:root[data-style="soft"] .match,:root[data-style="soft"] .tip,:root[data-style="soft"] .thread,:root[data-style="soft"] .stats div,:root[data-style="soft"] .mrow,:root[data-style="soft"] .citem,:root[data-style="soft"] .combo,:root[data-style="soft"] .bdg,:root[data-style="soft"] .prog,:root[data-style="soft"] .plan,:root[data-style="soft"] .passpage,:root[data-style="soft"] .teamhead,:root[data-style="soft"] .rep,:root[data-style="soft"] .search,:root[data-style="soft"] .modes{border-color:transparent;box-shadow:var(--shadow)}
-:root[data-style="soft"] .card.sel,:root[data-style="soft"] .thread.open,:root[data-style="soft"] .rep.open,:root[data-style="soft"] .bdg.on,:root[data-style="soft"] .steam.open{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow)}
+:root[data-style="soft"] .card,:root[data-style="soft"] .match,:root[data-style="soft"] .tip,:root[data-style="soft"] .thread,:root[data-style="soft"] .stats div,:root[data-style="soft"] .mrow,:root[data-style="soft"] .citem,:root[data-style="soft"] .combo,:root[data-style="soft"] .trc,:root[data-style="soft"] .trsum,:root[data-style="soft"] .prog,:root[data-style="soft"] .plan,:root[data-style="soft"] .passpage,:root[data-style="soft"] .teamhead,:root[data-style="soft"] .rep,:root[data-style="soft"] .search,:root[data-style="soft"] .modes{border-color:transparent;box-shadow:var(--shadow)}
+:root[data-style="soft"] .card.sel,:root[data-style="soft"] .thread.open,:root[data-style="soft"] .rep.open,:root[data-style="soft"] .steam.open{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow)}
 :root[data-style="soft"] .search:focus-within{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 :root[data-style="soft"] .empty{border:0;box-shadow:none;background:var(--soft)}
 :root[data-style="soft"] .btn,:root[data-style="soft"] .chip,:root[data-style="soft"] .mini,:root[data-style="soft"] .themebtn,:root[data-style="soft"] .iconbtn{border-color:transparent;background:var(--soft)}
@@ -667,8 +687,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 :root[data-style="flat"] body{background:var(--surface)}
 :root[data-style="flat"] .card,:root[data-style="flat"] .match,:root[data-style="flat"] .tip,:root[data-style="flat"] .thread,:root[data-style="flat"] .mrow,:root[data-style="flat"] .citem,:root[data-style="flat"] .combo,:root[data-style="flat"] .prog,:root[data-style="flat"] .plan,:root[data-style="flat"] .passpage,:root[data-style="flat"] .teamhead,:root[data-style="flat"] .rep{background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;padding-left:2px;padding-right:2px}
 :root[data-style="flat"] .card.sel,:root[data-style="flat"] .thread.open,:root[data-style="flat"] .rep.open{background:var(--soft);border-radius:var(--r);border-bottom-color:transparent;padding-left:14px;padding-right:14px;box-shadow:none}
-:root[data-style="flat"] .stats div,:root[data-style="flat"] .bdg{background:var(--bg);border-color:transparent}
-:root[data-style="flat"] .bdg.on{border-color:var(--accent)}
+:root[data-style="flat"] .stats div,:root[data-style="flat"] .trc,:root[data-style="flat"] .trsum{background:var(--bg);border-color:transparent}
 :root[data-style="flat"] .empty{background:transparent;border:0}
 :root[data-style="flat"] .search{background:var(--bg);border-color:transparent}
 :root[data-style="flat"] .search:focus-within{border-color:var(--accent)}
@@ -2570,10 +2589,35 @@ function seasonCardHtml(){let h="";
   h+=`<h3 class="sec">${$t("Säsongskort")}</h3><p class="hint">${$t("Årets matcher i en bild att dela.")}</p>
    <div class="chips" role="group" aria-label="${$t("År")}">${years.length>1?`<button class="chip" data-year="all" aria-pressed="${seasonYear==="all"}">${$t("Alla")}</button>`:""}${years.map(y=>`<button class="chip" data-year="${y}" aria-pressed="${seasonYear===y}">${y}</button>`).join("")}</div>${fmtChips()}${studioHtml("season",seasonYear==="all"?$t("Säsongskort för alla säsonger"):$t("Säsongskort för ")+seasonYear)}`;
   return h;}
-function renderChallenges(){const vs=visitedStadiums();
-  const B=[[$t("Matcher"),MY.attended.length,[1,10,25,50,100]],[$t("Arenor"),vs.size,[5,10,25,50,92]],[$t("Länder"),countriesSeen().size,[3,5,10]],[$t("Derbyn"),derbyCount(),[1,5,10]],[$t("Landslag"),natSeen().size,[1,5,10,25,50,100]],[$t("Världsdelar"),new Set([...natSeen()].map(id=>C[id].conf).filter(Boolean)).size,[2,3,4,5,6]],[$t("Dubbeldagar"),doubleDays(),[1,3,10]]];
-  let h=`<h3 class="sec">${$t("Märken")}</h3><div class="badges">${B.map(([l,v,st])=>{const done=st.filter(s=>v>=s);const next=st.find(s=>v<s);
-    return`<div class="bdg${done.length?" on":""}"><b>${v}</b><span>${l}</span><span class="rbar"><i style="width:${next?Math.min(100,v/next*100):100}%"></i></span><small>${next?$t("Nästa märke vid {0}",[next]):$t("Alla märken klara")}${done.length?$t(" · {0} av {1} klara",[done.length,st.length]):""}</small></div>`;}).join("")}</div>`;
+// troféer (samma ord på svenska och engelska): nivåer per kategori, med namn och ikon
+const TR_ICO={m:'<circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 4.5h-5L8 10z"/>',a:'<ellipse cx="12" cy="12" rx="9" ry="6"/><ellipse cx="12" cy="12" rx="4.5" ry="2.5"/>',c:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',d:'<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-6 1 1 2 2 3 2 0-2-1-4 0-6z"/>',n:'<path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z"/>',w:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',x:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>'};
+function trophyDefs(vs){return[
+  {k:"m",l:$t("Matcher"),v:MY.attended.length,st:[1,10,25,50,100],first:$t("Första matchen"),nm:n=>$t("{0} matcher",[n])},
+  {k:"a",l:$t("Arenor"),v:vs.size,st:[5,10,25,50,92],nm:n=>$t("{0} arenor",[n])},
+  {k:"c",l:$t("Länder"),v:countriesSeen().size,st:[3,5,10],nm:n=>$t("{0} länder",[n])},
+  {k:"d",l:$t("Derbyn"),v:derbyCount(),st:[1,5,10],first:$t("Första derbyt"),nm:n=>$t("{0} derbyn",[n])},
+  {k:"n",l:$t("Landslag"),v:natSeen().size,st:[1,5,10,25,50,100],first:$t("Första landslaget"),nm:n=>$t("{0} landslag",[n])},
+  {k:"w",l:$t("Världsdelar"),v:new Set([...natSeen()].map(id=>C[id].conf).filter(Boolean)).size,st:[2,3,4,5,6],nm:n=>$t("{0} världsdelar",[n])},
+  {k:"x",l:$t("Dubbeldagar"),v:doubleDays(),st:[1,3,10],first:$t("Första dubbeldagen"),nm:n=>$t("{0} dubbeldagar",[n])}];}
+let trSeenBase;
+function trophiesHtml(B){const tn=(c,n)=>n===1&&c.first?c.first:c.nm(n);
+  const won=[];let total=0,near=null;
+  for(const c of B){total+=c.st.length;c.st.forEach((n,i)=>{if(c.v>=n)won.push({id:c.k+n,c,n,i});});
+    const nx=c.st.find(n=>c.v<n);if(nx){const left=nx-c.v,f=c.v/nx;if(!near||f>near.f)near={f,left,c,nx};}}
+  // "Nytt!" = troféer som inte fanns förra gången man tittade (första gången räknas inget som nytt)
+  // jämförelsen görs mot läget när appen öppnades, så "Nytt!" står kvar hela besöket även om sidan ritas om
+  if(trSeenBase===undefined){trSeenBase=null;try{trSeenBase=JSON.parse(localStorage.getItem("fk-trseen")||"null");}catch(e){}}
+  const seen=trSeenBase;const isNew=t=>Array.isArray(seen)&&!seen.includes(t.id);
+  try{localStorage.setItem("fk-trseen",JSON.stringify(won.map(t=>t.id)));}catch(e){}
+  won.sort((a,b)=>isNew(b)-isNew(a)||b.i-a.i||b.n-a.n);
+  let h=`<h3 class="sec">${$t("Troféer")}</h3><div class="trsum"><div class="top"><div><b>${won.length}</b> ${$t("av {0} troféer",[total])}</div>${near?`<small>${$t("Närmast: {0}",[tn(near.c,near.nx)])} (${$t("{0} kvar",[near.left])})</small>`:""}</div>
+   <span class="rbar"><i style="width:${total?won.length/total*100:0}%"></i></span>
+   ${won.length?`<div class="seals">${won.map(t=>`<div class="seal${isNew(t)?" new":""}"><i>${t.n}</i>${isNew(t)?`<em>${$t("Nytt!")}</em>`:""}${esc(tn(t.c,t.n))}</div>`).join("")}</div>`:`<p class="hint" style="margin:0">${$t("Logga din första match så får du din första trofé.")}</p>`}</div><div class="trlist">`;
+  for(const c of B){const d=c.st.filter(n=>c.v>=n),nx=c.st.find(n=>c.v<n);
+    h+=`<div class="trc${d.length?"":" zero"}"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TR_ICO[c.k]}</svg></div><div><b>${c.l}</b><span class="lvl">${d.length?`${esc(tn(c,d[d.length-1]))} · ${$t("{0} av {1}",[d.length,c.st.length])}`:$t("Ingen trofé än")}</span><div class="dots">${c.st.map(n=>`<span class="${c.v>=n?"on":""}">${n}</span>`).join("")}</div></div><div class="n">${c.v}<small>${nx?(d.length?$t("{0} till nästa",[nx-c.v]):$t("{0} till första",[nx-c.v])):$t("Alla klara")}</small></div></div>`;}
+  return h+`</div>`;}
+function renderChallenges(){const vs=visitedStadiums();let h;
+  const B=trophyDefs(vs);h=trophiesHtml(B);
   // vilka serier som visas väljer man själv (sparas på kontot); standard = de stora serierna
   const allL=tblLeagues();const sel=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.some(x=>x.l===l)):defArLeagues();
   const lg=sel.map(l=>{const ar=leagueArenas(l);const miss=[...ar.entries()].filter(([s])=>!vs.has(s)).map(([,c])=>c);const seen=[...ar.entries()].filter(([s])=>vs.has(s)).map(([,c])=>c);return{l,total:ar.size,done:ar.size-miss.length,miss,seen};}).filter(x=>x.total).sort((a,b)=>b.done/b.total-a.done/a.total||b.total-a.total);
@@ -4322,7 +4366,7 @@ function exampleHtml(){const tile=(n,l)=>`<div><b>${n}</b><span>${l}</span></div
     <div class="obrow"><span class="meta">${$t("Favoritlag")}</span><b>${$t("Jönköpings Södra IF")}</b><span class="meta">${$t("12 matcher · V 7 · O 3 · F 2 · längsta bortaresan Luleå, 103 mil")}</span></div>
     <div class="obrow"><span class="meta">${$t("Senast")}</span><b>${$t("Jönköpings Södra – Trollhättan 2–1")}</b><span class="meta">${$t("lör 24 okt · Stadsparksvallen · med bild och reportage")}</span></div>
     <div class="obrow"><span class="meta">${$t("Min statistik")}</span><b>${$t("52 % hemmasegrar · 3,1 mål per match")}</b><span class="meta">${$t("rest ca 4 800 km · vanligaste matchdag lördag")}</span></div>
-    <div class="obrow"><span class="meta">${$t("Utmaningar")}</span><b>${$t("11 av 16 arenor i Ettan Södra")}</b><span class="meta">${$t("karta över alla arenor du besökt, märken och arenapass")}</span></div></div>`;}
+    <div class="obrow"><span class="meta">${$t("Utmaningar")}</span><b>${$t("11 av 16 arenor i Ettan Södra")}</b><span class="meta">${$t("karta över alla arenor du besökt, troféer och arenapass")}</span></div></div>`;}
 const isObBtn=t=>t.dataset.obskip||t.dataset.oblog||t.dataset.obex;
 function obClick(t){if(t.dataset.obex){obEx=!obEx;render();return;}if(t.dataset.obskip){mutate(d=>{d.onboarded=true;});return;}
   if(t.dataset.oblog==="add"){openLogMatch(null,null);return;}
