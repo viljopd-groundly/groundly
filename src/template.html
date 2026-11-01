@@ -948,6 +948,9 @@ html:root[data-look="atlas"]{--bg:#EDF0E4;--surface:#FAFBF7;--fg:#22332C;--muted
 :root[data-look="atlas"] .bnlog b{background:var(--fg);border-radius:16px;transform:rotate(45deg);border-color:var(--bg)}
 :root[data-look="atlas"] .bnlog b>*{transform:rotate(-45deg)}
 :root[data-look="atlas"] .bnlog span{color:var(--fg)}
+/* signaturen: en svag världskarta bakom innehållet (ligger still, ritas en gång) */
+html:root[data-look="atlas"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;transform:translateZ(0);background:url("img/atlas-world.svg") 52% 38%/165% auto no-repeat}
+html:root[data-look="atlas"][data-theme="dark"] body::before{background-image:url("img/atlas-world-dark.svg")}
 /* mörka varianter av utseendena */
 html:root[data-look="ticket"][data-theme="dark"]{--bg:#121A30;--surface:#1C2642;--fg:#E8EDF5;--muted:#9AA6C0;--line:#2E3A5C;--chalk:#1C2642;--accent:#F2B84B;--accent-soft:#3A2E14;--pitch:#5FCF8A;--pitch-soft:#173A26;--soft:color-mix(in srgb,#E8EDF5 8%,transparent);--soft2:color-mix(in srgb,#E8EDF5 13%,transparent);--shadow:none;color-scheme:dark}
 html:root[data-look="ticket"][data-theme="dark"]{--guil:rgba(232,237,245,.035)}
