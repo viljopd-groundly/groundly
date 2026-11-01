@@ -2120,5 +2120,19 @@
  "Tio flaggor. Vilket landslag hör flaggan till?": "Ten flags. Which national team does the flag belong to?",
  "Fem flaggor, samma för alla idag": "Five flags, the same for everyone today",
  "Gissa flaggan – hur många landslag känner du igen?": "Guess the flag – how many national teams do you know?",
- "Flaggorna kommer från flag-icons av Panayiotis Lipiridis (MIT-licens).": "Flags from flag-icons by Panayiotis Lipiridis (MIT licence)."
+ "Flaggorna kommer från flag-icons av Panayiotis Lipiridis (MIT-licens).": "Flags from flag-icons by Panayiotis Lipiridis (MIT licence).",
+ "VM & EM": "World Cup & Euros",
+ "Tio frågor om alla VM sedan 1930 och alla EM sedan 1960: vinnare, värdländer, finaler och skyttekungar.": "Ten questions on every World Cup since 1930 and every Euros since 1960: winners, hosts, finals and top scorers.",
+ "Vem vann {0}?": "Who won the {0}?",
+ "{0} vann {1} och slog {2} i finalen.": "{0} won the {1}, beating {2} in the final.",
+ "Vem förlorade finalen i {0}?": "Who lost the final of the {0}?",
+ "{0} förlorade mot {1} i finalen.": "{0} lost to {1} in the final.",
+ "Var spelades {0}?": "Where was the {0} played?",
+ "{0} spelades i {1}.": "The {0} was played in {1}.",
+ "Vem vann skytteligan i {0}?": "Who was top scorer at the {0}?",
+ "{0} gjorde {1} mål i {2}.": "{0} scored {1} goals at the {2}.",
+ "Vad slutade finalen i {0} mellan {1} och {2}?": "What was the score in the {0} final between {1} and {2}?",
+ "{0} vann finalen {1}.": "{0} won the final {1}.",
+ "Vilket år vann {0} {1}?": "In which year did {0} win the {1}?",
+ "{0} vann {1} {2}, enda gången hittills.": "{0} won the {1} in {2}, their only title so far."
 }
