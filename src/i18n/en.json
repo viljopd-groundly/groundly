@@ -2186,5 +2186,6 @@
  "Saknas": "Missing",
  "landslag": "national teams",
  "Ett landslag räknas när du har loggat en landskamp med laget, hemma eller borta.": "A national team counts once you've logged an international with that team, home or away.",
- "+ Lägg till eller ta bort serier ({0} valda)": "+ Add or remove leagues ({0} selected)"
+ "+ Lägg till eller ta bort serier ({0} valda)": "+ Add or remove leagues ({0} selected)",
+ "Visa alla ({0})": "Show all ({0})"
 }

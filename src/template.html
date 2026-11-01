@@ -288,6 +288,8 @@ dd{overflow-wrap:anywhere}
 .trsum .top b{font:800 calc(28px*var(--fs))/1 var(--f-display);color:var(--accent)}
 .trsum .top small{color:var(--muted);font-size:calc(13px*var(--fs))}
 .trsum .rbar{margin:10px 0 12px}
+.seals.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));row-gap:14px;overflow:visible}
+.trall{display:block;margin:12px auto 0;font-weight:600;color:var(--accent)}
 .seals{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:3px 3px 2px;margin:0 -3px}.seals::-webkit-scrollbar{display:none}
 .seal{flex:0 0 66px;text-align:center;font-size:calc(11px*var(--fs));line-height:1.2;color:var(--muted)}
 .seal i{width:54px;height:54px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;background:var(--flood-soft);color:var(--flood);border:2px dashed var(--flood);box-shadow:0 0 0 3px var(--flood-soft);font:800 16px/1 var(--f-display);font-style:normal}
@@ -2617,7 +2619,7 @@ function trophyDefs(vs){return[
   {k:"n",l:$t("Landslag"),v:natSeen().size,st:[1,5,10,25,50,100],first:$t("Första landslaget"),nm:n=>$t("{0} landslag",[n])},
   {k:"w",l:$t("Världsdelar"),v:new Set([...natSeen()].map(id=>C[id].conf).filter(Boolean)).size,st:[2,3,4,5,6],nm:n=>$t("{0} världsdelar",[n])},
   {k:"x",l:$t("Dubbeldagar"),v:doubleDays(),st:[1,3,10],first:$t("Första dubbeldagen"),nm:n=>$t("{0} dubbeldagar",[n])}];}
-let trSeenBase;
+let trSeenBase,trAll=false;
 const TR_CUP='<path d="M7 4h10v4a5 5 0 0 1-10 0zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M12 13v4M9 21h6M10 17h4v4h-4z"/>';
 function trophiesHtml(B,coll){const tn=(c,n)=>n===1&&c.first?c.first:c.nm(n);
   const won=[];let total=0,near=null;
@@ -2634,7 +2636,7 @@ function trophiesHtml(B,coll){const tn=(c,n)=>n===1&&c.first?c.first:c.nm(n);
   won.sort((a,b)=>isNew(b)-isNew(a)||!!b.big-!!a.big||b.i-a.i||b.n-a.n);
   let h=`<h3 class="sec">${$t("Troféer")}</h3><div class="trsum"><div class="top"><div><b>${won.length}</b> ${$t("av {0} troféer",[total])}</div>${near?`<small>${$t("Närmast: {0}",[near.label||tn(near.c,near.nx)])} (${$t("{0} kvar",[near.left])})</small>`:""}</div>
    <span class="rbar"><i style="width:${total?won.length/total*100:0}%"></i></span>
-   ${won.length?`<div class="seals">${won.map(t=>`<div class="seal${t.big?" big":""}${isNew(t)?" new":""}"><i>${t.big?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">${TR_CUP}</svg>`:t.n}</i>${isNew(t)?`<em>${$t("Nytt!")}</em>`:""}${esc(t.big||tn(t.c,t.n))}</div>`).join("")}</div>`:`<p class="hint" style="margin:0">${$t("Logga din första match så får du din första trofé.")}</p>`}</div><div class="trlist">`;
+   ${won.length?`<div class="seals${trAll?" grid":""}">${won.map(t=>`<div class="seal${t.big?" big":""}${isNew(t)?" new":""}"><i>${t.big?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">${TR_CUP}</svg>`:t.n}</i>${isNew(t)?`<em>${$t("Nytt!")}</em>`:""}${esc(t.big||tn(t.c,t.n))}</div>`).join("")}</div>${won.length>5?`<button class="link trall" data-trall="1" data-n="${won.length}">${trAll?$t("Visa färre"):$t("Visa alla ({0})",[won.length])}</button>`:""}`:`<p class="hint" style="margin:0">${$t("Logga din första match så får du din första trofé.")}</p>`}</div><div class="trlist">`;
   for(const c of B){const d=c.st.filter(n=>c.v>=n),nx=c.st.find(n=>c.v<n);
     h+=`<div class="trc${d.length?"":" zero"}"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TR_ICO[c.k]}</svg></div><div><b>${c.l}</b><span class="lvl">${d.length?`${esc(tn(c,d[d.length-1]))} · ${$t("{0} av {1}",[d.length,c.st.length])}`:$t("Ingen trofé än")}</span><div class="dots">${c.st.map(n=>`<span class="${c.v>=n?"on":""}">${n}</span>`).join("")}</div></div><div class="n">${c.v}<small>${nx?(d.length?$t("{0} till nästa",[nx-c.v]):$t("{0} till första",[nx-c.v])):$t("Alla klara")}</small></div></div>`;}
   return h+`</div>`;}
@@ -2677,7 +2679,7 @@ setTimeout(function tryFill(){if(myState==="ready"&&(FX_PAST||!FX_NEXT))fillScor
 function afterMine(){if(mySub==="arenas"&&arView!=="pass"){drawLiveMap();drawMap();}if(mySub==="arenas"&&arView==="pass"){drawPass();}else if(mySub==="been"){drawSeason();if(shareMatchId){const a=MY.attended.find(z=>z.id===shareMatchId);if(a)drawMatch(a);}}}
 
 // ---------- klick för de nya funktionerna ----------
-const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.tripfor||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard||t.dataset.sharecard;
+const isFeatBtn=t=>t.dataset.mview||t.dataset.dspeed||t.dataset.dmargin||t.dataset.wishall||t.dataset.rate||t.dataset.rstar||t.dataset.racc||t.dataset.rsave||t.dataset.rcancel||t.dataset.rdel||t.dataset.year||t.dataset.ryn||t.dataset.homeedit||t.dataset.homecancel||t.dataset.tripfor||t.dataset.fmt||t.dataset.mapr||t.dataset.arsel||t.dataset.trall||t.dataset.arselReset||t.dataset.arselSave||t.dataset.sharematch||t.dataset.savecard||t.dataset.copycard||t.dataset.sharecard;
 // hoppa direkt till det öppnade klubbkortet (sökrutan ovanför behöver inte synas)
 function scrollToCard(sub){const go=()=>{const card=document.querySelector('section[id^="v-"]:not([hidden]) .card.sel');if(!card){window.scrollTo({top:0});return;}const el=(sub&&card.querySelector(sub))||card;
   const tb=document.querySelector(".topbar");const off=(tb?tb.getBoundingClientRect().height:0)+8;const y=Math.max(0,el.getBoundingClientRect().top+window.scrollY-off);
@@ -2712,6 +2714,8 @@ function featClick(t){
     if(!was&&C[id]){const row=t.closest(".actions");if(row){row.insertAdjacentHTML("afterend",tripPanel(C[id]));t.setAttribute("aria-expanded","true");}else renderClubs();}return;}
   if(t.dataset.year){seasonYear=t.dataset.year==="all"?"all":+t.dataset.year;renderMine();return;}
   if(t.dataset.fmt){shareFmt=t.dataset.fmt;store.set("fk-fmt",shareFmt);renderMine();return;}
+  // fäll ut/ihop troféraden utan att rita om sidan
+  if(t.dataset.trall){trAll=!trAll;const r=t.parentElement.querySelector(".seals");if(r){r.classList.toggle("grid",trAll);r.scrollLeft=0;}t.textContent=trAll?$t("Visa färre"):$t("Visa alla ({0})",[+t.dataset.n]);return;}
   if(t.dataset.arsel){const allL=tblLeagues().map(x=>x.l);if(!arDraft)arDraft=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.includes(l)):defArLeagues();
     const l=t.dataset.arsel;arDraft=arDraft.includes(l)?arDraft.filter(x=>x!==l):[...arDraft,l];t.setAttribute("aria-pressed",String(arDraft.includes(l)));return;}
   if(t.dataset.arselReset){arDraft=defArLeagues();document.querySelectorAll(".arsel [data-arsel]").forEach(b=>b.setAttribute("aria-pressed",String(arDraft.includes(b.dataset.arsel))));return;}
