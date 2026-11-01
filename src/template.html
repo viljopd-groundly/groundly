@@ -3269,7 +3269,7 @@ function renderQuiz(){loadFlags43();
     const others=QUIZ.code?Object.entries(QSCORES).filter(([u,d])=>u!==myId&&d&&d.ch&&d.ch[QUIZ.code]!=null).map(([u,d])=>[u,+d.ch[QUIZ.code]]).sort((a,b)=>b[1]-a[1]):[];
     return`<article class="tip quiz"><div class="lbl">${QUIZ.kind==="daily"?$t("Dagens quiz"):QUIZ.kind==="challenge"?"Utmaning "+esc(QUIZ.code):$t("Fotbollsquiz")}</div><h2 class="name">${$t("{0} av {1} rätt",[s,N])}</h2><p>${msg}</p>${quizSaved?`<p class="meta">${esc(quizSaved)}</p>`:""}
       ${QUIZ.code?`<div class="chal"><div class="lbl">${$t("Utmana en kompis")}</div><p>${$t("Skicka koden")} <b class="qcodebig">${esc(QUIZ.code)}</b> ${$t("så får hen exakt samma tio frågor.")}</p>${others.length?`<p class="meta">${$t("Andra på samma kod:")} ${others.map(([u,v])=>`${esc(qName(u))} ${v}/10`).join(" · ")}</p>`:""}</div>`:""}
-      <div class="actions"><button class="btn primary" data-qstart="1">${$t("Ny omgång")}</button><button class="btn" data-qcopy="1">${$t("Kopiera resultatet")}</button><button class="btn" data-qhome="1">${$t("Tillbaka")}</button></div><p class="hint" id="qmsg"></p></article>
+      <div class="actions"><button class="btn primary" data-qshare="1">${ic("share")} ${$t("Utmana en kompis")}</button><button class="btn" data-qstart="1">${$t("Ny omgång")}</button><button class="btn" data-qcopy="1">${$t("Kopiera resultatet")}</button><button class="btn" data-qhome="1">${$t("Tillbaka")}</button></div><p class="hint" id="qmsg"></p></article>
       <article class="tip"><h2 class="name">${$t("Topplista")}</h2>${quizBoard()}</article>`;}
   const Q=QUIZ.qs[QUIZ.i];const ans=QUIZ.picked!=null;
   const vis=Q.flag?`<img class="qflag" src="${flagSrc(Q.flag)}" alt="${$t("Flagga att gissa")}">`:Q.shirt?shirtSvg(Q.shirt[0],Q.shirt[1]):"";
@@ -3294,7 +3294,7 @@ function startQuiz(db){quizNs=db;if(!db){quizState="none";return;}
   db.collection("quiz").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});QSCORES=o;quizState="ready";if(mode==="hem")renderHome();
     const ids=Object.keys(o).filter(id=>id!==myId&&!(id in QNAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{QNAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="quiz")renderQuizTab();}).catch(()=>{});
     if(mode==="quiz"&&(!QUIZ||QUIZ.done))renderQuizTab();},()=>{quizState="none";});}
-const isQuizBtn=t=>t.dataset.qmode||t.dataset.qlevel||t.dataset.qstart||t.dataset.qdaily||t.dataset.qboard||t.dataset.qopt!==undefined||t.dataset.qnext||t.dataset.qcopy||t.dataset.qhome;
+const isQuizBtn=t=>t.dataset.qmode||t.dataset.qlevel||t.dataset.qstart||t.dataset.qdaily||t.dataset.qboard||t.dataset.qopt!==undefined||t.dataset.qnext||t.dataset.qcopy||t.dataset.qshare||t.dataset.qhome;
 function quizClick(t){
   if(t.dataset.qmode){quizMode=t.dataset.qmode;store.set("fk-qcat",quizMode);rerenderQuizHost();return;}
   if(t.dataset.qlevel){quizLevel=t.dataset.qlevel;store.set("fk-qlevel",quizLevel);rerenderQuizHost();return;}
@@ -3304,6 +3304,11 @@ function quizClick(t){
   if(t.dataset.qhome){QUIZ=null;rerenderQuizHost();return;}
   if(t.dataset.qopt!==undefined&&QUIZ&&QUIZ.picked==null){const i=+t.dataset.qopt;QUIZ.picked=i;const Q=QUIZ.qs[QUIZ.i];if(Q.opts[i]===Q.a)QUIZ.score++;rerenderQuizHost();return;}
   if(t.dataset.qnext&&QUIZ){if(QUIZ.i+1<QUIZ.qs.length){QUIZ.i++;QUIZ.picked=null;rerenderQuizHost();}else{QUIZ.done=true;rerenderQuizHost();saveQuiz();}return;}
+  // dela en länk som öppnar exakt samma frågor (dagens quiz: länk till quizet)
+  if(t.dataset.qshare&&QUIZ){const N=QUIZ.qs.length;const daily=QUIZ.kind==="daily";const url=linkFor("q",daily?"dagens":QUIZ.code);
+    const txt=daily?$t("Jag fick {0} av {1} i dagens quiz i Groundly. Klarar du mer?",[QUIZ.score,N]):$t("Jag fick {0} av {1} rätt i Groundlys quiz. Klarar du samma frågor?",[QUIZ.score,N]);
+    if(navigator.share){navigator.share({title:"Groundly quiz",text:txt,url}).catch(()=>{});return;}
+    navigator.clipboard.writeText(txt+" "+url).then(()=>{const e=document.getElementById("qmsg");if(e)e.textContent=$t("Länken är kopierad. Skicka den till en kompis.");}).catch(()=>{const e=document.getElementById("qmsg");if(e)e.textContent=txt+" "+url;});return;}
   if(t.dataset.qcopy&&QUIZ){const N=QUIZ.qs.length;const txt=QUIZ.kind==="daily"?$t("Jag fick {0} av {1} i dagens quiz i Groundly. Klarar du mer?",[QUIZ.score,N]):$t("Jag fick {0} av {1} rätt i Groundlys quiz. Spela samma frågor med koden {2} under Quiz!",[QUIZ.score,N,QUIZ.code]);
     navigator.clipboard.writeText(txt).then(()=>{const e=document.getElementById("qmsg");if(e)e.textContent="Kopierat.";}).catch(()=>{const e=document.getElementById("qmsg");if(e)e.textContent=txt;});return;}
 }
@@ -4546,6 +4551,8 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-shar
   if(navigator.share){try{await navigator.share({title,text:title+" – Groundly",url});}catch(err){}return;}
   try{await navigator.clipboard.writeText(url);toast($t("Länken är kopierad."),"check");}catch(err){window.prompt($t("Kopiera länken:"),url);}},true);
 let deepJump=null;
+// quizlänk från en kompis: ?q=KOD startar samma frågor, ?q=dagens öppnar quizet
+{const q=new URLSearchParams(location.search).get("q");if(q){try{const u=new URL(location.href);u.searchParams.delete("q");history.replaceState(null,"",u.toString());}catch(e){}setTimeout(()=>{if(q==="dagens"){setMode("quiz");return;}const pc=parseCode(q);if(pc){startNormal(pc.cat,pc.lvl,pc.seed,true);}setMode("quiz");try{rerenderQuizHost();}catch(e){}},0);}}
 {const sp=new URLSearchParams(location.search);const r=sp.get("r"),th=sp.get("t");
   if((r&&/^[\w-]+:[\w-]+$/.test(r))||(th&&/^[\w-]+:[\w-]+$/.test(th))){
     deepJump={sel:r?`[data-rep="${CSS.escape(r)}"]`:`[data-thread="${CSS.escape(th)}"]`,kind:r?"r":"t",until:Date.now()+20000};
