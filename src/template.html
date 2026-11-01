@@ -3306,7 +3306,7 @@ function quizClick(t){
   if(t.dataset.qnext&&QUIZ){if(QUIZ.i+1<QUIZ.qs.length){QUIZ.i++;QUIZ.picked=null;rerenderQuizHost();}else{QUIZ.done=true;rerenderQuizHost();saveQuiz();}return;}
   // dela en länk som öppnar exakt samma frågor (dagens quiz: länk till quizet)
   if(t.dataset.qshare&&QUIZ){const N=QUIZ.qs.length;const daily=QUIZ.kind==="daily";const url=linkFor("q",daily?"dagens":QUIZ.code);
-    const txt=daily?$t("Jag fick {0} av {1} i dagens quiz i Groundly. Klarar du mer?",[QUIZ.score,N]):$t("Jag fick {0} av {1} rätt i Groundlys quiz. Klarar du samma frågor?",[QUIZ.score,N]);
+    const txt=daily?$t("Jag fick {0} av {1} i dagens quiz i Groundly. Klarar du mer?",[QUIZ.score,N]):$t("Jag fick {0} av {1} rätt i Groundlys quiz. Klarar du samma frågor? Tryck på länken eller skriv koden {2} under Quiz.",[QUIZ.score,N,QUIZ.code]);
     if(navigator.share){navigator.share({title:"Groundly quiz",text:txt,url}).catch(()=>{});return;}
     navigator.clipboard.writeText(txt+" "+url).then(()=>{const e=document.getElementById("qmsg");if(e)e.textContent=$t("Länken är kopierad. Skicka den till en kompis.");}).catch(()=>{const e=document.getElementById("qmsg");if(e)e.textContent=txt+" "+url;});return;}
   if(t.dataset.qcopy&&QUIZ){const N=QUIZ.qs.length;const txt=QUIZ.kind==="daily"?$t("Jag fick {0} av {1} i dagens quiz i Groundly. Klarar du mer?",[QUIZ.score,N]):$t("Jag fick {0} av {1} rätt i Groundlys quiz. Spela samma frågor med koden {2} under Quiz!",[QUIZ.score,N,QUIZ.code]);
