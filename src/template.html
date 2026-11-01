@@ -4654,7 +4654,7 @@ function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAt
   if(row)row.innerHTML=`<span class="tlbl">${$t("Färg")}</span>`+THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")+`<span class="tlbl">${$t("Stil")}</span>`+STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("");}
 applyTheme();try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(look!=="std"&&lookTheme==="auto")applyTheme();});}catch(e){}
 // ---------- inställningar: logga, utseende, notiser, hemort ----------
-const BRAND_LOGOS=[["stadion",$t("Stadion")],["enkel",$t("Stadion ljus")],["premium",$t("Stadion premium")],["cirkel",$t("Cirkel")],["cirkel-orange",$t("Cirkel orange")],["skold",$t("Sköld")],
+const BRAND_LOGOS=[["stadion",$t("Stadion")],["enkel",$t("Stadion ljus")],
   ["boll",$t("Boll")],["boll-orange",$t("Boll orange")],["plats",$t("Kartnål")],["g-gron",$t("G grön")],["g-orange","G orange"],["dynamisk","G i farten"]];
 let logoPick="stadion";try{const l=store.get("fk-logo");if(BRAND_LOGOS.some(x=>x[0]===l))logoPick=l;}catch(e){}
 function applyLogo(){const src=`logos/${logoPick}.png`;const im=document.getElementById("brandLogo");if(im&&im.getAttribute("src")!==src)im.setAttribute("src",src);
