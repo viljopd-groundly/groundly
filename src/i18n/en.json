@@ -2175,5 +2175,16 @@
  "{0} världsdelar": "{0} continents",
  "Första dubbeldagen": "First double-header",
  "{0} dubbeldagar": "{0} double-headers",
- "karta över alla arenor du besökt, troféer och arenapass": "a map of all the grounds you've visited, trophies and a ground passport"
+ "karta över alla arenor du besökt, troféer och arenapass": "a map of all the grounds you've visited, trophies and a ground passport",
+ "{0} klar": "{0} complete",
+ "Europas landslag klara": "All of Europe's national teams",
+ "Klar! Trofé vunnen": "Complete! Trophy won",
+ "{0} av {1} {2}": "{0} of {1} {2}",
+ "{0} kvar till trofén \"{1}\"": "{0} to go for the trophy \"{1}\"",
+ "Samla": "Collect",
+ "Bocka av alla arenor i en serie eller alla landslag i Europa. Klarar du en hel samling får du en trofé. Delar flera klubbar arena räknas den en gång.": "Tick off every ground in a league, or every national team in Europe. Complete a whole collection and you win a trophy. A ground shared by several clubs counts once.",
+ "Saknas": "Missing",
+ "landslag": "national teams",
+ "Ett landslag räknas när du har loggat en landskamp med laget, hemma eller borta.": "A national team counts once you've logged an international with that team, home or away.",
+ "+ Lägg till eller ta bort serier ({0} valda)": "+ Add or remove leagues ({0} selected)"
 }

@@ -265,6 +265,24 @@ dd{overflow-wrap:anywhere}
 .leg{display:grid;grid-template-columns:58px minmax(0,1fr);gap:10px;align-items:start}
 .lt{font-family:var(--f-mono);font-weight:700;font-size:calc(16px*var(--fs));background:var(--fg);color:var(--bg);border-radius:8px;text-align:center;padding:7px 0;font-variant-numeric:tabular-nums}
 .hop{margin-left:28px;font-size:calc(12px*var(--fs));color:var(--muted);border-left:2px dashed var(--line);padding:4px 0 4px 38px}
+.seal.big i{background:var(--accent);color:var(--surface);border:2px solid var(--surface);box-shadow:0 0 0 3px var(--accent)}
+.seal.big i svg{width:26px;height:26px}.seal.big{color:var(--fg);font-weight:700}
+.trc.coll{display:block;padding:0}.trc.coll summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;padding:12px 14px}
+.trc.coll summary::-webkit-details-marker{display:none}
+.trc.coll[open]{border-color:var(--accent);box-shadow:0 0 0 .5px var(--accent)}
+.trc.coll .lvl{color:var(--muted);font-weight:400}.trc.coll.done .lvl{color:var(--flood);font-weight:600}
+.trc.coll.done .ico{background:var(--accent);color:var(--surface)}
+.trc .ico .crest{margin:0}.trc .ico .tier{font:800 13px var(--f-display)}
+.trc .pbar{display:block;height:6px;border-radius:4px;background:var(--line);margin-top:7px;overflow:hidden}.trc .pbar i{display:block;height:100%;background:var(--accent)}
+.trc .chev{display:inline-block;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg);margin-left:8px;vertical-align:3px;transition:transform .15s}
+.trc.coll[open] .chev{transform:rotate(45deg);vertical-align:5px}
+.cbody{border-top:1px solid var(--line);margin:0 14px;padding:10px 0 14px}
+.clbl{font-size:calc(11px*var(--fs));font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:4px 0 6px}
+.cchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.cchip{font:inherit;font-size:calc(13px*var(--fs));padding:5px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--fg);cursor:pointer;text-align:left}
+.cchip span{color:var(--muted)}.cchip.y{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.cnext{font-size:calc(12px*var(--fs));color:var(--flood);font-weight:600;margin-top:4px}
+.trlist .arsel{margin:2px 0 0;padding:12px;border:1.5px dashed var(--line);border-radius:14px}.trlist .arsel summary{text-align:center}
 .trsum{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
 .trsum .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
 .trsum .top b{font:800 calc(28px*var(--fs))/1 var(--f-display);color:var(--accent)}
@@ -2600,38 +2618,45 @@ function trophyDefs(vs){return[
   {k:"w",l:$t("Världsdelar"),v:new Set([...natSeen()].map(id=>C[id].conf).filter(Boolean)).size,st:[2,3,4,5,6],nm:n=>$t("{0} världsdelar",[n])},
   {k:"x",l:$t("Dubbeldagar"),v:doubleDays(),st:[1,3,10],first:$t("Första dubbeldagen"),nm:n=>$t("{0} dubbeldagar",[n])}];}
 let trSeenBase;
-function trophiesHtml(B){const tn=(c,n)=>n===1&&c.first?c.first:c.nm(n);
+const TR_CUP='<path d="M7 4h10v4a5 5 0 0 1-10 0zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M12 13v4M9 21h6M10 17h4v4h-4z"/>';
+function trophiesHtml(B,coll){const tn=(c,n)=>n===1&&c.first?c.first:c.nm(n);
   const won=[];let total=0,near=null;
   for(const c of B){total+=c.st.length;c.st.forEach((n,i)=>{if(c.v>=n)won.push({id:c.k+n,c,n,i});});
     const nx=c.st.find(n=>c.v<n);if(nx){const left=nx-c.v,f=c.v/nx;if(!near||f>near.f)near={f,left,c,nx};}}
+  // en hel samling (alla arenor i en serie, alla landslag) = en egen trofé
+  for(const x of coll||[]){total++;if(x.done>=x.total)won.push({id:"L:"+x.id,big:x.trophy,n:0,i:9});
+    else{const f=x.done/x.total;if(!near||f>near.f)near={f,left:x.total-x.done,label:x.trophy};}}
   // "Nytt!" = troféer som inte fanns förra gången man tittade (första gången räknas inget som nytt)
   // jämförelsen görs mot läget när appen öppnades, så "Nytt!" står kvar hela besöket även om sidan ritas om
   if(trSeenBase===undefined){trSeenBase=null;try{trSeenBase=JSON.parse(localStorage.getItem("fk-trseen")||"null");}catch(e){}}
   const seen=trSeenBase;const isNew=t=>Array.isArray(seen)&&!seen.includes(t.id);
   try{localStorage.setItem("fk-trseen",JSON.stringify(won.map(t=>t.id)));}catch(e){}
-  won.sort((a,b)=>isNew(b)-isNew(a)||b.i-a.i||b.n-a.n);
-  let h=`<h3 class="sec">${$t("Troféer")}</h3><div class="trsum"><div class="top"><div><b>${won.length}</b> ${$t("av {0} troféer",[total])}</div>${near?`<small>${$t("Närmast: {0}",[tn(near.c,near.nx)])} (${$t("{0} kvar",[near.left])})</small>`:""}</div>
+  won.sort((a,b)=>isNew(b)-isNew(a)||!!b.big-!!a.big||b.i-a.i||b.n-a.n);
+  let h=`<h3 class="sec">${$t("Troféer")}</h3><div class="trsum"><div class="top"><div><b>${won.length}</b> ${$t("av {0} troféer",[total])}</div>${near?`<small>${$t("Närmast: {0}",[near.label||tn(near.c,near.nx)])} (${$t("{0} kvar",[near.left])})</small>`:""}</div>
    <span class="rbar"><i style="width:${total?won.length/total*100:0}%"></i></span>
-   ${won.length?`<div class="seals">${won.map(t=>`<div class="seal${isNew(t)?" new":""}"><i>${t.n}</i>${isNew(t)?`<em>${$t("Nytt!")}</em>`:""}${esc(tn(t.c,t.n))}</div>`).join("")}</div>`:`<p class="hint" style="margin:0">${$t("Logga din första match så får du din första trofé.")}</p>`}</div><div class="trlist">`;
+   ${won.length?`<div class="seals">${won.map(t=>`<div class="seal${t.big?" big":""}${isNew(t)?" new":""}"><i>${t.big?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">${TR_CUP}</svg>`:t.n}</i>${isNew(t)?`<em>${$t("Nytt!")}</em>`:""}${esc(t.big||tn(t.c,t.n))}</div>`).join("")}</div>`:`<p class="hint" style="margin:0">${$t("Logga din första match så får du din första trofé.")}</p>`}</div><div class="trlist">`;
   for(const c of B){const d=c.st.filter(n=>c.v>=n),nx=c.st.find(n=>c.v<n);
     h+=`<div class="trc${d.length?"":" zero"}"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TR_ICO[c.k]}</svg></div><div><b>${c.l}</b><span class="lvl">${d.length?`${esc(tn(c,d[d.length-1]))} · ${$t("{0} av {1}",[d.length,c.st.length])}`:$t("Ingen trofé än")}</span><div class="dots">${c.st.map(n=>`<span class="${c.v>=n?"on":""}">${n}</span>`).join("")}</div></div><div class="n">${c.v}<small>${nx?(d.length?$t("{0} till nästa",[nx-c.v]):$t("{0} till första",[nx-c.v])):$t("Alla klara")}</small></div></div>`;}
   return h+`</div>`;}
-function renderChallenges(){const vs=visitedStadiums();let h;
-  const B=trophyDefs(vs);h=trophiesHtml(B);
+function renderChallenges(){const vs=visitedStadiums();
   // vilka serier som visas väljer man själv (sparas på kontot); standard = de stora serierna
   const allL=tblLeagues();const sel=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.some(x=>x.l===l)):defArLeagues();
-  const lg=sel.map(l=>{const ar=leagueArenas(l);const miss=[...ar.entries()].filter(([s])=>!vs.has(s)).map(([,c])=>c);const seen=[...ar.entries()].filter(([s])=>vs.has(s)).map(([,c])=>c);return{l,total:ar.size,done:ar.size-miss.length,miss,seen};}).filter(x=>x.total).sort((a,b)=>b.done/b.total-a.done/a.total||b.total-a.total);
-  {const ns=natSeen();const all=Object.values(C).filter(c=>c.l==="Landslag"&&c.conf==="UEFA").sort((a,b)=>a.n.localeCompare(b.n,LANG));const miss=all.filter(c=>!ns.has(c.id));
-   h+=`<h3 class="sec">${$t("Europas landslag")}</h3><p class="hint">${$t("Se alla 55 landslag i UEFA spela, hemma eller borta. Ett landslag räknas när du har loggat en landskamp med laget.")}</p>
-   <div class="prog"><div class="ptop"><b>${$t("Landslag sedda")}</b><span>${all.length-miss.length}/${all.length}</span></div><span class="rbar"><i style="width:${(all.length-miss.length)/all.length*100}%"></i></span>
-   ${ns.size?`<div class="natflags">${[...ns].filter(id=>C[id].conf==="UEFA").map(id=>`<button class="link" data-open="${esc(id)}" title="${esc(C[id].n)}">${crest(id,C[id].n,26)}</button>`).join("")}</div>`:""}
-   ${miss.length?`<details><summary>${$t("Kvar att se ({0})",[miss.length])}</summary><div class="miss">${miss.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.n)}</button> <span class="meta">${esc(c.s||"")}</span>`).join("<br>")}</div></details>`:`<small class="meta">${$t("Alla 55 landslag sedda!")}</small>`}</div>`;}
-  h+=`<h3 class="sec">${$t("Arenor per serie")}</h3><p class="hint">${$t("Bocka av alla arenor i en serie, en efter en. Delar flera klubbar arena räknas den bara en gång. Från början visas de två högsta serierna i ditt land; lägg till fler under Välj serier.")}</p>
-   <details class="arsel"${arSelOpen?" open":""}><summary>${$t("Välj serier ({0} valda)",[sel.length])}</summary>
+  const lg=sel.map(l=>{const ar=leagueArenas(l);const miss=[...ar.entries()].filter(([s])=>!vs.has(s)).map(([,c])=>c);const seen=[...ar.entries()].filter(([s])=>vs.has(s)).map(([,c])=>c);const info=allL.find(x=>x.l===l)||{};return{id:l,l,c:info.c,t:info.t,total:ar.size,done:ar.size-miss.length,miss,seen,trophy:$t("{0} klar",[l])};}).filter(x=>x.total).sort((a,b)=>b.done/b.total-a.done/a.total||b.total-a.total);
+  const ns=natSeen();const natAll=Object.values(C).filter(c=>c.l==="Landslag"&&c.conf==="UEFA").sort((a,b)=>a.n.localeCompare(b.n,LANG));const natMiss=natAll.filter(c=>!ns.has(c.id));
+  const nat={id:"nat",total:natAll.length,done:natAll.length-natMiss.length,trophy:$t("Europas landslag klara")};
+  let h=trophiesHtml(trophyDefs(vs),[...lg,nat]);
+  const chk='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>';
+  const card=(x,icon,title,unit,body)=>{const ok=x.done>=x.total;return`<details class="trc coll${ok?" done":""}"><summary><div class="ico">${ok?chk:icon}</div><div><b>${esc(title)}</b><span class="lvl">${ok?$t("Klar! Trofé vunnen"):$t("{0} av {1} {2}",[x.done,x.total,unit])}</span><span class="pbar"><i style="width:${x.done/x.total*100}%"></i></span></div><div class="n">${x.done}/${x.total}<span class="chev" aria-hidden="true"></span></div></summary><div class="cbody">${body}${ok?"":`<div class="cnext">${$t("{0} kvar till trofén \"{1}\"",[x.total-x.done,x.trophy])}</div>`}</div></details>`;};
+  const list=(arr,f)=>`<div class="cchips">${arr.map(f).join("")}</div>`;
+  h+=`<h3 class="sec">${$t("Samla")}</h3><p class="hint">${$t("Bocka av alla arenor i en serie eller alla landslag i Europa. Klarar du en hel samling får du en trofé. Delar flera klubbar arena räknas den en gång.")}</p><div class="trlist">`;
+  h+=lg.map(x=>{const nid=x.c&&ntIdOf(x.c);const icon=nid?crest(nid,x.c,24):`<span class="tier">${x.t||""}</span>`;
+    const body=`${x.miss.length?`<div class="clbl">${$t("Saknas")}</div>${list(x.miss,c=>`<button class="cchip" data-open="${esc(c.id)}">${esc(c.s)} <span>${esc(c.n)}</span></button>`)}`:""}${x.seen.length?`<div class="clbl">${$t("Besökta ({0})",[x.seen.length])}</div>${list(x.seen,c=>`<button class="cchip y" data-open="${esc(c.id)}">${esc(c.s)}</button>`)}`:""}`;
+    return card(x,icon,x.l,$t("arenor"),body);}).join("");
+  h+=card(nat,`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">${TR_ICO.n}</svg>`,$t("Europas landslag"),$t("landslag"),
+    `<p class="hint" style="margin:0 0 8px">${$t("Ett landslag räknas när du har loggat en landskamp med laget, hemma eller borta.")}</p>${ns.size?`<div class="natflags">${[...ns].filter(id=>C[id].conf==="UEFA").map(id=>`<button class="link" data-open="${esc(id)}" title="${esc(C[id].n)}">${crest(id,C[id].n,26)}</button>`).join("")}</div>`:""}${natMiss.length?`<div class="clbl">${$t("Saknas")}</div>${list(natMiss,c=>`<button class="cchip" data-open="${esc(c.id)}">${esc(c.n)}</button>`)}`:""}`);
+  h+=`<details class="arsel"${arSelOpen?" open":""}><summary>${$t("+ Lägg till eller ta bort serier ({0} valda)",[sel.length])}</summary>
    ${(()=>{const dr=arDraft||sel;return[...new Set(allL.map(x=>x.c))].map(cn=>`<div class="lbl">${esc($t(cn))}</div><div class="chips wrapchips">${allL.filter(x=>x.c===cn).map(x=>`<button class="chip" data-arsel="${esc(x.l)}" aria-pressed="${dr.includes(x.l)}">${esc(x.l)}</button>`).join("")}</div>`).join("");})()}
-   <div class="actions"><button class="btn small primary" data-arsel-save="1">${$t("Spara")}</button><button class="btn small" data-arsel-reset="1">${$t("Standardurval")}</button></div></details>
-   ${!lg.length?`<p class="meta">${$t("Inga serier valda.")}</p>`:""}`;
-  h+=lg.map(x=>`<div class="prog"><div class="ptop"><b>${esc(x.l)}</b><span>${x.done}/${x.total}</span></div><span class="rbar"><i style="width:${x.done/x.total*100}%"></i></span><div class="pdets">${x.miss.length?`<details><summary>${$t("Kvar att besöka ({0})",[x.miss.length])}</summary><div class="miss">${x.miss.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.s)}</button> <span class="meta">${esc(c.n)}</span>`).join("<br>")}</div></details>`:`<small class="meta">${$t("Alla arenor besökta!")}</small>`}${x.seen.length?`<details class="pseen"><summary>${$t("Besökta ({0})",[x.seen.length])}</summary><div class="miss">${x.seen.map(c=>`<button class="link" data-open="${esc(c.id)}">${esc(c.s)}</button> <span class="meta">${esc(c.n)}</span>`).join("<br>")}</div></details>`:""}</div></div>`).join("");
+   <div class="actions"><button class="btn small primary" data-arsel-save="1">${$t("Spara")}</button><button class="btn small" data-arsel-reset="1">${$t("Standardurval")}</button></div></details></div>`;
   return h;}
 // fyll i resultat som saknas i loggen när resultatet finns i arkivet eller i matchschemat (t.ex. matcher sparade före avspark)
 let fillBusy=false,fillDone=false;
