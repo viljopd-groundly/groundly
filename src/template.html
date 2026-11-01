@@ -3103,7 +3103,7 @@ async function drawPass(){if(!document.getElementById("img-pass"))return;await f
 
 // ---------- fotbollsquiz ----------
 let QUIZ=null,quizMode="mix",quizLevel="medel",QSCORES={},quizState="loading",quizNs=null,QNAMES={},quizSaved="",qBoardTab="week",qCodeErr="";
-const QCATS=[["mix",$t("Blandat")],["klubb",$t("Klubblag")],["landslag",$t("Landslag")],["flagga",$t("Flaggor")],["geo",$t("Geografi")],["arena",$t("Arenor")],["sverige",$t("Svensk fotboll")],["cup",$t("VM & EM")]];
+const QCATS=[["mix",$t("Blandat")],["klubb",$t("Klubblag")],["landslag",$t("Landslag")],["flagga",$t("Flaggor")],["geo",$t("Geografi")],["arena",$t("Arenor")],["sverige",$t("Svensk fotboll")],["cup",$t("VM & EM")],["vm",$t("VM")],["em",$t("EM")]];
 const QLEVELS=[["latt",$t("Lätt")],["medel",$t("Medel")],["svar",$t("Svår")]];
 try{const qm=store.get("fk-qcat");if(QCATS.some(([k])=>k===qm))quizMode=qm;const ql=store.get("fk-qlevel");if(QLEVELS.some(([k])=>k===ql))quizLevel=ql;}catch(e){}
 // slump som kan seedas, så att dagens quiz och utmaningskoder ger samma frågor för alla
@@ -3185,8 +3185,8 @@ function makeQ0(type,pool,cat){
 function uniqBy(arr,f){const m=new Map();arr.forEach(x=>{const k=f(x);if(!m.has(k))m.set(k,x);});return[...m.values()];}
 // bygger en omgång; med seed blir den likadan för alla
 function genQuiz(cat,lvl,n,seed){const prev=qrand;qrand=seed==null?Math.random:seededRand(seed);
-  try{const pool=quizPool(cat,lvl);const types=cat==="cup"?CUP_TYPES[lvl]||CUP_TYPES.medel:QTYPES[cat]||QTYPES.mix;const qs=[],seen=new Set(),used=new Map();let g=0;
-    while(qs.length<n&&g++<600){const ty=types[Math.floor(qrand()*types.length)];if(new Set(types).size>1&&(used.get(ty)||0)>=Math.max(3,Math.ceil(n/2)))continue;const q=cat==="cup"?cupQ(ty,lvl):makeQ(ty,pool,cat);const qk=q&&q.q+"|"+q.a;
+  try{const pool=quizPool(cat,lvl);const isCup=cat==="cup"||cat==="vm"||cat==="em";const types=isCup?CUP_TYPES[lvl]||CUP_TYPES.medel:QTYPES[cat]||QTYPES.mix;const qs=[],seen=new Set(),used=new Map();let g=0;
+    while(qs.length<n&&g++<600){const ty=types[Math.floor(qrand()*types.length)];if(new Set(types).size>1&&(used.get(ty)||0)>=Math.max(3,Math.ceil(n/2)))continue;const q=isCup?cupQ(ty,lvl,cat):makeQ(ty,pool,cat);const qk=q&&q.q+"|"+q.a;
       if(!q||seen.has(qk)||new Set(q.opts).size!==q.opts.length)continue;seen.add(qk);used.set(ty,(used.get(ty)||0)+1);qs.push(q);}
     return qs;}finally{qrand=prev;}}
 // ---------- VM & EM: vinnare, finalist, värd, skyttekung och finalresultat ----------
@@ -3215,17 +3215,17 @@ const TOURN=[
  ["EM",2024,"Tyskland","Spanien","England","2–1",null,0]];
 // lätt: bara vinnare och värdland från 1990 och framåt. medel: från 1966, också skyttekung, finalist och år. svår: alla år från 1930 (inga resultatfrågor, för svårt).
 const CUP_TYPES={latt:["winner","winner","winner","host"],medel:["winner","winner","host","scorer","runner","year"],svar:["winner","host","scorer","scorer","runner","year"]};
-function cupQ(type,lvl){const k=qLvlIdx(lvl);const base=TOURN.filter(c=>k===0?c[1]>=1990:k===1?c[1]>=1966:true);const pk=a=>a[Math.floor(qrand()*a.length)];
-  const T=c=>`${c[0]} ${c[1]}`;const teams=[...new Set((k===0?base:TOURN).flatMap(c=>[c[3],c[4]]))];const OLDN=new Set(["Sovjetunionen","Västtyskland","Jugoslavien","Tjeckoslovakien"]),NEWN=new Set(["Tyskland","Kroatien","Tjeckien","Ukraina","Ryssland"]);
+function cupQ(type,lvl,cat){const k=qLvlIdx(lvl);const SRC=cat==="vm"?TOURN.filter(c=>c[0]==="VM"):cat==="em"?TOURN.filter(c=>c[0]==="EM"):TOURN;const base=SRC.filter(c=>k===0?c[1]>=1990:k===1?c[1]>=1966:true);const pk=a=>a[Math.floor(qrand()*a.length)];
+  const T=c=>`${$t(c[0])} ${c[1]}`;const teams=[...new Set((k===0?base:SRC).flatMap(c=>[c[3],c[4]]))];const OLDN=new Set(["Sovjetunionen","Västtyskland","Jugoslavien","Tjeckoslovakien"]),NEWN=new Set(["Tyskland","Kroatien","Tjeckien","Ukraina","Ryssland"]);
   // fel svar som fanns som land det året (inte Sovjetunionen i EM 2024 eller Kroatien i VM 1974)
   const fits=(x,yr)=>yr>=1992?!OLDN.has(x):yr<1990?!NEWN.has(x):true;let curYr=0;
   const others=(a,pool)=>pickN([...new Set(pool)].filter(x=>x!==a&&(!curYr||fits(x,curYr))),3);
   if(type==="winner"){const c=pk(base);curYr=c[1];const w=others(c[3],[c[4],...teams]);if(w.length<3)return null;return{q:$t("Vem vann {0}?",[T(c)]),a:c[3],opts:shuffle([c[3],...w]),ex:$t("{0} vann {1} och slog {2} i finalen.",[c[3],T(c),c[4]])};}
   if(type==="runner"){const c=pk(base);curYr=c[1];const w=others(c[4],[c[3],...teams]);return{q:$t("Vem förlorade finalen i {0}?",[T(c)]),a:c[4],opts:shuffle([c[4],...w]),ex:$t("{0} förlorade mot {1} i finalen.",[c[4],c[3]])};}
-  if(type==="host"){const c=pk(base);const w=others(c[2],(k===0?base:TOURN).map(x=>x[2]));return{q:$t("Var spelades {0}?",[T(c)]),a:c[2],opts:shuffle([c[2],...w]),ex:$t("{0} spelades i {1}.",[T(c),c[2]])};}
-  if(type==="scorer"){const c=pk(base.filter(x=>x[6]));if(!c)return null;const w=others(c[6],TOURN.filter(x=>x[6]&&x[6]!==c[6]).map(x=>x[6]));
+  if(type==="host"){const c=pk(base);const w=others(c[2],(k===0?base:SRC).map(x=>x[2]));return{q:$t("Var spelades {0}?",[T(c)]),a:c[2],opts:shuffle([c[2],...w]),ex:$t("{0} spelades i {1}.",[T(c),c[2]])};}
+  if(type==="scorer"){const c=pk(base.filter(x=>x[6]));if(!c)return null;const w=others(c[6],SRC.filter(x=>x[6]&&x[6]!==c[6]).map(x=>x[6]));
     return{q:$t("Vem vann skytteligan i {0}?",[T(c)]),a:c[6],opts:shuffle([c[6],...w]),ex:$t("{0} gjorde {1} mål i {2}.",[c[6],c[7],T(c)])};}
-  if(type==="final"){const c=pk(base);const w=others(c[5],TOURN.map(x=>x[5]));return{q:$t("Vad slutade finalen i {0} mellan {1} och {2}?",[T(c),c[3],c[4]]),a:c[5],opts:shuffle([c[5],...w]),ex:$t("{0} vann finalen {1}.",[c[3],c[5]])};}
+  if(type==="final"){const c=pk(base);const w=others(c[5],SRC.map(x=>x[5]));return{q:$t("Vad slutade finalen i {0} mellan {1} och {2}?",[T(c),c[3],c[4]]),a:c[5],opts:shuffle([c[5],...w]),ex:$t("{0} vann finalen {1}.",[c[3],c[5]])};}
   if(type==="year"){const c=pk(base.filter(x=>TOURN.filter(y=>y[0]===x[0]&&y[3]===x[3]).length===1));if(!c)return null;const w=others(String(c[1]),TOURN.filter(x=>x[0]===c[0]).map(x=>String(x[1])));
     return{q:$t("Vilket år vann {0} {1}?",[c[3],c[0]]),a:String(c[1]),opts:shuffle([String(c[1]),...w]),ex:$t("{0} vann {1} {2}, enda gången hittills.",[c[3],c[0],c[1]])};}
   return null;}
@@ -3236,7 +3236,8 @@ function parseCode(s){s=String(s||"").trim().toUpperCase().replace(/[^0-9A-Z]/g,
 function startNormal(cat,lvl,seed,fromCode){seed=seed??Math.floor(Math.random()*1679616);const qs=genQuiz(cat,lvl,10,seed);QUIZ={qs,i:0,score:0,picked:null,done:false,kind:fromCode?"challenge":"normal",cat,lvl,code:makeCode(cat,lvl,seed)};quizSaved="";}
 function startDaily(){const td=today();const qs=genQuiz("flagga","medel",5,strSeed("groundly-daily-"+td));QUIZ={qs,i:0,score:0,picked:null,done:false,kind:"daily",cat:"flagga",lvl:"medel",day:td};quizSaved="";}
 // quizet är bara flaggor (enklast och roligast); de andra kategorierna finns kvar för gamla utmaningskoder
-function newQuiz(){startNormal(quizMode==="cup"?"cup":"flagga",quizLevel);}
+const QMODES=["flagga","vm","em","cup"];const qMode=()=>QMODES.includes(quizMode)?quizMode:"flagga";
+function newQuiz(){startNormal(qMode(),quizLevel);}
 function renderQuizTab(){const el=document.getElementById("quizList");if(el)el.innerHTML=renderQuiz();}
 function rerenderQuizHost(){if(mode==="quiz")renderQuizTab();else if(mode==="tips")renderTips();}
 const qName=uid=>uid===myId?"Du":(QNAMES[uid]||(typeof NAMES!=="undefined"&&NAMES[uid])||$t("Spelare"));
@@ -3258,7 +3259,7 @@ function renderQuiz(){loadFlags43();
   const modes=`<div class="chips wrapchips" role="group" aria-label="${$t("Frågor om")}">${QCATS.map(([k,l])=>`<button class="chip" data-qmode="${k}" aria-pressed="${quizMode===k}">${l}</button>`).join("")}</div>`;
   const levels=`<div class="chips" role="group" aria-label="${$t("Svårighetsgrad")}">${QLEVELS.map(([k,l])=>`<button class="chip" data-qlevel="${k}" aria-pressed="${quizLevel===k}">${l}</button>`).join("")}</div>`;
   const mine=myId&&QSCORES[myId];
-  if(!QUIZ)return dailyCard()+`<article class="tip quiz"><h2 class="name">${$t("Fotbollsquiz")}</h2><div class="chips" role="group" aria-label="${$t("Quiz")}">${[["flagga",$t("Flaggor")],["cup",$t("VM & EM")]].map(([k,l])=>`<button class="chip" data-qmode="${k}" aria-pressed="${(quizMode==="cup"?"cup":"flagga")===k}">${l}</button>`).join("")}</div><p>${quizMode==="cup"?$t("Tio frågor om alla VM sedan 1930 och alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar."):$t("Tio flaggor. Vilket landslag hör flaggan till?")}</p><p class="meta">${$t("Svårighetsgrad")}</p>${levels}
+  if(!QUIZ)return dailyCard()+`<article class="tip quiz"><h2 class="name">${$t("Fotbollsquiz")}</h2><div class="chips" role="group" aria-label="${$t("Quiz")}">${[["flagga",$t("Flaggor")],["vm",$t("VM")],["em",$t("EM")],["cup",$t("VM & EM")]].map(([k,l])=>`<button class="chip" data-qmode="${k}" aria-pressed="${qMode()===k}">${l}</button>`).join("")}</div><p>${qMode()==="cup"?$t("Tio frågor om alla VM sedan 1930 och alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar."):qMode()==="vm"?$t("Tio frågor om alla VM sedan 1930: vinnare, värdländer, finalister och skyttekungar."):qMode()==="em"?$t("Tio frågor om alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar."):$t("Tio flaggor. Vilket landslag hör flaggan till?")}</p><p class="meta">${$t("Svårighetsgrad")}</p>${levels}
     <div class="actions"><button class="btn primary" data-qstart="1">${$t("Starta quiz")}</button></div>${mine&&+mine.best>=0&&mine.played?`<p class="meta">${$t("Ditt bästa: {0}/10",[+mine.best])}</p>`:""}
     <form class="qcode" id="qCodeForm"><label class="fld" for="qCodeIn">${$t("Har du fått en kod från en kompis?")}<input id="qCodeIn" maxlength="8" autocomplete="off" autocapitalize="characters" placeholder="${$t("31K7QA")}"></label><button class="btn" type="submit">${$t("Spela koden")}</button></form>${qCodeErr?`<p class="err">${esc(qCodeErr)}</p>`:""}</article>
     <article class="tip"><h2 class="name">${$t("Topplista")}</h2>${quizBoard()||`<p class="meta">${$t("Topplistan visas när du är inloggad.")}</p>`}</article>`;

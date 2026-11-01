@@ -2134,5 +2134,9 @@
  "{0} vann finalen {1}.": "{0} won the final {1}.",
  "Vilket år vann {0} {1}?": "In which year did {0} win the {1}?",
  "{0} vann {1} {2}, enda gången hittills.": "{0} won the {1} in {2}, their only title so far.",
- "Tio frågor om alla VM sedan 1930 och alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on every World Cup since 1930 and every Euros since 1960: winners, hosts, finalists and top scorers."
+ "Tio frågor om alla VM sedan 1930 och alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on every World Cup since 1930 and every Euros since 1960: winners, hosts, finalists and top scorers.",
+ "VM": "World Cup",
+ "EM": "Euros",
+ "Tio frågor om alla VM sedan 1930: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on every World Cup since 1930: winners, hosts, finalists and top scorers.",
+ "Tio frågor om alla EM sedan 1960: vinnare, värdländer, finalister och skyttekungar.": "Ten questions on every Euros since 1960: winners, hosts, finalists and top scorers."
 }
