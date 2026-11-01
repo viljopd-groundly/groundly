@@ -2086,5 +2086,20 @@
  "Lila": "Purple",
  "Detaljer": "Details",
  "Tema": "Theme",
- "Tryck för att ta bort": "Tap to remove"
+ "Tryck för att ta bort": "Tap to remove",
+ "{0} mål på läktaren": "{0} goals seen in the stands",
+ "{0} på läktaren": "{0} in the stands",
+ "{0} på plats": "{0} in person",
+ "Bästa matchen": "Best match",
+ "Favoritlaget": "Favourite team",
+ "första besöket i år": "first visit this year",
+ "Logga matcherna du ser så fylls kortet.": "Log the matches you see and the card fills up.",
+ "Min fotbollssäsong": "My football season",
+ "Ny i år: {0}": "New this year: {0}",
+ "Nya arenor": "New grounds",
+ "Oftast: {0}": "Most often: {0}",
+ "olika lag sedda": "different teams seen",
+ "Senast: {0}": "Latest: {0}",
+ "Stamarena": "Home ground",
+ "två matcher samma dag": "two matches in one day"
 }

@@ -2357,16 +2357,73 @@ function publishCard(id,cv,text,filename){STUDIO[id]={cv,text,filename};const im
 function seasonData(){const yr=String(seasonYear);const att=MY.attended.filter(a=>a.date.startsWith(yr)).sort((a,b)=>b.date.localeCompare(a.date));
   const ar=new Set(att.map(a=>a.venue||a.homeName));const ct=new Set(att.map(a=>a.country).filter(Boolean));return{yr,att,ar:ar.size,ct:ct.size};}
 function seasonText(){const d=seasonData();return $t("Min fotbollssäsong {0}: {1} matcher, {2} arenor, {3} länder.\n",[d.yr,d.att.length,d.ar,d.ct])+d.att.slice(0,10).map(a=>`${fmtDate(a.date)} ${a.homeName} ${a.score||"–"} ${a.awayName}${a.venue?" ("+a.venue+")":""}`).join("\n");}
-async function drawSeason(){if(!document.getElementById("img-season"))return;await fontsReady();const[cv,x,W,H]=newCanvas();const d=seasonData();const st=shareFmt==="story";const T=st?260:150;
-  frame(x,W,H);const half=st?960:680;x.strokeStyle=CC.LN;x.lineWidth=4;x.beginPath();x.moveTo(40,half);x.lineTo(W-40,half);x.stroke();x.beginPath();x.arc(W-40,half,110,Math.PI/2,Math.PI*1.5);x.stroke();
-  x.fillStyle=CC.MU;x.font=`700 30px ${F_M}`;x.fillText($t("MIN FOTBOLLSSÄSONG"),96,T);
-  x.fillStyle=CC.FG;x.font=`800 230px ${F_D}`;x.fillText(d.yr,84,T+210);
-  [[d.att.length,d.att.length===1?$t("match"):$t("matcher")],[d.ar,d.ar===1?$t("arena"):$t("arenor")],[d.ct,d.ct===1?"land":$t("länder")]].forEach(([n,l],i)=>{const cx=96+i*310;x.fillStyle=CC.AC;x.font=`700 120px ${F_M}`;x.fillText(String(n),cx,T+410);x.fillStyle=CC.MU;x.font=`600 36px ${F_B}`;x.fillText(l,cx+4,T+465);});
-  const L=half+80;x.fillStyle=CC.FG;x.font=`800 44px ${F_D}`;x.fillText(d.att.length?$t("Senaste matcherna"):$t("Inga matcher sparade än"),96,L);
-  const rows=st?9:6;d.att.slice(0,rows).forEach((a,i)=>{const y=L+70+i*78;x.fillStyle=CC.MU;x.font=`500 28px ${F_M}`;x.font=`500 26px ${F_M}`;x.fillText(fmtDate(a.date),96,y);
-    x.fillStyle=CC.FG;const t=fitText(x,`${a.homeName} ${a.score||"–"} ${a.awayName}`,600,F_B,34,30,W-96-300);x.fillText(t,300,y);});
-  if(d.att.length>rows){x.fillStyle=CC.MU;x.font=`600 30px ${F_B}`;x.fillText($t("+ {0} till",[d.att.length-rows]),300,L+70+rows*78);}
-  brand(x,W,H);publishCard("season",cv,seasonText(),`min-fotbollssasong-${d.yr}.png`);}
+// säsongskort: en biljett per uppgift. Bara uppgifter som inte är 0 visas; saknas något tar nästa i listan platsen.
+// stubbarna i en dämpad grön skala, biljetterna i papper
+const SK={BG:"#163423",PAPER:"#F2EEE3",INK:"#17291F",INKM:"#68705F",PERF:"#CFC8B5",STUBS:["#2E5E43","#3B6E51","#4A7D5F","#5B8C6E","#6F9A7F","#82A890","#5B8C6E","#4A7D5F"],ACC:"#E9C46A",W:"#2E6B4A",D:"#B9B19A",L:"#1E2A23"};
+const F_T='"GL Shoulders","Arial Narrow",sans-serif';
+let _shF=null;function shouldersReady(){if(_shF)return _shF;try{const f=new FontFace("GL Shoulders","url(fonts/BigShoulders.woff)",{weight:"100 900"});document.fonts.add(f);_shF=f.load().catch(()=>null);}catch(e){_shF=Promise.resolve(null);}return _shF;}
+const imgOf=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src;});
+let flagsP=null;function flagsReady(){if(Object.keys(FLAGS).some(k=>k.startsWith("nt-")))return Promise.resolve();return flagsP||(flagsP=fetch("data/flags.json").then(r=>r.ok?r.json():{}).then(j=>{Object.assign(FLAGS,j||{});}).catch(()=>{}));}
+const ntIdOf=land=>{const c=Object.values(C).find(c=>c.l==="Landslag"&&c.c===land);return c?c.id:null;};
+const goalsOf=s=>{const m=String(s||"").match(/(\d+)\s*[–-]\s*(\d+)/);return m?[+m[1],+m[2]]:null;};
+function seasonStats(){const d=seasonData();const att=d.att;const yr=d.yr;
+  const goals=att.reduce((n,a)=>{const g=goalsOf(a.score);return n+(g?g[0]+g[1]:0);},0);
+  const best=att.filter(a=>goalsOf(a.score)).slice().sort((p,q)=>{const a=goalsOf(p.score),b=goalsOf(q.score);return(b[0]+b[1])-(a[0]+a[1])||q.date.localeCompare(p.date);})[0]||null;
+  const key=a=>a.venue||a.homeName;const firstSeen={};MY.attended.slice().sort((p,q)=>p.date.localeCompare(q.date)).forEach(a=>{const k=key(a);if(!(k in firstSeen))firstSeen[k]=a.date;});
+  const newAr=[...new Set(att.map(key))].filter(k=>String(firstSeen[k]).startsWith(yr));
+  const countries=[...new Set(att.map(a=>a.country).filter(Boolean))];
+  const clubs=new Set();att.forEach(a=>[a.home,a.away].forEach(id=>{if(id&&C[id]&&!isNat(C[id]))clubs.add(id);}));
+  const nat=att.filter(a=>[a.home,a.away].some(id=>id&&C[id]&&isNat(C[id])));
+  const fav=favList().find(id=>C[id]&&!isNat(C[id]));const favM=fav?att.filter(a=>a.home===fav||a.away===fav).sort((p,q)=>p.date.localeCompare(q.date)):[];
+  const form=favM.map(a=>{const g=goalsOf(a.score);if(!g)return null;const my=a.home===fav?g[0]:g[1],ot=a.home===fav?g[1]:g[0];return my>ot?"V":my<ot?"F":"O";}).filter(Boolean);
+  const derbies=att.filter(a=>derbyOfAtt(a));const days={};att.forEach(a=>{days[a.date]=(days[a.date]||0)+1;});const dbl=Object.values(days).filter(n=>n>=2).length;
+  const arCount={};att.forEach(a=>{const k=key(a);arCount[k]=(arCount[k]||0)+1;});const topAr=Object.entries(arCount).sort((a,b)=>b[1]-a[1])[0];
+  return{d,goals,best,newAr,countries,clubs:clubs.size,nat,fav,favM,form,derbies,dbl,topAr};}
+function seasonTickets(S){const d=S.d,T=[];const pl=(n,a,b)=>n===1?a:b;
+  if(!d.att.length)return T;
+  T.push({k:$t("Matcher"),n:d.att.length,wide:true,sub:S.goals?$t("{0} mål på läktaren",[S.goals]):$t("{0} på läktaren",[pl(d.att.length,$t("match"),$t("matcher"))]),
+    right:S.best?{lbl:$t("Bästa matchen"),big:String(S.best.score).replace("-","–"),sm:`${S.best.homeName} – ${S.best.awayName}`}:null});
+  T.push({k:$t("Arenor"),n:d.ar,sub:S.newAr.length?$t("Ny i år: {0}",[S.newAr[0]]):S.topAr?$t("Oftast: {0}",[S.topAr[0]]):""});
+  if(S.countries.length)T.push({k:$t("Länder"),n:S.countries.length,flags:S.countries.slice(0,8)});
+  if(S.favM.length)T.push({k:$t("Favoritlaget"),n:S.favM.length,wide:true,sub:$t("{0} på plats",[C[S.fav].n]),form:S.form.slice(-10),crest:S.fav});
+  if(S.clubs)T.push({k:$t("Klubbar"),n:S.clubs,sub:$t("olika lag sedda")});
+  if(S.nat.length){const a=S.nat[0];T.push({k:$t("Landslag"),n:S.nat.length,sub:$t("Senast: {0}",[`${a.homeName} ${String(a.score||"–").replace("-","–")} ${a.awayName}`])});}
+  if(S.derbies.length){const dd=derbyOfAtt(S.derbies[0]);T.push({k:$t("Derbyn"),n:S.derbies.length,sub:dd?$t(dd[1]):""});}
+  if(S.newAr.length>1)T.push({k:$t("Nya arenor"),n:S.newAr.length,sub:$t("första besöket i år")});
+  if(S.dbl)T.push({k:$t("Dubbeldagar"),n:S.dbl,sub:$t("två matcher samma dag")});
+  if(S.topAr&&S.topAr[1]>1)T.push({k:$t("Stamarena"),n:S.topAr[1],sub:S.topAr[0]});
+  return T;}
+// lägger biljetterna i rader: breda tar en hel rad, smala delar två och två
+function packTickets(T,maxRows){const rows=[];let half=null;for(const t of T){if(t.wide){rows.push([t]);continue;}if(half){rows.push([half,t]);half=null;}else half=t;}
+  if(half)rows.push([{...half,wide:true}]);return rows.slice(0,maxRows);}
+function drawTicket(x,t,X,Y,w,h,col,imgs){const sw=74,r=16;
+  x.save();rrect(x,X,Y,w,h,r);x.clip();x.fillStyle=SK.PAPER;x.fillRect(X,Y,w,h);x.fillStyle=col;x.fillRect(X,Y,sw,h);x.restore();
+  // urklipp och perforering mellan stub och biljett
+  x.fillStyle=SK.BG;[Y,Y+h].forEach(cy=>{x.beginPath();x.arc(X+sw,cy,13,0,Math.PI*2);x.fill();});
+  x.strokeStyle=SK.PERF;x.lineWidth=4;x.setLineDash([10,9]);x.beginPath();x.moveTo(X+sw,Y+18);x.lineTo(X+sw,Y+h-18);x.stroke();x.setLineDash([]);
+  x.save();x.translate(X+sw/2+11,Y+h/2);x.rotate(-Math.PI/2);x.fillStyle=SK.PAPER;x.textAlign="center";const lab=fitText(x,t.k.toUpperCase(),800,F_T,32,20,h-40);x.fillText(lab,0,0);x.restore();
+  const bx=X+sw+28,inner=w-sw-56;x.textAlign="left";x.fillStyle=SK.INK;const nh=Math.min(120,h*.52);x.font=`800 ${nh}px ${F_T}`;x.fillText(String(t.n),bx,Y+20+nh*.86);
+  let sy=Y+30+nh*.86+34;const reserve=t.right?320:t.crest?150:0;
+  if(t.sub){x.fillStyle=SK.INKM;const s=fitText(x,t.sub,600,F_B,28,20,inner-reserve);x.fillText(s,bx,sy);sy+=12;}
+  if(t.flags){let fx=bx;const fy=t.sub?sy:Y+h-70;t.flags.forEach(land=>{const im=imgs[land];if(!im||fx>X+w-60)return;x.save();rrect(x,fx,fy,52,38,5);x.clip();x.drawImage(im,fx,fy-7,52,52);x.restore();x.strokeStyle="rgba(0,0,0,.12)";x.lineWidth=2;rrect(x,fx,fy,52,38,5);x.stroke();fx+=62;});}
+  if(t.form){let fx=bx;const fy=sy+22;t.form.forEach(f=>{x.fillStyle=f==="V"?SK.W:f==="F"?SK.L:SK.D;x.beginPath();x.arc(fx+17,fy,17,0,Math.PI*2);x.fill();x.fillStyle=f==="O"?SK.INK:SK.PAPER;x.font=`800 17px ${F_B}`;x.textAlign="center";x.fillText(f,fx+17,fy+6);x.textAlign="left";fx+=42;});}
+  if(t.right){const rx=X+w-30;x.textAlign="right";x.fillStyle=SK.INKM;x.font=`600 26px ${F_B}`;x.fillText(t.right.lbl,rx,Y+h/2-44);x.fillStyle=SK.INK;x.font=`800 76px ${F_T}`;x.fillText(t.right.big,rx,Y+h/2+28);
+    x.fillStyle=SK.INKM;x.fillText(fitText(x,t.right.sm,600,F_B,24,18,300),rx,Y+h/2+64);x.textAlign="left";}
+  if(t.crest){const k=COLORS[t.crest]||["#2E6B4A","#F2EEE3",crestInitials(C[t.crest].n)];const cx=X+w-100,cy=Y+h/2,R=Math.min(62,h/2-20);
+    x.fillStyle=k[1]||"#fff";x.beginPath();x.arc(cx,cy,R+7,0,Math.PI*2);x.fill();x.fillStyle=k[0]||"#2E6B4A";x.beginPath();x.arc(cx,cy,R,0,Math.PI*2);x.fill();
+    x.fillStyle=k[1]||"#fff";x.textAlign="center";x.fillText(fitText(x,k[2]||crestInitials(C[t.crest].n),800,F_T,46,24,R*1.6),cx,cy+15);x.textAlign="left";}}
+async function drawSeason(){if(!document.getElementById("img-season"))return;await fontsReady();await shouldersReady();const[cv,x,W,H]=newCanvas();const st=shareFmt==="story";const S=seasonStats();
+  x.fillStyle=SK.BG;x.fillRect(0,0,W,H);const P=60;
+  x.fillStyle=SK.PAPER;x.font=`800 ${st?190:150}px ${F_T}`;x.textAlign="left";x.fillText(S.d.yr,P+20,(st?110:70)+(st?160:126));
+  x.textAlign="right";x.fillStyle="#A9C1B0";x.font=`600 30px ${F_B}`;x.fillText($t("Min fotbollssäsong"),W-P-20,(st?110:70)+(st?150:118));x.textAlign="left";
+  const top=st?330:250,bottom=H-(st?170:130);
+  const T=seasonTickets(S);
+  if(!T.length){x.fillStyle=SK.PAPER;x.font=`800 54px ${F_D}`;x.fillText($t("Inga matcher sparade än"),P+20,top+80);x.fillStyle="#A9C1B0";x.font=`600 32px ${F_B}`;x.fillText($t("Logga matcherna du ser så fylls kortet."),P+20,top+140);}
+  else{const flagIds={};await flagsReady();const imgs={};await Promise.all(T.filter(t=>t.flags).flatMap(t=>t.flags).map(async land=>{const id=ntIdOf(land);if(id&&FLAGS[id])imgs[land]=await imgOf(FLAGS[id]);}));
+    const rows=packTickets(T,st?6:4);const gap=22,rh=Math.min(st?230:210,(bottom-top-gap*(rows.length-1))/rows.length);let y=top;let ci=0;
+    rows.forEach(row=>{const w=row.length===1?W-2*P:(W-2*P-gap)/2;row.forEach((t,j)=>{drawTicket(x,t,P+j*(w+gap),y,w,rh,SK.STUBS[ci++%SK.STUBS.length],imgs);});y+=rh+gap;});}
+  x.fillStyle=SK.ACC;x.font=`800 50px ${F_T}`;x.textAlign="right";x.fillText("GROUNDLY",W-P-20,H-(st?90:64));x.textAlign="left";
+  publishCard("season",cv,seasonText(),`min-fotbollssasong-${S.d.yr}.png`);}
 
 // matchkort i biljettstil
 function matchFacts(a){const all=MY.attended.slice().sort((p,q)=>p.date.localeCompare(q.date)||p.id.localeCompare(q.id));const n=all.findIndex(z=>z.id===a.id)+1;
