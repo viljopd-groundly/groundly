@@ -915,6 +915,9 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .profhead .uav{margin-right:0}
 .wchip .uav{margin:0 2px 0 0;align-self:center}
 .blrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}.blrow:last-child{border-bottom:0}
+.trbox{max-height:88vh;overflow:auto}.trbox>*{flex-shrink:0}.trbox>.chips{margin:4px 0 2px;flex-wrap:wrap}.trrow{border-top:1px solid var(--line)}.trhead{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:3px;width:100%;padding:10px 2px}
+.trsv{font-size:calc(12px*var(--fs));color:var(--muted)}.trcur{font-weight:600}.trhead .pill{justify-self:start}.trbody{padding:0 2px 12px;display:grid;gap:10px}
+.trsug{background:var(--bg);border-radius:10px;padding:8px 10px;display:grid;gap:6px}.trsug .actions{margin:0}.trsug .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
 .rep.repediting{padding:0;border:0;background:none;box-shadow:none}.rep.repediting:before{display:none}
 /* ===== Utseenden (Inställningar → Utseende → Utseende). Ligger sist så att de vinner över färg och stil. ===== */
 @font-face{font-family:"GL Shoulders";src:url(fonts/BigShoulders.woff) format("woff");font-weight:100 900;font-display:swap}
@@ -2110,7 +2113,7 @@ async function forumClick(t){
 (async()=>{try{userNs=await window.claude?.use?.("user")??null;}catch(e){userNs=null}
   // can("data.write") gäller den låsta roten, inte det egna forumdokumentet – ett nekat skrivförsök avgör i stället
   if(userNs){try{myId=await userNs.id();isMod=await userNs.canEdit();}catch(e){}}
-  let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startSocial(db);startFeedback(db);loadMyName();
+  let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startTl(db);startSocial(db);startFeedback(db);loadMyName();
   if(!db){forumState="none";if(mode==="forum")renderForum();return;}
   db.collection("forum").onSnapshot(s=>{const f={};s.docs.forEach(d=>{f[d.id]=d.data();});FORUM=f;forumState="ready";try{actBadge();}catch(e){}if(mode==="forum")renderForum();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();},()=>{forumState="none";if(mode==="forum")renderForum();});
   db.doc("mod/hidden").onSnapshot(s=>{HIDDEN=s.exists&&Array.isArray(s.data().keys)?s.data().keys:[];if(mode==="forum")renderForum();},()=>{});
@@ -2121,7 +2124,9 @@ let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",my
 let arView="list",bkupOpen=false;document.addEventListener("toggle",e=>{if(e.target&&e.target.id==="bkupBox")bkupOpen=e.target.open;},true);window.groundlyOpenMod=()=>{mySub="mod";if(mode==="mine")renderMine();else setMode("mine");window.scrollTo({top:0});};try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms))mySub=ms;}catch(e){}
 const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
-  wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,favNats:(Array.isArray(d&&d.favNats)?d.favNats:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&isNat(C[x])&&x!==d.favNat&&a.indexOf(x)===i).slice(0,MAXNAT),pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,200):[],showFo:!!(d&&d.showFo===true),cc:d&&typeof d.cc==="string"&&/^(none|nt-[a-z-]+)$/.test(d.cc)?d.cc:null};}
+  wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,favNats:(Array.isArray(d&&d.favNats)?d.favNats:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&isNat(C[x])&&x!==d.favNat&&a.indexOf(x)===i).slice(0,MAXNAT),pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,200):[],showFo:!!(d&&d.showFo===true),cc:d&&typeof d.cc==="string"&&/^(none|nt-[a-z-]+)$/.test(d.cc)?d.cc:null,
+  ...(Array.isArray(d&&d.arSel)?{arSel:d.arSel.filter(x=>typeof x==="string").slice(0,60)}:{}),blocked:Array.isArray(d&&d.blocked)?d.blocked.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,500):[],
+  ...(d&&typeof d.ini==="string"&&d.ini?{ini:d.ini.slice(0,3)}:{}),...(d&&(d.trHelp===true||d.trHelp===false)?{trHelp:d.trHelp}:{})};}
 const MAXFAV=6,MAXNAT=5;
 const natExtra=()=>myState==="ready"&&MY&&Array.isArray(MY.favNats)?MY.favNats.filter(id=>C[id]&&id!==MY.favNat):[];
 const isFavNat=id=>myState==="ready"&&!!MY&&(MY.favNat===id||natExtra().includes(id));
@@ -4087,7 +4092,7 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   const ob=onboardHtml();
   // nya användare (inte inloggade, inte klara med kom igång eller inga loggade matcher) får Så funkar Groundly överst, alltid
   const fresh=myState!=="ready"||!MY.onboarded||!(MY.attended&&MY.attended.length);
-  el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+ob+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+  el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
   return`<article class="tip howto">${fresh?`<div class="howeye">${$t("Ny här?")}</div>`:""}<h2 class="name">${$t("Så funkar Groundly")}</h2><p class="howsub">${$t("Tre saker du gör i appen. Tryck för att börja.")}</p>
@@ -4901,7 +4906,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-invite],[d
 function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>${b}</section>`;
   return`<div id="setOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="setT"><div class="compose askbox pvbox msbox setbox">
    <div class="mshead"><h2 id="setT">${$t("Inställningar")}</h2><button class="btn small" id="setClose">${$t("Klar")}</button></div>
-   ${sec($t("Språk"),`<div class="chips wrapchips">${LANG_LIST.map(([k,l])=>`<button class="chip" data-lang-pick="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join("")}</div>`)}
+   ${sec($t("Språk"),`<div class="chips wrapchips">${LANG_LIST.map(([k,l])=>`<button class="chip" data-lang-pick="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join("")}</div>${LANG!=="sv"?`<div class="actions"><button class="btn small" data-tropen="1">${ic("pencil")} ${$t("Förbättra översättningen")}</button></div><p class="hint" style="margin:0">${$t("Föreslå bättre texter och rösta på andras förslag.")}</p>`:""}`)}
    ${sec($t("Avstånd"),`<div class="chips wrapchips">${[["auto",$t("Automatiskt")],["mil","mil"],["km","km"],["mi","miles"]].map(([k,l])=>`<button class="chip" data-unit-pick="${k}" aria-pressed="${unitPick===k}">${l}</button>`).join("")}</div><p class="hint">${$t("Automatiskt väljer efter ditt land: mil i Sverige och Norge, miles i Storbritannien och USA, annars km.")}</p>`)}
    ${sec($t("Logga"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
@@ -4938,6 +4943,82 @@ document.addEventListener("submit",e=>{if(e.target.id!=="setHome")return;e.preve
 (()=>{const onMap=e=>!!(e.target&&e.target.closest&&e.target.closest(".leaflet-container,.lmap"));
   ["gesturestart","gesturechange"].forEach(t=>document.addEventListener(t,e=>{if(!onMap(e))e.preventDefault();},{passive:false}));
   document.addEventListener("touchmove",e=>{if(e.touches&&e.touches.length>1&&!onMap(e))e.preventDefault();},{passive:false});})();
+
+// fråga nya (och befintliga) användare på andra språk än svenska om de vill hjälpa till med översättningen
+function tlAskHtml(){if(LANG==="sv"||myState!=="ready"||!myId)return"";const ln=(LANG_LIST.find(x=>x[0]===LANG)||[,LANG])[1];
+  if(MY.trHelp===undefined)return`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Hjälp till med språket")}</div>
+    <p style="margin:0">${$t("Groundly är i beta, och översättningen till {0} kan innehålla fel. Kan du tänka dig att föreslå förbättringar på ditt språk och rösta på andras förslag?",[esc(ln)])}</p>
+    <div class="actions"><button class="btn small primary" data-tlhelp="1">${$t("Ja, gärna")}</button><button class="btn small" data-tlhelp="0">${$t("Nej tack")}</button></div></article>`;
+  if(MY.trHelp!==true||tlState!=="ready")return"";const mine=(TLV[myId]&&TLV[myId].v)||{};const n=tlAll().filter(x=>x.uid!==myId&&!mine[x.sk]).length;
+  return n?`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Hjälp till med språket")}</div><p style="margin:0">${$tn(n,"Ett översättningsförslag väntar på din röst.","{n} översättningsförslag väntar på din röst.")}</p>
+    <div class="actions"><button class="btn small primary" data-tropen="1" data-tlonly="1">${$t("Rösta")}</button></div></article>`:"";}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-tlhelp]");if(!t)return;const yes=t.dataset.tlhelp==="1";mutate(d=>{d.trHelp=yes;});
+  if(yes){toast($t("Tack! Du hittar översättningen under Inställningar → Språk."),"check");tlOnly=false;openTr();}});
+// ---------- förbättra översättningen (betan) ----------
+// trsug/{uid}.items=[{id,lang,key,text,at}], trvote/{uid}.v={"uid:id":1|-1}, mod/tr.acc={lang:{key:text}}, mod/tr.rej=["uid:id"]
+// Ett förslag gäller när minst 2 andra har röstat ja och ja-rösterna är minst 2 fler än nej-rösterna. Moderatorer kan godkänna eller avvisa direkt.
+let TLS={},TLV={},TLMOD={acc:{},rej:[]},tlState="loading",tlQ="",tlOpen=null,tlOnly=false,tlBusy=false;
+const TL_ORIG={};const TL_NEED=2;
+function tlCache(){try{return JSON.parse(localStorage.getItem("fk-tr-"+LANG)||"{}");}catch(e){return{};}}
+// använd sparade godkända förslag direkt vid start, innan databasen svarat
+(()=>{if(LANG==="sv")return;const c=tlCache();for(const[k,v]of Object.entries(c))if(I18N[k]!=null){TL_ORIG[k]=TL_ORIG[k]??I18N[k];I18N[k]=v;}})();
+function tlAll(){const out=[];Object.entries(TLS).forEach(([uid,d])=>(d&&Array.isArray(d.items)?d.items:[]).forEach(x=>{if(x&&x.id&&x.lang===LANG&&x.key&&x.text&&!blk(uid))out.push({...x,uid,sk:uid+":"+x.id});}));
+  const rej=new Set(TLMOD.rej||[]);return out.filter(x=>!rej.has(x.sk));}
+function tlScore(sk,author){let up=0,dn=0;Object.entries(TLV).forEach(([u,d])=>{if(u===author)return;const v=d&&d.v&&d.v[sk];if(v===1)up++;else if(v===-1)dn++;});return{up,dn};}
+function tlAccepted(){const acc={};const best={};tlAll().forEach(x=>{const{up,dn}=tlScore(x.sk,x.uid);if(up>=TL_NEED&&up-dn>=TL_NEED&&(!best[x.key]||up-dn>best[x.key].s)){best[x.key]={s:up-dn,t:x.text};}});
+  for(const[k,b]of Object.entries(best))acc[k]=b.t;Object.assign(acc,(TLMOD.acc||{})[LANG]||{});return acc;}
+function tlApply(){if(LANG==="sv")return;const acc=tlAccepted();
+  for(const[k,o]of Object.entries(TL_ORIG))if(!(k in acc)){I18N[k]=o;delete TL_ORIG[k];}
+  for(const[k,v]of Object.entries(acc))if(I18N[k]!=null||TL_ORIG[k]!=null){TL_ORIG[k]=TL_ORIG[k]??I18N[k];I18N[k]=v;}
+  try{localStorage.setItem("fk-tr-"+LANG,JSON.stringify(acc));}catch(e){}}
+function startTl(db){if(!db||LANG==="sv"){tlState="none";return;}
+  const upd=()=>{tlApply();if(document.getElementById("trOv"))tlRender();};
+  try{db.collection("trsug").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});TLS=o;tlState="ready";upd();},()=>{tlState="none";});}catch(e){tlState="none";}
+  try{db.collection("trvote").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});TLV=o;upd();},()=>{});}catch(e){}
+  try{db.doc("mod/tr").onSnapshot(s=>{TLMOD=s.exists?{acc:s.data().acc||{},rej:s.data().rej||[]}:{acc:{},rej:[]};upd();},()=>{});}catch(e){}}
+const tlTok=s=>(String(s).match(/\{\w+\}/g)||[]).sort().join(",");
+function tlRowHtml(k){const cur=I18N[k]||"";const sugs=tlAll().filter(x=>x.key===k);const open=tlOpen===k;
+  const mine=(TLV[myId]&&TLV[myId].v)||{};const orig=TL_ORIG[k];
+  return`<div class="trrow${open?" open":""}"><button class="trhead" data-trkey="${esc(k)}"><span class="trsv" lang="sv">${esc(k)}</span><span class="trcur">${esc(cur)}</span>${sugs.length?`<span class="pill t3">${$tn(sugs.length,"Ett förslag","{n} förslag")}</span>`:""}</button>
+   ${open?`<div class="trbody">${orig!=null?`<p class="hint">${$t("Ursprunglig översättning:")} ${esc(orig)}</p>`:""}
+    ${sugs.map(x=>{const{up,dn}=tlScore(x.sk,x.uid);const my=mine[x.sk]||0;const own=x.uid===myId;return`<div class="trsug"><div class="trtxt">${esc(x.text)}<span class="meta"> · ${esc(who(x.uid))}</span></div>
+      <div class="actions">${own?`<span class="meta">${$t("Ditt förslag")} · 👍 ${up} · 👎 ${dn}</span>`:`<button class="btn small" data-trvote="${esc(x.sk)}" data-v="1" aria-pressed="${my===1}">👍 ${up}</button><button class="btn small" data-trvote="${esc(x.sk)}" data-v="-1" aria-pressed="${my===-1}">👎 ${dn}</button>`}
+      ${isMod?`<button class="link" data-tracc="${esc(x.sk)}">${$t("Godkänn")}</button><button class="link" data-trrej="${esc(x.sk)}">${$t("Avvisa")}</button>`:""}</div></div>`;}).join("")}
+    <form class="trform" data-trform="${esc(k)}"><label class="fld">${$t("Ditt förslag")}<textarea rows="2" maxlength="400" required>${esc(cur)}</textarea></label>
+    <div class="actions"><button class="btn small primary" type="submit">${$t("Skicka förslag")}</button></div></form></div>`:""}</div>`;}
+function tlRender(){const box=document.getElementById("trList");if(!box)return;{const miss=[...new Set(tlAll().map(x=>x.uid))].filter(u=>u!==myId&&!(u in NAMES));if(miss.length)resolveNames(miss).then(()=>{if(document.getElementById("trOv"))tlRender();});}const q=norm(tlQ);const keys=Object.keys(I18N).filter(k=>k&&!k.startsWith("_")&&I18N[k]);
+  const has=new Set(tlAll().map(x=>x.key));let list=keys.filter(k=>(!tlOnly||has.has(k))&&(!q||norm(k).includes(q)||norm(I18N[k]).includes(q)));
+  list.sort((a,b)=>(has.has(b)-has.has(a)));const n=list.length;list=list.slice(0,40);if(tlOpen&&!list.includes(tlOpen)&&I18N[tlOpen])list.unshift(tlOpen);
+  box.innerHTML=(n?`<p class="hint">${$t("{0} texter",[n])}${n>40?" · "+$t("visar de 40 första, sök för att hitta fler"):""}</p>`:`<p class="hint">${$t("Ingen text matchar.")}</p>`)+list.map(tlRowHtml).join("");}
+function openTr(){const o=document.getElementById("trOv");if(o)o.remove();const ln=(LANG_LIST.find(x=>x[0]===LANG)||[,LANG])[1];
+  document.body.insertAdjacentHTML("beforeend",`<div id="trOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="trT"><div class="compose askbox pvbox trbox">
+   <div class="mshead"><h2 id="trT">${$t("Förbättra översättningen")}</h2><button class="btn small" id="trClose">${$t("Klar")}</button></div>
+   <p class="hint">${$t("Hittar du en text på {0} som låter fel? Sök efter den, föreslå en bättre och rösta på andras förslag. När minst två andra har röstat ja används förslaget i appen för alla.",[esc(ln)])}</p>
+   <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="tlQ" type="search" placeholder="${$t("Sök text")}" value="${esc(tlQ)}" autocomplete="off"></label>
+   <div class="chips"><button class="chip" data-tronly="0" aria-pressed="${!tlOnly}">${$t("Alla texter")}</button><button class="chip" data-tronly="1" aria-pressed="${tlOnly}">${$t("Har förslag")} (${new Set(tlAll().map(x=>x.key)).size})</button></div>
+   <div id="trList"></div></div></div>`);tlRender();}
+let tlQT=0;document.addEventListener("input",e=>{if(e.target.id!=="tlQ")return;tlQ=e.target.value;clearTimeout(tlQT);tlQT=setTimeout(tlRender,150);});
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-tropen],#trClose,#trOv,[data-trkey],[data-tronly],[data-trvote],[data-tracc],[data-trrej]");if(!t)return;
+  if(t.dataset.tropen){e.preventDefault();tlOnly=t.dataset.tlonly==="1";if(typeof closeSettings==="function"&&setOpen)closeSettings();openTr();return;}
+  if(t.id==="trClose"||(t.id==="trOv"&&e.target===t)){document.getElementById("trOv").remove();render();return;}
+  if(t.id==="trOv")return;
+  if(t.dataset.trkey){tlOpen=tlOpen===t.dataset.trkey?null:t.dataset.trkey;tlRender();return;}
+  if(t.dataset.tronly){tlOnly=t.dataset.tronly==="1";openTr();return;}
+  if(!dbNs||!myId){toast($t("Logga in för att föreslå och rösta."));return;}
+  if(t.dataset.trvote){const sk=t.dataset.trvote,v=+t.dataset.v;const cur=((TLV[myId]||{}).v)||{};const next={...cur};if(next[sk]===v)delete next[sk];else next[sk]=v;
+    TLV={...TLV,[myId]:{v:next}};tlApply();tlRender();try{await dbNs.doc("trvote/"+myId).set({v:next});}catch(x){toast($t("Kunde inte spara."));}return;}
+  if(isMod&&(t.dataset.tracc||t.dataset.trrej)){const sk=t.dataset.tracc||t.dataset.trrej;const x=tlAll().find(y=>y.sk===sk);if(!x)return;
+    const acc=JSON.parse(JSON.stringify(TLMOD.acc||{}));const rej=[...(TLMOD.rej||[])];
+    if(t.dataset.tracc){(acc[LANG]=acc[LANG]||{})[x.key]=x.text;}else{rej.push(sk);if(acc[LANG]&&acc[LANG][x.key]===x.text)delete acc[LANG][x.key];}
+    try{await dbNs.doc("mod/tr").set({acc,rej:rej.slice(-2000)});TLMOD={acc,rej};tlApply();tlRender();toast(t.dataset.tracc?$t("Godkänt."):$t("Avvisat."),"check");}catch(x){toast($t("Kunde inte spara."));}return;}});
+document.addEventListener("submit",async e=>{const f=e.target.closest&&e.target.closest("[data-trform]");if(!f)return;e.preventDefault();if(tlBusy)return;
+  if(!dbNs||!myId){toast($t("Logga in för att föreslå och rösta."));return;}const k=f.dataset.trform;const v=f.querySelector("textarea").value.trim();
+  if(!v||v===I18N[k]){toast($t("Ändra texten först."));return;}
+  if(tlTok(v)!==tlTok(I18N[k]||k)){toast($t("Behåll platshållarna, till exempel {0}, precis som i originalet.",["{0}"]));return;}
+  const mine=(TLS[myId]&&Array.isArray(TLS[myId].items)?TLS[myId].items:[]).filter(x=>!(x.lang===LANG&&x.key===k)).slice(-199);
+  mine.push({id:newId(),lang:LANG,key:k,text:v.slice(0,400),at:new Date().toISOString()});tlBusy=true;
+  try{await dbNs.doc("trsug/"+myId).set({items:mine});TLS={...TLS,[myId]:{items:mine}};tlRender();toast($t("Tack! Förslaget syns nu för andra som kan rösta på det."),"check");}
+  catch(x){toast($t("Det gick inte att skicka just nu. Försök igen senare."));}finally{tlBusy=false;}});
 // ---------- render ----------
 function render(){
   const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};

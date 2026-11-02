@@ -358,7 +358,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   }
 
   // radera kontot: allt användaren sparat eller skrivit, sedan själva kontot
-  const OWN = ["forum", "ratings", "pubs", "quiz", "reports", "likes", "stats", "hype", "votes", "tipnotes", "fixes", "public", "cheers", "comments", "legends", "legvotes", "feedback", "profiles"];
+  const OWN = ["forum", "ratings", "pubs", "quiz", "reports", "likes", "stats", "hype", "votes", "tipnotes", "fixes", "public", "cheers", "comments", "legends", "legvotes", "trsug", "trvote", "feedback", "profiles"];
   function confirmDelete(u) {
     dlg.innerHTML = `<div class="gdlg-card"><h2>Radera mitt konto?</h2>
       <p>Det här tar bort ditt konto och allt du har sparat eller skrivit: dina loggade matcher, favoriter, foruminlägg, reportage, kommentarer, legender, betyg och topplisteplatser. <b>Det går inte att ångra.</b></p>
