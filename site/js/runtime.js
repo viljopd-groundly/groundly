@@ -160,11 +160,12 @@ async function boot() {
     // favoritlag och land (flagga) visas vid ens namn; namnet måste redan finnas (reglerna kräver det)
     async setProfile(p) { if (!user) throw err("invalid_argument"); const ok = v => typeof v === "string" && /^[\w-]{1,24}$/.test(v) ? v : null;
       const name = NAMES[user.uid] || (await (async () => { try { const s = await F.getDoc(profRef(user.uid)); return s.exists() ? s.data().name : ""; } catch (e) { return ""; } })()) || (user.displayName || "").split(" ")[0] || "Supporter";
-      await F.setDoc(profRef(user.uid), { name: String(name).slice(0, 40), fav: ok(p && p.fav), cc: ok(p && p.cc) }, { merge: true }); PROFS[user.uid] = { fav: ok(p && p.fav), cc: ok(p && p.cc) }; },
+      const ini = p && typeof p.ini === "string" && /^[\p{L}\p{N}]{1,3}$/u.test(p.ini) ? p.ini : null;
+      await F.setDoc(profRef(user.uid), { name: String(name).slice(0, 40), fav: ok(p && p.fav), cc: ok(p && p.cc), ini }, { merge: true }); PROFS[user.uid] = { fav: ok(p && p.fav), cc: ok(p && p.cc), ini }; },
     async profiles(ids) {
       const out = {};
       await Promise.all([...new Set(ids)].slice(0, 200).map(async id => {
-        if (!(id in NAMES)) { try { const s = await F.getDoc(profRef(id)); const d = s.exists() ? s.data() : {}; NAMES[id] = String(d.name || ""); PROFS[id] = { fav: typeof d.fav === "string" ? d.fav : null, cc: typeof d.cc === "string" ? d.cc : null }; } catch (e) { NAMES[id] = ""; PROFS[id] = {}; } }
+        if (!(id in NAMES)) { try { const s = await F.getDoc(profRef(id)); const d = s.exists() ? s.data() : {}; NAMES[id] = String(d.name || ""); PROFS[id] = { fav: typeof d.fav === "string" ? d.fav : null, cc: typeof d.cc === "string" ? d.cc : null, ini: typeof d.ini === "string" ? d.ini.slice(0, 3) : null }; } catch (e) { NAMES[id] = ""; PROFS[id] = {}; } }
         out[id] = { name: NAMES[id], ...(PROFS[id] || {}) };
       }));
       return out;
