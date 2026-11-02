@@ -2203,5 +2203,9 @@
  "Regler för innehåll": "Content rules",
  "Groundly har nolltolerans mot kränkande, hatiskt, hotfullt, sexuellt eller olagligt innehåll och mot trakasserier av andra användare. Sådant tas bort, och den som bryter mot reglerna kan få sitt konto raderat.": "Groundly has zero tolerance for abusive, hateful, threatening, sexual or illegal content and for harassment of other users. Such content is removed, and anyone who breaks the rules may have their account deleted.",
  "Ser du något som inte hör hemma här trycker du Anmäl. Moderatorerna går igenom anmälningar inom ett dygn. Vill du slippa se någons innehåll trycker du Blockera; då döljs allt den personen skriver, bara för dig.": "If you see something that doesn't belong here, tap Report. Moderators review reports within 24 hours. If you don't want to see someone's content, tap Block; everything that person writes is then hidden, for you only.",
- "Genom att skapa ett konto godkänner du de här villkoren och reglerna för innehåll.": "By creating an account you accept these terms and the content rules."
+ "Genom att skapa ett konto godkänner du de här villkoren och reglerna för innehåll.": "By creating an account you accept these terms and the content rules.",
+ "Sök land, stad, arena, klubb eller världsdel": "Search country, city, ground, club or continent",
+ "Inga tips matchar ”{0}”. Sök på ett land, en stad, en arena, en klubb eller en världsdel.": "No tips match “{0}”. Try a country, a city, a ground, a club or a continent.",
+ "{n} tips matchar": "{n} tips match",
+ "Ett tips matchar": "1 tip matches"
 }

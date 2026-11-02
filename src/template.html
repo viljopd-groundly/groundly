@@ -1119,6 +1119,7 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
 
   <!-- Tips -->
   <section id="v-tips" hidden style="display:contents">
+    <label class="search" for="tipsQ"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="tipsQ" type="search" placeholder="Sök land, stad, arena, klubb eller världsdel" autocomplete="off" enterkeyhint="search"></label>
     <div class="chips wrapchips" role="group" aria-label="Typ av tips" id="tipsChips"></div>
     <div class="list" id="tipsList"></div>
   </section>
@@ -1940,12 +1941,8 @@ function tipBand(ids){return"";const cs=ids.map(id=>COLORS[id]&&COLORS[id][0]).f
 function nextBox(lbl,m,teams){const when=m.kickoff?dayLong(dayKey(new Date(m.kickoff))).replace(/^./,x=>x.toUpperCase())+" · "+timeOf(m.kickoff):"Spelas "+rangeTxt(m);
   return`<div class="nextbox mrowx"${mrowAttr(m)}><div class="nbt"><span class="nbl">${lbl}</span><b>${esc(when)}</b><span>${teams}${m.venue||m.city?` · ${esc(m.venue||m.city)}`:""}</span></div>${tixMini(m,"btn small")}</div>`;}
 function renderTips(){TIPC=tipCache();try{renderTips0();}finally{TIPC=null;}}
-function renderTips0(){
-  document.getElementById("tipsChips").innerHTML=[["derby",`${$t("Heta derbyn")}<small>${TIPS.derbies.length}</small>`],["cult",`${$t("Kultklubbar")}<small>${TIPS.cult.length}</small>`],["arenas",`${$t("Speciella arenor")}<small>${(TIPS.arenas||[]).length}</small>`],["top",$t("Bäst betyg")]]
-    .map(([k,l])=>`<button class="chip" data-tips="${k}" aria-pressed="${tipsTab===k}">${l}</button>`).join("");
-  const el=document.getElementById("tipsList");
-  if(tipsTab==="derby"){
-    el.innerHTML=TIPS.derbies.slice(0,lim("tdy",10)).map(([id,name,ids,where,why])=>{const nm=dbState==="ready"?nextMeeting(ids):null;
+// korten för de tre sorternas tips (används både i flikarna och i sökningen)
+const tipDerbyCard=([id,name,ids,where,why])=>{const nm=dbState==="ready"?nextMeeting(ids):null;
       const sep=ids.length===2?`<span class="vs">${$t("mot")}</span>`:`<span class="vs">·</span>`;
       return`<article class="tip tipx"${tipBand(ids)}>
         <div class="tip-head"><h2 class="name">${esc($t(name))}</h2><span class="meta">${esc($t(where))}</span></div>
@@ -1953,18 +1950,14 @@ function renderTips0(){
         <p>${esc($t(why))}</p>
         ${nm?nextBox($t("Nästa möte"),nm,`${esc(nm.homeName)} – ${esc(nm.awayName)}`):`<div class="next">${dbState==="ready"?$t("Inget möte i det inlagda schemat just nu."):$t("Laddar schema…")}</div>`}
         ${tipFeedback("derby",id,null)}
-      </article>`;}).join("")+limBtns("tdy",TIPS.derbies.length,10);
-  }else if(tipsTab==="arenas"){
-    el.innerHTML=(TIPS.arenas||[]).slice(0,lim("tar",10)).map(([id,why])=>{const c=C[id];if(!c||!c.s)return"";const k=arenaKey(c.s);const ax=arenas().find(x=>x.k===k);const sharers=ax?ax.clubs:[c];const sf=surfaceOf(c);const visited=myState==="ready"&&visitedStadiums().has(c.s);
+      </article>`;};
+const tipArenaCard=([id,why])=>{const c=C[id];if(!c||!c.s)return"";const k=arenaKey(c.s);const ax=arenas().find(x=>x.k===k);const sharers=ax?ax.clubs:[c];const sf=surfaceOf(c);const visited=myState==="ready"&&visitedStadiums().has(c.s);
       return`<article class="tip tipx"${tipBand(sharers.map(o=>o.id))}><div class="tip-head"><h2 class="name">${esc(c.s)}</h2><span class="meta">${esc([cityLbl(c),c.c].join(", "))}</span></div>
         <div class="teams">${sharers.map(o=>`<button data-open="${esc(o.id)}">${crest(o.id,o.n,22)}${esc(o.n)}${favStar(o.id)}</button>`).join('<span class="vs">·</span>')}</div>
         <div class="mp">${c.cap?`<span class="pill">${$t("{0} platser",[fmtCap(c.cap)])}</span>`:""}${sf?`<span class="pill">${esc(SURF_LBL[sf.v])}</span>`:""}${visited?`<span class="pill t1">${$t("Besökt {0}",[OK])}</span>`:""}</div>
         <p>${esc($t(why))}</p>
-        <div class="actions">${extLink(mapsDir(c.s,c.city),$t("Hitta hit"),"btn small")}${extLink(bookingUrl(c.s,c.city),adLabel($t("Hotell")),"btn small")}<button class="btn small" data-teamview="${esc(c.id)}">${$t("Kommande matcher")}</button></div>${tipFeedback("arena",id,c.id)}</article>`;}).join("")+limBtns("tar",(TIPS.arenas||[]).length,10);
-  }else if(tipsTab==="quiz"){el.innerHTML=renderQuiz();
-  }else if(tipsTab==="top"){el.innerHTML=renderTopRated();
-  }else{
-    el.innerHTML=TIPS.cult.slice(0,lim("tcu",10)).map(([id,why])=>{const c=C[id];if(!c)return"";const up=dbState==="ready"?upcomingFor(id)[0]:null;
+        <div class="actions">${extLink(mapsDir(c.s,c.city),$t("Hitta hit"),"btn small")}${extLink(bookingUrl(c.s,c.city),adLabel($t("Hotell")),"btn small")}<button class="btn small" data-teamview="${esc(c.id)}">${$t("Kommande matcher")}</button></div>${tipFeedback("arena",id,c.id)}</article>`;};
+const tipCultCard=([id,why])=>{const c=C[id];if(!c)return"";const up=dbState==="ready"?upcomingFor(id)[0]:null;
       return`<article class="tip tipx"${tipBand([id])}>
         <div class="tip-head tiph-c">${crest(id,c.n,40)}<div><h2 class="name">${esc(c.n)}</h2><span class="meta">${esc([cityLbl(c),$t(c.c)].join(", "))}${c.f?$t(" · grundad {0}",[c.f]):""}</span></div></div>
         <div class="mp">${c.l?tierPill(c.t,c.l):""}${c.s?`<span class="pill">${esc(c.s)}</span>`:""}</div>
@@ -1972,9 +1965,33 @@ function renderTips0(){
         ${up?nextBox($t("Nästa match"),up,`${esc(up.homeName)} – ${esc(up.awayName)}`):""}
         <div class="actions"><button class="btn small" data-open="${esc(id)}">${$t("Visa klubbfakta")}</button>${nearBtn(c.city,"btn small primary")}</div>
         ${tipFeedback("cult",id,id)}
-      </article>`;}).join("")+limBtns("tcu",TIPS.cult.length,10);}
+      </article>`;};
+// sökning i tips: land, stad, arena, klubb, världsdel, namn och beskrivning. Alla ord måste finnas med.
+let tipsQ="";
+function tipHay(kind,row){const k=kind+":"+row[0];if(tipHay.c[k])return tipHay.c[k];let ids=[],extra=[];
+  if(kind==="derby"){ids=row[2];extra=[row[1],$t(row[1]),row[3],$t(row[3]),row[4],$t(row[4])];}
+  else{ids=[row[0]];extra=[row[1],$t(row[1])];}
+  ids.forEach(id=>{const c=C[id];if(!c)return;const kt=kontOf(c.c);extra.push(c.n,c.a,c.nick,c.city,c.s,c.c,$t(c.c),c.l,kt,kt&&$t(kt));if(kind==="arena"){const k2=arenaKey(c.s);const ax=arenas().find(x=>x.k===k2);if(ax)ax.clubs.forEach(o=>extra.push(o.n));}});
+  return tipHay.c[k]=norm(extra.filter(Boolean).join(" "));}
+tipHay.c={};
+function tipsSearchHtml(q){const toks=norm(q).split(" ").filter(Boolean);const hit=(kind,row)=>toks.every(t=>tipHay(kind,row).includes(t));
+  const D=TIPS.derbies.filter(r=>hit("derby",r)),K=TIPS.cult.filter(r=>hit("cult",r)),A=(TIPS.arenas||[]).filter(r=>hit("arena",r));
+  const n=D.length+K.length+A.length;if(!n)return`<p class="empty">${$t("Inga tips matchar ”{0}”. Sök på ett land, en stad, en arena, en klubb eller en världsdel.",[q])}</p>`;
+  const grp=(t,arr,f,lk)=>arr.length?`<h3 class="sec">${t} <span class="meta">${arr.length}</span></h3>`+arr.slice(0,lim(lk,10)).map(f).join("")+limBtns(lk,arr.length,10):"";
+  return`<p class="hint">${$tn(n,"Ett tips matchar","{n} tips matchar")}</p>`+grp($t("Heta derbyn"),D,tipDerbyCard,"tsd")+grp($t("Kultklubbar"),K,tipCultCard,"tsk")+grp($t("Speciella arenor"),A,tipArenaCard,"tsa");}
+function renderTips0(){
+  const q=tipsQ.trim();
+  document.getElementById("tipsChips").innerHTML=[["derby",`${$t("Heta derbyn")}<small>${TIPS.derbies.length}</small>`],["cult",`${$t("Kultklubbar")}<small>${TIPS.cult.length}</small>`],["arenas",`${$t("Speciella arenor")}<small>${(TIPS.arenas||[]).length}</small>`],["top",$t("Bäst betyg")]]
+    .map(([k,l])=>`<button class="chip" data-tips="${k}" aria-pressed="${!q&&tipsTab===k}">${l}</button>`).join("");
+  const el=document.getElementById("tipsList");
+  if(q){el.innerHTML=tipsSearchHtml(q);return;}
+  if(tipsTab==="derby")el.innerHTML=TIPS.derbies.slice(0,lim("tdy",10)).map(tipDerbyCard).join("")+limBtns("tdy",TIPS.derbies.length,10);
+  else if(tipsTab==="arenas")el.innerHTML=(TIPS.arenas||[]).slice(0,lim("tar",10)).map(tipArenaCard).join("")+limBtns("tar",(TIPS.arenas||[]).length,10);
+  else if(tipsTab==="quiz")el.innerHTML=renderQuiz();
+  else if(tipsTab==="top")el.innerHTML=renderTopRated();
+  else el.innerHTML=TIPS.cult.slice(0,lim("tcu",10)).map(tipCultCard).join("")+limBtns("tcu",TIPS.cult.length,10);
 }
-
+let tipsQT=0;document.addEventListener("input",e=>{if(e.target.id!=="tipsQ")return;tipsQ=e.target.value;clearTimeout(tipsQT);tipsQT=setTimeout(()=>{if(mode==="tips")renderTips();},150);});
 // ---------- forum ----------
 const KINDS=[["fraga",$t("Fråga")],["derby",$t("Derbytips")],["klubb",$t("Klubbtips")],["tillg",$t("Tillgänglighet")]];
 const KIND_L=Object.fromEntries(KINDS);
@@ -3668,7 +3685,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.id==="askAi"){askClaude();return;}
   if(t.dataset.city){e.stopPropagation();cityEl.value=t.dataset.city;cityQ=t.dataset.city;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),6);radius=0;setMode("matcher");window.scrollTo({top:0});return;}
   if(t.id==="locate"){locateWithClaude();return;}
-  if(t.dataset.tips){tipsTab=t.dataset.tips;store.set("fk-tips",tipsTab);rerenderQuizHost();return;}
+  if(t.dataset.tips){tipsQ="";{const qi=document.getElementById("tipsQ");if(qi)qi.value="";}tipsTab=t.dataset.tips;store.set("fk-tips",tipsTab);rerenderQuizHost();return;}
   if(t.dataset.near){cityEl.value=t.dataset.near;cityQ=t.dataset.near;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),29);radius=+t.dataset.nr||5;store.set("fk-radius",String(radius));
     // nollställ andra filter så att alla matcher i närheten syns (lagvy, Herr/Dam, serie och "bara mina lag" kunde ligga kvar)
     matchView="list";mKind="alla";if(typeof tiers!=="undefined")tiers.clear();favOnly=false;
