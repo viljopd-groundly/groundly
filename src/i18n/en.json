@@ -2262,5 +2262,9 @@
  "Rösta": "Vote",
  "Tack! Du hittar översättningen under Inställningar → Språk.": "Thanks! You'll find the translation under Settings → Language.",
  "Lag|pl": "Teams",
- "Logga|bild": "Logo"
+ "Logga|bild": "Logo",
+ "Rättningsläge – tryck på en text": "Correction mode – tap a text",
+ "Rätta texter där de står": "Fix texts where they appear",
+ "Hittade ingen översatt text här. Prova att trycka direkt på texten.": "No translated text found here. Try tapping right on the text.",
+ "Välj vilken text du vill rätta.": "Choose which text you want to fix."
 }

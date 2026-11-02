@@ -428,6 +428,7 @@ button.stamp{cursor:pointer}
 .board li span{display:inline-block;min-width:8em}.board li b{font-family:var(--f-mono);margin-right:8px}.board li small{color:var(--muted)}
 .board li.me{font-weight:700;color:var(--accent)}
 .sechead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+body:has(#trOv) #tlBar{display:none}#tlBar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:61;display:flex;align-items:center;justify-content:space-between;gap:12px;width:min(460px,calc(100% - 32px));box-sizing:border-box;background:var(--fg);color:var(--bg);padding:8px 8px 8px 14px;border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,.25);font-size:calc(14px*var(--fs));max-width:calc(100% - 32px)}#tlBar span{display:flex;align-items:center;gap:8px;line-height:1.3}#tlBar svg{flex-shrink:0}#tlBar svg{width:16px;height:16px}
 #fkToast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:calc(14px*var(--fs));max-width:calc(100% - 32px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
 #fkToast.on{opacity:1;transform:translate(-50%,0)}
 #fkUndo.offer{width:min(440px,calc(100% - 32px));box-sizing:border-box;z-index:70}#fkUndo.offer span{flex:1}#fkUndo .x{background:none!important;color:inherit!important;opacity:.7;font-size:20px;padding:0 8px!important}
@@ -656,6 +657,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 @media (max-width:760px){
   .modes{display:none!important}
   .wrap{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  #tlBar{bottom:calc(78px + env(safe-area-inset-bottom,0px))}
   .bnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:59;background:var(--surface);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(0,0,0,.06);transform:translate3d(0,0,0);-webkit-transform:translate3d(0,0,0);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
   .bn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font:600 11px var(--f-body);color:var(--muted);padding:4px 0;border-radius:10px;min-height:48px;justify-content:center}
   .bn[aria-current="true"]{color:var(--accent)}
@@ -4906,7 +4908,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-invite],[d
 function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>${b}</section>`;
   return`<div id="setOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="setT"><div class="compose askbox pvbox msbox setbox">
    <div class="mshead"><h2 id="setT">${$t("Inställningar")}</h2><button class="btn small" id="setClose">${$t("Klar")}</button></div>
-   ${sec($t("Språk"),`<div class="chips wrapchips">${LANG_LIST.map(([k,l])=>`<button class="chip" data-lang-pick="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join("")}</div>${LANG!=="sv"?`<div class="actions"><button class="btn small" data-tropen="1">${ic("pencil")} ${$t("Förbättra översättningen")}</button></div><p class="hint" style="margin:0">${$t("Föreslå bättre texter och rösta på andras förslag.")}</p>`:""}`)}
+   ${sec($t("Språk"),`<div class="chips wrapchips">${LANG_LIST.map(([k,l])=>`<button class="chip" data-lang-pick="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join("")}</div>${LANG!=="sv"?`<div class="actions"><button class="btn small" data-tropen="1">${ic("pencil")} ${$t("Förbättra översättningen")}</button>${MY.trHelp===true?`<button class="btn small" data-tlfix="1">${ic("pencil")} ${$t("Rätta texter där de står")}</button>`:""}</div><p class="hint" style="margin:0">${$t("Föreslå bättre texter och rösta på andras förslag.")}</p>`:""}`)}
    ${sec($t("Avstånd"),`<div class="chips wrapchips">${[["auto",$t("Automatiskt")],["mil","mil"],["km","km"],["mi","miles"]].map(([k,l])=>`<button class="chip" data-unit-pick="${k}" aria-pressed="${unitPick===k}">${l}</button>`).join("")}</div><p class="hint">${$t("Automatiskt väljer efter ditt land: mil i Sverige och Norge, miles i Storbritannien och USA, annars km.")}</p>`)}
    ${sec($t("Logga|bild"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
@@ -4951,7 +4953,7 @@ function tlAskHtml(){if(LANG==="sv"||myState!=="ready"||!myId)return"";const ln=
     <div class="actions"><button class="btn small primary" data-tlhelp="1">${$t("Ja, gärna")}</button><button class="btn small" data-tlhelp="0">${$t("Nej tack")}</button></div></article>`;
   if(MY.trHelp!==true||tlState!=="ready")return"";const mine=(TLV[myId]&&TLV[myId].v)||{};const n=tlAll().filter(x=>x.uid!==myId&&!mine[x.sk]).length;
   return n?`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Hjälp till med språket")}</div><p style="margin:0">${$tn(n,"Ett översättningsförslag väntar på din röst.","{n} översättningsförslag väntar på din röst.")}</p>
-    <div class="actions"><button class="btn small primary" data-tropen="1" data-tlonly="1">${$t("Rösta")}</button></div></article>`:"";}
+    <div class="actions"><button class="btn small primary" data-tropen="1" data-tlonly="1">${$t("Rösta")}</button><button class="btn small" data-tlfix="1">${$t("Rätta texter där de står")}</button></div></article>`:"";}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-tlhelp]");if(!t)return;const yes=t.dataset.tlhelp==="1";mutate(d=>{d.trHelp=yes;});
   if(yes){toast($t("Tack! Du hittar översättningen under Inställningar → Språk."),"check");tlOnly=false;openTr();}});
 // ---------- förbättra översättningen (betan) ----------
@@ -4987,20 +4989,21 @@ function tlRowHtml(k){const cur=I18N[k]||"";const sugs=tlAll().filter(x=>x.key==
     <form class="trform" data-trform="${esc(k)}"><label class="fld">${$t("Ditt förslag")}<textarea rows="2" maxlength="400" required>${esc(cur)}</textarea></label>
     <div class="actions"><button class="btn small primary" type="submit">${$t("Skicka förslag")}</button></div></form></div>`:""}</div>`;}
 function tlRender(){const box=document.getElementById("trList");if(!box)return;{const miss=[...new Set(tlAll().map(x=>x.uid))].filter(u=>u!==myId&&!(u in NAMES));if(miss.length)resolveNames(miss).then(()=>{if(document.getElementById("trOv"))tlRender();});}const q=norm(tlQ);const keys=Object.keys(I18N).filter(k=>k&&!k.startsWith("_")&&I18N[k]);
-  const has=new Set(tlAll().map(x=>x.key));let list=keys.filter(k=>(!tlOnly||has.has(k))&&(!q||norm(k).includes(q)||norm(I18N[k]).includes(q)));
+  const has=new Set(tlAll().map(x=>x.key));if(tlPick){const l=tlPick.filter(k=>I18N[k]);box.innerHTML=`<p class="hint">${l.length>1?$t("Välj vilken text du vill rätta."):""}</p>`+l.map(tlRowHtml).join("");return;}
+  let list=keys.filter(k=>(!tlOnly||has.has(k))&&(!q||norm(k).includes(q)||norm(I18N[k]).includes(q)));
   list.sort((a,b)=>(has.has(b)-has.has(a)));const n=list.length;list=list.slice(0,40);if(tlOpen&&!list.includes(tlOpen)&&I18N[tlOpen])list.unshift(tlOpen);
   box.innerHTML=(n?`<p class="hint">${$t("{0} texter",[n])}${n>40?" · "+$t("visar de 40 första, sök för att hitta fler"):""}</p>`:`<p class="hint">${$t("Ingen text matchar.")}</p>`)+list.map(tlRowHtml).join("");}
 function openTr(){const o=document.getElementById("trOv");if(o)o.remove();const ln=(LANG_LIST.find(x=>x[0]===LANG)||[,LANG])[1];
   document.body.insertAdjacentHTML("beforeend",`<div id="trOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="trT"><div class="compose askbox pvbox trbox">
    <div class="mshead"><h2 id="trT">${$t("Förbättra översättningen")}</h2><button class="btn small" id="trClose">${$t("Klar")}</button></div>
-   <p class="hint">${$t("Hittar du en text på {0} som låter fel? Sök efter den, föreslå en bättre och rösta på andras förslag. När minst två andra har röstat ja används förslaget i appen för alla.",[esc(ln)])}</p>
-   <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="tlQ" type="search" placeholder="${$t("Sök text")}" value="${esc(tlQ)}" autocomplete="off"></label>
-   <div class="chips"><button class="chip" data-tronly="0" aria-pressed="${!tlOnly}">${$t("Alla texter")}</button><button class="chip" data-tronly="1" aria-pressed="${tlOnly}">${$t("Har förslag")} (${new Set(tlAll().map(x=>x.key)).size})</button></div>
+   ${tlPick?"":`<p class="hint">${$t("Hittar du en text på {0} som låter fel? Sök efter den, föreslå en bättre och rösta på andras förslag. När minst två andra har röstat ja används förslaget i appen för alla.",[esc(ln)])}</p>`}
+   ${tlPick?"":`<label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="tlQ" type="search" placeholder="${$t("Sök text")}" value="${esc(tlQ)}" autocomplete="off"></label>
+   <div class="chips"><button class="chip" data-tronly="0" aria-pressed="${!tlOnly}">${$t("Alla texter")}</button><button class="chip" data-tronly="1" aria-pressed="${tlOnly}">${$t("Har förslag")} (${new Set(tlAll().map(x=>x.key)).size})</button></div>`}
    <div id="trList"></div></div></div>`);tlRender();}
-let tlQT=0;document.addEventListener("input",e=>{if(e.target.id!=="tlQ")return;tlQ=e.target.value;clearTimeout(tlQT);tlQT=setTimeout(tlRender,150);});
+let tlQT=0;document.addEventListener("input",e=>{if(e.target.id!=="tlQ")return;tlQ=e.target.value;tlPick=null;clearTimeout(tlQT);tlQT=setTimeout(tlRender,150);});
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-tropen],#trClose,#trOv,[data-trkey],[data-tronly],[data-trvote],[data-tracc],[data-trrej]");if(!t)return;
-  if(t.dataset.tropen){e.preventDefault();tlOnly=t.dataset.tlonly==="1";if(typeof closeSettings==="function"&&setOpen)closeSettings();openTr();return;}
-  if(t.id==="trClose"||(t.id==="trOv"&&e.target===t)){document.getElementById("trOv").remove();render();return;}
+  if(t.dataset.tropen){e.preventDefault();tlPick=null;tlOnly=t.dataset.tlonly==="1";if(typeof closeSettings==="function"&&setOpen)closeSettings();openTr();return;}
+  if(t.id==="trClose"||(t.id==="trOv"&&e.target===t)){document.getElementById("trOv").remove();const wasPick=tlPick;tlPick=null;tlOpen=null;if(!(tlFix&&wasPick))render();return;}
   if(t.id==="trOv")return;
   if(t.dataset.trkey){tlOpen=tlOpen===t.dataset.trkey?null:t.dataset.trkey;tlRender();return;}
   if(t.dataset.tronly){tlOnly=t.dataset.tronly==="1";openTr();return;}
@@ -5019,6 +5022,28 @@ document.addEventListener("submit",async e=>{const f=e.target.closest&&e.target.
   mine.push({id:newId(),lang:LANG,key:k,text:v.slice(0,400),at:new Date().toISOString()});tlBusy=true;
   try{await dbNs.doc("trsug/"+myId).set({items:mine});TLS={...TLS,[myId]:{items:mine}};tlRender();toast($t("Tack! Förslaget syns nu för andra som kan rösta på det."),"check");}
   catch(x){toast($t("Det gick inte att skicka just nu. Försök igen senare."));}finally{tlBusy=false;}});
+// ---------- rättningsläge: tryck på en text i appen för att föreslå en bättre översättning ----------
+let tlFix=false,tlPick=null,tlIdx=null;
+function tlIndex(){if(tlIdx)return tlIdx;tlIdx=[];for(const k of Object.keys(I18N)){const v=I18N[k];if(!k||k.startsWith("_")||!v||typeof v!=="string")continue;const s=v.trim();if(s.length<2)continue;
+  if(/\{\w+\}/.test(s)){const parts=s.split(/\{\w+\}/).map(p=>p.trim()).filter(Boolean);if(!parts.length||parts.join("").length<3)continue;
+    try{tlIdx.push({k,len:parts.join("").length,re:new RegExp(s.split(/\{\w+\}/).map(p=>p.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join(".+?"))});}catch(e){}}
+  else tlIdx.push({k,len:s.length,lit:s});}return tlIdx;}
+function tlFind(el){const seen=new Set();for(let i=0,n=el;n&&i<5&&n!==document.body;i++,n=n.parentElement){
+    const txt=[n.innerText||"",n.getAttribute&&n.getAttribute("placeholder")||"",n.getAttribute&&n.getAttribute("aria-label")||"",n.getAttribute&&n.getAttribute("title")||""].join("\n").replace(/\s+/g," ").trim();
+    if(!txt||txt.length>600)break;const hits=[];for(const x of tlIndex()){let m=null;if(x.lit){if(txt.includes(x.lit))m=x.lit;}else{const r=x.re.exec(txt);if(r)m=r[0];}if(m)hits.push({k:x.k,m});}
+    const ex=hits.filter(h=>h.m===txt);const kept=[];
+    (ex.length?ex:hits.sort((a,b)=>b.m.length-a.m.length)).forEach(h=>{if(h.m.length<3&&h.m!==txt)return;if(!kept.some(o=>o.m.includes(h.m)&&o.m!==h.m))kept.push(h);});
+    kept.forEach(h=>seen.add(h.k));if(seen.size)break;}
+  return[...seen].slice(0,8);}
+function tlFixBar(){let b=document.getElementById("tlBar");if(!tlFix){if(b)b.remove();document.body.classList.remove("tlfix");return;}
+  document.body.classList.add("tlfix");if(b)return;document.body.insertAdjacentHTML("beforeend",`<div id="tlBar" role="status"><span>${ic("pencil")} ${$t("Rättningsläge – tryck på en text")}</span><button class="btn small primary" data-tlfixoff="1">${$t("Klar")}</button></div>`);}
+function tlPickOpen(keys){tlPick=keys;tlOpen=keys.length===1?keys[0]:null;tlQ="";tlOnly=false;openTr();}
+window.addEventListener("click",e=>{if(!tlFix)return;const t=e.target;if(t.closest("#tlBar,#trOv,#fkToast,.bnav,#moreSheet,#moreBack"))return;
+  e.preventDefault();e.stopPropagation();const keys=tlFind(t);if(!keys.length){toast($t("Hittade ingen översatt text här. Prova att trycka direkt på texten."));return;}tlPickOpen(keys);},true);
+document.addEventListener("click",e=>{const t=e.target.closest("[data-tlfix],[data-tlfixoff]");if(!t)return;e.preventDefault();
+  if(t.dataset.tlfixoff){tlFix=false;tlFixBar();return;}
+  if(!myId){toast($t("Logga in för att föreslå och rösta."));return;}
+  const o=document.getElementById("trOv");if(o)o.remove();if(typeof closeSettings==="function"&&setOpen)closeSettings();tlIdx=null;tlFix=true;tlFixBar();});
 // ---------- render ----------
 function render(){
   const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
