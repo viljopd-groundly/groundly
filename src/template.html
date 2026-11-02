@@ -905,6 +905,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .uflag{position:absolute;right:-3px;bottom:-3px;width:max(12px,calc(var(--s)*.44));height:max(12px,calc(var(--s)*.44));object-fit:cover;border-radius:50%;box-shadow:0 0 0 2px var(--surface),0 1px 2px rgba(0,0,0,.25)}
 .profhead .uav{margin-right:0}
 .wchip .uav{margin:0 2px 0 0;align-self:center}
+.blrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}.blrow:last-child{border-bottom:0}
 .rep.repediting{padding:0;border:0;background:none;box-shadow:none}.rep.repediting:before{display:none}
 /* ===== Utseenden (Inställningar → Utseende → Utseende). Ligger sist så att de vinner över färg och stil. ===== */
 @font-face{font-family:"GL Shoulders";src:url(fonts/BigShoulders.woff) format("woff");font-weight:100 900;font-display:swap}
@@ -1815,7 +1816,7 @@ let LEG={},LEGV={},legState="idle",legOpen=null,legMsg="",legBusy=false,legAddin
 const LEG_ROLE={p:$t("Spelare"),t:$t("Tränare"),b:$t("Spelare och tränare")};
 const legLbl=c=>isNat(c)?$t("Landslagslegender"):$t("Klubblegender");
 const legNorm=x=>norm(String(x||"")).replace(/\s+/g," ").trim();
-function legAll(club){const out=[];Object.entries(LEG).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(x=>{if(x&&x.id&&x.name&&(!club||x.club===club)&&!HIDDEN.includes("leg:"+uid+":"+x.id))out.push({...x,uid,key:uid+":"+x.id});});});return out;}
+function legAll(club){const out=[];Object.entries(LEG).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(x=>{if(x&&x.id&&x.name&&(!club||x.club===club)&&!blk(uid)&&!HIDDEN.includes("leg:"+uid+":"+x.id))out.push({...x,uid,key:uid+":"+x.id});});});return out;}
 function legVotes(key){let n=0;Object.values(LEGV).forEach(d=>{if(d&&Array.isArray(d.keys)&&d.keys.includes(key))n++;});return n;}
 function legCount(id){return legState==="ready"?legAll(id).length:0;}
 function legStart(){if(legState!=="idle"||!dbNs)return;legState="loading";
@@ -1977,11 +1978,13 @@ function renderTips0(){
 // ---------- forum ----------
 const KINDS=[["fraga",$t("Fråga")],["derby",$t("Derbytips")],["klubb",$t("Klubbtips")],["tillg",$t("Tillgänglighet")]];
 const KIND_L=Object.fromEntries(KINDS);
+// blockerade användare (sparas i ens egen logg): deras inlägg, reportage, kommentarer och tips döljs bara för en själv
+const blk=u=>!!u&&u!==myId&&typeof MY!=="undefined"&&Array.isArray(MY.blocked)&&MY.blocked.includes(u);
 let FORUM={},HIDDEN=[],forumState="loading",myId=null,canPost=null,isMod=false,userNs=null,dbNs=null;
 let composeKind="fraga",composeClub="",topSig="",fKind="alla",openThread=null,composing=false,writeBusy=false,forumMsg="",replyDraft={};
 const NAMES={};
 function allPosts(){const out=[];Object.entries(FORUM).forEach(([uid,d])=>{(d&&Array.isArray(d.posts)?d.posts:[]).forEach(p=>{if(p&&p.id&&p.body)out.push({...p,uid,key:uid+":"+p.id});});});
-  return out.filter(p=>!HIDDEN.includes(p.key));}
+  return out.filter(p=>!HIDDEN.includes(p.key)&&!blk(p.uid));}
 const ago=iso=>{const s=(Date.now()-Date.parse(iso))/1000;if(!(s>=0))return"";if(s<3600)return Math.max(1,Math.round(s/60))+$t(" min sedan");if(s<86400)return Math.round(s/3600)+$t(" tim sedan");
   const d=new Date(iso);return`${d.getDate()} ${L_MO3[d.getMonth()]}${d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():""}`;};
 async function resolveNames(ids){if(!userNs||!ids.length)return;try{const ps=await userNs.profiles(ids);let changed=false;
@@ -2823,7 +2826,7 @@ function pubList(c){const k=arenaKey(c.s);if(!k)return[];const out=[];const seed
   Object.entries(PUBS).forEach(([uid,d])=>(d&&Array.isArray(d.tips)?d.tips:[]).forEach(p=>{if(p&&p.arena===k&&p.name&&p.id)out.push({key:`${uid}:${p.id}`,name:String(p.name),crowd:p.crowd,walk:p.walk,text:p.text?String(p.text):"",uid,id:p.id});}));
   const votes={};Object.values(PUBS).forEach(d=>Object.keys((d&&d.votes)||{}).forEach(v=>{votes[v]=(votes[v]||0)+1;}));
   const myVotes=(myId&&PUBS[myId]&&PUBS[myId].votes)||{};
-  return out.filter(p=>!HIDDEN.includes("pub:"+p.key)).map(p=>({...p,votes:votes[p.key]||0,mine:!!myVotes[p.key]})).sort((a,b)=>b.votes-a.votes||(b.ed?1:0)-(a.ed?1:0));}
+  return out.filter(p=>!HIDDEN.includes("pub:"+p.key)&&!blk(p.uid)).map(p=>({...p,votes:votes[p.key]||0,mine:!!myVotes[p.key]})).sort((a,b)=>b.votes-a.votes||(b.ed?1:0)-(a.ed?1:0));}
 function pubItem(p){const can=!!myId&&pubsState==="ready";
   return`<div class="pub"><div class="mmain"><div class="pname">${esc(p.name)}${p.crowd&&CROWD[p.crowd]?` <span class="pill ${p.crowd==="away"?"t2":p.crowd==="home"?"t1":""}">${CROWD[p.crowd]}</span>`:""}${p.ed?` <span class="pill">${$t("Redaktionens tips")}</span>`:""}</div>
     ${+p.walk>0?`<div class="venue">${$t("{0} min promenad till arenan",[+p.walk])}</div>`:""}${p.text?`<div class="ptext">${esc(p.text)}</div>`:""}</div>
@@ -3697,7 +3700,7 @@ let COMM={},commBusy=false,REP={},LIKES={},repState="loading",assetsNs=null,canR
 const REP_MAXPH=8,PHID=/^[0-9a-f]{32}$/;
 const blobUrl=id=>"/_blob/"+id;
 function allReps(){const out=[];Object.entries(REP).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(r=>{if(r&&r.id&&r.title&&r.body)out.push({...r,uid,key:uid+":"+r.id,photos:(Array.isArray(r.photos)?r.photos:[]).filter(p=>typeof p==="string"&&PHID.test(p)).slice(0,REP_MAXPH)});});});
-  return out.filter(r=>!HIDDEN.includes("rep:"+r.key)&&(!r.draft||r.uid===myId));}
+  return out.filter(r=>!HIDDEN.includes("rep:"+r.key)&&!blk(r.uid)&&(!r.draft||r.uid===myId));}
 // kommentarer: var och en sparar sina egna i comments/{uid}.items = [{id, rep:"ägare:reportageId", body, at}]
 // ---------- nytt på mina reportage (kommentarer och gillningar sedan jag senast tittade) ----------
 var likesLoaded=false;
@@ -3726,7 +3729,7 @@ function activityHtml(){if(!notifOn("act"))return"";const a=repActivity();if(!a|
   const fr=a.newF.slice(-2).map(p=>{const t=a.threads.find(x=>x.key===p.parent);return`<button class="actrow linkrow" data-gothread="${esc(p.parent)}"><b>${esc(who(p.uid))}</b> ${$t("svarade på")} <i>${esc((t&&t.title)||$t("din tråd"))}</i>: ${esc(String(p.body).slice(0,90))}${String(p.body).length>90?"…":""}</button>`;}).join("");
   const last=a.newC.slice(-2).map(c=>`<div class="actrow"><b>${esc(who(c.uid))}</b> ${$t("om")} <i>${esc((a.mine.find(r=>r.key===c.rep)||{}).title||$t("ditt reportage"))}</i>: ${esc(String(c.body).slice(0,90))}${String(c.body).length>90?"…":""}</div>`).join("");
   return`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Nytt för dig i communityn")}</div><p style="margin:0"><b>${parts}</b> ${$t("sedan du senast tittade.")}</p>${fr}${last}<div class="actions">${a.newF.length?`<button class="btn small primary" data-gothread="${esc(a.newF[a.newF.length-1].parent)}">${$t("Läs svaren")}</button>`:""}${a.newC.length+a.newL?`<button class="btn small${a.newF.length?"":" primary"}" data-gomyrep="1">${$t("Visa mina reportage")}</button>`:""}<button class="btn small" data-actseen="1">${$t("Markera som läst")}</button></div></article>`;}
-function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&c.id&&c.rep===key&&c.body&&!HIDDEN.includes("com:"+uid+":"+c.id))out.push({...c,uid});});});return out.sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
+function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&c.id&&c.rep===key&&c.body&&!blk(uid)&&!HIDDEN.includes("com:"+uid+":"+c.id))out.push({...c,uid});});});return out.sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
 function commentsHtml(r){const cs=commentsFor(r.key);const ck="com:"+r.key,cn=lim(ck,3);
   return`<div class="rcomments"><h3 class="sec">${$t("Kommentarer")}${cs.length?` (${cs.length})`:""}</h3>
     ${cs.length>3?`<div class="morerow">${cn<cs.length?`<button class="btn small" data-limmore="${esc(ck)}" data-limbase="3">${$t("Visa tidigare kommentarer ({0})",[cs.length-cn])}</button>`:`<button class="btn small" data-limless="${esc(ck)}">${$t("Visa färre")}</button>`}</div>`:""}
@@ -4321,7 +4324,7 @@ document.addEventListener("change",e=>{const id=e.target.id;
 // ---------- kommentarer och "sett" på tips ----------
 let TIPNOTES={},tnState="loading",tnOpen=null,tnBusy=false,tnMsg="",tnDraft={};
 function tnAll(){const out=[];Object.entries(TIPNOTES).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(n=>{if(n&&n.id&&n.key&&n.text)out.push({...n,uid,nkey:uid+":"+n.id});});});
-  return out.filter(n=>!HIDDEN.includes("tn:"+n.nkey));}
+  return out.filter(n=>!HIDDEN.includes("tn:"+n.nkey)&&!blk(n.uid));}
 // per ritning: anteckningar grupperade per tips och antal sedda derbyn räknas en gång (inte en gång per kort)
 let TIPC=null;
 function tipCache(){const tn=new Map();tnAll().forEach(n=>{let a=tn.get(n.key);if(!a)tn.set(n.key,a=[]);a.push(n);});tn.forEach(a=>a.sort((x,y)=>String(x.at).localeCompare(String(y.at))));
@@ -4619,7 +4622,22 @@ document.addEventListener("submit",async e=>{if(e.target.id!=="fbForm")return;e.
 const FLAG_R=[["spam",$t("Spam eller reklam")],["hate",$t("Kränkande eller hatiskt")],["illegal",$t("Olagligt innehåll")],["personal",$t("Personuppgifter om någon annan")],["other",$t("Annat")]];
 const flagged=new Set();
 function flagBtn(key,uid,txt){if(!key||(uid&&uid===myId))return"";const done=flagged.has(key)||(MYFB&&Array.isArray(MYFB.items)&&MYFB.items.some(x=>x&&x.kind==="flag"&&x.ref===key));
-  return done?`<span class="meta flagdone">${$t("Anmäld")}</span>`:`<button class="link flagbtn" data-flag="${esc(key)}" data-flagtxt="${esc(String(txt||"").slice(0,160))}">${$t("Anmäl")}</button>`;}
+  return (done?`<span class="meta flagdone">${$t("Anmäld")}</span>`:`<button class="link flagbtn" data-flag="${esc(key)}" data-flagtxt="${esc(String(txt||"").slice(0,160))}">${$t("Anmäl")}</button>`)+(uid?`<button class="link flagbtn" data-block="${esc(uid)}">${$t("Blockera")}</button>`:"");}
+// blockera: bekräfta först, sedan sparas det i ens egen logg. Den blockerade får inte veta något.
+function openBlock(uid){const o=document.getElementById("blockOv");if(o)o.remove();
+  document.body.insertAdjacentHTML("beforeend",`<div id="blockOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="blT"><div class="compose askbox">
+    <h2 id="blT">${$t("Blockera {0}?",[who(uid)])}</h2>
+    <p>${$t("Du ser inte längre deras inlägg, svar, reportage, kommentarer, pubtips eller legender. De får inte veta att du har blockerat dem.")}</p>
+    <p class="hint">${$t("Du kan ta bort blockeringen under Inställningar → Blockerade användare.")}</p>
+    <div class="actions"><button class="btn primary" data-blockgo="${esc(uid)}">${$t("Blockera")}</button><button class="btn" data-blockno="1">${$t("Avbryt")}</button></div></div></div>`);}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-block],[data-blockgo],[data-blockno],[data-unblock],#blockOv");if(!t)return;
+  if(t.dataset.block){e.preventDefault();e.stopPropagation();if(!dbNs||!myId||myState!=="ready"){toast($t("Logga in för att blockera."));return;}openBlock(t.dataset.block);return;}
+  if(t.dataset.blockgo){const u=t.dataset.blockgo;document.getElementById("blockOv").remove();mutate(d=>{d.blocked=[...new Set([...(Array.isArray(d.blocked)?d.blocked:[]),u])].slice(-500);});
+    try{renderForum();}catch(x){}toast($t("{0} är blockerad.",[who(u)]),"check");return;}
+  if(t.dataset.unblock){const u=t.dataset.unblock;mutate(d=>{d.blocked=(Array.isArray(d.blocked)?d.blocked:[]).filter(x=>x!==u);});toast($t("Blockeringen är borttagen."),"check");if(setOpen)openSettings();return;}
+  if(t.dataset.blockno||(t.id==="blockOv"&&e.target===t))document.getElementById("blockOv").remove();},true);
+function blockedHtml(){const b=typeof MY!=="undefined"&&Array.isArray(MY.blocked)?MY.blocked:[];
+  return b.length?`<div class="plist">${b.map(u=>`<div class="blrow"><span>${esc(NAMES[u]||$t("Medlem"))}</span><button class="btn small" data-unblock="${esc(u)}">${$t("Ta bort blockering")}</button></div>`).join("")}</div>`:`<p class="hint" style="margin:0">${$t("Du har inte blockerat någon. Tryck på Blockera vid ett inlägg eller en kommentar för att sluta se den personens innehåll.")}</p>`;}
 function openFlag(key,txt){const o=document.getElementById("flagOv");if(o)o.remove();
   document.body.insertAdjacentHTML("beforeend",`<div id="flagOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="flT"><form class="compose askbox" id="flagForm" data-key="${esc(key)}" data-txt="${esc(txt)}">
     <h2 id="flT">${$t("Anmäl innehåll")}</h2>${txt?`<p class="meta flagq">”${esc(txt)}${txt.length>=160?"…":""}”</p>`:""}
@@ -4827,6 +4845,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${sec($t("Hemort"),`<form class="homeform" id="setHome"><label class="fld" for="setHomeIn">${$t("Används för helgtips, avstånd och resor")}<input id="setHomeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button></form>`)}
    ${sec($t("Tipsa en kompis"),inviteBody())}
    ${sec($t("Startsidan"),`<div class="actions"><button class="btn small" data-homecust="1">${ic("pencil")} ${$t("Anpassa startsidan")}</button></div>`)}
+   ${myId?sec($t("Blockerade användare"),blockedHtml()):""}
    ${sec($t("Mer"),`<div class="actions"><button class="btn small" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button><button class="btn small" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button></div><p class="hint">${$t("Konto, inloggning och Radera mitt konto finns under knappen med din bokstav uppe till höger.")}</p>`)}
   </div></div>`;}
 function openSettings(){setOpen=true;let ov=document.getElementById("setOv");const y=ov?ov.querySelector(".setbox").scrollTop:0;if(ov)ov.remove();document.body.insertAdjacentHTML("beforeend",settingsHtml());ov=document.getElementById("setOv");ov.querySelector(".setbox").scrollTop=y;}

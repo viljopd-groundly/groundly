@@ -2189,5 +2189,15 @@
  "+ Lägg till eller ta bort serier ({0} valda)": "+ Add or remove leagues ({0} selected)",
  "Visa alla ({0})": "Show all ({0})",
  "Gräsmattan": "The Pitch",
- "Matchtröjan": "The Kit"
+ "Matchtröjan": "The Kit",
+ "Blockera": "Block",
+ "Blockera {0}?": "Block {0}?",
+ "Du ser inte längre deras inlägg, svar, reportage, kommentarer, pubtips eller legender. De får inte veta att du har blockerat dem.": "You'll no longer see their posts, replies, reports, comments, pub tips or legends. They won't be told that you've blocked them.",
+ "Du kan ta bort blockeringen under Inställningar → Blockerade användare.": "You can unblock them under Settings → Blocked users.",
+ "Logga in för att blockera.": "Sign in to block someone.",
+ "{0} är blockerad.": "{0} is blocked.",
+ "Blockeringen är borttagen.": "Unblocked.",
+ "Ta bort blockering": "Unblock",
+ "Du har inte blockerat någon. Tryck på Blockera vid ett inlägg eller en kommentar för att sluta se den personens innehåll.": "You haven't blocked anyone. Tap Block on a post or comment to stop seeing that person's content.",
+ "Blockerade användare": "Blocked users"
 }

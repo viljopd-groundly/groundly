@@ -12,6 +12,10 @@ export default {
   // Sätt till true efter byte till Blaze och när Storage är aktiverat.
   photos: false,
 
+  // Logga in med Apple. Sätt till true när Apple är påslaget i Firebase-konsolen
+  // (Authentication → Sign-in method → Apple; kräver Apple Developer-konto, se README).
+  apple: false,
+
   // Valfritt: adress till en egen AI-funktion. Tomt = AI-funktionerna döljs.
   aiEndpoint: ""
 };

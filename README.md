@@ -51,3 +51,17 @@ Workflowet *Bygg och publicera* körs varje natt klockan 03:49 svensk sommartid.
 - publicerar sidan
 
 Du kan också köra workflowet manuellt under *Actions → Bygg och publicera → Run workflow*. En sammanfattning av körningen syns under körningen i Actions.
+
+## Logga in med Apple
+
+Knappen "Fortsätt med Apple" finns i koden men är avstängd tills Apple är påslaget (App Store kräver den när Google-inloggning finns).
+
+1. **Apple Developer** (developer.apple.com → Certificates, Identifiers & Profiles):
+   - Skapa ett **App ID** med *Sign in with Apple* påslaget (t.ex. `football.groundly.app`).
+   - Skapa ett **Services ID** (t.ex. `football.groundly.web`), slå på *Sign in with Apple* och ange
+     domänen `groundly-d81f0.firebaseapp.com` och return-URL:en `https://groundly-d81f0.firebaseapp.com/__/auth/handler`.
+   - Skapa en **Key** med *Sign in with Apple* och ladda ner `.p8`-filen. Notera Key ID och Team ID.
+2. **Firebase-konsolen** → Authentication → Sign-in method → **Apple**: slå på och fyll i Services ID, Team ID, Key ID och innehållet i `.p8`-filen.
+3. Sätt `apple: true` i `site/js/firebase-config.js`.
+
+Klistra aldrig in `.p8`-nyckeln i repot eller i en chatt. Den hör bara hemma i Firebase-konsolen.

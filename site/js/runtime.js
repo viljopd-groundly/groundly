@@ -273,6 +273,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
     dlg.innerHTML = `<div class="gdlg-card"><button class="btn small x" data-gx>Stäng</button>
       <h2>${up ? "Skapa konto" : "Logga in"}</h2><p>Med ett konto kan du logga matcher, skriva i forumet, betygsätta arenor och tipsa om pubar.</p>
       <button class="btn primary" data-ggoogle style="width:100%">Fortsätt med Google</button>
+      ${CONFIG.apple ? `<button class="btn" data-gapple style="width:100%;margin-top:8px;background:#000;border-color:#000;color:#fff"><svg width="15" height="18" viewBox="0 0 15 18" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path fill="currentColor" d="M12.4 9.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8C3 4.4 1.6 5.3.8 6.7c-1.7 2.9-.4 7.1 1.2 9.4.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.6-3.9zM10.2 2.8c.6-.8 1.1-1.8 1-2.8-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.7-1.3z"/></svg>Fortsätt med Apple</button>` : ""}
       <div class="or">eller med e-post</div>
       <form data-gform>
         ${up ? `<label for="gName">Visningsnamn</label><input id="gName" maxlength="40" autocomplete="nickname" required>` : ""}
@@ -301,6 +302,17 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
         say(MSG[e.code] || "Inloggningen misslyckades.", true);
       }
     };
+    // Logga in med Apple (krävs av App Store när Google finns). Slås på med apple: true i firebase-config.js
+    const ap = dlg.querySelector("[data-gapple]");
+    if (ap) ap.onclick = async () => {
+      const p = new A.OAuthProvider("apple.com"); p.addScope("email"); p.addScope("name");
+      try { auth.languageCode = "sv"; p.setCustomParameters({ locale: "sv_SE" }); } catch (e) {}
+      try { const r = await A.signInWithPopup(auth, p); if (r && r.user) await ensureProfile(r.user, r.user.displayName || ""); }
+      catch (e) {
+        if (/popup-blocked|operation-not-supported/.test(e.code || "")) { try { await A.signInWithRedirect(auth, p); return; } catch (e2) { e = e2; } }
+        say(MSG[e.code] || "Inloggningen misslyckades.", true);
+      }
+    };
     dlg.querySelector("[data-gform]").onsubmit = async ev => {
       ev.preventDefault();
       const mail = dlg.querySelector("#gMail").value.trim(), pw = dlg.querySelector("#gPw").value;
@@ -321,7 +333,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   async function openAccount() {
     const u = getUser(); const name = await profileName(); const mod = await isAdmin();
     dlg.innerHTML = `<div class="gdlg-card"><button class="btn small x" data-gx>Stäng</button>
-      <h2>Ditt konto</h2><p>Inloggad som ${esc(u.email || "Google-konto")}.</p>
+      <h2>Ditt konto</h2><p>Inloggad som ${esc(u.email || "Google- eller Apple-konto")}.</p>
       ${mod ? `<div class="role">${SHIELD} Moderator – du kan dölja inlägg och reportage, sköta rättelser och läsa feedback</div>` : ""}
       <form data-gname><label for="gNm">Visningsnamn (syns i forum och topplistor)</label><input id="gNm" maxlength="40" value="${esc(name)}" required>
       <div class="row"><button class="btn" type="submit">Spara namn</button></div></form>
@@ -360,7 +372,9 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
         const fresh = Date.now() - Date.parse(cu.metadata.lastSignInTime || 0) < 4 * 60 * 1000;
         if (!fresh) {
           const google = (cu.providerData || []).some(p => p.providerId === "google.com");
+          const apple = (cu.providerData || []).some(p => p.providerId === "apple.com");
           if (google) await A.reauthenticateWithPopup(cu, new A.GoogleAuthProvider());
+          else if (apple) await A.reauthenticateWithPopup(cu, new A.OAuthProvider("apple.com"));
           else { const pw = window.prompt("Skriv ditt lösenord för att bekräfta"); if (!pw) { say("Avbrutet.", true); go.disabled = false; return; }
             await A.reauthenticateWithCredential(cu, A.EmailAuthProvider.credential(cu.email, pw)); }
         }
