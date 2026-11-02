@@ -245,6 +245,8 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   .gdlg-card input{width:100%;box-sizing:border-box;font:inherit;padding:10px 12px;border-radius:10px;border:1px solid var(--line,#ccc);background:var(--bg,#fff);color:inherit}
   .gdlg-card .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
   .gdlg-card .row .btn{flex:1}
+  .gdlg-card .terms{font-size:12.5px;line-height:1.4;margin:10px 0 0}.gdlg-card .terms .link,.gdlg-card label.chk .link{font-size:inherit;padding:0;display:inline}
+  .gdlg-card label.chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;font-size:13px;line-height:1.4;margin:12px 0 2px}.gdlg-card label.chk input{width:auto;margin-top:2px;flex:none}
   .gdlg-card .or{display:flex;align-items:center;gap:10px;margin:16px 0 4px;color:var(--muted,#666);font-size:13px}
   .gdlg-card .or:before,.gdlg-card .or:after{content:"";flex:1;height:1px;background:var(--line,#ddd)}
   .gdlg-card .msg{min-height:1.2em;margin-top:10px;font-size:14px}
@@ -274,11 +276,13 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
       <h2>${up ? "Skapa konto" : "Logga in"}</h2><p>Med ett konto kan du logga matcher, skriva i forumet, betygsätta arenor och tipsa om pubar.</p>
       <button class="btn primary" data-ggoogle style="width:100%">Fortsätt med Google</button>
       ${CONFIG.apple ? `<button class="btn" data-gapple style="width:100%;margin-top:8px;background:#000;border-color:#000;color:#fff"><svg width="15" height="18" viewBox="0 0 15 18" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path fill="currentColor" d="M12.4 9.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8C3 4.4 1.6 5.3.8 6.7c-1.7 2.9-.4 7.1 1.2 9.4.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.6-3.9zM10.2 2.8c.6-.8 1.1-1.8 1-2.8-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.7-1.3z"/></svg>Fortsätt med Apple</button>` : ""}
+      <p class="terms">Genom att fortsätta godkänner du <button class="link" type="button" data-privacy="1" data-terms="1">villkoren och reglerna för innehåll</button>. Kränkande innehåll tolereras inte.</p>
       <div class="or">eller med e-post</div>
       <form data-gform>
         ${up ? `<label for="gName">Visningsnamn</label><input id="gName" maxlength="40" autocomplete="nickname" required>` : ""}
         <label for="gMail">E-post</label><input id="gMail" type="email" autocomplete="email" required>
         <label for="gPw">Lösenord</label><input id="gPw" type="password" minlength="6" autocomplete="${up ? "new-password" : "current-password"}" required>
+        ${up ? `<label class="chk"><input type="checkbox" id="gTerms" required> <span>Jag godkänner <button class="link" type="button" data-privacy="1" data-terms="1">villkoren och reglerna för innehåll</button> och förstår att kränkande innehåll inte tolereras.</span></label>` : ""}
         <div class="row"><button class="btn primary" type="submit">${up ? "Skapa konto" : "Logga in"}</button></div>
       </form>
       <div class="msg" aria-live="polite"></div>

@@ -548,7 +548,7 @@ button{touch-action:manipulation}
 .seenrow{display:grid;grid-template-columns:84px minmax(0,1fr);gap:8px;font-size:calc(14px*var(--fs))}
 .seenrow>span:last-child{display:flex;flex-direction:column;min-width:0}
 .seenrow .num{font-size:calc(12px*var(--fs));color:var(--muted);padding-top:2px}
-.askov{z-index:70}
+.askov{z-index:70}#privacyOv{z-index:10001}
 .askbox{max-width:420px;width:100%;box-sizing:border-box;background:var(--surface);align-self:center}
 .mdate,.seenrow .num,.nw{white-space:nowrap}
 .mrow{grid-template-columns:96px minmax(0,1fr)}
@@ -4533,20 +4533,22 @@ document.addEventListener("change",async e=>{if(e.target.id!=="restoreIn")return
 let wipeArm=false;
 function privacyHtml(){return`<div id="privacyOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="pvT"><div class="compose askbox pvbox">
   <h2 id="pvT">${ic("shield")} ${$t("Integritet och villkor")}</h2>
-  <h3>${$t("Ditt konto")}</h3><p>${$t("Du loggar in med Google eller e-post och lösenord. Vi sparar din e-postadress och ditt visningsnamn. Visningsnamnet syns för andra, e-postadressen gör det inte.")}</p>
+  <h3>${$t("Ditt konto")}</h3><p>${$t("Du loggar in med Google, Apple eller e-post och lösenord. Vi sparar din e-postadress och ditt visningsnamn. Visningsnamnet syns för andra, e-postadressen gör det inte.")}</p>
   <h3>${$t("Det som bara du ser")}</h3><p>${$t("Anteckningar, sällskap, bilder, önskelista, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.")}</p>
   <h3>${$t("Delning och topplistor")}</h3><p>${$t("Som ny användare syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för andra, så att vänner kan följa dig. Du är också med i topplistorna med dina antal. Anteckningar, sällskap och bilder delas aldrig. Du kan välja bort båda när som helst under Min fotboll och på Hem, och då tas det delade bort.")}</p>
   <h3>${$t("Det som andra ser")}</h3><p>${$t("Foruminlägg, reportage, kommentarer, klubblegender, kommentarer på tips, pubtips, arenabetyg, förslag på rättelser, quizresultat, gillningar, peppningar och röster syns för alla som använder appen, tillsammans med ditt visningsnamn. Topplistorna visar bara dina antal, och bara om du inte har valt bort det.")}</p>
   <h3>${$t("Var datan lagras")}</h3><p>${$t("Allt lagras hos Google Firebase. Appens ägare har teknisk åtkomst till databasen för drift och säkerhetskopior, men använder den inte för att läsa din logg. En säkerhetskopia tas varje vecka och sparas privat.")}</p>
   <h3>${$t("Moderering")}</h3><p>${$t("Moderatorer kan dölja inlägg, reportage, kommentarer och legender, godkänna rättelser av klubbfakta och läsa det du skickar via Tyck till.")}</p>
   <h3>${$t("Ta bort")}</h3><p>${$t("Inlägg, reportage, kommentarer och legender tar du bort där de ligger. Din logg kan du radera här nedan. Vill du ta bort hela kontot väljer du")} <b>${$t("Radera mitt konto")}</b> ${$t("under kontoknappen uppe till höger – då raderas kontot och allt du har sparat eller skrivit. Det går inte att ångra, så spara gärna en säkerhetskopia först under Min fotboll.")}</p>
-  <h3>${$t("Villkor i korthet")}</h3><p>${$t("Dela bara sådant du har rätt att dela. Inga personangrepp och ingen reklam. Matchtider och klubbfakta kan innehålla fel, så kontrollera med klubben innan du reser. Appen är en beta och kan ändras. Matchdata kommer från API-Football och openfootball (CC0), flaggor från flag-icons (MIT-licens).")}</p>
+  <h3 id="pvRules">${$t("Regler för innehåll")}</h3><p>${$t("Groundly har nolltolerans mot kränkande, hatiskt, hotfullt, sexuellt eller olagligt innehåll och mot trakasserier av andra användare. Sådant tas bort, och den som bryter mot reglerna kan få sitt konto raderat.")}</p>
+  <p>${$t("Ser du något som inte hör hemma här trycker du Anmäl. Moderatorerna går igenom anmälningar inom ett dygn. Vill du slippa se någons innehåll trycker du Blockera; då döljs allt den personen skriver, bara för dig.")}</p>
+  <h3>${$t("Villkor i korthet")}</h3><p>${$t("Genom att skapa ett konto godkänner du de här villkoren och reglerna för innehåll.")} ${$t("Dela bara sådant du har rätt att dela. Inga personangrepp och ingen reklam. Matchtider och klubbfakta kan innehålla fel, så kontrollera med klubben innan du reser. Appen är en beta och kan ändras. Matchdata kommer från API-Football och openfootball (CC0), flaggor från flag-icons (MIT-licens).")}</p>
   <p class="meta">${$t("Det här är en enkel sammanfattning på vanlig svenska, inte en juridisk text.")}</p>
   ${myState==="ready"?`<div class="actions"><button class="btn" type="button" id="pvWipe">${wipeArm?$t("Tryck igen för att radera allt"):$t("Radera min logg och mina inställningar")}</button></div><p class="hint" id="pvMsg"></p>`:""}
   <div class="actions"><button class="btn primary" type="button" id="pvClose">${$t("Stäng")}</button></div></div></div>`;}
 function openPrivacy(){wipeArm=false;const o=document.getElementById("privacyOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",privacyHtml());const b=document.getElementById("pvClose");if(b)b.focus({preventScroll:true});const bx=document.querySelector(".pvbox");if(bx)bx.scrollTop=0;}
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-privacy],#pvClose,#pvWipe,#privacyOv");if(!t)return;
-  if(t.dataset&&t.dataset.privacy){openPrivacy();return;}
+  if(t.dataset&&t.dataset.privacy){openPrivacy();if(t.dataset.terms){const h=document.getElementById("pvRules");if(h)setTimeout(()=>h.scrollIntoView({block:"start"}),30);}return;}
   if(t.id==="pvClose"||(t.id==="privacyOv"&&e.target===t)){document.getElementById("privacyOv").remove();return;}
   if(t.id==="pvWipe"){if(!wipeArm){wipeArm=true;t.textContent=$t("Tryck igen för att radera allt");return;}
     const photos=MY.attended.map(a=>a.photo).filter(p=>p&&PHID.test(p));const wasPub=!!MY.pub;

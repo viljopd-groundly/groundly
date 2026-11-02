@@ -386,7 +386,6 @@
  "Du kan inte spara på topplistan på den här sidan.": "You can't save to the leaderboard on this page.",
  "Du kan läsa forumet. Logga in för att skriva.": "You can read the forum. Log in to post.",
  "Du kan läsa reportagen. Logga in för att skriva och kommentera.": "You can read the reports. Log in to write and comment.",
- "Du loggar in med Google eller e-post och lösenord. Vi sparar din e-postadress och ditt visningsnamn. Visningsnamnet syns för andra, e-postadressen gör det inte.": "You log in with Google or email and password. We store your email address and your display name. Your display name is visible to others, your email address is not.",
  "Du syns i topplistorna.": "You appear on the leaderboards.",
  "Du syns inte längre i topplistorna.": "You no longer appear on the leaderboards.",
  "Du syns nu i topplistorna och för vänner. Du kan välja bort det under Min fotboll.": "You now appear on the leaderboards and to friends. You can opt out under My football.",
@@ -2199,5 +2198,10 @@
  "Blockeringen är borttagen.": "Unblocked.",
  "Ta bort blockering": "Unblock",
  "Du har inte blockerat någon. Tryck på Blockera vid ett inlägg eller en kommentar för att sluta se den personens innehåll.": "You haven't blocked anyone. Tap Block on a post or comment to stop seeing that person's content.",
- "Blockerade användare": "Blocked users"
+ "Blockerade användare": "Blocked users",
+ "Du loggar in med Google, Apple eller e-post och lösenord. Vi sparar din e-postadress och ditt visningsnamn. Visningsnamnet syns för andra, e-postadressen gör det inte.": "You sign in with Google, Apple or email and password. We store your email address and your display name. Your display name is visible to others; your email address is not.",
+ "Regler för innehåll": "Content rules",
+ "Groundly har nolltolerans mot kränkande, hatiskt, hotfullt, sexuellt eller olagligt innehåll och mot trakasserier av andra användare. Sådant tas bort, och den som bryter mot reglerna kan få sitt konto raderat.": "Groundly has zero tolerance for abusive, hateful, threatening, sexual or illegal content and for harassment of other users. Such content is removed, and anyone who breaks the rules may have their account deleted.",
+ "Ser du något som inte hör hemma här trycker du Anmäl. Moderatorerna går igenom anmälningar inom ett dygn. Vill du slippa se någons innehåll trycker du Blockera; då döljs allt den personen skriver, bara för dig.": "If you see something that doesn't belong here, tap Report. Moderators review reports within 24 hours. If you don't want to see someone's content, tap Block; everything that person writes is then hidden, for you only.",
+ "Genom att skapa ett konto godkänner du de här villkoren och reglerna för innehåll.": "By creating an account you accept these terms and the content rules."
 }
