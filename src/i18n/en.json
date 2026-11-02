@@ -2260,5 +2260,7 @@
  "Ett översättningsförslag väntar på din röst.": "1 translation suggestion is waiting for your vote.",
  "{n} översättningsförslag väntar på din röst.": "{n} translation suggestions are waiting for your vote.",
  "Rösta": "Vote",
- "Tack! Du hittar översättningen under Inställningar → Språk.": "Thanks! You'll find the translation under Settings → Language."
+ "Tack! Du hittar översättningen under Inställningar → Språk.": "Thanks! You'll find the translation under Settings → Language.",
+ "Lag|pl": "Teams",
+ "Logga|bild": "Logo"
 }
