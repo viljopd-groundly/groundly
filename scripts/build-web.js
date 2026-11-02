@@ -78,7 +78,7 @@ const head = `<!doctype html>
 <html lang="sv">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="description" content="Groundly – planera och logga dina fotbollsresor. Matcher, arenor, serietabeller, forum och reportage.">
 <meta name="theme-color" content="#1d6b3b">
 <meta property="og:type" content="website">
