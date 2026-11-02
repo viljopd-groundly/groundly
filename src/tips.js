@@ -38,7 +38,12 @@ exports.derbies=[
 ["boras","Boråsderbyt",["elf","nor"],"Borås, Sverige","IF Elfsborg mot Norrby IF, stadens två klubbar. Ett av Sveriges få riktiga stadsderbyn utanför storstäderna."],
 ["norrland","Norrlandsderbyt",["gif","öfk"],"Sundsvall och Östersund, Sverige","GIF Sundsvall mot Östersunds FK, de två stora klubbarna i mellersta Norrland. Laddat oavsett serie."],
 ["nvskane","Nordvästskånederbyt",["hif","lbois"],"Helsingborg och Landskrona, Sverige","Helsingborgs IF mot Landskrona BoIS, två grannstäder längs Öresundskusten med en gammal och het rivalitet."],
-["smaland","Smålandsderbyt",["öst","kff"],"Småland, Sverige","Östers IF från Växjö mot Kalmar FF, två av landskapets stora klubbar. Lagen spelar i olika serier 2026."]
+["smaland","Smålandsderbyt",["öst","kff"],"Småland, Sverige","Östers IF från Växjö mot Kalmar FF, två av landskapets stora klubbar. Lagen spelar i olika serier 2026."],
+["kairo","Kairoderbyt",["eg-ahly","eg-zamalek"],"Kairo, Egypten","Al Ahly mot Zamalek är Afrikas största klubbderby, och båda lagen spelar på Cairo International Stadium. Efter tragedin i Port Said 2012 har publiken länge varit begränsad, så kolla vilka regler som gäller innan du åker."],
+["soweto","Soweto-derbyt",["za-chiefs","za-pirates"],"Johannesburg, Sydafrika","Kaizer Chiefs mot Orlando Pirates, två klubbar med rötter i Soweto. Chiefs grundades 1970 av Kaizer Motaung, som själv hade spelat i Pirates. Derbyt spelas ofta inför fullsatt FNB Stadium, där VM-finalen 2010 avgjordes."],
+["casablanca","Casablanca-derbyt",["ma-wydad","ma-raja"],"Casablanca, Marocko","Wydad mot Raja, röda mot gröna, på Stade Mohamed V som båda klubbarna delar. Läktarna är kända för några av världens mest påkostade tifon och för sånger som sprids långt utanför Marocko."],
+["kariakoo","Kariakoo-derbyt",["tz-simba","tz-youngafrican"],"Dar es Salaam, Tanzania","Simba mot Young Africans, eller Yanga, två klubbar från stadsdelen Kariakoo. Simba bildades av utbrytare från Yanga på 1930-talet. Derbyt spelas på nationalarenan Benjamin Mkapa och samlar hela Östafrikas intresse."],
+["superclashgh","Ghanas Super Clash",["gh-asantekotoko","gh-heartsofoak"],"Kumasi och Accra, Ghana","Asante Kotoko från Kumasi mot Hearts of Oak från huvudstaden Accra, landets två största och mest framgångsrika klubbar. Hearts grundades 1911 och är Ghanas äldsta klubb."]
 ];
 // Kultklubbar: [klubb-id, varför]
 exports.cult=[
@@ -74,7 +79,8 @@ exports.cult=[
 ["fgr","Kallar sig världens första veganska fotbollsklubb, med vegansk mat på arenan och miljö som en del av identiteten."],
 ["ham","Bajen är Söders klubb, med en av Skandinaviens största publiksiffror och en egen kultur kring läktarsång och musik."],
 ["gais","Makrillarna i grönsvart och den så kallade GAIS-andan har gjort klubben till Göteborgs kärleksfulla underdog."],
-["deg","En liten bruksort i Värmland som ändå håller ett lag i Allsvenskan. Stora Valla är klassisk svensk fotbollsmark."]
+["deg","En liten bruksort i Värmland som ändå håller ett lag i Allsvenskan. Stora Valla är klassisk svensk fotbollsmark."],
+["cd-tpmazembe","Klubben från Lubumbashi har vunnit afrikanska Champions League fem gånger. 2010 blev TP Mazembe det första afrikanska laget som nådde finalen i klubblags-VM, efter vinst mot Internacional i semifinalen."]
 ];
 // Speciella arenor: [klubb-id, varför arenan är speciell]
 exports.arenas=[
@@ -99,5 +105,7 @@ exports.arenas=[
 ["bjk","Ligger vid Bosporen i Istanbul, granne med Dolmabahçepalatset. Ljudnivån är legendarisk, och Asien syns på andra sidan sundet."],
 ["riv","Sydamerikas största arena med plats för drygt 80 000. Här vann Argentina VM-finalen 1978."],
 ["olm","Byggd 1937 med en cykelbana runt planen, därav namnet. Kurvorna Virage Nord och Virage Sud hör till Frankrikes hetaste läktare."],
-["fla","VM-finalerna 1950 och 2014 spelades här, och arenan finns med bland arenorna till dam-VM 2027. Flamengo och Fluminense delar den."]
+["fla","VM-finalerna 1950 och 2014 spelades här, och arenan finns med bland arenorna till dam-VM 2027. Flamengo och Fluminense delar den."],
+["za-chiefs","FNB Stadium, även kallad Soccer City, är formad som en afrikansk lerkruka och tar runt 94 000 åskådare. Här spelades VM-finalen 2010, och här höll Nelson Mandela ett av sina första stora tal efter frigivningen 1990."],
+["eg-ahly","Cairo International Stadium är en av Afrikas största arenor och hemmaplan för både Al Ahly, Zamalek och Egyptens landslag. Den invigdes 1960 och har varit värd för flera finaler i afrikanska mästerskapet."]
 ];

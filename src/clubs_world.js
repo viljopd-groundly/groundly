@@ -219,7 +219,7 @@ module.exports=[
 ["eg-ittihad", "Al-Ittihad Alexandria", "al ittihad alexandria al ittihad", "Egypten", "Alexandria", 1914, "Egyptian Premier League", 1, "Alexandria Stadium", 19676, "", [], 1],
 ["eg-gouna", "El Gouna", "el gouna fc", "Egypten", "El Gouna", 2003, "Egyptian Premier League", 1, "Khaled Bichara Stadium", 14000, "", [], 1],
 ["eg-mokawloon", "Arab Contractors", "el mokawloon el mokawloon al mokawloon", "Egypten", "Kairo", 1973, "Egyptian Premier League", 1, "Arab Contractors Stadium (Osman Ahmed Osman Stadium)", 35000, "", [], 1],
-["eg-ahly", "Al Ahly", "al ahly sc", "Egypten", "Kairo", 1907, "Egyptian Premier League", 1, "Kairos internationella stadion", 74100, "Röda djävlarna", ["12 afrikanska Champions League"], 1],
+["eg-ahly", "Al Ahly", "al ahly sc", "Egypten", "Kairo", 1907, "Egyptian Premier League", 1, "Cairo International Stadium", 74100, "Röda djävlarna", ["12 afrikanska Champions League"], 1],
 ["eg-makkasa", "Misr Lel Makkasa", "masr", "Egypten", "Kairo", 2009, "Egyptian Premier League", 1, "Cairo International Stadium", 74100, "", [], 1],
 ["eg-ghazlmahal", "Ghazl El Mahalla", "ghazl el mehalla", "Egypten", "El-Mahalla El-Kubra", 1927, "Egyptian Premier League", 1, "El Mahalla Stadium", 29000, "", [], 1],
 ["eg-qanah", "El Qanah", "olympic el qanah", "Egypten", "Ismailia", 1946, "Egyptian Premier League", 1, "Suez Canal Stadium", 10000, "", [], 1],
