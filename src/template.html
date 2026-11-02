@@ -761,7 +761,9 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 
 .rcomments{border-top:1px solid var(--line);margin-top:12px;padding-top:10px;display:flex;flex-direction:column;gap:8px}
 .rcomments .sec{margin:0;font-size:calc(14px*var(--fs))}
-.rcom{background:var(--bg);border-radius:10px;padding:8px 10px}
+.rcom{background:var(--bg);border-radius:10px;padding:8px 10px;position:relative}
+.cflag{position:absolute;top:8px;right:8px;width:16px;height:12px;border-radius:2px;object-fit:cover;box-shadow:0 0 0 1px rgba(0,0,0,.12);z-index:2;pointer-events:auto}
+.post{position:relative}.post>.by{padding-right:24px}.rcom>.rcomh{padding-right:22px}.rep>.cflag{top:10px;right:10px}
 .rcomh{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap;font-size:calc(13px*var(--fs))}.rcomh .link{margin-left:auto;font-size:calc(12px*var(--fs))}
 .rcomb{white-space:pre-wrap;overflow-wrap:anywhere;font-size:calc(14px*var(--fs));margin-top:2px}
 .rcform{display:flex;gap:8px;align-items:flex-end}.rcform textarea{flex:1;font:inherit;font-size:calc(14px*var(--fs));padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);resize:vertical;min-height:40px}
@@ -2010,7 +2012,7 @@ async function resolveNames(ids){if(!userNs||!ids.length)return;try{const ps=awa
 const PROF={};
 const who=uid=>uid===myId?$t("Du"):(NAMES[uid]||$t("Medlem"));
 function postHtml(p,isReply){const mine=p.uid===myId;const c=p.club&&C[p.club];
-  return`<div class="post${isReply?" reply":""}">
+  return`<div class="post${isReply?" reply":""}">${cornerFlag(p.uid)}
     <div class="by"><b>${byAvatar(p.uid,p.lang)}${userLink(p.uid)}</b><span>${esc(ago(p.at))}</span></div>
     <div class="body">${esc(p.body)}</div>
     ${c?`<div><button class="btn small" data-open="${esc(c.id)}">${esc(c.n)}</button></div>`:""}
@@ -3751,7 +3753,7 @@ function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{
 function commentsHtml(r){const cs=commentsFor(r.key);const ck="com:"+r.key,cn=lim(ck,3);
   return`<div class="rcomments"><h3 class="sec">${$t("Kommentarer")}${cs.length?` (${cs.length})`:""}</h3>
     ${cs.length>3?`<div class="morerow">${cn<cs.length?`<button class="btn small" data-limmore="${esc(ck)}" data-limbase="3">${$t("Visa tidigare kommentarer ({0})",[cs.length-cn])}</button>`:`<button class="btn small" data-limless="${esc(ck)}">${$t("Visa färre")}</button>`}</div>`:""}
-    ${cs.slice(-cn).map(c=>`<div class="rcom"><div class="rcomh"><b>${byAvatar(c.uid,c.lang)}${userLink(c.uid)}</b> <span class="meta">· ${esc(ago(c.at))}</span>${c.uid===myId?`<button class="link" data-rcdel="${esc(c.id)}">${$t("Ta bort")}</button>`:isMod?`<button class="link" data-rchide="${esc(c.uid+":"+c.id)}">${$t("Dölj")}</button>`:""}${flagBtn("com:"+c.uid+":"+c.id,c.uid,c.body)}</div><div class="rcomb">${esc(c.body)}</div></div>`).join("")||`<p class="meta">${$t("Inga kommentarer än.")}</p>`}
+    ${cs.slice(-cn).map(c=>`<div class="rcom">${cornerFlag(c.uid)}<div class="rcomh"><b>${byAvatar(c.uid,c.lang)}${userLink(c.uid)}</b> <span class="meta">· ${esc(ago(c.at))}</span>${c.uid===myId?`<button class="link" data-rcdel="${esc(c.id)}">${$t("Ta bort")}</button>`:isMod?`<button class="link" data-rchide="${esc(c.uid+":"+c.id)}">${$t("Dölj")}</button>`:""}${flagBtn("com:"+c.uid+":"+c.id,c.uid,c.body)}</div><div class="rcomb">${esc(c.body)}</div></div>`).join("")||`<p class="meta">${$t("Inga kommentarer än.")}</p>`}
     ${canWriteRep()?`<form class="rcform" data-rcform="${esc(r.key)}"><textarea name="b" maxlength="600" rows="2" placeholder="${$t("Skriv en kommentar…")}" aria-label="${$t("Skriv en kommentar")}" required></textarea><button class="btn small primary" type="submit"${commBusy?" disabled":""}>${$t("Skicka")}</button></form>`:`<button class="btn small" data-glogin>${$t("Logga in för att kommentera")}</button>`}</div>`;}
 async function writeComments(fn){if(!dbNs||!myId||commBusy)return false;commBusy=true;
   const cur=COMM[myId]&&Array.isArray(COMM[myId].items)?COMM[myId].items:[];const next=fn(cur.slice()).slice(-300);
@@ -3856,7 +3858,7 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
   if(!reps.length){el.innerHTML=`<div class="empty"><b>${repSort==="mina"?$t("Du har inte skrivit något reportage än."):repClub?$t("Inga reportage om den här klubben än."):$t("Inga reportage än.")}</b><div>${$t("Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna. Lägg gärna till bilder.")}</div></div>`;return;}
   el.innerHTML=reps.filter((r,i)=>i<lim("rp",5)||r.key===repOpen).map(r=>{if(repDraft&&repDraft.editing&&r.uid===myId&&r.id===repDraft.editing)return`<article class="rep open repediting" data-repedit-art="${esc(r.key)}">${composeHtml()}</article>`;const c=r.club&&C[r.club];const open=repOpen===r.key;const n=likeCount(r.key);const mine=r.uid===myId;
     const meta=[r.visit&&c?(c.s||c.n):r.match&&r.result?`${String(r.match).slice(0,100)} ${String(r.result).slice(0,12)}`:c?c.n:"",r.city,repDateTxt(r.date)].filter(Boolean).join(" · ");
-    return`<article class="rep${open?" open":""}">
+    return`<article class="rep${open?" open":""}">${cornerFlag(r.uid)}
       <button class="rhead" data-rep="${esc(r.key)}" aria-expanded="${open}">
         ${r.photos.length&&!open?`<span class="rcover">${phImg(r.photos[0])}${r.photos.length>1?`<span class="rcount">${$t("{0} bilder",[r.photos.length])}</span>`:""}</span>`:""}
         <span class="rtxt">${r.draft?`<span class="pill ec draftpill">${$t("Utkast · syns bara för dig")}</span>`:""}${r.visit?`<span class="pill t3 draftpill">${$t("Arenabesök")}</span>`:""}<span class="rtitle">${esc(r.title)}</span>
@@ -4702,6 +4704,7 @@ function avatar(uid,size){size=size||24;const me=uid===myId;const p=me?{fav:favL
   const st=col?`background:${col};color:${/^#[0-9a-f]{6}$/i.test(col)&&lum(col)>.45?"#18213D":"#fff"};box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)`:"";
   return`<span class="uav" style="--s:${size}px"><span class="uini" style="${st};font-size:${Math.round(size*fs)}px">${esc(ini)}</span></span>`;}
 // vid namn i forum och kommentarer: liten profilbild; utan valt land visas språkflaggan som förut
+const cornerFlag=uid=>{const cc=uid===myId?myCc():(PROF[uid]||{}).cc;const fl=cc&&FLAGS[cc];return fl?`<img class="cflag" src="${fl}" alt="${esc(C[cc]?$t(C[cc].n):"")}" title="${esc(C[cc]?$t(C[cc].n):"")}">`:"";};
 const byAvatar=(uid,lang)=>{const p=uid===myId?{cc:myCc()}:(PROF[uid]||{});return avatar(uid,20)+(p.cc&&FLAGS[p.cc]?"":langFlag(lang));};
 const weakName=n=>!n||/^(supporter|medlem|member)$/i.test(n);
 function byAsHtml(){if(!myId)return"";const n=MYNAME;
@@ -4722,7 +4725,7 @@ function profileHtml(uid){const me=uid===myId;const name=me?(MYNAME||$t("Du")):(
   const nrep=forumState==="ready"?allPosts().filter(p=>p.uid===uid&&p.parent).length:0;
   const fav=pd&&pd.fav&&C[pd.fav];const recent=pubRows(uid).slice(0,4);
   const stats=[reps.length?$tn(reps.length,"{n} reportage","{n} reportage|pl"):"",ths.length+nrep?$tn(ths.length+nrep,"{n} inlägg","{n} inlägg|pl"):"",pd&&+pd.n>0?$t("{0} {1} · {2} arenor",[+pd.n,+pd.n===1?$t("match"):$t("matcher"),+pd.ar||0]):""].filter(Boolean).join(" · ");
-  return`<div class="compose askbox profbox"><div class="profhead">${avatar(uid,52)}<div><h2 id="prT">${esc(name)} ${wFlag(uid)}</h2>${me?`<span class="meta">${$t("Det här är du")}</span>`:""}${fav?`<div class="meta">${crest(fav.id,fav.n,18)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}</div></div>
+  return`<div class="compose askbox profbox"><div class="profhead">${avatar(uid,52)}<div><h2 id="prT">${esc(name)}</h2>${me?`<span class="meta">${$t("Det här är du")}</span>`:""}${fav?`<div class="meta">${crest(fav.id,fav.n,18)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}</div></div>
     ${stats?`<p class="meta">${stats}</p>`:""}
     ${reps.length?`<h3 class="sec">${$t("Reportage")}</h3><div class="proflist">${reps.slice(0,5).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${esc(ago(r.at))}</span></button>`).join("")}</div>`:""}
     ${ths.length?`<h3 class="sec">${$t("Forumtrådar")}</h3><div class="proflist">${ths.slice(0,5).map(t=>`<button class="plink" data-upthread="${esc(t.key)}"><b>${esc(t.title)}</b><span class="meta">${esc(ago(t.at))}</span></button>`).join("")}</div>`:""}
@@ -4759,7 +4762,7 @@ function renderProfil(){const el=document.getElementById("profilBody");if(!el)re
   const fl=follows(),fw=followersOf(myId);{const miss=[...fl,...fw].filter(u=>!(u in NAMES));if(miss.length)resolveNames(miss).then(()=>{if(mode==="profil")renderProfil();});}
   const stats=[myState==="ready"?$t("{0} {1} · {2} arenor",[MY.attended.length,MY.attended.length===1?$t("match"):$t("matcher"),visitedPins().length]):"",reps.filter(r=>!r.draft).length?$tn(reps.filter(r=>!r.draft).length,"{n} reportage","{n} reportage|pl"):"",posts.length?$tn(posts.length,"{n} inlägg","{n} inlägg|pl"):""].filter(Boolean).join(" · ");
   const ppl=(ids,empty,back)=>ids.length?`<div class="pplist">${ids.map(u=>`<div class="pprow">${avatar(u,30)}${userLink(u)}${back&&!isFollow(u)?`<button class="btn small primary" data-follow="${esc(u)}">${$t("Följ tillbaka")}</button>`:!back?`<button class="link" data-follow="${esc(u)}">${$t("Sluta följa")}</button>`:`<span class="meta">${$t("Ni följer varandra")}</span>`}</div>`).join("")}</div>`:`<p class="meta">${empty}</p>`;
-  el.innerHTML=`<article class="tip profcard"><div class="profhead">${avatar(myId,56)}<div><h2 class="name">${esc(weakName(name)?$t("Inget namn valt"):name)} ${wFlag(myId)}</h2>${fav?`<div class="meta">${crest(fav.id,fav.n,18)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}</div></div>
+  el.innerHTML=`<article class="tip profcard"><div class="profhead">${avatar(myId,56)}<div><h2 class="name">${esc(weakName(name)?$t("Inget namn valt"):name)}</h2>${fav?`<div class="meta">${crest(fav.id,fav.n,18)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}</div></div>
       ${stats?`<p class="meta" style="margin:0">${stats}</p>`:""}
       ${weakName(name)?`<div class="notice">${$t("Andra ser dig som ”{0}”. Välj ett namn som andra känner igen dig på.",[esc(name||$t("Medlem"))])}</div>`:""}
       <div class="actions"><button class="btn small${weakName(name)?" primary":""}" data-myname="1">${weakName(name)?$t("Välj namn"):$t("Ändra namn och initialer")}</button><button class="btn small" data-user="${esc(myId)}">${$t("Visa som andra ser den")}</button></div></article>
