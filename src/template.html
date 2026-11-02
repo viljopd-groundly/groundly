@@ -2056,7 +2056,7 @@ function renderForum(namesOnly){try{renderWriters();}catch(e){}
       <button class="thead" data-thread="${esc(t.key)}" aria-expanded="${open}">
         <span class="pill ${t.kind==="fraga"?"t2":t.kind==="derby"?"ec":t.kind==="tillg"?"t3":"t1"}">${esc(KIND_L[t.kind]||$t("Inlägg"))}</span>
         <span class="ttitle">${esc(t.title)}</span>
-        <span class="tmeta">${langFlag(t.lang)}${esc(who(t.uid))} · ${esc(ago(t.at))} · ${rs.length} ${rs.length===1?$t("svar"):$t("svar|pl")}</span>
+        <span class="tmeta">${ccFlag(t.uid)}${esc(who(t.uid))} · ${esc(ago(t.at))} · ${rs.length} ${rs.length===1?$t("svar"):$t("svar|pl")}</span>
       </button>
       ${open?`<div class="tbody">${postHtml(t,false)}${rs.map(r=>postHtml(r,true)).join("")}
         ${myId&&canPost!==false?`<form class="replyForm" data-replyto="${esc(t.key)}"><label class="fld" for="r-${esc(t.key)}">${$t("Svara")}<textarea id="r-${esc(t.key)}" maxlength="2000" rows="2" required>${esc(replyDraft[t.key]||"")}</textarea></label><div class="actions"><button class="btn small primary" type="submit"${writeBusy?" disabled":""}>${$t("Skicka svar")}</button></div></form>`:""}
@@ -3863,7 +3863,7 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
         ${r.photos.length&&!open?`<span class="rcover">${phImg(r.photos[0])}${r.photos.length>1?`<span class="rcount">${$t("{0} bilder",[r.photos.length])}</span>`:""}</span>`:""}
         <span class="rtxt">${r.draft?`<span class="pill ec draftpill">${$t("Utkast · syns bara för dig")}</span>`:""}${r.visit?`<span class="pill t3 draftpill">${$t("Arenabesök")}</span>`:""}<span class="rtitle">${esc(r.title)}</span>
         ${meta?`<span class="rmeta">${c?crest(c.id,c.n,20):""}${esc(meta)}</span>`:""}
-        <span class="rmeta">${langFlag(r.lang)}${esc(who(r.uid))} · ${esc(ago(r.at))}<span class="lkn" data-lk="${esc(r.key)}">${n?` · ${ic("heart")} ${n}`:""}</span>${(()=>{const k=commentsFor(r.key).length;return k?` · ${k} ${k===1?$t("kommentar"):$t("kommentarer")}`:"";})()}</span>
+        <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}<span class="lkn" data-lk="${esc(r.key)}">${n?` · ${ic("heart")} ${n}`:""}</span>${(()=>{const k=commentsFor(r.key).length;return k?` · ${k} ${k===1?$t("kommentar"):$t("kommentarer")}`:"";})()}</span>
         ${open?"":`<span class="rex">${esc(String(r.body).slice(0,160))}${String(r.body).length>160?"…":""}</span>`}</span>
       </button>
       ${open?`<div class="rbody">
@@ -4361,7 +4361,7 @@ function tipFeedback(type,id,club){const key=type+":"+id;const notes=tnState==="
   const cnt=notes.length;
   let h=`<div class="tipfb"><div class="actions">${mine}${tnState==="ready"?`<button class="btn small" data-tnopen="${esc(key)}" aria-expanded="${open}">${ic("chat")} ${cnt?`${cnt} ${cnt===1?$t("kommentar"):$t("kommentarer")}`:$t("Kommentera")}</button>`:""}</div>`;
   if(open){
-    h+=`<div class="tnlist">${notes.length?notes.map(n=>`<div class="tnrow"><div class="by"><b>${langFlag(n.lang)}${esc(who(n.uid))}</b><span>${esc(ago(n.at))}</span></div><div class="body">${esc(n.text)}</div>
+    h+=`<div class="tnlist">${notes.length?notes.map(n=>`<div class="tnrow"><div class="by"><b>${ccFlag(n.uid)}${esc(who(n.uid))}</b><span>${esc(ago(n.at))}</span></div><div class="body">${esc(n.text)}</div>
       ${n.uid===myId||isMod?`<div class="pactions">${n.uid===myId?`<button class="link" data-tndel="${esc(n.id)}">${$t("Ta bort")}</button>`:""}${isMod&&n.uid!==myId?`<button class="link" data-tnhide="${esc(n.nkey)}">${$t("Dölj")}</button>`:""}</div>`:""}</div>`).join(""):`<p class="hint">${$t("Inga kommentarer än. Har du varit här? Dela ett kort tips.")}</p>`}</div>`;
     if(dbNs&&myId)h+=`<form class="tnform" data-tnkey="${esc(key)}"><label class="fld" for="tn-${esc(key)}">${$t("Din kommentar")}<textarea id="tn-${esc(key)}" data-tnd="${esc(key)}" rows="2" maxlength="280" required placeholder="${$t("t.ex. Stå på kortsidan, bäst stämning")}">${esc(tnDraft[key]||"")}</textarea></label>
       ${tnMsg?`<p class="err">${esc(tnMsg)}</p>`:""}<div class="actions"><button class="btn small primary" type="submit"${tnBusy?" disabled":""}>${$t("Skicka")}</button></div></form>`;
@@ -4705,7 +4705,9 @@ function avatar(uid,size){size=size||24;const me=uid===myId;const p=me?{fav:favL
   return`<span class="uav" style="--s:${size}px"><span class="uini" style="${st};font-size:${Math.round(size*fs)}px">${esc(ini)}</span></span>`;}
 // vid namn i forum och kommentarer: liten profilbild; utan valt land visas språkflaggan som förut
 const cornerFlag=uid=>{const cc=uid===myId?myCc():(PROF[uid]||{}).cc;const fl=cc&&FLAGS[cc];return fl?`<img class="cflag" src="${fl}" alt="${esc(C[cc]?$t(C[cc].n):"")}" title="${esc(C[cc]?$t(C[cc].n):"")}">`:"";};
-const byAvatar=(uid,lang)=>{const p=uid===myId?{cc:myCc()}:(PROF[uid]||{});return avatar(uid,20)+(p.cc&&FLAGS[p.cc]?"":langFlag(lang));};
+const byAvatar=(uid,lang)=>avatar(uid,20);
+// landets flagga inne i en rad (där kortet inte har en flagga i hörnet). Språkflaggan används inte längre.
+const ccFlag=uid=>{const cc=uid===myId?myCc():(PROF[uid]||{}).cc;const fl=cc&&FLAGS[cc];return fl?`<span class="lflag" title="${esc(C[cc]?$t(C[cc].n):"")}"><img src="${fl}" alt=""></span>`:"";};
 const weakName=n=>!n||/^(supporter|medlem|member)$/i.test(n);
 function byAsHtml(){if(!myId)return"";const n=MYNAME;
   return weakName(n)?`<div class="notice byas">${$t("Andra ser dig som ”{0}”. Välj ett namn som andra känner igen dig på.",[esc(n||$t("Medlem"))])} <button type="button" class="btn small primary" data-myname="1">${$t("Välj namn")}</button></div>`
