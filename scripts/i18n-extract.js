@@ -11,10 +11,12 @@ const keys = new Set();
 // skript
 const STR = /"((?:[^"\\\n]|\\.)*)"/y;
 const grab = (src, i) => { STR.lastIndex = i; const m = STR.exec(src); return m ? { v: JSON.parse('"' + m[1] + '"'), end: STR.lastIndex } : null; };
-for (const re of [/\$t\(\s*/g, /\$tn\([^,]+,\s*/g]) {
-  let m; while ((m = re.exec(html))) {
-    let p = m.index + m[0].length; const a = grab(html, p); if (!a) continue; keys.add(a.v);
-    if (m[0].startsWith("$tn")) { const rest = html.slice(a.end).match(/^\s*,\s*/); if (rest) { const b = grab(html, a.end + rest[0].length); if (b) keys.add(b.v); } }
+// appens skript plus runtime.js (inloggning och konto)
+const runtime = fs.readFileSync(path.join(ROOT, "site", "js", "runtime.js"), "utf8");
+for (const src of [html, runtime]) for (const re of [/\$t\(\s*/g, /\$tn\([^,]+,\s*/g]) {
+  let m; while ((m = re.exec(src))) {
+    let p = m.index + m[0].length; const a = grab(src, p); if (!a) continue; keys.add(a.v);
+    if (m[0].startsWith("$tn")) { const rest = src.slice(a.end).match(/^\s*,\s*/); if (rest) { const b = grab(src, a.end + rest[0].length); if (b) keys.add(b.v); } }
   }
 }
 // fast HTML (utan skript och stil)
@@ -26,6 +28,8 @@ for (const m of body.matchAll(/\s(?:placeholder|aria-label|title|alt)="([^"]*)"/
 try { for (const k of JSON.parse(fs.readFileSync(path.join(ROOT, "src", "i18n", "_dyn.json"), "utf8"))) keys.add(k); } catch (e) {}
 // redaktionellt innehåll: derbyn, kultklubbar och speciella arenor
 try { const T = require(path.join(ROOT, "src", "tips.js")); (T.derbies || []).forEach(d => { keys.add(d[1]); keys.add(d[3]); keys.add(d[4]); }); (T.cult || []).forEach(c => keys.add(c[1])); (T.arenas || []).forEach(c => keys.add(c[1])); } catch (e) {}
+// kommande mästerskap: namn, datum, värdländer och beskrivning (städerna översätts via _dyn.json)
+try { for (const [, n, d, hosts, desc] of require(path.join(ROOT, "src", "cups.js"))) { [n, d, hosts, desc].forEach(x => x && keys.add(x)); } } catch (e) {}
 try { for (const [, , , note, pubs] of require(path.join(ROOT, "src", "pubseed.js"))) { if (note) keys.add(note); (pubs || []).forEach(p => { if (p[3]) keys.add(p[3]); }); } } catch (e) {}
 const all = [...keys].sort((a, b) => a.localeCompare(b, "sv"));
 fs.writeFileSync(path.join(ROOT, "src", "i18n", "_keys.json"), JSON.stringify(all, null, 0).replace(/","/g, '",\n"'));

@@ -3,6 +3,10 @@
 // med Firebase (Auth + Firestore + Storage), så att appens kod kan vara oförändrad.
 // Läsning av gemensamt innehåll fungerar utan inloggning; skrivning kräver konto.
 import CONFIG from "./firebase-config.js";
+// texter översätts med appens $t (nycklarna är den svenska texten)
+const $t = (s, v) => (typeof window.$t === "function" ? window.$t(s, v) : s);
+const LANGC = window.LANG || "sv";
+const LOC = { sv: "sv_SE", nb: "nb_NO", da: "da_DK", fi: "fi_FI", is: "is_IS", de: "de_DE", en: "en_GB", es: "es_ES", fr: "fr_FR", it: "it_IT", nl: "nl_NL", pl: "pl_PL", pt: "pt_BR" };
 
 const FB = (window.GROUNDLY_FIREBASE_BASE || "https://www.gstatic.com/firebasejs/10.14.1").replace(/\/$/, "");
 const NONE = { use: async () => null };
@@ -12,8 +16,8 @@ const done = rt => { try { window.__groundlyReady(rt); } catch (e) {} };
 const err = (code, msg) => Object.assign(new Error(msg || code), { code });
 const mapErr = e => {
   const c = (e && e.code) || "";
-  if (/permission-denied|unauthenticated|unauthorized/.test(c)) return err("invalid_argument", "Saknar behörighet");
-  if (/resource-exhausted|invalid-argument|quota-exceeded/.test(c)) return err("quota_exceeded", "För stort");
+  if (/permission-denied|unauthenticated|unauthorized/.test(c)) return err("invalid_argument", $t("Saknar behörighet"));
+  if (/resource-exhausted|invalid-argument|quota-exceeded/.test(c)) return err("quota_exceeded", $t("För stort"));
   return err(c || "unknown", e && e.message);
 };
 const hex32 = () => [...crypto.getRandomValues(new Uint8Array(16))].map(b => b.toString(16).padStart(2, "0")).join("");
@@ -35,7 +39,7 @@ async function boot() {
 
   const fbApp = app.initializeApp(CONFIG);
   const auth = A.getAuth(fbApp);
-  try { auth.languageCode = "sv"; } catch (e) {}
+  try { auth.languageCode = LANGC; } catch (e) {}
   // lokal cache i webbläsaren: sparad data visas direkt vid återbesök, ändringar hämtas sedan
   let fs;
   try { fs = F.initializeFirestore(fbApp, { ignoreUndefinedProperties: true, localCache: F.persistentLocalCache && F.persistentMultipleTabManager ? F.persistentLocalCache({ tabManager: F.persistentMultipleTabManager() }) : undefined }); }
@@ -264,64 +268,64 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !dlg.hidden) close(); });
 
   const MSG = {
-    "auth/invalid-credential": "Fel e-post eller lösenord.", "auth/wrong-password": "Fel e-post eller lösenord.", "auth/user-not-found": "Fel e-post eller lösenord.",
-    "auth/email-already-in-use": "Det finns redan ett konto med den e-postadressen. Logga in i stället.", "auth/weak-password": "Lösenordet måste ha minst 6 tecken.",
-    "auth/invalid-email": "E-postadressen ser inte rätt ut.", "auth/too-many-requests": "För många försök. Vänta en stund och försök igen.",
-    "auth/popup-closed-by-user": "Inloggningen avbröts.", "auth/network-request-failed": "Ingen anslutning. Kontrollera nätet."
+    "auth/invalid-credential": $t("Fel e-post eller lösenord."), "auth/wrong-password": $t("Fel e-post eller lösenord."), "auth/user-not-found": $t("Fel e-post eller lösenord."),
+    "auth/email-already-in-use": $t("Det finns redan ett konto med den e-postadressen. Logga in i stället."), "auth/weak-password": $t("Lösenordet måste ha minst 6 tecken."),
+    "auth/invalid-email": $t("E-postadressen ser inte rätt ut."), "auth/too-many-requests": $t("För många försök. Vänta en stund och försök igen."),
+    "auth/popup-closed-by-user": $t("Inloggningen avbröts."), "auth/network-request-failed": $t("Ingen anslutning. Kontrollera nätet.")
   };
   const say = (t, bad) => { const m = dlg.querySelector(".msg"); if (m) { m.textContent = t; m.className = "msg" + (bad ? " err" : ""); } };
 
   function openLogin(view = "in") {
     const up = view === "up";
-    dlg.innerHTML = `<div class="gdlg-card"><button class="btn small x" data-gx>Stäng</button>
-      <h2>${up ? "Skapa konto" : "Logga in"}</h2><p>Med ett konto kan du logga matcher, skriva i forumet, betygsätta arenor och tipsa om pubar.</p>
-      <button class="btn primary" data-ggoogle style="width:100%">Fortsätt med Google</button>
-      ${CONFIG.apple ? `<button class="btn" data-gapple style="width:100%;margin-top:8px;background:#000;border-color:#000;color:#fff"><svg width="15" height="18" viewBox="0 0 15 18" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path fill="currentColor" d="M12.4 9.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8C3 4.4 1.6 5.3.8 6.7c-1.7 2.9-.4 7.1 1.2 9.4.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.6-3.9zM10.2 2.8c.6-.8 1.1-1.8 1-2.8-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.7-1.3z"/></svg>Fortsätt med Apple</button>` : ""}
-      <p class="terms">Genom att fortsätta godkänner du <button class="link" type="button" data-privacy="1" data-terms="1">villkoren och reglerna för innehåll</button>. Kränkande innehåll tolereras inte.</p>
-      <div class="or">eller med e-post</div>
+    dlg.innerHTML = `<div class="gdlg-card"><button class="btn small x" data-gx>${$t("Stäng")}</button>
+      <h2>${up ? $t("Skapa konto") : $t("Logga in")}</h2><p>${$t("Med ett konto kan du logga matcher, skriva i forumet, betygsätta arenor och tipsa om pubar.")}</p>
+      <button class="btn primary" data-ggoogle style="width:100%">${$t("Fortsätt med Google")}</button>
+      ${CONFIG.apple ? `<button class="btn" data-gapple style="width:100%;margin-top:8px;background:#000;border-color:#000;color:#fff"><svg width="15" height="18" viewBox="0 0 15 18" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path fill="currentColor" d="M12.4 9.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8C3 4.4 1.6 5.3.8 6.7c-1.7 2.9-.4 7.1 1.2 9.4.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.6-3.9zM10.2 2.8c.6-.8 1.1-1.8 1-2.8-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.7-1.3z"/></svg>${$t("Fortsätt med Apple")}</button>` : ""}
+      <p class="terms">${$t("Genom att fortsätta godkänner du {0}. Kränkande innehåll tolereras inte.", [`<button class="link" type="button" data-privacy="1" data-terms="1">${$t("villkoren och reglerna för innehåll")}</button>`])}</p>
+      <div class="or">${$t("eller med e-post")}</div>
       <form data-gform>
-        ${up ? `<label for="gName">Visningsnamn</label><input id="gName" maxlength="40" autocomplete="nickname" required>` : ""}
-        <label for="gMail">E-post</label><input id="gMail" type="email" autocomplete="email" required>
-        <label for="gPw">Lösenord</label><input id="gPw" type="password" minlength="6" autocomplete="${up ? "new-password" : "current-password"}" required>
-        ${up ? `<label class="chk"><input type="checkbox" id="gTerms" required> <span>Jag godkänner <button class="link" type="button" data-privacy="1" data-terms="1">villkoren och reglerna för innehåll</button> och förstår att kränkande innehåll inte tolereras.</span></label>` : ""}
-        <div class="row"><button class="btn primary" type="submit">${up ? "Skapa konto" : "Logga in"}</button></div>
+        ${up ? `<label for="gName">${$t("Visningsnamn")}</label><input id="gName" maxlength="40" autocomplete="nickname" required>` : ""}
+        <label for="gMail">${$t("E-post")}</label><input id="gMail" type="email" autocomplete="email" required>
+        <label for="gPw">${$t("Lösenord")}</label><input id="gPw" type="password" minlength="6" autocomplete="${up ? "new-password" : "current-password"}" required>
+        ${up ? `<label class="chk"><input type="checkbox" id="gTerms" required> <span>${$t("Jag godkänner {0} och förstår att kränkande innehåll inte tolereras.", [`<button class="link" type="button" data-privacy="1" data-terms="1">${$t("villkoren och reglerna för innehåll")}</button>`])}</span></label>` : ""}
+        <div class="row"><button class="btn primary" type="submit">${up ? $t("Skapa konto") : $t("Logga in")}</button></div>
       </form>
       <div class="msg" aria-live="polite"></div>
       <div class="row" style="justify-content:space-between">
-        <button class="link" data-gswap>${up ? "Har du konto? Logga in" : "Nytt här? Skapa konto"}</button>
-        ${up ? "" : `<button class="link" data-greset>Glömt lösenordet?</button>`}
+        <button class="link" data-gswap>${up ? $t("Har du konto? Logga in") : $t("Nytt här? Skapa konto")}</button>
+        ${up ? "" : `<button class="link" data-greset>${$t("Glömt lösenordet?")}</button>`}
       </div></div>`;
     dlg.hidden = false;
     dlg.querySelector("[data-gx]").onclick = close;
     dlg.querySelector("[data-gswap]").onclick = () => openLogin(up ? "in" : "up");
     const r = dlg.querySelector("[data-greset]");
     if (r) r.onclick = async () => {
-      const mail = dlg.querySelector("#gMail").value.trim(); if (!mail) { say("Skriv din e-postadress först.", true); return; }
-      try { await A.sendPasswordResetEmail(auth, mail); say("Om adressen finns får du ett mejl med en länk för att välja nytt lösenord."); } catch (e) { say(MSG[e.code] || "Det gick inte att skicka mejlet.", true); }
+      const mail = dlg.querySelector("#gMail").value.trim(); if (!mail) { say($t("Skriv din e-postadress först."), true); return; }
+      try { await A.sendPasswordResetEmail(auth, mail); say($t("Om adressen finns får du ett mejl med en länk för att välja nytt lösenord.")); } catch (e) { say(MSG[e.code] || $t("Det gick inte att skicka mejlet."), true); }
     };
     dlg.querySelector("[data-ggoogle]").onclick = async () => {
       const p = new A.GoogleAuthProvider();
       try { await A.signInWithPopup(auth, p); }
       catch (e) {
         if (/popup-blocked|operation-not-supported/.test(e.code || "")) { try { await A.signInWithRedirect(auth, p); return; } catch (e2) { e = e2; } }
-        say(MSG[e.code] || "Inloggningen misslyckades.", true);
+        say(MSG[e.code] || $t("Inloggningen misslyckades."), true);
       }
     };
     // Logga in med Apple (krävs av App Store när Google finns). Slås på med apple: true i firebase-config.js
     const ap = dlg.querySelector("[data-gapple]");
     if (ap) ap.onclick = async () => {
       const p = new A.OAuthProvider("apple.com"); p.addScope("email"); p.addScope("name");
-      try { auth.languageCode = "sv"; p.setCustomParameters({ locale: "sv_SE" }); } catch (e) {}
+      try { auth.languageCode = LANGC; p.setCustomParameters({ locale: LOC[LANGC] || "sv_SE" }); } catch (e) {}
       try { const r = await A.signInWithPopup(auth, p); if (r && r.user) await ensureProfile(r.user, r.user.displayName || ""); }
       catch (e) {
         if (/popup-blocked|operation-not-supported/.test(e.code || "")) { try { await A.signInWithRedirect(auth, p); return; } catch (e2) { e = e2; } }
-        say(MSG[e.code] || "Inloggningen misslyckades.", true);
+        say(MSG[e.code] || $t("Inloggningen misslyckades."), true);
       }
     };
     dlg.querySelector("[data-gform]").onsubmit = async ev => {
       ev.preventDefault();
       const mail = dlg.querySelector("#gMail").value.trim(), pw = dlg.querySelector("#gPw").value;
-      say(up ? "Skapar konto…" : "Loggar in…");
+      say(up ? $t("Skapar konto…") : $t("Loggar in…"));
       try {
         if (up) {
           const name = dlg.querySelector("#gName").value.trim().slice(0, 40);
@@ -330,22 +334,22 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
           await ensureProfile(c.user, name);
           try { await A.sendEmailVerification(c.user); } catch (e) {}
         } else await A.signInWithEmailAndPassword(auth, mail, pw);
-      } catch (e) { say(MSG[e.code] || "Det gick inte. Försök igen.", true); }
+      } catch (e) { say(MSG[e.code] || $t("Det gick inte. Försök igen."), true); }
     };
     setTimeout(() => { const f = dlg.querySelector(up ? "#gName" : "#gMail"); if (f) f.focus(); }, 30);
   }
 
   async function openAccount() {
     const u = getUser(); const name = await profileName(); const mod = await isAdmin();
-    dlg.innerHTML = `<div class="gdlg-card"><button class="btn small x" data-gx>Stäng</button>
-      <h2>Ditt konto</h2><p>Inloggad som ${esc(u.email || "Google- eller Apple-konto")}.</p>
-      ${mod ? `<div class="role">${SHIELD} Moderator – du kan dölja inlägg och reportage, sköta rättelser och läsa feedback</div>` : ""}
-      <form data-gname><label for="gNm">Visningsnamn (syns i forum och topplistor)</label><input id="gNm" maxlength="40" value="${esc(name)}" required>
-      <div class="row"><button class="btn" type="submit">Spara namn</button></div></form>
-       ${mod ? `<div class="row"><button class="btn" data-gmod>${SHIELD} Rättelser och feedback</button></div>` : ""}
+    dlg.innerHTML = `<div class="gdlg-card"><button class="btn small x" data-gx>${$t("Stäng")}</button>
+      <h2>${$t("Ditt konto")}</h2><p>${$t("Inloggad som {0}.", [esc(u.email || $t("Google- eller Apple-konto"))])}</p>
+      ${mod ? `<div class="role">${SHIELD} ${$t("Moderator – du kan dölja inlägg och reportage, sköta rättelser och läsa feedback")}</div>` : ""}
+      <form data-gname><label for="gNm">${$t("Visningsnamn (syns i forum och topplistor)")}</label><input id="gNm" maxlength="40" value="${esc(name)}" required>
+      <div class="row"><button class="btn" type="submit">${$t("Spara namn")}</button></div></form>
+       ${mod ? `<div class="row"><button class="btn" data-gmod>${SHIELD} ${$t("Rättelser och feedback")}</button></div>` : ""}
       <div class="msg" aria-live="polite"></div>
-      <div class="row"><button class="btn" data-gout>Logga ut</button></div>
-      <div class="gdel"><button class="link" data-gdel>Radera mitt konto</button></div></div>`;
+      <div class="row"><button class="btn" data-gout>${$t("Logga ut")}</button></div>
+      <div class="gdel"><button class="link" data-gdel>${$t("Radera mitt konto")}</button></div></div>`;
     dlg.hidden = false;
     dlg.querySelector("[data-gx]").onclick = close;
     const gm = dlg.querySelector("[data-gmod]"); if (gm) gm.onclick = () => { close(); if (window.groundlyOpenMod) window.groundlyOpenMod(); };
@@ -353,24 +357,25 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
     dlg.querySelector("[data-gdel]").onclick = () => confirmDelete(u);
     dlg.querySelector("[data-gname]").onsubmit = async ev => {
       ev.preventDefault(); const v = dlg.querySelector("#gNm").value.trim(); if (!v) return;
-      await ensureProfile(u, v); say("Namnet är sparat. Det syns efter omladdning."); setTimeout(() => location.reload(), 900);
+      await ensureProfile(u, v); say($t("Namnet är sparat. Det syns efter omladdning.")); setTimeout(() => location.reload(), 900);
     };
   }
 
   // radera kontot: allt användaren sparat eller skrivit, sedan själva kontot
   const OWN = ["forum", "ratings", "pubs", "quiz", "reports", "likes", "stats", "hype", "votes", "tipnotes", "fixes", "public", "cheers", "comments", "legends", "legvotes", "trsug", "trvote", "feedback", "profiles"];
   function confirmDelete(u) {
-    dlg.innerHTML = `<div class="gdlg-card"><h2>Radera mitt konto?</h2>
-      <p>Det här tar bort ditt konto och allt du har sparat eller skrivit: dina loggade matcher, favoriter, foruminlägg, reportage, kommentarer, legender, betyg och topplisteplatser. <b>Det går inte att ångra.</b></p>
-      <p>Vill du behålla dina matcher, spara först en säkerhetskopia under Min fotboll → Matcher, längst ner.</p>
-      <label for="gDelOk">Skriv <b>RADERA</b> för att bekräfta</label><input id="gDelOk" autocomplete="off">
+    const DELW = $t("RADERA");
+    dlg.innerHTML = `<div class="gdlg-card"><h2>${$t("Radera mitt konto?")}</h2>
+      <p>${$t("Det här tar bort ditt konto och allt du har sparat eller skrivit: dina loggade matcher, favoriter, foruminlägg, reportage, kommentarer, legender, betyg och topplisteplatser.")} <b>${$t("Det går inte att ångra.")}</b></p>
+      <p>${$t("Vill du behålla dina matcher, spara först en säkerhetskopia under Min fotboll → Matcher, längst ner.")}</p>
+      <label for="gDelOk">${$t("Skriv {0} för att bekräfta", [`<b>${esc(DELW)}</b>`])}</label><input id="gDelOk" autocomplete="off">
       <div class="msg" aria-live="polite"></div>
-      <div class="row"><button class="btn" data-gx>Avbryt</button><button class="btn danger" data-gdelgo disabled>Radera kontot</button></div></div>`;
+      <div class="row"><button class="btn" data-gx>${$t("Avbryt")}</button><button class="btn danger" data-gdelgo disabled>${$t("Radera kontot")}</button></div></div>`;
     const inp = dlg.querySelector("#gDelOk"), go = dlg.querySelector("[data-gdelgo]");
     dlg.querySelector("[data-gx]").onclick = () => openAccount();
-    inp.oninput = () => { go.disabled = inp.value.trim().toUpperCase() !== "RADERA"; };
+    inp.oninput = () => { go.disabled = inp.value.trim().toUpperCase() !== DELW.toUpperCase(); };
     go.onclick = async () => {
-      go.disabled = true; say("Raderar…");
+      go.disabled = true; say($t("Raderar…"));
       try {
         // Firebase kräver en färsk inloggning för att ta bort ett konto – be om den först, innan något raderas
         const cu = auth.currentUser; if (!cu) throw new Error("utloggad");
@@ -380,7 +385,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
           const apple = (cu.providerData || []).some(p => p.providerId === "apple.com");
           if (google) await A.reauthenticateWithPopup(cu, new A.GoogleAuthProvider());
           else if (apple) await A.reauthenticateWithPopup(cu, new A.OAuthProvider("apple.com"));
-          else { const pw = window.prompt("Skriv ditt lösenord för att bekräfta"); if (!pw) { say("Avbrutet.", true); go.disabled = false; return; }
+          else { const pw = window.prompt($t("Skriv ditt lösenord för att bekräfta")); if (!pw) { say($t("Avbrutet."), true); go.disabled = false; return; }
             await A.reauthenticateWithCredential(cu, A.EmailAuthProvider.credential(cu.email, pw)); }
         }
         const uid = cu.uid;
@@ -389,9 +394,9 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
         try { await F.deleteDoc(F.doc(fs, "users", uid, "data", "logg")); } catch (e) {}
         await A.deleteUser(cu);
         try { localStorage.removeItem("fk-pending-logg"); } catch (e) {}
-        say("Ditt konto är raderat.");
+        say($t("Ditt konto är raderat."));
         setTimeout(() => location.reload(), 1200);
-      } catch (e) { say(e && e.code === "auth/popup-closed-by-user" ? "Avbrutet." : "Det gick inte att radera kontot. Logga ut och in igen och försök på nytt.", true); go.disabled = false; }
+      } catch (e) { say(e && e.code === "auth/popup-closed-by-user" ? $t("Avbrutet.") : $t("Det gick inte att radera kontot. Logga ut och in igen och försök på nytt."), true); go.disabled = false; }
     };
     setTimeout(() => inp.focus(), 30);
   }
@@ -399,9 +404,9 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   // kontoknapp i toppfältet
   const btn = document.createElement("div"); btn.className = "gacc";
   const u = getUser();
-  btn.innerHTML = u ? `<button class="gacc-btn" data-gacct aria-label="Ditt konto"><span class="dot">${esc(((u.displayName || u.email || "?")[0] || "?").toUpperCase())}</span></button>`
-    : `<button class="gacc-btn" data-glogin aria-label="Logga in" title="Logga in"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="gl">Logga in</span></button>`;
-  if (u) isAdmin().then(m => { if (m) { const b = btn.querySelector(".gacc-btn"); if (b) { b.insertAdjacentHTML("beforeend", `<span class="mod" title="Moderator">${SHIELD}</span>`); b.setAttribute("aria-label", "Ditt konto (moderator)"); } } });
+  btn.innerHTML = u ? `<button class="gacc-btn" data-gacct aria-label="${esc($t("Ditt konto"))}"><span class="dot">${esc(((u.displayName || u.email || "?")[0] || "?").toUpperCase())}</span></button>`
+    : `<button class="gacc-btn" data-glogin aria-label="${esc($t("Logga in"))}" title="${esc($t("Logga in"))}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="gl">${esc($t("Logga in"))}</span></button>`;
+  if (u) isAdmin().then(m => { if (m) { const b = btn.querySelector(".gacc-btn"); if (b) { b.insertAdjacentHTML("beforeend", `<span class="mod" title="Moderator">${SHIELD}</span>`); b.setAttribute("aria-label", $t("Ditt konto (moderator)")); } } });
   const place = () => { const tb = document.querySelector(".topbar"); const th = document.getElementById("themeBtn"); if (tb && th) tb.insertBefore(btn, th); else if (tb) tb.appendChild(btn); else document.body.prepend(btn); };
   place();
 
