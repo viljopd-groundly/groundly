@@ -4232,10 +4232,19 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   return`${dd} ${dd===1?$t("dag"):$t("dagar")}`;}
 // Hem: tre matcher i taget, "Visa fler" fäller ut resten
 const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false,wkOpen:false};if(FOKUS){homeMore.wkOpen=true;}
+// fokusläge: vad spelschemat faktiskt täcker i användarens land, så att löftet aldrig blir större än datan
+let _fkCov=null;
+function fokusCoverage(){const ctry=myCountry();const tail="Loggningen fungerar för alla nivåer, även matcher som saknas i schemat.";
+  if(!ctry||dbState!=="ready")return tail;const key=ctry+"|"+MATCHES.length;
+  if(!_fkCov||_fkCov.k!==key){const L=new Map();MATCHES.forEach(m=>{const t=+m.tier;if(!(t>0)||!m.comp)return;const h=C[m.home],a=C[m.away];if(!((h&&h.c===ctry)||(a&&a.c===ctry)))return;const cur=L.get(m.comp);if(cur==null||t<cur)L.set(m.comp,t);});
+    _fkCov={k:key,n:L.size,max:L.size?Math.max(...L.values()):0};}
+  const {n,max}=_fkCov;const land=$t(ctry);
+  if(!n)return`Det finns inget spelschema för ${esc(land)} i appen än. ${tail}`;
+  return`Spelschema för ${n} ${n===1?"serie":"serier"} i ${esc(land)}${max>1?`, ner till nivå ${max}`:""}. ${tail}`;}
 // fokusläge: en mening om vad appen är, matcher nära dig, logga en match, din säsong och vägar vidare
 function fokusHomeHtml(ob){
   const head=`<div class="fkpreview">Förhandsvisning av fokusläget · <a href="?fokus=0">Tillbaka till nuvarande startsida</a></div>
-   <section class="fkhero"><h1>Hitta matcher nära dig och samla alla du sett</h1><p>Från Champions League till division 4. Logga varje match, se din statistik och upptäck nya arenor.</p></section>`;
+   <section class="fkhero"><h1>Hitta matcher nära dig och samla alla du har sett, stora som små.</h1><p>${fokusCoverage()}</p></section>`;
   const logged=myState==="ready";const n=logged?(MY.attended||[]).length:0;
   const cta=`<article class="tip fkcta"><div><b>${n?`Du har loggat ${n} ${n===1?"match":"matcher"}`:"Varit på en match?"}</b><span class="meta">${n?"Lägg till nästa och se statistiken växa.":"Spara den på tio sekunder, så börjar din groundhopperstatistik."}</span></div>
      <button class="btn primary" ${logged?'data-plus="log"':'data-glogin="up"'}>${ic("plus")} Logga en match</button></article>`;
