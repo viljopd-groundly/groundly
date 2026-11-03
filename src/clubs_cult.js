@@ -7,7 +7,7 @@ module.exports=[
 ["a93","Altona 93","altona 93 afc","Tyskland","Hamburg",1893,"Oberliga Hamburg",5,"Adolf-Jäger-Kampfbahn",null,"AFC",[],0],
 ["wsc","Wiener Sport-Club","wiener sport club sportclub wsc","Österrike","Wien",1883,"Regionalliga Ost",3,"Wiener Sportclub-Platz",null,"Sportclub",["3 österrikiska ligatitlar"],0],
 ["uds","Unionistas de Salamanca","unionistas salamanca","Spanien","Salamanca",2013,"Primera Federación",3,"Estadio Reina Sofía",null,"",[],0],
-["hff","Husqvarna FF","husqvarna hff huskvarna","Sverige","Huskvarna",1987,"Ettan Södra",3,"Vapenvallen",null,"",[],0],
+["hff","Husqvarna FF","husqvarna hff huskvarna","Sverige","Huskvarna",1987,"Division 2 Norra Götaland",4,"Vapenvallen",null,"",[],0],
 ["csl","Centro Storico Lebowski","lebowski firenze","Italien","Florens",null,"Amatörserie",null,null,null,"",[],0]
 ];
 module.exports.colors={sar:["#0057b8","#ffffff","S08"],vps:["#000000","#ffffff","VPS"],fyl:["#f58113","#000000","FYL"],gri:["#ffd200","#0057b8","UMFG"],ser:["#e2001a","#000000","RFCS"],fcd:["#e2001a","#ffffff","FCD"],hff:["#7ec8f0","#0b2a5b","HFF"],afcw:["#0057b8","#ffd200","AFCW"],acc:["#e2001a","#ffffff","ASFC"],clap:["#e2001a","#ffffff","CCFC"],m60:["#5cb3e8","#ffffff","1860"],a93:["#000000","#ffffff","A93"],wsc:["#000000","#ffffff","WSC"],uds:["#000000","#ffffff","UDS"]};
