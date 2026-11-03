@@ -1426,6 +1426,7 @@ try{history.replaceState({m:mode,y:0},"");}catch(e){}window.__gmode=mode;
 document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>goTop(b.dataset.mode));
 // bottenmenyn
 const MORE_MODES=["profil","matcher","tabell","klubbar","landslag","arenor","tips","quiz"];
+document.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.fokustgl)return;try{if(t.checked)localStorage.setItem("fk-fokus","1");else localStorage.removeItem("fk-fokus");}catch(x){}location.replace(location.pathname);});
 // ---------- FÖRHANDSVISNING: fokusläge (?fokus=1 slår på, ?fokus=0 stänger av) ----------
 // Matcher får Communitys plats i menyraden, plusknappen loggar en match direkt och startsidan visar bara
 // matcher nära dig, logga-knappen och din säsong. Texterna är bara på svenska tills läget eventuellt blir standard.
@@ -4971,6 +4972,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
   return`<div id="setOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="setT"><div class="compose askbox pvbox msbox setbox">
    <div class="mshead"><h2 id="setT">${$t("Inställningar")}</h2><button class="btn small" id="setClose">${$t("Klar")}</button></div>
    ${sec($t("Språk"),`<div class="chips wrapchips">${LANG_LIST.map(([k,l])=>`<button class="chip" data-lang-pick="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join("")}</div>${LANG!=="sv"?`<div class="actions"><button class="btn small" data-tropen="1">${ic("pencil")} ${$t("Förbättra översättningen")}</button>${MY.trHelp===true||isMod?`<button class="btn small" data-tlfix="1">${ic("pencil")} ${$t("Rätta texter där de står")}</button>`:""}</div><p class="hint" style="margin:0">${$t("Föreslå bättre texter och rösta på andras förslag.")} <button class="link" data-tlguide="1">${$t("Så gör du")}</button></p>`:""}`)}
+   ${isMod?sec("Förhandsvisning (bara moderatorer)",`<label class="setsw"><input type="checkbox" data-fokustgl="1"${FOKUS?" checked":""}><span><b>Fokusläge</b><small>Ny startsida med matcher nära dig, logga-knapp och din säsong. Matcher i menyraden.</small></span></label>`):""}
    ${sec($t("Avstånd"),`<div class="chips wrapchips">${[["auto",$t("Automatiskt")],["mil","mil"],["km","km"],["mi","miles"]].map(([k,l])=>`<button class="chip" data-unit-pick="${k}" aria-pressed="${unitPick===k}">${l}</button>`).join("")}</div><p class="hint">${$t("Automatiskt väljer efter ditt land: mil i Sverige och Norge, miles i Storbritannien och USA, annars km.")}</p>`)}
    ${sec($t("Logga|bild"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
