@@ -225,6 +225,7 @@ module.exports.push(...require("./clubs_more3.js"));
 module.exports.push(...require("./clubs_women.js"));
 module.exports.push(...require("./clubs_ettan.js"));
 module.exports.push(...require("./clubs_div2.js"));
+module.exports.push(...require("./clubs_tier3.js"));
 module.exports.push(...require("./nationals_women.js"));
 module.exports.push(...require("./clubs_mls2.js"));
 module.exports.push(...require("./clubs_world.js"));

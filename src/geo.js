@@ -51,6 +51,7 @@ Object.assign(module.exports,require("./clubs_more3.js").geo);
 Object.assign(module.exports,require("./clubs_women.js").geo);
 Object.assign(module.exports,require("./clubs_ettan.js").geo);
 Object.assign(module.exports,require("./clubs_div2.js").geo);
+Object.assign(module.exports,require("./clubs_tier3.js").geo);
 Object.assign(module.exports,require("./clubs_mls2.js").geo);
 Object.assign(module.exports,require("./geo_world.js"));
 Object.assign(module.exports,require("./geo_europe.js"));

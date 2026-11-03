@@ -6,7 +6,7 @@ module.exports=[
 ["m60","TSV 1860 München","1860 munchen sechzig lowen","Tyskland","München",1860,"Regionalliga Bayern",4,"Grünwalder Stadion",15000,"Die Löwen",["Ligatitel 1966","Cupvinnarcupfinal 1965"],1],
 ["a93","Altona 93","altona 93 afc","Tyskland","Hamburg",1893,"Oberliga Hamburg",5,"Adolf-Jäger-Kampfbahn",null,"AFC",[],0],
 ["wsc","Wiener Sport-Club","wiener sport club sportclub wsc","Österrike","Wien",1883,"Regionalliga Ost",3,"Wiener Sportclub-Platz",null,"Sportclub",["3 österrikiska ligatitlar"],0],
-["uds","Unionistas de Salamanca","unionistas salamanca","Spanien","Salamanca",2013,"Primera Federación",3,"Estadio Reina Sofía",null,"",[],0],
+["uds","Unionistas de Salamanca","unionistas salamanca","Spanien","Salamanca",2013,"Primera Federación Grupo 1",3,"Estadio Reina Sofía",null,"",[],0],
 ["hff","Husqvarna FF","husqvarna hff huskvarna","Sverige","Huskvarna",1987,"Division 2 Norra Götaland",4,"Vapenvallen",null,"",[],0],
 ["csl","Centro Storico Lebowski","lebowski firenze","Italien","Florens",null,"Amatörserie",null,null,null,"",[],0]
 ];
