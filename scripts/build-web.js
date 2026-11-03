@@ -101,7 +101,7 @@ const head = `<!doctype html>
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <script>
 // språk: ?lang=xx, sparat val (fk-lang) eller telefonens språk; okänt språk ger engelska. Översättningen laddas före appen.
-(function(){var ok={sv:1,en:1,nb:1,da:1,de:1,es:1,fr:1,it:1,nl:1},L=null; // fi och is läggs till när översättningarna är klara
+(function(){var ok={sv:1,en:1,nb:1,da:1,de:1,es:1,fr:1,it:1,nl:1,pl:1,pt:1,fi:1},L=null; // fi och is läggs till när översättningarna är klara
 try{var q=new URLSearchParams(location.search).get("lang");if(q==="no"||q==="nn")q="nb";if(q&&ok[q]){localStorage.setItem("fk-lang",q);}var st=localStorage.getItem("fk-lang");if(st&&ok[st])L=st;}catch(e){}
 if(!L&&${AUTO_LANG}){var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"sv"];for(var i=0;i<ls.length&&!L;i++){var c=String(ls[i]||"").toLowerCase().split("-")[0];if(c==="no"||c==="nn")c="nb";if(ok[c])L=c;}if(!L)L="en";}if(!L)L="sv";
 window.LANG=L;document.documentElement.lang=L;if(L!=="sv")document.write('<script src="i18n/'+L+'.js?v=${I18NV}"><\\/script>');})();
