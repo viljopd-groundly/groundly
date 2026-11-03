@@ -936,6 +936,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .fkhero{padding:4px 2px 14px}.fkhero h1{font-size:calc(26px*var(--fs));line-height:1.15;margin:0 0 6px;letter-spacing:-.01em}.fkhero p{margin:0;color:var(--muted)}
 .fkcta{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.fkcta>div{display:grid;gap:2px;min-width:0;flex:1 1 180px}
 .fkgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.fkgo{all:unset;box-sizing:border-box;cursor:pointer;display:grid;justify-items:center;gap:6px;padding:12px 6px;border-radius:12px;background:var(--card,var(--bg));border:1px solid var(--line);text-align:center;font-size:13px;font-weight:600}.fkgo:focus-visible{outline:2px solid var(--accent)}.fkgo svg{width:22px;height:22px;color:var(--accent)}
+.calsubs{display:grid;gap:6px}.calsub{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface)}.calsub:focus-visible{outline:2px solid var(--accent)}.calsub span{min-width:0}.calsub small{color:var(--muted);text-align:right;white-space:nowrap;flex-shrink:0}.calsub.on{background:var(--accent-soft);border-color:var(--accent)}.calsub.on small{color:var(--accent);font-weight:600}.calsub svg{width:16px;height:16px;vertical-align:-3px}
 .pushask{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:62;width:min(460px,calc(100% - 32px));box-sizing:border-box;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:12px 14px}.pushask p{margin:0 0 4px}.pushask .actions{margin:0}
 .trbox{max-height:88vh;overflow:auto}.trbox>*{flex-shrink:0}.trbox>.chips{margin:4px 0 2px;flex-wrap:wrap}.trrow{border-top:1px solid var(--line)}.trhead{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:3px;width:100%;padding:10px 2px}
 .trsv{font-size:calc(12px*var(--fs));color:var(--muted)}.trcur{font-weight:600}.trhead .pill{justify-self:start}.trbody{padding:0 2px 12px;display:grid;gap:10px}
@@ -2168,7 +2169,7 @@ let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",my
 let arView="list",bkupOpen=false;document.addEventListener("toggle",e=>{if(e.target&&e.target.id==="bkupBox")bkupOpen=e.target.open;},true);window.groundlyOpenMod=()=>{mySub="mod";if(mode==="mine")renderMine();else setMode("mine");window.scrollTo({top:0});};try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms))mySub=ms;}catch(e){}
 const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
-  wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,favNats:(Array.isArray(d&&d.favNats)?d.favNats:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&isNat(C[x])&&x!==d.favNat&&a.indexOf(x)===i).slice(0,MAXNAT),pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,200):[],showFo:!!(d&&d.showFo===true),cc:d&&typeof d.cc==="string"&&/^(none|nt-[a-z-]+)$/.test(d.cc)?d.cc:null,
+  wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,favNats:(Array.isArray(d&&d.favNats)?d.favNats:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&isNat(C[x])&&x!==d.favNat&&a.indexOf(x)===i).slice(0,MAXNAT),pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),calSubs:Array.isArray(d&&d.calSubs)?d.calSubs.filter(x=>typeof x==="string").slice(0,50):[],follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,200):[],showFo:!!(d&&d.showFo===true),cc:d&&typeof d.cc==="string"&&/^(none|nt-[a-z-]+)$/.test(d.cc)?d.cc:null,
   ...(Array.isArray(d&&d.arSel)?{arSel:d.arSel.filter(x=>typeof x==="string").slice(0,60)}:{}),blocked:Array.isArray(d&&d.blocked)?d.blocked.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,500):[],
   ...(d&&typeof d.ini==="string"&&d.ini?{ini:d.ini.slice(0,3)}:{}),...(d&&(d.trHelp===true||d.trHelp===false)?{trHelp:d.trHelp}:{})};}
 const MAXFAV=6,MAXNAT=5;
@@ -5151,23 +5152,33 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-tlguide],[
 const calFile=id=>String(id).replace(/[^a-z0-9-]/g,c=>"_"+c.codePointAt(0).toString(16))+".ics";
 const calUrl=id=>new URL("cal/"+calFile(id),location.href).href;
 const hasCal=id=>!!C[id]&&upcomingFor(id).length>0;
-function calSubBtn(c){return hasCal(c.id)?`<button class="btn small" data-calsub="${esc(c.id)}">${ic("calendar")} ${$t("Prenumerera i kalendern")}</button>`:"";}
+// vi kan inte se i telefonens kalender – appen kommer ihåg att man tryckt på en av prenumerationsknapparna
+const calLocal=()=>{try{return JSON.parse(store.get("fk-calsubs")||"[]");}catch(e){return[];}};
+const isCalSub=id=>(myState==="ready"&&Array.isArray(MY.calSubs)&&MY.calSubs.includes(id))||calLocal().includes(id);
+let calFromSet=false;const calBack=()=>{if(calFromSet){calFromSet=false;openSettings();}else render();};
+function setCalSub(id,on){const loc=calLocal().filter(x=>x!==id);if(on)loc.push(id);store.set("fk-calsubs",JSON.stringify(loc));
+  if(myState==="ready")mutate(d=>{const a=(Array.isArray(d.calSubs)?d.calSubs:[]).filter(x=>x!==id);if(on)a.push(id);d.calSubs=a;});if(setOpen)setTimeout(openSettings,60);}
+function calSubBtn(c){return hasCal(c.id)?`<button class="btn small" data-calsub="${esc(c.id)}">${isCalSub(c.id)?`${OK} ${$t("I din kalender")}`:`${ic("calendar")} ${$t("Prenumerera i kalendern")}`}</button>`:"";}
 function openCalSub(id){const c=C[id];if(!c)return;const u=calUrl(id),wc=u.replace(/^https?:/,"webcal:");const o=document.getElementById("calOv");if(o)o.remove();
   document.body.insertAdjacentHTML("beforeend",`<div id="calOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="calT"><div class="compose askbox pvbox">
    <div class="mshead"><h2 id="calT">${$t("{0} i din kalender",[esc(c.n)])}</h2><button class="btn small" data-calx="1">${$t("Stäng")}</button></div>
    <p class="hint" style="margin:0">${$t("Lagets matcher läggs in i telefonens kalender och uppdateras av sig själva när tider ändras eller nya matcher spelas in. Påminnelser ställer du in i kalenderappen.")}</p>
    <div class="actions" style="flex-direction:column;align-items:stretch">
-    <a class="btn primary" href="${esc(wc)}">${ic("calendar")} ${$t("Apple-kalendern eller Outlook")}</a>
-    <a class="btn" href="https://calendar.google.com/calendar/render?cid=${encodeURIComponent(wc)}" target="_blank" rel="noopener">${$t("Google Kalender")}</a>
-    <button class="btn" data-calcopy="${esc(u)}">${$t("Kopiera länken")}</button></div></div></div>`);}
+    <a class="btn primary" href="${esc(wc)}" data-calmark="${esc(id)}">${ic("calendar")} ${$t("Apple-kalendern eller Outlook")}</a>
+    <a class="btn" href="https://calendar.google.com/calendar/render?cid=${encodeURIComponent(wc)}" target="_blank" rel="noopener" data-calmark="${esc(id)}">${$t("Google Kalender")}</a>
+    <button class="btn" data-calcopy="${esc(u)}" data-calmark="${esc(id)}">${$t("Kopiera länken")}</button></div>
+   <p class="hint" style="margin:0">${isCalSub(id)?`${OK} ${$t("Markerad som tillagd i din kalender.")} <button class="link" data-calunmark="${esc(id)}">${$t("Ta bort markeringen")}</button>`:`<button class="link" data-calmark="${esc(id)}" data-calonly="1">${$t("Jag har redan lagt in den")}</button>`}</p></div></div>`);}
+document.addEventListener("click",e=>{const m=e.target.closest("[data-calmark],[data-calunmark]");if(!m)return;
+  if(m.dataset.calunmark){setCalSub(m.dataset.calunmark,false);document.getElementById("calOv")?.remove();toast($t("Markeringen är borttagen."));calBack();return;}
+  setCalSub(m.dataset.calmark,true);if(m.dataset.calonly){e.preventDefault();document.getElementById("calOv")?.remove();toast($t("Markerad som tillagd i din kalender."),"check");calBack();}},true);
 document.addEventListener("click",e=>{const t=e.target.closest("[data-calsub],[data-calx],[data-calcopy],#calOv");if(!t)return;
-  if(t.id==="calOv"){if(e.target===t)t.remove();return;}
-  if(t.dataset.calsub){e.preventDefault();if(setOpen)closeSettings();openCalSub(t.dataset.calsub);return;}
-  if(t.dataset.calx){document.getElementById("calOv")?.remove();return;}
+  if(t.id==="calOv"){if(e.target===t){t.remove();calBack();}return;}
+  if(t.dataset.calsub){e.preventDefault();calFromSet=setOpen;if(setOpen)closeSettings();openCalSub(t.dataset.calsub);return;}
+  if(t.dataset.calx){document.getElementById("calOv")?.remove();calBack();return;}
   if(t.dataset.calcopy){e.preventDefault();try{navigator.clipboard.writeText(t.dataset.calcopy).then(()=>toast($t("Länken är kopierad."),"check"),()=>prompt("",t.dataset.calcopy));}catch(x){prompt("",t.dataset.calcopy);}}});
 function remindSecHtml(){const favs=favList().filter(hasCal);
   return`<p class="hint" style="margin:0 0 6px">${$t("Lägg in dina lags matcher i kalendern, så missar du ingen.")}</p>
-   ${favs.length?`<div class="actions">${favs.map(id=>`<button class="btn small" data-calsub="${esc(id)}">${ic("calendar")} ${esc(C[id].n)}</button>`).join("")}</div>`:`<p class="meta" style="margin:0">${$t("Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.")}</p>`}
+   ${favs.length?`<div class="calsubs">${favs.map(id=>isCalSub(id)?`<button class="calsub on" data-calsub="${esc(id)}"><span>${OK} <b>${esc(C[id].n)}</b></span><small>${$t("Tillagd i din kalender")}</small></button>`:`<button class="calsub" data-calsub="${esc(id)}"><span>${ic("calendar")} <b>${esc(C[id].n)}</b></span><small>${$t("Lägg till i kalendern")}</small></button>`).join("")}</div>`:`<p class="meta" style="margin:0">${$t("Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.")}</p>`}
    <div id="pushBox"></div>`;}
 const PUSH_PREFS=[["wish",()=>$t("Matcher i Vill gå"),()=>$t("En vecka före och dagen före matchen.")],["log",()=>$t("Var du där?"),()=>$t("Morgonen efter en match i Vill gå, så att du kan logga den.")]];
 async function fillPushBox(){const box=document.getElementById("pushBox");if(!box||!window.groundlyPush)return;let st="none";try{st=await groundlyPush.state();}catch(e){}

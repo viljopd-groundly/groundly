@@ -2363,5 +2363,12 @@
  "Stäng av påminnelser på den här enheten": "Désactiver les rappels sur cet appareil",
  "Var du på {0} – {1}?": "Tu étais à {0} – {1} ?",
  "Vill du få en påminnelse innan matchen, och en fråga efteråt om du var där?": "Tu veux un rappel avant le match, et une question après pour savoir si tu y étais ?",
- "Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.": "Choisis une équipe favorite dans Mon football, ou ouvre un club et choisis S'abonner dans l'agenda."
+ "Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.": "Choisis une équipe favorite dans Mon football, ou ouvre un club et choisis S'abonner dans l'agenda.",
+ "I din kalender": "Dans ton agenda",
+ "Jag har redan lagt in den": "Je l'ai déjà ajouté",
+ "Lägg till i kalendern": "Ajouter à l'agenda",
+ "Markerad som tillagd i din kalender.": "Marqué comme ajouté à ton agenda.",
+ "Markeringen är borttagen.": "La marque a été retirée.",
+ "Ta bort markeringen": "Retirer la marque",
+ "Tillagd i din kalender": "Ajouté à ton agenda"
 }

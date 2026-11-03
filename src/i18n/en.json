@@ -2453,5 +2453,12 @@
  "Stäng av påminnelser på den här enheten": "Turn off reminders on this device",
  "Var du på {0} – {1}?": "Were you at {0} – {1}?",
  "Vill du få en påminnelse innan matchen, och en fråga efteråt om du var där?": "Want a reminder before the match, and a question afterwards asking if you were there?",
- "Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.": "Pick a favourite team under My football, or open a club and choose Subscribe in calendar."
+ "Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.": "Pick a favourite team under My football, or open a club and choose Subscribe in calendar.",
+ "I din kalender": "In your calendar",
+ "Jag har redan lagt in den": "I've already added it",
+ "Lägg till i kalendern": "Add to calendar",
+ "Markerad som tillagd i din kalender.": "Marked as added to your calendar.",
+ "Markeringen är borttagen.": "The mark has been removed.",
+ "Ta bort markeringen": "Remove the mark",
+ "Tillagd i din kalender": "Added to your calendar"
 }

@@ -2363,5 +2363,12 @@
  "Stäng av påminnelser på den här enheten": "Poista muistutukset käytöstä tällä laitteella",
  "Var du på {0} – {1}?": "Olitko ottelussa {0} – {1}?",
  "Vill du få en påminnelse innan matchen, och en fråga efteråt om du var där?": "Haluatko muistutuksen ennen ottelua ja jälkeenpäin kysymyksen, olitko paikalla?",
- "Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.": "Valitse suosikkijoukkue kohdassa Oma jalkapallo tai avaa seura ja valitse Tilaa kalenteriin."
+ "Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.": "Valitse suosikkijoukkue kohdassa Oma jalkapallo tai avaa seura ja valitse Tilaa kalenteriin.",
+ "I din kalender": "Kalenterissasi",
+ "Jag har redan lagt in den": "Olen jo lisännyt sen",
+ "Lägg till i kalendern": "Lisää kalenteriin",
+ "Markerad som tillagd i din kalender.": "Merkitty lisätyksi kalenteriisi.",
+ "Markeringen är borttagen.": "Merkintä on poistettu.",
+ "Ta bort markeringen": "Poista merkintä",
+ "Tillagd i din kalender": "Lisätty kalenteriisi"
 }
