@@ -5028,7 +5028,7 @@ function tlRender(){const box=document.getElementById("trList");if(!box)return;{
   const has=new Set(tlAll().map(x=>x.key));if(tlPick){const l=tlPick.filter(k=>I18N[k]);box.innerHTML=`<p class="hint">${l.length>1?$t("Välj vilken text du vill rätta."):""}</p>`+l.map(tlRowHtml).join("");return;}
   let list=keys.filter(k=>(!tlOnly||has.has(k))&&(!q||norm(k).includes(q)||norm(I18N[k]).includes(q)));
   list.sort((a,b)=>(has.has(b)-has.has(a)));const n=list.length;list=list.slice(0,40);if(tlOpen&&!list.includes(tlOpen)&&I18N[tlOpen])list.unshift(tlOpen);
-  box.innerHTML=(n?`<p class="hint">${$t("{0} texter",[n])}${n>40?" · "+$t("visar de 40 första, sök för att hitta fler"):""}</p>`:`<p class="hint">${$t("Ingen text matchar.")}</p>`)+list.map(tlRowHtml).join("");}
+  box.innerHTML=(n?`<p class="hint">${$tn(n,"En text","{n} texter")}${n>40?" · "+$t("visar de 40 första, sök för att hitta fler"):""}</p>`:`<p class="hint">${$t("Ingen text matchar.")}</p>`)+list.map(tlRowHtml).join("");}
 function openTr(){const o=document.getElementById("trOv");if(o)o.remove();const ln=(LANG_LIST.find(x=>x[0]===LANG)||[,LANG])[1];
   document.body.insertAdjacentHTML("beforeend",`<div id="trOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="trT"><div class="compose askbox pvbox trbox">
    <div class="mshead"><h2 id="trT">${$t("Förbättra översättningen")}</h2><button class="btn small" id="trClose">${$t("Klar")}</button></div>
