@@ -919,6 +919,19 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .profhead .uav{margin-right:0}
 .wchip .uav{margin:0 2px 0 0;align-self:center}
 .blrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}.blrow:last-child{border-bottom:0}
+.tlg{gap:12px}.tlgsteps{margin:0;padding:0;list-style:none;counter-reset:tlg;display:grid;gap:14px}.tlgsteps li{counter-increment:tlg;display:grid;gap:6px;padding-left:34px;position:relative}
+.tlgsteps li::before{content:counter(tlg);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.tlgsteps span{color:var(--muted);font-size:calc(14px*var(--fs))}.tlgmock{background:var(--soft);border-radius:12px;padding:10px;display:grid}
+.tlgbar{background:var(--fg);color:var(--bg);border-radius:10px;padding:6px 8px 6px 10px;display:flex;align-items:center;gap:6px;font-size:13px}.tlgbar svg{width:14px;height:14px}.tlgbar i{margin-left:auto;font-style:normal;background:var(--accent);color:#fff;border-radius:8px;padding:3px 9px;font-weight:600}
+.tlgsearch{background:var(--card,var(--bg));border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:14px}
+.tlgcard{background:var(--card,var(--bg));border-radius:10px;padding:10px;display:grid;gap:2px}.tlgcard small{color:var(--muted)}
+.tlgtap{position:relative;justify-self:start;font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:.04em;color:var(--accent);padding:2px 4px;border-radius:6px;outline:2px dashed var(--accent);animation:tlgPulse 1.8s ease-in-out infinite}
+.tlgtap em{position:absolute;right:-26px;top:8px;font-style:normal;font-size:22px;animation:tlgTap 1.8s ease-in-out infinite}
+@keyframes tlgTap{0%,100%{transform:translate(8px,8px)}45%,60%{transform:translate(0,0) scale(.9)}}@keyframes tlgPulse{0%,40%,100%{background:transparent}50%,65%{background:var(--accent-soft)}}
+.tlgform{background:var(--card,var(--bg));border-radius:10px;padding:10px;display:grid;gap:6px}.tlgform small{color:var(--muted)}.tlgta{border:1.5px solid var(--accent);border-radius:8px;padding:6px 8px;font-size:14px}
+.tlgcaret{display:inline-block;width:1.5px;height:1em;background:var(--fg);margin-left:1px;vertical-align:-2px;animation:tlgBlink 1s steps(1) infinite}@keyframes tlgBlink{50%{opacity:0}}
+.tlgbtn,.tlgvote{font-style:normal;justify-self:start;border-radius:8px;padding:3px 10px;font-size:13px;font-weight:600}.tlgbtn{background:var(--accent);color:#fff}.tlgvote{border:1px solid var(--line);display:inline-block}
+@media (prefers-reduced-motion:reduce){.tlgtap,.tlgtap em,.tlgcaret{animation:none}}
 .trbox{max-height:88vh;overflow:auto}.trbox>*{flex-shrink:0}.trbox>.chips{margin:4px 0 2px;flex-wrap:wrap}.trrow{border-top:1px solid var(--line)}.trhead{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:3px;width:100%;padding:10px 2px}
 .trsv{font-size:calc(12px*var(--fs));color:var(--muted)}.trcur{font-weight:600}.trhead .pill{justify-self:start}.trbody{padding:0 2px 12px;display:grid;gap:10px}
 .trsug{background:var(--bg);border-radius:10px;padding:8px 10px;display:grid;gap:6px}.trsug .actions{margin:0}.trsug .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
@@ -4919,7 +4932,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-invite],[d
 function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>${b}</section>`;
   return`<div id="setOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="setT"><div class="compose askbox pvbox msbox setbox">
    <div class="mshead"><h2 id="setT">${$t("Inställningar")}</h2><button class="btn small" id="setClose">${$t("Klar")}</button></div>
-   ${sec($t("Språk"),`<div class="chips wrapchips">${LANG_LIST.map(([k,l])=>`<button class="chip" data-lang-pick="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join("")}</div>${LANG!=="sv"?`<div class="actions"><button class="btn small" data-tropen="1">${ic("pencil")} ${$t("Förbättra översättningen")}</button>${MY.trHelp===true||isMod?`<button class="btn small" data-tlfix="1">${ic("pencil")} ${$t("Rätta texter där de står")}</button>`:""}</div><p class="hint" style="margin:0">${$t("Föreslå bättre texter och rösta på andras förslag.")}</p>`:""}`)}
+   ${sec($t("Språk"),`<div class="chips wrapchips">${LANG_LIST.map(([k,l])=>`<button class="chip" data-lang-pick="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join("")}</div>${LANG!=="sv"?`<div class="actions"><button class="btn small" data-tropen="1">${ic("pencil")} ${$t("Förbättra översättningen")}</button>${MY.trHelp===true||isMod?`<button class="btn small" data-tlfix="1">${ic("pencil")} ${$t("Rätta texter där de står")}</button>`:""}</div><p class="hint" style="margin:0">${$t("Föreslå bättre texter och rösta på andras förslag.")} <button class="link" data-tlguide="1">${$t("Så gör du")}</button></p>`:""}`)}
    ${sec($t("Avstånd"),`<div class="chips wrapchips">${[["auto",$t("Automatiskt")],["mil","mil"],["km","km"],["mi","miles"]].map(([k,l])=>`<button class="chip" data-unit-pick="${k}" aria-pressed="${unitPick===k}">${l}</button>`).join("")}</div><p class="hint">${$t("Automatiskt väljer efter ditt land: mil i Sverige och Norge, miles i Storbritannien och USA, annars km.")}</p>`)}
    ${sec($t("Logga|bild"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
@@ -4964,9 +4977,9 @@ function tlAskHtml(){if(LANG==="sv"||myState!=="ready"||!myId)return"";const ln=
     <div class="actions"><button class="btn small primary" data-tlhelp="1">${$t("Ja, gärna")}</button><button class="btn small" data-tlhelp="0">${$t("Nej tack")}</button></div></article>`;
   if(MY.trHelp!==true||tlState!=="ready")return"";const mine=(TLV[myId]&&TLV[myId].v)||{};const n=tlAll().filter(x=>x.uid!==myId&&!mine[x.sk]).length;
   return n?`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Hjälp till med språket")}</div><p style="margin:0">${$tn(n,"Ett översättningsförslag väntar på din röst.","{n} översättningsförslag väntar på din röst.")}</p>
-    <div class="actions"><button class="btn small primary" data-tropen="1" data-tlonly="1">${$t("Rösta")}</button><button class="btn small" data-tlfix="1">${$t("Rätta texter där de står")}</button></div></article>`:"";}
+    <div class="actions"><button class="btn small primary" data-tropen="1" data-tlonly="1">${$t("Rösta")}</button><button class="btn small" data-tlfix="1">${$t("Rätta texter där de står")}</button><button class="link" data-tlguide="1">${$t("Så gör du")}</button></div></article>`:"";}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-tlhelp]");if(!t)return;const yes=t.dataset.tlhelp==="1";mutate(d=>{d.trHelp=yes;});
-  if(yes){toast($t("Tack! Du hittar översättningen under Inställningar → Språk."),"check");tlOnly=false;openTr();}});
+  if(yes){toast($t("Tack! Du hittar översättningen under Inställningar → Språk."),"check");tlOnly=false;openTlGuide();}});
 // ---------- förbättra översättningen (betan) ----------
 // trsug/{uid}.items=[{id,lang,key,text,at}], trvote/{uid}.v={"uid:id":1|-1}, mod/tr.acc={lang:{key:text}}, mod/tr.rej=["uid:id"]
 // Ett förslag gäller när minst 2 andra har röstat ja och ja-rösterna är minst 2 fler än nej-rösterna. Moderatorer kan godkänna eller avvisa direkt.
@@ -5007,7 +5020,7 @@ function tlRender(){const box=document.getElementById("trList");if(!box)return;{
 function openTr(){const o=document.getElementById("trOv");if(o)o.remove();const ln=(LANG_LIST.find(x=>x[0]===LANG)||[,LANG])[1];
   document.body.insertAdjacentHTML("beforeend",`<div id="trOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="trT"><div class="compose askbox pvbox trbox">
    <div class="mshead"><h2 id="trT">${$t("Förbättra översättningen")}</h2><button class="btn small" id="trClose">${$t("Klar")}</button></div>
-   ${tlPick?"":`<p class="hint">${$t("Hittar du en text på {0} som låter fel? Sök efter den, föreslå en bättre och rösta på andras förslag. När minst två andra har röstat ja används förslaget i appen för alla.",[esc(ln)])}</p>`}
+   ${tlPick?"":`<p class="hint">${$t("Hittar du en text på {0} som låter fel? Sök efter den, föreslå en bättre och rösta på andras förslag. När minst två andra har röstat ja används förslaget i appen för alla.",[esc(ln)])} <button class="link" data-tlguide="1">${$t("Så gör du")}</button></p>`}
    ${tlPick?"":`<label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="tlQ" type="search" placeholder="${$t("Sök text")}" value="${esc(tlQ)}" autocomplete="off"></label>
    <div class="chips"><button class="chip" data-tronly="0" aria-pressed="${!tlOnly}">${$t("Alla texter")}</button><button class="chip" data-tronly="1" aria-pressed="${tlOnly}">${$t("Har förslag")} (${new Set(tlAll().map(x=>x.key)).size})</button></div>`}
    <div id="trList"></div></div></div>`);tlRender();}
@@ -5047,14 +5060,40 @@ function tlFind(el){const seen=new Set();for(let i=0,n=el;n&&i<5&&n!==document.b
     kept.forEach(h=>seen.add(h.k));if(seen.size)break;}
   return[...seen].slice(0,8);}
 function tlFixBar(){let b=document.getElementById("tlBar");if(!tlFix){if(b)b.remove();document.body.classList.remove("tlfix");return;}
-  document.body.classList.add("tlfix");if(b)return;document.body.insertAdjacentHTML("beforeend",`<div id="tlBar" role="status"><span>${ic("pencil")} ${$t("Rättningsläge – tryck på en text")}</span><button class="btn small primary" data-tlfixoff="1">${$t("Klar")}</button></div>`);}
+  document.body.classList.add("tlfix");if(b)return;document.body.insertAdjacentHTML("beforeend",`<div id="tlBar" role="status"><span>${ic("pencil")} ${$t("Rättningsläge – tryck på en text")}</span><span style="display:flex;gap:6px"><button class="btn small" data-tlguide="1" aria-label="${$t("Så gör du")}">?</button><button class="btn small primary" data-tlfixoff="1">${$t("Klar")}</button></span></div>`);}
 function tlPickOpen(keys){tlPick=keys;tlOpen=keys.length===1?keys[0]:null;tlQ="";tlOnly=false;openTr();}
-window.addEventListener("click",e=>{if(!tlFix)return;const t=e.target;if(t.closest("#tlBar,#trOv,#fkToast,.bnav,#moreSheet,#moreBack"))return;
+window.addEventListener("click",e=>{if(!tlFix)return;const t=e.target;if(t.closest("#tlBar,#trOv,#tlgOv,#fkToast,.bnav,#moreSheet,#moreBack"))return;
   e.preventDefault();e.stopPropagation();const keys=tlFind(t);if(!keys.length){toast($t("Hittade ingen översatt text här. Prova att trycka direkt på texten."));return;}tlPickOpen(keys);},true);
 document.addEventListener("click",e=>{const t=e.target.closest("[data-tlfix],[data-tlfixoff]");if(!t)return;e.preventDefault();
   if(t.dataset.tlfixoff){tlFix=false;tlFixBar();return;}
   if(!myId){toast($t("Logga in för att föreslå och rösta."));return;}
-  const o=document.getElementById("trOv");if(o)o.remove();if(typeof closeSettings==="function"&&setOpen)closeSettings();tlIdx=null;tlFix=true;tlFixBar();});
+  const o=document.getElementById("trOv");if(o)o.remove();if(!tlGuideSeen){openTlGuide();return;}if(typeof closeSettings==="function"&&setOpen)closeSettings();tlIdx=null;tlFix=true;tlFixBar();});
+// ---------- guide: så föreslår du en bättre översättning, med ett illustrerat exempel ----------
+let tlGuideSeen=false;try{tlGuideSeen=localStorage.getItem("fk-tlguide")==="1";}catch(e){}
+function tlGuideHtml(){const ex=$t("Nästa möte"),ok=MY.trHelp===true||isMod;
+  return`<div id="tlgOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="tlgT"><div class="compose askbox pvbox trbox tlg">
+   <div class="mshead"><h2 id="tlgT">${$t("Så föreslår du en bättre översättning")}</h2><button class="btn small" data-tlgclose="1">${$t("Stäng")}</button></div>
+   <p class="hint" style="margin:0">${$t("Ser du en text som låter konstig, är felstavad eller inte passar? Så här gör du. Exemplet nedan visar hur det ser ut.")}</p>
+   <ol class="tlgsteps">
+    <li><b>${ok?$t("Slå på rättningsläget"):$t("Öppna översättningen")}</b><span>${ok?$t("Tryck på ”{0}”. En rad längst ner visar att läget är på, och du kan gå runt i appen som vanligt.",[$t("Rätta texter där de står")]):$t("Gå till {0} → {1} och tryck på ”{2}”. Sök sedan efter texten du vill ändra.",[$t("Inställningar"),$t("Språk"),$t("Förbättra översättningen")])}</span>
+     ${ok?`<div class="tlgmock"><div class="tlgbar">${ic("pencil")} ${$t("Rättningsläge – tryck på en text")}<i>${$t("Klar")}</i></div></div>`:`<div class="tlgmock"><div class="tlgsearch">🔍 ${esc(ex)}</div></div>`}</li>
+    <li><b>${ok?$t("Tryck på texten som är fel"):$t("Tryck på texten i listan")}</b><span>${$t("Då öppnas texten med originalet på svenska ovanför, så att du ser vad som menas.")}</span>
+     <div class="tlgmock"><div class="tlgcard"><span class="tlgtap">${esc(ex)}<em aria-hidden="true">👆</em></span><small>Chemie Leipzig – Lokomotive Leipzig</small></div></div></li>
+    <li><b>${$t("Skriv ditt förslag och skicka")}</b><span>${$t("Skriv hur texten borde låta och tryck på ”{0}”. Skriv hela texten, inte bara ordet du ändrar.",[$t("Skicka förslag")])}</span>
+     <div class="tlgmock"><div class="tlgform"><small lang="sv">${$t("Svenska")}: Nästa möte</small><div class="tlgta">${esc(ex)}<span class="tlgcaret"></span></div><i class="tlgbtn">${$t("Skicka förslag")}</i></div></div></li>
+    <li><b>${$t("Andra röstar")}</b><span>${$t("Andra som talar språket röstar 👍 eller 👎. När minst två har röstat ja används ditt förslag i appen för alla.")}</span>
+     <div class="tlgmock"><div class="tlgform"><div>${esc(ex)} <small>· ${$t("Ditt förslag")}</small></div><div><i class="tlgvote">👍 2</i> <i class="tlgvote">👎 0</i></div></div></div></li>
+   </ol>
+   <p class="hint" style="margin:0">${$t("Tips: står det något som {0} i texten är det en platshållare som byts mot ett namn eller en siffra. Låt den stå kvar.",["{0}"])}</p>
+   <div class="actions">${ok?`<button class="btn small primary" data-tlgstart="fix">${$t("Sätt igång")}</button><button class="btn small" data-tlgstart="list">${$t("Sök bland texterna i stället")}</button>`:`<button class="btn small primary" data-tlgstart="list">${$t("Sätt igång")}</button>`}</div>
+  </div></div>`;}
+function openTlGuide(){const o=document.getElementById("tlgOv");if(o)o.remove();if(typeof closeSettings==="function"&&setOpen)closeSettings();document.body.insertAdjacentHTML("beforeend",tlGuideHtml());tlGuideSeen=true;try{localStorage.setItem("fk-tlguide","1");}catch(e){}}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-tlguide],[data-tlgclose],[data-tlgstart],#tlgOv");if(!t)return;
+  if(t.id==="tlgOv"){if(e.target===t)t.remove();return;}e.preventDefault();
+  if(t.dataset.tlguide){const o=document.getElementById("trOv");if(o)o.remove();openTlGuide();return;}
+  const g=document.getElementById("tlgOv");if(g)g.remove();
+  if(t.dataset.tlgstart==="fix"){if(!myId){toast($t("Logga in för att föreslå och rösta."));return;}tlIdx=null;tlFix=true;tlFixBar();toast($t("Tryck på en text du vill rätta."),"pencil");}
+  else if(t.dataset.tlgstart==="list"){tlPick=null;tlOnly=false;openTr();}});
 // ---------- render ----------
 function render(){
   const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
