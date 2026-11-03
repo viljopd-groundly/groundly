@@ -46,12 +46,12 @@ const swaps = [
    `<b>Matchschemat kunde inte hämtas.</b><div>Kontrollera anslutningen och ladda om sidan. Klubbsöket fungerar ändå.</div>`],
   [`<b>Forumet kan inte visas här.</b><div>Öppna sidan inloggad på claude.ai för att läsa och skriva.</div>`,
    `<b>Forumet kunde inte hämtas.</b><div>Kontrollera anslutningen och ladda om sidan.</div>`],
-  [`<b>Reportagen kan inte visas här.</b><div>Öppna sidan inloggad på claude.ai för att läsa och skriva.</div>`,
-   `<b>Reportagen kunde inte hämtas.</b><div>Kontrollera anslutningen och ladda om sidan.</div>`],
+  [`<b>Matchberättelserna kan inte visas här.</b><div>Öppna sidan inloggad på claude.ai för att läsa och skriva.</div>`,
+   `<b>Matchberättelserna kunde inte hämtas.</b><div>Kontrollera anslutningen och ladda om sidan.</div>`],
   [`Du kan läsa forumet. För att skriva behöver ägaren bjuda in dig till sidan med redigeringsrätt.</span>`,
    `Du kan läsa forumet. Logga in för att skriva.</span><button class="btn small primary" data-glogin>Logga in</button>`],
-  [`Du kan läsa reportagen. För att skriva behöver ägaren bjuda in dig till sidan.</span>`,
-   `Du kan läsa reportagen. Logga in för att skriva och kommentera.</span><button class="btn small primary" data-glogin>Logga in</button>`],
+  [`Du kan läsa matchberättelserna. För att skriva behöver ägaren bjuda in dig till sidan.</span>`,
+   `Du kan läsa matchberättelserna. Logga in för att skriva och kommentera.</span><button class="btn small primary" data-glogin>Logga in</button>`],
   [`"Logga in på claude.ai för att spara."`, `"Logga in för att spara."`],
   [`<b>Logga in för att spara.</b><div>Dina matcher och klubbar sparas på ditt claude.ai-konto, så du behöver öppna sidan inloggad.</div>`,
    `<b>Logga in för att spara.</b><div>Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.</div><div style="margin-top:10px">${LOGIN}</div>`],
@@ -79,13 +79,13 @@ const head = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="description" content="Groundly – planera och logga dina fotbollsresor. Matcher, arenor, serietabeller, forum och reportage.">
+<meta name="description" content="Groundly – planera och logga dina fotbollsresor. Matcher, arenor, serietabeller, forum och matchberättelser.">
 <meta name="theme-color" content="#1d6b3b">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Groundly">
 <meta property="og:locale" content="sv_SE">
 <meta property="og:title" content="Groundly – planera och logga dina fotbollsresor">
-<meta property="og:description" content="Matcher, arenor, serietabeller, forum och reportage – för dig som åker på fotboll.">
+<meta property="og:description" content="Matcher, arenor, serietabeller, forum och matchberättelser – för dig som åker på fotboll.">
 <meta property="og:url" content="https://viljopd-groundly.github.io/groundly/">
 <meta property="og:image" content="https://viljopd-groundly.github.io/groundly/og.png">
 <meta property="og:image:width" content="1200">

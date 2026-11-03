@@ -343,7 +343,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
     const u = getUser(); const name = await profileName(); const mod = await isAdmin();
     dlg.innerHTML = `<div class="gdlg-card"><button class="btn small x" data-gx>${$t("Stäng")}</button>
       <h2>${$t("Ditt konto")}</h2><p>${$t("Inloggad som {0}.", [esc(u.email || $t("Google- eller Apple-konto"))])}</p>
-      ${mod ? `<div class="role">${SHIELD} ${$t("Moderator – du kan dölja inlägg och reportage, sköta rättelser och läsa feedback")}</div>` : ""}
+      ${mod ? `<div class="role">${SHIELD} ${$t("Moderator – du kan dölja inlägg och matchberättelser, sköta rättelser och läsa feedback")}</div>` : ""}
       <form data-gname><label for="gNm">${$t("Visningsnamn (syns i forum och topplistor)")}</label><input id="gNm" maxlength="40" value="${esc(name)}" required>
       <div class="row"><button class="btn" type="submit">${$t("Spara namn")}</button></div></form>
        ${mod ? `<div class="row"><button class="btn" data-gmod>${SHIELD} ${$t("Rättelser och feedback")}</button></div>` : ""}
@@ -366,7 +366,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   function confirmDelete(u) {
     const DELW = $t("RADERA");
     dlg.innerHTML = `<div class="gdlg-card"><h2>${$t("Radera mitt konto?")}</h2>
-      <p>${$t("Det här tar bort ditt konto och allt du har sparat eller skrivit: dina loggade matcher, favoriter, foruminlägg, reportage, kommentarer, legender, betyg och topplisteplatser.")} <b>${$t("Det går inte att ångra.")}</b></p>
+      <p>${$t("Det här tar bort ditt konto och allt du har sparat eller skrivit: dina loggade matcher, favoriter, foruminlägg, matchberättelser, kommentarer, legender, betyg och topplisteplatser.")} <b>${$t("Det går inte att ångra.")}</b></p>
       <p>${$t("Vill du behålla dina matcher, spara först en säkerhetskopia under Min fotboll → Matcher, längst ner.")}</p>
       <label for="gDelOk">${$t("Skriv {0} för att bekräfta", [`<b>${esc(DELW)}</b>`])}</label><input id="gDelOk" autocomplete="off">
       <div class="msg" aria-live="polite"></div>

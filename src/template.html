@@ -1054,7 +1054,7 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
   <div class="modes" role="group" aria-label="Välj vy">
     <button class="mode" id="m-hem" data-mode="hem" aria-pressed="false">Hem</button>
     <button class="mode" id="m-forum" data-mode="forum" aria-pressed="false">Forum</button>
-    <button class="mode" id="m-reportage" data-mode="reportage" aria-pressed="false">Reportage</button>
+    <button class="mode" id="m-reportage" data-mode="reportage" aria-pressed="false">Matchberättelser</button>
     <button class="mode" id="m-klubbar" data-mode="klubbar" aria-pressed="true">Klubbar</button>
     <button class="mode" id="m-landslag" data-mode="landslag" aria-pressed="false">Landslag</button>
     <button class="mode" id="m-arenor" data-mode="arenor" aria-pressed="false">Arenor</button>
@@ -1180,11 +1180,11 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
 
   <!-- Reportage -->
   <section id="v-reportage" hidden style="display:contents">
-    <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Reportage</button></div>
+    <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Matchberättelser</button></div>
     <div class="reprow"><div id="repTop" class="ftop"></div>
     <label class="search" for="repQ" id="repSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="repQ" type="search" placeholder="Sök" aria-label="Sök bland reportagen" autocomplete="off" enterkeyhint="search">
+      <input id="repQ" type="search" placeholder="Sök" aria-label="Sök bland matchberättelserna" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="repQClear" hidden>Rensa</button>
     </label></div>
     <div class="chips" role="group" aria-label="Visa" id="repChips"></div>
@@ -1194,7 +1194,7 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
 
   <!-- Forum -->
   <section id="v-forum" hidden style="display:contents">
-    <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Reportage</button></div>
+    <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Matchberättelser</button></div>
     <div class="reprow"><div id="forumTop" class="ftop"></div>
     <label class="search" for="forumQ" id="forumSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1212,7 +1212,7 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
 <nav class="bnav" aria-label="Huvudmeny">
   <button class="bn" data-bn="hem" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Hem</span></button>
   <button class="bn" data-bn="community" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20.5l1.4-4.3A7.5 7.5 0 1 1 20 12.5z"/><path d="M8.5 11.5h7M8.5 14.5h4.5"/></svg><span>Community</span></button>
-  <button class="bn bnlog" id="bnLog" aria-label="Skapa: logga match, skriv reportage eller fråga i forumet" aria-expanded="false" aria-controls="plusSheet"><b><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></b><span>Skapa</span></button>
+  <button class="bn bnlog" id="bnLog" aria-label="Skapa: logga match, skriv en matchberättelse eller fråga i forumet" aria-expanded="false" aria-controls="plusSheet"><b><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></b><span>Skapa</span></button>
   <button class="bn" data-bn="mine" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Min fotboll</span></button>
   <button class="bn" id="bnMore" aria-expanded="false" aria-controls="moreSheet"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span>Mer</span></button>
 </nav>
@@ -1221,7 +1221,7 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
   <div class="mspanel" role="dialog" aria-label="Skapa">
     <div class="plist">
       <button class="pitem" data-plus="log"><b><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></b><span><strong>Logga match</strong><small>En match du har sett, med resultat och arena</small></span></button>
-      <button class="pitem" data-plus="rep"><b><svg class="ic" aria-hidden="true"><use href="#i-pencil"/></svg></b><span><strong>Skriv reportage</strong><small>Berätta om resan, arenan och stämningen</small></span></button>
+      <button class="pitem" data-plus="rep"><b><svg class="ic" aria-hidden="true"><use href="#i-pencil"/></svg></b><span><strong>Skriv matchberättelse</strong><small>Berätta om resan, arenan och stämningen</small></span></button>
       <button class="pitem" data-plus="ask"><b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span><strong>Fråga i forumet</strong><small>Få tips om arenor, biljetter och pubar</small></span></button>
     </div>
   </div>
@@ -1392,7 +1392,7 @@ const TAGLINES={"sv": "För oss som älskar fotboll.", "en": "For fans who love 
 // ---------- mode ----------
 // Tillbaka: hoppar man från en vy till en annan (t.ex. arena → landslag) sparas varifrån man kom,
 // så att mobilens bakåt-gest och knappen "Tillbaka till …" leder rätt.
-const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Reportage"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};
+const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};
 let navPop=false,pendingJump=null,jumpFrom=null,topNav=false;
 // menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
 function goTop(m){if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";arView="list";}topNav=true;try{setMode(m);}finally{topNav=false;}}
@@ -2218,7 +2218,7 @@ function undoToast(msg,undo,after){let el=document.getElementById("fkUndo");if(!
 function offerReport(id){const a=MY.attended.find(x=>x.id===id);if(!a||!canWriteRep()||(a.date&&a.date>today()))return;
   let el=document.getElementById("fkUndo");if(!el){el=document.createElement("div");el.id="fkUndo";el.setAttribute("role","status");document.body.appendChild(el);}
   if(undoToast.fin)undoToast.fin();clearTimeout(undoToast.t);
-  el.classList.add("offer");el.innerHTML=`<span>${$t("Vill du berätta om resan?")}</span><button type="button">${$t("Skriv reportage")}</button><button type="button" class="x" aria-label="${$t("Stäng")}">×</button>`;el.classList.add("on");
+  el.classList.add("offer");el.innerHTML=`<span>${$t("Vill du berätta om resan?")}</span><button type="button">${$t("Skriv matchberättelse")}</button><button type="button" class="x" aria-label="${$t("Stäng")}">×</button>`;el.classList.add("on");
   const fin=()=>{el.classList.remove("on");setTimeout(()=>el.classList.remove("offer"),300);undoToast.fin=null;};undoToast.fin=fin;
   const [go,x]=el.querySelectorAll("button");go.onclick=()=>{clearTimeout(undoToast.t);fin();draftFromAtt(id);};x.onclick=()=>{clearTimeout(undoToast.t);fin();};
   undoToast.t=setTimeout(fin,9000);}
@@ -2295,7 +2295,7 @@ function renderMine(){
       <div class="venue">${esc([a.venue,$t(a.city)].filter(Boolean).join(" · ")||$t("Arena ej angiven"))}${a.comp?" · "+esc(a.comp):""}</div>${derbyOfAtt(a)?`<div><span class="pill ec">${ic("flame")} ${esc($t(derbyOfAtt(a)[1]))}</span></div>`:""}
       ${a.with?`<div class="venue">${$t("Sällskap: {0}",[esc(a.with)])}</div>`:""}${a.note?`<div class="mnote">${esc(a.note)}</div>`:""}
       ${a.photo&&PHID.test(a.photo)?`<button class="attph" data-phview="${esc(a.photo)}" aria-label="${$t("Visa bilden från matchen")}">${phImg(a.photo)}</button>`:""}${attPhUp===a.id?`<p class="hint">${$t("Laddar upp bilden…")}</p>`:""}
-      ${editAtt===a.id?editAttForm(a):""}<div class="pactions">${assetsNs?`<label class="link strong" for="attPh-${esc(a.id)}">${ic("image")} ${a.photo?$t("Byt bild"):$t("Lägg till bild")}<input id="attPh-${esc(a.id)}" data-attphoto="${esc(a.id)}" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic" hidden></label>${a.photo?`<button class="link" data-attphdel="${esc(a.id)}">${$t("Ta bort bild")}</button>`:""}`:""}<button class="link" data-editatt="${esc(a.id)}">${editAtt===a.id?$t("Stäng"):a.score?$t("Redigera"):$t("Lägg till resultat")}</button><button class="link strong" data-repfrom="${esc(a.id)}">${$t("Skriv reportage")}</button><button class="link strong" data-sharematch="${esc(a.id)}">${shareMatchId===a.id?$t("Stäng"):$t("Dela matchkort")}</button>${delBtn("att",a.id)}</div>${shareMatchId===a.id?`<div class="studio">${fmtChips()}${studioHtml("match",$t("Matchkort"))}</div>`:""}</div></div>`).join("")+moreBtns("att",att.length)
+      ${editAtt===a.id?editAttForm(a):""}<div class="pactions">${assetsNs?`<label class="link strong" for="attPh-${esc(a.id)}">${ic("image")} ${a.photo?$t("Byt bild"):$t("Lägg till bild")}<input id="attPh-${esc(a.id)}" data-attphoto="${esc(a.id)}" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic" hidden></label>${a.photo?`<button class="link" data-attphdel="${esc(a.id)}">${$t("Ta bort bild")}</button>`:""}`:""}<button class="link" data-editatt="${esc(a.id)}">${editAtt===a.id?$t("Stäng"):a.score?$t("Redigera"):$t("Lägg till resultat")}</button><button class="link strong" data-repfrom="${esc(a.id)}">${$t("Skriv matchberättelse")}</button><button class="link strong" data-sharematch="${esc(a.id)}">${shareMatchId===a.id?$t("Stäng"):$t("Dela matchkort")}</button>${delBtn("att",a.id)}</div>${shareMatchId===a.id?`<div class="studio">${fmtChips()}${studioHtml("match",$t("Matchkort"))}</div>`:""}</div></div>`).join("")+moreBtns("att",att.length)
      :`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><p class="hint">${$t("Så här kan det se ut efter en säsong:")}</p>${exampleHtml()}`;
     if(MY.attended.length)h+=seasonCardHtml();
     h+=`<details class="bkup" id="bkupBox"${bkupOpen?" open":""}><summary>${ic("download")} ${$t("Ladda ner och säkerhetskopiera")}</summary>
@@ -3801,8 +3801,8 @@ function actBadge(){const a=notifOn("act")?repActivity():null;const nr=a?a.newC.
 function activityHtml(){if(!notifOn("act"))return"";const a=repActivity();if(!a||!(a.newC.length+a.newL+a.newF.length))return"";
   const parts=[a.newF.length?`${a.newF.length} ${a.newF.length===1?$t("nytt svar i forumet"):$t("nya svar i forumet")}`:"",a.newC.length?`${a.newC.length} ${a.newC.length===1?$t("ny kommentar"):$t("nya kommentarer")}`:"",a.newL?`${a.newL} ${a.newL===1?$t("ny gillning"):$t("nya gillningar")}`:""].filter(Boolean).join(", ").replace(/, ([^,]*)$/,$t(" och ")+"$1");
   const fr=a.newF.slice(-2).map(p=>{const t=a.threads.find(x=>x.key===p.parent);return`<button class="actrow linkrow" data-gothread="${esc(p.parent)}"><b>${esc(who(p.uid))}</b> ${$t("svarade på")} <i>${esc((t&&t.title)||$t("din tråd"))}</i>: ${esc(String(p.body).slice(0,90))}${String(p.body).length>90?"…":""}</button>`;}).join("");
-  const last=a.newC.slice(-2).map(c=>`<div class="actrow"><b>${esc(who(c.uid))}</b> ${$t("om")} <i>${esc((a.mine.find(r=>r.key===c.rep)||{}).title||$t("ditt reportage"))}</i>: ${esc(String(c.body).slice(0,90))}${String(c.body).length>90?"…":""}</div>`).join("");
-  return`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Nytt för dig i communityn")}</div><p style="margin:0"><b>${parts}</b> ${$t("sedan du senast tittade.")}</p>${fr}${last}<div class="actions">${a.newF.length?`<button class="btn small primary" data-gothread="${esc(a.newF[a.newF.length-1].parent)}">${$t("Läs svaren")}</button>`:""}${a.newC.length+a.newL?`<button class="btn small${a.newF.length?"":" primary"}" data-gomyrep="1">${$t("Visa mina reportage")}</button>`:""}<button class="btn small" data-actseen="1">${$t("Markera som läst")}</button></div></article>`;}
+  const last=a.newC.slice(-2).map(c=>`<div class="actrow"><b>${esc(who(c.uid))}</b> ${$t("om")} <i>${esc((a.mine.find(r=>r.key===c.rep)||{}).title||$t("din matchberättelse"))}</i>: ${esc(String(c.body).slice(0,90))}${String(c.body).length>90?"…":""}</div>`).join("");
+  return`<article class="tip actcard"><div class="lbl">${ic("chat")} ${$t("Nytt för dig i communityn")}</div><p style="margin:0"><b>${parts}</b> ${$t("sedan du senast tittade.")}</p>${fr}${last}<div class="actions">${a.newF.length?`<button class="btn small primary" data-gothread="${esc(a.newF[a.newF.length-1].parent)}">${$t("Läs svaren")}</button>`:""}${a.newC.length+a.newL?`<button class="btn small${a.newF.length?"":" primary"}" data-gomyrep="1">${$t("Visa mina matchberättelser")}</button>`:""}<button class="btn small" data-actseen="1">${$t("Markera som läst")}</button></div></article>`;}
 function commentsFor(key){const out=[];Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&c.id&&c.rep===key&&c.body&&!blk(uid)&&!HIDDEN.includes("com:"+uid+":"+c.id))out.push({...c,uid});});});return out.sort((a,b)=>String(a.at).localeCompare(String(b.at)));}
 function commentsHtml(r){const cs=commentsFor(r.key);const ck="com:"+r.key,cn=lim(ck,3);
   return`<div class="rcomments"><h3 class="sec">${$t("Kommentarer")}${cs.length?` (${cs.length})`:""}</h3>
@@ -3830,13 +3830,13 @@ function commCount(id){if(!id)return null;if(_cc.rep!==REP||_cc.fo!==FORUM||!_cc
     if(repState==="ready")allReps().forEach(r=>{if(!r.draft&&r.club)g(r.club).r++;});if(forumState==="ready")allPosts().forEach(p=>{if(!p.parent&&p.title&&p.club)g(p.club).f++;});_cc={rep:REP,fo:FORUM,m};}
   return _cc.m[id]||null;}
 function commLinks(id){const n=commCount(id);if(!n)return"";
-  return[n.r?`<button class="link strong" data-repclub="${esc(id)}">${$tn(n.r,"{n} reportage","{n} reportage|pl")}</button>`:"",n.f?`<button class="link strong" data-forumclub="${esc(id)}">${$tn(n.f,"{n} forumtråd","{n} forumtrådar")}</button>`:""].filter(Boolean).join(" · ");}
+  return[n.r?`<button class="link strong" data-repclub="${esc(id)}">${$tn(n.r,"{n} matchberättelse","{n} matchberättelser|pl")}</button>`:"",n.f?`<button class="link strong" data-forumclub="${esc(id)}">${$tn(n.f,"{n} forumtråd","{n} forumtrådar")}</button>`:""].filter(Boolean).join(" · ");}
 function commRow(c){const l=commLinks(c.id);
-  return`<dt>${$t("Community")}</dt><dd>${l?`${ic("chat")} ${l}`:`<span class="meta">${$t("Ingen har skrivit om {0} än.",[esc(c.n)])}</span>`}${canWriteRep()?` <button class="link" data-repnewclub="${esc(c.id)}">${l?$t("Skriv reportage"):$t("Skriv det första reportaget")}</button>`:""}</dd>`;}
+  return`<dt>${$t("Community")}</dt><dd>${l?`${ic("chat")} ${l}`:`<span class="meta">${$t("Ingen har skrivit om {0} än.",[esc(c.n)])}</span>`}${canWriteRep()?` <button class="link" data-repnewclub="${esc(c.id)}">${l?$t("Skriv matchberättelse"):$t("Skriv den första matchberättelsen")}</button>`:""}</dd>`;}
 function commLine(m){const id=m.home&&C[m.home]?m.home:null;const l=id&&commLinks(id);return l?`<div class="commline">${ic("chat")} ${l}</div>`:"";}
 function repsFor(id){return repState==="ready"?allReps().filter(r=>r.club===id).length:0;}
 const canWriteRep=()=>!!(dbNs&&myId&&canRep!==false);
-function repBtn(c){const n=repsFor(c.id);return n?`<button class="btn small" data-repclub="${esc(c.id)}">${$t("Reportage ({0})",[n])}</button>`:"";}
+function repBtn(c){const n=repsFor(c.id);return n?`<button class="btn small" data-repclub="${esc(c.id)}">${$t("Matchberättelser ({0})",[n])}</button>`:"";}
 async function resolveRepNames(ids){if(!userNs||!ids.length)return;try{const ps=await userNs.profiles(ids);let changed=false;
   ids.forEach(id=>{const n=(ps[id]&&ps[id].name)||"";if(NAMES[id]!==n){NAMES[id]=n;changed=true;}if(ps[id])PROF[id]={fav:ps[id].fav||null,cc:ps[id].cc||null,ini:ps[id].ini||null};});if(changed&&mode==="reportage")renderReports(true);}catch(e){}}
 function phImg(id,cls){return`<img class="rph ${cls||""}" src="${blobUrl(id)}" alt="${$t("Bild från resan")}" loading="lazy" decoding="async">`;}
@@ -3844,7 +3844,7 @@ function repDateTxt(d){return d&&/^\d{4}-\d{2}-\d{2}$/.test(d)?new Date(d+"T12:0
 
 function newDraft(o){return Object.assign({editing:null,draft:false,visit:false,match:"",result:"",crowd:"",title:"",club:"",city:"",date:"",body:"",tip:"",photos:[],added:[],orig:[]},o||{});}
 function composeHtml(){const d=repDraft;return`<form class="compose" id="repForm"${d.editing?` data-edit="${esc(d.editing)}"`:""}>
-  <h2>${d.editing?$t("Redigera reportage"):$t("Nytt reportage")}</h2>${byAsHtml()}
+  <h2>${d.editing?$t("Redigera matchberättelse"):$t("Ny matchberättelse")}</h2>${byAsHtml()}
   <label class="fld" for="rTitle">${$t("Rubrik")}<input id="rTitle" data-rd="title" maxlength="120" required value="${esc(d.title)}" placeholder="${$t("t.ex. Regnig derbyhelg i Glasgow")}"></label>
   <div class="row2">
     <label class="fld" for="rClub">${$t("Klubb eller arena")}<input id="rClub" data-rd="club" list="allClubs" value="${esc(d.club)}" placeholder="${$t("t.ex. Celtic")}"></label>
@@ -3864,7 +3864,7 @@ function composeHtml(){const d=repDraft;return`<form class="compose" id="repForm
   <div class="fld"><span>${$t("Bilder (högst {0})",[REP_MAXPH])}</span><div id="repPh"></div></div>
   <p class="err" id="repErr">${esc(repMsg)}</p>
   <div class="actions"><button class="btn primary" type="submit"${repBusy||repUp?" disabled":""}>${repBusy?"Publicerar…":repUp?$t("Laddar upp bilder…"):d.editing&&!d.draft?$t("Spara ändringar"):$t("Publicera")}</button>${d.draft?`<button class="btn" type="submit" data-keepdraft="1"${repBusy||repUp?" disabled":""}>${$t("Spara som utkast")}</button>`:""}<button class="btn" type="button" id="repCancel">${$t("Avbryt")}</button></div>
-  ${d.draft?`<p class="hint">${$t("Utkastet syns bara för dig. När du trycker Publicera blir reportaget synligt för alla.")}</p>`:""}
+  ${d.draft?`<p class="hint">${$t("Utkastet syns bara för dig. När du trycker Publicera blir matchberättelsen synlig för alla.")}</p>`:""}
 </form>`;}
 function renderRepPhotos(){const el=document.getElementById("repPh");if(!el||!repDraft)return;const d=repDraft;
   const tiles=d.photos.map((id,i)=>`<div class="phtile">${phImg(id)}<button type="button" class="phx" data-phdel="${i}" aria-label="${$t("Ta bort bild {0}",[i+1])}">${NO}</button></div>`).join("")
@@ -3885,19 +3885,19 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
   const ae=document.activeElement,cf=ae&&ae.closest&&ae.closest("[data-rcform]"),keep=cf?{k:cf.dataset.rcform,s:ae.selectionStart}:null;
   const keepAll=[...document.querySelectorAll("[data-rcform] textarea")].map(t=>[t.closest("[data-rcform]").dataset.rcform,t.value]).filter(x=>x[1]);
   const el=document.getElementById("repList"),top=document.getElementById("repTop");
-  document.getElementById("repChips").innerHTML=[["nya",$t("Senaste")],["pop",$t("Populärast")],["mina",$t("Mina reportage")]].map(([k,l])=>`<button class="chip" data-repsort="${k}" aria-pressed="${repSort===k}">${l}</button>`).join("")
+  document.getElementById("repChips").innerHTML=[["nya",$t("Senaste")],["pop",$t("Populärast")],["mina",$t("Mina matchberättelser")]].map(([k,l])=>`<button class="chip" data-repsort="${k}" aria-pressed="${repSort===k}">${l}</button>`).join("")
     +(repClub&&C[repClub]?`<button class="chip" data-repclubclear="1" aria-pressed="true" aria-label="${$t("Sluta filtrera på {0}",[esc(C[repClub].n)])}">${esc(C[repClub].n)} ${NO}</button>`:"");
-  if(repState==="none"){top.innerHTML="";el.innerHTML=`<div class="empty"><b>${$t("Reportagen kan inte visas här.")}</b><div>${$t("Öppna sidan inloggad på claude.ai för att läsa och skriva.")}</div></div>`;return;}
-  if(repState==="loading"){top.innerHTML="";el.innerHTML=`<div class="empty">${$t("Hämtar reportage…")}</div>`;return;}
+  if(repState==="none"){top.innerHTML="";el.innerHTML=`<div class="empty"><b>${$t("Matchberättelserna kan inte visas här.")}</b><div>${$t("Öppna sidan inloggad på claude.ai för att läsa och skriva.")}</div></div>`;return;}
+  if(repState==="loading"){top.innerHTML="";el.innerHTML=`<div class="empty">${$t("Hämtar matchberättelser…")}</div>`;return;}
   {const sw=document.getElementById("repSearch");if(sw)sw.hidden=!!repDraft;}
   const sig=[canWriteRep(),!!repDraft,repDraft&&repDraft.editing].join("|");
   if(sig!==repTopSig){repTopSig=sig;
-    if(!canWriteRep())top.innerHTML=`<div class="place"><span>${$t("Du kan läsa reportagen. För att skriva behöver ägaren bjuda in dig till sidan.")}</span></div>`;
-    else if(!repDraft)top.innerHTML=`<button class="btn primary" id="repNew">${$t("+ Skriv reportage")}</button>`;
+    if(!canWriteRep())top.innerHTML=`<div class="place"><span>${$t("Du kan läsa matchberättelserna. För att skriva behöver ägaren bjuda in dig till sidan.")}</span></div>`;
+    else if(!repDraft)top.innerHTML=`<button class="btn primary" id="repNew">${$t("+ Skriv matchberättelse")}</button>`;
     else if(repDraft.editing)top.innerHTML="";
     else{top.innerHTML=composeHtml();renderRepPhotos();}}
   else if(repDraft){const er=document.getElementById("repErr");if(er)er.textContent=repMsg;renderRepPhotos();}
-  else if(canWriteRep())top.innerHTML=`<button class="btn primary" id="repNew">${$t("+ Skriv reportage")}</button>${repMsg?`<p class="err">${esc(repMsg)}</p>`:""}`;
+  else if(canWriteRep())top.innerHTML=`<button class="btn primary" id="repNew">${$t("+ Skriv matchberättelse")}</button>${repMsg?`<p class="err">${esc(repMsg)}</p>`:""}`;
   // redigering sker på plats i reportaget; listan ritas inte om medan formuläret är öppet
   if(repDraft&&repDraft.editing){const f=document.getElementById("repForm");if(f&&f.dataset.edit===repDraft.editing&&el.contains(f))return;}
   let reps=allReps();const ids=[...new Set([...reps.map(r=>r.uid),...Object.keys(COMM)])];if(!namesOnly)resolveRepNames(ids);
@@ -3908,8 +3908,8 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
   if(repSort==="pop"){if(!repPopOrder){const o=[...reps].sort((a,b)=>likeCount(b.key)-likeCount(a.key)||b.at.localeCompare(a.at));repPopOrder=new Map(o.map((r,i)=>[r.key,i]));}
     reps.sort((a,b)=>(repPopOrder.get(a.key)??-1)-(repPopOrder.get(b.key)??-1)||b.at.localeCompare(a.at));}
   else reps.sort((a,b)=>String(b.at).localeCompare(String(a.at)));
-  if(!reps.length&&repQ){el.innerHTML=`<div class="empty"><b>${$t("Inga reportage matchar ”{0}”.",[esc(repQ)])}</b><div>${$t("Prova ett annat ord, till exempel en stad, en klubb eller en arena.")}</div></div>`;return;}
-  if(!reps.length){el.innerHTML=`<div class="empty"><b>${repSort==="mina"?$t("Du har inte skrivit något reportage än."):repClub?$t("Inga reportage om den här klubben än."):$t("Inga reportage än.")}</b><div>${$t("Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna. Lägg gärna till bilder.")}</div></div>`;return;}
+  if(!reps.length&&repQ){el.innerHTML=`<div class="empty"><b>${$t("Inga matchberättelser matchar ”{0}”.",[esc(repQ)])}</b><div>${$t("Prova ett annat ord, till exempel en stad, en klubb eller en arena.")}</div></div>`;return;}
+  if(!reps.length){el.innerHTML=`<div class="empty"><b>${repSort==="mina"?$t("Du har inte skrivit någon matchberättelse än."):repClub?$t("Inga matchberättelser om den här klubben än."):$t("Inga matchberättelser än.")}</b><div>${$t("Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna. Lägg gärna till bilder.")}</div></div>`;return;}
   el.innerHTML=reps.filter((r,i)=>i<lim("rp",5)||r.key===repOpen).map(r=>{if(repDraft&&repDraft.editing&&r.uid===myId&&r.id===repDraft.editing)return`<article class="rep open repediting" data-repedit-art="${esc(r.key)}">${composeHtml()}</article>`;const c=r.club&&C[r.club];const open=repOpen===r.key;const n=likeCount(r.key);const mine=r.uid===myId;
     const meta=[r.visit&&c?(c.s||c.n):r.match&&r.result?`${String(r.match).slice(0,100)} ${String(r.result).slice(0,12)}`:c?c.n:"",r.city,repDateTxt(r.date)].filter(Boolean).join(" · ");
     return`<article class="rep${open?" open":""}">${cornerFlag(r.uid)}
@@ -3939,7 +3939,7 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
 async function writeReps(fn){if(!dbNs||!myId||repBusy)return false;repBusy=true;repMsg="";
   try{const cur=REP[myId]&&Array.isArray(REP[myId].items)?REP[myId].items:[];const next=fn(cur.slice());
     await dbNs.doc("reports/"+myId).set({items:next});return true;}
-  catch(e){repMsg=e&&(e.code==="invalid_argument"||e.code==="not_granted"||e.code==="permission_denied")?$t("Du har inte behörighet att skriva reportage."):e&&e.code==="quota_exceeded"?$t("Reportaget är för stort att spara. Korta texten och försök igen."):$t("Kunde inte spara. Försök igen.");
+  catch(e){repMsg=e&&(e.code==="invalid_argument"||e.code==="not_granted"||e.code==="permission_denied")?$t("Du har inte behörighet att skriva matchberättelser."):e&&e.code==="quota_exceeded"?$t("Matchberättelsen är för stor att spara. Korta texten och försök igen."):$t("Kunde inte spara. Försök igen.");
     if(e&&(e.code==="invalid_argument"||e.code==="permission_denied"))canRep=false;return false;}
   finally{repBusy=false;}}
 async function dropAssets(ids){if(!assetsNs)return;for(const id of ids){try{await assetsNs.delete(id);}catch(e){}}}
@@ -3999,12 +3999,12 @@ async function repClick(t){
   if(t.dataset.repdel){const id=t.dataset.repdel;if(!confirmRepDel[id]){confirmRepDel[id]=1;t.textContent=$t("Tryck igen för att ta bort");setTimeout(()=>{delete confirmRepDel[id];},4000);return;}
     delete confirmRepDel[id];const r=(REP[myId]&&REP[myId].items||[]).find(x=>x.id===id);const ok=await writeReps(rs=>rs.filter(x=>x.id!==id));
     repOpen=null;renderReports();
-    if(ok&&r)undoToast($t("Reportaget togs bort"),async()=>{await writeReps(rs=>putBack(rs,[r]));renderReports();},()=>dropAssets((r.photos||[]).filter(p=>PHID.test(p))));return;}
+    if(ok&&r)undoToast($t("Matchberättelsen togs bort"),async()=>{await writeReps(rs=>putBack(rs,[r]));renderReports();},()=>dropAssets((r.photos||[]).filter(p=>PHID.test(p))));return;}
   if(t.dataset.rcdel){const id=t.dataset.rcdel;if(!confirmRepDel["c"+id]){confirmRepDel["c"+id]=1;t.textContent=$t("Tryck igen för att ta bort");setTimeout(()=>{delete confirmRepDel["c"+id];},4000);return;}
     delete confirmRepDel["c"+id];let gone=[];if(await writeComments(cs=>{gone=cs.filter(x=>x.id===id);return cs.filter(x=>x.id!==id);})){renderReports(true);
       undoToast($t("Kommentaren togs bort"),async()=>{await writeComments(cs=>putBack(cs,gone));renderReports(true);});}return;}
   if(t.dataset.rchide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"com:"+t.dataset.rchide])]});}catch(e){toast($t("Kunde inte dölja kommentaren."));}renderReports(true);return;}
-  if(t.dataset.rephide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"rep:"+t.dataset.rephide])]});}catch(e){toast($t("Kunde inte dölja reportaget."));}renderReports();return;}}
+  if(t.dataset.rephide&&isMod){try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,"rep:"+t.dataset.rephide])]});}catch(e){toast($t("Kunde inte dölja matchberättelsen."));}renderReports();return;}}
 
 function openPhoto(id){if(!PHID.test(id))return;let ov=document.getElementById("phView");
   if(!ov){document.body.insertAdjacentHTML("beforeend",`<div id="phView" class="phview" role="dialog" aria-modal="true" aria-label="${$t("Bild")}"><button class="btn small" id="phClose">${$t("Stäng")}</button><img alt="${$t("Bild från resan")}"></div>`);ov=document.getElementById("phView");
@@ -4026,7 +4026,7 @@ document.addEventListener("submit",async e=>{if(e.target.id!=="repForm")return;e
   renderRepPhotos();
   if(d.editing){item.draft=keep&&d.draft;}
   const wasDraft=d.draft;const ok=await writeReps(rs=>d.editing?rs.map(x=>x.id===d.editing?{...x,...item,...(wasDraft&&!item.draft?{lang:LANG,at:new Date().toISOString()}:{}),edited:new Date().toISOString()}:x):[...rs,{id:newId(),...item,lang:LANG,at:new Date().toISOString()}].slice(-60));
-  if(ok){const removed=d.orig.filter(p=>!d.photos.includes(p));repDraft=null;repSort="nya";repOpen=d.editing?myId+":"+d.editing:null;renderReports();dropAssets(removed);toast(item.draft?$t("Utkastet är sparat."):wasDraft?$t("Reportaget är publicerat."):d.editing?$t("Reportaget är uppdaterat."):$t("Reportaget är publicerat."));}
+  if(ok){const removed=d.orig.filter(p=>!d.photos.includes(p));repDraft=null;repSort="nya";repOpen=d.editing?myId+":"+d.editing:null;renderReports();dropAssets(removed);toast(item.draft?$t("Utkastet är sparat."):wasDraft?$t("Matchberättelsen är publicerad."):d.editing?$t("Matchberättelsen är uppdaterad."):$t("Matchberättelsen är publicerad."));}
   else renderReports(true);});
 
 async function startReports(db){
@@ -4100,7 +4100,7 @@ function writersRank(){const m=new Date().toISOString().slice(0,7);const W={};co
   if(forumState==="ready")allPosts().forEach(p=>{if(String(p.at).startsWith(m))add(p.uid,"post",p.parent?1:2);});
   Object.entries(COMM).forEach(([uid,d])=>{(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&String(c.at).startsWith(m))add(uid,"post",1);});});
   return Object.values(W).sort((a,b)=>b.pts-a.pts||b.rep-a.rep).slice(0,5);}
-const wDesc=w=>[w.rep?$tn(w.rep,"{n} reportage","{n} reportage|pl"):"",w.post?$tn(w.post,"{n} inlägg","{n} inlägg|pl"):""].filter(Boolean).join(" · ");
+const wDesc=w=>[w.rep?$tn(w.rep,"{n} matchberättelse","{n} matchberättelser|pl"):"",w.post?$tn(w.post,"{n} inlägg","{n} inlägg|pl"):""].filter(Boolean).join(" · ");
 // månadens skribenter: bara placering, liten flagga och namn (klubbmärke och beskrivning gjorde raden rörig)
 function wFlag(uid){const cc=uid===myId?myCc():(PROF[uid]||{}).cc;const fl=cc&&FLAGS[cc];return fl?`<img class="wflag" src="${fl}" alt="" title="${esc(C[cc]?$t(C[cc].n):"")}">`:"";}
 function writersStrip(){const ws=writersRank();if(!ws.length)return"";const mon=new Date().toLocaleDateString(LOC,{month:"long"});
@@ -4108,23 +4108,23 @@ function writersStrip(){const ws=writersRank();if(!ws.length)return"";const mon=
 function writersHtml(){const ws=writersRank();const mon=new Date().toLocaleDateString(LOC,{month:"long"});
   return`<article class="tip"><div class="lbl">${$t("Månadens skribenter")}</div>${ws.length?`<h2 class="name">${ic("star")} ${userLink(ws[0].uid)}</h2><p class="meta" style="margin:0">${esc(wDesc(ws[0]))}</p>
     ${ws.length>1?`<ol class="board" start="2">${ws.slice(1).map(w=>`<li class="${w.uid===myId?"me":""}"><span>${userLink(w.uid)}</span><b>${w.pts}</b><small>${esc(wDesc(w))}</small></li>`).join("")}</ol>`:""}`
-    :`<h2 class="name">${$t("Ledig plats i {0}",[esc(mon)])}</h2><p class="meta">${$t("Skriv ett reportage eller svara på en fråga i forumet så hamnar du här.")}</p>`}
-    <p class="hint">${$t("Reportage ger 3 poäng, en ny forumtråd 2 och ett svar eller en kommentar 1. Räknas för {0}.",[esc(mon)])}</p>
-    <div class="actions"><button class="btn small" data-gomode="reportage">${$t("Skriv reportage")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button></div></article>`;}
+    :`<h2 class="name">${$t("Ledig plats i {0}",[esc(mon)])}</h2><p class="meta">${$t("Skriv en matchberättelse eller svara på en fråga i forumet så hamnar du här.")}</p>`}
+    <p class="hint">${$t("En matchberättelse ger 3 poäng, en ny forumtråd 2 och ett svar eller en kommentar 1. Räknas för {0}.",[esc(mon)])}</p>
+    <div class="actions"><button class="btn small" data-gomode="reportage">${$t("Skriv matchberättelse")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button></div></article>`;}
 function renderWriters(){document.querySelectorAll(".commwriters").forEach(el=>{const h=writersStrip();if(el.innerHTML!==h)el.innerHTML=h;});}
 function latestHtml(){const parts=[];
   if(repState==="ready"){const reps=allReps().filter(r=>!r.draft);const last=reps.slice().sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0];
     const ym=new Date().toISOString().slice(0,7);const pop=reps.filter(r=>String(r.at).startsWith(ym)).map(r=>({r,n:likeCount(r.key)})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
     const card=(r,lbl,extra)=>`<button class="hcard" data-homerep="${esc(r.key)}">${r.photos.length?phImg(r.photos[0],"hthumb"):""}<span class="htxt"><span class="lbl">${lbl}</span><b>${esc(r.title)}</b><span class="meta">${esc(who(r.uid))} · ${esc(ago(r.at))}${extra||""}</span></span></button>`;
-    if(last)parts.push(card(last,$t("Senaste reportaget")));if(pop&&(!last||pop.r.key!==last.key))parts.push(card(pop.r,$t("Månadens populäraste"),` · ${ic("heart")} ${pop.n}`));
-    if(!reps.length)parts.push(`<button class="hcard" data-gorep="1"><span class="htxt"><span class="lbl">${$t("Reportage")}</span><b>${$t("Inga reportage än")}</b><span class="meta">${$t("Bli först att berätta om en resa")}</span></span></button>`);}
+    if(last)parts.push(card(last,$t("Senaste matchberättelsen")));if(pop&&(!last||pop.r.key!==last.key))parts.push(card(pop.r,$t("Månadens populäraste"),` · ${ic("heart")} ${pop.n}`));
+    if(!reps.length)parts.push(`<button class="hcard" data-gorep="1"><span class="htxt"><span class="lbl">${$t("Matchberättelser")}</span><b>${$t("Inga matchberättelser än")}</b><span class="meta">${$t("Bli först att berätta om en resa")}</span></span></button>`);}
   if(forumState==="ready"){const ps=allPosts();const th=ps.filter(p=>!p.parent&&p.title);const lastAt=t=>ps.filter(p=>p.parent===t.key).reduce((m,p)=>p.at>m?p.at:m,t.at);
     const last=th.slice().sort((a,b)=>lastAt(b).localeCompare(lastAt(a)))[0];
     const ym=new Date().toISOString().slice(0,7);const hot=th.map(t=>({t,n:ps.filter(p=>p.parent===t.key&&String(p.at).startsWith(ym)).length})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
     const card=(t,lbl,extra)=>`<button class="hcard" data-homethread="${esc(t.key)}"><span class="htxt"><span class="lbl">${lbl}</span><b>${esc(t.title)}</b><span class="meta">${esc(KIND_L[t.kind]||$t("Inlägg"))} · ${esc(who(t.uid))} · ${esc(ago(lastAt(t)))}${extra||""}</span></span></button>`;
     if(last)parts.push(card(last,$t("Senast i forumet")));if(hot&&(!last||hot.t.key!==last.key))parts.push(card(hot.t,$t("Hetast i forumet denna månad"),$t(" · {0} svar",[hot.n])));}
-  return`<article class="tip community"><h2 class="name">${$t("Community")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras reportage.")}</p>${parts.length?`<div class="hgrid">${parts.join("")}</div>`:""}
-    <div class="actions"><button class="btn small primary" data-gomode="forum">${ic("chat")} ${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs reportage")}</button></div>
+  return`<article class="tip community"><h2 class="name">${$t("Community")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras matchberättelser.")}</p>${parts.length?`<div class="hgrid">${parts.join("")}</div>`:""}
+    <div class="actions"><button class="btn small primary" data-gomode="forum">${ic("chat")} ${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs matchberättelser")}</button></div>
     ${writersStrip()}</article>`;}
 function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().toISOString().slice(0,7);const cnt={};
   Object.values(RATINGS).forEach(d=>{Object.entries((d&&d.r)||{}).forEach(([k,r])=>{if(r&&String(r.at||"").startsWith(ym))cnt[k]=(cnt[k]||0)+1;});});
@@ -4149,7 +4149,7 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
   return`<article class="tip howto">${fresh?`<div class="howeye">${$t("Ny här?")}</div>`:""}<h2 class="name">${$t("Så funkar Groundly")}</h2><p class="howsub">${$t("Tre saker du gör i appen. Tryck för att börja.")}</p>
-    <div class="itiles">${tile('data-gomode="matcher"',"calendar",$t("Planera & boka"),$t("Hitta matcher och boka biljett, hotell och resa via våra länkar"))}${tile('data-gomine="1"',"check",$t("Logga"),$t("Spara matcherna du sett, betygsätt arenor och följ din statistik"))}${tile('data-gomode="forum"',"chat",$t("Community"),$t("Fråga, tipsa och läs reportage från andra som reser på fotboll"))}</div></article>`;}
+    <div class="itiles">${tile('data-gomode="matcher"',"calendar",$t("Planera & boka"),$t("Hitta matcher och boka biljett, hotell och resa via våra länkar"))}${tile('data-gomine="1"',"check",$t("Logga"),$t("Spara matcherna du sett, betygsätt arenor och följ din statistik"))}${tile('data-gomode="forum"',"chat",$t("Community"),$t("Fråga, tipsa och läs matchberättelser från andra som reser på fotboll"))}</div></article>`;}
 // ---------- startsidan: vilka rutor som visas och i vilken ordning ----------
 // standard = kort startsida; resten slås på under Anpassa startsidan. Valen sparas på kontot (homeCfg) och i telefonen.
 const HOME_BLOCKS=[["intro","Så funkar Groundly",true],["hero","Veckans match",true],["latest","Community",true],["mine","Din säsong",true],["weekend","Tips för helgen",true],["news","Nytt i appen",false],
@@ -4305,7 +4305,7 @@ function pollHtml(){const wk=isoWeek(new Date());const[q,opts]=POLLS[(wk.y*53+wk
 // nytt i appen
 const NEWS=[// [datum, rubrik, text, flik]. Nyheter äldre än ett halvår visas inte längre (se newsList).
  ["2026-10-26",$t("Ny logga och inställningar"),$t("Groundly har fått en ny logga. Under kugghjulet uppe till höger väljer du mellan tolv loggor, ljust eller mörkt utseende, notiser och hemort."),"hem"],
- ["2026-10-23",$t("Påminnelser och notiser"),$t("Appen frågar om du var på matcher du ville gå på, och du ser när någon kommenterar eller gillar dina reportage."),"hem"],
+ ["2026-10-23",$t("Påminnelser och notiser"),$t("Appen frågar om du var på matcher du ville gå på, och du ser när någon kommenterar eller gillar dina matchberättelser."),"hem"],
  ["2026-10-23",$t("Historiska tabeller"),$t("Välj säsong under Tabeller och se slutställningen ända tillbaka till 2016, till exempel Allsvenskan, Superettan och Ettan."),"tabell"],
  ["2026-10-23",$t("Sök lag i arkivet och din statistik"),$t("Hitta alla gamla matcher med ett lag direkt, och se din vinstprocent, målrikaste match och längsta resa under Min fotboll."),"mine"],
  ["2026-10-23",$t("Kultspelare"),$t("Märk en klubblegend som kultspelare – publikfavoriten med speciell status."),"klubbar"],
@@ -4313,7 +4313,7 @@ const NEWS=[// [datum, rubrik, text, flik]. Nyheter äldre än ett halvår visas
  ["2026-10-22",$t("Längre arkiv"),$t("Allsvenskan, Superettan, Ettan, Norge och Danmark från 2016, plus kvalet till Ettan."),"mine"],
  ["2026-10-22",$t("Enklare filter"),$t("Land, serie och sortering som rullgardiner, och Fler filter under Matcher."),"matcher"],
  ["2026-10-21",$t("Klubblegender"),$t("Lägg till klubbens och landslagets största spelare och tränare, och håll med om andras förslag."),"klubbar"],
- ["2026-10-21",$t("Kommentarer på reportage"),$t("Kommentera varandras reportage och tipsa om resan."),"reportage"],
+ ["2026-10-21",$t("Kommentarer på matchberättelser"),$t("Kommentera varandras matchberättelser och tipsa om resan."),"reportage"],
  ["2026-10-20",$t("Damfotboll"),$t("Damallsvenskan och de största damserierna i Norden och Europa, damlandslag och filtret Herr / Dam / Landslag."),"matcher"],
  ["2026-10-20",$t("Ettan Norra och Södra"),$t("29 nya svenska klubbar med matcher och tabeller."),"klubbar"],
  ["2026-10-15",$t("Serietabeller och skytteligor"),$t("Officiella tabeller, skytte- och assistligor och målskyttar på spelade matcher – uppdateras varje natt."),"tabell"],
@@ -4321,7 +4321,7 @@ const NEWS=[// [datum, rubrik, text, flik]. Nyheter äldre än ett halvår visas
  ["2026-10-10",$t("Nytt quiz"),$t("Dagens quiz med svit, svårighetsgrad, flaggor och klubbfärger, veckans topplista och koder för att utmana en kompis."),"quiz"],
  ["2026-10-08",$t("Karta, bilder och kalender"),$t("Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern."),"mine"],
  ["2026-10-05",$t("Alla världens landslag"),$t("FIFA:s 211 landslag med flaggor, sorterade per världsdel."),"landslag"],
- ["2026-10-01",$t("Reportage"),$t("Skriv om dina resor med bilder, match, resultat och publik."),"reportage"]];
+ ["2026-10-01",$t("Matchberättelser"),$t("Skriv om dina resor med bilder, match, resultat och publik."),"reportage"]];
 const MON=L_MO3;
 const newsDate=d=>{const[y,m,dd]=d.split("-").map(Number);return`${dd} ${MON[m-1]}${y!==new Date().getFullYear()?" "+y:""}`;};
 // bara nyheter från det senaste halvåret, högst 10 under "Fler nyheter"
@@ -4547,7 +4547,7 @@ function exampleHtml(){const tile=(n,l)=>`<div><b>${n}</b><span>${l}</span></div
   return`<div class="obex" aria-label="${$t("Exempel")}"><span class="pill sm">${$t("Exempel")}</span>
     <div class="obtiles">${tile(27,$t("matcher"))}${tile(14,$t("arenor"))}${tile(4,$t("länder"))}${tile(6,$t("på önskelistan"))}</div>
     <div class="obrow"><span class="meta">${$t("Favoritlag")}</span><b>${$t("Jönköpings Södra IF")}</b><span class="meta">${$t("12 matcher · V 7 · O 3 · F 2 · längsta bortaresan Luleå, 103 mil")}</span></div>
-    <div class="obrow"><span class="meta">${$t("Senast")}</span><b>${$t("Jönköpings Södra – Trollhättan 2–1")}</b><span class="meta">${$t("lör 24 okt · Stadsparksvallen · med bild och reportage")}</span></div>
+    <div class="obrow"><span class="meta">${$t("Senast")}</span><b>${$t("Jönköpings Södra – Trollhättan 2–1")}</b><span class="meta">${$t("lör 24 okt · Stadsparksvallen · med bild och matchberättelse")}</span></div>
     <div class="obrow"><span class="meta">${$t("Min statistik")}</span><b>${$t("52 % hemmasegrar · 3,1 mål per match")}</b><span class="meta">${$t("rest ca 4 800 km · vanligaste matchdag lördag")}</span></div>
     <div class="obrow"><span class="meta">${$t("Utmaningar")}</span><b>${$t("11 av 16 arenor i Ettan Södra")}</b><span class="meta">${$t("karta över alla arenor du besökt, troféer och arenapass")}</span></div></div>`;}
 const isObBtn=t=>t.dataset.obskip||t.dataset.oblog||t.dataset.obex;
@@ -4671,10 +4671,10 @@ function privacyHtml(){return`<div id="privacyOv" class="phview on askov" role="
   <h3>${$t("Ditt konto")}</h3><p>${$t("Du loggar in med Google, Apple eller e-post och lösenord. Vi sparar din e-postadress och ditt visningsnamn. Visningsnamnet syns för andra, e-postadressen gör det inte.")}</p>
   <h3>${$t("Det som bara du ser")}</h3><p>${$t("Anteckningar, sällskap, bilder, önskelista, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.")}</p>
   <h3>${$t("Delning och topplistor")}</h3><p>${$t("Som ny användare syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för andra, så att vänner kan följa dig. Du är också med i topplistorna med dina antal. Anteckningar, sällskap och bilder delas aldrig. Du kan välja bort båda när som helst under Min fotboll och på Hem, och då tas det delade bort.")}</p>
-  <h3>${$t("Det som andra ser")}</h3><p>${$t("Foruminlägg, reportage, kommentarer, klubblegender, kommentarer på tips, pubtips, arenabetyg, förslag på rättelser, quizresultat, gillningar, peppningar och röster syns för alla som använder appen, tillsammans med ditt visningsnamn. Topplistorna visar bara dina antal, och bara om du inte har valt bort det.")}</p>
+  <h3>${$t("Det som andra ser")}</h3><p>${$t("Foruminlägg, matchberättelser, kommentarer, klubblegender, kommentarer på tips, pubtips, arenabetyg, förslag på rättelser, quizresultat, gillningar, peppningar och röster syns för alla som använder appen, tillsammans med ditt visningsnamn. Topplistorna visar bara dina antal, och bara om du inte har valt bort det.")}</p>
   <h3>${$t("Var datan lagras")}</h3><p>${$t("Allt lagras hos Google Firebase. Appens ägare har teknisk åtkomst till databasen för drift och säkerhetskopior, men använder den inte för att läsa din logg. En säkerhetskopia tas varje vecka och sparas privat.")}</p>
-  <h3>${$t("Moderering")}</h3><p>${$t("Moderatorer kan dölja inlägg, reportage, kommentarer och legender, godkänna rättelser av klubbfakta och läsa det du skickar via Tyck till.")}</p>
-  <h3>${$t("Ta bort")}</h3><p>${$t("Inlägg, reportage, kommentarer och legender tar du bort där de ligger. Din logg kan du radera här nedan. Vill du ta bort hela kontot väljer du")} <b>${$t("Radera mitt konto")}</b> ${$t("under kontoknappen uppe till höger – då raderas kontot och allt du har sparat eller skrivit. Det går inte att ångra, så spara gärna en säkerhetskopia först under Min fotboll.")}</p>
+  <h3>${$t("Moderering")}</h3><p>${$t("Moderatorer kan dölja inlägg, matchberättelser, kommentarer och legender, godkänna rättelser av klubbfakta och läsa det du skickar via Tyck till.")}</p>
+  <h3>${$t("Ta bort")}</h3><p>${$t("Inlägg, matchberättelser, kommentarer och legender tar du bort där de ligger. Din logg kan du radera här nedan. Vill du ta bort hela kontot väljer du")} <b>${$t("Radera mitt konto")}</b> ${$t("under kontoknappen uppe till höger – då raderas kontot och allt du har sparat eller skrivit. Det går inte att ångra, så spara gärna en säkerhetskopia först under Min fotboll.")}</p>
   <h3 id="pvRules">${$t("Regler för innehåll")}</h3><p>${$t("Groundly har nolltolerans mot kränkande, hatiskt, hotfullt, sexuellt eller olagligt innehåll och mot trakasserier av andra användare. Sådant tas bort, och den som bryter mot reglerna kan få sitt konto raderat.")}</p>
   <p>${$t("Ser du något som inte hör hemma här trycker du Anmäl. Moderatorerna går igenom anmälningar inom ett dygn. Vill du slippa se någons innehåll trycker du Blockera; då döljs allt den personen skriver, bara för dig.")}</p>
   <h3>${$t("Villkor i korthet")}</h3><p>${$t("Genom att skapa ett konto godkänner du de här villkoren och reglerna för innehåll.")} ${$t("Dela bara sådant du har rätt att dela. Inga personangrepp och ingen reklam. Matchtider och klubbfakta kan innehålla fel, så kontrollera med klubben innan du reser. Appen är en beta och kan ändras. Matchdata kommer från API-Football och openfootball (CC0), flaggor från flag-icons (MIT-licens).")}</p>
@@ -4764,7 +4764,7 @@ function flagBtn(key,uid,txt){if(!key||(uid&&uid===myId))return"";const done=fla
 function openBlock(uid){const o=document.getElementById("blockOv");if(o)o.remove();
   document.body.insertAdjacentHTML("beforeend",`<div id="blockOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="blT"><div class="compose askbox">
     <h2 id="blT">${$t("Blockera {0}?",[who(uid)])}</h2>
-    <p>${$t("Du ser inte längre deras inlägg, svar, reportage, kommentarer, pubtips eller legender. De får inte veta att du har blockerat dem.")}</p>
+    <p>${$t("Du ser inte längre deras inlägg, svar, matchberättelser, kommentarer, pubtips eller legender. De får inte veta att du har blockerat dem.")}</p>
     <p class="hint">${$t("Du kan ta bort blockeringen under Inställningar → Blockerade användare.")}</p>
     <div class="actions"><button class="btn primary" data-blockgo="${esc(uid)}">${$t("Blockera")}</button><button class="btn" data-blockno="1">${$t("Avbryt")}</button></div></div></div>`);}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-block],[data-blockgo],[data-blockno],[data-unblock],#blockOv");if(!t)return;
@@ -4830,7 +4830,7 @@ function byAsHtml(){if(!myId)return"";const n=MYNAME;
 function userLink(uid){if(!uid)return esc($t("Medlem"));return`<button type="button" class="ulink" data-user="${esc(uid)}">${esc(who(uid))}</button>`;}
 function openNameDlg(){const o=document.getElementById("nameOv");if(o)o.remove();
   document.body.insertAdjacentHTML("beforeend",`<div id="nameOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="nmT"><form class="compose askbox" id="nameForm">
-    <h2 id="nmT">${$t("Ditt namn i communityn")}</h2><p class="meta">${$t("Namnet visas vid dina inlägg, reportage och kommentarer. Förnamn, smeknamn eller ditt groundhoppernamn går bra.")}</p>
+    <h2 id="nmT">${$t("Ditt namn i communityn")}</h2><p class="meta">${$t("Namnet visas vid dina inlägg, matchberättelser och kommentarer. Förnamn, smeknamn eller ditt groundhoppernamn går bra.")}</p>
     <label class="fld" for="nmIn">${$t("Namn")}<input id="nmIn" maxlength="40" required value="${esc(weakName(MYNAME)?"":MYNAME||"")}" autocomplete="nickname"></label>
     <label class="fld" for="nmIni">${$t("Initialer i profilbilden (1–3 bokstäver)")}<input id="nmIni" maxlength="3" value="${esc(myIni()||"")}" placeholder="${esc(((MYNAME||"").trim()[0]||"").toUpperCase())}" autocapitalize="characters" autocomplete="off" style="max-width:120px;text-transform:uppercase"></label>
     <p class="hint">${$t("Profilbilden får ditt favoritlags färg. Lämna tomt för att använda första bokstaven i namnet.")}</p><p class="err" id="nmErr"></p>
@@ -4841,10 +4841,10 @@ function profileHtml(uid){const me=uid===myId;const name=me?(MYNAME||$t("Du")):(
   const ths=forumState==="ready"?allPosts().filter(p=>p.uid===uid&&!p.parent&&p.title&&!HIDDEN.includes(p.key)).sort((a,b)=>String(b.at).localeCompare(String(a.at))):[];
   const nrep=forumState==="ready"?allPosts().filter(p=>p.uid===uid&&p.parent).length:0;
   const fav=pd&&pd.fav&&C[pd.fav];const recent=pubRows(uid).slice(0,4);
-  const stats=[reps.length?$tn(reps.length,"{n} reportage","{n} reportage|pl"):"",ths.length+nrep?$tn(ths.length+nrep,"{n} inlägg","{n} inlägg|pl"):"",pd&&+pd.n>0?$t("{0} {1} · {2} arenor",[+pd.n,+pd.n===1?$t("match"):$t("matcher"),+pd.ar||0]):""].filter(Boolean).join(" · ");
+  const stats=[reps.length?$tn(reps.length,"{n} matchberättelse","{n} matchberättelser|pl"):"",ths.length+nrep?$tn(ths.length+nrep,"{n} inlägg","{n} inlägg|pl"):"",pd&&+pd.n>0?$t("{0} {1} · {2} arenor",[+pd.n,+pd.n===1?$t("match"):$t("matcher"),+pd.ar||0]):""].filter(Boolean).join(" · ");
   return`<div class="compose askbox profbox"><div class="profhead">${avatar(uid,52)}<div><h2 id="prT">${esc(name)}</h2>${me?`<span class="meta">${$t("Det här är du")}</span>`:""}${fav?`<div class="meta">${crest(fav.id,fav.n,18)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}</div></div>
     ${stats?`<p class="meta">${stats}</p>`:""}
-    ${reps.length?`<h3 class="sec">${$t("Reportage")}</h3><div class="proflist">${reps.slice(0,5).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${esc(ago(r.at))}</span></button>`).join("")}</div>`:""}
+    ${reps.length?`<h3 class="sec">${$t("Matchberättelser")}</h3><div class="proflist">${reps.slice(0,5).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${esc(ago(r.at))}</span></button>`).join("")}</div>`:""}
     ${ths.length?`<h3 class="sec">${$t("Forumtrådar")}</h3><div class="proflist">${ths.slice(0,5).map(t=>`<button class="plink" data-upthread="${esc(t.key)}"><b>${esc(t.title)}</b><span class="meta">${esc(ago(t.at))}</span></button>`).join("")}</div>`:""}
     ${recent.length?`<h3 class="sec">${$t("Senaste matcherna")}</h3><div class="proflist">${recent.map(r=>`<div class="plink static"><b>${esc(r.h)}${r.sc?` ${esc(r.sc)} `:" – "}${esc(r.a)}</b><span class="meta">${esc([r.v,fmtDate(r.d)].filter(Boolean).join(" · "))}</span></div>`).join("")}</div>`:""}
     ${!reps.length&&!ths.length&&!recent.length?`<p class="meta">${me?$t("Du har inte skrivit något än."):$t("Har inte skrivit något än.")}</p>`:""}
@@ -4872,23 +4872,23 @@ document.addEventListener("submit",async e=>{if(e.target.id!=="nameForm")return;
 const followersOf=uid=>Object.entries(PUBLIC).filter(([u,d])=>u!==uid&&d&&Array.isArray(d.fo)&&d.fo.includes(uid)).map(([u])=>u);
 function profSw(attr,on,title,sub){return`<label class="setsw"><input type="checkbox" ${attr}${on?" checked":""}><span><b>${title}</b><small>${sub}</small></span></label>`;}
 function renderProfil(){const el=document.getElementById("profilBody");if(!el)return;
-  if(!dbNs||!myId){el.innerHTML=`<div class="empty"><b>${$t("Logga in för att se din profil.")}</b><div>${$t("Med ett konto får du ett namn i communityn, kan följa andra groundhoppers och skriva reportage.")}</div><div class="actions"><button class="btn primary" data-glogin>${$t("Logga in")}</button></div></div>`;return;}
+  if(!dbNs||!myId){el.innerHTML=`<div class="empty"><b>${$t("Logga in för att se din profil.")}</b><div>${$t("Med ett konto får du ett namn i communityn, kan följa andra groundhoppers och skriva matchberättelser.")}</div><div class="actions"><button class="btn primary" data-glogin>${$t("Logga in")}</button></div></div>`;return;}
   const name=MYNAME||"";const fav=favList()[0]&&C[favList()[0]];
   const reps=repState==="ready"?allReps().filter(r=>r.uid===myId).sort((a,b)=>String(b.at).localeCompare(String(a.at))):[];
   const posts=forumState==="ready"?allPosts().filter(p=>p.uid===myId):[];const ths=posts.filter(p=>!p.parent&&p.title).sort((a,b)=>String(b.at).localeCompare(String(a.at)));
   const fl=follows(),fw=followersOf(myId);{const miss=[...fl,...fw].filter(u=>!(u in NAMES));if(miss.length)resolveNames(miss).then(()=>{if(mode==="profil")renderProfil();});}
-  const stats=[myState==="ready"?$t("{0} {1} · {2} arenor",[MY.attended.length,MY.attended.length===1?$t("match"):$t("matcher"),visitedPins().length]):"",reps.filter(r=>!r.draft).length?$tn(reps.filter(r=>!r.draft).length,"{n} reportage","{n} reportage|pl"):"",posts.length?$tn(posts.length,"{n} inlägg","{n} inlägg|pl"):""].filter(Boolean).join(" · ");
+  const stats=[myState==="ready"?$t("{0} {1} · {2} arenor",[MY.attended.length,MY.attended.length===1?$t("match"):$t("matcher"),visitedPins().length]):"",reps.filter(r=>!r.draft).length?$tn(reps.filter(r=>!r.draft).length,"{n} matchberättelse","{n} matchberättelser|pl"):"",posts.length?$tn(posts.length,"{n} inlägg","{n} inlägg|pl"):""].filter(Boolean).join(" · ");
   const ppl=(ids,empty,back)=>ids.length?`<div class="pplist">${ids.map(u=>`<div class="pprow">${avatar(u,30)}${userLink(u)}${back&&!isFollow(u)?`<button class="btn small primary" data-follow="${esc(u)}">${$t("Följ tillbaka")}</button>`:!back?`<button class="link" data-follow="${esc(u)}">${$t("Sluta följa")}</button>`:`<span class="meta">${$t("Ni följer varandra")}</span>`}</div>`).join("")}</div>`:`<p class="meta">${empty}</p>`;
   el.innerHTML=`<article class="tip profcard"><div class="profhead">${avatar(myId,56)}<div><h2 class="name">${esc(weakName(name)?$t("Inget namn valt"):name)}</h2>${fav?`<div class="meta">${crest(fav.id,fav.n,18)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}</div></div>
       ${stats?`<p class="meta" style="margin:0">${stats}</p>`:""}
       ${weakName(name)?`<div class="notice">${$t("Andra ser dig som ”{0}”. Välj ett namn som andra känner igen dig på.",[esc(name||$t("Medlem"))])}</div>`:""}
       <div class="actions"><button class="btn small${weakName(name)?" primary":""}" data-myname="1">${weakName(name)?$t("Välj namn"):$t("Ändra namn och initialer")}</button><button class="btn small" data-user="${esc(myId)}">${$t("Visa som andra ser den")}</button></div></article>
     <article class="tip"><div class="lbl">${$t("Vänner")}</div>
-      <h3 class="sec">${$t("Du följer")} <span class="meta">(${fl.length})</span></h3>${ppl(fl,$t("Du följer ingen än. Tryck på ett namn i forumet eller bland reportagen och välj Följ."),false)}
+      <h3 class="sec">${$t("Du följer")} <span class="meta">(${fl.length})</span></h3>${ppl(fl,$t("Du följer ingen än. Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ."),false)}
       <h3 class="sec">${$t("Följer dig")} <span class="meta">(${fw.length})</span></h3>${ppl(fw,MY.showFo?$t("Ingen följer dig än."):$t("Syns bara för dem som valt att visa vilka de följer."),true)}</article>
     ${friendsHtml()}
     <article class="tip"><div class="lbl">${$t("Det du skrivit")}</div>
-      <h3 class="sec">${$t("Reportage")} <span class="meta">(${reps.length})</span></h3>${reps.length?`<div class="proflist">${reps.slice(0,8).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${r.draft?$t("Utkast · syns bara för dig"):esc(ago(r.at))}</span></button>`).join("")}</div>`:`<p class="meta">${$t("Inga reportage än.")} <button class="link strong" data-gomode="reportage">${$t("Skriv reportage")}</button></p>`}
+      <h3 class="sec">${$t("Matchberättelser")} <span class="meta">(${reps.length})</span></h3>${reps.length?`<div class="proflist">${reps.slice(0,8).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${r.draft?$t("Utkast · syns bara för dig"):esc(ago(r.at))}</span></button>`).join("")}</div>`:`<p class="meta">${$t("Inga matchberättelser än.")} <button class="link strong" data-gomode="reportage">${$t("Skriv matchberättelse")}</button></p>`}
       <h3 class="sec">${$t("Forumtrådar")} <span class="meta">(${ths.length})</span></h3>${ths.length?`<div class="proflist">${ths.slice(0,8).map(t=>`<button class="plink" data-upthread="${esc(t.key)}"><b>${esc(t.title)}</b><span class="meta">${esc(ago(t.at))}</span></button>`).join("")}</div>`:`<p class="meta">${$t("Inga trådar än.")} <button class="link strong" data-gomode="forum">${$t("Till forumet")}</button></p>`}</article>
     <article class="tip"><div class="lbl">${$t("Inställningar för communityn")}</div>
       <label class="fld" for="ccSel">${$t("Land (flagga vid ditt namn)")}<select id="ccSel"><option value="none"${MY.cc==="none"?" selected":""}>${$t("Visa ingen flagga")}</option>${Object.values(C).filter(c=>c.l==="Landslag").map(c=>[c.id,$t(c.n)]).sort((a,b)=>a[1].localeCompare(b[1],LANG)).map(([id,n])=>`<option value="${id}"${myCc()===id?" selected":""}>${esc(n)}</option>`).join("")}</select></label>
@@ -4920,7 +4920,7 @@ let deepJump=null;
     const tick=()=>{if(!deepJump)return;const el=document.querySelector(deepJump.sel);
       if(el){const tb=document.querySelector(".topbar");window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-(tb?tb.offsetHeight:0)-12)});deepJump=null;return;}
       const ready=deepJump.kind==="r"?repState==="ready":forumState==="ready";
-      if(Date.now()>deepJump.until||(ready&&Date.now()>deepJump.until-14000)){toast(deepJump.kind==="r"?$t("Reportaget finns inte längre."):$t("Tråden finns inte längre."));deepJump=null;return;}
+      if(Date.now()>deepJump.until||(ready&&Date.now()>deepJump.until-14000)){toast(deepJump.kind==="r"?$t("Matchberättelsen finns inte längre."):$t("Tråden finns inte längre."));deepJump=null;return;}
       setTimeout(tick,300);};
     setTimeout(tick,600);}}
 // ---------- tema ----------
@@ -4946,7 +4946,7 @@ let logoPick="stadion";try{const l=store.get("fk-logo");if(BRAND_LOGOS.some(x=>x
 function applyLogo(){const src=`logos/${logoPick}.png`;const im=document.getElementById("brandLogo");if(im&&im.getAttribute("src")!==src)im.setAttribute("src",src);
   const fl=document.getElementById("favLink");if(fl)fl.setAttribute("href",src);}
 applyLogo();
-const NOTIF=[["remind",$t("Påminn mig att logga matcher jag ville gå på"),$t("Rutan Var du där? på Hem efter matchen")],["act",$t("Nytt i communityn"),$t("Röd siffra och ruta på Hem när någon svarar i dina forumtrådar eller kommenterar och gillar dina reportage")]];
+const NOTIF=[["remind",$t("Påminn mig att logga matcher jag ville gå på"),$t("Rutan Var du där? på Hem efter matchen")],["act",$t("Nytt i communityn"),$t("Röd siffra och ruta på Hem när någon svarar i dina forumtrådar eller kommenterar och gillar dina matchberättelser")]];
 const notifOn=k=>store.get("fk-n-"+k)!=="0";
 let setOpen=false;
 // ---------- tipsa en kompis ----------
@@ -5147,7 +5147,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-tlguide],[
 function render(){
   const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
   {const sb=document.getElementById("sub");{const it=document.getElementById("intro");if(it)it.style.display=FOKUS&&mode==="hem"?"none":"";}if(mode==="hem"){sb.textContent=$t("Ett fotbollscommunity där du träffar likasinnade, delar matchupplevelser, hittar nya matcher och upptäcker ditt nästa fotbollsäventyr.");const kk=document.getElementById("kicker");if(kk)kk.textContent=$t("Möt. Upptäck. Upplev.");}else sb.textContent=SUB[mode];}
-  {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Reportage"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
+  {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
    const intro=document.getElementById("intro");if(intro)intro.hidden=mode!=="hem";}
   document.getElementById("foot").innerHTML=mode==="klubbar"
    ?`<div>${$t("Serie anges för säsongen 2026/27 där den är kontrollerad mot aktuella spelscheman; övriga visas som senast kända.")}</div>${AI_ON?`<div>${$t("Klubbar utanför listan slås upp av Claude och kan innehålla fel.")}</div>`:""}<div>${$t("Flaggor från flag-icons av Panayiotis Lipiridis (MIT-licens).")}</div>`
@@ -5158,9 +5158,9 @@ function render(){
    :mode==="arenor"?`<div>${$t("Kapacitet enligt klubbdatan. Betyg och tillgänglighet kommer från besökare. Arenor som delas av flera klubbar visas en gång.")}</div>`
    :mode==="tips"?`<div>${$t("Urvalet och beskrivningarna är redaktionella tips. Nästa möte hämtas från det inlagda matchschemat.")}</div>`
    :mode==="hem"?`<div>${$t("Topplistorna visar bara antal, och bara för dem som inte valt bort det. Veckans match väljs bland derbyn, dina favoritlag, matcher i ditt land och nära din hemort och matcher andra peppar.")}</div>`
-   :mode==="reportage"?`<div>${$t("Reportagen och bilderna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja reportage. Lägg inte upp bilder på andra personer utan att de vet om det.")} ${$t("Ser du något som inte hör hemma här, tryck Anmäl.")}</div>`
+   :mode==="reportage"?`<div>${$t("Matchberättelserna och bilderna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja matchberättelser. Lägg inte upp bilder på andra personer utan att de vet om det.")} ${$t("Ser du något som inte hör hemma här, tryck Anmäl.")}</div>`
    :mode==="mine"?`<div>${$t("Matcherna och listorna här syns bara för dig och följer med ditt claude.ai-konto.")}</div>`
-   :mode==="profil"?`<div>${$t("Det du skriver i forum och reportage syns för alla. Dina loggade matcher syns bara om du slår på det här.")}</div>`
+   :mode==="profil"?`<div>${$t("Det du skriver i forum och matchberättelser syns för alla. Dina loggade matcher syns bara om du slår på det här.")}</div>`
    :mode==="forum"?`<div class="forumrules"><b>${$t("Forumregler")}</b><br>${$t("Håll god ton och hjälp varandra. Spam, hat, olagligt innehåll och personuppgifter om andra tas bort. Ser du något som inte hör hemma här, tryck Anmäl.")}</div><div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; moderatorerna kan dölja inlägg.")}</div>`
    :`<div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; sidans ägare kan dölja inlägg.")}</div>`;
   document.getElementById("foot").insertAdjacentHTML("beforeend",`<div><button class="link" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button> · <button class="link" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button></div>`);
