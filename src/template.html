@@ -1317,6 +1317,11 @@ function matchKindChips(){const el=document.getElementById("gMatch");if(!el)retu
   el.innerHTML=[["alla",$t("Alla")],["herr",$t("Herr")],["dam",$t("Dam")],["landslag",$t("Landslag")]].map(([k,l])=>`<button class="chip" data-mkind="${k}" aria-pressed="${mKind===k}">${l}</button>`).join("");}
 function genderChips(id){const el=document.getElementById(id);if(!el)return;el.innerHTML=WLEAGUES.size?[["alla",$t("Alla")],["herr",$t("Herr")],["dam",$t("Dam")]].map(([k,l])=>`<button class="chip" data-gender="${k}" aria-pressed="${gender===k}">${l}</button>`).join(""):"";}
 const C={};CLUBS.forEach(r=>{const[id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf]=r;C[id]={id,n,a,c,city,f,l,t,s,cap,nick,h,v,conf:conf||(l==="Landslag"||l==="Damlandslag"?"UEFA":null)};});
+// klubb- och landslagsnamn på användarens språk (t.ex. Röda Stjärnan → Red Star Belgrade). Originalnamnet sparas i n0 och går att söka på.
+const CLUB_TR=new Set(["Röda Stjärnan","FC Köpenhamn","Slavia Prag","Sparta Prag","AEK Aten","Bayern München","TSV 1860 München","FC Inter Åbo","Ararat Jerevan","BKMA Jerevan","CSKA Moskva","Spartak Moskva","Lokomotiv Moskva","Dynamo Moskva","Rodina Moskva","Metalist 1925 Charkiv","Al-Ahli Damaskus"]);
+if(LANG!=="sv")Object.values(C).forEach(c=>{const m=/^(.*?)( \(dam\))?( II| U\d\d)?$/.exec(c.n||"");if(!m)return;const b=m[1];const nat=c.l==="Landslag"||c.l==="U21-landslag"||c.l==="Damlandslag";const tb=nat?(I18N[b]||ctryName(b)||b):(CLUB_TR.has(b)&&I18N[b])||b;
+  const nn=tb+(m[2]?" "+(I18N["(dam)"]||"(dam)"):"")+(m[3]||"");if(nn!==c.n){c.n0=c.n;c.a=((c.a||"")+" "+c.n0.toLowerCase()).trim();c.n=nn;}});
+const sameCN=(s,c)=>!!c&&(s===c.n||(c.n0!=null&&s===c.n0));
 const CONFS=[["UEFA",$t("Europa")],["CONMEBOL",$t("Sydamerika")],["CONCACAF",$t("Nord- och Centralamerika")],["CAF",$t("Afrika")],["AFC",$t("Asien")],["OFC",$t("Oceanien")]];
 const CONF_L=Object.fromEntries(CONFS);
 const esc=s=>String(s??"").replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
@@ -1512,7 +1517,7 @@ function clubCard(c,isAi){const sel=openClub===c.id;const pr=isAi?null:pairOf(c.
     ${c.nick?`<dt>${$t("Smeknamn")}</dt><dd>${esc(c.nick)}</dd>`:""}${webRow(c)}
     ${isAi?"":similarRow(c)}
     <dt>${$t("Meriter")}</dt><dd>${c.h&&c.h.length?`<ul>${c.h.map(x=>`<li>${esc($tp(x))}</li>`).join("")}</ul>`:$t("Inga större titlar")}</dd>
-    ${isAi?"":`<dt>${$t("Nästa match")}</dt><dd>${up.length?(m=>{const home=m.home===c.id||(!m.away&&m.homeName===c.n);const opp=home?m.awayName:m.homeName;
+    ${isAi?"":`<dt>${$t("Nästa match")}</dt><dd>${up.length?(m=>{const home=m.home===c.id||(!m.away&&sameCN(m.homeName,c));const opp=home?m.awayName:m.homeName;
       return`<div class="nextone"><span class="nd">${esc(m.kickoff?shortDate(m.kickoff):rangeTxt(m))}${m.kickoff?` · ${esc(timeOf(m.kickoff))}`:""}</span> <span class="nm">${home?$t("Hemma mot {0}",[esc(opp)]):$t("Borta mot {0}",[esc(opp)])}</span>${c.city?` <button class="link strong" data-teamview="${esc(c.id)}">${$t("Alla matcher →")}</button>`:""}</div>`;})(up[0]):dbState==="ready"?$t("Inga matcher i schemat"):$t("Laddar schema…")}</dd>`}
    </dl>
    ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:"")+wishBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
@@ -2099,7 +2104,7 @@ async function writeMine(fn){if(!dbNs||!myId||writeBusy)return false;writeBusy=t
 const newId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 // känner igen lag även på smeknamn och kortnamn ("Bajen", "Malmö", "Blåvitt") så att derbyn hamnar rätt
 const NAME_ALIAS={"husqvarna":"hff","hff":"hff","huskvarna":"hff","j sodra":"jsö","jsif":"jsö","sodra":"jsö","jonkopings sodra":"jsö","bajen":"ham","hammarby":"ham","djurgarden":"dif","dif":"dif","malmo":"mff","mff":"mff","helsingborg":"hif","hif":"hif","blavitt":"ifkg","goteborg":"ifkg","orgryte":"ois","hacken":"häc","oster":"öst","kalmar":"kff","brommapojkarna":"bp","st pauli":"stp","hsv":"hsv","hamburg":"hsv","man utd":"mun","man united":"mun","manchester utd":"mun","man city":"mci","city":"mci","spurs":"tot","tottenham":"tot","milan":"acm","ac milan":"acm","inter":"int","roma":"rom","barca":"bar","barcelona":"bar","atletico":"atm","atletico madrid":"atm","real":"rma","dortmund":"bvb","bvb":"bvb","schalke":"s04","bayern":"bmu","psg":"psg","marseille":"olm","om":"olm","fck":"fck","kobenhavn":"fck","brondby":"bif","fenerbahce":"fen","galatasaray":"gal","besiktas":"bjk","ajax":"aja","feyenoord":"fey","benfica":"slb","sporting":"scp","olympiakos":"oly","aek":"aek","boca":"boc","river":"riv","river plate":"riv","newcastle":"new","sunderland":"sun","everton":"eve","liverpool":"lfc","celtic":"cel","rangers":"ran","sevilla":"sev","betis":"rbb","athletic":"ath","bilbao":"ath","real sociedad":"rso","sociedad":"rso","brann":"brn","viking":"vik","inter turku":"fcit","tps":"tps","kr":"kr","valur":"val","slavia":"sla","bohemians":"boh","wisla":"wis","cracovia":"cra","cardiff":"cdf","swansea":"swa","monaco":"asm","nice":"nic","lafc":"lafc","la galaxy":"lag","galaxy":"lag","hilal":"hil","al hilal":"hil","nassr":"nas","al nassr":"nas","corinthians":"cor","palmeiras":"pal","lazio":"laz","club brugge":"bru","brugge":"bru","anderlecht":"and"};
-function clubIdFromName(n){const nn=norm(n);if(!nn)return null;const all=Object.values(C);const ex=all.find(c=>norm(c.n)===nn);if(ex)return ex.id;
+function clubIdFromName(n){const nn=norm(n);if(!nn)return null;const all=Object.values(C);const ex=all.find(c=>norm(c.n)===nn||(c.n0&&norm(c.n0)===nn));if(ex)return ex.id;
   const al=NAME_ALIAS[nn.normalize("NFD").replace(/[\u0300-\u036f]/g,"")];if(al&&C[al])return al;
   const hits=all.filter(c=>(" "+norm(c.a||"")+" ").includes(" "+nn+" ")||norm(c.n).startsWith(nn+" ")||(c.nick&&norm(c.nick)===nn));
   if(hits.length===1)return hits[0].id;const clubs=hits.filter(c=>!isNat(c));if(clubs.length===1)return clubs[0].id;
@@ -2765,7 +2770,7 @@ async function fillScores(){if(fillBusy||fillDone||myState!=="ready"||!Array.isA
     // 1) arkivet (mid = arc:kod:säsong:i). Indexet kan ha ändrats när säsongen hämtats om, så vi matchar på datum och lag
     const files=[...new Set(miss.filter(a=>/^arc:/.test(a.mid||"")).map(a=>a.mid.split(":").slice(1,3).join("/")))];
     for(const k of files){let d;try{d=await arcLoad(`archive/${k}.json?r=${today()}`);}catch(e){continue;}
-      miss.filter(a=>(a.mid||"").startsWith("arc:"+k.replace("/",":")+":")).forEach(a=>{const r=d.m.find(m=>m[2]===a.date&&m[4]!=null&&(()=>{const H=d.t[m[0]],A=d.t[m[1]];const hit=(t,id,n)=>(id&&t[1]===id)||nm(t[0])===nm(n)||(t[1]&&C[t[1]]&&nm(C[t[1]].n)===nm(n));return hit(H,a.home,a.homeName)&&hit(A,a.away,a.awayName);})());
+      miss.filter(a=>(a.mid||"").startsWith("arc:"+k.replace("/",":")+":")).forEach(a=>{const r=d.m.find(m=>m[2]===a.date&&m[4]!=null&&(()=>{const H=d.t[m[0]],A=d.t[m[1]];const hit=(t,id,n)=>(id&&t[1]===id)||nm(t[0])===nm(n)||(t[1]&&C[t[1]]&&(nm(C[t[1]].n)===nm(n)||(C[t[1]].n0&&nm(C[t[1]].n0)===nm(n))));return hit(H,a.home,a.homeName)&&hit(A,a.away,a.awayName);})());
         if(r)up[a.id]=`${r[4]}–${r[5]}`;});}
     // 2) matchschemat
     if(typeof MATCHES!=="undefined")miss.filter(a=>!up[a.id]).forEach(a=>{const m=MATCHES.find(x=>x.score&&((a.mid&&x._id===a.mid)||(x.home===a.home&&x.away===a.away&&a.home&&(x.kickoff?dayKey(new Date(x.kickoff)):x.dateFrom)===a.date)));if(m){const sc=scoreOf(m);if(sc)up[a.id]=`${sc[0]}–${sc[1]}`;}});
@@ -4329,7 +4334,7 @@ function arcHtml(){if(!ARC.open)return"";const ix=ARC.index||[];
   const ti=d.t.findIndex(t=>t[0]===ARC.team);const rows=d.m.map((r,i)=>[r,i]).filter(([r])=>r[0]===ti||r[1]===ti);
   h+=`<p class="hint">${$t("{0} matcher med {1} i {2} {3}. Tryck",[rows.length,esc(ARC.team),esc(d.l),esc(d.s)])} <b>${$t("Jag var där")}</b> ${$t("på de du sett.")}</p><div class="dlist">`;
   h+=rows.map(([r,i])=>{const H=d.t[r[0]],A=d.t[r[1]];const sc=r[4]!=null?`${r[4]}–${r[5]}${r[6]?$t(" (str {0})",[r[6].replace("-","–")]):""}`:"–";const mid=arcMid(i);
-    const done=isAtt(mid)||MY.attended.some(a=>a.date===r[2]&&a.homeName===(H[1]&&C[H[1]]?C[H[1]].n:H[0]));
+    const done=isAtt(mid)||MY.attended.some(a=>a.date===r[2]&&(H[1]&&C[H[1]]?sameCN(a.homeName,C[H[1]]):a.homeName===H[0]));
     return`<div class="drow"><div class="dcd"><b>${esc(fmtDate(r[2]))}</b><span>${esc(r[7]||(r[0]===ti?$t("Hemma"):$t("Borta")))}</span></div>
       <div class="mmain"><b>${esc(H[1]&&C[H[1]]?C[H[1]].n:H[0])} <span class="num">${esc(sc)}</span> ${esc(A[1]&&C[A[1]]?C[A[1]].n:A[0])}</b><span class="meta">${esc((arcNeutral(ARC.code,ARC.season,r)||[])[0]||venueAt(H[1],r[2])||[H[2],H[3]].filter(Boolean).join(", ")||$t("Arena saknas, fyll i efteråt"))}</span></div>
       <button class="mini" data-arcadd="${i}" aria-pressed="${done}"${done?` title="${$t("Tryck för att ta bort")}"`:""}>${done?$t("Var där {0}",[OK]):$t("Jag var där")}</button></div>`;}).join("");
@@ -4350,14 +4355,14 @@ function arcTeamHtml(){const c=ARC.tid&&C[ARC.tid];
   if(all.length>ARC.tlim)h+=`<div class="morerow"><button class="btn small" data-arcmore="1">${$t("Visa äldre säsonger ({0} till)",[all.length-ARC.tlim])}</button></div>`;
   return h;}
 function arcRowHtml(d,code,season,r,i,ti){const H=d.t[r[0]],A=d.t[r[1]];const sc=r[4]!=null?`${r[4]}–${r[5]}${r[6]?$t(" (str {0})",[r[6].replace("-","–")]):""}`:"–";const mid=`arc:${code}:${season}:${i}`;
-  const done=isAtt(mid)||MY.attended.some(a=>a.date===r[2]&&a.homeName===(H[1]&&C[H[1]]?C[H[1]].n:H[0]));
+  const done=isAtt(mid)||MY.attended.some(a=>a.date===r[2]&&(H[1]&&C[H[1]]?sameCN(a.homeName,C[H[1]]):a.homeName===H[0]));
   return`<div class="drow"><div class="dcd"><b>${esc(fmtDate(r[2]))}</b><span>${esc(r[7]||(r[0]===ti?$t("Hemma"):$t("Borta")))}</span></div>
     <div class="mmain"><b>${esc(H[1]&&C[H[1]]?C[H[1]].n:H[0])} <span class="num">${esc(sc)}</span> ${esc(A[1]&&C[A[1]]?C[A[1]].n:A[0])}</b><span class="meta">${esc((arcNeutral(code,season,r)||[])[0]||venueAt(H[1],r[2])||[H[2],H[3]].filter(Boolean).join(", ")||$t("Arena saknas, fyll i efteråt"))}</span></div>
     <button class="mini" data-arcadd2="${esc(code+"|"+season+"|"+i)}" aria-pressed="${done}"${done?` title="${$t("Tryck för att ta bort")}"`:""}>${done?$t("Var där {0}",[OK]):$t("Jag var där")}</button></div>`;}
 function arcAdd(i){arcAddFrom(ARC.data,ARC.code,ARC.season,i);}
 function arcAddFrom(d,code,season,i){if(!d||myState!=="ready")return;const r=d.m[i];if(!r)return;const H=d.t[r[0]],A=d.t[r[1]];const hc=H[1]&&C[H[1]],ac=A[1]&&C[A[1]];
   // redan sparad: ett tryck till tar bort den (om man tryckte fel), med Ångra
-  const mid0=`arc:${code}:${season}:${i}`,hn=hc?hc.n:H[0];const same=a=>a.mid===mid0||(a.date===r[2]&&a.homeName===hn);
+  const mid0=`arc:${code}:${season}:${i}`,hn=hc?hc.n:H[0];const same=a=>a.mid===mid0||(a.date===r[2]&&(hc?sameCN(a.homeName,hc):a.homeName===hn));
   if(MY.attended.some(same)){let gone=[];mutate(x=>{gone=x.attended.filter(same);x.attended=x.attended.filter(a=>!same(a));});
     undoToast($t("Matchen togs bort"),async()=>{mutate(x=>{x.attended=putBack(x.attended,gone);});});return;}
   const cup=d.tier==="EC"||d.tier==="CUP";const nv=arcNeutral(code,season,r);const sc=r[4]!=null?`${r[4]}–${r[5]}`:null;
@@ -4376,7 +4381,7 @@ document.addEventListener("change",e=>{const id=e.target.id;
   if(id==="arcCode"){ARC.code=e.target.value;const s=(ARC.index||[]).filter(x=>x[0]===ARC.code).map(x=>x[2]).sort().reverse();ARC.season=s.includes(ARC.season)?ARC.season:(s[0]||"");arcSeason();}
   else if(id==="arcSeason"){ARC.season=e.target.value;arcSeason();}
   else if(id==="arcTeam"){ARC.team=e.target.value;renderMine();}
-  else if(id==="arcTeamIn"){const v=norm(e.target.value);const c=Object.values(C).find(x=>norm(x.n)===v)||Object.values(C).find(x=>norm(x.n).startsWith(v));if(c){ARC.tid=c.id;ARC.tlim=4;ARC.topen=null;renderMine();}}});
+  else if(id==="arcTeamIn"){const v=norm(e.target.value);const c=Object.values(C).find(x=>norm(x.n)===v||(x.n0&&norm(x.n0)===v))||Object.values(C).find(x=>norm(x.n).startsWith(v));if(c){ARC.tid=c.id;ARC.tlim=4;ARC.topen=null;renderMine();}}});
 
 // ---------- kommentarer och "sett" på tips ----------
 let TIPNOTES={},tnState="loading",tnOpen=null,tnBusy=false,tnMsg="",tnDraft={};
