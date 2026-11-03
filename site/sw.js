@@ -42,3 +42,15 @@ self.addEventListener("fetch", e => {
     }));
   }
 });
+
+// påminnelser (webbpush från tools/push.js): datan innehåller titel, text och vart notisen leder
+self.addEventListener("push", e => {
+  let d = {}; try { d = e.data ? e.data.json() : {}; } catch (x) { d = { data: { body: e.data && e.data.text() } }; }
+  const x = d.data || {}, n = d.notification || {};
+  const title = x.title || n.title || "Groundly";
+  e.waitUntil(self.registration.showNotification(title, { body: x.body || n.body || "", icon: "icon-192.png", badge: "icon-192.png", tag: x.tag || undefined, data: { url: x.url || "./" } }));
+});
+self.addEventListener("notificationclick", e => {
+  e.notification.close(); const url = new URL((e.notification.data && e.notification.data.url) || "./", self.registration.scope).href;
+  e.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(cs => { for (const c of cs) { if (c.url.startsWith(self.registration.scope) && "focus" in c) { c.navigate(url).catch(() => {}); return c.focus(); } } return self.clients.openWindow(url); }));
+});

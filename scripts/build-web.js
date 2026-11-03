@@ -132,4 +132,6 @@ fs.writeFileSync(path.join(SITE, ".nojekyll"), "");
 // syntaxkontroll av appens skript
 const js = html.split("<script>").slice(1).map(x => x.split("</script>")[0]).sort((a, b) => b.length - a.length)[0]; // appens stora skript
 new Function(js);
+// kalenderflöden per lag (site/cal/*.ics)
+try { require("child_process").execFileSync(process.execPath, [path.join(__dirname, "build-cal.js")], { stdio: "inherit" }); } catch (e) { console.warn("kalenderflödena kunde inte byggas"); }
 console.log(`site/index.html ${html.length} byte, AI ${aiOn ? "på" : "av"}, skript ok`);

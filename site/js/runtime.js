@@ -417,6 +417,52 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
     if (t.hasAttribute("data-gacct")) openAccount(); else openLogin(t.dataset.glogin === "up" ? "up" : "in");
   }, true);
   window.groundlyLogin = openLogin;
+
+  // ---------- påminnelser i telefonen (webbpush via Firebase Cloud Messaging) ----------
+  // Slås på med vapidKey i firebase-config.js. Token och val sparas privat i users/{uid}/data/push;
+  // utskicket görs av tools/push.js (GitHub Actions) med tjänstekontot.
+  const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const standalone = window.matchMedia && matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  const canPush = !!(CONFIG.vapidKey && "serviceWorker" in navigator && "PushManager" in window && "Notification" in window);
+  const pushRef = () => F.doc(fs, "users", getUser().uid, "data", "push");
+  let M = null;
+  const msg = async () => { if (!M) { const m = await import(`${FB}/firebase-messaging.js`); M = { m, inst: m.getMessaging(fbApp) }; } return M; };
+  window.groundlyPush = {
+    // "on" = påslaget här, "off", "ios-home" = iPhone utan hemskärmsapp, "blocked" = nekat i webbläsaren, "none" = stöds inte
+    state: async () => {
+      if (!CONFIG.vapidKey) return "none";
+      if (ios && !standalone) return "ios-home";
+      if (!canPush) return "none";
+      if (Notification.permission === "denied") return "blocked";
+      if (!getUser()) return "off";
+      try { const d = await F.getDoc(pushRef()); const x = d.exists() ? d.data() : null; const tok = localStorage.getItem("fk-push-token");
+        return x && x.on && tok && (x.tokens || []).some(t => t.t === tok) ? "on" : "off"; } catch (e) { return "off"; }
+    },
+    prefs: async () => { if (!getUser()) return null; try { const d = await F.getDoc(pushRef()); return d.exists() ? d.data().prefs || null : null; } catch (e) { return null; } },
+    enable: async prefs => {
+      if (!getUser() || !canPush) return "none";
+      const perm = await Notification.requestPermission(); if (perm !== "granted") return perm === "denied" ? "blocked" : "off";
+      const reg = await navigator.serviceWorker.ready; const { m, inst } = await msg();
+      const token = await m.getToken(inst, { vapidKey: CONFIG.vapidKey, serviceWorkerRegistration: reg });
+      if (!token) return "off";
+      localStorage.setItem("fk-push-token", token);
+      const d = await F.getDoc(pushRef()); const x = d.exists() ? d.data() : {};
+      const tokens = (x.tokens || []).filter(t => t.t !== token).slice(-4).concat([{ t: token, at: new Date().toISOString(), ua: navigator.userAgent.slice(0, 120) }]);
+      let tz = "Europe/Stockholm"; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || tz; } catch (e) {}
+      await F.setDoc(pushRef(), { on: true, tokens, prefs: { wish: true, log: true, ...(x.prefs || {}), ...(prefs || {}) }, tz, lang: LANGC, sent: x.sent || {} });
+      return "on";
+    },
+    setPrefs: async prefs => { if (!getUser()) return; const d = await F.getDoc(pushRef()); const x = d.exists() ? d.data() : {}; await F.setDoc(pushRef(), { ...x, prefs: { ...(x.prefs || {}), ...prefs } }); },
+    disable: async () => {
+      if (!getUser()) return "off"; const tok = localStorage.getItem("fk-push-token");
+      try { const { m, inst } = await msg(); await m.deleteToken(inst); } catch (e) {}
+      const d = await F.getDoc(pushRef()); const x = d.exists() ? d.data() : {};
+      const tokens = (x.tokens || []).filter(t => t.t !== tok);
+      await F.setDoc(pushRef(), { ...x, tokens, on: tokens.length > 0 });
+      localStorage.removeItem("fk-push-token"); return "off";
+    }
+  };
+  try { window.dispatchEvent(new Event("groundly-push")); } catch (e) {}
 }
 
 boot().catch(e => { console.error("[groundly]", e); done(NONE); });

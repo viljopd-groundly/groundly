@@ -1,0 +1,28 @@
+# Påminnelser i telefonen: körs varje timme och skickar de notiser som är på tur (se tools/push.js).
+# Kräver hemligheten FIREBASE_SA (Settings → Secrets and variables → Actions). Utan den gör jobbet ingenting.
+name: Påminnelser
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry:
+        description: "Torrkörning: visa vad som skulle skickas utan att skicka"
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: push
+  cancel-in-progress: false
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - env:
+          FIREBASE_SA: ${{ secrets.FIREBASE_SA }}
+          PUSH_DRY: ${{ inputs.dry && '1' || '' }}
+        run: node tools/push.js

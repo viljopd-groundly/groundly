@@ -16,6 +16,10 @@ export default {
   // (Authentication → Sign-in method → Apple; kräver Apple Developer-konto, se README).
   apple: false,
 
+  // Påminnelser i telefonen (webbpush). Klistra in den publika nyckeln från Firebase-konsolen:
+  // Projektinställningar → Cloud Messaging → Web Push certificates → Key pair. Tomt = påminnelserna döljs.
+  vapidKey: "",
+
   // Valfritt: adress till en egen AI-funktion. Tomt = AI-funktionerna döljs.
   aiEndpoint: ""
 };

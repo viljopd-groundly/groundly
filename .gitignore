@@ -5,3 +5,4 @@ site/data/maps.json
 tools/prev_events.json
 node_modules/
 of_src/
+site/cal/

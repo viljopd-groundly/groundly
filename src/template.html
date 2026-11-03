@@ -936,6 +936,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .fkhero{padding:4px 2px 14px}.fkhero h1{font-size:calc(26px*var(--fs));line-height:1.15;margin:0 0 6px;letter-spacing:-.01em}.fkhero p{margin:0;color:var(--muted)}
 .fkcta{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.fkcta>div{display:grid;gap:2px;min-width:0;flex:1 1 180px}
 .fkgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.fkgo{all:unset;box-sizing:border-box;cursor:pointer;display:grid;justify-items:center;gap:6px;padding:12px 6px;border-radius:12px;background:var(--card,var(--bg));border:1px solid var(--line);text-align:center;font-size:13px;font-weight:600}.fkgo:focus-visible{outline:2px solid var(--accent)}.fkgo svg{width:22px;height:22px;color:var(--accent)}
+.pushask{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:62;width:min(460px,calc(100% - 32px));box-sizing:border-box;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:12px 14px}.pushask p{margin:0 0 4px}.pushask .actions{margin:0}
 .trbox{max-height:88vh;overflow:auto}.trbox>*{flex-shrink:0}.trbox>.chips{margin:4px 0 2px;flex-wrap:wrap}.trrow{border-top:1px solid var(--line)}.trhead{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:3px;width:100%;padding:10px 2px}
 .trsv{font-size:calc(12px*var(--fs));color:var(--muted)}.trcur{font-weight:600}.trhead .pill{justify-self:start}.trbody{padding:0 2px 12px;display:grid;gap:10px}
 .trsug{background:var(--bg);border-radius:10px;padding:8px 10px;display:grid;gap:6px}.trsug .actions{margin:0}.trsug .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
@@ -1541,7 +1542,7 @@ function clubCard(c,isAi){const sel=openClub===c.id;const pr=isAi?null:pairOf(c.
     ${isAi?"":`<dt>${$t("Nästa match")}</dt><dd>${up.length?(m=>{const home=m.home===c.id||(!m.away&&sameCN(m.homeName,c));const opp=home?m.awayName:m.homeName;
       return`<div class="nextone"><span class="nd">${esc(m.kickoff?shortDate(m.kickoff):rangeTxt(m))}${m.kickoff?` · ${esc(timeOf(m.kickoff))}`:""}</span> <span class="nm">${home?$t("Hemma mot {0}",[esc(opp)]):$t("Borta mot {0}",[esc(opp)])}</span>${c.city?` <button class="link strong" data-teamview="${esc(c.id)}">${$t("Alla matcher →")}</button>`:""}</div>`;})(up[0]):dbState==="ready"?$t("Inga matcher i schemat"):$t("Laddar schema…")}</dd>`}
    </dl>
-   ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:"")+wishBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
+   ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:"")+calSubBtn(c)+wishBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
      return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">${$t("Lagets matcher")}</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>${favBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="${$t("Fler val")}">${more?$t("Färre"):$t("⋯ Mer")}</button>`:""}</div>${extra?`<div class="cmore"${more?"":" hidden"}>${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
   return h+`</div>`;}
 let ntQ="",ntView="a";
@@ -2347,7 +2348,7 @@ function myClick(t){
   if(t.dataset.arview){arView=t.dataset.arview;renderMine();return;}
   if(t.id==="amOpen"){addingMatch=true;fillVenueList();renderMine();setTimeout(()=>document.getElementById("amHome")?.focus(),0);return;}
   if(t.id==="amCancel"){addingMatch=false;renderMine();return;}
-  if(t.dataset.wishm){const m=matchById(t.dataset.wishm);if(!m)return;mutate(d=>{d.wishMatches=isWishM(m._id)?d.wishMatches.filter(w=>w.id!==m._id):[...d.wishMatches,slim(m)];});return;}
+  if(t.dataset.wishm){const m=matchById(t.dataset.wishm);if(!m)return;const adding=!isWishM(m._id);mutate(d=>{d.wishMatches=isWishM(m._id)?d.wishMatches.filter(w=>w.id!==m._id):[...d.wishMatches,slim(m)];});if(adding)setTimeout(maybeAskPush,600);return;}
   if(t.dataset.attend){const m=matchById(t.dataset.attend);if(!m)return;let added=null;mutate(d=>{if(isAtt(m._id))d.attended=d.attended.filter(a=>a.mid!==m._id);else{added=attendFromMatch(m);d.attended=[...d.attended,added];}d.wishMatches=d.wishMatches.filter(w=>w.id!==m._id);});if(added&&!added.score)askScore(added.id);return;}
   if(t.dataset.wmdone){const w=MY.wishMatches.find(x=>x.id===t.dataset.wmdone);if(!w)return;
     mutate(d=>{d.wishMatches=d.wishMatches.filter(x=>x.id!==w.id);if(!d.attended.some(a=>a.mid===w.id))d.attended.push({id:newId(),mid:w.id,home:w.home,away:w.away,homeName:w.homeName,awayName:w.awayName,date:w.kickoff?dayKey(new Date(w.kickoff)):(w.dateFrom||today()),score:null,note:"",venue:w.venue,city:w.city,country:w.country,comp:w.comp});});mySub="been";{const a=MY.attended.find(x=>x.mid===w.id);if(a&&!a.score)askScore(a.id);}return;}
@@ -4910,6 +4911,8 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-shar
   if(navigator.share){try{await navigator.share({title,text:title+" – Groundly",url});}catch(err){}return;}
   try{await navigator.clipboard.writeText(url);toast($t("Länken är kopierad."),"check");}catch(err){window.prompt($t("Kopiera länken:"),url);}},true);
 let deepJump=null;
+// länk från en påminnelse: ?go=mine öppnar Min fotboll, ?go=hem startsidan (där "Var du där?" visas)
+{const g=new URLSearchParams(location.search).get("go");if(g==="mine"||g==="hem"){try{const u=new URL(location.href);u.searchParams.delete("go");history.replaceState(null,"",u.toString());}catch(e){}setTimeout(()=>{try{setMode(g);window.scrollTo({top:0});}catch(e){}},0);}}
 // quizlänk från en kompis: ?q=KOD startar samma frågor, ?q=dagens öppnar quizet
 {const q=new URLSearchParams(location.search).get("q");if(q){try{const u=new URL(location.href);u.searchParams.delete("q");history.replaceState(null,"",u.toString());}catch(e){}setTimeout(()=>{if(q==="dagens"){setMode("quiz");return;}const pc=parseCode(q);if(pc){startNormal(pc.cat,pc.lvl,pc.seed,true);}setMode("quiz");try{rerenderQuizHost();}catch(e){}},0);}}
 {const sp=new URLSearchParams(location.search);const r=sp.get("r"),th=sp.get("t");
@@ -4982,6 +4985,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    <div class="mshead"><h2 id="setT">${$t("Inställningar")}</h2><button class="btn small" id="setClose">${$t("Klar")}</button></div>
    ${sec($t("Språk"),`<div class="chips wrapchips">${LANG_LIST.map(([k,l])=>`<button class="chip" data-lang-pick="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join("")}</div>${LANG!=="sv"?`<div class="actions"><button class="btn small" data-tropen="1">${ic("pencil")} ${$t("Förbättra översättningen")}</button>${MY.trHelp===true||isMod?`<button class="btn small" data-tlfix="1">${ic("pencil")} ${$t("Rätta texter där de står")}</button>`:""}</div><p class="hint" style="margin:0">${$t("Föreslå bättre texter och rösta på andras förslag.")} <button class="link" data-tlguide="1">${$t("Så gör du")}</button></p>`:""}`)}
    ${isMod?sec("Förhandsvisning (bara moderatorer)",`<label class="setsw"><input type="checkbox" data-fokustgl="1"${FOKUS?" checked":""}><span><b>Fokusläge</b><small>Ny startsida med matcher nära dig, logga-knapp och din säsong. Matcher i menyraden.</small></span></label>`):""}
+   ${sec($t("Påminnelser"),remindSecHtml())}
    ${sec($t("Avstånd"),`<div class="chips wrapchips">${[["auto",$t("Automatiskt")],["mil","mil"],["km","km"],["mi","miles"]].map(([k,l])=>`<button class="chip" data-unit-pick="${k}" aria-pressed="${unitPick===k}">${l}</button>`).join("")}</div><p class="hint">${$t("Automatiskt väljer efter ditt land: mil i Sverige och Norge, miles i Storbritannien och USA, annars km.")}</p>`)}
    ${sec($t("Logga|bild"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
@@ -4997,7 +5001,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${myId?sec($t("Blockerade användare"),blockedHtml()):""}
    ${sec($t("Mer"),`<div class="actions"><button class="btn small" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button><button class="btn small" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button></div><p class="hint">${$t("Konto, inloggning och Radera mitt konto finns under knappen med din bokstav uppe till höger.")}</p>`)}
   </div></div>`;}
-function openSettings(){setOpen=true;let ov=document.getElementById("setOv");const y=ov?ov.querySelector(".setbox").scrollTop:0;if(ov)ov.remove();document.body.insertAdjacentHTML("beforeend",settingsHtml());ov=document.getElementById("setOv");ov.querySelector(".setbox").scrollTop=y;}
+function openSettings(){setOpen=true;setTimeout(fillPushBox,0);let ov=document.getElementById("setOv");const y=ov?ov.querySelector(".setbox").scrollTop:0;if(ov)ov.remove();document.body.insertAdjacentHTML("beforeend",settingsHtml());ov=document.getElementById("setOv");ov.querySelector(".setbox").scrollTop=y;}
 function closeSettings(){setOpen=false;document.getElementById("setOv")?.remove();}
 document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-look-pick],[data-looktheme-pick],[data-acc-pick]");if(!b)return;
   if(b.dataset.fsPick){fsize=b.dataset.fsPick;store.set("fk-fs",fsize);applyTheme();if(setOpen){const ov=document.querySelector("#setOv .sheet,#setOv > *");const y=ov?ov.scrollTop:0;openSettings();const o2=document.querySelector("#setOv .sheet,#setOv > *");if(o2)o2.scrollTop=y;}return;}
@@ -5143,6 +5147,48 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-tlguide],[
   const g=document.getElementById("tlgOv");if(g)g.remove();
   if(t.dataset.tlgstart==="fix"){if(!myId){toast($t("Logga in för att föreslå och rösta."));return;}tlIdx=null;tlFix=true;tlFixBar();toast($t("Tryck på en text du vill rätta."),"pencil");}
   else if(t.dataset.tlgstart==="list"){tlPick=null;tlOnly=false;openTr();}});
+// ---------- påminnelser: kalenderprenumeration per lag och notiser i telefonen ----------
+const calFile=id=>String(id).replace(/[^a-z0-9-]/g,c=>"_"+c.codePointAt(0).toString(16))+".ics";
+const calUrl=id=>new URL("cal/"+calFile(id),location.href).href;
+const hasCal=id=>!!C[id]&&upcomingFor(id).length>0;
+function calSubBtn(c){return hasCal(c.id)?`<button class="btn small" data-calsub="${esc(c.id)}">${ic("calendar")} ${$t("Prenumerera i kalendern")}</button>`:"";}
+function openCalSub(id){const c=C[id];if(!c)return;const u=calUrl(id),wc=u.replace(/^https?:/,"webcal:");const o=document.getElementById("calOv");if(o)o.remove();
+  document.body.insertAdjacentHTML("beforeend",`<div id="calOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="calT"><div class="compose askbox pvbox">
+   <div class="mshead"><h2 id="calT">${$t("{0} i din kalender",[esc(c.n)])}</h2><button class="btn small" data-calx="1">${$t("Stäng")}</button></div>
+   <p class="hint" style="margin:0">${$t("Lagets matcher läggs in i telefonens kalender och uppdateras av sig själva när tider ändras eller nya matcher spelas in. Påminnelser ställer du in i kalenderappen.")}</p>
+   <div class="actions" style="flex-direction:column;align-items:stretch">
+    <a class="btn primary" href="${esc(wc)}">${ic("calendar")} ${$t("Apple-kalendern eller Outlook")}</a>
+    <a class="btn" href="https://calendar.google.com/calendar/render?cid=${encodeURIComponent(wc)}" target="_blank" rel="noopener">${$t("Google Kalender")}</a>
+    <button class="btn" data-calcopy="${esc(u)}">${$t("Kopiera länken")}</button></div></div></div>`);}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-calsub],[data-calx],[data-calcopy],#calOv");if(!t)return;
+  if(t.id==="calOv"){if(e.target===t)t.remove();return;}
+  if(t.dataset.calsub){e.preventDefault();if(setOpen)closeSettings();openCalSub(t.dataset.calsub);return;}
+  if(t.dataset.calx){document.getElementById("calOv")?.remove();return;}
+  if(t.dataset.calcopy){e.preventDefault();try{navigator.clipboard.writeText(t.dataset.calcopy).then(()=>toast($t("Länken är kopierad."),"check"),()=>prompt("",t.dataset.calcopy));}catch(x){prompt("",t.dataset.calcopy);}}});
+function remindSecHtml(){const favs=favList().filter(hasCal);
+  return`<p class="hint" style="margin:0 0 6px">${$t("Lägg in dina lags matcher i kalendern, så missar du ingen.")}</p>
+   ${favs.length?`<div class="actions">${favs.map(id=>`<button class="btn small" data-calsub="${esc(id)}">${ic("calendar")} ${esc(C[id].n)}</button>`).join("")}</div>`:`<p class="meta" style="margin:0">${$t("Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.")}</p>`}
+   <div id="pushBox"></div>`;}
+const PUSH_PREFS=[["wish",()=>$t("Matcher i Vill gå"),()=>$t("En vecka före och dagen före matchen.")],["log",()=>$t("Var du där?"),()=>$t("Morgonen efter en match i Vill gå, så att du kan logga den.")]];
+async function fillPushBox(){const box=document.getElementById("pushBox");if(!box||!window.groundlyPush)return;let st="none";try{st=await groundlyPush.state();}catch(e){}
+  if(st==="none"){box.innerHTML="";return;}
+  const head=`<h3 class="sec" style="margin-top:14px">${$t("Påminnelser i telefonen")}</h3>`;
+  if(myState!=="ready"){box.innerHTML=head+`<p class="meta" style="margin:0">${$t("Logga in för att få påminnelser.")} <button class="link strong" data-glogin>${$t("Logga in")}</button></p>`;return;}
+  if(st==="ios-home"){box.innerHTML=head+`<p class="meta" style="margin:0">${$t("På iPhone fungerar påminnelser när Groundly ligger på hemskärmen. Tryck på Dela i Safari, välj Lägg till på hemskärmen och öppna appen därifrån.")}</p>`;return;}
+  if(st==="blocked"){box.innerHTML=head+`<p class="meta" style="margin:0">${$t("Notiser är blockerade för Groundly i webbläsarens inställningar. Tillåt dem där för att få påminnelser.")}</p>`;return;}
+  if(st==="off"){box.innerHTML=head+`<p class="hint" style="margin:0">${$t("Få en notis om matcher du vill gå på, och en fråga morgonen efter om du var där. Högst tre i veckan och aldrig på natten.")}</p><div class="actions"><button class="btn small primary" data-pushon="1">${$t("Slå på påminnelser")}</button></div>`;return;}
+  const pr=Object.assign({wish:true,log:true},await groundlyPush.prefs()||{});
+  box.innerHTML=head+PUSH_PREFS.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-pushpref="${k}"${pr[k]!==false?" checked":""}><span><b>${l()}</b><small>${d()}</small></span></label>`).join("")+`<div class="actions"><button class="link" data-pushoff="1">${$t("Stäng av påminnelser på den här enheten")}</button></div>`;}
+window.addEventListener("groundly-push",()=>{if(setOpen)fillPushBox();});
+async function pushOn(){if(!window.groundlyPush)return;try{const r=await groundlyPush.enable();if(r==="on")toast($t("Påminnelserna är påslagna."),"check");else if(r==="blocked")toast($t("Notiser är blockerade för Groundly i webbläsarens inställningar. Tillåt dem där för att få påminnelser."));}catch(e){toast($t("Det gick inte att slå på påminnelserna just nu."));}fillPushBox();}
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-pushon],[data-pushoff],[data-pushask]");if(!t||!window.groundlyPush)return;e.preventDefault();
+  if(t.dataset.pushask){document.getElementById("pushAsk")?.remove();store.set("fk-pushask","1");if(t.dataset.pushask==="1")await pushOn();return;}
+  if(t.dataset.pushon){await pushOn();return;}
+  if(t.dataset.pushoff){await groundlyPush.disable();toast($t("Påminnelserna är avstängda på den här enheten."));fillPushBox();}});
+document.addEventListener("change",async e=>{const t=e.target;if(!t.dataset||!t.dataset.pushpref||!window.groundlyPush)return;try{await groundlyPush.setPrefs({[t.dataset.pushpref]:t.checked});}catch(x){toast($t("Kunde inte spara."));}});
+// fråga om påminnelser när någon lägger en match i Vill gå (en gång)
+async function maybeAskPush(){if(!window.groundlyPush||store.get("fk-pushask")==="1"||document.getElementById("pushAsk"))return;let st="none";try{st=await groundlyPush.state();}catch(e){}if(st!=="off")return;
+  document.body.insertAdjacentHTML("beforeend",`<div id="pushAsk" class="pushask" role="dialog" aria-label="${esc($t("Påminnelser"))}"><p>${ic("calendar")} ${$t("Vill du få en påminnelse innan matchen, och en fråga efteråt om du var där?")}</p><div class="actions"><button class="btn small primary" data-pushask="1">${$t("Ja, påminn mig")}</button><button class="btn small" data-pushask="0">${$t("Inte nu")}</button></div></div>`);}
 // ---------- render ----------
 function render(){
   const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
