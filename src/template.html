@@ -932,6 +932,10 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .tlgcaret{display:inline-block;width:1.5px;height:1em;background:var(--fg);margin-left:1px;vertical-align:-2px;animation:tlgBlink 1s steps(1) infinite}@keyframes tlgBlink{50%{opacity:0}}
 .tlgbtn,.tlgvote{font-style:normal;justify-self:start;border-radius:8px;padding:3px 10px;font-size:13px;font-weight:600}.tlgbtn{background:var(--accent);color:#fff}.tlgvote{border:1px solid var(--line);display:inline-block}
 @media (prefers-reduced-motion:reduce){.tlgtap,.tlgtap em,.tlgcaret{animation:none}}
+.fkpreview{font-size:13px;background:var(--accent-soft);border-radius:10px;padding:8px 12px;margin:0 0 12px}.fkpreview a{color:inherit;font-weight:600}
+.fkhero{padding:4px 2px 14px}.fkhero h1{font-size:calc(26px*var(--fs));line-height:1.15;margin:0 0 6px;letter-spacing:-.01em}.fkhero p{margin:0;color:var(--muted)}
+.fkcta{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.fkcta>div{display:grid;gap:2px;min-width:0;flex:1 1 180px}
+.fkgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.fkgo{all:unset;box-sizing:border-box;cursor:pointer;display:grid;justify-items:center;gap:6px;padding:12px 6px;border-radius:12px;background:var(--card,var(--bg));border:1px solid var(--line);text-align:center;font-size:13px;font-weight:600}.fkgo:focus-visible{outline:2px solid var(--accent)}.fkgo svg{width:22px;height:22px;color:var(--accent)}
 .trbox{max-height:88vh;overflow:auto}.trbox>*{flex-shrink:0}.trbox>.chips{margin:4px 0 2px;flex-wrap:wrap}.trrow{border-top:1px solid var(--line)}.trhead{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:3px;width:100%;padding:10px 2px}
 .trsv{font-size:calc(12px*var(--fs));color:var(--muted)}.trcur{font-weight:600}.trhead .pill{justify-self:start}.trbody{padding:0 2px 12px;display:grid;gap:10px}
 .trsug{background:var(--bg);border-radius:10px;padding:8px 10px;display:grid;gap:6px}.trsug .actions{margin:0}.trsug .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
@@ -1422,6 +1426,14 @@ try{history.replaceState({m:mode,y:0},"");}catch(e){}window.__gmode=mode;
 document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>goTop(b.dataset.mode));
 // bottenmenyn
 const MORE_MODES=["profil","matcher","tabell","klubbar","landslag","arenor","tips","quiz"];
+// ---------- FÖRHANDSVISNING: fokusläge (?fokus=1 slår på, ?fokus=0 stänger av) ----------
+// Matcher får Communitys plats i menyraden, plusknappen loggar en match direkt och startsidan visar bara
+// matcher nära dig, logga-knappen och din säsong. Texterna är bara på svenska tills läget eventuellt blir standard.
+const FOKUS=(()=>{try{const u=new URLSearchParams(location.search).get("fokus");if(u==="1")localStorage.setItem("fk-fokus","1");if(u==="0")localStorage.removeItem("fk-fokus");return localStorage.getItem("fk-fokus")==="1";}catch(e){return false;}})();
+if(FOKUS){MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"forum","reportage");
+  const cb=document.querySelector('.bnav [data-bn="community"]');if(cb){cb.dataset.bn="matcher";cb.innerHTML=`<svg width="22" height="22" aria-hidden="true" style="width:22px;height:22px"><use href="#i-calendar"/></svg><span>${$t("Matcher")}</span>`;}
+  const mm=document.querySelector('#moreSheet [data-bn="matcher"]');if(mm){mm.dataset.bn="community";mm.innerHTML=`<b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span>${$t("Community")}</span>`;}
+  const lg=document.getElementById("bnLog");if(lg){lg.setAttribute("aria-label","Logga en match");const sp=lg.querySelector("span");if(sp)sp.textContent="Logga";}}
 // Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
 const isComm=m=>m==="forum"||m==="reportage";
 const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"forum";}catch(e){return"forum";}};
@@ -1437,6 +1449,7 @@ function closeMore(){closePlus();const sh=document.getElementById("moreSheet");i
 document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMore,#bnLog,#moreBack");if(!b)return;
   if(b.id==="moreBack"){closeMore();return;}
   if(b.id==="bnMore"){const sh=document.getElementById("moreSheet");const open=sh.hidden;sh.hidden=!open;b.setAttribute("aria-expanded",String(open));return;}
+  if(b.id==="bnLog"&&FOKUS){closeMore();if(myState!=="ready"){goTop("mine");return;}openLogMatch(null,null);return;}
   if(b.id==="bnLog"){const sh=document.getElementById("plusSheet");const open=sh.hidden;closeMore();if(open){sh.hidden=false;b.setAttribute("aria-expanded","true");}return;}
   const to=b.dataset.bn==="community"?(isComm(mode)?mode:commLast()):b.dataset.bn;
   closeMore();if(to!==mode||to==="mine")goTop(to);window.scrollTo({top:0});},true);
@@ -4130,6 +4143,7 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   const ob=onboardHtml();
   // nya användare (inte inloggade, inte klara med kom igång eller inga loggade matcher) får Så funkar Groundly överst, alltid
   const fresh=myState!=="ready"||!MY.onboarded||!(MY.attended&&MY.attended.length);
+  if(FOKUS){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=fokusHomeHtml(ob);return;}
   el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
@@ -4216,7 +4230,19 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   if(dd<=0){if(!m.kickoff)return"i dag";const h=Math.max(0,Math.ceil((Date.parse(m.kickoff)-Date.now())/36e5));return h<=0?$t("pågår"):$t("{0} tim",[h]);}
   return`${dd} ${dd===1?$t("dag"):$t("dagar")}`;}
 // Hem: tre matcher i taget, "Visa fler" fäller ut resten
-const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false,wkOpen:false};
+const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false,wkOpen:false};if(FOKUS){homeMore.wkOpen=true;}
+// fokusläge: en mening om vad appen är, matcher nära dig, logga en match, din säsong och vägar vidare
+function fokusHomeHtml(ob){
+  const head=`<div class="fkpreview">Förhandsvisning av fokusläget · <a href="?fokus=0">Tillbaka till nuvarande startsida</a></div>
+   <section class="fkhero"><h1>Hitta matcher nära dig och samla alla du sett</h1><p>Från Champions League till division 4. Logga varje match, se din statistik och upptäck nya arenor.</p></section>`;
+  const logged=myState==="ready";const n=logged?(MY.attended||[]).length:0;
+  const cta=`<article class="tip fkcta"><div><b>${n?`Du har loggat ${n} ${n===1?"match":"matcher"}`:"Varit på en match?"}</b><span class="meta">${n?"Lägg till nästa och se statistiken växa.":"Spara den på tio sekunder, så börjar din groundhopperstatistik."}</span></div>
+     <button class="btn primary" ${logged?'data-plus="log"':'data-glogin="up"'}>${ic("plus")} Logga en match</button></article>`;
+  const go=(attr,icon,t)=>`<button class="fkgo" ${attr}>${ic(icon)}<span>${t}</span></button>`;
+  const more=`<section class="fkmore"><h3 class="sec">Upptäck mer</h3><div class="fkgrid">${go('data-gomode="tips"',"flame","Derbyn och tips")}${go('data-gomode="arenor"',"stadium","Arenor")}${go('data-gomode="klubbar"',"ball","Klubbar")}${go('data-gomode="tabell"',"table","Tabeller")}${go('data-gomode="landslag"',"globe","Landslag")}${go('data-gomode="forum"',"chat","Community")}</div></section>`;
+  let w="";try{w=weekendHtml();}catch(e){}let m="";try{m=mineSnap();}catch(e){}
+  return head+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
+
 const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
 // "visa mer" på Hem: fäll ut under, skärmen står still. Fälls något ihop och rutans topp hamnat ovanför skärmen, skrolla till rutans topp.
 document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;const card=t.closest("article");const idx=card?[...card.parentElement.children].indexOf(card):-1;
@@ -5109,7 +5135,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-tlguide],[
 // ---------- render ----------
 function render(){
   const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
-  {const sb=document.getElementById("sub");if(mode==="hem"){sb.textContent=$t("Ett fotbollscommunity där du träffar likasinnade, delar matchupplevelser, hittar nya matcher och upptäcker ditt nästa fotbollsäventyr.");const kk=document.getElementById("kicker");if(kk)kk.textContent=$t("Möt. Upptäck. Upplev.");}else sb.textContent=SUB[mode];}
+  {const sb=document.getElementById("sub");{const it=document.getElementById("intro");if(it)it.style.display=FOKUS&&mode==="hem"?"none":"";}if(mode==="hem"){sb.textContent=$t("Ett fotbollscommunity där du träffar likasinnade, delar matchupplevelser, hittar nya matcher och upptäcker ditt nästa fotbollsäventyr.");const kk=document.getElementById("kicker");if(kk)kk.textContent=$t("Möt. Upptäck. Upplev.");}else sb.textContent=SUB[mode];}
   {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Reportage"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
    const intro=document.getElementById("intro");if(intro)intro.hidden=mode!=="hem";}
   document.getElementById("foot").innerHTML=mode==="klubbar"
