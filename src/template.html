@@ -850,7 +850,7 @@ html:root:not([data-look]) .tip.hero:after{content:"";position:absolute;inset:0;
 
 /* Community: växla mellan Forum och Reportage */
 .commtabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px}
-.commtabs button{all:unset;box-sizing:border-box;cursor:pointer;text-align:center;font:600 calc(15px*var(--fs)) var(--f-body);color:var(--muted);padding:9px 10px;border-radius:9px}
+.commtabs button{all:unset;position:relative;box-sizing:border-box;cursor:pointer;text-align:center;font:600 calc(15px*var(--fs)) var(--f-body);color:var(--muted);padding:9px 10px;border-radius:9px}
 .commtabs button[aria-current="true"]{background:var(--accent);color:var(--chalk)}
 .commtabs button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 @media (min-width:761px){.commtabs{display:none}}
@@ -3823,7 +3823,8 @@ function repActivity(){if(!myId)return null;
 function repSeen(part){const a=repActivity();if(!a)return;const now=new Date().toISOString();const s=a.seen;
   if(!part||part==="rep"){s.c=now;s.l=a.likes;}if(!part||part==="forum")s.f=now;try{store.set("fk-repseen",JSON.stringify(s));}catch(e){}actBadge();}
 function actBadge(){const a=notifOn("act")?repActivity():null;const nr=a?a.newC.length+a.newL:0,nf=a?a.newF.length:0;
-  for(const [el,n] of [[document.querySelector('.bnav [data-bn="community"]'),nr+nf],[document.getElementById("m-reportage"),nr],[document.getElementById("m-forum"),nf],[document.querySelector('.commtabs [data-bn="reportage"]'),nr],[document.querySelector('.commtabs [data-bn="forum"]'),nf]]){if(!el)continue;let d=el.querySelector(".actdot");
+  const tabs=(k,n)=>[...document.querySelectorAll(`.commtabs [data-bn="${k}"]`)].map(el=>[el,n]);
+  for(const [el,n] of [[document.querySelector('.bnav [data-bn="community"]'),nr+nf],[document.getElementById("m-reportage"),nr],[document.getElementById("m-forum"),nf],...tabs("reportage",nr),...tabs("forum",nf)]){if(!el)continue;let d=el.querySelector(".actdot");
     if(n&&!d){d=document.createElement("span");d.className="actdot";el.appendChild(d);}if(d){if(n)d.textContent=n>9?"9+":n;else d.remove();}}
   document.querySelectorAll('section:not([hidden]) .commtabs').forEach(()=>{});}
 function activityHtml(){if(!notifOn("act"))return"";const a=repActivity();if(!a||!(a.newC.length+a.newL+a.newF.length))return"";
