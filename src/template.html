@@ -4193,7 +4193,7 @@ function hotHtml(){const cut=new Date(Date.now()-30*864e5).toISOString().slice(0
   return`<article class="tip hot"><div class="lbl">${ic("flame")} ${$t("Hett just nu")}</div><p class="meta">${hotTab==="pepp"?$t("Matcherna som communityn peppar mest inför de närmaste dagarna."):$t("De senaste 30 dagarna, från alla som visar sina matcher.")}</p>
     <div class="chips wrapchips" role="group" aria-label="${$t("Topplista")}">${tabs.map(([k,l])=>`<button class="chip" data-hot="${k}" aria-pressed="${hotTab===k}">${l}</button>`).join("")}</div>
     ${note}${body?`<ol class="hotlist">${body}</ol>`:`<p class="meta">${$t("Ingen har loggat något här än.")}</p>`}</article>`;}
-document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-hot]");if(!t)return;hotTab=t.dataset.hot;renderFlode();});
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-hot]");if(!t)return;flodeKeep(()=>{hotTab=t.dataset.hot;renderFlode();});});
 function renderFlode(){const el=document.getElementById("flodeList");if(!el)return;
   const all=flodeEvents();
   {const miss=[...new Set(all.map(e=>e.uid))].filter(u=>u!==myId&&!(u in NAMES));if(miss.length&&typeof resolveNames==="function")resolveNames(miss).then(()=>{if(mode==="flode")queueFlode();}).catch(()=>{});}const list=flodeKind==="alla"?all:all.filter(e=>flKindOf(e.t)===flodeKind);
@@ -4201,8 +4201,11 @@ function renderFlode(){const el=document.getElementById("flodeList");if(!el)retu
   const loading=forumState==="loading"&&repState!=="ready";
   const sharing=myState==="ready"&&!MY.share?`<div class="notice">${(PH()?$t("Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig."):$t("Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar och sällskap delas aldrig."))} <button class="btn small primary" data-share="1">${$t("Visa mina matcher för andra")}</button></div>`:"";
   const empty=`<div class="empty"><b>${flodeKind==="alla"?$t("Det är lugnt just nu"):$t("Inget här de senaste {0} dagarna",[FL_DAYS])}</b><div>${$t("Skriv en matchberättelse, betygsätt en arena du varit på eller starta en tråd i forumet, så syns det här.")}</div><div class="actions"><button class="btn small primary" data-gomode="reportage">${$t("Skriv matchberättelse")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button></div></div>`;
-  el.innerHTML=(flodeKind==="alla"||flodeKind==="mat"?hotHtml():"")+chips+(loading?`<div class="empty">${$t("Hämtar…")}</div>`:list.length?`<div class="flist">${list.slice(0,lim("flo",25)).map(flodeItem).join("")}</div>${limBtns("flo",list.length,25)}`:empty)+sharing;}
-document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-flkind]");if(!t)return;flodeKind=t.dataset.flkind;delete LIM.flo;renderFlode();});
+  el.innerHTML=hotHtml()+chips+(loading?`<div class="empty">${$t("Hämtar…")}</div>`:list.length?`<div class="flist">${list.slice(0,lim("flo",25)).map(flodeItem).join("")}</div>${limBtns("flo",list.length,25)}`:empty)+sharing;}
+// filter och flikar byts utan att sidan hoppar: listan behåller sin höjd tills man lämnar vyn
+function flodeKeep(fn){const el=document.getElementById("flodeList");const h=el?el.offsetHeight:0;fn();if(el&&h)el.style.minHeight=Math.max(h,parseFloat(el.style.minHeight)||0)+"px";}
+window.addEventListener("gmode",e=>{if(e.detail!=="flode"){const el=document.getElementById("flodeList");if(el)el.style.minHeight="";}});
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-flkind]");if(!t)return;flodeKeep(()=>{flodeKind=t.dataset.flkind;delete LIM.flo;renderFlode();});});
 function latestHtml(){const parts=[];
   if(repState==="ready"){const reps=allReps().filter(r=>!r.draft);const last=reps.slice().sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0];
     const ym=new Date().toISOString().slice(0,7);const pop=reps.filter(r=>String(r.at).startsWith(ym)).map(r=>({r,n:likeCount(r.key)})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
