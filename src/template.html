@@ -981,6 +981,9 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .tip.hero.fkdark .hmore,.tip.hero.fkdark .hrow{color:#fff;border-color:rgba(255,255,255,.18)}
 :root[data-look="ticket"] .tip.hero.fkdark>.lbl{border-bottom-color:rgba(255,255,255,.28)}
 .tip.hero.fkdark:after{display:none}
+.tip.hero.fktext h1{color:#fff;font-size:calc(28px*var(--fs));line-height:1.12;margin:6px 0 10px;letter-spacing:-.01em}
+:root[data-look="ticket"] .tip.hero.fktext h1{text-transform:uppercase;font-weight:800;font-size:calc(32px*var(--fs))}
+.tip.hero.fktext p{margin:0 0 4px;font-size:calc(17px*var(--fs));line-height:1.45}
 /* Veckans match blir en biljett: urklipp i kanterna och perforering */
 :root[data-look="ticket"] .tip.hero{position:relative;border:0;background:var(--surface);box-shadow:var(--shadow);overflow:visible;
   -webkit-mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat;
@@ -4345,8 +4348,11 @@ const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false
 // fokusläge: en mening under rubriken (utan antal serier, så att den passar alla länder)
 function fokusCoverage(){return esc($t("Varje match räknas. Spara allt du ser och hitta nästa äventyr bland serier från hela världen."));}
 // fokusläge: en mening om vad appen är, matcher nära dig, logga en match, din säsong och vägar vidare
+// fokusläge: vad biljetten överst visar (?biljett=match eller ?biljett=text), för att jämföra två förslag
+function fkTicket(){try{const u=new URLSearchParams(location.search).get("biljett");if(u==="text"||u==="match")localStorage.setItem("fk-tkt",u);return localStorage.getItem("fk-tkt")==="text"?"text":"match";}catch(e){return"match";}}
 function fokusHomeHtml(ob){
-  const head=`<div class="fkpreview">${$t("Förhandsvisning av fokusläget")} · <a href="?fokus=0">${$t("Tillbaka till nuvarande startsida")}</a></div>
+  const tk=fkTicket();const sw=(k,l)=>tk===k?`<b>${l}</b>`:`<a href="?biljett=${k}">${l}</a>`;
+  const head=`<div class="fkpreview">${$t("Förhandsvisning av fokusläget")} · <a href="?fokus=0">${$t("Tillbaka till nuvarande startsida")}</a><br>Biljetten: ${sw("match","Veckans match")} · ${sw("text","Texten")}</div>
    <section class="fkhero"><h1>${$t("Hitta matcher nära dig och samla alla du har sett, stora som små.")}</h1><p>${fokusCoverage()}</p></section>`;
   const logged=myState==="ready";const n=logged?(MY.attended||[]).length:0;
   const cta=`<article class="tip fkcta"><div><b>${n?$tn(n,"Du har loggat 1 match","Du har loggat {n} matcher"):$t("Varit på en match?")}</b><span class="meta">${n?$t("Lägg till nästa och se statistiken växa."):$t("Spara den på tio sekunder, så börjar din groundhopperstatistik.")}</span></div>
@@ -4355,8 +4361,11 @@ function fokusHomeHtml(ob){
   const more=`<section class="fkmore"><h3 class="sec">${$t("Upptäck mer")}</h3><div class="fkgrid">${go('data-gomode="tips"',"flame",$t("Derbyn och tips"))}${go('data-gomode="arenor"',"stadium",$t("Arenor"))}${go('data-gomode="klubbar"',"ball",$t("Klubbar"))}${go('data-gomode="tabell"',"table",$t("Tabeller"))}${go('data-gomode="landslag"',"globe",$t("Landslag"))}${go('data-gomode="flode"',"chat",$t("Community"))}</div></section>`;
   let w="";try{w=weekendHtml();}catch(e){}let m="";try{m=mineSnap();}catch(e){}
   // Veckans match som en mörk biljett överst, så att startsidan får en tydlig blickfångare
-  let t="";try{t=heroHtml().replace('class="tip hero"','class="tip hero fkdark"');}catch(e){}
   const [pv,hero]=head.split("\n   ");
+  // alternativ: rubriken och undertexten i biljetten i stället för Veckans match
+  if(tk==="text"){const t=`<article class="tip hero fkdark fktext"><div class="lbl">Groundly</div><h1>${$t("Hitta matcher nära dig och samla alla du har sett, stora som små.")}</h1><p>${fokusCoverage()}</p></article>`;
+    return pv+t+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
+  let t="";try{t=heroHtml().replace('class="tip hero"','class="tip hero fkdark"');}catch(e){}
   return pv+t+hero+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
 
 const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
