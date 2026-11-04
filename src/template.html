@@ -969,6 +969,18 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 :root[data-look="ticket"] .btn.primary{background:var(--fg);border-color:var(--fg);color:#fff}
 :root[data-look="ticket"] .btn{border-radius:4px}
 :root[data-look="ticket"] .chip[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:#fff}
+
+/* fokusläget: Veckans match som mörk biljett överst */
+.tip.hero.fkdark{--tk:#18213D;background:var(--tk)!important;border-color:var(--tk)!important;color:#fff;margin-bottom:6px}
+.tip.hero.fkdark .lbl{color:#F2B84B}
+.tip.hero.fkdark .teams.big button,.tip.hero.fkdark .teams .vs,.tip.hero.fkdark b{color:#fff}
+.tip.hero.fkdark .cd,.tip.hero.fkdark .venue,.tip.hero.fkdark .meta,.tip.hero.fkdark p{color:#C9D2DE}
+.tip.hero.fkdark .link,.tip.hero.fkdark .link.more{color:#fff}
+.tip.hero.fkdark .btn{background:transparent;border-color:rgba(255,255,255,.45);color:#fff}
+.tip.hero.fkdark .btn.primary,.tip.hero.fkdark .btn[aria-pressed="true"]{background:#F2B84B;border-color:#F2B84B;color:#18213D}
+.tip.hero.fkdark .hmore,.tip.hero.fkdark .hrow{color:#fff;border-color:rgba(255,255,255,.18)}
+:root[data-look="ticket"] .tip.hero.fkdark>.lbl{border-bottom-color:rgba(255,255,255,.28)}
+.tip.hero.fkdark:after{display:none}
 /* Veckans match blir en biljett: urklipp i kanterna och perforering */
 :root[data-look="ticket"] .tip.hero{position:relative;border:0;background:var(--surface);box-shadow:var(--shadow);overflow:visible;
   -webkit-mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat;
@@ -4342,7 +4354,10 @@ function fokusHomeHtml(ob){
   const go=(attr,icon,t)=>`<button class="fkgo" ${attr}>${ic(icon)}<span>${t}</span></button>`;
   const more=`<section class="fkmore"><h3 class="sec">${$t("Upptäck mer")}</h3><div class="fkgrid">${go('data-gomode="tips"',"flame",$t("Derbyn och tips"))}${go('data-gomode="arenor"',"stadium",$t("Arenor"))}${go('data-gomode="klubbar"',"ball",$t("Klubbar"))}${go('data-gomode="tabell"',"table",$t("Tabeller"))}${go('data-gomode="landslag"',"globe",$t("Landslag"))}${go('data-gomode="flode"',"chat",$t("Community"))}</div></section>`;
   let w="";try{w=weekendHtml();}catch(e){}let m="";try{m=mineSnap();}catch(e){}
-  return head+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
+  // Veckans match som en mörk biljett överst, så att startsidan får en tydlig blickfångare
+  let t="";try{t=heroHtml().replace('class="tip hero"','class="tip hero fkdark"');}catch(e){}
+  const [pv,hero]=head.split("\n   ");
+  return pv+t+hero+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
 
 const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
 // "visa mer" på Hem: fäll ut under, skärmen står still. Fälls något ihop och rutans topp hamnat ovanför skärmen, skrolla till rutans topp.
