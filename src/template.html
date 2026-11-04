@@ -589,7 +589,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .flic{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--surface);color:var(--accent);margin-top:1px}.flic .ic{width:16px;height:16px}
 #flodeList .flist{margin-top:10px}#flodeList .hot{margin-bottom:12px}#flodeList .hot .chips{margin:8px 0 4px}
 .hotlist{margin:6px 0 0;padding-left:24px;display:flex;flex-direction:column;gap:8px}.hotlist li{font-variant-numeric:tabular-nums}.hotlist li::marker{font-weight:700;color:var(--accent)}
-.hotlist li{display:list-item}.hotlist li>.hotm{display:inline-flex;flex-direction:column;min-width:0;max-width:calc(100% - 5.5em);vertical-align:top}.hotlist .hotn .ic{width:14px;height:14px;vertical-align:-2px}.hotlist .hotm small{color:var(--muted)}.hotlist .hotn{float:right;color:var(--muted);font-size:calc(14px*var(--fs));white-space:nowrap}.hotlist li.me b{color:var(--accent)}#flodeList .notice{margin-top:12px}
+.hotlist li{display:list-item}.hotlist li>.hotm{display:inline-flex;flex-direction:column;min-width:0;max-width:calc(100% - 5.5em);vertical-align:top}.hotlist .hotn .ic{width:14px;height:14px;vertical-align:-2px}.hotrow{display:inline-flex;width:100%;gap:10px;align-items:center;justify-content:space-between;vertical-align:top}.hotlist li>.hotrow>.hotm{display:flex;flex-direction:column;min-width:0;flex:1}.hotrow>.btn,.hotrow>.meta{flex:none}.hotlist .hotm small{color:var(--muted)}.hotlist .hotn{float:right;color:var(--muted);font-size:calc(14px*var(--fs));white-space:nowrap}.hotlist li.me b{color:var(--accent)}#flodeList .notice{margin-top:12px}
 .btn.on{color:var(--bad)}
 
 .qshirt{display:block;width:120px;height:auto;margin:4px 0 8px;color:var(--fg)}
@@ -4173,22 +4173,26 @@ function flodeItem(e){const u=`<b>${userLink(e.uid)}</b>`,when=e.t==="mat"?fmtDa
       myState==="ready"&&e.uid!==myId?`<button class="btn small${mine?" on":""}" data-cheer="${esc(k)}" aria-pressed="${mine}" aria-label="${$t("Snyggt")}"${cheerBusy?" disabled":""}>${ic("heart",mine?"on":"")}${n?` ${n}`:""}</button>`:(n?`<span class="meta">${ic("heart")} ${n}</span>`:""));}
   return"";}
 // ---------- Hett just nu: topplistor för de senaste 30 dagarna, ur matcherna som delas ----------
-let hotTab="mat";
+let hotTab="pepp";
 function hotHtml(){const cut=new Date(Date.now()-30*864e5).toISOString().slice(0,10),today=new Date().toISOString().slice(0,10);
   const rows=[];Object.keys(PUBLIC||{}).forEach(uid=>{if(blk(uid))return;pubRows(uid).forEach(r=>{if(r.d>=cut&&r.d<=today)rows.push({...r,uid});});});
-  if(!rows.length)return"";
   const nm=(id,n)=>id&&C[id]?C[id].n:n;const top=(m,k)=>[...m.values()].sort((a,b)=>b.u.size-a.u.size||b.d.localeCompare(a.d)).slice(0,k);
-  let body="";
-  if(hotTab==="mat"){const m=new Map();rows.forEach(r=>{const k=r.d+"|"+(r.hi||norm(r.h))+"|"+(r.ai||norm(r.a));const x=m.get(k)||{r,d:r.d,u:new Set()};x.u.add(r.uid);m.set(k,x);});
+  let body="",note="";
+  if(hotTab==="pepp"){const now=Date.now(),end=now+10*864e5;
+    let list=dbState==="ready"?MATCHES.filter(m=>m.kickoff&&mTs(m)>now&&mTs(m)<end&&hypeCount(m._id)>0).sort((a,b)=>hypeCount(b._id)-hypeCount(a._id)||mTs(a)-mTs(b)).slice(0,5):[];
+    if(!list.length&&dbState==="ready")note=`<p class="meta">${$t("Ingen har peppat någon match än. Här är tre heta kandidater – bli först!")}</p>`;
+    if(list.length<3&&dbState==="ready"){const have=new Set(list.map(m=>m._id));list=list.concat(hypeCandidates().filter(m=>!have.has(m._id)).slice(0,3-list.length));if(!list.length)note="";}
+    body=list.map(m=>`<li><div class="hotrow"><div class="hotm"><b>${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))}</b><small>${esc([dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff),m.venue].filter(Boolean).join(" · "))}</small></div>${hypeBtn(m)}</div></li>`).join("");}
+  else if(hotTab==="mat"){const m=new Map();rows.forEach(r=>{const k=r.d+"|"+(r.hi||norm(r.h))+"|"+(r.ai||norm(r.a));const x=m.get(k)||{r,d:r.d,u:new Set()};x.u.add(r.uid);m.set(k,x);});
     body=top(m,5).map(x=>`<li><div class="hotm"><b>${esc(nm(x.r.hi,x.r.h))}${x.r.sc?` ${esc(x.r.sc)} `:" – "}${esc(nm(x.r.ai,x.r.a))}</b><small>${esc([x.r.v,fmtDate(x.d)].filter(Boolean).join(" · "))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}" aria-label="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
   else if(hotTab==="arena"){const m=new Map();rows.filter(r=>r.v).forEach(r=>{const k=arenaKey(r.v);const x=m.get(k)||{v:r.v,c:r.c,d:r.d,u:new Set()};x.u.add(r.uid);if(r.d>x.d)x.d=r.d;m.set(k,x);});
     body=top(m,5).map(x=>`<li><div class="hotm"><b>${esc(x.v)}</b><small>${esc($t(x.c||""))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}" aria-label="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
   else{const m=new Map();rows.forEach(r=>{const x=m.get(r.uid)||{uid:r.uid,d:r.d,u:new Set(),a:new Set()};x.u.add(r.id);if(r.v)x.a.add(arenaKey(r.v));m.set(r.uid,x);});
     body=top(m,5).map(x=>`<li class="${x.uid===myId?"me":""}"><div class="hotm"><b>${userLink(x.uid)}</b><small>${$tn(x.a.size,"1 arena","{n} arenor")}</small></div><span class="hotn">${$tn(x.u.size,"1 match","{n} matcher")}</span></li>`).join("");}
-  const tabs=[["mat",$t("Matcher")],["arena",$t("Arenor")],["hop",$t("Groundhoppers")]];
-  return`<article class="tip hot"><div class="lbl">${ic("flame")} ${$t("Hett just nu")}</div><p class="meta">${$t("De senaste 30 dagarna, från alla som visar sina matcher.")}</p>
+  const tabs=[["pepp",$t("Peppat")],["mat",$t("Matcher")],["arena",$t("Arenor")],["hop",$t("Groundhoppers")]];
+  return`<article class="tip hot"><div class="lbl">${ic("flame")} ${$t("Hett just nu")}</div><p class="meta">${hotTab==="pepp"?$t("Matcherna som communityn peppar mest inför de närmaste dagarna."):$t("De senaste 30 dagarna, från alla som visar sina matcher.")}</p>
     <div class="chips wrapchips" role="group" aria-label="${$t("Topplista")}">${tabs.map(([k,l])=>`<button class="chip" data-hot="${k}" aria-pressed="${hotTab===k}">${l}</button>`).join("")}</div>
-    ${body?`<ol class="hotlist">${body}</ol>`:`<p class="meta">${$t("Ingen har loggat något här än.")}</p>`}</article>`;}
+    ${note}${body?`<ol class="hotlist">${body}</ol>`:`<p class="meta">${$t("Ingen har loggat något här än.")}</p>`}</article>`;}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-hot]");if(!t)return;hotTab=t.dataset.hot;renderFlode();});
 function renderFlode(){const el=document.getElementById("flodeList");if(!el)return;
   const all=flodeEvents();
@@ -4284,7 +4288,7 @@ async function homeClick(t){
   if(t.dataset.pub!==undefined){const on=t.dataset.pub==="1";mutate(d=>{d.pub=on;});syncStats();toast(on?$t("Du syns nu i topplistorna."):$t("Du syns inte längre i topplistorna."));return;}
   if(t.dataset.hype){if(!dbNs||!myId||hypeBusy)return;const mid=t.dataset.hype;const cur=HYPE[myId]&&Array.isArray(HYPE[myId].ids)?HYPE[myId].ids:[];
     const next=cur.includes(mid)?cur.filter(x=>x!==mid):[...cur,mid].slice(-60);hypeBusy=true;
-    try{await dbNs.doc("hype/"+myId).set({ids:next});HYPE={...HYPE,[myId]:{ids:next}};}catch(e){toast($t("Kunde inte spara."));}hypeBusy=false;renderHome();return;}
+    try{await dbNs.doc("hype/"+myId).set({ids:next});HYPE={...HYPE,[myId]:{ids:next}};}catch(e){toast($t("Kunde inte spara."));}hypeBusy=false;if(mode==="flode")renderFlode();else renderHome();return;}
   if(t.dataset.homerep){repOpen=t.dataset.homerep;repSort="nya";repClub=null;setMode("reportage");window.scrollTo({top:0});return;}
   if(t.dataset.homethread){openThread=t.dataset.homethread;fKind="alla";setMode("forum");window.scrollTo({top:0});return;}
   if(t.dataset.gorep){setMode("reportage");return;}
@@ -4293,7 +4297,7 @@ async function homeClick(t){
 function startHome(db){if(!db){statsState="none";return;}
   db.collection("stats").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});STATS=o;statsState="ready";if(mode==="hem")renderHome();},()=>{statsState="none";});
   db.collection("votes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});VOTES=o;votesLoaded=true;if(mode==="hem")renderHome();},()=>{});
-  db.collection("hype").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});HYPE=o;if(mode==="hem")renderHome();},()=>{});}
+  db.collection("hype").onSnapshot(s=>{queueFlode();const o={};s.docs.forEach(d=>{o[d.id]=d.data();});HYPE=o;if(mode==="hem")renderHome();},()=>{});}
 
 // ---------- hem: fler block ----------
 const ym=()=>new Date().toISOString().slice(0,7);
