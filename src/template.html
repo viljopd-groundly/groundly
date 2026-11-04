@@ -4305,6 +4305,14 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-homecust],
   if(t.dataset.hcmv){const k=t.dataset.hcmv,dir=+t.dataset.dir;const o=homeOrder();const i=o.indexOf(k),j=i+dir;if(j<0||j>=o.length)return;[o[i],o[j]]=[o[j],o[i]];const c=homeCfg();saveHomeCfg({order:o,on:{...c.on}});openHomeCust();}});
 document.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.hcon)return;const c=homeCfg();saveHomeCfg({order:homeOrder(),on:{...c.on,[t.dataset.hcon]:t.checked}});openHomeCust();});
 const isHomeBtn=t=>t.dataset.wmno||t.dataset.gomyrep||t.dataset.gothread||t.dataset.actseen||t.dataset.vote!==undefined||t.dataset.wkr||t.dataset.gomode||(t.dataset.homeedit&&mode==="hem")||t.dataset.board||t.dataset.pub!==undefined||t.dataset.hype||t.dataset.homerep||t.dataset.homethread||t.dataset.gomine||t.dataset.goquiz||t.dataset.gorep;
+// öppna en matchberättelse eller forumtråd och scrolla fram till den (sökning och filter nollställs så att den syns)
+function goToItem(kind,key){
+  if(kind==="r"){repOpen=key;repSort="nya";repClub=null;repQ="";const q=document.getElementById("repQ");if(q){q.value="";document.getElementById("repQClear").hidden=true;}try{LIM.rp=Math.max(lim("rp",5),5);}catch(e){}setMode("reportage");}
+  else{openThread=key;fKind="alla";accClub=null;forumQ="";const q=document.getElementById("forumQ");if(q){q.value="";document.getElementById("forumQClear").hidden=true;}setMode("forum");}
+  const sel=kind==="r"?`[data-rep="${CSS.escape(key)}"]`:`[data-thread="${CSS.escape(key)}"]`;
+  const go=n=>{const b=document.querySelector(sel);const a=b&&(b.closest("article")||b);const tb=document.querySelector(".topbar");
+    if(a)window.scrollTo({top:Math.max(0,a.getBoundingClientRect().top+scrollY-(tb?tb.offsetHeight:0)-12)});else if(n>0)setTimeout(()=>go(n-1),150);else window.scrollTo({top:0});};
+  requestAnimationFrame(()=>go(10));}
 async function homeClick(t){
   if(t.dataset.gomyrep){repSort="mina";repPopOrder=null;repClub=null;repOpen=null;setMode("reportage");window.scrollTo({top:0});repSeen("rep");return;}
   if(t.dataset.actseen){repSeen();renderHome();return;}
@@ -4321,8 +4329,8 @@ async function homeClick(t){
   if(t.dataset.hype){if(!dbNs||!myId||hypeBusy)return;const mid=t.dataset.hype;const cur=HYPE[myId]&&Array.isArray(HYPE[myId].ids)?HYPE[myId].ids:[];
     const next=cur.includes(mid)?cur.filter(x=>x!==mid):[...cur,mid].slice(-60);hypeBusy=true;
     try{await dbNs.doc("hype/"+myId).set({ids:next});HYPE={...HYPE,[myId]:{ids:next}};}catch(e){toast($t("Kunde inte spara."));}hypeBusy=false;if(mode==="flode")renderFlode();else renderHome();return;}
-  if(t.dataset.homerep){repOpen=t.dataset.homerep;repSort="nya";repClub=null;setMode("reportage");window.scrollTo({top:0});return;}
-  if(t.dataset.homethread){openThread=t.dataset.homethread;fKind="alla";setMode("forum");window.scrollTo({top:0});return;}
+  if(t.dataset.homerep){goToItem("r",t.dataset.homerep);return;}
+  if(t.dataset.homethread){goToItem("t",t.dataset.homethread);return;}
   if(t.dataset.gorep){setMode("reportage");return;}
   if(t.dataset.gomine){setMode("mine");window.scrollTo({top:0});return;}
   if(t.dataset.goquiz){setMode("quiz");window.scrollTo({top:0});return;}}
@@ -4971,7 +4979,7 @@ function profileHtml(uid){const me=uid===myId;const name=me?(MYNAME||$t("Du")):(
 function openProfile(uid){const o=document.getElementById("profOv");if(o)o.remove();if(!(uid in NAMES)&&uid!==myId)resolveNames([uid]).then(()=>{if(document.getElementById("profOv"))openProfile(uid);});
   document.body.insertAdjacentHTML("beforeend",`<div id="profOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="prT" data-uid="${esc(uid)}">${profileHtml(uid)}</div>`);}
 function goItem(kind,key){document.getElementById("profOv")?.remove();
-  if(kind==="r"){repOpen=key;repSort="nya";repClub=null;setMode("reportage");}else{openThread=key;fKind="alla";accClub=null;setMode("forum");}
+  goToItem(kind==="r"?"r":"t",key);
   deepJump={sel:kind==="r"?`[data-rep="${CSS.escape(key)}"]`:`[data-thread="${CSS.escape(key)}"]`,kind,until:Date.now()+8000};
   const tick=()=>{if(!deepJump)return;const el=document.querySelector(deepJump.sel);if(el){const tb=document.querySelector(".topbar");window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-(tb?tb.offsetHeight:0)-12)});deepJump=null;return;}if(Date.now()<deepJump.until)setTimeout(tick,200);else deepJump=null;};requestAnimationFrame(tick);}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-user],[data-myname],[data-uprep],[data-upthread],#prClose,#profOv,#nmCancel,#nameOv");if(!t)return;
