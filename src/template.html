@@ -4330,15 +4330,8 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   return`${dd} ${dd===1?$t("dag"):$t("dagar")}`;}
 // Hem: tre matcher i taget, "Visa fler" fäller ut resten
 const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false,wkOpen:false};if(FOKUS){homeMore.wkOpen=true;}
-// fokusläge: vad spelschemat faktiskt täcker i användarens land, så att löftet aldrig blir större än datan
-let _fkCov=null;
-function fokusCoverage(){const ctry=myCountry();const tail="Loggningen fungerar för alla nivåer, även matcher som saknas i schemat.";
-  if(!ctry||dbState!=="ready")return tail;const key=ctry+"|"+MATCHES.length;
-  if(!_fkCov||_fkCov.k!==key){const L=new Map();MATCHES.forEach(m=>{const t=+m.tier;if(!(t>0)||!m.comp)return;const h=C[m.home],a=C[m.away];if(!((h&&h.c===ctry)||(a&&a.c===ctry)))return;const cur=L.get(m.comp);if(cur==null||t<cur)L.set(m.comp,t);});
-    _fkCov={k:key,n:L.size,max:L.size?Math.max(...L.values()):0};}
-  const {n,max}=_fkCov;const land=$t(ctry);
-  if(!n)return`Det finns inget spelschema för ${esc(land)} i appen än. ${tail}`;
-  return`Spelschema för ${n} ${n===1?"serie":"serier"} i ${esc(land)}${max>1?`, ner till nivå ${max}`:""}. ${tail}`;}
+// fokusläge: en mening under rubriken (utan antal serier, så att den passar alla länder)
+function fokusCoverage(){return esc($t("Varje match räknas. Spara allt du ser och hitta nästa äventyr bland serier från hela världen."));}
 // fokusläge: en mening om vad appen är, matcher nära dig, logga en match, din säsong och vägar vidare
 function fokusHomeHtml(ob){
   const head=`<div class="fkpreview">Förhandsvisning av fokusläget · <a href="?fokus=0">Tillbaka till nuvarande startsida</a></div>
