@@ -585,6 +585,9 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .flist{display:flex;flex-direction:column;gap:8px}
 .fitem{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--soft,var(--bg));border-radius:12px;padding:9px 12px}
 .fitem .mmain{min-width:0}.fitem .btn{flex:none}.fbitem{align-items:flex-start}
+.flev{justify-content:flex-start;align-items:flex-start}.flev .mmain{flex:1}.flev .link.strong{text-align:left}
+.flic{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--surface);color:var(--accent);margin-top:1px}.flic .ic{width:16px;height:16px}
+#flodeList .flist{margin-top:10px}#flodeList .notice{margin-top:12px}
 .btn.on{color:var(--bad)}
 
 .qshirt{display:block;width:120px;height:auto;margin:4px 0 8px;color:var(--fg)}
@@ -844,7 +847,7 @@ html:root:not([data-look]) .tip.hero:after{content:"";position:absolute;inset:0;
 .calopt small{font-weight:400;color:var(--muted);font-size:calc(12px*var(--fs))}
 
 /* Community: växla mellan Forum och Reportage */
-.commtabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px}
+.commtabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px}
 .commtabs button{all:unset;box-sizing:border-box;cursor:pointer;text-align:center;font:600 calc(15px*var(--fs)) var(--f-body);color:var(--muted);padding:9px 10px;border-radius:9px}
 .commtabs button[aria-current="true"]{background:var(--accent);color:var(--chalk)}
 .commtabs button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
@@ -1056,6 +1059,7 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
 <div class="wrap">
   <div class="modes" role="group" aria-label="Välj vy">
     <button class="mode" id="m-hem" data-mode="hem" aria-pressed="false">Hem</button>
+    <button class="mode" id="m-flode" data-mode="flode" aria-pressed="false">Aktivitet</button>
     <button class="mode" id="m-forum" data-mode="forum" aria-pressed="false">Forum</button>
     <button class="mode" id="m-reportage" data-mode="reportage" aria-pressed="false">Matchberättelser</button>
     <button class="mode" id="m-klubbar" data-mode="klubbar" aria-pressed="true">Klubbar</button>
@@ -1181,9 +1185,15 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
     <datalist id="allClubs"></datalist>
   </section>
 
+  <!-- Aktivitet: det senaste som händer i communityn -->
+  <section id="v-flode" hidden style="display:contents">
+    <div class="commtabs" role="group" aria-label="Community"><button data-bn="flode">Aktivitet</button><button data-bn="forum">Forum</button><button data-bn="reportage">Matchberättelser</button></div>
+    <div class="list" id="flodeList"></div>
+  </section>
+
   <!-- Reportage -->
   <section id="v-reportage" hidden style="display:contents">
-    <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Matchberättelser</button></div>
+    <div class="commtabs" role="group" aria-label="Community"><button data-bn="flode">Aktivitet</button><button data-bn="forum">Forum</button><button data-bn="reportage">Matchberättelser</button></div>
     <div class="reprow"><div id="repTop" class="ftop"></div>
     <label class="search" for="repQ" id="repSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1197,7 +1207,7 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
 
   <!-- Forum -->
   <section id="v-forum" hidden style="display:contents">
-    <div class="commtabs" role="group" aria-label="Community"><button data-bn="forum">Forum</button><button data-bn="reportage">Matchberättelser</button></div>
+    <div class="commtabs" role="group" aria-label="Community"><button data-bn="flode">Aktivitet</button><button data-bn="forum">Forum</button><button data-bn="reportage">Matchberättelser</button></div>
     <div class="reprow"><div id="forumTop" class="ftop"></div>
     <label class="search" for="forumQ" id="forumSearch">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1395,7 +1405,7 @@ const TAGLINES={"sv": "För oss som älskar fotboll.", "en": "For fans who love 
 // ---------- mode ----------
 // Tillbaka: hoppar man från en vy till en annan (t.ex. arena → landslag) sparas varifrån man kom,
 // så att mobilens bakåt-gest och knappen "Tillbaka till …" leder rätt.
-const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};
+const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};
 let navPop=false,pendingJump=null,jumpFrom=null,topNav=false;
 // menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
 function goTop(m){if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";arView="list";}topNav=true;try{setMode(m);}finally{topNav=false;}}
@@ -1420,7 +1430,7 @@ function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)repPopOrder=nu
   pendingJump=null;if(m!==prev)clubStack=[];
   mode=m;store.set("fk-mode",m);window.__gmode=m;try{window.dispatchEvent(new CustomEvent("gmode",{detail:m}));}catch(e){}
   document.querySelectorAll(".mode").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===m)));
-  ["hem","klubbar","landslag","arenor","matcher","tabell","tips","quiz","reportage","forum","mine","profil"].forEach(v=>{const s=document.getElementById("v-"+v);s.hidden=m!==v;s.style.display=m===v?"contents":"none";});
+  ["hem","klubbar","landslag","arenor","matcher","tabell","tips","quiz","flode","reportage","forum","mine","profil"].forEach(v=>{const s=document.getElementById("v-"+v);s.hidden=m!==v;s.style.display=m===v?"contents":"none";});
   if(typeof syncNav==="function")syncNav();
   // ett fel i en vy får aldrig låsa menyn
   try{render();}catch(e){console.error("[groundly] render",e);try{toast($t("Något gick fel i vyn. Prova att ladda om sidan."));}catch(_){}}
@@ -1434,13 +1444,13 @@ document.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.datase
 // Matcher får Communitys plats i menyraden, plusknappen loggar en match direkt och startsidan visar bara
 // matcher nära dig, logga-knappen och din säsong. Texterna är bara på svenska tills läget eventuellt blir standard.
 const FOKUS=(()=>{try{const u=new URLSearchParams(location.search).get("fokus");if(u==="1")localStorage.setItem("fk-fokus","1");if(u==="0")localStorage.removeItem("fk-fokus");return localStorage.getItem("fk-fokus")==="1";}catch(e){return false;}})();
-if(FOKUS){MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"forum","reportage");
+if(FOKUS){MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"flode","forum","reportage");
   const cb=document.querySelector('.bnav [data-bn="community"]');if(cb){cb.dataset.bn="matcher";cb.innerHTML=`<svg width="22" height="22" aria-hidden="true" style="width:22px;height:22px"><use href="#i-calendar"/></svg><span>${$t("Matcher")}</span>`;}
   const mm=document.querySelector('#moreSheet [data-bn="matcher"]');if(mm){mm.dataset.bn="community";mm.innerHTML=`<b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span>${$t("Community")}</span>`;}
   const lg=document.getElementById("bnLog");if(lg){lg.setAttribute("aria-label","Logga en match");const sp=lg.querySelector("span");if(sp)sp.textContent="Logga";}}
 // Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
-const isComm=m=>m==="forum"||m==="reportage";
-const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"forum";}catch(e){return"forum";}};
+const isComm=m=>m==="flode"||m==="forum"||m==="reportage";
+const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"flode";}catch(e){return"flode";}};
 function syncNav(){if(isComm(mode))try{store.set("fk-comm",mode);}catch(e){}document.querySelectorAll("[data-bn]").forEach(b=>b.setAttribute("aria-current",String(b.dataset.bn===mode||(b.dataset.bn==="community"&&isComm(mode)))));
   const more=document.getElementById("bnMore");if(more)more.setAttribute("aria-current",String(MORE_MODES.includes(mode)));}
 function closePlus(){const sh=document.getElementById("plusSheet");if(sh)sh.hidden=true;document.getElementById("bnLog")?.setAttribute("aria-expanded","false");}
@@ -2161,7 +2171,7 @@ async function forumClick(t){
   if(userNs){try{myId=await userNs.id();isMod=await userNs.canEdit();}catch(e){}}
   let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startTl(db);startSocial(db);startFeedback(db);loadMyName();
   if(!db){forumState="none";if(mode==="forum")renderForum();return;}
-  db.collection("forum").onSnapshot(s=>{const f={};s.docs.forEach(d=>{f[d.id]=d.data();});FORUM=f;forumState="ready";try{actBadge();}catch(e){}if(mode==="forum")renderForum();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();},()=>{forumState="none";if(mode==="forum")renderForum();});
+  db.collection("forum").onSnapshot(s=>{queueFlode();const f={};s.docs.forEach(d=>{f[d.id]=d.data();});FORUM=f;forumState="ready";try{actBadge();}catch(e){}if(mode==="forum")renderForum();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();},()=>{forumState="none";if(mode==="forum")renderForum();});
   db.doc("mod/hidden").onSnapshot(s=>{HIDDEN=s.exists&&Array.isArray(s.data().keys)?s.data().keys:[];if(mode==="forum")renderForum();},()=>{});
 })();
 
@@ -2520,7 +2530,7 @@ function saveRating(id){const c=C[id];const k=arenaKey(c&&c.s);if(!k)return;cons
   const entry={at:new Date().toISOString(),acc:{}};RCATS.forEach(([x])=>{if(d[x])entry[x]=d[x];});ACC.forEach(([a])=>{if(d.acc[a])entry.acc[a]=d.acc[a];});Object.assign(entry,trv);
   const mine={...((RATINGS[myId]&&RATINGS[myId].r)||{})};mine[k]=entry;writeRatings(mine);}
 function startRatings(db){ratingsNs=db;if(!db){ratingsState="none";return;}
-  db.collection("ratings").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});RATINGS=o;ratingsState="ready";if(mode!=="forum")render();},()=>{ratingsState="none";});}
+  db.collection("ratings").onSnapshot(s=>{queueFlode();const o={};s.docs.forEach(d=>{o[d.id]=d.data();});RATINGS=o;ratingsState="ready";if(mode!=="forum")render();},()=>{ratingsState="none";});}
 function renderTopRated(){if(ratingsState==="loading")return`<div class="empty">${$t("Hämtar betyg…")}</div>`;
   if(ratingsState!=="ready")return`<div class="empty">${$t("Betygen kan inte visas här. Öppna sidan inloggad på claude.ai.")}</div>`;
   const map=new Map();Object.values(C).forEach(c=>{if(!c.s)return;const k=arenaKey(c.s);if(!map.has(k))map.set(k,{s:c.s,clubs:[],city:c.city,country:c.c});map.get(k).clubs.push(c);});
@@ -4035,9 +4045,9 @@ document.addEventListener("submit",async e=>{if(e.target.id!=="repForm")return;e
 async function startReports(db){
   try{assetsNs=await window.claude?.use?.("assets")??null;}catch(e){assetsNs=null;}
   if(!db){repState="none";if(mode==="reportage")renderReports();return;}
-  db.collection("reports").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(repState==="ready"&&JSON.stringify(o)===JSON.stringify(REP))return;REP=o;setTimeout(actBadge,0);repState="ready";if(mode==="reportage")renderReports();else if(mode==="hem")renderHome();else if(mode==="klubbar"&&openClub)renderClubs();else if(mode==="profil")renderProfil();},()=>{repState="none";if(mode==="reportage")renderReports();});
+  db.collection("reports").onSnapshot(s=>{queueFlode();const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(repState==="ready"&&JSON.stringify(o)===JSON.stringify(REP))return;REP=o;setTimeout(actBadge,0);repState="ready";if(mode==="reportage")renderReports();else if(mode==="hem")renderHome();else if(mode==="klubbar"&&openClub)renderClubs();else if(mode==="profil")renderProfil();},()=>{repState="none";if(mode==="reportage")renderReports();});
   db.collection("likes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(!likesLoaded){likesLoaded=true;LIKES=o;actBadge();if(mode==="reportage")likesInPlace();else if(mode==="hem")renderHome();return;}if(JSON.stringify(o)===JSON.stringify(LIKES))return;LIKES=o;actBadge();if(mode==="reportage")likesInPlace();else if(mode==="hem")renderHome();},()=>{});
-  db.collection("comments").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(JSON.stringify(o)===JSON.stringify(COMM))return;COMM=o;actBadge();if(mode==="hem")renderHome();if(mode==="reportage")renderReports();},()=>{});}
+  db.collection("comments").onSnapshot(s=>{queueFlode();const o={};s.docs.forEach(d=>{o[d.id]=d.data();});if(JSON.stringify(o)===JSON.stringify(COMM))return;COMM=o;actBadge();if(mode==="hem")renderHome();if(mode==="reportage")renderReports();},()=>{});}
 
 // ---------- hem ----------
 let STATS={},statsState="loading",HYPE={},boardTab="matches",statsSig="",statsBusy=false,hypeBusy=false;
@@ -4115,6 +4125,47 @@ function writersHtml(){const ws=writersRank();const mon=new Date().toLocaleDateS
     <p class="hint">${$t("En matchberättelse ger 3 poäng, en ny forumtråd 2 och ett svar eller en kommentar 1. Räknas för {0}.",[esc(mon)])}</p>
     <div class="actions"><button class="btn small" data-gomode="reportage">${$t("Skriv matchberättelse")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button></div></article>`;}
 function renderWriters(){document.querySelectorAll(".commwriters").forEach(el=>{const h=writersStrip();if(el.innerHTML!==h)el.innerHTML=h;});}
+// ---------- aktivitet: det senaste från alla i communityn, nyast först ----------
+// Bygger bara på det som redan är offentligt: matchberättelser, kommentarer, forum, arenabetyg och matcher från dem som delar.
+let flodeT=0,flodeKind="alla";
+function queueFlode(){clearTimeout(flodeT);flodeT=setTimeout(()=>{if(mode==="flode")renderFlode();},60);}
+const FL_DAYS=60;
+function flodeEvents(){const ev=[],cut=new Date(Date.now()-FL_DAYS*864e5).toISOString();
+  const ok=uid=>uid&&!blk(uid);
+  let reps=[];try{reps=repState==="ready"?allReps().filter(r=>!r.draft):[];}catch(e){}
+  const repBy=Object.fromEntries(reps.map(r=>[r.key,r]));
+  reps.forEach(r=>{if(ok(r.uid)&&String(r.at)>cut)ev.push({t:"rep",at:String(r.at),uid:r.uid,r});});
+  Object.entries(COMM||{}).forEach(([uid,d])=>{if(!ok(uid))return;(d&&Array.isArray(d.items)?d.items:[]).forEach(c=>{if(c&&c.id&&c.body&&repBy[c.rep]&&String(c.at)>cut&&!HIDDEN.includes("com:"+uid+":"+c.id))ev.push({t:"com",at:String(c.at),uid,c,r:repBy[c.rep]});});});
+  if(forumState==="ready"){const ps=allPosts();const th=Object.fromEntries(ps.filter(p=>!p.parent&&p.title).map(p=>[p.key,p]));
+    ps.forEach(p=>{if(!ok(p.uid)||!(String(p.at)>cut))return;if(!p.parent&&p.title)ev.push({t:"thr",at:String(p.at),uid:p.uid,p});else if(p.parent&&th[p.parent])ev.push({t:"rpl",at:String(p.at),uid:p.uid,p,th:th[p.parent]});});}
+  const arena={};Object.values(C).forEach(c=>{const k=arenaKey(c.s);if(k&&!arena[k]&&!isNat(c))arena[k]=c;});
+  Object.entries(RATINGS||{}).forEach(([uid,d])=>{if(!ok(uid)||!d||!d.r)return;Object.entries(d.r).forEach(([k,e])=>{if(!e||!arena[k]||!(String(e.at)>cut))return;const v=RCATS.map(([x])=>+e[x]).filter(x=>x>0);ev.push({t:"rat",at:String(e.at),uid,c:arena[k],sc:v.length?v.reduce((a,b)=>a+b,0)/v.length:null});});});
+  const today=new Date().toISOString().slice(0,10),dcut=cut.slice(0,10);
+  Object.keys(PUBLIC||{}).forEach(uid=>{if(!ok(uid))return;pubRows(uid).forEach(r=>{if(r.d>=dcut&&r.d<=today)ev.push({t:"mat",at:r.d+"T23:59:00",uid,m:r});});});
+  return ev.sort((a,b)=>b.at.localeCompare(a.at));}
+const FL_KINDS=[["alla",$t("Allt")],["mat",$t("Matcher")],["rep",$t("Matchberättelser")],["thr",$t("Forum")],["rat",$t("Arenabetyg")]];
+const flKindOf=t=>t==="com"?"rep":t==="rpl"?"thr":t;
+function flodeItem(e){const u=`<b>${userLink(e.uid)}</b>`,when=e.t==="mat"?fmtDate(e.m.d):ago(e.at);
+  const row=(icon,txt,sub,btn)=>`<div class="fitem flev"><span class="flic">${ic(icon)}</span><div class="mmain"><div>${txt}</div>${sub?`<div class="venue">${sub}</div>`:""}</div>${btn||""}</div>`;
+  if(e.t==="rep")return row("pencil",`${u} ${$t("skrev en matchberättelse")}`,`<button class="link strong" data-homerep="${esc(e.r.key)}">${esc(e.r.title)}</button> · ${esc(when)}`);
+  if(e.t==="com")return row("chat",`${u} ${$t("kommenterade")} <button class="link strong" data-homerep="${esc(e.r.key)}">${esc(e.r.title)}</button>`,`”${esc(String(e.c.body).slice(0,90))}${String(e.c.body).length>90?"…":""}” · ${esc(when)}`);
+  if(e.t==="thr")return row("chat",`${u} ${$t("startade en tråd i forumet")}`,`<button class="link strong" data-homethread="${esc(e.p.key)}">${esc(e.p.title)}</button> · ${esc(when)}`);
+  if(e.t==="rpl")return row("chat",`${u} ${$t("svarade i")} <button class="link strong" data-homethread="${esc(e.th.key)}">${esc(e.th.title)}</button>`,`”${esc(String(e.p.body).slice(0,90))}${String(e.p.body).length>90?"…":""}” · ${esc(when)}`);
+  if(e.t==="rat")return row("stadium",`${u} ${$t("betygsatte")} <button class="link strong" data-open="${esc(e.c.id)}">${esc(e.c.s)}</button>`,`${esc(e.c.n)}${e.sc?` · ${ic("star")} ${e.sc.toFixed(1)}`:""} · ${esc(when)}`);
+  if(e.t==="mat"){const r=e.m,k=e.uid+":"+r.id,n=cheerCount(k),mine=myCheers().includes(k);
+    const tm=(id,nm)=>id&&C[id]?`<button class="link strong" data-open="${esc(id)}">${esc(C[id].n)}</button>`:`<b>${esc(nm)}</b>`;
+    return row("ball",`${u} ${$t("var på")} ${tm(r.hi,r.h)}${r.sc?` ${esc(r.sc)} `:" – "}${tm(r.ai,r.a)}`,esc([r.v,$t(r.c)].filter(Boolean).join(", "))+(r.v||r.c?" · ":"")+esc(when),
+      myState==="ready"&&e.uid!==myId?`<button class="btn small${mine?" on":""}" data-cheer="${esc(k)}" aria-pressed="${mine}" aria-label="${$t("Snyggt")}"${cheerBusy?" disabled":""}>${ic("heart",mine?"on":"")}${n?` ${n}`:""}</button>`:(n?`<span class="meta">${ic("heart")} ${n}</span>`:""));}
+  return"";}
+function renderFlode(){const el=document.getElementById("flodeList");if(!el)return;
+  const all=flodeEvents();
+  {const miss=[...new Set(all.map(e=>e.uid))].filter(u=>u!==myId&&!(u in NAMES));if(miss.length&&typeof resolveNames==="function")resolveNames(miss).then(()=>{if(mode==="flode")queueFlode();}).catch(()=>{});}const list=flodeKind==="alla"?all:all.filter(e=>flKindOf(e.t)===flodeKind);
+  const chips=`<div class="chips" role="group" aria-label="${$t("Visa")}">${FL_KINDS.map(([k,l])=>`<button class="chip" data-flkind="${k}" aria-pressed="${flodeKind===k}">${l}</button>`).join("")}</div>`;
+  const loading=forumState==="loading"&&repState!=="ready";
+  const sharing=myState==="ready"&&!MY.share?`<div class="notice">${$t("Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.")} <button class="btn small primary" data-share="1">${$t("Visa mina matcher för andra")}</button></div>`:"";
+  const empty=`<div class="empty"><b>${flodeKind==="alla"?$t("Det är lugnt just nu"):$t("Inget här de senaste {0} dagarna",[FL_DAYS])}</b><div>${$t("Skriv en matchberättelse, betygsätt en arena du varit på eller starta en tråd i forumet, så syns det här.")}</div><div class="actions"><button class="btn small primary" data-gomode="reportage">${$t("Skriv matchberättelse")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button></div></div>`;
+  el.innerHTML=chips+(loading?`<div class="empty">${$t("Hämtar…")}</div>`:list.length?`<div class="flist">${list.slice(0,lim("flo",25)).map(flodeItem).join("")}</div>${limBtns("flo",list.length,25)}`:empty)+sharing;}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-flkind]");if(!t)return;flodeKind=t.dataset.flkind;delete LIM.flo;renderFlode();});
 function latestHtml(){const parts=[];
   if(repState==="ready"){const reps=allReps().filter(r=>!r.draft);const last=reps.slice().sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0];
     const ym=new Date().toISOString().slice(0,7);const pop=reps.filter(r=>String(r.at).startsWith(ym)).map(r=>({r,n:likeCount(r.key)})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
@@ -4127,7 +4178,7 @@ function latestHtml(){const parts=[];
     const card=(t,lbl,extra)=>`<button class="hcard" data-homethread="${esc(t.key)}"><span class="htxt"><span class="lbl">${lbl}</span><b>${esc(t.title)}</b><span class="meta">${esc(KIND_L[t.kind]||$t("Inlägg"))} · ${esc(who(t.uid))} · ${esc(ago(lastAt(t)))}${extra||""}</span></span></button>`;
     if(last)parts.push(card(last,$t("Senast i forumet")));if(hot&&(!last||hot.t.key!==last.key))parts.push(card(hot.t,$t("Hetast i forumet denna månad"),$t(" · {0} svar",[hot.n])));}
   return`<article class="tip community"><h2 class="name">${$t("Community")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras matchberättelser.")}</p>${parts.length?`<div class="hgrid">${parts.join("")}</div>`:""}
-    <div class="actions"><button class="btn small primary" data-gomode="forum">${ic("chat")} ${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs matchberättelser")}</button></div>
+    <div class="actions"><button class="btn small primary" data-gomode="flode">${ic("chat")} ${$t("Se vad som händer")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs matchberättelser")}</button></div>
     ${writersStrip()}</article>`;}
 function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().toISOString().slice(0,7);const cnt={};
   Object.values(RATINGS).forEach(d=>{Object.entries((d&&d.r)||{}).forEach(([k,r])=>{if(r&&String(r.at||"").startsWith(ym))cnt[k]=(cnt[k]||0)+1;});});
@@ -4706,7 +4757,7 @@ function myPublicDoc(){const rec=MY.attended.slice().sort((a,b)=>b.date.localeCo
 async function syncPublic(){if(!dbNs||!myId||myState!=="ready"||pubBusy)return;const on=!!MY.share,fo=!!MY.showFo;const body=on||fo?{...(on?myPublicDoc():{}),...(fo?{fo:follows().slice(-300)}:{})}:null;const sig=JSON.stringify(body);if(sig===pubSig)return;
   pubBusy=true;try{if(body)await dbNs.doc("public/"+myId).set({...body,at:new Date().toISOString()});else if(PUBLIC[myId])await dbNs.doc("public/"+myId).delete();pubSig=sig;}catch(e){}finally{pubBusy=false;}}
 function startSocial(db){if(!db)return;
-  db.collection("public").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});PUBLIC=o;resolveNames(Object.keys(o).filter(id=>id!==myId&&!(id in NAMES))).then(()=>{if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();});if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();},()=>{});
+  db.collection("public").onSnapshot(s=>{queueFlode();const o={};s.docs.forEach(d=>{o[d.id]=d.data();});PUBLIC=o;resolveNames(Object.keys(o).filter(id=>id!==myId&&!(id in NAMES))).then(()=>{if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();});if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();},()=>{});
   db.collection("cheers").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});CHEERS=o;if(mode==="hem")renderHome();},()=>{});}
 const follows=()=>myState==="ready"&&Array.isArray(MY.follows)?MY.follows:[];
 const isFollow=uid=>follows().includes(uid);
@@ -4732,7 +4783,7 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-shar
   if(t.dataset.hopall){hopAll=!hopAll;renderHome();return;}
   if(t.dataset.follow){const u=t.dataset.follow;mutate(d=>{d.follows=Array.isArray(d.follows)?d.follows:[];d.follows=d.follows.includes(u)?d.follows.filter(x=>x!==u):[...d.follows,u].slice(-200);});setTimeout(syncPublic,50);if(mode==="profil")renderProfil();return;}
   if(t.dataset.cheer&&dbNs&&myId&&!cheerBusy){const k=t.dataset.cheer;const cur=myCheers();const next=cur.includes(k)?cur.filter(x=>x!==k):[...cur,k].slice(-300);
-    cheerBusy=true;CHEERS={...CHEERS,[myId]:{k:next}};renderHome();try{await dbNs.doc("cheers/"+myId).set({k:next});}catch(err){toast($t("Det gick inte att spara."));}finally{cheerBusy=false;renderHome();}}});
+    cheerBusy=true;CHEERS={...CHEERS,[myId]:{k:next}};const rr=()=>mode==="flode"?renderFlode():renderHome();rr();try{await dbNs.doc("cheers/"+myId).set({k:next});}catch(err){toast($t("Det gick inte att spara."));}finally{cheerBusy=false;rr();}}});
 
 // ---------- tyck till ----------
 let FEEDBACK={},MYFB=null,fbDone=[],fbBusy=false;
@@ -5205,7 +5256,7 @@ async function maybeAskPush(){if(!window.groundlyPush||store.get("fk-pushask")==
 function render(){
   const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:$t("Berättelser och bilder från andras fotbollsresor"),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
   {const sb=document.getElementById("sub");{const it=document.getElementById("intro");if(it)it.style.display=FOKUS&&mode==="hem"?"none":"";}if(mode==="hem"){sb.textContent=$t("Ett fotbollscommunity där du träffar likasinnade, delar matchupplevelser, hittar nya matcher och upptäcker ditt nästa fotbollsäventyr.");const kk=document.getElementById("kicker");if(kk)kk.textContent=$t("Möt. Upptäck. Upplev.");}else sb.textContent=SUB[mode];}
-  {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
+  {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
    const intro=document.getElementById("intro");if(intro)intro.hidden=mode!=="hem";}
   document.getElementById("foot").innerHTML=mode==="klubbar"
    ?`<div>${$t("Serie anges för säsongen 2026/27 där den är kontrollerad mot aktuella spelscheman; övriga visas som senast kända.")}</div>${AI_ON?`<div>${$t("Klubbar utanför listan slås upp av Claude och kan innehålla fel.")}</div>`:""}<div>${$t("Flaggor från flag-icons av Panayiotis Lipiridis (MIT-licens).")}</div>`
@@ -5217,12 +5268,13 @@ function render(){
    :mode==="tips"?`<div>${$t("Urvalet och beskrivningarna är redaktionella tips. Nästa möte hämtas från det inlagda matchschemat.")}</div>`
    :mode==="hem"?`<div>${$t("Topplistorna visar bara antal, och bara för dem som inte valt bort det. Veckans match väljs bland derbyn, dina favoritlag, matcher i ditt land och nära din hemort och matcher andra peppar.")}</div>`
    :mode==="reportage"?`<div>${$t("Matchberättelserna och bilderna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja matchberättelser. Lägg inte upp bilder på andra personer utan att de vet om det.")} ${$t("Ser du något som inte hör hemma här, tryck Anmäl.")}</div>`
+   :mode==="flode"?`<div>${$t("Här syns det som andra har delat: matchberättelser, kommentarer, forumtrådar, arenabetyg och matcher från dem som valt att visa sina matcher.")}</div>`
    :mode==="mine"?`<div>${$t("Matcherna och listorna här syns bara för dig och följer med ditt claude.ai-konto.")}</div>`
    :mode==="profil"?`<div>${$t("Det du skriver i forum och matchberättelser syns för alla. Dina loggade matcher syns bara om du slår på det här.")}</div>`
    :mode==="forum"?`<div class="forumrules"><b>${$t("Forumregler")}</b><br>${$t("Håll god ton och hjälp varandra. Spam, hat, olagligt innehåll och personuppgifter om andra tas bort. Ser du något som inte hör hemma här, tryck Anmäl.")}</div><div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; moderatorerna kan dölja inlägg.")}</div>`
    :`<div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; sidans ägare kan dölja inlägg.")}</div>`;
   document.getElementById("foot").insertAdjacentHTML("beforeend",`<div><button class="link" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button> · <button class="link" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button></div>`);
-  if(mode==="klubbar"||mode==="landslag")renderClubs();else if(mode==="arenor")renderArenas();else if(mode==="matcher")renderMatches();else if(mode==="tabell")renderTable();else if(mode==="tips"||mode==="quiz")rerenderQuizHost();else if(mode==="mine")renderMine();else if(mode==="reportage")renderReports();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();else renderForum();}
+  if(mode==="klubbar"||mode==="landslag")renderClubs();else if(mode==="arenor")renderArenas();else if(mode==="matcher")renderMatches();else if(mode==="tabell")renderTable();else if(mode==="tips"||mode==="quiz")rerenderQuizHost();else if(mode==="mine")renderMine();else if(mode==="reportage")renderReports();else if(mode==="flode")renderFlode();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();else renderForum();}
 document.body.insertAdjacentHTML("beforeend",`<datalist id="allNats">${Object.values(C).filter(c=>c.l==="Landslag").map(c=>`<option value="${esc(c.n)}">`).join("")}</datalist>`);
 document.getElementById("allClubs").innerHTML=Object.values(C).map(c=>`<option value="${esc(c.n)}">`).join("");
 setMode(mode);
