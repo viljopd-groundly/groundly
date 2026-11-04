@@ -2402,5 +2402,18 @@
  "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar och bilder delas aldrig.": "Den vises nu i feedet for andre groundhoppere, og venner kan følge dig. Noter og billeder deles aldrig.",
  "Toppen": "Super",
  "Visa bara för mig": "Vis kun for mig",
- "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Dine kampe er kun synlige for dig. Du kan ændre det under Min profil."
+ "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Dine kampe er kun synlige for dig. Du kan ændre det under Min profil.",
+ "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar delas aldrig.": "Den vises nu i feedet for andre groundhoppere, og venner kan følge dig. Noter deles aldrig.",
+ "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar och sällskap delas aldrig.": "Vil du vises her, når du logger en kamp? Så kan andre se dine seneste kampe (hold, resultat, stadion og dato). Noter og selskab deles aldrig.",
+ "Anteckningar, sällskap, önskelista, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Noter, selskab, ønskeliste, hvem du følger og indstillinger gemmes på din Groundly-konto. Andre brugere kan ikke se dem.",
+ "Som ny användare syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för andra, så att vänner kan följa dig. Du är också med i topplistorna med dina antal. Anteckningar och sällskap delas aldrig. Du kan välja bort båda när som helst under Min fotboll och på Hem, och då tas det delade bort.": "Som ny bruger vises dine 40 seneste kampe (hold, resultat, stadion og dato), antal kampe og stadioner og dit første favorithold for andre, så venner kan følge dig. Du er også med på toplisterne med dine antal. Noter og selskab deles aldrig. Du kan fravælge begge dele når som helst under Min fodbold og på Hjem, og så fjernes det delte.",
+ "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar och sällskap delas aldrig.": "Dine kampe kan kun ses af dig. Vil du have, at venner kan følge dig? Så vises dine {0} seneste kampe (hold, resultat, stadion og dato) for alle, der kan åbne appen. Noter og selskab deles aldrig.",
+ "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar delas aldrig.": "Dine {0} seneste kampe (hold, resultat, stadion og dato). Noter deles aldrig.",
+ "Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna.": "Fortæl om en fodboldtur: hvordan I kom derhen, stemningen på stadionet, pubben før kampen, og hvad der var pengene værd.",
+ "Matchberättelserna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja matchberättelser.": "Kampberetningerne kan ses af alle, der kan åbne siden. Hver enkelt kan kun redigere og slette sine egne; sidens ejer kan skjule kampberetninger.",
+ "Berättelser från andras fotbollsresor": "Fortællinger fra andres fodboldture",
+ "Karta och kalender": "Kort og kalender",
+ "Dina arenor på en karta och Vill gå-matcher direkt till kalendern.": "Dine stadioner på et kort og Vil gerne-kampe direkte i kalenderen.",
+ "lör 24 okt · Stadsparksvallen · med matchberättelse": "lør. 24. okt. · Stadsparksvallen · med kampberetning",
+ "Skriv om dina resor: match, resultat, publik och tips.": "Skriv om dine rejser: kamp, resultat, publikum og tips."
 }

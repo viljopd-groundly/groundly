@@ -2401,5 +2401,18 @@
  "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar och bilder delas aldrig.": "Hann birtist nú í straumnum hjá öðrum vallaflökkurum og vinir geta fylgt þér. Athugasemdum og myndum er aldrei deilt.",
  "Toppen": "Frábært",
  "Visa bara för mig": "Sýna bara mér",
- "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Leikirnir þínir eru aðeins sýnilegir þér. Þú getur breytt því undir Prófíllinn minn."
+ "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Leikirnir þínir eru aðeins sýnilegir þér. Þú getur breytt því undir Prófíllinn minn.",
+ "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar delas aldrig.": "Hann birtist nú í straumnum hjá öðrum vallaflökkurum og vinir geta fylgt þér. Athugasemdum er aldrei deilt.",
+ "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar och sällskap delas aldrig.": "Viltu sjást hér þegar þú skráir leik? Þá sjá aðrir nýjustu leikina þína (lið, úrslit, völl og dagsetningu). Athugasemdum og félagsskap er aldrei deilt.",
+ "Anteckningar, sällskap, önskelista, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Athugasemdir, félagsskapur, óskalisti, hverjum þú fylgir og stillingar eru vistaðar á Groundly-reikningnum þínum. Aðrir notendur sjá þær ekki.",
+ "Som ny användare syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för andra, så att vänner kan följa dig. Du är också med i topplistorna med dina antal. Anteckningar och sällskap delas aldrig. Du kan välja bort båda när som helst under Min fotboll och på Hem, och då tas det delade bort.": "Sem nýr notandi sjá aðrir 40 nýjustu leikina þína (lið, úrslit, völl og dagsetningu), fjölda leikja og valla og fyrsta uppáhaldsliðið þitt, svo vinir geti fylgt þér. Þú ert líka á stigalistunum með tölurnar þínar. Athugasemdum og félagsskap er aldrei deilt. Þú getur slökkt á hvoru tveggja hvenær sem er undir Minn fótbolti og á Heim, og þá er því sem var deilt eytt.",
+ "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar och sällskap delas aldrig.": "Aðeins þú sérð leikina þína. Viltu að vinir geti fylgt þér? Þá birtast {0} nýjustu leikirnir þínir (lið, úrslit, völlur og dagsetning) öllum sem opna appið. Athugasemdum og félagsskap er aldrei deilt.",
+ "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar delas aldrig.": "{0} nýjustu leikirnir þínir (lið, úrslit, völlur og dagsetning). Athugasemdum er aldrei deilt.",
+ "Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna.": "Segðu frá fótboltaferð: hvernig þið komust þangað, stemningunni á vellinum, kránni fyrir leik og hvað var þess virði.",
+ "Matchberättelserna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja matchberättelser.": "Ferðasögurnar sjá allir sem geta opnað síðuna. Hver og einn getur aðeins breytt og eytt sínu eigin; eigandi síðunnar getur falið ferðasögur.",
+ "Berättelser från andras fotbollsresor": "Frásagnir úr fótboltaferðum annarra",
+ "Karta och kalender": "Kort og dagatal",
+ "Dina arenor på en karta och Vill gå-matcher direkt till kalendern.": "Vellirnir þínir á korti og Langar að fara-leikir beint í dagatalið.",
+ "lör 24 okt · Stadsparksvallen · med matchberättelse": "lau 24. okt · Stadsparksvallen · með ferðasögu",
+ "Skriv om dina resor: match, resultat, publik och tips.": "Skrifaðu um ferðirnar þínar: leik, úrslit, áhorfendur og ráð."
 }

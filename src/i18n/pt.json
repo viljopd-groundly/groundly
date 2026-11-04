@@ -2401,5 +2401,18 @@
  "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar och bilder delas aldrig.": "Agora aparece no feed para outros groundhoppers, e os amigos podem seguir-te. Notas e fotos nunca são partilhadas.",
  "Toppen": "Boa",
  "Visa bara för mig": "Mostrar só a mim",
- "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Os teus jogos só são visíveis para ti. Podes mudar isto em O meu perfil."
+ "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Os teus jogos só são visíveis para ti. Podes mudar isto em O meu perfil.",
+ "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar delas aldrig.": "Agora aparece no feed para outros groundhoppers, e os amigos podem seguir-te. As notas nunca são partilhadas.",
+ "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar och sällskap delas aldrig.": "Queres aparecer aqui quando registas um jogo? Os teus últimos jogos (equipas, resultado, estádio e data) passam a ser visíveis para outros. Notas e companhia nunca são partilhadas.",
+ "Anteckningar, sällskap, önskelista, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Anotações, companhia, lista de desejos, quem você segue e configurações ficam salvos na sua conta Groundly. Outros usuários não podem vê-los.",
+ "Som ny användare syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för andra, så att vänner kan följa dig. Du är också med i topplistorna med dina antal. Anteckningar och sällskap delas aldrig. Du kan välja bort båda när som helst under Min fotboll och på Hem, och då tas det delade bort.": "Como usuário novo, seus 40 jogos mais recentes (times, resultado, estádio e data), o número de jogos e estádios e seu primeiro clube favorito ficam visíveis para os outros, para que amigos possam te seguir. Você também aparece nos rankings com seus números. Anotações e companhia nunca são compartilhadas. Você pode desativar as duas coisas quando quiser em Meu futebol e em Início, e o que foi compartilhado é removido.",
+ "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar och sällskap delas aldrig.": "Seus jogos só aparecem para você. Quer que amigos possam te seguir? Então seus {0} jogos mais recentes (times, resultado, estádio e data) ficam visíveis para todos que abrirem o app. Anotações e companhia nunca são compartilhadas.",
+ "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar delas aldrig.": "Seus {0} jogos mais recentes (times, resultado, estádio e data). Anotações nunca são compartilhadas.",
+ "Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna.": "Conte sobre uma viagem de futebol: como vocês chegaram, o clima no estádio, o bar antes do jogo e o que valeu a pena.",
+ "Matchberättelserna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja matchberättelser.": "Os relatos ficam visíveis para todos que podem abrir a página. Cada um só pode alterar e apagar os seus; o dono da página pode ocultar relatos.",
+ "Berättelser från andras fotbollsresor": "Relatos das viagens de futebol de outras pessoas",
+ "Karta och kalender": "Mapa e calendário",
+ "Dina arenor på en karta och Vill gå-matcher direkt till kalendern.": "Seus estádios em um mapa e os jogos de Quero ir direto no calendário.",
+ "lör 24 okt · Stadsparksvallen · med matchberättelse": "sáb 24 out · Stadsparksvallen · com relato",
+ "Skriv om dina resor: match, resultat, publik och tips.": "Escreva sobre suas viagens: jogo, resultado, público e dicas."
 }

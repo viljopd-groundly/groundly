@@ -2401,5 +2401,18 @@
  "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar och bilder delas aldrig.": "Se näkyy nyt syötteessä muille groundhoppereille, ja kaverit voivat seurata sinua. Muistiinpanoja ja kuvia ei koskaan jaeta.",
  "Toppen": "Mahtavaa",
  "Visa bara för mig": "Näytä vain minulle",
- "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Ottelusi näkyvät vain sinulle. Voit muuttaa tämän kohdassa Oma profiili."
+ "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Ottelusi näkyvät vain sinulle. Voit muuttaa tämän kohdassa Oma profiili.",
+ "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar delas aldrig.": "Se näkyy nyt syötteessä muille groundhoppereille, ja kaverit voivat seurata sinua. Muistiinpanoja ei koskaan jaeta.",
+ "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar och sällskap delas aldrig.": "Haluatko näkyä täällä, kun kirjaat ottelun? Silloin viimeisimmät ottelusi (joukkueet, tulos, stadion ja päivä) näkyvät muille. Muistiinpanoja ja seuraa ei koskaan jaeta.",
+ "Anteckningar, sällskap, önskelista, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Muistiinpanot, seura, toivelista, seuraamasi ja asetukset tallennetaan Groundly-tilillesi. Muut käyttäjät eivät näe niitä.",
+ "Som ny användare syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för andra, så att vänner kan följa dig. Du är också med i topplistorna med dina antal. Anteckningar och sällskap delas aldrig. Du kan välja bort båda när som helst under Min fotboll och på Hem, och då tas det delade bort.": "Uutena käyttäjänä 40 viimeisintä otteluasi (joukkueet, tulos, stadion ja päivämäärä), otteluiden ja stadionien määrä sekä ensimmäinen suosikkijoukkueesi näkyvät muille, jotta kaverit voivat seurata sinua. Olet myös kärkilistoilla määrinesi. Muistiinpanoja ja seuraa ei koskaan jaeta. Voit poistaa molemmat milloin tahansa kohdassa Oma jalkapallo ja Etusivulla, jolloin jaettu poistetaan.",
+ "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar och sällskap delas aldrig.": "Ottelusi näkyvät vain sinulle. Haluatko, että kaverit voivat seurata sinua? Silloin {0} viimeisintä otteluasi (joukkueet, tulos, stadion ja päivämäärä) näkyvät kaikille sovelluksen avaajille. Muistiinpanoja ja seuraa ei koskaan jaeta.",
+ "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar delas aldrig.": "{0} viimeisintä otteluasi (joukkueet, tulos, stadion ja päivämäärä). Muistiinpanoja ei koskaan jaeta.",
+ "Berätta om en fotbollsresa: hur ni tog er dit, stämningen på arenan, puben före matchen och vad som var värt pengarna.": "Kerro jalkapallomatkasta: miten pääsitte perille, tunnelma stadionilla, pubi ennen ottelua ja mikä oli rahan arvoista.",
+ "Matchberättelserna syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna; sidans ägare kan dölja matchberättelser.": "Ottelukertomukset näkyvät kaikille, jotka voivat avata sivun. Kukin voi muuttaa ja poistaa vain omiaan; sivun omistaja voi piilottaa ottelukertomuksia.",
+ "Berättelser från andras fotbollsresor": "Kertomuksia muiden jalkapallomatkoilta",
+ "Karta och kalender": "Kartta ja kalenteri",
+ "Dina arenor på en karta och Vill gå-matcher direkt till kalendern.": "Stadionisi kartalla ja Haluan mennä -ottelut suoraan kalenteriin.",
+ "lör 24 okt · Stadsparksvallen · med matchberättelse": "la 24.10. · Stadsparksvallen · ottelukertomus",
+ "Skriv om dina resor: match, resultat, publik och tips.": "Kirjoita matkoistasi: ottelu, tulos, yleisö ja vinkit."
 }
