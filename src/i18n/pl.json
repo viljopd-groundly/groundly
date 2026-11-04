@@ -2414,5 +2414,16 @@
  "Karta och kalender": "Mapa i kalendarz",
  "Dina arenor på en karta och Vill gå-matcher direkt till kalendern.": "Twoje stadiony na mapie i mecze z listy Chcę iść prosto do kalendarza.",
  "lör 24 okt · Stadsparksvallen · med matchberättelse": "sob. 24 paź · Stadsparksvallen · z relacją",
- "Skriv om dina resor: match, resultat, publik och tips.": "Pisz o swoich podróżach: mecz, wynik, widownia i wskazówki."
+ "Skriv om dina resor: match, resultat, publik och tips.": "Pisz o swoich podróżach: mecz, wynik, widownia i wskazówki.",
+ "{n} arenor": "Stadiony: {n}",
+ "{n} groundhoppers": "Groundhopperzy: {n}",
+ "{n} matcher": "Mecze: {n}",
+ "1 arena": "1 stadion",
+ "1 besökare": "1 odwiedzający",
+ "1 groundhopper": "1 groundhopper",
+ "1 match": "1 mecz",
+ "De senaste 30 dagarna, från alla som visar sina matcher.": "Ostatnie 30 dni, od wszystkich, którzy pokazują swoje mecze.",
+ "Hett just nu": "Na topie",
+ "Ingen har loggat något här än.": "Nikt jeszcze nic tu nie zapisał.",
+ "Groundhoppers": "Groundhopperzy"
 }

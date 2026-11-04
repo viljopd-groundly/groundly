@@ -587,7 +587,9 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .fitem .mmain{min-width:0}.fitem .btn{flex:none}.fbitem{align-items:flex-start}
 .flev{justify-content:flex-start;align-items:flex-start}.flev .mmain{flex:1}.flev .link.strong{text-align:left}
 .flic{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--surface);color:var(--accent);margin-top:1px}.flic .ic{width:16px;height:16px}
-#flodeList .flist{margin-top:10px}#flodeList .notice{margin-top:12px}
+#flodeList .flist{margin-top:10px}#flodeList .hot{margin-bottom:12px}#flodeList .hot .chips{margin:8px 0 4px}
+.hotlist{margin:6px 0 0;padding-left:24px;display:flex;flex-direction:column;gap:8px}.hotlist li{font-variant-numeric:tabular-nums}.hotlist li::marker{font-weight:700;color:var(--accent)}
+.hotlist li{display:list-item}.hotlist li>.hotm{display:inline-flex;flex-direction:column;min-width:0;max-width:calc(100% - 5.5em);vertical-align:top}.hotlist .hotn .ic{width:14px;height:14px;vertical-align:-2px}.hotlist .hotm small{color:var(--muted)}.hotlist .hotn{float:right;color:var(--muted);font-size:calc(14px*var(--fs));white-space:nowrap}.hotlist li.me b{color:var(--accent)}#flodeList .notice{margin-top:12px}
 .btn.on{color:var(--bad)}
 
 .qshirt{display:block;width:120px;height:auto;margin:4px 0 8px;color:var(--fg)}
@@ -4170,6 +4172,24 @@ function flodeItem(e){const u=`<b>${userLink(e.uid)}</b>`,when=e.t==="mat"?fmtDa
     return row("ball",`${u} ${$t("var på")} ${tm(r.hi,r.h)}${r.sc?` ${esc(r.sc)} `:" – "}${tm(r.ai,r.a)}`,esc([r.v,$t(r.c)].filter(Boolean).join(", "))+(r.v||r.c?" · ":"")+esc(when),
       myState==="ready"&&e.uid!==myId?`<button class="btn small${mine?" on":""}" data-cheer="${esc(k)}" aria-pressed="${mine}" aria-label="${$t("Snyggt")}"${cheerBusy?" disabled":""}>${ic("heart",mine?"on":"")}${n?` ${n}`:""}</button>`:(n?`<span class="meta">${ic("heart")} ${n}</span>`:""));}
   return"";}
+// ---------- Hett just nu: topplistor för de senaste 30 dagarna, ur matcherna som delas ----------
+let hotTab="mat";
+function hotHtml(){const cut=new Date(Date.now()-30*864e5).toISOString().slice(0,10),today=new Date().toISOString().slice(0,10);
+  const rows=[];Object.keys(PUBLIC||{}).forEach(uid=>{if(blk(uid))return;pubRows(uid).forEach(r=>{if(r.d>=cut&&r.d<=today)rows.push({...r,uid});});});
+  if(!rows.length)return"";
+  const nm=(id,n)=>id&&C[id]?C[id].n:n;const top=(m,k)=>[...m.values()].sort((a,b)=>b.u.size-a.u.size||b.d.localeCompare(a.d)).slice(0,k);
+  let body="";
+  if(hotTab==="mat"){const m=new Map();rows.forEach(r=>{const k=r.d+"|"+(r.hi||norm(r.h))+"|"+(r.ai||norm(r.a));const x=m.get(k)||{r,d:r.d,u:new Set()};x.u.add(r.uid);m.set(k,x);});
+    body=top(m,5).map(x=>`<li><div class="hotm"><b>${esc(nm(x.r.hi,x.r.h))}${x.r.sc?` ${esc(x.r.sc)} `:" – "}${esc(nm(x.r.ai,x.r.a))}</b><small>${esc([x.r.v,fmtDate(x.d)].filter(Boolean).join(" · "))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}" aria-label="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
+  else if(hotTab==="arena"){const m=new Map();rows.filter(r=>r.v).forEach(r=>{const k=arenaKey(r.v);const x=m.get(k)||{v:r.v,c:r.c,d:r.d,u:new Set()};x.u.add(r.uid);if(r.d>x.d)x.d=r.d;m.set(k,x);});
+    body=top(m,5).map(x=>`<li><div class="hotm"><b>${esc(x.v)}</b><small>${esc($t(x.c||""))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}" aria-label="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
+  else{const m=new Map();rows.forEach(r=>{const x=m.get(r.uid)||{uid:r.uid,d:r.d,u:new Set(),a:new Set()};x.u.add(r.id);if(r.v)x.a.add(arenaKey(r.v));m.set(r.uid,x);});
+    body=top(m,5).map(x=>`<li class="${x.uid===myId?"me":""}"><div class="hotm"><b>${userLink(x.uid)}</b><small>${$tn(x.a.size,"1 arena","{n} arenor")}</small></div><span class="hotn">${$tn(x.u.size,"1 match","{n} matcher")}</span></li>`).join("");}
+  const tabs=[["mat",$t("Matcher")],["arena",$t("Arenor")],["hop",$t("Groundhoppers")]];
+  return`<article class="tip hot"><div class="lbl">${ic("flame")} ${$t("Hett just nu")}</div><p class="meta">${$t("De senaste 30 dagarna, från alla som visar sina matcher.")}</p>
+    <div class="chips wrapchips" role="group" aria-label="${$t("Topplista")}">${tabs.map(([k,l])=>`<button class="chip" data-hot="${k}" aria-pressed="${hotTab===k}">${l}</button>`).join("")}</div>
+    ${body?`<ol class="hotlist">${body}</ol>`:`<p class="meta">${$t("Ingen har loggat något här än.")}</p>`}</article>`;}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-hot]");if(!t)return;hotTab=t.dataset.hot;renderFlode();});
 function renderFlode(){const el=document.getElementById("flodeList");if(!el)return;
   const all=flodeEvents();
   {const miss=[...new Set(all.map(e=>e.uid))].filter(u=>u!==myId&&!(u in NAMES));if(miss.length&&typeof resolveNames==="function")resolveNames(miss).then(()=>{if(mode==="flode")queueFlode();}).catch(()=>{});}const list=flodeKind==="alla"?all:all.filter(e=>flKindOf(e.t)===flodeKind);
@@ -4177,7 +4197,7 @@ function renderFlode(){const el=document.getElementById("flodeList");if(!el)retu
   const loading=forumState==="loading"&&repState!=="ready";
   const sharing=myState==="ready"&&!MY.share?`<div class="notice">${(PH()?$t("Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig."):$t("Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar och sällskap delas aldrig."))} <button class="btn small primary" data-share="1">${$t("Visa mina matcher för andra")}</button></div>`:"";
   const empty=`<div class="empty"><b>${flodeKind==="alla"?$t("Det är lugnt just nu"):$t("Inget här de senaste {0} dagarna",[FL_DAYS])}</b><div>${$t("Skriv en matchberättelse, betygsätt en arena du varit på eller starta en tråd i forumet, så syns det här.")}</div><div class="actions"><button class="btn small primary" data-gomode="reportage">${$t("Skriv matchberättelse")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button></div></div>`;
-  el.innerHTML=chips+(loading?`<div class="empty">${$t("Hämtar…")}</div>`:list.length?`<div class="flist">${list.slice(0,lim("flo",25)).map(flodeItem).join("")}</div>${limBtns("flo",list.length,25)}`:empty)+sharing;}
+  el.innerHTML=(flodeKind==="alla"||flodeKind==="mat"?hotHtml():"")+chips+(loading?`<div class="empty">${$t("Hämtar…")}</div>`:list.length?`<div class="flist">${list.slice(0,lim("flo",25)).map(flodeItem).join("")}</div>${limBtns("flo",list.length,25)}`:empty)+sharing;}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-flkind]");if(!t)return;flodeKind=t.dataset.flkind;delete LIM.flo;renderFlode();});
 function latestHtml(){const parts=[];
   if(repState==="ready"){const reps=allReps().filter(r=>!r.draft);const last=reps.slice().sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0];

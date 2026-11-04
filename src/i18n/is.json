@@ -2414,5 +2414,16 @@
  "Karta och kalender": "Kort og dagatal",
  "Dina arenor på en karta och Vill gå-matcher direkt till kalendern.": "Vellirnir þínir á korti og Langar að fara-leikir beint í dagatalið.",
  "lör 24 okt · Stadsparksvallen · med matchberättelse": "lau 24. okt · Stadsparksvallen · með ferðasögu",
- "Skriv om dina resor: match, resultat, publik och tips.": "Skrifaðu um ferðirnar þínar: leik, úrslit, áhorfendur og ráð."
+ "Skriv om dina resor: match, resultat, publik och tips.": "Skrifaðu um ferðirnar þínar: leik, úrslit, áhorfendur og ráð.",
+ "{n} arenor": "{n} vellir",
+ "{n} groundhoppers": "{n} vallaflakkarar",
+ "{n} matcher": "{n} leikir",
+ "1 arena": "1 völlur",
+ "1 besökare": "1 gestur",
+ "1 groundhopper": "1 vallaflakkari",
+ "1 match": "1 leikur",
+ "De senaste 30 dagarna, från alla som visar sina matcher.": "Síðustu 30 dagar, frá öllum sem sýna leikina sína.",
+ "Hett just nu": "Heitast núna",
+ "Ingen har loggat något här än.": "Enginn hefur skráð neitt hér enn.",
+ "Groundhoppers": "Vallaflakkarar"
 }

@@ -2414,5 +2414,16 @@
  "Karta och kalender": "Kartta ja kalenteri",
  "Dina arenor på en karta och Vill gå-matcher direkt till kalendern.": "Stadionisi kartalla ja Haluan mennä -ottelut suoraan kalenteriin.",
  "lör 24 okt · Stadsparksvallen · med matchberättelse": "la 24.10. · Stadsparksvallen · ottelukertomus",
- "Skriv om dina resor: match, resultat, publik och tips.": "Kirjoita matkoistasi: ottelu, tulos, yleisö ja vinkit."
+ "Skriv om dina resor: match, resultat, publik och tips.": "Kirjoita matkoistasi: ottelu, tulos, yleisö ja vinkit.",
+ "{n} arenor": "{n} stadionia",
+ "{n} groundhoppers": "{n} groundhopperia",
+ "{n} matcher": "{n} ottelua",
+ "1 arena": "1 stadion",
+ "1 besökare": "1 kävijä",
+ "1 groundhopper": "1 groundhopper",
+ "1 match": "1 ottelu",
+ "De senaste 30 dagarna, från alla som visar sina matcher.": "Viimeiset 30 päivää kaikilta, jotka näyttävät ottelunsa.",
+ "Hett just nu": "Kuuminta nyt",
+ "Ingen har loggat något här än.": "Kukaan ei ole vielä kirjannut tänne mitään.",
+ "Groundhoppers": "Groundhopperit"
 }
