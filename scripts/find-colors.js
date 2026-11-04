@@ -8,7 +8,7 @@ const LANG = { Sverige: "sv", Norge: "no", Danmark: "da", Finland: "fi", Island:
 const UA = { "User-Agent": "groundly-bot/1.0 (github.com/viljopd-groundly/groundly)" };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function api(lang, params) { const u = `https://${lang}.wikipedia.org/w/api.php?` + new URLSearchParams({ format: "json", formatversion: "2", ...params });
-  for (let i = 0; i < 3; i++) { try { const r = await fetch(u, { headers: UA }); if (r.status === 429) { await sleep(5000); continue; } return await r.json(); } catch (e) { await sleep(2000); } } return null; }
+  for (let i = 0; i < 3; i++) { try { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(20000) }); if (r.status === 429) { await sleep(5000); continue; } return await r.json(); } catch (e) { await sleep(2000); } } return null; }
 const norm = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9 ]/g, " ");
 const STOP = new Set("fc if ik bk ff fk sk aif ifk cf cd ud sd ac as us ss afc club sport sporting calcio football futbol fotboll fotball real atletico deportivo united city town the de la del di do da 1 2 ii u23 b dam".split(" "));
 const toks = s => norm(s).split(/\s+/).filter(w => w.length > 2 && !STOP.has(w));
@@ -25,13 +25,17 @@ async function look(lang, name, city) {
   }
   return null; }
 (async () => {
+  // delas upp i SHARD/OF parallella jobb; sparar löpande och slutar i tid så att inget går förlorat
+  const OF = +process.env.OF || 1, SH = +process.env.SHARD || 0, T0 = Date.now(), BUDGET = (+process.env.MINUTES || 80) * 60000;
+  const file = path.join(__dirname, "..", "tools", OF > 1 ? `colors_found_${SH}.json` : "colors_found.json");
+  const save = () => fs.writeFileSync(file, JSON.stringify(out, null, 0).replace(/},"/g, '},\n"'));
   const out = {}; let n = 0;
-  for (const [id, name, country, city] of Q) {
+  for (const [id, name, country, city] of Q.filter((_, i) => i % OF === SH)) {
+    if (Date.now() - T0 > BUDGET) { console.log("tiden slut vid", n); break; }
     const L = LANG[country]; let r = null;
     try { if (L) r = await look(L, name, city); if (!r) r = await look("en", name, city); } catch (e) {}
-    if (r) out[id] = r; if (++n % 100 === 0) console.log(n, Object.keys(out).length);
+    if (r) out[id] = r; if (++n % 25 === 0) { console.log(n, Object.keys(out).length); save(); }
     await sleep(150);
   }
-  fs.writeFileSync(path.join(__dirname, "..", "tools", "colors_found.json"), JSON.stringify(out, null, 0).replace(/},"/g, '},\n"'));
-  console.log(`klart: ${Object.keys(out).length} av ${Q.length}`);
+  save(); console.log(`klart: ${Object.keys(out).length} av ${n}`);
 })();

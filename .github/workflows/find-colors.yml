@@ -1,4 +1,5 @@
 # Engångsjobb: letar klubbfärger på Wikipedia för klubbar som saknar färger (tools/colors_query.json -> tools/colors_found.json)
+# Körs som 8 parallella delar som var och en sparar löpande; sista steget slår ihop och committar.
 name: Leta klubbfärger
 on:
   workflow_dispatch:
@@ -7,14 +8,37 @@ permissions:
 jobs:
   find:
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 100
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: node scripts/find-colors.js
+        env:
+          SHARD: ${{ matrix.shard }}
+          OF: 8
+          MINUTES: 80
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: colors-${{ matrix.shard }}
+          path: tools/colors_found_${{ matrix.shard }}.json
+  merge:
+    needs: find
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: parts
       - run: |
+          node -e 'const fs=require("fs"),o={};for(const d of fs.readdirSync("parts"))for(const f of fs.readdirSync("parts/"+d))Object.assign(o,JSON.parse(fs.readFileSync(`parts/${d}/${f}`,"utf8")));fs.writeFileSync("tools/colors_found.json",JSON.stringify(o).replace(/},"/g,"},\n\""));console.log(Object.keys(o).length)'
           git config user.name "groundly-bot"
           git config user.email "groundly-bot@users.noreply.github.com"
           git add tools/colors_found.json
