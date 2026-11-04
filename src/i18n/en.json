@@ -1993,7 +1993,6 @@
  "Inga trådar än.": "No threads yet.",
  "Inställningar för communityn": "Community settings",
  "Synas i topplistorna": "Appear on the leaderboards",
- "Bara antal matcher, arenor och länder i år, inte vilka matcher.": "Only the number of matches, grounds and countries this year, not which matches.",
  "Visa mina senaste matcher för andra": "Show my latest matches to others",
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "Your {0} latest matches (teams, result, ground and date). Notes and photos are never shared.",
  "Visa vilka jag följer": "Show who I follow",
@@ -2518,5 +2517,6 @@
  "Groundhoppers": "Groundhoppers",
  "Ingen har peppat någon match än. Här är tre heta kandidater – bli först!": "Nobody has hyped a match yet. Here are three hot candidates – be the first!",
  "Matcherna som communityn peppar mest inför de närmaste dagarna.": "The matches the community is most hyped about in the coming days.",
- "Peppat": "Hyped"
+ "Peppat": "Hyped",
+ "Bara antal i år: matcher, arenor, länder, landskamper och matcher med ditt favoritlag. Aldrig vilka matcher. Gäller topplistorna på Hem och Groundhoppers i Aktivitet.": "Only this year’s counts: matches, grounds, countries, internationals and matches with your favourite team. Never which matches. Applies to the leaderboards on Home and Groundhoppers in Activity."
 }

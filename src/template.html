@@ -4188,7 +4188,7 @@ function hotHtml(){const cut=new Date(Date.now()-30*864e5).toISOString().slice(0
     body=top(m,5).map(x=>`<li><div class="hotm"><b>${esc(nm(x.r.hi,x.r.h))}${x.r.sc?` ${esc(x.r.sc)} `:" – "}${esc(nm(x.r.ai,x.r.a))}</b><small>${esc([x.r.v,fmtDate(x.d)].filter(Boolean).join(" · "))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}" aria-label="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
   else if(hotTab==="arena"){const m=new Map();rows.filter(r=>r.v).forEach(r=>{const k=arenaKey(r.v);const x=m.get(k)||{v:r.v,c:r.c,d:r.d,u:new Set()};x.u.add(r.uid);if(r.d>x.d)x.d=r.d;m.set(k,x);});
     body=top(m,5).map(x=>`<li><div class="hotm"><b>${esc(x.v)}</b><small>${esc($t(x.c||""))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}" aria-label="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
-  else{const m=new Map();rows.forEach(r=>{const x=m.get(r.uid)||{uid:r.uid,d:r.d,u:new Set(),a:new Set()};x.u.add(r.id);if(r.v)x.a.add(arenaKey(r.v));m.set(r.uid,x);});
+  else{const onBoard=uid=>uid===myId?!!MY.pub:!!(STATS[uid]&&!STATS[uid]._gone);const m=new Map();rows.filter(r=>onBoard(r.uid)).forEach(r=>{const x=m.get(r.uid)||{uid:r.uid,d:r.d,u:new Set(),a:new Set()};x.u.add(r.id);if(r.v)x.a.add(arenaKey(r.v));m.set(r.uid,x);});
     body=top(m,5).map(x=>`<li class="${x.uid===myId?"me":""}"><div class="hotm"><b>${userLink(x.uid)}</b><small>${$tn(x.a.size,"1 arena","{n} arenor")}</small></div><span class="hotn">${$tn(x.u.size,"1 match","{n} matcher")}</span></li>`).join("");}
   const tabs=[["pepp",$t("Peppat")],["mat",$t("Matcher")],["arena",$t("Arenor")],["hop",$t("Groundhoppers")]];
   return`<article class="tip hot"><div class="lbl">${ic("flame")} ${$t("Hett just nu")}</div><p class="meta">${hotTab==="pepp"?$t("Matcherna som communityn peppar mest inför de närmaste dagarna."):$t("De senaste 30 dagarna, från alla som visar sina matcher.")}</p>
@@ -4302,7 +4302,7 @@ async function homeClick(t){
   if(t.dataset.gomine){setMode("mine");window.scrollTo({top:0});return;}
   if(t.dataset.goquiz){setMode("quiz");window.scrollTo({top:0});return;}}
 function startHome(db){if(!db){statsState="none";return;}
-  db.collection("stats").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});STATS=o;statsState="ready";if(mode==="hem")renderHome();},()=>{statsState="none";});
+  db.collection("stats").onSnapshot(s=>{queueFlode();const o={};s.docs.forEach(d=>{o[d.id]=d.data();});STATS=o;statsState="ready";if(mode==="hem")renderHome();},()=>{statsState="none";});
   db.collection("votes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});VOTES=o;votesLoaded=true;if(mode==="hem")renderHome();},()=>{});
   db.collection("hype").onSnapshot(s=>{queueFlode();const o={};s.docs.forEach(d=>{o[d.id]=d.data();});HYPE=o;if(mode==="hem")renderHome();},()=>{});}
 
@@ -4991,7 +4991,7 @@ function renderProfil(){const el=document.getElementById("profilBody");if(!el)re
     <article class="tip"><div class="lbl">${$t("Inställningar för communityn")}</div>
       <label class="fld" for="ccSel">${$t("Land (flagga vid ditt namn)")}<select id="ccSel"><option value="none"${MY.cc==="none"?" selected":""}>${$t("Visa ingen flagga")}</option>${Object.values(C).filter(c=>c.l==="Landslag").map(c=>[c.id,$t(c.n)]).sort((a,b)=>a[1].localeCompare(b[1],LANG)).map(([id,n])=>`<option value="${id}"${myCc()===id?" selected":""}>${esc(n)}</option>`).join("")}</select></label>
       <p class="hint">${$t("Din profilbild är märket för ditt första favoritlag. Byt favoritlag under Min fotboll.")}</p>
-      ${profSw(`data-profset="pub"`,!!MY.pub,$t("Synas i topplistorna"),$t("Bara antal matcher, arenor och länder i år, inte vilka matcher."))}
+      ${profSw(`data-profset="pub"`,!!MY.pub,$t("Synas i topplistorna"),$t("Bara antal i år: matcher, arenor, länder, landskamper och matcher med ditt favoritlag. Aldrig vilka matcher. Gäller topplistorna på Hem och Groundhoppers i Aktivitet."))}
       ${profSw(`data-profset="share"`,!!MY.share,$t("Visa mina senaste matcher för andra"),(PH()?$t("Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.",[PUB_N]):$t("Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar delas aldrig.",[PUB_N])))}
       ${profSw(`data-profset="showFo"`,!!MY.showFo,$t("Visa vilka jag följer"),$t("Då syns du som följare hos dem du följer, och du ser vilka som följer dig."))}
       ${NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")}</article>`;}

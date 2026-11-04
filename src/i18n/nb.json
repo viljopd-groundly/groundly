@@ -370,7 +370,6 @@
  "Avvisa": "Avvis",
  "Avvisat.": "Avvist.",
  "Bajen är Söders klubb, med en av Skandinaviens största publiksiffror och en egen kultur kring läktarsång och musik.": "Bajen er Södermalms klubb, med et av Skandinavias største publikumstall og en egen kultur rundt tribunesang og musikk.",
- "Bara antal matcher, arenor och länder i år, inte vilka matcher.": "Bare antall kamper, arenaer og land i år, ikke hvilke kamper.",
  "Bara moderatorer ser det här.": "Bare moderatorer ser dette.",
  "Bara orten": "Bare stedet",
  "Basel": "Basel",
@@ -2429,5 +2428,6 @@
  "Groundhoppers": "Groundhoppere",
  "Ingen har peppat någon match än. Här är tre heta kandidater – bli först!": "Ingen har gira seg på en kamp ennå. Her er tre hete kandidater – bli den første!",
  "Matcherna som communityn peppar mest inför de närmaste dagarna.": "Kampene communityet gleder seg mest til de neste dagene.",
- "Peppat": "Gira"
+ "Peppat": "Gira",
+ "Bara antal i år: matcher, arenor, länder, landskamper och matcher med ditt favoritlag. Aldrig vilka matcher. Gäller topplistorna på Hem och Groundhoppers i Aktivitet.": "Bare antall i år: kamper, arenaer, land, landskamper og kamper med favorittlaget ditt. Aldri hvilke kamper. Gjelder topplistene på Hjem og Groundhoppere under Aktivitet."
 }
