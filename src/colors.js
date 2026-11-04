@@ -50,3 +50,5 @@ Object.assign(module.exports,require("./clubs_women.js").colors);
 Object.assign(module.exports,require("./clubs_ettan.js").colors);
 Object.assign(module.exports,require("./clubs_mls2.js").colors);
 Object.assign(module.exports,require("./clubs_world.js").colors);
+// Wikipedia-färger fyller bara i där klubben saknar färger
+for(const[k,v] of Object.entries(require("./colors_wiki.js")))if(!module.exports[k])module.exports[k]=v;
