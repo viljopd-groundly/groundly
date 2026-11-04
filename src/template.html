@@ -1444,12 +1444,12 @@ const MORE_MODES=["profil","matcher","tabell","klubbar","landslag","arenor","tip
 document.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.fokustgl)return;try{if(t.checked)localStorage.setItem("fk-fokus","1");else localStorage.removeItem("fk-fokus");}catch(x){}location.replace(location.pathname);});
 // ---------- FÖRHANDSVISNING: fokusläge (?fokus=1 slår på, ?fokus=0 stänger av) ----------
 // Matcher får Communitys plats i menyraden, plusknappen loggar en match direkt och startsidan visar bara
-// matcher nära dig, logga-knappen och din säsong. Texterna är bara på svenska tills läget eventuellt blir standard.
+// matcher nära dig, logga-knappen och din säsong. Texterna översätts som resten av appen.
 const FOKUS=(()=>{try{const u=new URLSearchParams(location.search).get("fokus");if(u==="1")localStorage.setItem("fk-fokus","1");if(u==="0")localStorage.removeItem("fk-fokus");return localStorage.getItem("fk-fokus")==="1";}catch(e){return false;}})();
 if(FOKUS){MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"flode","forum","reportage");
   const cb=document.querySelector('.bnav [data-bn="community"]');if(cb){cb.dataset.bn="matcher";cb.innerHTML=`<svg class="ic" width="22" height="22" aria-hidden="true" style="width:22px;height:22px;vertical-align:0"><use href="#i-calendar"/></svg><span>${$t("Matcher")}</span>`;}
   const mm=document.querySelector('#moreSheet [data-bn="matcher"]');if(mm){mm.dataset.bn="community";mm.innerHTML=`<b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span>${$t("Community")}</span>`;}
-  const lg=document.getElementById("bnLog");if(lg){lg.setAttribute("aria-label","Logga en match");const sp=lg.querySelector("span");if(sp)sp.textContent="Logga";}}
+  const lg=document.getElementById("bnLog");if(lg){lg.setAttribute("aria-label",$t("Logga en match"));const sp=lg.querySelector("span");if(sp)sp.textContent=$t("Logga");}}
 // Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
 const isComm=m=>m==="flode"||m==="forum"||m==="reportage";
 const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"flode";}catch(e){return"flode";}};
@@ -4334,13 +4334,13 @@ const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false
 function fokusCoverage(){return esc($t("Varje match räknas. Spara allt du ser och hitta nästa äventyr bland serier från hela världen."));}
 // fokusläge: en mening om vad appen är, matcher nära dig, logga en match, din säsong och vägar vidare
 function fokusHomeHtml(ob){
-  const head=`<div class="fkpreview">Förhandsvisning av fokusläget · <a href="?fokus=0">Tillbaka till nuvarande startsida</a></div>
-   <section class="fkhero"><h1>Hitta matcher nära dig och samla alla du har sett, stora som små.</h1><p>${fokusCoverage()}</p></section>`;
+  const head=`<div class="fkpreview">${$t("Förhandsvisning av fokusläget")} · <a href="?fokus=0">${$t("Tillbaka till nuvarande startsida")}</a></div>
+   <section class="fkhero"><h1>${$t("Hitta matcher nära dig och samla alla du har sett, stora som små.")}</h1><p>${fokusCoverage()}</p></section>`;
   const logged=myState==="ready";const n=logged?(MY.attended||[]).length:0;
-  const cta=`<article class="tip fkcta"><div><b>${n?`Du har loggat ${n} ${n===1?"match":"matcher"}`:"Varit på en match?"}</b><span class="meta">${n?"Lägg till nästa och se statistiken växa.":"Spara den på tio sekunder, så börjar din groundhopperstatistik."}</span></div>
-     <button class="btn primary" ${logged?'data-plus="log"':'data-glogin="up"'}>${ic("plus")} Logga en match</button></article>`;
+  const cta=`<article class="tip fkcta"><div><b>${n?$tn(n,"Du har loggat 1 match","Du har loggat {n} matcher"):$t("Varit på en match?")}</b><span class="meta">${n?$t("Lägg till nästa och se statistiken växa."):$t("Spara den på tio sekunder, så börjar din groundhopperstatistik.")}</span></div>
+     <button class="btn primary" ${logged?'data-plus="log"':'data-glogin="up"'}>${ic("plus")} ${$t("Logga en match")}</button></article>`;
   const go=(attr,icon,t)=>`<button class="fkgo" ${attr}>${ic(icon)}<span>${t}</span></button>`;
-  const more=`<section class="fkmore"><h3 class="sec">Upptäck mer</h3><div class="fkgrid">${go('data-gomode="tips"',"flame","Derbyn och tips")}${go('data-gomode="arenor"',"stadium","Arenor")}${go('data-gomode="klubbar"',"ball","Klubbar")}${go('data-gomode="tabell"',"table","Tabeller")}${go('data-gomode="landslag"',"globe","Landslag")}${go('data-gomode="forum"',"chat","Community")}</div></section>`;
+  const more=`<section class="fkmore"><h3 class="sec">${$t("Upptäck mer")}</h3><div class="fkgrid">${go('data-gomode="tips"',"flame",$t("Derbyn och tips"))}${go('data-gomode="arenor"',"stadium",$t("Arenor"))}${go('data-gomode="klubbar"',"ball",$t("Klubbar"))}${go('data-gomode="tabell"',"table",$t("Tabeller"))}${go('data-gomode="landslag"',"globe",$t("Landslag"))}${go('data-gomode="flode"',"chat",$t("Community"))}</div></section>`;
   let w="";try{w=weekendHtml();}catch(e){}let m="";try{m=mineSnap();}catch(e){}
   return head+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
 
