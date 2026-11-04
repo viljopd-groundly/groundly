@@ -1447,7 +1447,7 @@ document.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.datase
 // matcher nära dig, logga-knappen och din säsong. Texterna är bara på svenska tills läget eventuellt blir standard.
 const FOKUS=(()=>{try{const u=new URLSearchParams(location.search).get("fokus");if(u==="1")localStorage.setItem("fk-fokus","1");if(u==="0")localStorage.removeItem("fk-fokus");return localStorage.getItem("fk-fokus")==="1";}catch(e){return false;}})();
 if(FOKUS){MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"flode","forum","reportage");
-  const cb=document.querySelector('.bnav [data-bn="community"]');if(cb){cb.dataset.bn="matcher";cb.innerHTML=`<svg width="22" height="22" aria-hidden="true" style="width:22px;height:22px"><use href="#i-calendar"/></svg><span>${$t("Matcher")}</span>`;}
+  const cb=document.querySelector('.bnav [data-bn="community"]');if(cb){cb.dataset.bn="matcher";cb.innerHTML=`<svg class="ic" width="22" height="22" aria-hidden="true" style="width:22px;height:22px;vertical-align:0"><use href="#i-calendar"/></svg><span>${$t("Matcher")}</span>`;}
   const mm=document.querySelector('#moreSheet [data-bn="matcher"]');if(mm){mm.dataset.bn="community";mm.innerHTML=`<b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span>${$t("Community")}</span>`;}
   const lg=document.getElementById("bnLog");if(lg){lg.setAttribute("aria-label","Logga en match");const sp=lg.querySelector("span");if(sp)sp.textContent="Logga";}}
 // Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
