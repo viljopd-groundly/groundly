@@ -2396,5 +2396,10 @@
  "Skriv en matchberättelse, betygsätt en arena du varit på eller starta en tråd i forumet, så syns det här.": "Napisz relację z meczu, oceń stadion, na którym byłeś, albo załóż wątek na forum, a pojawi się tutaj.",
  "startade en tråd i forumet": "założył(a) wątek na forum",
  "svarade i": "odpowiedział(a) w",
- "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Chcesz pojawiać się tutaj, gdy zapiszesz mecz? Wtedy inni zobaczą twoje ostatnie mecze (drużyny, wynik, stadion i datę). Notatki, towarzystwo i zdjęcia nigdy nie są udostępniane."
+ "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Chcesz pojawiać się tutaj, gdy zapiszesz mecz? Wtedy inni zobaczą twoje ostatnie mecze (drużyny, wynik, stadion i datę). Notatki, towarzystwo i zdjęcia nigdy nie są udostępniane.",
+ "Snyggt, din första match är loggad!": "Super, twój pierwszy mecz jest zapisany!",
+ "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar och bilder delas aldrig.": "Jest teraz widoczny w aktywności dla innych groundhopperów, a znajomi mogą cię obserwować. Notatki i zdjęcia nigdy nie są udostępniane.",
+ "Toppen": "Super",
+ "Visa bara för mig": "Pokaż tylko mnie",
+ "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Twoje mecze są widoczne tylko dla ciebie. Możesz to zmienić w Mój profil."
 }

@@ -2396,5 +2396,10 @@
  "Skriv en matchberättelse, betygsätt en arena du varit på eller starta en tråd i forumet, så syns det här.": "Skrifaðu leiksögu, gefðu velli sem þú hefur heimsótt einkunn eða stofnaðu þráð á spjallinu, þá birtist það hér.",
  "startade en tråd i forumet": "stofnaði þráð á spjallinu",
  "svarade i": "svaraði í",
- "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Viltu sjást hér þegar þú skráir leik? Þá sjá aðrir nýjustu leikina þína (lið, úrslit, völl og dagsetningu). Athugasemdum, félagsskap og myndum er aldrei deilt."
+ "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Viltu sjást hér þegar þú skráir leik? Þá sjá aðrir nýjustu leikina þína (lið, úrslit, völl og dagsetningu). Athugasemdum, félagsskap og myndum er aldrei deilt.",
+ "Snyggt, din första match är loggad!": "Flott, fyrsti leikurinn þinn er skráður!",
+ "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar och bilder delas aldrig.": "Hann birtist nú í straumnum hjá öðrum vallaflökkurum og vinir geta fylgt þér. Athugasemdum og myndum er aldrei deilt.",
+ "Toppen": "Frábært",
+ "Visa bara för mig": "Sýna bara mér",
+ "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Leikirnir þínir eru aðeins sýnilegir þér. Þú getur breytt því undir Prófíllinn minn."
 }

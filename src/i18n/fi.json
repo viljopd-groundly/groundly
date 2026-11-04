@@ -2396,5 +2396,10 @@
  "Skriv en matchberättelse, betygsätt en arena du varit på eller starta en tråd i forumet, så syns det här.": "Kirjoita ottelukertomus, arvioi stadion, jolla olet käynyt, tai aloita foorumiketju, niin se näkyy täällä.",
  "startade en tråd i forumet": "aloitti ketjun foorumilla",
  "svarade i": "vastasi ketjuun",
- "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Haluatko näkyä täällä, kun kirjaat ottelun? Silloin viimeisimmät ottelusi (joukkueet, tulos, stadion ja päivä) näkyvät muille. Muistiinpanoja, seuraa ja kuvia ei koskaan jaeta."
+ "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Haluatko näkyä täällä, kun kirjaat ottelun? Silloin viimeisimmät ottelusi (joukkueet, tulos, stadion ja päivä) näkyvät muille. Muistiinpanoja, seuraa ja kuvia ei koskaan jaeta.",
+ "Snyggt, din första match är loggad!": "Hienoa, ensimmäinen ottelusi on kirjattu!",
+ "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar och bilder delas aldrig.": "Se näkyy nyt syötteessä muille groundhoppereille, ja kaverit voivat seurata sinua. Muistiinpanoja ja kuvia ei koskaan jaeta.",
+ "Toppen": "Mahtavaa",
+ "Visa bara för mig": "Näytä vain minulle",
+ "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Ottelusi näkyvät vain sinulle. Voit muuttaa tämän kohdassa Oma profiili."
 }

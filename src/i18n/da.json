@@ -2397,5 +2397,10 @@
  "Skriv en matchberättelse, betygsätt en arena du varit på eller starta en tråd i forumet, så syns det här.": "Skriv en kampberetning, bedøm et stadion, du har været på, eller start en tråd i forummet, så vises det her.",
  "startade en tråd i forumet": "startede en tråd i forummet",
  "svarade i": "svarede i",
- "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Vil du vises her, når du logger en kamp? Så kan andre se dine seneste kampe (hold, resultat, stadion og dato). Noter, selskab og billeder deles aldrig."
+ "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Vil du vises her, når du logger en kamp? Så kan andre se dine seneste kampe (hold, resultat, stadion og dato). Noter, selskab og billeder deles aldrig.",
+ "Snyggt, din första match är loggad!": "Flot, din første kamp er logget!",
+ "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar och bilder delas aldrig.": "Den vises nu i feedet for andre groundhoppere, og venner kan følge dig. Noter og billeder deles aldrig.",
+ "Toppen": "Super",
+ "Visa bara för mig": "Vis kun for mig",
+ "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Dine kampe er kun synlige for dig. Du kan ændre det under Min profil."
 }

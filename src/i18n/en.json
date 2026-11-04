@@ -2486,5 +2486,10 @@
  "Skriv en matchberättelse, betygsätt en arena du varit på eller starta en tråd i forumet, så syns det här.": "Write a match story, rate a ground you've visited or start a forum thread, and it will show up here.",
  "startade en tråd i forumet": "started a forum thread",
  "svarade i": "replied in",
- "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Want to show up here when you log a match? Your latest matches (teams, score, ground and date) will then be visible to others. Notes, companions and photos are never shared."
+ "Vill du synas här när du loggar en match? Då visas dina senaste matcher (lag, resultat, arena och datum) för andra. Anteckningar, sällskap och bilder delas aldrig.": "Want to show up here when you log a match? Your latest matches (teams, score, ground and date) will then be visible to others. Notes, companions and photos are never shared.",
+ "Snyggt, din första match är loggad!": "Nice, your first match is logged!",
+ "Den syns nu i flödet för andra groundhoppers, och vänner kan följa dig. Anteckningar och bilder delas aldrig.": "It now shows in the feed for other groundhoppers, and friends can follow you. Notes and photos are never shared.",
+ "Toppen": "Great",
+ "Visa bara för mig": "Only show to me",
+ "Dina matcher syns bara för dig. Du kan ändra det under Min profil.": "Your matches are only visible to you. You can change this under My profile."
 }
