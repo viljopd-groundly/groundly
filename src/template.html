@@ -1655,11 +1655,12 @@ const TIERS=[["1",$t("Högsta serien")],["2",$t("Näst högsta")],["3",$t("Lägr
 // cuper: Europacuper, nationella cuper, ligacuper, supercuper, landslagsturneringar m.m.
 const CUP_RE=/cup|pokal|coppa|copa|coupe|beker|taça|taca|puchar|bikar|trophy|shield|champions league|champions cup|libertadores|europa league|conference|nations league|kval|qualif|playoff|em-|vm-|euro |world cup|mästerskap|turnering/i;
 function tierOf(m){const t=String(m.tier||"").toUpperCase();if(t==="EC"||t==="CUP"||CUP_RE.test(m.comp||""))return"CUP";if(t==="1"||t==="2")return t;return t?"3":"3";}
-// avståndsenhet: mil (Sverige, Norge), miles (Storbritannien, USA), annars km. Kan ändras under Inställningar (fk-unit).
+// avståndsenhet: mil på svenska och norska, miles i Storbritannien och USA, annars km. Kan ändras under Inställningar (fk-unit).
+// "mil" (10 km) finns bara i Sverige och Norge, så den används inte automatiskt på andra språk även om telefonen är inställd på Sverige.
 // Internt räknas radien alltid i mil (10 km).
 const UNIT_PER_MIL={mil:1,km:10,mi:6.2137};
 function autoUnit(){const l=String((navigator.languages&&navigator.languages[0])||navigator.language||"");const reg=(l.split("-")[1]||"").toUpperCase();
-  if(reg==="SE"||reg==="NO")return"mil";if(["GB","US","LR","MM"].includes(reg))return"mi";return LANG==="sv"||LANG==="nb"?"mil":"km";}
+  if(LANG==="sv"||LANG==="nb")return"mil";if(["GB","US","LR","MM"].includes(reg))return"mi";return"km";}
 let unitPick=(()=>{const v=store.get("fk-unit");return UNIT_PER_MIL[v]?v:"auto";})();
 let UNIT=unitPick==="auto"?autoUnit():unitPick;
 const UNIT_STEPS={mil:[1,5,10,25],km:[10,50,100,250],mi:[10,30,60,150]};
@@ -1682,7 +1683,7 @@ const fmtU=(v,dec)=>Number(v).toLocaleString(LOC,{maximumFractionDigits:dec});
 const milU=mil=>UNIT==="mil"?fmtU(mil,1)+" mil":UNIT==="km"?fmtU(Math.round(mil*10),0)+" km":fmtU(mil*6.2137<10?Math.round(mil*62.137)/10:Math.round(mil*6.2137),1)+" miles";
 // km i vald enhet (för längre sträckor, t.ex. totalt rest)
 const kmU=km=>UNIT==="mi"?fmtU(Math.round(km*0.62137/10)*10,0)+" miles":fmtU(Math.round(km/10)*10,0)+" km";
-const milTxt=km=>{if(UNIT==="mil"){const m=km/10;return"ca "+(m<10?m.toFixed(1):Math.round(m).toString()).replace(".",",")+" mil";}
+const milTxt=km=>{if(UNIT==="mil"){const m=km/10;return $t("ca {0}",[fmtU(m<10?Math.round(m*10)/10:Math.round(m),1)+" mil"]);}
   const v=UNIT==="mi"?km*0.62137:km;const r=v<100?Math.round(v):Math.round(v/10)*10;return $t("ca {0}",[fmtU(r,0)+(UNIT==="mi"?" miles":" km")]);};
 // uppskattad bilväg: fågelvägen + 25 % (stämmer ungefär med vägavstånd i Sverige och Europa). Exakt sträcka finns under "Ta dig till arenan".
 const ROADF=1.25;const roadKm=(a,b)=>haversine(a,b)*ROADF;
