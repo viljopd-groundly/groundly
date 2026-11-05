@@ -1847,8 +1847,11 @@ function officialRowsHtml(g,fav){return g.rows.map(r=>{const[id,name,rank,s,v,o,
   const fm=String(form||"").slice(-5).split("").filter(x=>FORM_SV[x]).map(x=>{const y=FORM_SV[x];return`<i class="fm ${y==="V"?"w":y==="F"?"l":"d"}" title="${y==="V"?$t("Vinst"):y==="F"?$t("Förlust"):$t("Oavgjort")}">${y}</i>`;}).join("");
   return`<tr class="${id&&id===tblHL?"hl":""}${id&&fav.has(id)?" fav":""}"${desc?` title="${esc(desc)}"`:""}><td class="n">${rank}</td><td class="tl">${c?`<button class="tteam" data-open="${esc(id)}">${crest(id,c.n,20)}<span>${esc(c.n)}</span></button>`:`<span class="tteam">${esc(name)}</span>`}</td><td class="n">${s}</td><td class="n">${v}</td><td class="n">${o}</td><td class="n">${f}</td><td class="n">${gd>0?"+":""}${gd}</td><td class="n"><b>${p}</b></td><td class="fcol">${fm}</td></tr>`;}).join("");}
 const TBL_HEAD=`<thead><tr><th>#</th><th class="tl">${$t("Lag")}</th><th title="${$t("Spelade")}">S</th><th title="${$t("Vinster")}">V</th><th title="${$t("Oavgjorda")}">O</th><th title="${$t("Förluster")}">F</th><th title="${$t("Målskillnad")}">+/−</th><th title="${$t("Poäng")}">P</th><th class="fcol">${$t("Form")}</th></tr></thead>`;
+// assist visas bara där serien registrerar assist ordentligt: minst 10 spelare på listan och
+// minst 0,45 assist per mål bland topplistorna (bra serier ligger på 0,5–0,75). Räknas om på varje natts data.
+function assistOk(P){const a=P.assists||[],g=P.goals||[];if(a.length<10||!g.length)return false;const sum=l=>l.reduce((s,x)=>s+(+x[2]||0),0);const sg=sum(g);return sg>0&&sum(a)/sg>=0.45;}
 function statBoardHtml(L){const P=XD.players&&XD.players.leagues&&XD.players.leagues[L];if(!P)return"";
-  const tabs=[["goals",$t("Mål")],["assists",$t("Assist")],["yellow",$t("Gula kort")],["red",$t("Röda kort")]].filter(([k])=>P[k]&&P[k].length);if(!tabs.length)return"";if(!tabs.some(([k])=>k===tblStat))tblStat=tabs[0][0];
+  const tabs=[["goals",$t("Mål")],["assists",$t("Assist")],["yellow",$t("Gula kort")],["red",$t("Röda kort")]].filter(([k])=>P[k]&&P[k].length&&(k!=="assists"||assistOk(P)));if(!tabs.length)return"";if(!tabs.some(([k])=>k===tblStat))tblStat=tabs[0][0];
   const list=P[tblStat];
   return`<article class="tip tblcard" id="statBoard"><div class="tblhead"><h2 class="name">${$t("Spelarligor")}</h2><span class="meta">${$t("{0} · topp {1}",[esc(L),list.length])}</span></div>
    <div class="chips">${tabs.map(([k,l])=>`<button class="chip" data-tblstat="${k}" aria-pressed="${k===tblStat}">${l}</button>`).join("")}</div>
