@@ -4375,10 +4375,10 @@ function fokusHomeHtml(ob){
   const go=(attr,icon,t)=>`<button class="fkgo" ${attr}>${ic(icon)}<span>${t}</span></button>`;
   const more=`<section class="fkmore"><h3 class="sec">${$t("Upptäck mer")}</h3><div class="fkgrid">${go('data-gomode="tips"',"flame",$t("Derbyn och tips"))}${go('data-gomode="arenor"',"stadium",$t("Arenor"))}${go('data-gomode="klubbar"',"ball",$t("Klubbar"))}${go('data-gomode="tabell"',"table",$t("Tabeller"))}${go('data-gomode="landslag"',"globe",$t("Landslag"))}${go('data-gomode="flode"',"chat",$t("Community"))}</div></section>`;
   let w="";try{w=weekendHtml();}catch(e){}let m="";try{m=mineSnap();}catch(e){}
-  // Veckans match som en mörk biljett överst, så att startsidan får en tydlig blickfångare
+  // rubriken överst, sedan Veckans match som en mörk biljett
   const [pv,hero]=head.split("\n   ");
   let t="";try{t=heroHtml().replace('class="tip hero"','class="tip hero fkdark"');}catch(e){}
-  return pv+t+hero+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
+  return pv+hero+t+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
 
 const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
 // "visa mer" på Hem: fäll ut under, skärmen står still. Fälls något ihop och rutans topp hamnat ovanför skärmen, skrolla till rutans topp.
