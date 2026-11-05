@@ -1682,11 +1682,12 @@ function haversine(a,b){const R=6371,r=x=>x*Math.PI/180;const dLa=r(b[0]-a[0]),d
   const h=Math.sin(dLa/2)**2+Math.cos(r(a[0]))*Math.cos(r(b[0]))*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
 // avstånd: svenska och norska i mil, övriga språk i km
 const fmtU=(v,dec)=>Number(v).toLocaleString(LOC,{maximumFractionDigits:dec});
-const milU=mil=>UNIT==="mil"?fmtU(mil,1)+" mil":UNIT==="km"?fmtU(Math.round(mil*10),0)+" km":fmtU(mil*6.2137<10?Math.round(mil*62.137)/10:Math.round(mil*6.2137),1)+" miles";
+// tal och enhet hålls ihop på samma rad (hårt mellanslag)
+const milU=mil=>UNIT==="mil"?fmtU(mil,1)+"\u00a0mil":UNIT==="km"?fmtU(Math.round(mil*10),0)+"\u00a0km":fmtU(mil*6.2137<10?Math.round(mil*62.137)/10:Math.round(mil*6.2137),1)+"\u00a0miles";
 // km i vald enhet (för längre sträckor, t.ex. totalt rest)
-const kmU=km=>UNIT==="mi"?fmtU(Math.round(km*0.62137/10)*10,0)+" miles":fmtU(Math.round(km/10)*10,0)+" km";
-const milTxt=km=>{if(UNIT==="mil"){const m=km/10;return $t("ca {0}",[fmtU(m<10?Math.round(m*10)/10:Math.round(m),1)+" mil"]);}
-  const v=UNIT==="mi"?km*0.62137:km;const r=v<100?Math.round(v):Math.round(v/10)*10;return $t("ca {0}",[fmtU(r,0)+(UNIT==="mi"?" miles":" km")]);};
+const kmU=km=>UNIT==="mi"?fmtU(Math.round(km*0.62137/10)*10,0)+"\u00a0miles":fmtU(Math.round(km/10)*10,0)+"\u00a0km";
+const milTxt=km=>{if(UNIT==="mil"){const m=km/10;return $t("ca {0}",[fmtU(m<10?Math.round(m*10)/10:Math.round(m),1)+"\u00a0mil"]);}
+  const v=UNIT==="mi"?km*0.62137:km;const r=v<100?Math.round(v):Math.round(v/10)*10;return $t("ca {0}",[fmtU(r,0)+(UNIT==="mi"?"\u00a0miles":"\u00a0km")]);};
 // uppskattad bilväg: fågelvägen + 25 % (stämmer ungefär med vägavstånd i Sverige och Europa). Exakt sträcka finns under "Ta dig till arenan".
 const ROADF=1.25;const roadKm=(a,b)=>haversine(a,b)*ROADF;
 const DIST_NOTE=$t("Avstånden är uppskattad bilväg. För exakt sträcka, tryck Ta dig till arenan.");
