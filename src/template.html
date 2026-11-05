@@ -4209,7 +4209,7 @@ function hotHtml(){const cut=new Date(Date.now()-30*864e5).toISOString().slice(0
   const tabs=[["pepp",$t("Peppat")],["mat",$t("Matcher")],["arena",$t("Arenor")],["hop",$t("Groundhoppers")]];
   return`<article class="tip hot"><div class="lbl">${ic("flame")} ${$t("Hett just nu")}</div><p class="meta">${hotTab==="pepp"?$t("Matcherna som communityn peppar mest inför de närmaste dagarna."):$t("De senaste 30 dagarna, från alla som visar sina matcher.")}</p>
     <div class="chips wrapchips" role="group" aria-label="${$t("Topplista")}">${tabs.map(([k,l])=>`<button class="chip" data-hot="${k}" aria-pressed="${hotTab===k}">${l}</button>`).join("")}</div>
-    ${note}${body?`<ol class="hotlist">${body}</ol>`:`<p class="meta">${$t("Ingen har loggat något här än.")}</p>`}</article>`;}
+    ${note}${body?`<ol class="hotlist">${body}</ol>`:`<p class="meta">${hotTab==="pepp"&&dbState==="loading"?$t("Hämtar matchschemat…"):$t("Ingen har loggat något här än.")}</p>`}</article>`;}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-hot]");if(!t)return;flodeKeep(()=>{hotTab=t.dataset.hot;renderFlode();});});
 function renderFlode(){const el=document.getElementById("flodeList");if(!el)return;
   const all=flodeEvents();

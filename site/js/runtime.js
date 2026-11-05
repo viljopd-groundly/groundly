@@ -103,18 +103,25 @@ async function boot() {
       return { at: e.at, docs: JSON.parse(j || "{}") };
     } catch (e2) { return null; }
   }
+  // senast kända innehåll sparas i webbläsaren och visas direkt vid nästa start, medan det färska hämtas (högst ~1,5 MB per samling)
+  const LKEY = n => "gl-cc-" + n;
+  const asSnap = m => { const docs = Object.entries(m).map(([id, d]) => ({ id, exists: true, data: () => JSON.parse(JSON.stringify(d)) })); return { size: docs.length, empty: !docs.length, docs }; };
+  const lsT = {};
+  function keepLocal(name, m) { clearTimeout(lsT[name]); lsT[name] = setTimeout(() => { try { const j = JSON.stringify(m); if (j.length < 1.5e6) localStorage.setItem(LKEY(name), j); else localStorage.removeItem(LKEY(name)); } catch (e) {} }, 1500); }
   function cached(name, ref, next, onErr, full) {
-    let off = null, dead = false;
+    let off = null, dead = false, fresh = false;
+    try { const raw = localStorage.getItem(LKEY(name)); if (raw) { const m = JSON.parse(raw); setTimeout(() => { if (!dead && !fresh) next(asSnap(m)); }, 0); } } catch (e) {}
+    const next2 = s => { fresh = true; try { const m = {}; s.docs.forEach(d => { m[d.id] = d.data(); }); keepLocal(name, m); } catch (e) {} next(s); };
     (async () => {
       const base = await cacheBase(name);
       if (dead) return;
-      if (!base) { off = full(); return; }
+      if (!base) { off = full(next2); return; }
       const emit = delta => { const m = { ...base.docs }; for (const [id, d] of Object.entries(delta)) { if (d && d._gone) delete m[id]; else m[id] = clean(d); }
-        const docs = Object.entries(m).map(([id, d]) => ({ id, exists: true, data: () => JSON.parse(JSON.stringify(d)) })); next({ size: docs.length, empty: !docs.length, docs }); };
+        fresh = true; keepLocal(name, m); next(asSnap(m)); };
       emit({});
       const q = F.query(ref, F.where("_u", ">", F.Timestamp.fromMillis(Date.parse(base.at))));
       off = F.onSnapshot(q, s => { const delta = {}; s.docs.forEach(d => { delta[d.id] = d.data(); }); emit(delta); },
-        () => { if (!dead) { try { off && off(); } catch (e) {} off = full(); } });
+        () => { if (!dead) { try { off && off(); } catch (e) {} off = full(next2); } });
     })();
     return () => { dead = true; if (off) off(); };
   }
@@ -138,7 +145,7 @@ async function boot() {
       return {
         async get() { try { return wrap(await F.getDocs(ref)); } catch (e) { throw mapErr(e); } },
         onSnapshot(next, onErr) {
-          const full = () => F.onSnapshot(ref, s => next(wrap(s)), e => onErr && onErr(mapErr(e)));
+          const full = (nx = next) => F.onSnapshot(ref, s => nx(wrap(s)), e => onErr && onErr(mapErr(e)));
           const sub = () => cached(name, ref, next, onErr, full);
           // samlingar som bara behövs i vissa vyer hämtas först när man öppnar vyn (sparar läsningar). Forumet behövs på Hem (rutan Community), så det hämtas direkt.
           const need = LAZY[name];
