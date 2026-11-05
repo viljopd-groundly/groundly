@@ -1304,6 +1304,8 @@ try{trDom(document.body);}catch(e){}
 const _ifmt=(o,mk)=>Array.from({length:mk[0]},(_,i)=>new Intl.DateTimeFormat(LOC,o).format(mk[1](i)).replace(/\.$/,""));
 const L_WD3=LANG==="sv"?["sön","mån","tis","ons","tor","fre","lör"]:_ifmt({weekday:"short"},[7,i=>new Date(2024,0,7+i)]);
 const L_WDL=LANG==="sv"?["söndag","måndag","tisdag","onsdag","torsdag","fredag","lördag"]:_ifmt({weekday:"long"},[7,i=>new Date(2024,0,7+i)]);
+// tyska, danska, norska, finska och isländska skriver punkt efter dagen: 30. okt
+const DDOT=["de","da","nb","fi","is"].includes(LANG)?".":"";
 const L_MO3=LANG==="sv"?["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"]:_ifmt({month:"short"},[12,i=>new Date(2024,i,15)]);
 const L_MOL=LANG==="sv"?["januari","februari","mars","april","maj","juni","juli","augusti","september","oktober","november","december"]:_ifmt({month:"long"},[12,i=>new Date(2024,i,15)]);
 const CLUBS=/*CLUBS*/[];
@@ -2090,7 +2092,7 @@ const NAMES={};
 function allPosts(){const out=[];Object.entries(FORUM).forEach(([uid,d])=>{(d&&Array.isArray(d.posts)?d.posts:[]).forEach(p=>{if(p&&p.id&&p.body)out.push({...p,uid,key:uid+":"+p.id});});});
   return out.filter(p=>!HIDDEN.includes(p.key)&&!blk(p.uid));}
 const ago=iso=>{const s=(Date.now()-Date.parse(iso))/1000;if(!(s>=0))return"";if(s<3600)return Math.max(1,Math.round(s/60))+$t(" min sedan");if(s<86400)return Math.round(s/3600)+$t(" tim sedan");
-  const d=new Date(iso);return`${d.getDate()} ${L_MO3[d.getMonth()]}${d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():""}`;};
+  const d=new Date(iso);return`${d.getDate()}${DDOT} ${L_MO3[d.getMonth()]}${d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():""}`;};
 async function resolveNames(ids){if(!userNs||!ids.length)return;try{const ps=await userNs.profiles(ids);let changed=false;
   ids.forEach(id=>{const n=(ps[id]&&ps[id].name)||"";if(NAMES[id]!==n){NAMES[id]=n;changed=true;}if(ps[id])PROF[id]={fav:ps[id].fav||null,cc:ps[id].cc||null,ini:ps[id].ini||null};});if(changed&&mode==="forum")renderForum(true);}catch(e){}}
 const PROF={};
@@ -2283,7 +2285,7 @@ function delBtn(kind,id,label){const k=kind+":"+id;return`<button class="link" d
 // alltid "17 okt 2026": tre bokstäver för månaden, utan punkt
 const MON3=L_MO3;
 // "2 nov", med årtal bara om matchen inte spelas i år
-function shortDate(iso){const d=new Date(iso);return`${d.getDate()} ${MON3[d.getMonth()]}${d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():""}`;}
+function shortDate(iso){const d=new Date(iso);return`${d.getDate()}${DDOT} ${MON3[d.getMonth()]}${d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():""}`;}
 const fmtDate=k=>{if(!k)return"";const[y,m,d]=String(k).split("-").map(Number);return y&&m&&d?`${d} ${MON3[m-1]} ${y}`:"";};
 
 let myYear="all";
@@ -3869,7 +3871,7 @@ function iLike(key){const d=LIKES[myId];return!!(d&&Array.isArray(d.keys)&&d.key
 const likeInner=key=>{const n=likeCount(key);return`${ic("heart",iLike(key)?"on":"")} ${iLike(key)?$t("Gillad"):$t("Gilla")}${n?` (${n})`:""}`;};
 // uppdatera gilla-knappar och hjärtan där de står, utan att rita om listan (då laddas bilder och märken om och sidan hoppar)
 function likesInPlace(){document.querySelectorAll("[data-replike]").forEach(b=>{const k=b.dataset.replike;b.setAttribute("aria-pressed",iLike(k));b.innerHTML=likeInner(k);});
-  document.querySelectorAll(".lkn[data-lk]").forEach(x=>{const n=likeCount(x.dataset.lk);x.innerHTML=n?` · ${ic("heart")} ${n}`:"";});}
+  document.querySelectorAll(".lkn[data-lk]").forEach(x=>{const n=likeCount(x.dataset.lk);x.innerHTML=n?`\u00a0·\u00a0${ic("heart")} ${n}`:"";});}
 // antal reportage och forumtrådar per klubb (byggs om bara när datan ändras)
 let _cc={rep:null,fo:null,m:null};
 function commCount(id){if(!id)return null;if(_cc.rep!==REP||_cc.fo!==FORUM||!_cc.m){const m={};const g=k=>m[k]||(m[k]={r:0,f:0});
@@ -3963,7 +3965,7 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
         ${r.photos.length&&!open?`<span class="rcover">${phImg(r.photos[0])}${r.photos.length>1?`<span class="rcount">${$t("{0} bilder",[r.photos.length])}</span>`:""}</span>`:""}
         <span class="rtxt">${r.draft?`<span class="pill ec draftpill">${$t("Utkast · syns bara för dig")}</span>`:""}${r.visit?`<span class="pill t3 draftpill">${$t("Arenabesök")}</span>`:""}<span class="rtitle">${esc(r.title)}</span>
         ${meta?`<span class="rmeta">${c?crest(c.id,c.n,20):""}${esc(meta)}</span>`:""}
-        <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}<span class="lkn" data-lk="${esc(r.key)}">${n?` · ${ic("heart")} ${n}`:""}</span>${(()=>{const k=commentsFor(r.key).length;return k?` · ${k} ${k===1?$t("kommentar"):$t("kommentarer")}`:"";})()}</span>
+        <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}<span class="lkn" data-lk="${esc(r.key)}">${n?`\u00a0·\u00a0${ic("heart")} ${n}`:""}</span>${(()=>{const k=commentsFor(r.key).length;return k?`\u00a0·\u00a0${k} ${k===1?$t("kommentar"):$t("kommentarer")}`:"";})()}</span>
         ${open?"":`<span class="rex">${esc(String(r.body).slice(0,160))}${String(r.body).length>160?"…":""}</span>`}</span>
       </button>
       ${open?`<div class="rbody">
