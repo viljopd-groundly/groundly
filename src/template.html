@@ -1849,9 +1849,10 @@ function officialRowsHtml(g,fav){return g.rows.map(r=>{const[id,name,rank,s,v,o,
 const TBL_HEAD=`<thead><tr><th>#</th><th class="tl">${$t("Lag")}</th><th title="${$t("Spelade")}">S</th><th title="${$t("Vinster")}">V</th><th title="${$t("Oavgjorda")}">O</th><th title="${$t("Förluster")}">F</th><th title="${$t("Målskillnad")}">+/−</th><th title="${$t("Poäng")}">P</th><th class="fcol">${$t("Form")}</th></tr></thead>`;
 // assist visas bara där serien registrerar assist ordentligt: minst 10 spelare på listan och
 // minst 0,45 assist per mål bland topplistorna (bra serier ligger på 0,5–0,75). Räknas om på varje natts data.
+// målen visas när minst 10 spelare finns på skytteligan (färre betyder att serien bara registrerar en del av målen)
 function assistOk(P){const a=P.assists||[],g=P.goals||[];if(a.length<10||!g.length)return false;const sum=l=>l.reduce((s,x)=>s+(+x[2]||0),0);const sg=sum(g);return sg>0&&sum(a)/sg>=0.45;}
 function statBoardHtml(L){const P=XD.players&&XD.players.leagues&&XD.players.leagues[L];if(!P)return"";
-  const tabs=[["goals",$t("Mål")],["assists",$t("Assist")],["yellow",$t("Gula kort")],["red",$t("Röda kort")]].filter(([k])=>P[k]&&P[k].length&&(k!=="assists"||assistOk(P)));if(!tabs.length)return"";if(!tabs.some(([k])=>k===tblStat))tblStat=tabs[0][0];
+  const tabs=[["goals",$t("Mål")],["assists",$t("Assist")],["yellow",$t("Gula kort")],["red",$t("Röda kort")]].filter(([k])=>P[k]&&P[k].length&&(k!=="assists"||assistOk(P))&&(k!=="goals"||P.goals.length>=10));if(!tabs.length)return"";if(!tabs.some(([k])=>k===tblStat))tblStat=tabs[0][0];
   const list=P[tblStat];
   return`<article class="tip tblcard" id="statBoard"><div class="tblhead"><h2 class="name">${$t("Spelarligor")}</h2><span class="meta">${$t("{0} · topp {1}",[esc(L),list.length])}</span></div>
    <div class="chips">${tabs.map(([k,l])=>`<button class="chip" data-tblstat="${k}" aria-pressed="${k===tblStat}">${l}</button>`).join("")}</div>
