@@ -970,6 +970,40 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 :root[data-look="ticket"] .btn{border-radius:4px}
 :root[data-look="ticket"] .chip[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:#fff}
 
+
+/* ---------- fokusläge, karusellförslag ---------- */
+:root[data-fkc] #v-hem .fkhero{display:none}
+.fcloc button{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:6px 2px 10px;font-size:calc(17px*var(--fs))}
+.fcloc button>.ic:first-child{width:34px;height:34px;padding:7px;box-sizing:border-box;border-radius:50%;background:var(--pitch-soft);color:var(--pitch)}
+.fcloc button>.ic:last-child{width:18px;height:18px;transform:rotate(90deg);color:var(--muted)}
+.fccats{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 14px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}.fccats::-webkit-scrollbar{display:none}
+.fccat{all:unset;cursor:pointer;flex:none;width:72px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:calc(13px*var(--fs));font-weight:600;text-align:center;color:var(--fg)}
+.fccat>span{width:62px;height:62px;border-radius:20px;display:grid;place-items:center;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--line)}
+.fccat>span .ic{width:28px;height:28px;color:var(--pitch)}
+.fcsec{margin:8px 0 18px}.fchead{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px}
+.fchead h2{margin:0;font-size:calc(22px*var(--fs));letter-spacing:-.01em}
+.fcarrow{all:unset;cursor:pointer;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--soft2,rgba(0,0,0,.06))}.fcarrow .ic{width:18px;height:18px}
+.fcrow{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:2px 16px 8px;scrollbar-width:none}.fcrow::-webkit-scrollbar{display:none}
+.fcard{all:unset;box-sizing:border-box;cursor:pointer;flex:none;width:min(80vw,300px);scroll-snap-align:start;scroll-margin-left:16px;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.fcban{position:relative;height:128px;background:linear-gradient(120deg,var(--ca) 0 50%,var(--cb) 50% 100%);display:grid;place-items:center}
+.fcban:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.18))}
+.fccr{position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin-top:26px}.fccr i{font-style:normal;color:#fff;font-weight:800;font-size:22px;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.fccr .crest{border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.25);border:3px solid #fff}.fccr img.crest{background:#fff}
+.fcbadge{position:absolute;z-index:2;top:10px;left:10px;background:#FFF3C4;color:#1d1a10;font-weight:700;font-size:calc(13px*var(--fs));padding:5px 10px;border-radius:999px;white-space:nowrap}
+.fccorner{position:absolute;z-index:2;top:10px;right:10px;background:#fff;color:#1d1a10;font-weight:700;font-size:calc(13px*var(--fs));padding:5px 10px;border-radius:999px;display:inline-flex;gap:4px;align-items:center}.fccorner .ic{width:14px;height:14px;color:#d1581e}
+.fcbody{padding:12px 14px 6px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.fct{font-size:calc(17px*var(--fs));line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fcs{color:var(--muted);font-size:calc(14px*var(--fs));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fcm{font-size:calc(14px*var(--fs));display:flex;align-items:center;gap:8px}.fcm i{width:1px;height:14px;background:var(--line)}
+.fcfoot{margin-top:auto;border-top:1px dashed var(--line);padding:8px 14px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:40px}
+.fcfoot .fcs{flex:1}.fcfoot .btn,.fcfoot .mini{flex:none}
+.fctile{width:min(62vw,230px)}.fcstat{height:128px;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;text-align:center;background:linear-gradient(135deg,var(--pitch),color-mix(in srgb,var(--pitch) 60%,#000));color:#fff}
+.fcstat b{display:block;font-size:30px;line-height:1}.fcstat span{font-size:12px;opacity:.85}
+.fcadd{justify-content:flex-start}.fcplus{height:128px;display:grid;place-items:center;background:var(--pitch-soft)}.fcplus .ic{width:44px;height:44px;color:var(--pitch)}
+.fcwait{padding:20px 0}
+:root[data-fkc][data-theme="dark"] .fcbadge{background:#F2B84B}
+:root[data-fkc][data-theme="dark"] .fccorner{background:#0f1830;color:#fff}
+:root[data-fkc][data-theme="dark"] .fccat>span{box-shadow:none}
 /* fokusläget: Veckans match som mörk biljett överst */
 .tip.hero.fkdark{--tk:#18213D;background:var(--tk)!important;border-color:var(--tk)!important;color:#fff;margin-bottom:6px}
 .tip.hero.fkdark .lbl{color:#F2B84B}
@@ -1239,7 +1273,7 @@ html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mi
 
   <footer id="foot"></footer>
 </div>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></symbol><symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l4.3 3.1-1.6 5H9.3l-1.6-5z"/><path d="M12 7.5V3.2M16.3 10.6l4.3-1.4M14.7 15.6l2.6 3.7M9.3 15.6l-2.6 3.7M7.7 10.6 3.4 9.2"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol><symbol id="i-stadium" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9.5" ry="7"/><rect x="7" y="8.5" width="10" height="7" rx="1"/><path d="M12 8.5v7"/></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-3.9 0-7-2.8-7-6.6 0-3 1.8-5.2 3.4-6.9.4 1.6 1.3 2.7 2.4 3.2C10.6 7.4 12.1 4.5 14.5 3c-.2 2.6.9 4.5 2.4 6.1C18.2 10.6 19 12.3 19 14.4 19 18.2 15.9 21 12 21z"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.3-2.5 3.8"/><path d="M12 17.2v.1"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.7-2.5h6.6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.2" r="3.4"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20.5l1.4-4.3A7.5 7.5 0 1 1 20 12.5z"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/></symbol><symbol id="i-offline" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M8.5 16.5a5 5 0 0 1 7 0M5 13a10 10 0 0 1 4.2-2.4M19 13a10 10 0 0 0-2.1-1.5M2 9.5a14 14 0 0 1 4-2.6M22 9.5A14 14 0 0 0 11 6"/><path d="M12 20h.01"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3.5 8V6.5a1 1 0 0 1 1-1h15a1 1 0 0 1 1 1V8a2.5 2.5 0 0 0 0 5v1.5a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1V13a2.5 2.5 0 0 0 0-5z" transform="translate(0 1.5)"/><path d="M14 7v1.5M14 11v1.5M14 15v1.5"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M20.5 16l-5-5-8.5 8.5"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M4.5 19.5h15"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M4.5 19.5h15"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol><symbol id="i-mpin" viewBox="0 0 32 40" style="stroke:none"><path d="M16 1C8.3 1 2 7.2 2 14.8c0 10.2 12.3 23 13.1 23.8a1.3 1.3 0 0 0 1.8 0C17.7 37.8 30 25 30 14.8 30 7.2 23.7 1 16 1z" fill="var(--accent)" stroke="var(--surface)" stroke-width="2.5"/><circle cx="16" cy="14.6" r="5.6" fill="var(--chalk)"/></symbol><symbol id="i-table" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 9v11"/></g></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></symbol><symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l4.3 3.1-1.6 5H9.3l-1.6-5z"/><path d="M12 7.5V3.2M16.3 10.6l4.3-1.4M14.7 15.6l2.6 3.7M9.3 15.6l-2.6 3.7M7.7 10.6 3.4 9.2"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol><symbol id="i-stadium" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9.5" ry="7"/><rect x="7" y="8.5" width="10" height="7" rx="1"/><path d="M12 8.5v7"/></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-3.9 0-7-2.8-7-6.6 0-3 1.8-5.2 3.4-6.9.4 1.6 1.3 2.7 2.4 3.2C10.6 7.4 12.1 4.5 14.5 3c-.2 2.6.9 4.5 2.4 6.1C18.2 10.6 19 12.3 19 14.4 19 18.2 15.9 21 12 21z"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.3-2.5 3.8"/><path d="M12 17.2v.1"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.7-2.5h6.6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.2" r="3.4"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20.5l1.4-4.3A7.5 7.5 0 1 1 20 12.5z"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/></symbol><symbol id="i-offline" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M8.5 16.5a5 5 0 0 1 7 0M5 13a10 10 0 0 1 4.2-2.4M19 13a10 10 0 0 0-2.1-1.5M2 9.5a14 14 0 0 1 4-2.6M22 9.5A14 14 0 0 0 11 6"/><path d="M12 20h.01"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3.5 8V6.5a1 1 0 0 1 1-1h15a1 1 0 0 1 1 1V8a2.5 2.5 0 0 0 0 5v1.5a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1V13a2.5 2.5 0 0 0 0-5z" transform="translate(0 1.5)"/><path d="M14 7v1.5M14 11v1.5M14 15v1.5"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M20.5 16l-5-5-8.5 8.5"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M4.5 19.5h15"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M4.5 19.5h15"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol><symbol id="i-mpin" viewBox="0 0 32 40" style="stroke:none"><path d="M16 1C8.3 1 2 7.2 2 14.8c0 10.2 12.3 23 13.1 23.8a1.3 1.3 0 0 0 1.8 0C17.7 37.8 30 25 30 14.8 30 7.2 23.7 1 16 1z" fill="var(--accent)" stroke="var(--surface)" stroke-width="2.5"/><circle cx="16" cy="14.6" r="5.6" fill="var(--chalk)"/></symbol><symbol id="i-table" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 9v11"/></g></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol></svg>
 <nav class="bnav" aria-label="Huvudmeny">
   <button class="bn" data-bn="hem" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Hem</span></button>
   <button class="bn" data-bn="community" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20.5l1.4-4.3A7.5 7.5 0 1 1 20 12.5z"/><path d="M8.5 11.5h7M8.5 14.5h4.5"/></svg><span>Community</span></button>
@@ -4374,8 +4408,47 @@ const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false
 // fokusläge: en mening under rubriken (utan antal serier, så att den passar alla länder)
 function fokusCoverage(){return esc($t("Varje match räknas. Spara allt du ser och hitta nästa äventyr bland serier från hela världen."));}
 // fokusläge: en mening om vad appen är, matcher nära dig, logga en match, din säsong och vägar vidare
+// ---------- fokusläge, förslag: startsida med karuseller (scrolla i sidled), ljus eller mörk ----------
+// Växlas med ?stil=vanlig|ljus|mork (sparas i fk-fkstyle). Mörk använder appens mörka tema medan förslaget är valt.
+function fkStyle(){try{const u=new URLSearchParams(location.search).get("stil");if(["vanlig","ljus","mork"].includes(u))localStorage.setItem("fk-fkstyle",u);const v=localStorage.getItem("fk-fkstyle");return["ljus","mork"].includes(v)&&FOKUS?v:"vanlig";}catch(e){return"vanlig";}}
+
+function fcBanner(m,badge,corner){const c=id=>(COLORS[id]||["#2f6b47","#ffffff"])[0];
+  return`<div class="fcban" style="--ca:${c(m.home)};--cb:${c(m.away)}">${badge?`<span class="fcbadge">${badge}</span>`:""}${corner?`<span class="fccorner">${corner}</span>`:""}
+    <div class="fccr">${crest(m.home,m.homeName,54)}<i>–</i>${crest(m.away,m.awayName,54)}</div></div>`;}
+function fcMatch(m,opt){opt=opt||{};const hl=homeLL(),ll=GEO[m.city];const km=hl&&ll?roadKm(hl.ll,ll):null;
+  const when=m.kickoff?`${esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])} ${timeOf(m.kickoff)}`:$t("datum ej klart");
+  const dby=derbyOf(m),fav=isFav(m.home)||isFav(m.away),n=hypeCount(m._id);
+  const badge=opt.badge!==undefined?opt.badge:dby?$t("Derby"):fav?$t("Ditt lag"):"";
+  return`<div class="fcard mrow"${mrowAttr(m)}>${fcBanner(m,badge,n?`${ic("flame")} ${n}`:"")}
+    <div class="fcbody"><b class="fct">${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))}</b><span class="fcs">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}</span>
+    <span class="fcm">${when}${km!=null?`<i></i>${km<5?$t("i stan"):esc(milTxt(km))}`:""}</span></div>
+    <div class="fcfoot"><span class="fcs">${esc(m.comp||"")}</span>${opt.btn==="tix"?tixMini(m):hypeBtn(m)}</div></div>`;}
+function fcSection(title,go,cards){return cards?`<section class="fcsec"><div class="fchead"><h2>${title}</h2>${go?`<button class="fcarrow" ${go} aria-label="${$t("Visa alla")}">${ic("chev")}</button>`:""}</div><div class="fcrow">${cards}</div></section>`:"";}
+function carouselHome(ob){const logged=myState==="ready";
+  const loc=`<div class="fcloc"><button data-homeedit="1">${ic("mpin")}<b>${homeTown?$t("Nära {0}",[esc(homeTown)]):$t("Välj hemort")}</b>${ic("chev")}</button></div>`;
+  const cat=(attr,icon,t)=>`<button class="fccat" ${attr}><span>${ic(icon)}</span>${t}</button>`;
+  const cats=`<div class="fccats">${cat('data-gomode="tips"',"flame",$t("Derbyn"))}${cat('data-gomode="arenor"',"stadium",$t("Arenor"))}${cat('data-gomode="klubbar"',"ball",$t("Klubbar"))}${cat('data-gomode="tabell"',"table",$t("Tabeller"))}${cat('data-gomode="landslag"',"globe",$t("Landslag"))}${cat('data-gomode="flode"',"chat",$t("Community"))}${cat('data-gomode="quiz"',"star",$t("Quiz"))}</div>`;
+  if(dbState!=="ready")return loc+cats+`<p class="meta fcwait">${$t("Hämtar matchschemat…")}</p>`+modAlertHtml()+ob;
+  const hot=hypeCandidates().slice(0,8);
+  const s1=fcSection($t("Veckans matcher"),'data-gomode="matcher"',hot.map((m,i)=>fcMatch(m,i===0?{badge:$t("Veckans match")}:{})).join(""));
+  // helgen nära hemorten
+  let s2="";const p=homeLL();if(p){const[from,to]=weekendRange();const nowW=Date.now()-2*36e5;
+    const wk=MATCHES.filter(m=>m.kickoff?(mTs(m)>nowW&&koDay(m.kickoff)>=from&&koDay(m.kickoff)<=to):(m.dateFrom<=to&&m.dateTo>=from)).map(m=>{const ll=GEO[m.city];return{m,km:ll?roadKm(p.ll,ll):null};}).filter(x=>x.km!==null&&x.km<=300).sort((a,b)=>a.km-b.km).slice(0,10);
+    s2=fcSection($t("Nära dig i helgen"),'data-homeedit="1"',wk.map(x=>fcMatch(x.m,{badge:x.km<5?$t("i stan"):esc(milTxt(x.km)),btn:"tix"})).join(""));}
+  // min fotboll
+  let s3="";if(logged){const y=myYearStats();const fl=favList();const tiles=[];
+    tiles.push(`<button class="fcard fctile" data-gomine="1"><div class="fcstat"><div><b>${y.matches}</b><span>${$t("matcher")}</span></div><div><b>${y.arenas}</b><span>${$t("arenor")}</span></div><div><b>${y.countries}</b><span>${$t("länder")}</span></div></div><div class="fcbody"><b class="fct">${$t("Din säsong {0}",[YEAR])}</b><span class="fcs">${$t("Statistik, karta och listor")}</span></div></button>`);
+    const nx=fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
+    if(nx)tiles.push(fcMatch(nx,{badge:$t("Ditt lag")}));
+    const last=(MY.attended||[]).slice().sort((a,b)=>b.date.localeCompare(a.date))[0];
+    if(last)tiles.push(`<button class="fcard fctile" data-gomine="1">${fcBanner({home:last.home,away:last.away,homeName:last.homeName,awayName:last.awayName},$t("Senast loggad"),"")}<div class="fcbody"><b class="fct">${esc(last.homeName)} – ${esc(last.awayName)}${last.score?" "+esc(last.score):""}</b><span class="fcs">${esc([last.venue,shortDate(last.date+"T12:00:00")].filter(Boolean).join(" · "))}</span></div></button>`);
+    tiles.push(`<button class="fcard fctile fcadd" data-plus="log"><span class="fcplus">${ic("plus")}</span><div class="fcbody"><b class="fct">${$t("Logga en match")}</b><span class="fcs">${$t("Spara den på tio sekunder.")}</span></div></button>`);
+    s3=fcSection($t("Min fotboll"),'data-gomine="1"',tiles.join(""));}
+  else s3=`<article class="tip fkcta"><div><b>${$t("Varit på en match?")}</b><span class="meta">${$t("Spara den på tio sekunder, så börjar din groundhopperstatistik.")}</span></div><button class="btn primary" data-glogin="up">${ic("plus")} ${$t("Logga en match")}</button></article>`;
+  return loc+cats+modAlertHtml()+remindHtml()+s1+ob+s2+s3;}
 function fokusHomeHtml(ob){
-  const head=`<div class="fkpreview">${$t("Förhandsvisning av fokusläget")} · <a href="?fokus=0">${$t("Tillbaka till nuvarande startsida")}</a></div>
+  const st=fkStyle();const sw=(k,l)=>st===k?`<b>${l}</b>`:`<a href="?stil=${k}">${l}</a>`;
+  const head=`<div class="fkpreview">${$t("Förhandsvisning av fokusläget")} · <a href="?fokus=0">${$t("Tillbaka till nuvarande startsida")}</a><br>Utseende: ${sw("vanlig","Vanlig")} · ${sw("ljus","Karusell ljus")} · ${sw("mork","Karusell mörk")}</div>
    <section class="fkhero"><h1>${$t("Hitta matcher nära dig och samla alla du har sett, stora som små.")}</h1><p>${fokusCoverage()}</p></section>`;
   const logged=myState==="ready";const n=logged?(MY.attended||[]).length:0;
   const cta=`<article class="tip fkcta"><div><b>${n?$tn(n,"Du har loggat 1 match","Du har loggat {n} matcher"):$t("Varit på en match?")}</b><span class="meta">${n?$t("Lägg till nästa och se statistiken växa."):$t("Spara den på tio sekunder, så börjar din groundhopperstatistik.")}</span></div>
@@ -4385,6 +4458,7 @@ function fokusHomeHtml(ob){
   let w="";try{w=weekendHtml();}catch(e){}let m="";try{m=mineSnap();}catch(e){}
   // rubriken överst, sedan Veckans match som en mörk biljett
   const [pv,hero]=head.split("\n   ");
+  if(st!=="vanlig")return pv+carouselHome(ob);
   let t="";try{t=heroHtml().replace('class="tip hero"','class="tip hero fkdark"');}catch(e){}
   return pv+hero+t+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
 
@@ -5073,6 +5147,8 @@ function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAt
   // Biljetten och Atlasen har egna ljusa färger, så färgvalet gäller bara Groundly-utseendet
   if(look!=="std"&&!DARKLOOK[look]&&acc!=="std")r.setAttribute("data-acc",acc);else r.removeAttribute("data-acc");
   if(look!=="std"){r.setAttribute("data-look",look);const dk=lookTheme==="dark"||(lookTheme==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);r.setAttribute("data-theme",dk&&!DARKLOOK[look]?"dark":"light");}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
+  // fokuslägets karusellförslag: mörk variant använder appens mörka tema
+  {const st=fkStyle();r.toggleAttribute("data-fkc",st!=="vanlig");if(st==="mork")r.setAttribute("data-theme","dark");}
   const row=document.getElementById("themeRow");r.setAttribute("data-style",uiStyle);
   if(row)row.innerHTML=`<span class="tlbl">${$t("Färg")}</span>`+THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")+`<span class="tlbl">${$t("Stil")}</span>`+STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("");}
 applyTheme();try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(look!=="std"&&lookTheme==="auto")applyTheme();});}catch(e){}

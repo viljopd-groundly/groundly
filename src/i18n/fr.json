@@ -2440,5 +2440,14 @@
  "Tillbaka till nuvarande startsida": "Retour à l’accueil actuel",
  "Upptäck mer": "Découvrir plus",
  "Varit på en match?": "Tu as vu un match ?",
- "Logga en match": "Enregistrer un match"
+ "Logga en match": "Enregistrer un match",
+ "Ditt lag": "Ton équipe",
+ "Nära {0}": "Près de {0}",
+ "Nära dig i helgen": "Près de chez toi ce week-end",
+ "Senast loggad": "Dernier enregistré",
+ "Spara den på tio sekunder.": "Enregistre-le en dix secondes.",
+ "Statistik, karta och listor": "Stats, carte et listes",
+ "Veckans matcher": "Matchs de la semaine",
+ "Visa alla": "Tout voir",
+ "Välj hemort": "Choisir ta ville"
 }

@@ -2440,5 +2440,14 @@
  "Tillbaka till nuvarande startsida": "Takaisin nykyiselle etusivulle",
  "Upptäck mer": "Löydä lisää",
  "Varit på en match?": "Kävitkö ottelussa?",
- "Logga en match": "Kirjaa ottelu"
+ "Logga en match": "Kirjaa ottelu",
+ "Ditt lag": "Joukkueesi",
+ "Nära {0}": "Lähellä: {0}",
+ "Nära dig i helgen": "Lähelläsi viikonloppuna",
+ "Senast loggad": "Viimeksi kirjattu",
+ "Spara den på tio sekunder.": "Tallenna se kymmenessä sekunnissa.",
+ "Statistik, karta och listor": "Tilastot, kartta ja listat",
+ "Veckans matcher": "Viikon ottelut",
+ "Visa alla": "Näytä kaikki",
+ "Välj hemort": "Valitse kotipaikka"
 }
