@@ -1065,45 +1065,41 @@ html:root[data-look][data-acc="gold"]{--accent:#9A6400;--accent-soft:#F6E7C1}htm
 html:root[data-look][data-acc="green"]{--accent:#1F7A45;--accent-soft:#D6EDDD}html:root[data-look][data-acc="green"][data-theme="dark"]{--accent:#5FD18E;--accent-soft:#173A26}
 html:root[data-look][data-acc="blue"]{--accent:#1F6F8B;--accent-soft:#D5E8EF}html:root[data-look][data-acc="blue"][data-theme="dark"]{--accent:#5EC3DD;--accent-soft:#173540}
 @font-face{font-family:"GL Archivo";src:url(fonts/Archivo.woff) format("woff");font-weight:400 800;font-stretch:90% 100%;font-display:swap}
-/* --- Gräsmattan och Matchtröjan: mörk randig botten, ljusa kort och knappar ---
+/* --- Matchtröjan: mörk randig botten, ljusa kort och knappar ---
    Variablerna gäller texten direkt på den mörka botten; inne i korten och knapparna byts de till mörk text på ljust. */
-html:root:is([data-look="grass"],[data-look="kit"]){--surface:#F4F6F1;--chalk:#F4F6F1;--fg:#F2F5F1;--muted:rgba(242,245,241,.74);--line:rgba(255,255,255,.2);
+html:root[data-look="kit"]{--surface:#F4F6F1;--chalk:#F4F6F1;--fg:#F2F5F1;--muted:rgba(242,245,241,.74);--line:rgba(255,255,255,.2);
   --accent:#9BE3B3;--accent-soft:rgba(155,227,179,.16);--soft:rgba(255,255,255,.08);--soft2:rgba(255,255,255,.14);
   --f-display:"GL Archivo",system-ui,sans-serif;--f-body:"GL Archivo",system-ui,sans-serif;--r:18px;--shadow:0 10px 24px -14px rgba(0,0,0,.55);color-scheme:light}
-html:root[data-look="grass"]{--bg:#173A28;--pitch:#9BE3B3;--pitch-soft:rgba(155,227,179,.16)}
 html:root[data-look="kit"]{--bg:#1A2433;--accent:#A9D8FF;--accent-soft:rgba(169,216,255,.16);--pitch:#9BE3B3;--pitch-soft:rgba(155,227,179,.16)}
 /* ränderna: klippt gräs (breda vågräta) och kritstreck (smala lodräta); ritas en gång i ett fast lager */
-html:root:is([data-look="grass"],[data-look="kit"]) body{background:var(--bg)}
-html:root:is([data-look="grass"],[data-look="kit"]) body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;transform:translateZ(0)}
-html:root[data-look="grass"] body::before{background:repeating-linear-gradient(180deg,#173A28 0 64px,#1B4330 64px 128px)}
+html:root[data-look="kit"] body{background:var(--bg)}
+html:root[data-look="kit"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;transform:translateZ(0)}
 html:root[data-look="kit"] body::before{background:repeating-linear-gradient(90deg,#1A2433 0 22px,#25344B 22px 23px)}
-html:root[data-look="grass"] :is(.tip,.card,.rep,.match,.combo,.thread,.citem,.mrow,.plan,.prog,.trip,.trc,.trsum,.passpage,.teamhead,.stats div,.favcard,.empty,.compose,.askbox,.calpanel,.mspanel,.dsel,.search,.btn,.chip,.mini,.iconbtn,.themebtn,.modes,.commtabs,.mfilt,.mtile,.bnav,.stamp,.lmap,.arcsea,.hcard,.pub,.wchip,.pill,.cchip,.qopt,.popt,.phbtn,.phtile,.simbtn,.calopt,.plink,.fld input,.fld select,.fld textarea,.rin input){--fg:#14261C;--muted:#5A6B60;--line:#D5DDD3;--bg:#E6ECE4;--accent:#1E6B3E;--accent-soft:#DDF0E3;--pitch:#1E6B3E;--pitch-soft:#DDF0E3;--soft:rgba(20,38,28,.06);--soft2:rgba(20,38,28,.11);color:var(--fg)}
 html:root[data-look="kit"] :is(.tip,.card,.rep,.match,.combo,.thread,.citem,.mrow,.plan,.prog,.trip,.trc,.trsum,.passpage,.teamhead,.stats div,.favcard,.empty,.compose,.askbox,.calpanel,.mspanel,.dsel,.search,.btn,.chip,.mini,.iconbtn,.themebtn,.modes,.commtabs,.mfilt,.mtile,.bnav,.stamp,.lmap,.arcsea,.hcard,.pub,.wchip,.pill,.cchip,.qopt,.popt,.phbtn,.phtile,.simbtn,.calopt,.plink,.fld input,.fld select,.fld textarea,.rin input){--fg:#17202E;--muted:#5C6676;--line:#D7DDE6;--bg:#E6EAF0;--accent:#1E5FA0;--accent-soft:#DCE8F5;--pitch:#1E6B3E;--pitch-soft:#DDF0E3;--soft:rgba(23,32,46,.06);--soft2:rgba(23,32,46,.11);color:var(--fg)}
-:root:is([data-look="grass"],[data-look="kit"]) :is(.tip,.card,.rep,.match,.combo,.thread,.trc,.trsum,.prog,.plan,.trip,.teamhead,.favcard){border-color:transparent;box-shadow:var(--shadow)}
-:root:is([data-look="grass"],[data-look="kit"]) :is(.tip,.card,.rep,.combo,.match):before{display:none}
-:root:is([data-look="grass"],[data-look="kit"]) .name,:root:is([data-look="grass"],[data-look="kit"]) .intro .tagline{font-weight:800;font-stretch:92%;letter-spacing:-.02em}
-:root:is([data-look="grass"],[data-look="kit"]) .intro .tagline span{color:inherit}
-:root:is([data-look="grass"],[data-look="kit"]) .lbl{text-transform:none;letter-spacing:0;font-weight:700;color:var(--accent)}
-:root:is([data-look="grass"],[data-look="kit"]) .intro .kicker{text-transform:none;letter-spacing:0;color:var(--accent)}
-:root:is([data-look="grass"],[data-look="kit"]) .btn{border-radius:12px;border-color:transparent}
-:root[data-look="grass"] .btn.primary{background:#DDF3E3;color:#0F4A27;border-color:transparent}
+:root[data-look="kit"] :is(.tip,.card,.rep,.match,.combo,.thread,.trc,.trsum,.prog,.plan,.trip,.teamhead,.favcard){border-color:transparent;box-shadow:var(--shadow)}
+:root[data-look="kit"] :is(.tip,.card,.rep,.combo,.match):before{display:none}
+:root[data-look="kit"] .name,:root[data-look="kit"] .intro .tagline{font-weight:800;font-stretch:92%;letter-spacing:-.02em}
+:root[data-look="kit"] .intro .tagline span{color:inherit}
+:root[data-look="kit"] .lbl{text-transform:none;letter-spacing:0;font-weight:700;color:var(--accent)}
+:root[data-look="kit"] .intro .kicker{text-transform:none;letter-spacing:0;color:var(--accent)}
+:root[data-look="kit"] .btn{border-radius:12px;border-color:transparent}
 :root[data-look="kit"] .btn.primary{background:#DCEBFA;color:#123E6B;border-color:transparent}
-:root:is([data-look="grass"],[data-look="kit"]) .chip[aria-pressed="true"]{background:var(--fg);color:var(--surface);border-color:var(--fg)}
+:root[data-look="kit"] .chip[aria-pressed="true"]{background:var(--fg);color:var(--surface);border-color:var(--fg)}
 /* rutan för nya blir ett ljust kort med stegen i ljusa rutor */
-:root:is([data-look="grass"],[data-look="kit"]) .tip.howto{background:var(--surface)}
-:root:is([data-look="grass"],[data-look="kit"]) .tip.howto .name{color:var(--fg)}
-:root:is([data-look="grass"],[data-look="kit"]) .tip.howto .howsub{color:var(--muted)}
-:root:is([data-look="grass"],[data-look="kit"]) .tip.howto .itile{background:var(--soft);border-color:transparent;color:var(--fg);backdrop-filter:none}
-:root:is([data-look="grass"],[data-look="kit"]) .tip.howto .itile b{color:var(--fg)}
-:root:is([data-look="grass"],[data-look="kit"]) .tip.howto .itile small{color:var(--muted)}
-:root:is([data-look="grass"],[data-look="kit"]) .tip.howto .itile .ic{color:var(--accent)}
+:root[data-look="kit"] .tip.howto{background:var(--surface)}
+:root[data-look="kit"] .tip.howto .name{color:var(--fg)}
+:root[data-look="kit"] .tip.howto .howsub{color:var(--muted)}
+:root[data-look="kit"] .tip.howto .itile{background:var(--soft);border-color:transparent;color:var(--fg);backdrop-filter:none}
+:root[data-look="kit"] .tip.howto .itile b{color:var(--fg)}
+:root[data-look="kit"] .tip.howto .itile small{color:var(--muted)}
+:root[data-look="kit"] .tip.howto .itile .ic{color:var(--accent)}
 /* knappar, val och tomma rutor som annars är genomskinliga blir ljusa, så att den mörka texten syns */
-:root:is([data-look="grass"],[data-look="kit"]) :is(.chip,.btn,.mini,.iconbtn,.empty):not(.primary):not([aria-pressed="true"]){background:var(--surface)}
-:root:is([data-look="grass"],[data-look="kit"]) .tip.howto .itile:after{background:var(--accent);color:#fff}
-:root:is([data-look="grass"],[data-look="kit"]) .tip.howto .howeye{background:var(--accent-soft);color:var(--accent)}
+:root[data-look="kit"] :is(.chip,.btn,.mini,.iconbtn,.empty):not(.primary):not([aria-pressed="true"]){background:var(--surface)}
+:root[data-look="kit"] .tip.howto .itile:after{background:var(--accent);color:#fff}
+:root[data-look="kit"] .tip.howto .howeye{background:var(--accent-soft);color:var(--accent)}
 /* menyn längst ner: ljus med rundade hörn */
-:root:is([data-look="grass"],[data-look="kit"]) .bnav{border-top:0;border-radius:20px 20px 0 0;box-shadow:0 -8px 24px -12px rgba(0,0,0,.5)}
-:root:is([data-look="grass"],[data-look="kit"]) .bnlog b{border-color:var(--surface)}
+:root[data-look="kit"] .bnav{border-top:0;border-radius:20px 20px 0 0;box-shadow:0 -8px 24px -12px rgba(0,0,0,.5)}
+:root[data-look="kit"] .bnlog b{border-color:var(--surface)}
 /* vit: vita detaljer i mörkt läge; i ljust läge blir de i textfärgen eftersom vitt inte syns på ljus botten */
 html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mix(in srgb,var(--fg) 10%,transparent)}html:root[data-look][data-acc="white"][data-theme="dark"]{--accent:#FFFFFF;--accent-soft:color-mix(in srgb,#FFFFFF 12%,transparent)}
 .accdot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 1px var(--line)}
@@ -5165,7 +5161,7 @@ let deepJump=null;
 // ---------- tema ----------
 const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["warm",$t("Varmt")],["dim",$t("Dämpat")],["dusk",$t("Halvmörkt")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
-const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")],["grass",$t("Gräsmattan")],["kit",$t("Matchtröjan")]];const DARKLOOK={grass:1,kit:1};let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
+const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")],["kit",$t("Matchtröjan")]];const DARKLOOK={kit:1};let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
 const ACCS=[["std",$t("Standard"),""],["red",$t("Röd"),"#C4122F"],["orange",$t("Orange"),"#B45309"],["gold",$t("Guld"),"#9A6400"],["green",$t("Grön"),"#1F7A45"],["blue",$t("Blå"),"#1F6F8B"],["white",$t("Vit"),"#FFFFFF"]];let acc="std";try{let t=store.get("fk-acc");if(t==="purple")t="white";if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
 const LOOK_THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dark",$t("Mörkt")]];let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
 const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
