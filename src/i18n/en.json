@@ -2137,7 +2137,6 @@
  "+ Lägg till eller ta bort serier ({0} valda)": "+ Add or remove leagues ({0} selected)",
  "Visa alla ({0})": "Show all ({0})",
  "Gräsmattan": "The Pitch",
- "Matchtröjan": "The Kit",
  "Blockera": "Block",
  "Blockera {0}?": "Block {0}?",
  "Du kan ta bort blockeringen under Inställningar → Blockerade användare.": "You can unblock them under Settings → Blocked users.",
@@ -2546,5 +2545,6 @@
  "på {0}": "at {0}",
  "Var du på någon av de här?": "Were you at any of these?",
  "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Rather look the match up? Search for your team in the match archive and pick it there.",
- "Sök i matcharkivet": "Search the match archive"
+ "Sök i matcharkivet": "Search the match archive",
+ "Kvällsmatch": "Night match"
 }

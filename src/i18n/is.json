@@ -1317,7 +1317,6 @@
  "Matchinfo": "Upplýsingar um leik",
  "Matchkort": "Leikjaspjald",
  "Matchschemat kan inte visas här.": "Ekki er hægt að sýna leikjadagskrána hér.",
- "Matchtröjan": "Treyjan",
  "Matchupplevelse": "Leikjaupplifun",
  "med marginal · framme {0},": "með svigrúmi · komið {0},",
  "Med ramar": "Með römmum",
@@ -2457,5 +2456,6 @@
  "på {0}": "á {0}",
  "Var du på någon av de här?": "Varstu á einhverjum af þessum?",
  "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Viltu frekar fletta leiknum upp? Leitaðu að liðinu þínu í leikjasafninu og veldu hann þar.",
- "Sök i matcharkivet": "Leita í leikjasafninu"
+ "Sök i matcharkivet": "Leita í leikjasafninu",
+ "Kvällsmatch": "Kvöldleikur"
 }

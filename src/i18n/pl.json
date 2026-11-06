@@ -1317,7 +1317,6 @@
  "Matchinfo": "Informacje o meczu",
  "Matchkort": "Karta meczu",
  "Matchschemat kan inte visas här.": "Nie można tu pokazać terminarza.",
- "Matchtröjan": "Koszulka",
  "Matchupplevelse": "Przeżycia meczowe",
  "med marginal · framme {0},": "z zapasem · przyjazd {0},",
  "Med ramar": "Z ramkami",
@@ -2457,5 +2456,6 @@
  "på {0}": "na {0}",
  "Var du på någon av de här?": "Byłeś na którymś z tych meczów?",
  "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Wolisz wyszukać mecz? Znajdź swoją drużynę w archiwum meczów i wybierz go tam.",
- "Sök i matcharkivet": "Szukaj w archiwum meczów"
+ "Sök i matcharkivet": "Szukaj w archiwum meczów",
+ "Kvällsmatch": "Mecz wieczorny"
 }

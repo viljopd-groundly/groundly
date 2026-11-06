@@ -1314,7 +1314,6 @@
  "Matchinfo": "Kampinfo",
  "Matchkort": "Kampkort",
  "Matchschemat kan inte visas här.": "Terminlisten kan ikke vises her.",
- "Matchtröjan": "Draktene",
  "Matchupplevelse": "Kampopplevelse",
  "med marginal · framme {0},": "med margin · fremme {0},",
  "Med ramar": "Med rammer",
@@ -2458,5 +2457,6 @@
  "på {0}": "på {0}",
  "Var du på någon av de här?": "Var du på noen av disse?",
  "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Vil du heller finne kampen? Søk på laget ditt i kamparkivet og velg den der.",
- "Sök i matcharkivet": "Søk i kamparkivet"
+ "Sök i matcharkivet": "Søk i kamparkivet",
+ "Kvällsmatch": "Kveldskamp"
 }

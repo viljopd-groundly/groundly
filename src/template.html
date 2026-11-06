@@ -1065,7 +1065,7 @@ html:root[data-look][data-acc="gold"]{--accent:#9A6400;--accent-soft:#F6E7C1}htm
 html:root[data-look][data-acc="green"]{--accent:#1F7A45;--accent-soft:#D6EDDD}html:root[data-look][data-acc="green"][data-theme="dark"]{--accent:#5FD18E;--accent-soft:#173A26}
 html:root[data-look][data-acc="blue"]{--accent:#1F6F8B;--accent-soft:#D5E8EF}html:root[data-look][data-acc="blue"][data-theme="dark"]{--accent:#5EC3DD;--accent-soft:#173540}
 @font-face{font-family:"GL Archivo";src:url(fonts/Archivo.woff) format("woff");font-weight:400 800;font-stretch:90% 100%;font-display:swap}
-/* --- Matchtröjan: mörk randig botten, ljusa kort och knappar ---
+/* --- Kvällsmatch (intern nyckel "kit"): mörkblå botten utan mönster, ljusa kort och knappar ---
    Variablerna gäller texten direkt på den mörka botten; inne i korten och knapparna byts de till mörk text på ljust. */
 html:root[data-look="kit"]{--surface:#F4F6F1;--chalk:#F4F6F1;--fg:#F2F5F1;--muted:rgba(242,245,241,.74);--line:rgba(255,255,255,.2);
   --accent:#9BE3B3;--accent-soft:rgba(155,227,179,.16);--soft:rgba(255,255,255,.08);--soft2:rgba(255,255,255,.14);
@@ -1073,8 +1073,6 @@ html:root[data-look="kit"]{--surface:#F4F6F1;--chalk:#F4F6F1;--fg:#F2F5F1;--mute
 html:root[data-look="kit"]{--bg:#1A2433;--accent:#A9D8FF;--accent-soft:rgba(169,216,255,.16);--pitch:#9BE3B3;--pitch-soft:rgba(155,227,179,.16)}
 /* ränderna: klippt gräs (breda vågräta) och kritstreck (smala lodräta); ritas en gång i ett fast lager */
 html:root[data-look="kit"] body{background:var(--bg)}
-html:root[data-look="kit"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;transform:translateZ(0)}
-html:root[data-look="kit"] body::before{background:repeating-linear-gradient(90deg,#1A2433 0 22px,#25344B 22px 23px)}
 html:root[data-look="kit"] :is(.tip,.card,.rep,.match,.combo,.thread,.citem,.mrow,.plan,.prog,.trip,.trc,.trsum,.passpage,.teamhead,.stats div,.favcard,.empty,.compose,.askbox,.calpanel,.mspanel,.dsel,.search,.btn,.chip,.mini,.iconbtn,.themebtn,.modes,.commtabs,.mfilt,.mtile,.bnav,.stamp,.lmap,.arcsea,.hcard,.pub,.wchip,.pill,.cchip,.qopt,.popt,.phbtn,.phtile,.simbtn,.calopt,.plink,.fld input,.fld select,.fld textarea,.rin input){--fg:#17202E;--muted:#5C6676;--line:#D7DDE6;--bg:#E6EAF0;--accent:#1E5FA0;--accent-soft:#DCE8F5;--pitch:#1E6B3E;--pitch-soft:#DDF0E3;--soft:rgba(23,32,46,.06);--soft2:rgba(23,32,46,.11);color:var(--fg)}
 :root[data-look="kit"] :is(.tip,.card,.rep,.match,.combo,.thread,.trc,.trsum,.prog,.plan,.trip,.teamhead,.favcard){border-color:transparent;box-shadow:var(--shadow)}
 :root[data-look="kit"] :is(.tip,.card,.rep,.combo,.match):before{display:none}
@@ -5161,7 +5159,7 @@ let deepJump=null;
 // ---------- tema ----------
 const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["warm",$t("Varmt")],["dim",$t("Dämpat")],["dusk",$t("Halvmörkt")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
-const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")],["kit",$t("Matchtröjan")]];const DARKLOOK={kit:1};let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
+const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")],["kit",$t("Kvällsmatch")]];const DARKLOOK={kit:1};let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
 const ACCS=[["std",$t("Standard"),""],["red",$t("Röd"),"#C4122F"],["orange",$t("Orange"),"#B45309"],["gold",$t("Guld"),"#9A6400"],["green",$t("Grön"),"#1F7A45"],["blue",$t("Blå"),"#1F6F8B"],["white",$t("Vit"),"#FFFFFF"]];let acc="std";try{let t=store.get("fk-acc");if(t==="purple")t="white";if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
 const LOOK_THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dark",$t("Mörkt")]];let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
 const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}

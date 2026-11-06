@@ -1317,7 +1317,6 @@
  "Matchinfo": "Otteluinfo",
  "Matchkort": "Ottelukortti",
  "Matchschemat kan inte visas här.": "Otteluohjelmaa ei voi näyttää täällä.",
- "Matchtröjan": "Pelipaita",
  "Matchupplevelse": "Otteluelämys",
  "med marginal · framme {0},": "marginaalilla · perillä {0},",
  "Med ramar": "Kehyksillä",
@@ -2457,5 +2456,6 @@
  "på {0}": "stadionilla {0}",
  "Var du på någon av de här?": "Olitko jossain näistä?",
  "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Haluatko mieluummin etsiä ottelun? Hae joukkuettasi otteluarkistosta ja valitse se sieltä.",
- "Sök i matcharkivet": "Hae otteluarkistosta"
+ "Sök i matcharkivet": "Hae otteluarkistosta",
+ "Kvällsmatch": "Iltaottelu"
 }

@@ -1317,7 +1317,6 @@
  "Matchinfo": "Wedstrijdinfo",
  "Matchkort": "Wedstrijdkaart",
  "Matchschemat kan inte visas här.": "Het wedstrijdschema kan hier niet worden getoond.",
- "Matchtröjan": "Het Shirt",
  "Matchupplevelse": "Wedstrijdbeleving",
  "med marginal · framme {0},": "met marge · aankomst {0},",
  "Med ramar": "Met kaders",
@@ -2457,5 +2456,6 @@
  "på {0}": "in {0}",
  "Var du på någon av de här?": "Was je bij een van deze?",
  "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Liever de wedstrijd opzoeken? Zoek je club in het wedstrijdarchief en kies hem daar.",
- "Sök i matcharkivet": "Zoek in het wedstrijdarchief"
+ "Sök i matcharkivet": "Zoek in het wedstrijdarchief",
+ "Kvällsmatch": "Avondwedstrijd"
 }
