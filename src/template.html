@@ -1000,6 +1000,7 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .fcstat b{display:block;font-size:30px;line-height:1;color:var(--pitch)}.fcstat span{font-size:12px;opacity:.85}
 .fcadd{justify-content:flex-start}.fcplus{height:128px;display:grid;place-items:center;background:var(--bg);border-bottom:1px solid var(--line)}.fcplus .ic{width:44px;height:44px;color:var(--pitch)}
 .fcwait{padding:20px 0}
+.amfound{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.amfound>span{flex:1 1 200px}
 
 :root[data-fkc][data-theme="dark"] .fccat>span{box-shadow:none}
 /* fokusläget: Veckans match som mörk biljett överst */
@@ -2346,12 +2347,14 @@ function renderMine(){
     h+=`<div class="sechead"><h3 class="sec">${ic("shield")} ${$t("Moderering")}</h3></div>`+(isMod?(r||`<div class="empty">${$t("Inga nya rättelser eller meddelanden.")}</div>`):`<div class="empty">${$t("Bara moderatorer ser det här.")}</div>`);
   }else if(mySub==="been"){
     if(pendingLogg())h+=`<p class="notice">${ic("offline")} ${$t("Du har ändringar som väntar på nät. De skickas automatiskt när kontakten är tillbaka.")} <button class="link strong" data-retrysave="1">${$t("Försök nu")}</button></p>`;
-    h+=addingMatch?`<form class="compose" id="addMatchForm">
+    h+=addingMatch?`${recentPicksHtml()}<form class="compose" id="addMatchForm">
       <h2>${$t("Lägg till en match du varit på")}</h2>
+      <p class="hint">${$t("Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.")} <button class="link strong" type="button" id="arcOpen">${$t("Sök i matcharkivet")}</button></p>
       <div class="row2"><label class="fld" for="amHome">${$t("Hemmalag")}<input id="amHome" list="allClubs" required maxlength="80" placeholder="${$t("t.ex. Jönköpings Södra IF")}"></label>
       <label class="fld" for="amAway">${$t("Bortalag")}<input id="amAway" list="allClubs" required maxlength="80" placeholder="${$t("t.ex. Trelleborgs FF")}"></label></div>
       <div class="row2"><label class="fld" for="amDate">${$t("Datum")}<input id="amDate" type="date" required max="${today()}" value="${today()}"></label>
       <label class="fld" for="amScoreH">${$t("Resultat (hemma–borta)")}${scoreFields("amScore","",true)}</label></div>
+      <div id="amFound" aria-live="polite"></div>
       <fieldset class="matchfs"><legend>${$t("Arena och serie")}</legend>
       <label class="fld" for="amVenue">${$t("Arena")}<input id="amVenue" list="allVenues" maxlength="80" placeholder="${$t("t.ex. Vapenvallen eller Bergshamra IP")}"></label>
       <div class="row2"><label class="fld" for="amCity">${$t("Ort")}<input id="amCity" maxlength="60" placeholder="${$t("t.ex. Huskvarna")}"></label>
@@ -2495,7 +2498,7 @@ document.addEventListener("submit",e=>{
     const hn=g("amHome"),an=g("amAway"),date=g("amDate");if(!hn||!an||!date){myErr=$t("Fyll i hemmalag, bortalag och datum.");renderMine();return;}
     const scm=(document.getElementById("amScore").value||"").match(/^(\d{1,2})\s*[-–—:]\s*(\d{1,2})$/);if(!scm){myErr=$t("Fyll i resultatet, till exempel 2–1.");toast(myErr);document.getElementById("amScoreH").focus();return;}const amSc=`${+scm[1]}–${+scm[2]}`;
     const hid=clubIdFromName(hn),aid=clubIdFromName(an);const hc=hid&&C[hid];
-    const nid=newId();shareMatchId=nid;mutate(d=>{d.attended.push({id:nid,mid:null,home:hid,away:aid,homeName:hc?hc.n:hn.slice(0,80),awayName:aid?C[aid].n:an.slice(0,80),date,score:amSc,note:g("amNote").slice(0,500),venue:g("amVenue").slice(0,80)||(hc?hc.s:null),city:g("amCity").slice(0,60)||(hc?hc.city:null),country:g("amCountry").slice(0,40)||(hc?hc.c:null),comp:g("amComp").slice(0,60)||null});});
+    const nid=newId();shareMatchId=nid;const fm=findLogMatch(hid,aid,date);mutate(d=>{d.attended.push({id:nid,mid:fm&&!isAtt(fm._id)?fm._id:null,home:hid,away:aid,homeName:hc?hc.n:hn.slice(0,80),awayName:aid?C[aid].n:an.slice(0,80),date,score:amSc,note:g("amNote").slice(0,500),venue:g("amVenue").slice(0,80)||(hc?hc.s:null),city:g("amCity").slice(0,60)||(hc?hc.city:null),country:g("amCountry").slice(0,40)||(hc?hc.c:null),comp:g("amComp").slice(0,60)||null});});
     addingMatch=false;renderMine();{const dd=derbyOfAtt({home:hid,away:aid});if(dd)toast($t("Derby loggat: {0}",[dd[1]]),"flame");}return;}
   const ac=e.target.dataset&&e.target.dataset.addclub;if(ac){e.preventDefault();const inp=e.target.querySelector("input");const id=clubIdFromName(inp.value);
     if(!id){myErr=$t("Hittade ingen klubb som heter ”{0}” i listan.",[inp.value.trim()]);renderMine();return;}
@@ -2547,6 +2550,29 @@ function guessComp(pre){const g=k=>(document.getElementById(pre+k)||{}).value||"
 document.addEventListener("input",e=>{const id=e.target.id;if(id==="amComp"||id==="eaComp"){e.target.dataset.auto="";return;}
   const pre=/^am(Home|Away|Date)$/.test(id)?"am":/^ea(Home|Away|Date)$/.test(id)?"ea":null;if(!pre)return;const el=document.getElementById(pre+"Comp");if(!el)return;
   if(el.value.trim()&&el.dataset.auto!=="1")return;const v=guessComp(pre);el.value=v;el.dataset.auto=v?"1":"";});
+// ---------- loggning: snabbval och automatisk träff i schemat ----------
+// Snabbval: nyligen spelade matcher (senaste 8 dagarna) för favoritlagen, på önskelistan eller nära hemorten
+function recentPicks(){if(dbState!=="ready"||myState!=="ready")return[];const now=Date.now(),from=now-8*864e5,fl=favList(),hl=homeLL();
+  return MATCHES.filter(m=>m.score&&m.home&&m.away&&!isAtt(m._id)&&(()=>{const t=m.kickoff?Date.parse(m.kickoff):Date.parse((m.dateFrom||"")+"T12:00:00");return t>from&&t<now;})()).map(m=>{let sc=0;
+    if(fl.includes(m.home)||fl.includes(m.away))sc+=100;if(isWishM(m._id))sc+=80;const ll=GEO[m.city];const km=hl&&ll?roadKm(hl.ll,ll):null;if(km!=null&&km<150)sc+=50-km/3;
+    return{m,sc};}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc).slice(0,5).map(x=>x.m);}
+function recentPicksHtml(){const l=recentPicks();if(!l.length)return"";
+  return`<article class="tip" id="amPicks"><div class="lbl">${$t("Var du på någon av de här?")}</div><p class="meta">${$t("Ett tryck så sparas lag, resultat, arena och serie.")}</p><div class="dlist">${l.map(m=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0]:shortDate(m.dateFrom+"T12:00:00"))}</b></div><div class="mmain"><b>${esc(tnm(m,"home"))} ${esc(m.score)} ${esc(tnm(m,"away"))}</b><span class="meta">${esc([m.venue,m.comp].filter(Boolean).join(" · "))}</span></div><span class="mp">${myBtns(m)}</span></div>`).join("")}</div></article>`;}
+// träff: samma lag och datum i schemat/resultaten (även omvänd ordning om man blandat ihop hemma och borta)
+function findLogMatch(hid,aid,date){if(!hid||!aid||!date||dbState!=="ready")return null;const day=m=>m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;
+  return MATCHES.find(m=>m.home===hid&&m.away===aid&&day(m)===date)||MATCHES.find(m=>m.home===aid&&m.away===hid&&day(m)===date)||null;}
+function amFoundUpdate(){const el=document.getElementById("amFound");if(!el)return;const g=k=>(document.getElementById(k)||{}).value||"";
+  const m=findLogMatch(clubIdFromName(g("amHome")),clubIdFromName(g("amAway")),g("amDate"));
+  el.innerHTML=m?`<div class="notice amfound">${ic("check")} <span>${$t("Hittade matchen:")} <b>${esc(tnm(m,"home"))} ${esc(m.score||"–")} ${esc(tnm(m,"away"))}</b>${m.venue?` ${$t("på {0}",[esc(m.venue)])}`:""}${m.comp?` · ${esc(m.comp)}`:""}</span> <button class="btn small primary" type="button" data-amuse="${esc(m._id)}">${$t("Använd")}</button></div>`:"";}
+document.addEventListener("input",e=>{if(/^am(Home|Away|Date)$/.test(e.target.id))amFoundUpdate();});
+document.addEventListener("change",e=>{if(/^am(Home|Away|Date)$/.test(e.target.id))amFoundUpdate();});
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-amuse]");if(!t)return;const m=matchById(t.dataset.amuse);if(!m)return;
+  const set=(id,v)=>{const x=document.getElementById(id);if(x&&v!=null){x.value=v;x.dataset.auto="1";}};
+  set("amHome",m.homeName);set("amAway",m.awayName);
+  const sc=/(\d{1,2})\s*[-–—:]\s*(\d{1,2})/.exec(m.score||"");if(sc){set("amScoreH",sc[1]);set("amScoreA",sc[2]);set("amScore",sc[1]+"–"+sc[2]);}
+  set("amVenue",m.venue);set("amCity",m.city);set("amComp",m.comp);
+  document.getElementById("amFound").innerHTML=`<p class="hint">${ic("check")} ${$t("Ifyllt från matchen. Lägg gärna till en anteckning och spara.")}</p>`;
+  document.getElementById("amNote")?.focus({preventScroll:true});});
 function venueMeta(name){const k=arenaKey(name);if(!k)return null;const x=arenas().find(y=>y.k===k);if(x)return{city:x.city,country:x.c};
   const a=MY.attended.slice().reverse().find(z=>z.venue&&arenaKey(z.venue)===k);return a?{city:a.city||"",country:a.country||""}:null;}
 document.addEventListener("input",e=>{if(e.target.id!=="amHome"&&e.target.id!=="amAway")return;const el=document.getElementById("amDerby");if(!el)return;
@@ -4682,7 +4708,7 @@ function openLogMatch(homeId,awayId){if(myState!=="ready"){toast($t("Logga in f�
   setTimeout(()=>{const h=document.getElementById("amHome"),a=document.getElementById("amAway");if(!h)return;
     if(homeId&&C[homeId]){h.value=C[homeId].n;h.dispatchEvent(new Event("input",{bubbles:true}));}
     if(awayId&&C[awayId]&&a)a.value=C[awayId].n;
-    document.getElementById("addMatchForm")?.scrollIntoView({block:"start",behavior:"smooth"});(homeId?(awayId?document.getElementById("amDate"):a):h)?.focus();if(homeId)toast($t("Fyll i datum och resultat så sparas besöket."));},60);}
+    (document.getElementById("amPicks")||document.getElementById("addMatchForm"))?.scrollIntoView({block:"start",behavior:"smooth"});(homeId?(awayId?document.getElementById("amDate"):a):h)?.focus();if(homeId)toast($t("Fyll i datum och resultat så sparas besöket."));},60);}
 function startTipNotes(db){if(!db){tnState="none";return;}
   db.collection("tipnotes").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});TIPNOTES=o;tnState="ready";
     const ids=Object.keys(o).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="tips")rerenderQuizHost();}).catch(()=>{});

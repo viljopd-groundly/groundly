@@ -2449,5 +2449,13 @@
  "Statistik, karta och listor": "Estatísticas, mapa e listas",
  "Veckans matcher": "Jogos da semana",
  "Visa alla": "Ver tudo",
- "Välj hemort": "Escolher cidade"
+ "Välj hemort": "Escolher cidade",
+ "Använd": "Usar",
+ "Ett tryck så sparas lag, resultat, arena och serie.": "Um toque guarda equipas, resultado, estádio e competição.",
+ "Hittade matchen:": "Jogo encontrado:",
+ "Ifyllt från matchen. Lägg gärna till en anteckning och spara.": "Preenchido a partir do jogo. Adiciona uma nota se quiseres e guarda.",
+ "på {0}": "em {0}",
+ "Var du på någon av de här?": "Estiveste em algum destes?",
+ "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Preferes procurar o jogo? Pesquisa a tua equipa no arquivo de jogos e escolhe-o lá.",
+ "Sök i matcharkivet": "Pesquisar no arquivo de jogos"
 }

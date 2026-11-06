@@ -2449,5 +2449,13 @@
  "Statistik, karta och listor": "Tilastot, kartta ja listat",
  "Veckans matcher": "Viikon ottelut",
  "Visa alla": "Näytä kaikki",
- "Välj hemort": "Valitse kotipaikka"
+ "Välj hemort": "Valitse kotipaikka",
+ "Använd": "Käytä",
+ "Ett tryck så sparas lag, resultat, arena och serie.": "Yksi napautus tallentaa joukkueet, tuloksen, stadionin ja sarjan.",
+ "Hittade matchen:": "Ottelu löytyi:",
+ "Ifyllt från matchen. Lägg gärna till en anteckning och spara.": "Täytetty ottelun tiedoista. Lisää halutessasi muistiinpano ja tallenna.",
+ "på {0}": "stadionilla {0}",
+ "Var du på någon av de här?": "Olitko jossain näistä?",
+ "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Haluatko mieluummin etsiä ottelun? Hae joukkuettasi otteluarkistosta ja valitse se sieltä.",
+ "Sök i matcharkivet": "Hae otteluarkistosta"
 }

@@ -2449,5 +2449,13 @@
  "Statistik, karta och listor": "Tölfræði, kort og listar",
  "Veckans matcher": "Leikir vikunnar",
  "Visa alla": "Sýna allt",
- "Välj hemort": "Veldu heimabæ"
+ "Välj hemort": "Veldu heimabæ",
+ "Använd": "Nota",
+ "Ett tryck så sparas lag, resultat, arena och serie.": "Eitt pikk vistar lið, úrslit, völl og keppni.",
+ "Hittade matchen:": "Fann leikinn:",
+ "Ifyllt från matchen. Lägg gärna till en anteckning och spara.": "Fyllt út úr leiknum. Bættu gjarnan við athugasemd og vistaðu.",
+ "på {0}": "á {0}",
+ "Var du på någon av de här?": "Varstu á einhverjum af þessum?",
+ "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Viltu frekar fletta leiknum upp? Leitaðu að liðinu þínu í leikjasafninu og veldu hann þar.",
+ "Sök i matcharkivet": "Leita í leikjasafninu"
 }

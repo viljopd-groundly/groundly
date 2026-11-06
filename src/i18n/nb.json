@@ -2450,5 +2450,13 @@
  "Statistik, karta och listor": "Statistikk, kart og lister",
  "Veckans matcher": "Ukens kamper",
  "Visa alla": "Vis alle",
- "Välj hemort": "Velg hjemsted"
+ "Välj hemort": "Velg hjemsted",
+ "Använd": "Bruk",
+ "Ett tryck så sparas lag, resultat, arena och serie.": "Ett trykk lagrer lag, resultat, arena og turnering.",
+ "Hittade matchen:": "Fant kampen:",
+ "Ifyllt från matchen. Lägg gärna till en anteckning och spara.": "Fylt ut fra kampen. Legg gjerne til et notat og lagre.",
+ "på {0}": "på {0}",
+ "Var du på någon av de här?": "Var du på noen av disse?",
+ "Vill du hellre leta upp matchen? Sök på ditt lag i matcharkivet och välj den där.": "Vil du heller finne kampen? Søk på laget ditt i kamparkivet og velg den der.",
+ "Sök i matcharkivet": "Søk i kamparkivet"
 }
