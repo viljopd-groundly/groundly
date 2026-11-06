@@ -972,7 +972,7 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 
 
 /* ---------- fokusläge, karusellförslag ---------- */
-:root[data-fkc] #v-hem .fkhero{display:none}
+:root[data-fkc] #v-hem .fkhero{display:none}:root[data-fkc] #v-hem .fkmore{margin-top:10px}
 .fcloc button{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:6px 2px 10px;font-size:calc(17px*var(--fs))}
 .fcloc button>.ic:first-child{width:34px;height:34px;padding:7px;box-sizing:border-box;border-radius:50%;background:var(--pitch-soft);color:var(--pitch)}
 .fcloc button>.ic:last-child{width:18px;height:18px;transform:rotate(90deg);color:var(--muted)}
@@ -985,24 +985,22 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .fcarrow{all:unset;cursor:pointer;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--soft2,rgba(0,0,0,.06))}.fcarrow .ic{width:18px;height:18px}
 .fcrow{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:2px 16px 8px;scrollbar-width:none}.fcrow::-webkit-scrollbar{display:none}
 .fcard{all:unset;box-sizing:border-box;cursor:pointer;flex:none;width:min(80vw,300px);scroll-snap-align:start;scroll-margin-left:16px;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.fcban{position:relative;height:128px;background:linear-gradient(120deg,var(--ca) 0 50%,var(--cb) 50% 100%);display:grid;place-items:center}
-.fcban:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.18))}
-.fccr{position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin-top:26px}.fccr i{font-style:normal;color:#fff;font-weight:800;font-size:22px;text-shadow:0 1px 3px rgba(0,0,0,.4)}
-.fccr .crest{border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.25);border:3px solid #fff}.fccr img.crest{background:#fff}
-.fcbadge{position:absolute;z-index:2;top:10px;left:10px;background:#FFF3C4;color:#1d1a10;font-weight:700;font-size:calc(13px*var(--fs));padding:5px 10px;border-radius:999px;white-space:nowrap}
-.fccorner{position:absolute;z-index:2;top:10px;right:10px;background:#fff;color:#1d1a10;font-weight:700;font-size:calc(13px*var(--fs));padding:5px 10px;border-radius:999px;display:inline-flex;gap:4px;align-items:center}.fccorner .ic{width:14px;height:14px;color:#d1581e}
+.fcban{position:relative;height:128px;background:linear-gradient(120deg,color-mix(in srgb,var(--ca) 9%,var(--bg)) 0 50%,color-mix(in srgb,var(--cb) 9%,var(--bg)) 50% 100%);display:grid;place-items:center;border-bottom:1px solid var(--line)}
+.fccr{position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin-top:26px}.fccr i{font-style:normal;color:var(--muted);font-weight:700;font-size:20px}
+.fccr .crest{border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.12)}.fccr img.crest{background:#fff;border:3px solid #fff}
+.fcbadge{position:absolute;z-index:2;top:10px;left:10px;background:var(--surface);border:1px solid var(--line);color:var(--fg);font-weight:700;font-size:calc(13px*var(--fs));padding:5px 10px;border-radius:999px;white-space:nowrap}
+.fccorner{position:absolute;z-index:2;top:10px;right:10px;background:var(--surface);border:1px solid var(--line);color:var(--fg);font-weight:700;font-size:calc(13px*var(--fs));padding:5px 10px;border-radius:999px;display:inline-flex;gap:4px;align-items:center}.fccorner .ic{width:14px;height:14px;color:#d1581e}
 .fcbody{padding:12px 14px 6px;display:flex;flex-direction:column;gap:3px;min-width:0}
 .fct{font-size:calc(17px*var(--fs));line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .fcs{color:var(--muted);font-size:calc(14px*var(--fs));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fcm{font-size:calc(14px*var(--fs));display:flex;align-items:center;gap:8px}.fcm i{width:1px;height:14px;background:var(--line)}
 .fcfoot{margin-top:auto;border-top:1px dashed var(--line);padding:8px 14px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:40px}
 .fcfoot .fcs{flex:1}.fcfoot .btn,.fcfoot .mini{flex:none}
-.fctile{width:min(62vw,230px)}.fcstat{height:128px;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;text-align:center;background:linear-gradient(135deg,var(--pitch),color-mix(in srgb,var(--pitch) 60%,#000));color:#fff}
-.fcstat b{display:block;font-size:30px;line-height:1}.fcstat span{font-size:12px;opacity:.85}
-.fcadd{justify-content:flex-start}.fcplus{height:128px;display:grid;place-items:center;background:var(--pitch-soft)}.fcplus .ic{width:44px;height:44px;color:var(--pitch)}
+.fctile{width:min(62vw,230px)}.fcstat{height:128px;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;text-align:center;background:var(--bg);border-bottom:1px solid var(--line);color:var(--muted)}
+.fcstat b{display:block;font-size:30px;line-height:1;color:var(--pitch)}.fcstat span{font-size:12px;opacity:.85}
+.fcadd{justify-content:flex-start}.fcplus{height:128px;display:grid;place-items:center;background:var(--bg);border-bottom:1px solid var(--line)}.fcplus .ic{width:44px;height:44px;color:var(--pitch)}
 .fcwait{padding:20px 0}
-:root[data-fkc][data-theme="dark"] .fcbadge{background:#F2B84B}
-:root[data-fkc][data-theme="dark"] .fccorner{background:#0f1830;color:#fff}
+
 :root[data-fkc][data-theme="dark"] .fccat>span{box-shadow:none}
 /* fokusläget: Veckans match som mörk biljett överst */
 .tip.hero.fkdark{--tk:#18213D;background:var(--tk)!important;border-color:var(--tk)!important;color:#fff;margin-bottom:6px}
@@ -4426,9 +4424,9 @@ function fcMatch(m,opt){opt=opt||{};const hl=homeLL(),ll=GEO[m.city];const km=hl
 function fcSection(title,go,cards){return cards?`<section class="fcsec"><div class="fchead"><h2>${title}</h2>${go?`<button class="fcarrow" ${go} aria-label="${$t("Visa alla")}">${ic("chev")}</button>`:""}</div><div class="fcrow">${cards}</div></section>`:"";}
 function carouselHome(ob){const logged=myState==="ready";
   const loc=`<div class="fcloc"><button data-homeedit="1">${ic("mpin")}<b>${homeTown?$t("Nära {0}",[esc(homeTown)]):$t("Välj hemort")}</b>${ic("chev")}</button></div>`;
-  const cat=(attr,icon,t)=>`<button class="fccat" ${attr}><span>${ic(icon)}</span>${t}</button>`;
-  const cats=`<div class="fccats">${cat('data-gomode="tips"',"flame",$t("Derbyn"))}${cat('data-gomode="arenor"',"stadium",$t("Arenor"))}${cat('data-gomode="klubbar"',"ball",$t("Klubbar"))}${cat('data-gomode="tabell"',"table",$t("Tabeller"))}${cat('data-gomode="landslag"',"globe",$t("Landslag"))}${cat('data-gomode="flode"',"chat",$t("Community"))}${cat('data-gomode="quiz"',"star",$t("Quiz"))}</div>`;
-  if(dbState!=="ready")return loc+cats+`<p class="meta fcwait">${$t("Hämtar matchschemat…")}</p>`+modAlertHtml()+ob;
+  const go=(attr,icon,t)=>`<button class="fkgo" ${attr}>${ic(icon)}<span>${t}</span></button>`;
+  const cats=`<section class="fkmore"><h3 class="sec">${$t("Upptäck mer")}</h3><div class="fkgrid">${go('data-gomode="tips"',"flame",$t("Derbyn och tips"))}${go('data-gomode="arenor"',"stadium",$t("Arenor"))}${go('data-gomode="klubbar"',"ball",$t("Klubbar"))}${go('data-gomode="tabell"',"table",$t("Tabeller"))}${go('data-gomode="landslag"',"globe",$t("Landslag"))}${go('data-gomode="flode"',"chat",$t("Community"))}</div></section>`;
+  if(dbState!=="ready")return loc+modAlertHtml()+`<p class="meta fcwait">${$t("Hämtar matchschemat…")}</p>`+ob+cats;
   const hot=hypeCandidates().slice(0,8);
   const s1=fcSection($t("Veckans matcher"),'data-gomode="matcher"',hot.map((m,i)=>fcMatch(m,i===0?{badge:$t("Veckans match")}:{})).join(""));
   // helgen nära hemorten
@@ -4445,7 +4443,7 @@ function carouselHome(ob){const logged=myState==="ready";
     tiles.push(`<button class="fcard fctile fcadd" data-plus="log"><span class="fcplus">${ic("plus")}</span><div class="fcbody"><b class="fct">${$t("Logga en match")}</b><span class="fcs">${$t("Spara den på tio sekunder.")}</span></div></button>`);
     s3=fcSection($t("Min fotboll"),'data-gomine="1"',tiles.join(""));}
   else s3=`<article class="tip fkcta"><div><b>${$t("Varit på en match?")}</b><span class="meta">${$t("Spara den på tio sekunder, så börjar din groundhopperstatistik.")}</span></div><button class="btn primary" data-glogin="up">${ic("plus")} ${$t("Logga en match")}</button></article>`;
-  return loc+cats+modAlertHtml()+remindHtml()+s1+ob+s2+s3;}
+  return loc+modAlertHtml()+remindHtml()+s2+s1+ob+s3+cats;}
 function fokusHomeHtml(ob){
   const st=fkStyle();const sw=(k,l)=>st===k?`<b>${l}</b>`:`<a href="?stil=${k}">${l}</a>`;
   const head=`<div class="fkpreview">${$t("Förhandsvisning av fokusläget")} · <a href="?fokus=0">${$t("Tillbaka till nuvarande startsida")}</a><br>Utseende: ${sw("vanlig","Vanlig")} · ${sw("ljus","Karusell ljus")} · ${sw("mork","Karusell mörk")}</div>
