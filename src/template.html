@@ -1065,10 +1065,10 @@ html:root[data-acc="green"]{--accent:#1F7A45;--accent-soft:#D6EDDD;--acc-l:#1F7A
 html:root[data-acc="orange"]{--accent:#B4470F;--accent-soft:#FBE3CC;--acc-l:#B4470F;--acc-ls:#FBE3CC}
 /* vit: på ljus botten blir den textens egen mörka färg, på mörk botten vit */
 html:root[data-acc="white"]{--accent:var(--fg);--accent-soft:color-mix(in srgb,var(--fg) 10%,transparent);--acc-l:#000000;--acc-ls:rgba(0,0,0,.08)}
-html:root[data-acc="gold"]:is([data-theme="dark"],[data-look="kit"]){--accent:#F2C14E;--accent-soft:rgba(242,193,78,.16)}
-html:root[data-acc="green"]:is([data-theme="dark"],[data-look="kit"]){--accent:#6FD08C;--accent-soft:rgba(111,208,140,.16)}
-html:root[data-acc="orange"]:is([data-theme="dark"],[data-look="kit"]){--accent:#FF9A4D;--accent-soft:rgba(255,154,77,.16)}
-html:root[data-acc="white"]:is([data-theme="dark"],[data-look="kit"]){--accent:#FFFFFF;--accent-soft:rgba(255,255,255,.14)}
+html:root[data-acc="gold"]:is([data-theme="dark"],[data-look="kit"]){--accent:#F2C14E;--acc-d:#F2C14E;--accent-soft:rgba(242,193,78,.16)}
+html:root[data-acc="green"]:is([data-theme="dark"],[data-look="kit"]){--accent:#6FD08C;--acc-d:#6FD08C;--accent-soft:rgba(111,208,140,.16)}
+html:root[data-acc="orange"]:is([data-theme="dark"],[data-look="kit"]){--accent:#FF9A4D;--acc-d:#FF9A4D;--accent-soft:rgba(255,154,77,.16)}
+html:root[data-acc="white"]:is([data-theme="dark"],[data-look="kit"]){--accent:#FFFFFF;--acc-d:#FFFFFF;--accent-soft:rgba(255,255,255,.14)}
 @media (prefers-color-scheme: dark){
 html:root[data-acc="gold"]:not([data-look]):not([data-theme]){--accent:#F2C14E;--accent-soft:rgba(242,193,78,.16)}
 html:root[data-acc="green"]:not([data-look]):not([data-theme]){--accent:#6FD08C;--accent-soft:rgba(111,208,140,.16)}
@@ -1084,6 +1084,12 @@ html:root[data-look="kit"]{--bg:#1A2433;--accent:#F2C14E;--accent-soft:rgba(242,
 /* ränderna: klippt gräs (breda vågräta) och kritstreck (smala lodräta); ritas en gång i ett fast lager */
 html:root[data-look="kit"] body{background:var(--bg)}
 html:root[data-look="kit"] :is(.tip,.card,.fcard,.rep,.match,.combo,.thread,.citem,.mrow,.plan,.prog,.trip,.trc,.trsum,.passpage,.teamhead,.stats div,.favcard,.empty,.compose,.askbox,.calpanel,.mspanel,.dsel,.search,.btn,.chip,.mini,.iconbtn,.themebtn,.modes,.commtabs,.mfilt,.mtile,.bnav,.stamp,.lmap,.arcsea,.hcard,.pub,.wchip,.pill,.cchip,.qopt,.popt,.phbtn,.phtile,.simbtn,.calopt,.plink,.fld input,.fld select,.fld textarea,.rin input){--fg:#000000;--muted:#4A5260;--line:#D7DDE6;--bg:#E6EAF0;--accent:var(--acc-l,#1E5FA0);--accent-soft:var(--acc-ls,#DCE8F5);--pitch:#1E6B3E;--pitch-soft:#DDF0E3;--soft:rgba(23,32,46,.06);--soft2:rgba(23,32,46,.11);color:var(--fg)}
+/* Kvällsmatch, mörkt: även korten och menyn blir mörka */
+html:root[data-look="kit"][data-theme="dark"]:not(#_){--bg:#1A2433;--page:#1A2433;--surface:#243248;--chalk:#243248;--fg:#F2F5F1;--muted:rgba(242,245,241,.74);--line:rgba(255,255,255,.2);--accent:var(--acc-d,#F2C14E)}
+html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.fcard,.rep,.match,.combo,.thread,.citem,.mrow,.plan,.prog,.trip,.trc,.trsum,.passpage,.teamhead,.stats div,.favcard,.empty,.compose,.askbox,.calpanel,.mspanel,.dsel,.search,.btn,.chip,.mini,.iconbtn,.themebtn,.modes,.commtabs,.mfilt,.mtile,.bnav,.stamp,.lmap,.arcsea,.hcard,.pub,.wchip,.pill,.cchip,.qopt,.popt,.phbtn,.phtile,.simbtn,.calopt,.plink,.fld input,.fld select,.fld textarea,.rin input){--surface:#243248;--chalk:#243248;--fg:#F2F5F1;--muted:rgba(242,245,241,.72);--line:rgba(255,255,255,.14);--bg:#1E2A3C;--accent:var(--acc-d,#F2C14E);--accent-soft:rgba(242,193,78,.16);--pitch:#9BE3B3;--pitch-soft:rgba(155,227,179,.16);--soft:rgba(255,255,255,.07);--soft2:rgba(255,255,255,.12);color:var(--fg)}
+html:root[data-look="kit"][data-theme="dark"] .btn.primary{background:var(--accent);color:#1A2433}
+html:root[data-look="kit"][data-theme="dark"] :is(.chip,.mfilt button,.commtabs button)[aria-pressed="true"]{background:var(--accent)!important;color:#1A2433!important;border-color:var(--accent)!important}
+html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,.thread,.trc,.trsum,.prog,.plan,.trip,.teamhead,.favcard,.fcard){border-color:rgba(255,255,255,.08)}
 :root[data-look="kit"] :is(.tip,.card,.rep,.match,.combo,.thread,.trc,.trsum,.prog,.plan,.trip,.teamhead,.favcard){border-color:transparent;box-shadow:var(--shadow)}
 :root[data-look="kit"] :is(.tip,.card,.rep,.combo,.match):before{display:none}
 :root[data-look="kit"] .name,:root[data-look="kit"] .intro .tagline{font-weight:800;font-stretch:92%;letter-spacing:-.02em}
@@ -5178,7 +5184,7 @@ let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t)
 let theme="auto";try{let t=store.get("fk-theme");if(t==="dusk")t="dark";if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
 function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
   if(acc!=="std")r.setAttribute("data-acc",acc);else r.removeAttribute("data-acc");
-  if(look!=="std"){r.setAttribute("data-look",look);const dk=lookTheme==="dark"||(lookTheme==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);r.setAttribute("data-theme",dk&&!DARKLOOK[look]?"dark":"light");}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
+  if(look!=="std"){r.setAttribute("data-look",look);const dk=lookTheme==="dark"||(lookTheme==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);r.setAttribute("data-theme",(DARKLOOK[look]?lookTheme==="dark":dk)?"dark":"light");}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
   // fokuslägets karusellförslag: mörk variant använder appens mörka tema
   {const st=fkStyle();r.toggleAttribute("data-fkc",st!=="vanlig");if(st==="mork")r.setAttribute("data-theme","dark");}
   const row=document.getElementById("themeRow");r.setAttribute("data-style",uiStyle);
@@ -5232,7 +5238,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${sec($t("Logga|bild"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
    ${sec($t("Utseende"),`<div class="lbl">${$t("Tema")}</div><div class="chips wrapchips">${LOOKS.map(([k,l])=>`<button class="chip" data-look-pick="${k}" aria-pressed="${look===k}">${l}</button>`).join("")}</div>
-     ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>`:DARKLOOK[look]?"":`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${LOOK_THEMES.map(([k,l])=>`<button class="chip" data-looktheme-pick="${k}" aria-pressed="${lookTheme===k}">${l}</button>`).join("")}</div>
+     ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>`:`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${LOOK_THEMES.filter(([k])=>!DARKLOOK[look]||k!=="auto").map(([k,l])=>`<button class="chip" data-looktheme-pick="${k}" aria-pressed="${DARKLOOK[look]?(k==="dark")===(lookTheme==="dark"):lookTheme===k}">${l}</button>`).join("")}</div>
 `}
      <div class="lbl">${$t("Textfärg")}</div><div class="chips wrapchips">${ACCS.map(([k,l,c])=>`<button class="chip" data-acc-pick="${k}" aria-pressed="${acc===k}">${c?`<span class="accdot" style="background:${c}"></span>`:""}${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>
