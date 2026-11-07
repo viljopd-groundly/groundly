@@ -2480,5 +2480,8 @@
  "Välj favoritlag": "Veldu uppáhaldslið",
  "Välj favoritlag så får de egna kort med statistik här.": "Veldu uppáhaldslið og þau fá sín eigin spjöld með tölfræði hér.",
  "Ny version finns": "Ný útgáfa í boði",
- "Uppdatera": "Uppfæra"
+ "Uppdatera": "Uppfæra",
+ "om {0} min": "eftir {0} mín.",
+ "om {0} tim {1} min": "eftir {0} klst. {1} mín.",
+ "om {0} {1}": "eftir {0} {1}"
 }

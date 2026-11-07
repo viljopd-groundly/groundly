@@ -2480,5 +2480,8 @@
  "Välj favoritlag": "Escolher equipas favoritas",
  "Välj favoritlag så får de egna kort med statistik här.": "Escolhe as tuas equipas favoritas e elas ganham aqui cartões próprios com estatísticas.",
  "Ny version finns": "Nova versão disponível",
- "Uppdatera": "Atualizar"
+ "Uppdatera": "Atualizar",
+ "om {0} min": "daqui a {0} min",
+ "om {0} tim {1} min": "daqui a {0} h {1} min",
+ "om {0} {1}": "daqui a {0} {1}"
 }

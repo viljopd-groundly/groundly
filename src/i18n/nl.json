@@ -2480,5 +2480,8 @@
  "Välj favoritlag": "Kies favoriete clubs",
  "Välj favoritlag så får de egna kort med statistik här.": "Kies favoriete clubs, dan krijgen ze hier eigen kaarten met statistieken.",
  "Ny version finns": "Nieuwe versie beschikbaar",
- "Uppdatera": "Bijwerken"
+ "Uppdatera": "Bijwerken",
+ "om {0} min": "over {0} min",
+ "om {0} tim {1} min": "over {0} u {1} min",
+ "om {0} {1}": "over {0} {1}"
 }

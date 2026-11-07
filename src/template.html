@@ -4233,7 +4233,10 @@ function hypeCandidates(){if(dbState!=="ready")return[];const now=Date.now(),end
     if(derbyOf(m))sc+=(local||!ctry||(km!=null&&km<400))?100:70;if(fl.includes(m.home)||fl.includes(m.away))sc+=60;if(local)sc+=50;if(km!=null)sc+=km<100?30:km<300?20:km<600?8:0;
     sc+=hypeCount(m._id)*(local||!ctry?15:5);if(String(m.tier)==="1")sc+=20;if(tierOf(m)==="CUP")sc+=/Champions/i.test(m.comp||"")?30:15;
     sc+=Math.min(30,((h&&h.cap)||0)/3000);return{m,sc};}).sort((x,y)=>y.sc-x.sc).map(x=>x.m);}
-function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return $t($t("Pågår snart"));const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5);return d?$t("om {0} {1} och {2} tim",[d,d===1?$t("dag"):$t("dagar"),h]):$t("om {0} tim",[h]);}
+// nedräkning: minuter de sista timmarna, avrundade timmar under ett dygn, sedan dagar (och timmar om det inte är jämnt)
+function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return $t("Pågår snart");const min=Math.round(ms/6e4);
+  if(min<60)return $t("om {0} min",[Math.max(1,min)]);if(min<6*60){const h=Math.floor(min/60),m=min%60;return m?$t("om {0} tim {1} min",[h,m]):$t("om {0} tim",[h]);}
+  const th=Math.round(ms/36e5);if(th<24)return $t("om {0} tim",[th]);const d=Math.floor(th/24),h=th%24;return h?$t("om {0} {1} och {2} tim",[d,d===1?$t("dag"):$t("dagar"),h]):$t("om {0} {1}",[d,d===1?$t("dag"):$t("dagar")]);}
 function hypeBtn(m,mini){if(mPast(m))return"";const n=hypeCount(m._id);return dbNs&&myId?`<button class="btn small${mini?" hypemini":""}" data-hype="${esc(m._id)}" aria-pressed="${iHype(m._id)}"${mini?` aria-label="${iHype(m._id)?$t("Peppad"):$t("Peppa")}"`:""}${hypeBusy?" disabled":""}>${ic("flame",iHype(m._id)?"on":"")}${mini?"":" "+(iHype(m._id)?$t("Peppad"):$t("Peppa"))}${n?`<span class="hcnt" aria-label="${$t("{0} peppade",[n])}">${n}</span>`:""}</button>`:n?(mini?`<span class="meta" aria-label="${$t("Peppad av {0}",[n])}">${ic("flame")} ${n}</span>`:`<span class="meta">${ic("flame")} ${$t("Peppad av {0}",[n])}</span>`):"";}
 function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==="loading"?`<article class="tip hero"><p class="meta">${$t("Hämtar matchschemat…")}</p></article>`:"";
   const m=list[0],dby=derbyOf(m),fav=isFav(m.home)||isFav(m.away);
