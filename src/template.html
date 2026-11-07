@@ -1058,12 +1058,18 @@ html:root[data-look="ticket"][data-theme="dark"]{--guil:rgba(232,237,245,.035)}
 html:root[data-look="atlas"][data-theme="dark"]{--bg:#17211C;--surface:#1F2B25;--fg:#E7EDE6;--muted:#9FB0A4;--line:#34453B;--chalk:#1F2B25;--accent:#5EC3DD;--accent-soft:#173540;--pitch:#6FCF97;--pitch-soft:#1E3A2A;--soft:color-mix(in srgb,#E7EDE6 8%,transparent);--soft2:color-mix(in srgb,#E7EDE6 13%,transparent);color-scheme:dark}
 :root[data-look="atlas"][data-theme="dark"] .tip.howto{background:#0F1713}
 :root[data-look="atlas"][data-theme="dark"] .bnlog b{background:var(--accent);color:#17211C}
-/* egen färg på detaljerna i Biljetten och Atlasen */
-html:root[data-look][data-acc="red"]{--accent:#C4122F;--accent-soft:#F8D7DC}html:root[data-look][data-acc="red"][data-theme="dark"]{--accent:#FF6B6B;--accent-soft:#3D1C1F}
-html:root[data-look][data-acc="orange"]{--accent:#B45309;--accent-soft:#FBE3CC}html:root[data-look][data-acc="orange"][data-theme="dark"]{--accent:#FFA552;--accent-soft:#3D2A16}
-html:root[data-look][data-acc="gold"]{--accent:#9A6400;--accent-soft:#F6E7C1}html:root[data-look][data-acc="gold"][data-theme="dark"]{--accent:#F2B84B;--accent-soft:#3A2E14}
-html:root[data-look][data-acc="green"]{--accent:#1F7A45;--accent-soft:#D6EDDD}html:root[data-look][data-acc="green"][data-theme="dark"]{--accent:#5FD18E;--accent-soft:#173A26}
-html:root[data-look][data-acc="blue"]{--accent:#1F6F8B;--accent-soft:#D5E8EF}html:root[data-look][data-acc="blue"][data-theme="dark"]{--accent:#5EC3DD;--accent-soft:#173540}
+/* textfärg (detaljer): gul, grön eller orange i alla utseenden. Mörk ton på ljus botten, ljus ton på mörk botten.
+   --acc-l/--acc-ls används inne i de ljusa korten i Kvällsmatch. */
+html:root[data-acc="gold"]{--accent:#8A5A00;--accent-soft:#F6E7C1;--acc-l:#8A5A00;--acc-ls:#F6E7C1}
+html:root[data-acc="green"]{--accent:#1F7A45;--accent-soft:#D6EDDD;--acc-l:#1F7A45;--acc-ls:#D6EDDD}
+html:root[data-acc="orange"]{--accent:#B4470F;--accent-soft:#FBE3CC;--acc-l:#B4470F;--acc-ls:#FBE3CC}
+html:root[data-acc="gold"]:is([data-theme="dark"],[data-look="kit"]){--accent:#F2C14E;--accent-soft:rgba(242,193,78,.16)}
+html:root[data-acc="green"]:is([data-theme="dark"],[data-look="kit"]){--accent:#6FD08C;--accent-soft:rgba(111,208,140,.16)}
+html:root[data-acc="orange"]:is([data-theme="dark"],[data-look="kit"]){--accent:#FF9A4D;--accent-soft:rgba(255,154,77,.16)}
+@media (prefers-color-scheme: dark){
+html:root[data-acc="gold"]:not([data-look]):not([data-theme]){--accent:#F2C14E;--accent-soft:rgba(242,193,78,.16)}
+html:root[data-acc="green"]:not([data-look]):not([data-theme]){--accent:#6FD08C;--accent-soft:rgba(111,208,140,.16)}
+html:root[data-acc="orange"]:not([data-look]):not([data-theme]){--accent:#FF9A4D;--accent-soft:rgba(255,154,77,.16)}}
 @font-face{font-family:"GL Archivo";src:url(fonts/Archivo.woff) format("woff");font-weight:400 800;font-stretch:90% 100%;font-display:swap}
 /* --- Kvällsmatch (intern nyckel "kit"): mörkblå botten utan mönster, ljusa kort och knappar ---
    Variablerna gäller texten direkt på den mörka botten; inne i korten och knapparna byts de till mörk text på ljust. */
@@ -1073,7 +1079,7 @@ html:root[data-look="kit"]{--surface:#F4F6F1;--chalk:#F4F6F1;--fg:#F2F5F1;--mute
 html:root[data-look="kit"]{--bg:#1A2433;--accent:#F2C14E;--accent-soft:rgba(242,193,78,.16);--pitch:#9BE3B3;--pitch-soft:rgba(155,227,179,.16)}
 /* ränderna: klippt gräs (breda vågräta) och kritstreck (smala lodräta); ritas en gång i ett fast lager */
 html:root[data-look="kit"] body{background:var(--bg)}
-html:root[data-look="kit"] :is(.tip,.card,.fcard,.rep,.match,.combo,.thread,.citem,.mrow,.plan,.prog,.trip,.trc,.trsum,.passpage,.teamhead,.stats div,.favcard,.empty,.compose,.askbox,.calpanel,.mspanel,.dsel,.search,.btn,.chip,.mini,.iconbtn,.themebtn,.modes,.commtabs,.mfilt,.mtile,.bnav,.stamp,.lmap,.arcsea,.hcard,.pub,.wchip,.pill,.cchip,.qopt,.popt,.phbtn,.phtile,.simbtn,.calopt,.plink,.fld input,.fld select,.fld textarea,.rin input){--fg:#000000;--muted:#4A5260;--line:#D7DDE6;--bg:#E6EAF0;--accent:#1E5FA0;--accent-soft:#DCE8F5;--pitch:#1E6B3E;--pitch-soft:#DDF0E3;--soft:rgba(23,32,46,.06);--soft2:rgba(23,32,46,.11);color:var(--fg)}
+html:root[data-look="kit"] :is(.tip,.card,.fcard,.rep,.match,.combo,.thread,.citem,.mrow,.plan,.prog,.trip,.trc,.trsum,.passpage,.teamhead,.stats div,.favcard,.empty,.compose,.askbox,.calpanel,.mspanel,.dsel,.search,.btn,.chip,.mini,.iconbtn,.themebtn,.modes,.commtabs,.mfilt,.mtile,.bnav,.stamp,.lmap,.arcsea,.hcard,.pub,.wchip,.pill,.cchip,.qopt,.popt,.phbtn,.phtile,.simbtn,.calopt,.plink,.fld input,.fld select,.fld textarea,.rin input){--fg:#000000;--muted:#4A5260;--line:#D7DDE6;--bg:#E6EAF0;--accent:var(--acc-l,#1E5FA0);--accent-soft:var(--acc-ls,#DCE8F5);--pitch:#1E6B3E;--pitch-soft:#DDF0E3;--soft:rgba(23,32,46,.06);--soft2:rgba(23,32,46,.11);color:var(--fg)}
 :root[data-look="kit"] :is(.tip,.card,.rep,.match,.combo,.thread,.trc,.trsum,.prog,.plan,.trip,.teamhead,.favcard){border-color:transparent;box-shadow:var(--shadow)}
 :root[data-look="kit"] :is(.tip,.card,.rep,.combo,.match):before{display:none}
 :root[data-look="kit"] .name,:root[data-look="kit"] .intro .tagline{font-weight:800;font-stretch:92%;letter-spacing:-.02em}
@@ -1099,7 +1105,6 @@ html:root[data-look="kit"] :is(.tip,.card,.fcard,.rep,.match,.combo,.thread,.cit
 :root[data-look="kit"] .bnav{border-top:0;border-radius:20px 20px 0 0;box-shadow:0 -8px 24px -12px rgba(0,0,0,.5)}
 :root[data-look="kit"] .bnlog b{border-color:var(--surface)}
 /* vit: vita detaljer i mörkt läge; i ljust läge blir de i textfärgen eftersom vitt inte syns på ljus botten */
-html:root[data-look][data-acc="white"]{--accent:var(--fg);--accent-soft:color-mix(in srgb,var(--fg) 10%,transparent)}html:root[data-look][data-acc="white"][data-theme="dark"]{--accent:#FFFFFF;--accent-soft:color-mix(in srgb,#FFFFFF 12%,transparent)}
 .accdot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 1px var(--line)}
 /* toppraden: ogenomskinlig i stället för suddig glaseffekt, som annars räknas om vid varje scrollsteg */
 :root[data-look] .topbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--bg)}
@@ -5160,15 +5165,15 @@ let deepJump=null;
 const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["warm",$t("Varmt")],["dim",$t("Dämpat")],["dark",$t("Mörkt")]];
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
 const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")],["kit",$t("Kvällsmatch")]];const DARKLOOK={kit:1};let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
-const ACCS=[["std",$t("Standard"),""],["red",$t("Röd"),"#C4122F"],["orange",$t("Orange"),"#B45309"],["gold",$t("Guld"),"#9A6400"],["green",$t("Grön"),"#1F7A45"],["blue",$t("Blå"),"#1F6F8B"],["white",$t("Vit"),"#FFFFFF"]];let acc="std";try{let t=store.get("fk-acc");if(t==="purple")t="white";if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
+// textfärg i alla utseenden; tidigare val (röd, blå, vit, lila) faller tillbaka på standard
+const ACCS=[["std",$t("Standard"),""],["gold",$t("Gul"),"#F2C14E"],["green",$t("Grön"),"#2E9A57"],["orange",$t("Orange"),"#F07F2A"]];let acc="std";try{let t=store.get("fk-acc");if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
 const LOOK_THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dark",$t("Mörkt")]];let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
 const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
 let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 // Halvmörkt (dusk) är borttaget; den som hade valt det får Mörkt
 let theme="auto";try{let t=store.get("fk-theme");if(t==="dusk")t="dark";if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
 function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
-  // Biljetten och Atlasen har egna ljusa färger, så färgvalet gäller bara Groundly-utseendet
-  if(look!=="std"&&!DARKLOOK[look]&&acc!=="std")r.setAttribute("data-acc",acc);else r.removeAttribute("data-acc");
+  if(acc!=="std")r.setAttribute("data-acc",acc);else r.removeAttribute("data-acc");
   if(look!=="std"){r.setAttribute("data-look",look);const dk=lookTheme==="dark"||(lookTheme==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);r.setAttribute("data-theme",dk&&!DARKLOOK[look]?"dark":"light");}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
   // fokuslägets karusellförslag: mörk variant använder appens mörka tema
   {const st=fkStyle();r.toggleAttribute("data-fkc",st!=="vanlig");if(st==="mork")r.setAttribute("data-theme","dark");}
@@ -5224,7 +5229,8 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
    ${sec($t("Utseende"),`<div class="lbl">${$t("Tema")}</div><div class="chips wrapchips">${LOOKS.map(([k,l])=>`<button class="chip" data-look-pick="${k}" aria-pressed="${look===k}">${l}</button>`).join("")}</div>
      ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>`:DARKLOOK[look]?"":`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${LOOK_THEMES.map(([k,l])=>`<button class="chip" data-looktheme-pick="${k}" aria-pressed="${lookTheme===k}">${l}</button>`).join("")}</div>
-     <div class="lbl">${$t("Detaljer")}</div><div class="chips wrapchips">${ACCS.map(([k,l,c])=>`<button class="chip" data-acc-pick="${k}" aria-pressed="${acc===k}">${c?`<span class="accdot" style="background:${c}"></span>`:""}${l}</button>`).join("")}</div>`}
+`}
+     <div class="lbl">${$t("Textfärg")}</div><div class="chips wrapchips">${ACCS.map(([k,l,c])=>`<button class="chip" data-acc-pick="${k}" aria-pressed="${acc===k}">${c?`<span class="accdot" style="background:${c}"></span>`:""}${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Textstorlek")}</div><div class="chips wrapchips">${FSIZES.map(([k,l],i)=>`<button class="chip" data-fs-pick="${k}" aria-pressed="${fsize===k}" style="font-size:${[14,16,18][i]}px">${l}</button>`).join("")}</div>`)}
    ${sec($t("Notiser"),NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")+`<p class="hint">${$t("Notiserna visas i appen. Appen skickar inga push-notiser till telefonen.")}</p>`)}
