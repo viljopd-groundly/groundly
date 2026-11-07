@@ -588,6 +588,9 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 @media (min-width:761px){.topbar{margin-top:0;border-radius:12px;border:1px solid var(--line)}}
 #themeRow[hidden],.intro[hidden]{display:none}
 .flist{display:flex;flex-direction:column;gap:8px}
+.hscroll{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:8px 0 4px;padding-bottom:2px}.hscroll::-webkit-scrollbar{display:none}
+.hscroll>.fitem{flex:0 0 78%;min-width:0;box-sizing:border-box;scroll-snap-align:start;flex-direction:column;align-items:flex-start;justify-content:space-between}.hscroll.hops>.fitem{flex-basis:72%;flex-direction:row;align-items:center}.hscroll.hops>.fitem .mmain{width:auto;flex:1}.hscroll>.fitem .mmain{min-width:0;width:100%}.hscroll>.fitem .venue{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.friends .notice{font-size:calc(13px*var(--fs))}.friends h3.sec{margin-top:10px}
 .fitem{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--soft,var(--bg));border-radius:12px;padding:9px 12px}
 .fitem .mmain{min-width:0}.fitem .btn{flex:none}.fbitem{align-items:flex-start}
 .flev{justify-content:flex-start;align-items:flex-start}.flev .mmain{flex:1}.flev .link.strong{text-align:left}
@@ -5015,15 +5018,15 @@ function friendsHtml(){if(myState!=="ready"||!dbNs||!myId)return"";
   const others=Object.entries(PUBLIC).filter(([u,d])=>u!==myId&&d&&+d.n>0).sort((a,b)=>(+b[1].n)-(+a[1].n));
   const share=MY.share?`<p class="meta">${ic("check")} ${$t("Dina senaste matcher syns för andra.")} <button class="link" data-share="0">${$t("Sluta dela")}</button></p>`
     :`<div class="notice">${(PH()?$t("Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.",[PUB_N]):$t("Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar och sällskap delas aldrig.",[PUB_N]))} <button class="btn small primary" data-share="1">${$t("Visa mina matcher för andra")}</button></div>`;
-  const feedH=feed.length?`<div class="flist">${feed.map(r=>{const k=r.uid+":"+r.id,n=cheerCount(k),mine=myCheers().includes(k);
+  const feedH=feed.length?`<div class="hscroll">${feed.map(r=>{const k=r.uid+":"+r.id,n=cheerCount(k),mine=myCheers().includes(k);
       return`<div class="fitem"><div class="mmain"><div><b>${esc(who(r.uid))}</b> ${$t("var på")} <b>${esc(r.h)}${r.sc?` ${esc(r.sc)} `:" – "}${esc(r.a)}</b></div><div class="venue">${esc([r.v,$t(r.c)].filter(Boolean).join(", "))}${r.v||r.c?" · ":""}${esc(fmtDate(r.d))}</div></div>
         <button class="btn small${mine?" on":""}" data-cheer="${esc(k)}" aria-pressed="${mine}"${cheerBusy?" disabled":""}>${ic("heart",mine?"on":"")} ${mine?"Snyggt!":$t("Snyggt")}${n?` · ${n}`:""}</button></div>`;}).join("")}</div>`
     :fl.length?`<p class="meta">${$t("De du följer har inte loggat några matcher än.")}</p>`:`<p class="meta">${$t("Följ andra groundhoppers så ser du deras matcher här.")}</p>`;
   const show=hopAll?others:others.slice(0,6);
-  const hops=others.length?`<h3 class="sec">${$t("Groundhoppers att följa")}</h3><div class="flist">${show.map(([u,d])=>`<div class="fitem"><div class="mmain"><b>${esc(who(u))}</b><div class="venue">${$t("{0} {1} · {2} arenor",[+d.n,+d.n===1?$t("match"):$t("matcher"),+d.ar||0])}${d.fav&&C[d.fav]?$t(" · håller på {0}",[esc(C[d.fav].n)]):""}</div></div>
-      <button class="btn small${isFollow(u)?"":" primary"}" data-follow="${esc(u)}" aria-pressed="${isFollow(u)}">${isFollow(u)?$t("{0} Följer",[ic("check")]):$t("Följ")}</button></div>`).join("")}</div>${others.length>6?`<button class="link strong" data-hopall="1">${hopAll?$t("Visa färre"):$t("Visa alla {0}",[others.length])}</button>`:""}`
+  const hops=others.length?`<h3 class="sec">${$t("Groundhoppers att följa")}</h3><div class="hscroll hops">${others.slice(0,12).map(([u,d])=>`<div class="fitem"><div class="mmain"><b>${esc(who(u))}</b><div class="venue">${$t("{0} {1} · {2} arenor",[+d.n,+d.n===1?$t("match"):$t("matcher"),+d.ar||0])}${d.fav&&C[d.fav]?$t(" · håller på {0}",[esc(C[d.fav].n)]):""}</div></div>
+      <button class="btn small${isFollow(u)?"":" primary"}" data-follow="${esc(u)}" aria-pressed="${isFollow(u)}">${isFollow(u)?$t("{0} Följer",[ic("check")]):$t("Följ")}</button></div>`).join("")}</div>`
     :`<p class="meta">${$t("Ingen annan delar sina matcher än.")}</p>`;
-  return`<article class="tip"><div class="lbl">${$t("Vänner")}</div><h2 class="name">${$t("Vad har vännerna sett?")}</h2>${feedH}${share}${hops}</article>`;}
+  return`<article class="tip friends"><div class="lbl">${$t("Vänner")}</div><h2 class="name">${$t("Vad har vännerna sett?")}</h2>${feedH}${hops}${share}</article>`;}
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-share],[data-follow],[data-cheer],[data-hopall]");if(!t||myState!=="ready")return;
   if(t.dataset.share!==undefined){const on=t.dataset.share==="1";mutate(d=>{d.share=on;});setTimeout(syncPublic,50);toast(on?$t("Dina matcher syns nu för andra."):$t("Dina matcher syns inte längre för andra."));return;}
   if(t.dataset.hopall){hopAll=!hopAll;renderHome();return;}
