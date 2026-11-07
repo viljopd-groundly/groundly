@@ -1,9 +1,10 @@
 // Groundly service worker: gör appen snabb vid återbesök och användbar utan täckning.
-//  - sidan (index.html): nätet först (max 4 s), annars sparad kopia
+//  - sidan (index.html): sparad kopia direkt, så att appen öppnar snabbt även utan täckning.
+//    Appen frågar sedan (index.html?__check=1) om det finns en ny version; då sparas den och appen visar "Ny version finns".
 //  - appens filer och data (js, data/*.json, archive/*.json, ikoner): sparad kopia direkt, uppdateras i bakgrunden
 //  - Firebase-biblioteken och typsnitt (versionerade): sparad kopia, hämtas bara en gång
 //  - allt annat (inloggning, databasen, API:er): går direkt till nätet, sparas aldrig
-const V = "groundly-v3";
+const V = "groundly-v4";
 const SHELL = ["./", "index.html", "js/runtime.js", "js/firebase-config.js", "manifest.webmanifest", "icon-192.png", "apple-touch-icon.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).catch(() => {})); self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -15,12 +16,24 @@ self.addEventListener("fetch", e => {
   const req = e.request; if (req.method !== "GET") return;
   const url = new URL(req.url);
   const same = url.origin === self.location.origin;
-  // sidan: nätet först
+  // sidan: sparad kopia direkt (nätet bara första gången)
   if (req.mode === "navigate") {
-    e.respondWith(Promise.race([
-      fetch(req, { cache: "no-cache" }).then(r => put(new Request("index.html"), r)),
-      new Promise((_, rej) => setTimeout(rej, 4000))
-    ]).catch(() => fromCache("index.html").then(r => r || fetch(req))));
+    e.respondWith(fromCache("index.html").then(hit => hit || fetch(req, { cache: "no-cache" }).then(r => put(new Request("index.html"), r))).catch(() => fetch(req)));
+    return;
+  }
+  // finns det en ny version av sidan? hämta, jämför med den sparade och spara den nya
+  if (same && url.searchParams.has("__check")) {
+    e.respondWith((async () => {
+      try {
+        const net = await fetch(new Request("index.html", { cache: "no-cache" }));
+        if (!net.ok) return new Response('{"changed":false}', { headers: { "content-type": "application/json" } });
+        const txt = await net.clone().text();
+        const old = await fromCache("index.html"); const oldTxt = old ? await old.text() : null;
+        const changed = oldTxt !== null && oldTxt !== txt;
+        if (oldTxt !== txt) { const c = await caches.open(V); await c.put("index.html", net); }
+        return new Response(JSON.stringify({ changed }), { headers: { "content-type": "application/json" } });
+      } catch (x) { return new Response('{"changed":false}', { headers: { "content-type": "application/json" } }); }
+    })());
     return;
   }
   // versionerade bibliotek och typsnitt: sparad kopia

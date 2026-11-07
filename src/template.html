@@ -434,6 +434,7 @@ button.stamp{cursor:pointer}
 .sechead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
 body:has(#trOv) #tlBar{display:none}#tlBar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:61;display:flex;align-items:center;justify-content:space-between;gap:12px;width:min(460px,calc(100% - 32px));box-sizing:border-box;background:var(--fg);color:var(--bg);padding:8px 8px 8px 14px;border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,.25);font-size:calc(14px*var(--fs));max-width:calc(100% - 32px)}#tlBar span{display:flex;align-items:center;gap:8px;line-height:1.3}#tlBar svg{flex-shrink:0}#tlBar svg{width:16px;height:16px}
 :is(html:lang(fi),html:lang(de),html:lang(nl),html:lang(pl)) .itiles{-webkit-hyphens:auto;hyphens:auto}
+#updBar{position:fixed;left:12px;right:12px;bottom:calc(88px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 14px;border-radius:14px;background:var(--surface);color:var(--fg);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18);max-width:520px;margin:0 auto}#updBar>span{flex:1;font-weight:600}#updBar .x{all:unset;cursor:pointer;padding:4px 8px;font-size:20px;color:var(--muted)}
 #fkToast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:calc(14px*var(--fs));max-width:calc(100% - 32px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
 #fkToast.on{opacity:1;transform:translate(-50%,0)}
 #fkUndo.offer{width:min(440px,calc(100% - 32px));box-sizing:border-box;z-index:70}#fkUndo.offer span{flex:1}#fkUndo .x{background:none!important;color:inherit!important;opacity:.7;font-size:20px;padding:0 8px!important}
@@ -2297,6 +2298,14 @@ function mutate(fn){myErr="";(MY.attended||[]).forEach(a=>SEEN_ATT.add(a.id));fn
   {const added=(MY.attended||[]).filter(a=>a&&!SEEN_ATT.has(a.id));added.forEach(a=>SEEN_ATT.add(a.id));if(added.length===1){const aid=added[0].id;setTimeout(()=>{if(!maybeAskShare(aid))offerReport(aid);},1200);}}if(Array.isArray(MY.favs))MY.fav=MY.favs[0]||null;saveMy();render();setTimeout(()=>{try{syncStats();}catch(e){}try{syncPublic();}catch(e){}try{syncProfile();}catch(e){}},400);}
 const ic=(n,c)=>`<svg class="ic${c?" "+c:""}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 const STAR=on=>ic("star",on?"on":""),OK=ic("check"),NO=ic("x");
+// Ny version: appen öppnar från den sparade kopian och frågar i bakgrunden om det finns en nyare (se sw.js)
+let updLast=0,updShown=false;
+function checkUpdate(){if(updShown||!("serviceWorker"in navigator)||!navigator.serviceWorker.controller)return;const now=Date.now();if(now-updLast<60000)return;updLast=now;
+  fetch("index.html?__check=1",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.changed)showUpdateBar();}).catch(()=>{});}
+function showUpdateBar(){if(updShown)return;updShown=true;const el=document.createElement("div");el.id="updBar";el.setAttribute("role","status");
+  el.innerHTML=`<span>${ic("download")} ${esc($t("Ny version finns"))}</span><button type="button" class="btn small primary" data-updnow="1">${esc($t("Uppdatera"))}</button><button type="button" class="x" data-updx="1" aria-label="${esc($t("Stäng"))}">×</button>`;document.body.appendChild(el);}
+document.addEventListener("click",e=>{if(e.target.closest("[data-updnow]")){location.reload();return;}if(e.target.closest("[data-updx]"))document.getElementById("updBar")?.remove();});
+addEventListener("load",()=>setTimeout(checkUpdate,2500));document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")checkUpdate();});
 function toast(msg,icon){let el=document.getElementById("fkToast");if(!el){el=document.createElement("div");el.id="fkToast";el.setAttribute("role","status");document.body.appendChild(el);}el.innerHTML=(icon?ic(icon):"")+esc(msg);el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),3500);}
 // beta: visa JavaScript-fel som en ruta för moderatorer, så att fel på telefonen går att se
 const showErr=(m,st)=>{try{if(typeof isMod==="undefined"||!isMod)return;const at=String(st||"").split("\n").slice(0,3).map(x=>x.trim()).join(" ← ");toast("Fel: "+String(m||$t("okänt")).slice(0,140)+(at?" · "+at.slice(0,160):""));clearTimeout(toast.t);toast.t=setTimeout(()=>{const el=document.getElementById("fkToast");if(el)el.classList.remove("on");},12000);}catch(x){}};
