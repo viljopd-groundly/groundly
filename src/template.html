@@ -516,7 +516,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .pill.cultp{background:color-mix(in srgb,#e8ad00 18%,var(--surface));color:color-mix(in srgb,#b07a00 85%,var(--fg))}.pill.cultp .ic{width:11px;height:11px;vertical-align:-1px}
 .remind .rmrow{display:flex;flex-direction:column;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}.remind .rmrow:first-of-type{border-top:0;padding-top:2px}.remind .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
 .actdot{position:absolute;top:2px;right:calc(50% - 22px);min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#d64545;color:#fff;font:700 10px/17px var(--f-body);text-align:center;box-sizing:border-box;pointer-events:none}
-#bnMore,.msi[data-bn="reportage"],#m-reportage,#m-forum,.bnav [data-bn="community"]{position:relative}.msi .actdot{right:8px;top:6px}#m-reportage .actdot,#m-forum .actdot{right:-6px;top:-6px}
+#bnMore,#m-community,.msi[data-bn="reportage"],#m-reportage,#m-forum,.bnav [data-bn="community"]{position:relative}.msi .actdot{right:8px;top:6px}#bnMore .actdot{right:14px;top:2px}#m-reportage .actdot,#m-forum .actdot{right:-6px;top:-6px}
 .commtabs button{position:relative}.commtabs .actdot{top:-6px;right:6px}
 .actcard .actrow.linkrow{cursor:pointer;display:block;width:100%;text-align:left;background:none;border-top:0;border-right:0;border-bottom:0;font-family:inherit;margin:0}@media (hover:hover){.actrow.linkrow:hover i{text-decoration:underline}}
 .actcard .actrow{font-size:calc(14px*var(--fs));color:var(--muted);border-left:3px solid var(--accent-soft);padding-left:9px}.actcard .actrow b{color:var(--fg)}.actcard .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
@@ -1525,9 +1525,10 @@ document.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.datase
 // Matcher får Communitys plats i menyraden, plusknappen loggar en match direkt och startsidan visar bara
 // matcher nära dig, logga-knappen och din säsong. Texterna översätts som resten av appen.
 const FOKUS=(()=>{try{const u=new URLSearchParams(location.search).get("fokus");if(u==="1")localStorage.setItem("fk-fokus","1");if(u==="0")localStorage.removeItem("fk-fokus");return localStorage.getItem("fk-fokus")==="1";}catch(e){return false;}})();
-if(FOKUS){MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"flode","forum","reportage");
+// Matcher ligger i menyraden; Community först under Mer (med pricken för nya inlägg)
+{MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"flode","forum","reportage");
   const cb=document.querySelector('.bnav [data-bn="community"]');if(cb){cb.dataset.bn="matcher";cb.innerHTML=`<svg class="ic" width="22" height="22" aria-hidden="true" style="width:22px;height:22px;vertical-align:0"><use href="#i-calendar"/></svg><span>${$t("Matcher")}</span>`;}
-  const mm=document.querySelector('#moreSheet [data-bn="matcher"]');if(mm){mm.dataset.bn="community";mm.innerHTML=`<b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span>${$t("Community")}</span>`;}
+  const mm=document.querySelector('#moreSheet [data-bn="matcher"]');if(mm){mm.dataset.bn="community";mm.id="m-community";mm.innerHTML=`<b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span>${$t("Community")}</span>`;mm.parentElement.prepend(mm);}
 }
 // Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
 const isComm=m=>m==="flode"||m==="forum"||m==="reportage";
@@ -3951,7 +3952,7 @@ function repSeen(part){const a=repActivity();if(!a)return;const now=new Date().t
   if(!part||part==="rep"){s.c=now;s.l=a.likes;}if(!part||part==="forum")s.f=now;try{store.set("fk-repseen",JSON.stringify(s));}catch(e){}actBadge();}
 function actBadge(){const a=notifOn("act")?repActivity():null;const nr=a?a.newC.length+a.newL:0,nf=a?a.newF.length:0;
   const tabs=(k,n)=>[...document.querySelectorAll(`.commtabs [data-bn="${k}"]`)].map(el=>[el,n]);
-  for(const [el,n] of [[document.querySelector('.bnav [data-bn="community"]'),nr+nf],[document.getElementById("m-reportage"),nr],[document.getElementById("m-forum"),nf],...tabs("reportage",nr),...tabs("forum",nf)]){if(!el)continue;let d=el.querySelector(".actdot");
+  for(const [el,n] of [[document.querySelector('.bnav [data-bn="community"]'),nr+nf],[document.getElementById("bnMore"),nr+nf],[document.getElementById("m-community"),nr+nf],[document.getElementById("m-reportage"),nr],[document.getElementById("m-forum"),nf],...tabs("reportage",nr),...tabs("forum",nf)]){if(!el)continue;let d=el.querySelector(".actdot");
     if(n&&!d){d=document.createElement("span");d.className="actdot";el.appendChild(d);}if(d){if(n)d.textContent=n>9?"9+":n;else d.remove();}}
   document.querySelectorAll('section:not([hidden]) .commtabs').forEach(()=>{});}
 function activityHtml(){if(!notifOn("act"))return"";const a=repActivity();if(!a||!(a.newC.length+a.newL+a.newF.length))return"";
