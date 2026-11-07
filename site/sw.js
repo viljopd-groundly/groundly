@@ -3,7 +3,7 @@
 //  - appens filer och data (js, data/*.json, archive/*.json, ikoner): sparad kopia direkt, uppdateras i bakgrunden
 //  - Firebase-biblioteken och typsnitt (versionerade): sparad kopia, hämtas bara en gång
 //  - allt annat (inloggning, databasen, API:er): går direkt till nätet, sparas aldrig
-const V = "groundly-v2";
+const V = "groundly-v3";
 const SHELL = ["./", "index.html", "js/runtime.js", "js/firebase-config.js", "manifest.webmanifest", "icon-192.png", "apple-touch-icon.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).catch(() => {})); self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -18,7 +18,7 @@ self.addEventListener("fetch", e => {
   // sidan: nätet först
   if (req.mode === "navigate") {
     e.respondWith(Promise.race([
-      fetch(req).then(r => put(new Request("index.html"), r)),
+      fetch(req, { cache: "no-cache" }).then(r => put(new Request("index.html"), r)),
       new Promise((_, rej) => setTimeout(rej, 4000))
     ]).catch(() => fromCache("index.html").then(r => r || fetch(req))));
     return;
