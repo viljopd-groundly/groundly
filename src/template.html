@@ -4393,7 +4393,8 @@ function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" $
 // ---------- startsidan: vilka rutor som visas och i vilken ordning ----------
 // standard = kort startsida; resten slås på under Anpassa startsidan. Valen sparas på kontot (homeCfg) och i telefonen.
 const HOME_BLOCKS=[["weekend","Tips för helgen",true],["hero","Veckans match",true],["mine","Din säsong",true],["latest","Community",true],["news","Nytt i appen",false],
-  ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["board","Topplistor",false],["hopper","Månadens groundhopper",false],["writers","Månadens skribenter",false],["toparena","Månadens arena",false],["quiz","Quizledare",false],["invite","Tipsa en kompis",false]];
+  ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["invite","Tipsa en kompis",false]];
+// Topplistor, Månadens groundhopper, skribenter, arena och Quizledare är borttagna härifrån: de finns i Hett just nu och i Community-rutan
 function isNewbie(){if(myState!=="ready")return true;if((MY.attended||[]).length>=3)return false;const s=MY.since||today();return(Date.parse(today())-Date.parse(s))/864e5<14;}
 const HOME_FN={intro:()=>isNewbie()?introHtml():"",hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),writers:()=>writersHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
 function normHomeCfg(c){const keys=HOME_BLOCKS.map(x=>x[0]);if(!c||typeof c!=="object")return null;const order=Array.isArray(c.order)?c.order.filter((k,i,a)=>keys.includes(k)&&a.indexOf(k)===i):[];
