@@ -4402,7 +4402,7 @@ function homeCfg(){if(myState==="ready"&&MY.homeCfg)return MY.homeCfg;try{return
 // Tips för helgen ligger alltid ovanför Veckans match, även i en egen ordning
 function homeOrder(){const c=homeCfg();const keys=HOME_BLOCKS.map(x=>x[0]);const o=[...c.order.filter(k=>keys.includes(k)),...keys.filter(k=>!c.order.includes(k))];
   const w=o.indexOf("weekend"),h=o.indexOf("hero");if(w>h&&h>=0){o.splice(w,1);o.splice(h,0,"weekend");}return o;}
-function homeDefault(k){if(k==="friends")return follows().length>0;const b=HOME_BLOCKS.find(x=>x[0]===k);return!!(b&&b[2]);}
+function homeDefault(k){const b=HOME_BLOCKS.find(x=>x[0]===k);return!!(b&&b[2]);}
 function homeOn(k,onboarding){const c=homeCfg();const on=typeof c.on[k]==="boolean"?c.on[k]:homeDefault(k);
   // ny användare: Kom igång visar redan det som Din säsong skulle visa
   if(k==="mine"&&onboarding&&typeof c.on[k]!=="boolean"&&!(MY.attended||[]).length)return false;return on;}
