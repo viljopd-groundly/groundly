@@ -2473,5 +2473,8 @@
  "Textfärg": "Cor do texto",
  "Bläddra i sidled": "Deslizar",
  "kl": "às",
- "Lista": "Lista"
+ "Lista": "Lista",
+ "Använd min plats": "Usar a minha localização",
+ "Hittade ingen ort nära dig": "Não foi encontrada nenhuma cidade perto de ti",
+ "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Não foi possível obter a tua localização. Permite a localização no navegador ou escreve a cidade."
 }

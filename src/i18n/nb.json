@@ -2474,5 +2474,8 @@
  "Textfärg": "Tekstfarge",
  "Bläddra i sidled": "Bla sidelengs",
  "kl": "kl.",
- "Lista": "Liste"
+ "Lista": "Liste",
+ "Använd min plats": "Bruk posisjonen min",
+ "Hittade ingen ort nära dig": "Fant ingen sted nær deg",
+ "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Kunne ikke hente posisjonen din. Tillat posisjon i nettleseren eller skriv stedet."
 }

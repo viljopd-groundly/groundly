@@ -2473,5 +2473,8 @@
  "Textfärg": "Litur texta",
  "Bläddra i sidled": "Fletta til hliðar",
  "kl": "kl.",
- "Lista": "Listi"
+ "Lista": "Listi",
+ "Använd min plats": "Nota staðsetningu mína",
+ "Hittade ingen ort nära dig": "Fann engan stað nálægt þér",
+ "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Gat ekki sótt staðsetningu þína. Leyfðu staðsetningu í vafranum eða skrifaðu staðinn."
 }

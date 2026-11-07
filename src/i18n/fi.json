@@ -2473,5 +2473,8 @@
  "Textfärg": "Tekstin väri",
  "Bläddra i sidled": "Selaa sivuttain",
  "kl": "klo",
- "Lista": "Lista"
+ "Lista": "Lista",
+ "Använd min plats": "Käytä sijaintiani",
+ "Hittade ingen ort nära dig": "Lähelläsi ei löytynyt paikkakuntaa",
+ "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Sijaintia ei saatu. Salli sijainti selaimessa tai kirjoita paikkakunta."
 }

@@ -2473,5 +2473,8 @@
  "Textfärg": "Kolor tekstu",
  "Bläddra i sidled": "Przewijaj w bok",
  "kl": "o",
- "Lista": "Lista"
+ "Lista": "Lista",
+ "Använd min plats": "Użyj mojej lokalizacji",
+ "Hittade ingen ort nära dig": "Nie znaleziono miejscowości w pobliżu",
+ "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Nie udało się pobrać lokalizacji. Zezwól na nią w przeglądarce lub wpisz miejscowość."
 }
