@@ -2064,7 +2064,7 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
     ${past?"":`<h3>${$t("Biljetter")}</h3>${tix||`<p class="meta">${$t("Vi har ingen biljettlänk för den här matchen.")}</p>`}${awayTix}`}
     ${det}
     ${past||!m.city||homeIsLocal(m.city)?"":`<h3 id="msResa">${$t("Resa")}</h3><div class="actions">${omioLink(homeTown,m.city)}${homeTown?extLink(transitUrl(homeTown,placeStr(m.venue,m.city)),$t("Resväg från {0}",[esc(homeTown)]),"btn small"):""}</div>`}
-    <div class="mp">${myBtns(m)}${hotelLink(m)}${calLink(m)}</div>
+    <div class="mp">${myBtns(m)}${hotelLink(m)}${!mPast(m)&&m.city?extLink(omioUrl(homeLL()?.name||homeTown,m.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"mini"):""}${calLink(m)}</div>
     ${past?"":`<p class="hint">${$t("Tider kan flyttas, till exempel för tv. Kolla hos klubben innan du bokar resa.")}</p>`}
   </div></div>`;}
 let msId=null;
@@ -2111,7 +2111,7 @@ const tipArenaCard=([id,why])=>{const c=C[id];if(!c||!c.s)return"";const k=arena
         <div class="teams">${sharers.map(o=>`<button data-open="${esc(o.id)}">${crest(o.id,o.n,22)}${esc(o.n)}${favStar(o.id)}</button>`).join('<span class="vs">·</span>')}</div>
         <div class="mp">${c.cap?`<span class="pill">${$t("{0} platser",[fmtCap(c.cap)])}</span>`:""}${sf?`<span class="pill">${esc(SURF_LBL[sf.v])}</span>`:""}${visited?`<span class="pill t1">${$t("Besökt {0}",[OK])}</span>`:""}</div>
         <p>${esc($t(why))}</p>
-        <div class="actions">${extLink(mapsDir(c.s,c.city),$t("Hitta hit"),"btn small")}${extLink(bookingUrl(c.s,c.city),adLabel($t("Hotell")),"btn small")}${c.city&&!homeIsLocal(c.city)?extLink(omioUrl(homeTown,c.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"btn small"):""}<button class="btn small" data-teamview="${esc(c.id)}">${$t("Kommande matcher")}</button></div>${tipFeedback("arena",id,c.id)}</article>`;};
+        <div class="actions">${extLink(mapsDir(c.s,c.city),$t("Hitta hit"),"btn small")}${extLink(bookingUrl(c.s,c.city),adLabel($t("Hotell")),"btn small")}${c.city?extLink(omioUrl(homeTown,c.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"btn small"):""}<button class="btn small" data-teamview="${esc(c.id)}">${$t("Kommande matcher")}</button></div>${tipFeedback("arena",id,c.id)}</article>`;};
 const tipCultCard=([id,why])=>{const c=C[id];if(!c)return"";const up=dbState==="ready"?upcomingFor(id)[0]:null;
       return`<article class="tip tipx"${tipBand([id])}>
         <div class="tip-head tiph-c">${crest(id,c.n,40)}<div><h2 class="name">${esc(c.n)}</h2><span class="meta">${esc([cityLbl(c),$t(c.c)].join(", "))}${c.f?$t(" · grundad {0}",[c.f]):""}</span></div></div>
@@ -2444,7 +2444,7 @@ function renderMine(){
       return`<div class="mrow"><div class="mdate">${esc(w.kickoff?fmtDate(dayKey(new Date(w.kickoff))):w.dateFrom?rangeTxt(w):"")}</div><div class="mmain">
       <div class="teams">${w.home&&C[w.home]?`<button data-open="${esc(w.home)}">${esc(tnm(w,"home"))}</button>`:esc(tnm(w,"home"))}<span class="vs">–</span>${w.away&&C[w.away]?`<button data-open="${esc(w.away)}">${esc(tnm(w,"away"))}</button>`:esc(tnm(w,"away"))}</div>
       <div class="venue">${esc(when)} · ${esc([w.venue,$t(w.city)].filter(Boolean).join(", "))}</div>
-      <div class="pactions">${past?`<button class="link strong" data-wmdone="${esc(w.id)}">${$t("Matchen är spelad. Var du där?")}</button>`:calLinks(w)+(w.home&&C[w.home]&&C[w.home].tix?`<a class="link strong" href="${esc(C[w.home].tix)}" target="_blank" rel="noopener">${$t("Biljetter")}</a>`:"")+hotelLink(w,"link")+(w.city&&!homeIsLocal(w.city)?extLink(omioUrl(homeTown,w.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"link"):"")}${delBtn("wm",w.id)}</div></div></div>`;}).join("")+limBtns("wm",wm.length,3)
+      <div class="pactions">${past?`<button class="link strong" data-wmdone="${esc(w.id)}">${$t("Matchen är spelad. Var du där?")}</button>`:calLinks(w)+(w.home&&C[w.home]&&C[w.home].tix?`<a class="link strong" href="${esc(C[w.home].tix)}" target="_blank" rel="noopener">${$t("Biljetter")}</a>`:"")+hotelLink(w,"link")+(w.city?extLink(omioUrl(homeTown,w.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"link"):"")}${delBtn("wm",w.id)}</div></div></div>`;}).join("")+limBtns("wm",wm.length,3)
      :`<div class="empty">${$t("Tryck")} <b>${$t("Vill gå")}</b> ${$t("på en kommande match under Matcher för att spara den här.")}</div>`;
     h+=`<h3 class="sec">${$t("Klubbar jag vill besöka")}</h3>`;
     const wc=MY.wishClubs.filter(id=>C[id]&&!isNat(C[id]));const wn=MY.wishClubs.filter(id=>C[id]&&isNat(C[id]));
@@ -3114,7 +3114,7 @@ function tripPanel(c){const to=placeStr(c.s,c.city);
   const near=`<div class="tripsec"><div class="lbl">${$t("På plats")}</div><div class="actions">${extLink(dirUrl("",to,"walking"),$t("Gång"),"btn small")}${extLink(dirUrl("",to,"transit"),$t("Kollektivt"),"btn small")}${extLink(dirUrl("",to,"driving"),$t("Bil"),"btn small")}</div></div>`;
   const foot=homeEdit?homeRow(c):!homeTown?`<div><button class="link" data-homeedit="1">${$t("Ange din hemort för resväg hela vägen hit")}</button></div>`:local?`<p class="meta">${$t("Du bor nära, så vi visar bara sista biten.")} <button class="link" data-homeedit="1">${$t("Byt hemort")}</button></p>`:"";
   return`<div class="trip" data-noclose="1" data-tripof="${esc(c.id)}">${far}${near}${foot}</div>`;}
-const tripLink=m=>m&&m._id&&m.city&&!homeIsLocal(m.city)&&!mPast(m)?`<button class="mini" data-mstrip="${esc(m._id)}">${$t("Resa")}</button>`:"";
+const tripLink=m=>m&&m._id&&m.city&&!mPast(m)?`<button class="mini" data-mstrip="${esc(m._id)}">${$t("Resa")}</button>`:"";
 // "Använd min plats": telefonens position blir närmaste ort vi känner till
 function locBtn(){return"geolocation"in navigator?`<button class="btn small" type="button" data-useloc="1">${ic("mpin")} ${$t("Använd min plats")}</button>`:"";}
 function nearestCity(lat,lng){let best=null,bd=1e9;for(const k in GEO){const d=haversine([lat,lng],GEO[k]);if(d<bd){bd=d;best=k;}}return best;}
