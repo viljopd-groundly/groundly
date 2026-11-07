@@ -1006,8 +1006,9 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 /* Tips för helgen som kort i sidled, i samma stil som Veckans match */
 /* ett helt kort i taget: kortet är lika brett som rutan, prickarna visar att det finns fler */
 .wkrow{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px 0 4px;padding:4px 0 6px;scrollbar-width:none}.wkrow::-webkit-scrollbar{display:none}
-.wkrow>.wkcard{flex:0 0 100%;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;margin:0}
+.wkrow>.wkcard{flex:0 0 100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;margin:0}
 .hotcard{background:var(--bg);border-radius:14px;padding:12px 14px}.hotcard h3{margin:0 0 2px;font:700 calc(16px*var(--fs)) var(--f-body)}.hotcard .hotlist{margin-top:8px}.hotcard .hotm{min-width:0}.hotcard .hotm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotm small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotrow{min-width:0}
+.hrow{align-items:stretch}.hrow>.hcard{align-items:center}.hrow>.hcard .htxt b{font-size:calc(17px*var(--fs))}.hothome{border:1px solid var(--line)}.hothome .hotlist{margin-top:6px}
 .wkdots{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}.wkdots i.on{background:var(--accent);width:18px;border-radius:4px}
 /* Tips för helgen ligger överst och ska synas mest: mörkare överkant */
 .tip.wkbox{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,var(--surface)) 0,color-mix(in srgb,var(--accent) 7%,var(--surface)) 64px,var(--surface) 140px)!important;border-top:4px solid color-mix(in srgb,var(--accent) 70%,var(--surface))!important}
@@ -4290,7 +4291,7 @@ function flodeItem(e){const u=`<b>${userLink(e.uid)}</b>`,when=e.t==="mat"?fmtDa
 // ---------- Hett just nu: topplistor för de senaste 30 dagarna, ur matcherna som delas ----------
 // Hett just nu: fyra topplistor som kort man bläddrar mellan (som Tips för helgen)
 let hotIdx=0;
-function hotHtml(){const cut=new Date(Date.now()-30*864e5).toISOString().slice(0,10),today=new Date().toISOString().slice(0,10);
+function hotHtml(only){const cut=new Date(Date.now()-30*864e5).toISOString().slice(0,10),today=new Date().toISOString().slice(0,10);
   const rows=[];Object.keys(PUBLIC||{}).forEach(uid=>{if(blk(uid))return;pubRows(uid).forEach(r=>{if(r.d>=cut&&r.d<=today)rows.push({...r,uid});});});
   const nm=(id,n)=>id&&C[id]?C[id].n:n;const top=(m,k)=>[...m.values()].sort((a,b)=>b.u.size-a.u.size||b.d.localeCompare(a.d)).slice(0,k);
   const one=tab=>{
@@ -4308,6 +4309,7 @@ function hotHtml(){const cut=new Date(Date.now()-30*864e5).toISOString().slice(0
     body=top(m,3).map(x=>`<li class="${x.uid===myId?"me":""}"><div class="hotm"><b>${userLink(x.uid)}</b><small>${$tn(x.a.size,"1 arena","{n} arenor")}</small></div><span class="hotn">${$tn(x.u.size,"1 match","{n} matcher")}</span></li>`).join("");}
   return{body,note};};
   const tabs=[["pepp",$t("Peppat"),$t("Matcherna som communityn peppar mest inför de närmaste dagarna.")],["mat",$t("Matcher"),$t("De senaste 30 dagarna, från alla som visar sina matcher.")],["arena",$t("Arenor"),$t("De senaste 30 dagarna, från alla som visar sina matcher.")],["hop",$t("Groundhoppers"),$t("De senaste 30 dagarna, från alla som visar sina matcher.")]];
+  if(only){const{body,note}=one(only);if(!body)return"";return`<div class="hotcard wkcard hothome"><span class="lbl">${ic("flame")} ${$t("Hett just nu")}</span>${note||`<p class="meta">${tabs[0][2]}</p>`}<ol class="hotlist">${body}</ol></div>`;}
   const cards=tabs.map(([k,l,d])=>{const{body,note}=one(k);return`<section class="hotcard wkcard" aria-label="${esc(l)}"><h3>${l}</h3>${note||`<p class="meta">${d}</p>`}${body?`<ol class="hotlist">${body}</ol>`:`<p class="meta">${k==="pepp"&&dbState==="loading"?$t("Hämtar matchschemat…"):$t("Ingen har loggat något här än.")}</p>`}</section>`;}).join("");
   requestAnimationFrame(()=>{const r=document.querySelector(".hot .wkrow");if(r&&hotIdx)r.scrollLeft=hotIdx*(r.clientWidth+12);});
   return`<article class="tip hot"><div class="lbl">${ic("flame")} ${$t("Hett just nu")}</div>
@@ -4347,7 +4349,10 @@ function latestHtml(){const parts=[];
     const ym=new Date().toISOString().slice(0,7);const hot=th.map(t=>({t,n:ps.filter(p=>p.parent===t.key&&String(p.at).startsWith(ym)).length})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
     const card=(t,lbl,extra)=>`<button class="hcard" data-homethread="${esc(t.key)}"><span class="htxt"><span class="lbl">${lbl}</span><b>${esc(t.title)}</b><span class="meta">${esc(KIND_L[t.kind]||$t("Inlägg"))} · ${esc(who(t.uid))} · ${esc(ago(lastAt(t)))}${extra||""}</span></span></button>`;
     if(last)parts.push(card(last,$t("Senast i forumet")));if(hot&&(!last||hot.t.key!==last.key))parts.push(card(hot.t,$t("Hetast i forumet denna månad"),$t(" · {0} svar",[hot.n])));}
-  return`<article class="tip community"><h2 class="name">${$t("Community")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras matchberättelser.")}</p>${parts.length?`<div class="hgrid">${parts.join("")}</div>`:""}
+  // Hett just nu först, sedan senaste berättelserna och trådarna – ett kort i taget, bläddra i sidled
+  let hot="";try{hot=hotHtml("pepp");}catch(e){}
+  const cards=[hot,...parts.map(x=>x.replace('class="hcard"','class="hcard wkcard"'))].filter(Boolean);
+  return`<article class="tip community"><h2 class="name">${$t("Community")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras matchberättelser.")}</p>${cards.length?`<div class="wkrow hrow">${cards.join("")}</div>${cards.length>1?`<div class="wkdots" aria-hidden="true">${cards.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}`:""}
     <div class="actions"><button class="btn small primary" data-gomode="flode">${ic("chat")} ${$t("Se vad som händer")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs matchberättelser")}</button></div>
     ${writersStrip()}</article>`;}
 function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().toISOString().slice(0,7);const cnt={};
