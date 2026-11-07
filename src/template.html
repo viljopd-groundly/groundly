@@ -4533,9 +4533,8 @@ function homeLL(){if(!homeTown)return null;const nq=norm(homeTown);const al=CITY
 function weekendRange(){const d=new Date();const wd=(d.getDay()+6)%7;const fri=new Date(d);fri.setDate(d.getDate()+(wd<=4?4-wd:0));const sun=new Date(d);sun.setDate(d.getDate()+(6-wd));
   return[wd>=4?today():dayKey(fri),dayKey(sun)];}
 let wkRadius=15;
-let wkView="list";try{if(localStorage.getItem("fk-wkview")==="swipe")wkView="swipe";}catch(e){}
+const wkView="swipe"; // helgtipsen visas alltid som kort i sidled
 document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));},true);
-document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-wkview]");if(!t)return;wkView=t.dataset.wkview;try{localStorage.setItem("fk-wkview",wkView);}catch(e){}if(mode==="hem")renderHome();});
 function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i dag"):$t("i helgen");
   if(!homeTown||homeEdit)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p>${$t("Ange din hemort så visar vi matcher nära dig {0}.",[label])}</p><form class="homeform" id="homeForm"><label class="fld" for="homeIn">${$t("Din hemort")}<input id="homeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button>${locBtn()}</form></article>`;
   const p=homeLL();if(!p)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p class="meta">${$t("Hittar inte {0} på kartan. Prova en större ort i närheten.",[esc(homeTown)])}</p><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></article>`;
@@ -4546,7 +4545,7 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i
   const row=({m,km},full)=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${km<5?$t("i stan"):esc(milTxt(km))}</b><span>${m.kickoff?esc(dayLabel(dayKey(new Date(m.kickoff))).split(" ")[0])+" "+timeOf(m.kickoff):$t("datum ej klart")}</span></div>
       <div class="mmain"><b>${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div>${full?`<span class="mp">${tixMini(m)}${myBtns(m)}</span>`:""}</div>`;
   // alternativ vy: bläddra i sidled bland kort som liknar Veckans match
-  const vsw=`<div class="wkview" role="group" aria-label="${$t("Visa")}"><button class="link${wkView==="list"?" on":""}" data-wkview="list" aria-pressed="${wkView==="list"}">${$t("Lista")}</button><button class="link${wkView==="swipe"?" on":""}" data-wkview="swipe" aria-pressed="${wkView==="swipe"}">${$t("Bläddra i sidled")}</button></div>`;
+  const vsw="";
   if(wkView==="swipe"){const card=({m,km})=>`<article class="tip hero wkcard"><div class="lbl">${km<5?$t("i stan"):esc(milTxt(km))}</div>
       <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,34)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,34)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>
       <div class="cd">${m.kickoff?`${esc(dayLabel(dayKey(new Date(m.kickoff))))} ${$t("kl")} ${timeOf(m.kickoff)} · <b>${countdown(m.kickoff)}</b>`:$t("datum ej klart")}</div>
