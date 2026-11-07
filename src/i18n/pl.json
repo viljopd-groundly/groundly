@@ -2476,5 +2476,7 @@
  "Lista": "Lista",
  "Använd min plats": "Użyj mojej lokalizacji",
  "Hittade ingen ort nära dig": "Nie znaleziono miejscowości w pobliżu",
- "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Nie udało się pobrać lokalizacji. Zezwól na nią w przeglądarce lub wpisz miejscowość."
+ "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Nie udało się pobrać lokalizacji. Zezwól na nią w przeglądarce lub wpisz miejscowość.",
+ "Välj favoritlag": "Wybierz ulubione drużyny",
+ "Välj favoritlag så får de egna kort med statistik här.": "Wybierz ulubione drużyny, a dostaną tu własne karty ze statystykami."
 }

@@ -2565,5 +2565,7 @@
  "Lista": "List",
  "Använd min plats": "Use my location",
  "Hittade ingen ort nära dig": "Couldn't find a town near you",
- "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Couldn't get your location. Allow location in your browser or type the town."
+ "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Couldn't get your location. Allow location in your browser or type the town.",
+ "Välj favoritlag": "Choose favourite teams",
+ "Välj favoritlag så får de egna kort med statistik här.": "Choose favourite teams and they get their own cards with stats here."
 }

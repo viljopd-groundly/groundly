@@ -1007,6 +1007,7 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 /* ett helt kort i taget: kortet är lika brett som rutan, prickarna visar att det finns fler */
 .wkrow{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px 0 4px;padding:4px 0 6px;scrollbar-width:none}.wkrow::-webkit-scrollbar{display:none}
 .wkrow>.wkcard{flex:0 0 100%;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;margin:0}
+.hotcard{background:var(--bg);border-radius:14px;padding:12px 14px}.hotcard h3{margin:0 0 2px;font:700 calc(16px*var(--fs)) var(--f-body)}.hotcard .hotlist{margin-top:8px}.hotcard .hotm{min-width:0}.hotcard .hotm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotm small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotrow{min-width:0}
 .wkdots{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}.wkdots i.on{background:var(--accent);width:18px;border-radius:4px}
 /* Tips för helgen ligger överst och ska synas mest: mörkare överkant */
 .tip.wkbox{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,var(--surface)) 0,color-mix(in srgb,var(--accent) 7%,var(--surface)) 64px,var(--surface) 140px)!important;border-top:4px solid color-mix(in srgb,var(--accent) 70%,var(--surface))!important}
@@ -1483,7 +1484,7 @@ const TAGLINES={"sv": "För oss som älskar fotboll.", "en": "For fans who love 
 const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};
 let navPop=false,pendingJump=null,jumpFrom=null,topNav=false;
 // menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
-function goTop(m){if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";arView="list";}topNav=true;try{setMode(m);}finally{topNav=false;}}
+function goTop(m){if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";mySubAuto=true;arView="list";}topNav=true;try{setMode(m);}finally{topNav=false;}}
 function syncBack(){let b=document.getElementById("backPill");
   if(!b){document.body.insertAdjacentHTML("beforeend",`<button id="backPill" class="backpill" hidden></button>`);b=document.getElementById("backPill");b.onclick=()=>{if(clubStack.length){if(history.state&&history.state.cjump)history.back();else clubBack();return;}if(history.state&&history.state.jump)history.back();else if(jumpFrom)setMode(jumpFrom);};}
   const top=clubStack.length?clubStack[clubStack.length-1]:null;const on=!!top||!!(jumpFrom&&jumpFrom!==mode);b.hidden=!on;
@@ -2257,7 +2258,7 @@ async function forumClick(t){
 
 // ---------- min fotboll ----------
 let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",myRef=null,myQ=Promise.resolve(),myPending=0,myErr="",mySub="home",addingMatch=false;
-let arView="list",bkupOpen=false;document.addEventListener("toggle",e=>{if(e.target&&e.target.id==="bkupBox")bkupOpen=e.target.open;},true);window.groundlyOpenMod=()=>{mySub="mod";if(mode==="mine")renderMine();else setMode("mine");window.scrollTo({top:0});};try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms))mySub=ms;}catch(e){}
+let arView="list",bkupOpen=false;document.addEventListener("toggle",e=>{if(e.target&&e.target.id==="bkupBox")bkupOpen=e.target.open;},true);window.groundlyOpenMod=()=>{mySub="mod";if(mode==="mine")renderMine();else setMode("mine");window.scrollTo({top:0});};let mySubAuto=true;try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms)){mySub=ms;mySubAuto=ms==="home";};}catch(e){}
 const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
   wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,favNats:(Array.isArray(d&&d.favNats)?d.favNats:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&isNat(C[x])&&x!==d.favNat&&a.indexOf(x)===i).slice(0,MAXNAT),pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),since:d&&typeof d.since==="string"?d.since.slice(0,10):"",shareAsk:d&&d.shareAsk&&typeof d.shareAsk==="object"?{n:Math.min(9,+d.shareAsk.n||0),c:+d.shareAsk.c||0}:{n:0,c:0},vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),calSubs:Array.isArray(d&&d.calSubs)?d.calSubs.filter(x=>typeof x==="string").slice(0,50):[],follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,200):[],showFo:!!(d&&d.showFo===true),cc:d&&typeof d.cc==="string"&&/^(none|nt-[a-z-]+)$/.test(d.cc)?d.cc:null,
@@ -2352,6 +2353,8 @@ function renderMine(){
   const el=document.getElementById("mineBody");
   if(myState==="loading"){el.innerHTML=`<div class="empty">${$t("Hämtar dina sparade matcher…")}</div>`;return;}
   if(myState==="none"){el.innerHTML=`<div class="empty"><b>${$t("Logga in för att spara.")}</b><div>${$t("Dina matcher och klubbar sparas på ditt claude.ai-konto, så du behöver öppna sidan inloggad.")}</div></div>`;return;}
+  // har man loggat matcher men inte valt favoritlag öppnar Min fotboll på Matcher i stället för ett tomt formulär
+  const noFav=!favList().length&&!(MY.favNat&&C[MY.favNat]);if(mySubAuto&&mySub==="home"&&noFav&&MY.attended.length)mySub="been";
   const vm=visitedMap();const countries=new Set([...vm.keys()].map(id=>C[id]&&C[id].c).filter(Boolean));
   MY.attended.forEach(a=>{if(a.country)countries.add(a.country);});
   const teamsN=new Set(MY.attended.flatMap(a=>[a.home||a.homeName,a.away||a.awayName]).filter(Boolean)).size;
@@ -2367,6 +2370,7 @@ function renderMine(){
     const r=fixReviewHtml()+feedbackReviewHtml();
     h+=`<div class="sechead"><h3 class="sec">${ic("shield")} ${$t("Moderering")}</h3></div>`+(isMod?(r||`<div class="empty">${$t("Inga nya rättelser eller meddelanden.")}</div>`):`<div class="empty">${$t("Bara moderatorer ser det här.")}</div>`);
   }else if(mySub==="been"){
+    if(noFav&&!addingMatch)h+=`<p class="hint favnudge">${ic("heart")} ${$t("Välj favoritlag så får de egna kort med statistik här.")} <button class="link strong" data-mysub="home">${$t("Välj favoritlag")}</button></p>`;
     if(pendingLogg())h+=`<p class="notice">${ic("offline")} ${$t("Du har ändringar som väntar på nät. De skickas automatiskt när kontakten är tillbaka.")} <button class="link strong" data-retrysave="1">${$t("Försök nu")}</button></p>`;
     h+=addingMatch?`${recentPicksHtml()}<form class="compose" id="addMatchForm">
       <h2>${$t("Lägg till en match du varit på")}</h2>
@@ -2449,7 +2453,7 @@ function myClick(t){
   if(t.dataset.stkind){stKind=t.dataset.stkind;store.set("fk-stkind",stKind);renderMine();return;}
   if(t.dataset.stsort){stSort=t.dataset.stsort;store.set("fk-stsort",stSort);renderMine();return;}
   if(t.dataset.myyear){myYear=t.dataset.myyear;MYMORE.att=3;renderMine();return;}
-  if(t.dataset.mysub){const was=mySub;mySub=t.dataset.mysub;store.set("fk-mysub",mySub);renderMine();if(was!==mySub){const m=document.querySelector(".mymenu");const tb=document.querySelector(".topbar");const off=(tb?tb.offsetHeight:0)+8;if(m&&m.getBoundingClientRect().top<off)window.scrollTo({top:Math.max(0,m.getBoundingClientRect().top+scrollY-off)});}return;}
+  if(t.dataset.mysub){const was=mySub;mySub=t.dataset.mysub;mySubAuto=false;store.set("fk-mysub",mySub);renderMine();if(was!==mySub){const m=document.querySelector(".mymenu");const tb=document.querySelector(".topbar");const off=(tb?tb.offsetHeight:0)+8;if(m&&m.getBoundingClientRect().top<off)window.scrollTo({top:Math.max(0,m.getBoundingClientRect().top+scrollY-off)});}return;}
   if(t.dataset.arview){arView=t.dataset.arview;renderMine();return;}
   if(t.id==="amOpen"){addingMatch=true;fillVenueList();renderMine();setTimeout(()=>document.getElementById("amHome")?.focus(),0);return;}
   if(t.id==="amCancel"){addingMatch=false;renderMine();return;}
@@ -4284,27 +4288,30 @@ function flodeItem(e){const u=`<b>${userLink(e.uid)}</b>`,when=e.t==="mat"?fmtDa
       myState==="ready"&&e.uid!==myId?`<button class="btn small${mine?" on":""}" data-cheer="${esc(k)}" aria-pressed="${mine}" aria-label="${$t("Snyggt")}"${cheerBusy?" disabled":""}>${ic("heart",mine?"on":"")}${n?` ${n}`:""}</button>`:(n?`<span class="meta">${ic("heart")} ${n}</span>`:""));}
   return"";}
 // ---------- Hett just nu: topplistor för de senaste 30 dagarna, ur matcherna som delas ----------
-let hotTab="pepp";
+// Hett just nu: fyra topplistor som kort man bläddrar mellan (som Tips för helgen)
+let hotIdx=0;
 function hotHtml(){const cut=new Date(Date.now()-30*864e5).toISOString().slice(0,10),today=new Date().toISOString().slice(0,10);
   const rows=[];Object.keys(PUBLIC||{}).forEach(uid=>{if(blk(uid))return;pubRows(uid).forEach(r=>{if(r.d>=cut&&r.d<=today)rows.push({...r,uid});});});
   const nm=(id,n)=>id&&C[id]?C[id].n:n;const top=(m,k)=>[...m.values()].sort((a,b)=>b.u.size-a.u.size||b.d.localeCompare(a.d)).slice(0,k);
+  const one=tab=>{
   let body="",note="";
-  if(hotTab==="pepp"){const now=Date.now(),end=now+10*864e5;
-    let list=dbState==="ready"?MATCHES.filter(m=>m.kickoff&&mTs(m)>now&&mTs(m)<end&&hypeCount(m._id)>0).sort((a,b)=>hypeCount(b._id)-hypeCount(a._id)||mTs(a)-mTs(b)).slice(0,5):[];
+  if(tab==="pepp"){const now=Date.now(),end=now+10*864e5;
+    let list=dbState==="ready"?MATCHES.filter(m=>m.kickoff&&mTs(m)>now&&mTs(m)<end&&hypeCount(m._id)>0).sort((a,b)=>hypeCount(b._id)-hypeCount(a._id)||mTs(a)-mTs(b)).slice(0,3):[];
     if(!list.length&&dbState==="ready")note=`<p class="meta">${$t("Ingen har peppat någon match än. Här är tre heta kandidater – bli först!")}</p>`;
     if(list.length<3&&dbState==="ready"){const have=new Set(list.map(m=>m._id));list=list.concat(hypeCandidates().filter(m=>!have.has(m._id)).slice(0,3-list.length));if(!list.length)note="";}
     body=list.map(m=>`<li><div class="hotrow"><div class="hotm"><b>${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))}</b><small>${esc([dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff),m.venue].filter(Boolean).join(" · "))}</small></div>${hypeBtn(m)}</div></li>`).join("");}
-  else if(hotTab==="mat"){const m=new Map();rows.forEach(r=>{const k=r.d+"|"+(r.hi||norm(r.h))+"|"+(r.ai||norm(r.a));const x=m.get(k)||{r,d:r.d,u:new Set()};x.u.add(r.uid);m.set(k,x);});
-    body=top(m,5).map(x=>`<li><div class="hotm"><b>${esc(nm(x.r.hi,x.r.h))}${x.r.sc?` ${esc(x.r.sc)} `:" – "}${esc(nm(x.r.ai,x.r.a))}</b><small>${esc([x.r.v,fmtDate(x.d)].filter(Boolean).join(" · "))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}" aria-label="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
-  else if(hotTab==="arena"){const m=new Map();rows.filter(r=>r.v).forEach(r=>{const k=arenaKey(r.v);const x=m.get(k)||{v:r.v,c:r.c,d:r.d,u:new Set()};x.u.add(r.uid);if(r.d>x.d)x.d=r.d;m.set(k,x);});
-    body=top(m,5).map(x=>`<li><div class="hotm"><b>${esc(x.v)}</b><small>${esc($t(x.c||""))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}" aria-label="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
+  else if(tab==="mat"){const m=new Map();rows.forEach(r=>{const k=r.d+"|"+(r.hi||norm(r.h))+"|"+(r.ai||norm(r.a));const x=m.get(k)||{r,d:r.d,u:new Set()};x.u.add(r.uid);m.set(k,x);});
+    body=top(m,3).map(x=>`<li><div class="hotm"><b>${esc(nm(x.r.hi,x.r.h))}${x.r.sc?` ${esc(x.r.sc)} `:" – "}${esc(nm(x.r.ai,x.r.a))}</b><small>${esc([x.r.v,fmtDate(x.d)].filter(Boolean).join(" · "))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}" aria-label="${esc($tn(x.u.size,"1 groundhopper","{n} groundhoppers"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
+  else if(tab==="arena"){const m=new Map();rows.filter(r=>r.v).forEach(r=>{const k=arenaKey(r.v);const x=m.get(k)||{v:r.v,c:r.c,d:r.d,u:new Set()};x.u.add(r.uid);if(r.d>x.d)x.d=r.d;m.set(k,x);});
+    body=top(m,3).map(x=>`<li><div class="hotm"><b>${esc(x.v)}</b><small>${esc($t(x.c||""))}</small></div><span class="hotn" title="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}" aria-label="${esc($tn(x.u.size,"1 besökare","{n} besökare|pl"))}">${ic("user")} ${x.u.size}</span></li>`).join("");}
   else{const onBoard=uid=>uid===myId?!!MY.pub:!!(STATS[uid]&&!STATS[uid]._gone);const m=new Map();rows.filter(r=>onBoard(r.uid)).forEach(r=>{const x=m.get(r.uid)||{uid:r.uid,d:r.d,u:new Set(),a:new Set()};x.u.add(r.id);if(r.v)x.a.add(arenaKey(r.v));m.set(r.uid,x);});
-    body=top(m,5).map(x=>`<li class="${x.uid===myId?"me":""}"><div class="hotm"><b>${userLink(x.uid)}</b><small>${$tn(x.a.size,"1 arena","{n} arenor")}</small></div><span class="hotn">${$tn(x.u.size,"1 match","{n} matcher")}</span></li>`).join("");}
-  const tabs=[["pepp",$t("Peppat")],["mat",$t("Matcher")],["arena",$t("Arenor")],["hop",$t("Groundhoppers")]];
-  return`<article class="tip hot"><div class="lbl">${ic("flame")} ${$t("Hett just nu")}</div><p class="meta">${hotTab==="pepp"?$t("Matcherna som communityn peppar mest inför de närmaste dagarna."):$t("De senaste 30 dagarna, från alla som visar sina matcher.")}</p>
-    <div class="chips wrapchips" role="group" aria-label="${$t("Topplista")}">${tabs.map(([k,l])=>`<button class="chip" data-hot="${k}" aria-pressed="${hotTab===k}">${l}</button>`).join("")}</div>
-    ${note}${body?`<ol class="hotlist">${body}</ol>`:`<p class="meta">${hotTab==="pepp"&&dbState==="loading"?$t("Hämtar matchschemat…"):$t("Ingen har loggat något här än.")}</p>`}</article>`;}
-document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-hot]");if(!t)return;flodeKeep(()=>{hotTab=t.dataset.hot;renderFlode();});});
+    body=top(m,3).map(x=>`<li class="${x.uid===myId?"me":""}"><div class="hotm"><b>${userLink(x.uid)}</b><small>${$tn(x.a.size,"1 arena","{n} arenor")}</small></div><span class="hotn">${$tn(x.u.size,"1 match","{n} matcher")}</span></li>`).join("");}
+  return{body,note};};
+  const tabs=[["pepp",$t("Peppat"),$t("Matcherna som communityn peppar mest inför de närmaste dagarna.")],["mat",$t("Matcher"),$t("De senaste 30 dagarna, från alla som visar sina matcher.")],["arena",$t("Arenor"),$t("De senaste 30 dagarna, från alla som visar sina matcher.")],["hop",$t("Groundhoppers"),$t("De senaste 30 dagarna, från alla som visar sina matcher.")]];
+  const cards=tabs.map(([k,l,d])=>{const{body,note}=one(k);return`<section class="hotcard wkcard" aria-label="${esc(l)}"><h3>${l}</h3>${note||`<p class="meta">${d}</p>`}${body?`<ol class="hotlist">${body}</ol>`:`<p class="meta">${k==="pepp"&&dbState==="loading"?$t("Hämtar matchschemat…"):$t("Ingen har loggat något här än.")}</p>`}</section>`;}).join("");
+  requestAnimationFrame(()=>{const r=document.querySelector(".hot .wkrow");if(r&&hotIdx)r.scrollLeft=hotIdx*(r.clientWidth+12);});
+  return`<article class="tip hot"><div class="lbl">${ic("flame")} ${$t("Hett just nu")}</div>
+    <div class="wkrow">${cards}</div><div class="wkdots" aria-hidden="true">${tabs.map((_,i)=>`<i${i===hotIdx?' class="on"':""}></i>`).join("")}</div></article>`;}
 function renderFlode(){const el=document.getElementById("flodeList");if(!el)return;
   const all=flodeEvents();
   {const miss=[...new Set(all.map(e=>e.uid))].filter(u=>u!==myId&&!(u in NAMES));if(miss.length&&typeof resolveNames==="function")resolveNames(miss).then(()=>{if(mode==="flode")queueFlode();}).catch(()=>{});}const list=flodeKind==="alla"?all:all.filter(e=>flKindOf(e.t)===flodeKind);
@@ -4534,7 +4541,7 @@ function weekendRange(){const d=new Date();const wd=(d.getDay()+6)%7;const fri=n
   return[wd>=4?today():dayKey(fri),dayKey(sun)];}
 let wkRadius=15;
 const wkView="swipe"; // helgtipsen visas alltid som kort i sidled
-document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));},true);
+document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));if(r.closest(".hot"))hotIdx=i;const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));},true);
 function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i dag"):$t("i helgen");
   if(!homeTown||homeEdit)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p>${$t("Ange din hemort så visar vi matcher nära dig {0}.",[label])}</p><form class="homeform" id="homeForm"><label class="fld" for="homeIn">${$t("Din hemort")}<input id="homeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button>${locBtn()}</form></article>`;
   const p=homeLL();if(!p)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p class="meta">${$t("Hittar inte {0} på kartan. Prova en större ort i närheten.",[esc(homeTown)])}</p><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></article>`;

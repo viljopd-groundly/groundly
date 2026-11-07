@@ -2477,5 +2477,7 @@
  "Lista": "Liste",
  "Använd min plats": "Bruk posisjonen min",
  "Hittade ingen ort nära dig": "Fant ingen sted nær deg",
- "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Kunne ikke hente posisjonen din. Tillat posisjon i nettleseren eller skriv stedet."
+ "Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten.": "Kunne ikke hente posisjonen din. Tillat posisjon i nettleseren eller skriv stedet.",
+ "Välj favoritlag": "Velg favorittlag",
+ "Välj favoritlag så får de egna kort med statistik här.": "Velg favorittlag, så får de egne kort med statistikk her."
 }
