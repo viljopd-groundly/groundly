@@ -4356,14 +4356,16 @@ function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" $
     <div class="itiles">${tile('data-gomode="matcher"',"calendar",$t("Planera & boka"),$t("Hitta matcher och boka biljett, hotell och resa via våra länkar"))}${tile('data-gomine="1"',"check",$t("Logga"),$t("Spara matcherna du sett, betygsätt arenor och följ din statistik"))}${tile('data-gomode="forum"',"chat",$t("Community"),$t("Fråga, tipsa och läs matchberättelser från andra som reser på fotboll"))}</div></article>`;}
 // ---------- startsidan: vilka rutor som visas och i vilken ordning ----------
 // standard = kort startsida; resten slås på under Anpassa startsidan. Valen sparas på kontot (homeCfg) och i telefonen.
-const HOME_BLOCKS=[["hero","Veckans match",true],["latest","Community",true],["mine","Din säsong",true],["weekend","Tips för helgen",true],["news","Nytt i appen",false],
+const HOME_BLOCKS=[["weekend","Tips för helgen",true],["hero","Veckans match",true],["latest","Community",true],["mine","Din säsong",true],["news","Nytt i appen",false],
   ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["board","Topplistor",false],["hopper","Månadens groundhopper",false],["writers","Månadens skribenter",false],["toparena","Månadens arena",false],["quiz","Quizledare",false],["invite","Tipsa en kompis",false]];
 function isNewbie(){if(myState!=="ready")return true;if((MY.attended||[]).length>=3)return false;const s=MY.since||today();return(Date.parse(today())-Date.parse(s))/864e5<14;}
 const HOME_FN={intro:()=>isNewbie()?introHtml():"",hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),writers:()=>writersHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
 function normHomeCfg(c){const keys=HOME_BLOCKS.map(x=>x[0]);if(!c||typeof c!=="object")return null;const order=Array.isArray(c.order)?c.order.filter((k,i,a)=>keys.includes(k)&&a.indexOf(k)===i):[];
   const on={};if(c.on&&typeof c.on==="object")keys.forEach(k=>{if(typeof c.on[k]==="boolean")on[k]=c.on[k];});return{order,on};}
 function homeCfg(){if(myState==="ready"&&MY.homeCfg)return MY.homeCfg;try{return normHomeCfg(JSON.parse(store.get("fk-homecfg")||"null"))||{order:[],on:{}};}catch(e){return{order:[],on:{}};}}
-function homeOrder(){const c=homeCfg();const keys=HOME_BLOCKS.map(x=>x[0]);return[...c.order.filter(k=>keys.includes(k)),...keys.filter(k=>!c.order.includes(k))];}
+// Tips för helgen ligger alltid ovanför Veckans match, även i en egen ordning
+function homeOrder(){const c=homeCfg();const keys=HOME_BLOCKS.map(x=>x[0]);const o=[...c.order.filter(k=>keys.includes(k)),...keys.filter(k=>!c.order.includes(k))];
+  const w=o.indexOf("weekend"),h=o.indexOf("hero");if(w>h&&h>=0){o.splice(w,1);o.splice(h,0,"weekend");}return o;}
 function homeDefault(k){if(k==="friends")return follows().length>0;const b=HOME_BLOCKS.find(x=>x[0]===k);return!!(b&&b[2]);}
 function homeOn(k,onboarding){const c=homeCfg();const on=typeof c.on[k]==="boolean"?c.on[k]:homeDefault(k);
   // ny användare: Kom igång visar redan det som Din säsong skulle visa
@@ -4500,7 +4502,7 @@ function fokusHomeHtml(ob){
   const [pv,hero]=head.split("\n   ");
   if(st!=="vanlig")return pv+carouselHome(ob);
   let t="";try{t=heroHtml().replace('class="tip hero"','class="tip hero fkdark"');}catch(e){}
-  return pv+hero+t+modAlertHtml()+ob+remindHtml()+w+cta+m+more;}
+  return pv+hero+modAlertHtml()+ob+remindHtml()+w+t+cta+m+more;}
 
 const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
 // "visa mer" på Hem: fäll ut under, skärmen står still. Fälls något ihop och rutans topp hamnat ovanför skärmen, skrolla till rutans topp.
