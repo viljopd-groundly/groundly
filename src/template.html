@@ -1307,8 +1307,8 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
   <div class="mspanel" role="dialog" aria-label="Skapa">
     <div class="plist">
       <button class="pitem" data-plus="log"><b><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></b><span><strong>Logga match</strong><small>En match du har sett, med resultat och arena</small></span></button>
-      <button class="pitem" data-plus="rep"><b><svg class="ic" aria-hidden="true"><use href="#i-pencil"/></svg></b><span><strong>Skriv matchberättelse</strong><small>Berätta om resan, arenan och stämningen</small></span></button>
       <button class="pitem" data-plus="ask"><b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span><strong>Fråga i forumet</strong><small>Få tips om arenor, biljetter och pubar</small></span></button>
+      <button class="pitem" data-plus="rep"><b><svg class="ic" aria-hidden="true"><use href="#i-pencil"/></svg></b><span><strong>Skriv matchberättelse</strong><small>Berätta om resan, arenan och stämningen</small></span></button>
     </div>
   </div>
 </div>
@@ -1522,7 +1522,7 @@ const FOKUS=(()=>{try{const u=new URLSearchParams(location.search).get("fokus");
 if(FOKUS){MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"flode","forum","reportage");
   const cb=document.querySelector('.bnav [data-bn="community"]');if(cb){cb.dataset.bn="matcher";cb.innerHTML=`<svg class="ic" width="22" height="22" aria-hidden="true" style="width:22px;height:22px;vertical-align:0"><use href="#i-calendar"/></svg><span>${$t("Matcher")}</span>`;}
   const mm=document.querySelector('#moreSheet [data-bn="matcher"]');if(mm){mm.dataset.bn="community";mm.innerHTML=`<b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span>${$t("Community")}</span>`;}
-  const lg=document.getElementById("bnLog");if(lg){lg.setAttribute("aria-label",$t("Logga en match"));const sp=lg.querySelector("span");if(sp)sp.textContent=$t("Logga");}}
+}
 // Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
 const isComm=m=>m==="flode"||m==="forum"||m==="reportage";
 const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"flode";}catch(e){return"flode";}};
@@ -1538,7 +1538,6 @@ function closeMore(){closePlus();const sh=document.getElementById("moreSheet");i
 document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMore,#bnLog,#moreBack");if(!b)return;
   if(b.id==="moreBack"){closeMore();return;}
   if(b.id==="bnMore"){const sh=document.getElementById("moreSheet");const open=sh.hidden;sh.hidden=!open;b.setAttribute("aria-expanded",String(open));return;}
-  if(b.id==="bnLog"&&FOKUS){closeMore();if(myState!=="ready"){goTop("mine");return;}openLogMatch(null,null);return;}
   if(b.id==="bnLog"){const sh=document.getElementById("plusSheet");const open=sh.hidden;closeMore();if(open){sh.hidden=false;b.setAttribute("aria-expanded","true");}return;}
   const to=b.dataset.bn==="community"?(isComm(mode)?mode:commLast()):b.dataset.bn;
   closeMore();if(to!==mode||to==="mine")goTop(to);window.scrollTo({top:0});},true);
