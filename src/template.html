@@ -2064,7 +2064,7 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
     ${past?"":`<h3>${$t("Biljetter")}</h3>${tix||`<p class="meta">${$t("Vi har ingen biljettlänk för den här matchen.")}</p>`}${awayTix}`}
     ${det}
     ${past||!m.city||homeIsLocal(m.city)?"":`<h3 id="msResa">${$t("Resa")}</h3><div class="actions">${omioLink(homeTown,m.city)}${homeTown?extLink(transitUrl(homeTown,placeStr(m.venue,m.city)),$t("Resväg från {0}",[esc(homeTown)]),"btn small"):""}</div>`}
-    <div class="mp">${myBtns(m)}${hotelLink(m)}${!mPast(m)&&m.city?extLink(omioUrl(homeLL()?.name||homeTown,m.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"mini"):""}${calLink(m)}</div>
+    <div class="mp">${myBtns(m)}${hotelLink(m)}${!mPast(m)&&m.city&&homeIsLocal(m.city)?extLink(omioUrl(homeLL()?.name||homeTown,m.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"mini"):""}${calLink(m)}</div>
     ${past?"":`<p class="hint">${$t("Tider kan flyttas, till exempel för tv. Kolla hos klubben innan du bokar resa.")}</p>`}
   </div></div>`;}
 let msId=null;
