@@ -1005,8 +1005,12 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .fcadd{justify-content:flex-start}.fcplus{height:128px;display:grid;place-items:center;background:var(--bg);border-bottom:1px solid var(--line)}.fcplus .ic{width:44px;height:44px;color:var(--pitch)}
 .fcwait{padding:20px 0}
 /* Tips för helgen som kort i sidled, i samma stil som Veckans match */
-.wkrow{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px -16px 4px;padding:4px 16px 10px;scrollbar-width:none}.wkrow::-webkit-scrollbar{display:none}
-.wkrow>.wkcard{flex:none;width:min(82vw,330px);scroll-snap-align:start;scroll-margin-left:16px;margin:0}
+/* ett helt kort i taget: kortet är lika brett som rutan, prickarna visar att det finns fler */
+.wkrow{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px 0 4px;padding:4px 0 6px;scrollbar-width:none}.wkrow::-webkit-scrollbar{display:none}
+.wkrow>.wkcard{flex:0 0 100%;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;margin:0}
+.wkdots{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}.wkdots i.on{background:var(--accent);width:18px;border-radius:4px}
+/* Tips för helgen ligger överst och ska synas mest: mörkare överkant */
+.tip.wkbox{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,var(--surface)) 0,color-mix(in srgb,var(--accent) 7%,var(--surface)) 64px,var(--surface) 140px)!important;border-top:4px solid color-mix(in srgb,var(--accent) 70%,var(--surface))!important}
 .wkcard .teams.big{flex-direction:column;align-items:flex-start;gap:4px;font-size:calc(18px*var(--fs))}.wkcard .teams.big .vs{display:none}
 .wkcard .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .wkview{display:flex;gap:14px;margin-top:8px}.wkview .link{color:var(--muted)}.wkview .link.on{color:var(--fg);font-weight:700;text-decoration:none}
@@ -4525,6 +4529,7 @@ function weekendRange(){const d=new Date();const wd=(d.getDay()+6)%7;const fri=n
   return[wd>=4?today():dayKey(fri),dayKey(sun)];}
 let wkRadius=15;
 let wkView="list";try{if(localStorage.getItem("fk-wkview")==="swipe")wkView="swipe";}catch(e){}
+document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));},true);
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-wkview]");if(!t)return;wkView=t.dataset.wkview;try{localStorage.setItem("fk-wkview",wkView);}catch(e){}if(mode==="hem")renderHome();});
 function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i dag"):$t("i helgen");
   if(!homeTown||homeEdit)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p>${$t("Ange din hemort så visar vi matcher nära dig {0}.",[label])}</p><form class="homeform" id="homeForm"><label class="fld" for="homeIn">${$t("Din hemort")}<input id="homeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button></form></article>`;
@@ -4544,10 +4549,10 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i
       <div class="actions">${tixMini(m)}${myBtns(m)}</div></article>`;
     return`<article class="tip wkbox"><div class="sechead"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></div><div class="chips" role="group" aria-label="${$t("Avstånd")}">${chips}</div>
       ${!list.length?`<p class="meta">${$t("Inga matcher i det inlagda schemat {0}.",[label])}</p>`:!near.length?`<p class="meta">${$t("Inget inom {0} {1}. Närmaste matcherna:",[milU(wkRadius),label])}</p>`:""}
-      ${pool.length?`<div class="wkrow">${pool.map(card).join("")}</div>`:""}${vsw}</article>`;}
+      ${pool.length?`<div class="wkrow">${pool.map(card).join("")}</div>${pool.length>1?`<div class="wkdots" aria-hidden="true">${pool.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}`:""}${vsw}</article>`;}
   if(!homeMore.wkOpen){const sum=near.length?$t("{0} matcher inom {1} {2}",[near.length,milU(wkRadius),label]):list.length?$t("Inget inom {0} {1}. Närmaste matcherna:",[milU(wkRadius),label]):$t("Inga matcher i det inlagda schemat {0}.",[label]);
-    return`<article class="tip"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><p class="meta">${sum}</p>${pool.length?`<div class="dlist">${row(pool[0],false)}</div>`:""}<button class="link more" data-homemore="wkOpen" aria-expanded="false">${$t("Visa alla och välj avstånd")}</button>${vsw}</article>`;}
-  return`<article class="tip"><div class="sechead"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></div><div class="chips" role="group" aria-label="${$t("Avstånd")}">${chips}</div>
+    return`<article class="tip wkbox"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><p class="meta">${sum}</p>${pool.length?`<div class="dlist">${row(pool[0],false)}</div>`:""}<button class="link more" data-homemore="wkOpen" aria-expanded="false">${$t("Visa alla och välj avstånd")}</button>${vsw}</article>`;}
+  return`<article class="tip wkbox"><div class="sechead"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></div><div class="chips" role="group" aria-label="${$t("Avstånd")}">${chips}</div>
     ${!list.length?`<p class="meta">${$t("Inga matcher i det inlagda schemat {0}.",[label])}</p>`:!near.length?`<p class="meta">${$t("Inget inom {0} {1}. Närmaste matcherna:",[milU(wkRadius),label])}</p>`:""}
     <div class="dlist">${show.map(x=>row(x,true)).join("")}</div>${moreBtn("wk",pool.length)}<p class="hint">${DIST_NOTE}</p><button class="link more" data-homemore="wkOpen" aria-expanded="true">${$t("Visa mindre")}</button>${vsw}</article>`;}
 // veckans fråga
