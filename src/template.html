@@ -4352,8 +4352,8 @@ function latestHtml(){const parts=[];
   // Hett just nu först, sedan senaste berättelserna och trådarna – ett kort i taget, bläddra i sidled
   let hot="";try{hot=hotHtml("pepp");}catch(e){}
   const cards=[hot,...parts.map(x=>x.replace('class="hcard"','class="hcard wkcard"'))].filter(Boolean);
-  return`<article class="tip community"><h2 class="name">${$t("Community")}</h2><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras matchberättelser.")}</p>${cards.length?`<div class="wkrow hrow">${cards.join("")}</div>${cards.length>1?`<div class="wkdots" aria-hidden="true">${cards.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}`:""}
-    <div class="actions"><button class="btn small primary" data-gomode="flode">${ic("chat")} ${$t("Se vad som händer")}</button><button class="btn small" data-gomode="forum">${$t("Till forumet")}</button><button class="btn small" data-gomode="reportage">${$t("Läs matchberättelser")}</button></div>
+  return`<article class="tip community"><div class="sechead"><h2 class="name">${$t("Community")}</h2><button class="link strong" data-bn="community">${$t("Visa alla")}</button></div><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras matchberättelser.")}</p>${cards.length?`<div class="wkrow hrow">${cards.join("")}</div>${cards.length>1?`<div class="wkdots" aria-hidden="true">${cards.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}`:""}
+    
     ${writersStrip()}</article>`;}
 function topArenaHtml(){if(ratingsState!=="ready")return"";const ym=new Date().toISOString().slice(0,7);const cnt={};
   Object.values(RATINGS).forEach(d=>{Object.entries((d&&d.r)||{}).forEach(([k,r])=>{if(r&&String(r.at||"").startsWith(ym))cnt[k]=(cnt[k]||0)+1;});});
