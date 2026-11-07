@@ -5229,24 +5229,29 @@ let deepJump=null;
       setTimeout(tick,300);};
     setTimeout(tick,600);}}
 // ---------- tema ----------
-const THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["warm",$t("Varmt")],["dim",$t("Dämpat")],["dark",$t("Mörkt")]];
+// bara Ljust och Mörkt i alla utseenden. Har man inte valt följer appen telefonen, och rätt knapp visas som vald.
+const THEMES=[["light",$t("Ljust")],["dark",$t("Mörkt")]];
+const sysDark=()=>!!(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
 const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")],["kit",$t("Kvällsmatch")]];const DARKLOOK={kit:1};let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
 // textfärg i alla utseenden; tidigare val (röd, blå, vit, lila) faller tillbaka på standard
 const ACCS=[["std",$t("Standard"),""],["gold",$t("Gul"),"#F2C14E"],["green",$t("Grön"),"#2E9A57"],["orange",$t("Orange"),"#F07F2A"],["white",$t("Vit"),"#FFFFFF"]];let acc="std";try{let t=store.get("fk-acc");if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
-const LOOK_THEMES=[["auto",$t("Som telefonen")],["light",$t("Ljust")],["dark",$t("Mörkt")]];let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
+const LOOK_THEMES=THEMES;let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
 const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
 let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 // Halvmörkt (dusk) är borttaget; den som hade valt det får Mörkt
-let theme="auto";try{let t=store.get("fk-theme");if(t==="dusk")t="dark";if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
+// Halvmörkt och Dämpat blir Mörkt, Varmt blir Ljust
+let theme="auto";try{let t=store.get("fk-theme");if(t==="dusk"||t==="dim")t="dark";if(t==="warm")t="light";if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
+const effTheme=()=>theme==="auto"?(sysDark()?"dark":"light"):theme;
+const effLookTheme=()=>DARKLOOK[look]?(lookTheme==="dark"?"dark":"light"):lookTheme==="auto"?(sysDark()?"dark":"light"):lookTheme;
 function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
   if(acc!=="std")r.setAttribute("data-acc",acc);else r.removeAttribute("data-acc");
-  if(look!=="std"){r.setAttribute("data-look",look);const dk=lookTheme==="dark"||(lookTheme==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);r.setAttribute("data-theme",(DARKLOOK[look]?lookTheme==="dark":dk)?"dark":"light");}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
+  if(look!=="std"){r.setAttribute("data-look",look);r.setAttribute("data-theme",effLookTheme());}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
   // fokuslägets karusellförslag: mörk variant använder appens mörka tema
   {const st=fkStyle();r.toggleAttribute("data-fkc",st!=="vanlig");if(st==="mork")r.setAttribute("data-theme","dark");}
   const row=document.getElementById("themeRow");r.setAttribute("data-style",uiStyle);
-  if(row)row.innerHTML=`<span class="tlbl">${$t("Färg")}</span>`+THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")+`<span class="tlbl">${$t("Stil")}</span>`+STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("");}
-applyTheme();try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(look!=="std"&&lookTheme==="auto")applyTheme();});}catch(e){}
+  if(row)row.innerHTML=`<span class="tlbl">${$t("Färg")}</span>`+THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${effTheme()===k}">${l}</button>`).join("")+`<span class="tlbl">${$t("Stil")}</span>`+STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("");}
+applyTheme();try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{applyTheme();if(typeof setOpen!=="undefined"&&setOpen)openSettings();});}catch(e){}
 // ---------- inställningar: logga, utseende, notiser, hemort ----------
 const BRAND_LOGOS=[["stadion",$t("Stadion")],["enkel",$t("Stadion ljus")],
   ["boll",$t("Boll")],["boll-orange",$t("Boll orange")],["plats",$t("Kartnål")],["g-gron",$t("G grön")],["g-orange","G orange"],["dynamisk","G i farten"]];
@@ -5295,7 +5300,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${sec($t("Logga|bild"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
    ${sec($t("Utseende"),`<div class="lbl">${$t("Tema")}</div><div class="chips wrapchips">${LOOKS.map(([k,l])=>`<button class="chip" data-look-pick="${k}" aria-pressed="${look===k}">${l}</button>`).join("")}</div>
-     ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${theme===k}">${l}</button>`).join("")}</div>`:`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${LOOK_THEMES.filter(([k])=>!DARKLOOK[look]||k!=="auto").map(([k,l])=>`<button class="chip" data-looktheme-pick="${k}" aria-pressed="${DARKLOOK[look]?(k==="dark")===(lookTheme==="dark"):lookTheme===k}">${l}</button>`).join("")}</div>
+     ${look==="std"?`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${THEMES.map(([k,l])=>`<button class="chip" data-theme-pick="${k}" aria-pressed="${effTheme()===k}">${l}</button>`).join("")}</div>`:`<div class="lbl">${$t("Färg")}</div><div class="chips wrapchips">${LOOK_THEMES.map(([k,l])=>`<button class="chip" data-looktheme-pick="${k}" aria-pressed="${effLookTheme()===k}">${l}</button>`).join("")}</div>
 `}
      <div class="lbl">${$t("Textfärg")}</div><div class="chips wrapchips">${ACCS.map(([k,l,c])=>`<button class="chip" data-acc-pick="${k}" aria-pressed="${acc===k}">${c?`<span class="accdot" style="background:${c}"></span>`:""}${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k}">${l}</button>`).join("")}</div>
