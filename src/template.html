@@ -1075,20 +1075,20 @@ html:root[data-look="atlas"][data-theme="dark"]:not(#_){--bg:#17211C;--surface:#
 :root[data-look="atlas"][data-theme="dark"] .bnlog b{background:var(--accent);color:#17211C}
 /* textfärg (detaljer): gul, grön eller orange i alla utseenden. Mörk ton på ljus botten, ljus ton på mörk botten.
    --acc-l/--acc-ls används inne i de ljusa korten i Kvällsmatch. */
-html:root[data-acc="gold"]{--accent:#8A5A00;--accent-soft:#F6E7C1;--acc-l:#8A5A00;--acc-ls:#F6E7C1}
-html:root[data-acc="green"]{--accent:#1F7A45;--accent-soft:#D6EDDD;--acc-l:#1F7A45;--acc-ls:#D6EDDD}
-html:root[data-acc="orange"]{--accent:#B4470F;--accent-soft:#FBE3CC;--acc-l:#B4470F;--acc-ls:#FBE3CC}
+html:root[data-acc="gold"]:not(#_){--accent:#8A5A00;--accent-soft:#F6E7C1;--acc-l:#8A5A00;--acc-ls:#F6E7C1}
+html:root[data-acc="green"]:not(#_){--accent:#1F7A45;--accent-soft:#D6EDDD;--acc-l:#1F7A45;--acc-ls:#D6EDDD}
+html:root[data-acc="orange"]:not(#_){--accent:#B4470F;--accent-soft:#FBE3CC;--acc-l:#B4470F;--acc-ls:#FBE3CC}
 /* vit: på ljus botten blir den textens egen mörka färg, på mörk botten vit */
-html:root[data-acc="white"]{--accent:var(--fg);--accent-soft:color-mix(in srgb,var(--fg) 10%,transparent);--acc-l:#000000;--acc-ls:rgba(0,0,0,.08)}
-html:root[data-acc="gold"]:is([data-theme="dark"],[data-look="kit"]){--accent:#F2C14E;--acc-d:#F2C14E;--accent-soft:rgba(242,193,78,.16)}
-html:root[data-acc="green"]:is([data-theme="dark"],[data-look="kit"]){--accent:#6FD08C;--acc-d:#6FD08C;--accent-soft:rgba(111,208,140,.16)}
-html:root[data-acc="orange"]:is([data-theme="dark"],[data-look="kit"]){--accent:#FF9A4D;--acc-d:#FF9A4D;--accent-soft:rgba(255,154,77,.16)}
-html:root[data-acc="white"]:is([data-theme="dark"],[data-look="kit"]){--accent:#FFFFFF;--acc-d:#FFFFFF;--accent-soft:rgba(255,255,255,.14)}
+html:root[data-acc="white"]:not(#_){--accent:var(--fg);--accent-soft:color-mix(in srgb,var(--fg) 10%,transparent);--acc-l:#000000;--acc-ls:rgba(0,0,0,.08)}
+html:root[data-acc="gold"]:not(#_):is([data-theme="dark"],[data-look="kit"]){--accent:#F2C14E;--acc-d:#F2C14E;--accent-soft:rgba(242,193,78,.16)}
+html:root[data-acc="green"]:not(#_):is([data-theme="dark"],[data-look="kit"]){--accent:#6FD08C;--acc-d:#6FD08C;--accent-soft:rgba(111,208,140,.16)}
+html:root[data-acc="orange"]:not(#_):is([data-theme="dark"],[data-look="kit"]){--accent:#FF9A4D;--acc-d:#FF9A4D;--accent-soft:rgba(255,154,77,.16)}
+html:root[data-acc="white"]:not(#_):is([data-theme="dark"],[data-look="kit"]){--accent:#FFFFFF;--acc-d:#FFFFFF;--accent-soft:rgba(255,255,255,.14)}
 @media (prefers-color-scheme: dark){
-html:root[data-acc="gold"]:not([data-look]):not([data-theme]){--accent:#F2C14E;--accent-soft:rgba(242,193,78,.16)}
-html:root[data-acc="green"]:not([data-look]):not([data-theme]){--accent:#6FD08C;--accent-soft:rgba(111,208,140,.16)}
-html:root[data-acc="orange"]:not([data-look]):not([data-theme]){--accent:#FF9A4D;--accent-soft:rgba(255,154,77,.16)}
-html:root[data-acc="white"]:not([data-look]):not([data-theme]){--accent:#FFFFFF;--accent-soft:rgba(255,255,255,.14)}}
+html:root[data-acc="gold"]:not(#_):not([data-look]):not([data-theme]){--accent:#F2C14E;--accent-soft:rgba(242,193,78,.16)}
+html:root[data-acc="green"]:not(#_):not([data-look]):not([data-theme]){--accent:#6FD08C;--accent-soft:rgba(111,208,140,.16)}
+html:root[data-acc="orange"]:not(#_):not([data-look]):not([data-theme]){--accent:#FF9A4D;--accent-soft:rgba(255,154,77,.16)}
+html:root[data-acc="white"]:not(#_):not([data-look]):not([data-theme]){--accent:#FFFFFF;--accent-soft:rgba(255,255,255,.14)}}
 @font-face{font-family:"GL Archivo";src:url(fonts/Archivo.woff) format("woff");font-weight:400 800;font-stretch:90% 100%;font-display:swap}
 /* --- Kvällsmatch (intern nyckel "kit"): mörkblå botten utan mönster, ljusa kort och knappar ---
    Variablerna gäller texten direkt på den mörka botten; inne i korten och knapparna byts de till mörk text på ljust. */
