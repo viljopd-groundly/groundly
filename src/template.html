@@ -151,7 +151,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .mfilt[open]>summary:after{transform:rotate(-135deg);margin-top:4px}
 .mfilt>summary .mfn{margin-left:auto;font-size:calc(12px*var(--fs));font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 9px}
 .mfbody{display:flex;flex-direction:column;gap:14px;padding:2px 14px 14px}
-.tip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:8px}
+.tip{--tp:20px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px var(--tp);display:flex;flex-direction:column;gap:8px}
 .tip-head{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap}
 .tip h2.name{font-size:calc(21px*var(--fs))}
 .tip p{margin:0;max-width:62ch}
@@ -1011,8 +1011,8 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 /* ett helt kort i taget: kortet är lika brett som rutan, prickarna visar att det finns fler */
 .wkrow{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px 0 4px;padding:4px 0 6px;scrollbar-width:none}.wkrow::-webkit-scrollbar{display:none}
 .wkrow>.wkcard{flex:0 0 100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;margin:0}
-.hotcard{background:var(--bg);border-radius:14px;padding:12px 14px}.hotcard h3{margin:0 0 2px;font:700 calc(16px*var(--fs)) var(--f-body)}.hotcard .hotlist{margin-top:8px}.hotcard .hotm{min-width:0}.hotcard .hotm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotm small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotrow{min-width:0}
-.hrow{align-items:stretch}.hrow>.hcard{align-items:center}.hrow>.hcard .htxt b{font-size:calc(17px*var(--fs))}.hothome{border:1px solid var(--line)}.hotopen{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;min-width:0;flex:1}.hotopen:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}.hotopen b{text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 25%,transparent);text-underline-offset:3px}.hypemini{gap:4px;padding-left:12px;padding-right:12px}.hypemini .hcnt{margin-left:0}.hothome .hotlist{margin-top:6px}
+.hotcard{background:var(--bg);border-radius:14px;padding:14px 18px}.hotcard h3{margin:0 0 2px;font:700 calc(16px*var(--fs)) var(--f-body)}.hotcard .hotlist{margin-top:8px}.hotcard .hotm{min-width:0}.hotcard .hotm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotm small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotrow{min-width:0}
+.hrow{align-items:stretch}.hrow>.hcard{align-items:center;padding:14px 18px}.hrow>.hcard .htxt b{font-size:calc(17px*var(--fs))}.hothome{border:1px solid var(--line)}.hotopen{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;min-width:0;flex:1}.hotopen:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}.hotopen b{text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 25%,transparent);text-underline-offset:3px}.hypemini{gap:4px;padding-left:12px;padding-right:12px}.hypemini .hcnt{margin-left:0}.hothome .hotlist{margin-top:6px}
 .wkdots{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}.wkdots i.on{background:var(--accent);width:18px;border-radius:4px}
 /* Tips för helgen ligger överst och ska synas mest: mörkare överkant */
 .tip.wkbox{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,var(--surface)) 0,color-mix(in srgb,var(--accent) 7%,var(--surface)) 64px,var(--surface) 140px)!important;border-top:4px solid color-mix(in srgb,var(--accent) 70%,var(--surface))!important}
@@ -1041,7 +1041,7 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 :root[data-look="ticket"] .tip.hero{position:relative;border:0;background:var(--surface);box-shadow:var(--shadow);overflow:visible;
   -webkit-mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat;
   mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat}
-:root[data-look="ticket"] .tip.hero>.lbl{padding-bottom:16px;border-bottom:2px dashed var(--line);margin:0 -14px 4px;padding-left:14px}
+:root[data-look="ticket"] .tip.hero>.lbl{padding-bottom:16px;border-bottom:2px dashed var(--line);margin:0 calc(-1*var(--tp)) 4px;padding-left:var(--tp)}
 :root[data-look="ticket"] .tip.hero .teams.big{font-size:calc(23px*var(--fs))}:root[data-look="ticket"] .tip.hero.wkcard .teams.big{font-size:calc(20px*var(--fs))}
 :root[data-look="ticket"] .tip.howto{background:var(--fg)}
 :root[data-look="ticket"] .bnav{background:var(--fg);border-top:0;box-shadow:none}
