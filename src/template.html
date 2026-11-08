@@ -732,6 +732,8 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 :root[data-style="flat"] .card.sel,:root[data-style="flat"] .thread.open,:root[data-style="flat"] .rep.open{background:var(--soft);border-radius:var(--r);border-bottom-color:transparent;padding-left:14px;padding-right:14px;box-shadow:none}
 :root[data-style="flat"] .stats div,:root[data-style="flat"] .trc,:root[data-style="flat"] .trsum{background:var(--bg);border-color:transparent}
 :root[data-style="flat"] .empty{background:transparent;border:0}
+/* Platt: rutor som ändå har egen bakgrund (helgtips, Veckans match, Så funkar) behåller luft och rundade hörn */
+:root[data-style="flat"] .tip.wkbox,:root[data-style="flat"] .tip.hero,:root[data-style="flat"] .tip.howto{padding-left:var(--tp);padding-right:var(--tp);border-radius:var(--r);border-bottom:0}
 :root[data-style="flat"] .search{background:var(--bg);border-color:transparent}
 :root[data-style="flat"] .search:focus-within{border-color:var(--accent)}
 /* sökfält för klubb och ort ser ut som sökrutorna */
@@ -808,7 +810,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .scorein{display:flex;align-items:center;gap:8px}.scorein .scnum{width:3.2em;text-align:center;font-size:calc(18px*var(--fs));font-weight:700}.scdash{font-weight:800;font-size:calc(20px*var(--fs));color:var(--fg)}
 
 /* Så funkar Groundly: egen, tydlig stil för nya användare (en planhalva i klubbgrönt) */
-:root:root .tip.howto{--hw1:#0f3b23;--hw2:#1f7543;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240' viewBox='0 0 400 240' fill='none' stroke='white' stroke-opacity='.12' stroke-width='2'%3E%3Cpath d='M300 0v240'/%3E%3Ccircle cx='300' cy='120' r='52'/%3E%3Ccircle cx='300' cy='120' r='3' fill='white' fill-opacity='.12'/%3E%3Cpath d='M400 60h-48v120h48'/%3E%3C/svg%3E") right -40px center/auto 125% no-repeat,linear-gradient(150deg,var(--hw1),var(--hw2));color:#fff;border:0;box-shadow:0 6px 20px rgba(15,59,35,.28);padding:16px 14px 14px;gap:6px}
+:root:root .tip.howto{--hw1:#0f3b23;--hw2:#1f7543;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240' viewBox='0 0 400 240' fill='none' stroke='white' stroke-opacity='.12' stroke-width='2'%3E%3Cpath d='M300 0v240'/%3E%3Ccircle cx='300' cy='120' r='52'/%3E%3Ccircle cx='300' cy='120' r='3' fill='white' fill-opacity='.12'/%3E%3Cpath d='M400 60h-48v120h48'/%3E%3C/svg%3E") right -40px center/auto 125% no-repeat,linear-gradient(150deg,var(--hw1),var(--hw2));color:#fff;border:0;box-shadow:0 6px 20px rgba(15,59,35,.28);padding:16px var(--tp) 16px;gap:6px}
 :root[data-theme="warm"] .tip.howto{--hw1:#6b2c06;--hw2:#b4510b}
 :root:root .tip.howto:before{display:none}
 /* Groundly-utseendet: rak linje under loggan */
