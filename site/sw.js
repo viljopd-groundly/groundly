@@ -4,7 +4,7 @@
 //  - appens filer och data (js, data/*.json, archive/*.json, ikoner): sparad kopia direkt, uppdateras i bakgrunden
 //  - Firebase-biblioteken och typsnitt (versionerade): sparad kopia, hämtas bara en gång
 //  - allt annat (inloggning, databasen, API:er): går direkt till nätet, sparas aldrig
-const V = "groundly-v4";
+const V = "groundly-v5";
 const SHELL = ["./", "index.html", "js/runtime.js", "js/firebase-config.js", "manifest.webmanifest", "icon-192.png", "apple-touch-icon.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).catch(() => {})); self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -25,7 +25,7 @@ self.addEventListener("fetch", e => {
   if (same && url.searchParams.has("__check")) {
     e.respondWith((async () => {
       try {
-        const net = await fetch(new Request("index.html", { cache: "no-cache" }));
+        const net = await fetch(new Request("index.html?cb=" + Date.now(), { cache: "no-store" })); // unik adress: förbi alla mellanlager
         if (!net.ok) return new Response('{"changed":false}', { headers: { "content-type": "application/json" } });
         const txt = await net.clone().text();
         const old = await fromCache("index.html"); const oldTxt = old ? await old.text() : null;
