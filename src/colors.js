@@ -52,3 +52,11 @@ Object.assign(module.exports,require("./clubs_mls2.js").colors);
 Object.assign(module.exports,require("./clubs_world.js").colors);
 // Wikipedia-färger fyller bara i där klubben saknar färger
 for(const[k,v] of Object.entries(require("./colors_wiki.js")))if(!module.exports[k])module.exports[k]=v;
+// Ettan Norra och Södra 2026, kontrollerat mot klubbarnas matchställ på Wikipedia (nov 2026). Går före alla andra källor.
+Object.assign(module.exports,{
+  gefle:["#2696d9","#ffffff","GIF"],ifkar:["#002fa7","#000000","KF"],jarf:["#ffffff","#000000","FCJ"],karlb:["#e30613","#ffffff","KBK"],
+  pitm:["#cc0033","#ffffff","PIF"],sint:["#000000","#ffffff","FCS"],stocks:["#ffffff","#0033cc","IFK"],umefc:["#0033cc","#ffffff","UFC"],
+  afce:["#ff9900","#ffffff","AFC"],rose17:["#ffffff","#000060","FCR"],vasal:["#e3111c","#110f0a","VIF"],enkop:["#319a63","#000000","ESK"],fbkk:["#ff0000","#ffffff","FBK"],
+  atvid:["#303090","#ffffff","ÅFF"],eskil:["#1874cd","#fde910","EIF"],lbk:["#fde910","#ffffff","LBK"],olymp:["#208040","#ffffff","BKO"],
+  skovd:["#ff0000","#ffffff","SAIK"],jsö:["#338033","#ffffff","JSIF"],utb:["#1c2f50","#ffffff","UBK"],tff:["#0033cc","#ffffff","TFF"]
+});
