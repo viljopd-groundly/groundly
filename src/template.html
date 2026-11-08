@@ -880,6 +880,7 @@ html:root:not([data-look]) .tip.hero{isolation:isolate}
 .tip.community .writers{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 
 .commline{font-size:calc(13px*var(--fs));color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.match.mrow>.teams,.match.mrow>.venue,.match.mrow>.commline,.match.mrow>.mp{grid-column:2} /* matchberättelse-raden ska inte knuffa knapparna till vänsterkolumnen */
 .commline .ic{width:14px;height:14px;color:var(--accent)}
 @media (max-width:760px){#fkUndo.offer{bottom:calc(150px + env(safe-area-inset-bottom,0px))}}
 
