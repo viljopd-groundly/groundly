@@ -1017,6 +1017,7 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .wkrow>.wkcard{flex:0 0 100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;margin:0}
 .hotcard{background:var(--bg);border-radius:14px;padding:14px 18px}.hotcard h3{margin:0 0 2px;font:700 calc(16px*var(--fs)) var(--f-body)}.hotcard .hotlist{margin-top:8px}.hotcard .hotm{min-width:0}.hotcard .hotm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotm small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotrow{min-width:0}
 .hrow{align-items:stretch}.hrow>.hcard{align-items:center;padding:14px 18px}.hrow>.hcard .htxt b{font-size:calc(17px*var(--fs))}.hothome{border:1px solid var(--line)}.hotopen{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;min-width:0;flex:1}.hotopen:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}.hotopen b{text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 25%,transparent);text-underline-offset:3px}.hypemini{gap:4px;padding-left:12px;padding-right:12px}.hypemini .hcnt{margin-left:0}.hothome .hotlist{margin-top:6px}
+.heroswipe .wkrow>.heroslide{flex:0 0 100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always}.heroswipe .heroslide>.teams{margin-top:2px}
 .wkdots{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}.wkdots i.on{background:var(--accent);width:18px;border-radius:4px}
 /* Tips för helgen ligger överst och ska synas mest: mörkare överkant */
 .tip.wkbox{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,var(--surface)) 0,color-mix(in srgb,var(--accent) 7%,var(--surface)) 64px,var(--surface) 140px)!important;border-top:4px solid color-mix(in srgb,var(--accent) 70%,var(--surface))!important}
@@ -4249,17 +4250,22 @@ function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return ms>-
   if(min<60)return $t("om {0} min",[Math.max(1,min)]);if(min<6*60){const h=Math.floor(min/60),m=min%60;return m?$t("om {0} tim {1} min",[h,m]):$t("om {0} tim",[h]);}
   const th=Math.round(ms/36e5);if(th<24)return $t("om {0} tim",[th]);const d=Math.floor(th/24),h=th%24;return h?$t("om {0} {1} och {2} tim",[d,d===1?$t("dag"):$t("dagar"),h]):$t("om {0} {1}",[d,d===1?$t("dag"):$t("dagar")]);}
 function hypeBtn(m,mini){if(mPast(m))return"";const n=hypeCount(m._id);return dbNs&&myId?`<button class="btn small${mini?" hypemini":""}" data-hype="${esc(m._id)}" aria-pressed="${iHype(m._id)}"${mini?` aria-label="${iHype(m._id)?$t("Peppad"):$t("Peppa")}"`:""}${hypeBusy?" disabled":""}>${ic("flame",iHype(m._id)?"on":"")}${mini?"":" "+(iHype(m._id)?$t("Peppad"):$t("Peppa"))}${n?`<span class="hcnt" aria-label="${$t("{0} peppade",[n])}">${n}</span>`:""}</button>`:n?(mini?`<span class="meta" aria-label="${$t("Peppad av {0}",[n])}">${ic("flame")} ${n}</span>`:`<span class="meta">${ic("flame")} ${$t("Peppad av {0}",[n])}</span>`):"";}
-function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==="loading"?`<article class="tip hero"><p class="meta">${$t("Hämtar matchschemat…")}</p></article>`:"";
-  const m=list[0],dby=derbyOf(m),fav=isFav(m.home)||isFav(m.away);
-  const why=dby?`${esc($t(dby[1]))}. ${esc($t(String(dby[4]||"")).split(". ")[0])}.`:fav?$t("Ditt favoritlag spelar."):`${esc(m.comp||"")}${C[m.home]&&C[m.home].cap?$t(" inför upp till {0} åskådare",[C[m.home].cap.toLocaleString(LOC)]):""}.`;
-  const more=list.slice(1,4);
-  return`<article class="tip hero"><div class="lbl">${$t("Veckans match")}</div>
+// Veckans match: de fem hetaste matcherna som kort i sidled inne i samma ruta. Varje kort fälls ut för sig.
+let heroIdx=0;
+function heroWhy(m){const dby=derbyOf(m),fav=isFav(m.home)||isFav(m.away);
+  return dby?`${esc($t(dby[1]))}. ${esc($t(String(dby[4]||"")).split(". ")[0])}.`:fav?$t("Ditt favoritlag spelar."):`${esc(m.comp||"")}${C[m.home]&&C[m.home].cap?$t(" inför upp till {0} åskådare",[C[m.home].cap.toLocaleString(LOC)]):""}.`;}
+function heroSlide(m,i){const k="hero"+i,open=!!homeMore[k];
+  return`<div class="heroslide">
     <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,40)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,40)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>
     <div class="cd">${$t("{0} kl {1} ·",[esc(dayLabel(dayKey(new Date(m.kickoff)))),timeOf(m.kickoff)])} <b>${countdown(m.kickoff)}</b></div>
     <div class="venue">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}</div>
-    <button class="link more" data-homemore="hero" aria-expanded="${!!homeMore.hero}">${homeMore.hero?$t("Mindre om matchen"):$t("Mer om matchen")}</button>${homeMore.hero?`<p>${why}</p>
-    <div class="actions">${tixMini(m,"btn small primary")}${hypeBtn(m)}${myBtns(m).replace(/class="mini"/g,'class="btn small"')}${hotelLink(m,"btn small")}${tripLink(m).replace('class="mini"','class="btn small"')}</div>
-    ${more.length?`<button class="link more" data-homemore="hot" aria-expanded="${!!homeMore.hot}">${homeMore.hot?$t("Dölj fler heta matcher"):$t("Fler heta matcher ({0})",[more.length])}</button>${homeMore.hot?`<div class="hmore">${more.map(x=>`<div class="hrow mrow"${mrowAttr(x)}><span class="num">${esc(dayLabel(dayKey(new Date(x.kickoff))))} ${timeOf(x.kickoff)}</span><span>${esc(tnm(x,"home"))} – ${esc(tnm(x,"away"))}${derbyOf(x)?` <span class="pill ec">${$t("Derby")}</span>`:""}${wPill(x)}</span></div>`).join("")}</div>`:""}`:""}`:""}</article>`;}
+    <button class="link more" data-homemore="${k}" aria-expanded="${open}">${open?$t("Mindre om matchen"):$t("Mer om matchen")}</button>${open?`<p>${heroWhy(m)}</p>
+    <div class="actions">${tixMini(m,"btn small primary")}${hypeBtn(m)}${myBtns(m).replace(/class="mini"/g,'class="btn small"')}${hotelLink(m,"btn small")}${tripLink(m).replace('class="mini"','class="btn small"')}</div>`:""}</div>`;}
+function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==="loading"?`<article class="tip hero"><p class="meta">${$t("Hämtar matchschemat…")}</p></article>`:"";
+  const show=list.slice(0,5);if(heroIdx>=show.length)heroIdx=0;
+  requestAnimationFrame(()=>{const r=document.querySelector(".heroswipe .wkrow");if(r&&heroIdx)r.scrollLeft=heroIdx*(r.clientWidth+12);});
+  return`<article class="tip hero heroswipe"><div class="lbl">${$t("Veckans match")}</div>
+    <div class="wkrow">${show.map(heroSlide).join("")}</div>${show.length>1?`<div class="wkdots" aria-hidden="true">${show.map((_,i)=>`<i${i===heroIdx?' class="on"':""}></i>`).join("")}</div>`:""}</article>`;}
 function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl=favList();
   const nx=dbState==="ready"&&fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
   return`<article class="tip"><div class="sechead"><h2 class="name">${$t("Din säsong {0}",[YEAR])}</h2><button class="link strong" data-gomine="1">${$t("Min fotboll")}</button></div>
@@ -4576,7 +4582,7 @@ function weekendRange(){const d=new Date();const wd=(d.getDay()+6)%7;const fri=n
   return[wd>=4?today():dayKey(fri),dayKey(sun)];}
 let wkRadius=15;
 const wkView="swipe"; // helgtipsen visas alltid som kort i sidled
-document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));if(r.closest(".hot"))hotIdx=i;const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));},true);
+document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));if(r.closest(".hot"))hotIdx=i;if(r.closest(".heroswipe"))heroIdx=i;const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));},true);
 function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i dag"):$t("i helgen");
   if(!homeTown||homeEdit)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p>${$t("Ange din hemort så visar vi matcher nära dig {0}.",[label])}</p><form class="homeform" id="homeForm"><label class="fld" for="homeIn">${$t("Din hemort")}<input id="homeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button>${locBtn()}</form></article>`;
   const p=homeLL();if(!p)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p class="meta">${$t("Hittar inte {0} på kartan. Prova en större ort i närheten.",[esc(homeTown)])}</p><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></article>`;
