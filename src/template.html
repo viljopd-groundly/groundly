@@ -4399,13 +4399,15 @@ function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" $
     <div class="itiles">${tile('data-gomode="matcher"',"calendar",$t("Planera & boka"),$t("Hitta matcher och boka biljett, hotell och resa via våra länkar"))}${tile('data-gomine="1"',"check",$t("Logga"),$t("Spara matcherna du sett, betygsätt arenor och följ din statistik"))}${tile('data-gomode="forum"',"chat",$t("Community"),$t("Fråga, tipsa och läs matchberättelser från andra som reser på fotboll"))}</div></article>`;}
 // ---------- startsidan: vilka rutor som visas och i vilken ordning ----------
 // standard = kort startsida; resten slås på under Anpassa startsidan. Valen sparas på kontot (homeCfg) och i telefonen.
-const HOME_BLOCKS=[["weekend","Tips för helgen",true],["hero","Veckans match",true],["mine","Din säsong",true],["latest","Community",true],["news","Nytt i appen",false],
-  ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["invite","Tipsa en kompis",false]];
+const HOME_BLOCKS=[["weekend","Tips för helgen",true],["hero","Veckans match",true],["mine","Din säsong",true],["latest","Community",true],
+  ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["invite","Tipsa en kompis",false],["news","Nytt i appen",false]];
 // Topplistor, Månadens groundhopper, skribenter, arena och Quizledare är borttagna härifrån: de finns i Hett just nu och i Community-rutan
 function isNewbie(){if(myState!=="ready")return true;if((MY.attended||[]).length>=3)return false;const s=MY.since||today();return(Date.parse(today())-Date.parse(s))/864e5<14;}
 const HOME_FN={intro:()=>isNewbie()?introHtml():"",hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),writers:()=>writersHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
 function normHomeCfg(c){const keys=HOME_BLOCKS.map(x=>x[0]);if(!c||typeof c!=="object")return null;const order=Array.isArray(c.order)?c.order.filter((k,i,a)=>keys.includes(k)&&a.indexOf(k)===i):[];
-  const on={};if(c.on&&typeof c.on==="object")keys.forEach(k=>{if(typeof c.on[k]==="boolean")on[k]=c.on[k];});return{order,on};}
+  const on={};if(c.on&&typeof c.on==="object")keys.forEach(k=>{if(typeof c.on[k]==="boolean")on[k]=c.on[k];});
+  // Nytt i appen flyttades sist (nov 2026): äldre sparade ordningar släpper den så att den hamnar längst ner
+  if(!c.nl){const i=order.indexOf("news");if(i>=0)order.splice(i,1);}return{order,on,nl:true};}
 function homeCfg(){if(myState==="ready"&&MY.homeCfg)return MY.homeCfg;try{return normHomeCfg(JSON.parse(store.get("fk-homecfg")||"null"))||{order:[],on:{}};}catch(e){return{order:[],on:{}};}}
 // Tips för helgen ligger alltid ovanför Veckans match, även i en egen ordning
 function homeOrder(){const c=homeCfg();const keys=HOME_BLOCKS.map(x=>x[0]);const o=[...c.order.filter(k=>keys.includes(k)),...keys.filter(k=>!c.order.includes(k))];
@@ -4414,7 +4416,7 @@ function homeDefault(k){const b=HOME_BLOCKS.find(x=>x[0]===k);return!!(b&&b[2]);
 function homeOn(k,onboarding){const c=homeCfg();const on=typeof c.on[k]==="boolean"?c.on[k]:homeDefault(k);
   // ny användare: Kom igång visar redan det som Din säsong skulle visa
   if(k==="mine"&&onboarding&&typeof c.on[k]!=="boolean"&&!(MY.attended||[]).length)return false;return on;}
-function saveHomeCfg(c){store.set("fk-homecfg",JSON.stringify(c));if(myState==="ready")mutate(d=>{d.homeCfg=c;});else{renderHome();}}
+function saveHomeCfg(c){c={...c,nl:true};store.set("fk-homecfg",JSON.stringify(c));if(myState==="ready")mutate(d=>{d.homeCfg=c;});else{renderHome();}}
 function homeCustBar(){const off=HOME_BLOCKS.filter(([k])=>!homeOn(k,false)).length;
   return`<div class="homecust"><button class="btn small" data-homecust="1">${ic("pencil")} ${$t("Anpassa startsidan")}</button>${off?`<span class="meta">${$tn(off,"{n} ruta till att välja","{n} rutor till att välja")}</span>`:""}</div>`;}
 function homeCustHtml(){const order=homeOrder();
