@@ -2483,5 +2483,13 @@
  "Uppdatera": "Uppfæra",
  "om {0} min": "eftir {0} mín.",
  "om {0} tim {1} min": "eftir {0} klst. {1} mín.",
- "om {0} {1}": "eftir {0} {1}"
+ "om {0} {1}": "eftir {0} {1}",
+ "Det du delar kan också synas i Aktivitet under Community.": "Það sem þú deilir getur líka birst undir Virkni í samfélaginu.",
+ "Sparat i telefonen": "Vistað í símanum",
+ "Inställningar, din hemort och en kopia av matchschemat sparas i telefonen så att appen öppnar snabbt, även utan täckning. Groundly använder inga spårningskakor och samlar ingen statistik om hur du använder appen.": "Stillingar, heimabær þinn og afrit af leikjadagskránni eru vistuð í símanum svo appið opnist hratt, líka án sambands. Groundly notar engar rakningarkökur og safnar engri tölfræði um hvernig þú notar appið.",
+ "Plats": "Staðsetning",
+ "Trycker du Använd min plats frågar telefonen först om lov. Positionen används bara i telefonen för att hitta närmaste ort och skickas aldrig till Groundly.": "Ef þú ýtir á Nota staðsetningu mína biður síminn fyrst um leyfi. Staðsetningin er aðeins notuð í símanum til að finna næsta bæ og er aldrei send til Groundly.",
+ "Länkar till hotell och resor": "Tenglar á hótel og ferðir",
+ "Knapparna Hotell och Resa går till Booking.com och Omio. En del av dem är annonslänkar: bokar du via dem kan Groundly få provision, utan att det kostar dig något extra. När du lämnar appen gäller deras villkor och integritetspolicy. Biljetter köper du alltid hos klubben.": "Hnapparnir Hótel og Ferð vísa á Booking.com og Omio. Sumir þeirra eru auglýsingatenglar: ef þú bókar í gegnum þá getur Groundly fengið þóknun, án aukakostnaðar fyrir þig. Þegar þú ferð úr appinu gilda skilmálar þeirra og persónuverndarstefna. Miða kaupir þú alltaf hjá félaginu.",
+ "Senast uppdaterad {0}.": "Síðast uppfært {0}."
 }

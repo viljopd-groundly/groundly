@@ -2484,5 +2484,13 @@
  "Uppdatera": "Oppdater",
  "om {0} min": "om {0} min",
  "om {0} tim {1} min": "om {0} t {1} min",
- "om {0} {1}": "om {0} {1}"
+ "om {0} {1}": "om {0} {1}",
+ "Det du delar kan också synas i Aktivitet under Community.": "Det du deler, kan også vises under Aktivitet i Community.",
+ "Sparat i telefonen": "Lagret på telefonen",
+ "Inställningar, din hemort och en kopia av matchschemat sparas i telefonen så att appen öppnar snabbt, även utan täckning. Groundly använder inga spårningskakor och samlar ingen statistik om hur du använder appen.": "Innstillinger, hjemstedet ditt og en kopi av kampprogrammet lagres på telefonen slik at appen åpner raskt, også uten dekning. Groundly bruker ingen sporingscookies og samler ingen statistikk om hvordan du bruker appen.",
+ "Plats": "Posisjon",
+ "Trycker du Använd min plats frågar telefonen först om lov. Positionen används bara i telefonen för att hitta närmaste ort och skickas aldrig till Groundly.": "Trykker du på Bruk posisjonen min, spør telefonen først om lov. Posisjonen brukes bare på telefonen for å finne nærmeste sted og sendes aldri til Groundly.",
+ "Länkar till hotell och resor": "Lenker til hotell og reiser",
+ "Knapparna Hotell och Resa går till Booking.com och Omio. En del av dem är annonslänkar: bokar du via dem kan Groundly få provision, utan att det kostar dig något extra. När du lämnar appen gäller deras villkor och integritetspolicy. Biljetter köper du alltid hos klubben.": "Knappene Hotell og Reise går til Booking.com og Omio. Noen av dem er annonselenker: bestiller du via dem, kan Groundly få provisjon, uten at det koster deg noe ekstra. Når du forlater appen, gjelder deres vilkår og personvernerklæring. Billetter kjøper du alltid hos klubben.",
+ "Senast uppdaterad {0}.": "Sist oppdatert {0}."
 }

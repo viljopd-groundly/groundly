@@ -2483,5 +2483,13 @@
  "Uppdatera": "Bijwerken",
  "om {0} min": "over {0} min",
  "om {0} tim {1} min": "over {0} u {1} min",
- "om {0} {1}": "over {0} {1}"
+ "om {0} {1}": "over {0} {1}",
+ "Det du delar kan också synas i Aktivitet under Community.": "Wat je deelt, kan ook verschijnen onder Activiteit in de Community.",
+ "Sparat i telefonen": "Opgeslagen op je telefoon",
+ "Inställningar, din hemort och en kopia av matchschemat sparas i telefonen så att appen öppnar snabbt, även utan täckning. Groundly använder inga spårningskakor och samlar ingen statistik om hur du använder appen.": "Instellingen, je woonplaats en een kopie van het speelschema worden op je telefoon opgeslagen zodat de app snel opent, ook zonder bereik. Groundly gebruikt geen trackingcookies en verzamelt geen statistieken over hoe je de app gebruikt.",
+ "Plats": "Locatie",
+ "Trycker du Använd min plats frågar telefonen först om lov. Positionen används bara i telefonen för att hitta närmaste ort och skickas aldrig till Groundly.": "Tik je op Gebruik mijn locatie, dan vraagt je telefoon eerst toestemming. De locatie wordt alleen op je telefoon gebruikt om de dichtstbijzijnde plaats te vinden en wordt nooit naar Groundly gestuurd.",
+ "Länkar till hotell och resor": "Links naar hotels en reizen",
+ "Knapparna Hotell och Resa går till Booking.com och Omio. En del av dem är annonslänkar: bokar du via dem kan Groundly få provision, utan att det kostar dig något extra. När du lämnar appen gäller deras villkor och integritetspolicy. Biljetter köper du alltid hos klubben.": "De knoppen Hotel en Reis gaan naar Booking.com en Omio. Sommige zijn advertentielinks: boek je via die links, dan kan Groundly een commissie krijgen, zonder extra kosten voor jou. Zodra je de app verlaat, gelden hun voorwaarden en privacybeleid. Kaartjes koop je altijd bij de club.",
+ "Senast uppdaterad {0}.": "Laatst bijgewerkt op {0}."
 }

@@ -2483,5 +2483,13 @@
  "Uppdatera": "Mettre à jour",
  "om {0} min": "dans {0} min",
  "om {0} tim {1} min": "dans {0} h {1} min",
- "om {0} {1}": "dans {0} {1}"
+ "om {0} {1}": "dans {0} {1}",
+ "Det du delar kan också synas i Aktivitet under Community.": "Ce que tu partages peut aussi apparaître dans Activité, sous Communauté.",
+ "Sparat i telefonen": "Enregistré sur ton téléphone",
+ "Inställningar, din hemort och en kopia av matchschemat sparas i telefonen så att appen öppnar snabbt, även utan täckning. Groundly använder inga spårningskakor och samlar ingen statistik om hur du använder appen.": "Tes réglages, ta ville et une copie du calendrier des matchs sont enregistrés sur ton téléphone pour que l'appli s'ouvre vite, même sans réseau. Groundly n'utilise aucun cookie de suivi et ne collecte aucune statistique sur ton utilisation de l'appli.",
+ "Plats": "Position",
+ "Trycker du Använd min plats frågar telefonen först om lov. Positionen används bara i telefonen för att hitta närmaste ort och skickas aldrig till Groundly.": "Si tu appuies sur Utiliser ma position, ton téléphone te demande d'abord l'autorisation. La position sert uniquement sur ton téléphone à trouver la ville la plus proche et n'est jamais envoyée à Groundly.",
+ "Länkar till hotell och resor": "Liens vers les hôtels et les voyages",
+ "Knapparna Hotell och Resa går till Booking.com och Omio. En del av dem är annonslänkar: bokar du via dem kan Groundly få provision, utan att det kostar dig något extra. När du lämnar appen gäller deras villkor och integritetspolicy. Biljetter köper du alltid hos klubben.": "Les boutons Hôtel et Voyage mènent à Booking.com et Omio. Certains sont des liens d'affiliation : si tu réserves par leur intermédiaire, Groundly peut toucher une commission, sans surcoût pour toi. Dès que tu quittes l'appli, leurs conditions et leur politique de confidentialité s'appliquent. Les billets s'achètent toujours auprès du club.",
+ "Senast uppdaterad {0}.": "Dernière mise à jour : {0}."
 }

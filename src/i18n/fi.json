@@ -2483,5 +2483,13 @@
  "Uppdatera": "Päivitä",
  "om {0} min": "{0} min kuluttua",
  "om {0} tim {1} min": "{0} t {1} min kuluttua",
- "om {0} {1}": "{0} {1} kuluttua"
+ "om {0} {1}": "{0} {1} kuluttua",
+ "Det du delar kan också synas i Aktivitet under Community.": "Jakamasi asiat voivat näkyä myös Yhteisön Toiminta-näkymässä.",
+ "Sparat i telefonen": "Tallennettu puhelimeen",
+ "Inställningar, din hemort och en kopia av matchschemat sparas i telefonen så att appen öppnar snabbt, även utan täckning. Groundly använder inga spårningskakor och samlar ingen statistik om hur du använder appen.": "Asetukset, kotipaikkakuntasi ja kopio otteluohjelmasta tallennetaan puhelimeen, jotta sovellus aukeaa nopeasti myös ilman verkkoa. Groundly ei käytä seurantaevästeitä eikä kerää tilastoja siitä, miten käytät sovellusta.",
+ "Plats": "Sijainti",
+ "Trycker du Använd min plats frågar telefonen först om lov. Positionen används bara i telefonen för att hitta närmaste ort och skickas aldrig till Groundly.": "Kun napautat Käytä sijaintiani, puhelin kysyy ensin luvan. Sijaintia käytetään vain puhelimessa lähimmän paikkakunnan löytämiseen, eikä sitä koskaan lähetetä Groundlylle.",
+ "Länkar till hotell och resor": "Linkit hotelleihin ja matkoihin",
+ "Knapparna Hotell och Resa går till Booking.com och Omio. En del av dem är annonslänkar: bokar du via dem kan Groundly få provision, utan att det kostar dig något extra. När du lämnar appen gäller deras villkor och integritetspolicy. Biljetter köper du alltid hos klubben.": "Hotelli- ja Matka-painikkeet vievät Booking.comiin ja Omioon. Osa niistä on mainoslinkkejä: jos varaat niiden kautta, Groundly voi saada provision ilman lisäkustannuksia sinulle. Kun poistut sovelluksesta, niiden ehdot ja tietosuojakäytäntö ovat voimassa. Liput ostetaan aina seuralta.",
+ "Senast uppdaterad {0}.": "Päivitetty viimeksi {0}."
 }
