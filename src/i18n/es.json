@@ -2492,5 +2492,6 @@
  "Trycker du Använd min plats frågar telefonen först om lov. Positionen används bara i telefonen för att hitta närmaste ort och skickas aldrig till Groundly.": "Si pulsas Usar mi ubicación, el teléfono te pide permiso primero. La ubicación solo se usa en tu teléfono para encontrar la ciudad más cercana y nunca se envía a Groundly.",
  "Länkar till hotell och resor": "Enlaces a hoteles y viajes",
  "Knapparna Hotell och Resa går till Booking.com och Omio. En del av dem är annonslänkar: bokar du via dem kan Groundly få provision, utan att det kostar dig något extra. När du lämnar appen gäller deras villkor och integritetspolicy. Biljetter köper du alltid hos klubben.": "Los botones Hotel y Viaje llevan a Booking.com y Omio. Algunos son enlaces de afiliado: si reservas a través de ellos, Groundly puede recibir una comisión sin coste extra para ti. Al salir de la app se aplican sus condiciones y su política de privacidad. Las entradas se compran siempre en el club.",
- "Senast uppdaterad {0}.": "Última actualización: {0}."
+ "Senast uppdaterad {0}.": "Última actualización: {0}.",
+ "Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Encuentra partidos en todo el mundo, colecciona todos los que has visto y comparte la experiencia con otros que aman el fútbol."
 }
