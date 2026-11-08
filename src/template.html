@@ -2355,7 +2355,9 @@ const matchById=id=>MATCHES.find(m=>m._id===id);
 const slim=m=>({id:m._id,home:m.home||null,away:m.away||null,homeName:m.homeName,awayName:m.awayName,kickoff:m.kickoff||null,dateFrom:m.dateFrom||null,dateTo:m.dateTo||null,venue:m.venue||null,city:m.city||null,country:m.country||null,comp:m.comp||null});
 function attendFromMatch(m){return{id:newId(),mid:m._id,home:m.home||null,away:m.away||null,homeName:m.homeName,awayName:m.awayName,date:m.kickoff?dayKey(new Date(m.kickoff)):(m.dateFrom||today()),score:m.score?String(m.score).slice(0,12):null,note:"",venue:m.venue||null,city:m.city||null,country:m.country||null,comp:m.comp||null};}
 function myBtns(m){if(!m._id||myState!=="ready")return"";const past=m.kickoff&&Date.parse(m.kickoff)<Date.now();
-  if(past)return`<button class="mini" data-attend="${esc(m._id)}" aria-pressed="${isAtt(m._id)}">${isAtt(m._id)?$t("Var där {0}",[OK]):$t("Jag var där")}</button>`;
+  // under matchen (ca 2 timmar från avspark) heter knappen "Jag är där", efteråt "Jag var där"
+  const live=past&&Date.now()-Date.parse(m.kickoff)<2*36e5;
+  if(past)return`<button class="mini" data-attend="${esc(m._id)}" aria-pressed="${isAtt(m._id)}">${isAtt(m._id)?(live?$t("Är här {0}",[OK]):$t("Var där {0}",[OK])):(live?$t("Jag är där"):$t("Jag var där"))}</button>`;
   return`<button class="mini" data-wishm="${esc(m._id)}" aria-pressed="${isWishM(m._id)}">${isWishM(m._id)?$t("Sparad {0}",[OK]):$t("Vill gå")}</button>`;}
 function logBtn(c){if(myState!=="ready"||!C[c.id])return"";const nM=MY.attended.filter(a=>a.home===c.id||a.away===c.id).length;
   return`<button class="btn small primary" data-logmatch="${esc(c.id)}">${nM?$t("+ Logga match ({0})",[nM]):$t("+ Logga match")}</button>`;}
@@ -4243,7 +4245,7 @@ function hypeCandidates(){if(dbState!=="ready")return[];const now=Date.now(),end
     sc+=hypeCount(m._id)*(local||!ctry?15:5);if(String(m.tier)==="1")sc+=20;if(tierOf(m)==="CUP")sc+=/Champions/i.test(m.comp||"")?30:15;
     sc+=Math.min(30,((h&&h.cap)||0)/3000);return{m,sc};}).sort((x,y)=>y.sc-x.sc).map(x=>x.m);}
 // nedräkning: minuter de sista timmarna, avrundade timmar under ett dygn, sedan dagar (och timmar om det inte är jämnt)
-function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return $t("Pågår snart");const min=Math.round(ms/6e4);
+function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return ms>-2*36e5?$t("Pågår"):$t("Spelad");const min=Math.round(ms/6e4);
   if(min<60)return $t("om {0} min",[Math.max(1,min)]);if(min<6*60){const h=Math.floor(min/60),m=min%60;return m?$t("om {0} tim {1} min",[h,m]):$t("om {0} tim",[h]);}
   const th=Math.round(ms/36e5);if(th<24)return $t("om {0} tim",[th]);const d=Math.floor(th/24),h=th%24;return h?$t("om {0} {1} och {2} tim",[d,d===1?$t("dag"):$t("dagar"),h]):$t("om {0} {1}",[d,d===1?$t("dag"):$t("dagar")]);}
 function hypeBtn(m,mini){if(mPast(m))return"";const n=hypeCount(m._id);return dbNs&&myId?`<button class="btn small${mini?" hypemini":""}" data-hype="${esc(m._id)}" aria-pressed="${iHype(m._id)}"${mini?` aria-label="${iHype(m._id)?$t("Peppad"):$t("Peppa")}"`:""}${hypeBusy?" disabled":""}>${ic("flame",iHype(m._id)?"on":"")}${mini?"":" "+(iHype(m._id)?$t("Peppad"):$t("Peppa"))}${n?`<span class="hcnt" aria-label="${$t("{0} peppade",[n])}">${n}</span>`:""}</button>`:n?(mini?`<span class="meta" aria-label="${$t("Peppad av {0}",[n])}">${ic("flame")} ${n}</span>`:`<span class="meta">${ic("flame")} ${$t("Peppad av {0}",[n])}</span>`):"";}
