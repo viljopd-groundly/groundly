@@ -2310,6 +2310,11 @@ function showUpdateBar(){if(updShown)return;updShown=true;const el=document.crea
   el.innerHTML=`<span>${ic("download")} ${esc($t("Ny version finns"))}</span><button type="button" class="btn small primary" data-updnow="1">${esc($t("Uppdatera"))}</button><button type="button" class="x" data-updx="1" aria-label="${esc($t("Stäng"))}">×</button>`;document.body.appendChild(el);}
 document.addEventListener("click",e=>{if(e.target.closest("[data-updnow]")){location.reload();return;}if(e.target.closest("[data-updx]"))document.getElementById("updBar")?.remove();});
 addEventListener("load",()=>setTimeout(checkUpdate,2500));document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")checkUpdate();});
+// "För oss som älskar fotboll." ska rymmas på en rad i alla utseenden: krymp texten tills den får plats
+function fitTagline(){const el=document.getElementById("tagline");if(!el||!el.offsetParent)return;el.style.fontSize="";el.style.whiteSpace="nowrap";
+  const max=parseFloat(getComputedStyle(el).fontSize),w=el.clientWidth;if(!w)return;let f=max;
+  for(let i=0;i<4&&el.scrollWidth>w+1;i++){f=Math.max(14,f*w/el.scrollWidth-.3);el.style.fontSize=f+"px";}}
+addEventListener("resize",()=>requestAnimationFrame(fitTagline));if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitTagline);
 function toast(msg,icon){let el=document.getElementById("fkToast");if(!el){el=document.createElement("div");el.id="fkToast";el.setAttribute("role","status");document.body.appendChild(el);}el.innerHTML=(icon?ic(icon):"")+esc(msg);el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),3500);}
 // beta: visa JavaScript-fel som en ruta för moderatorer, så att fel på telefonen går att se
 const showErr=(m,st)=>{try{if(typeof isMod==="undefined"||!isMod)return;const at=String(st||"").split("\n").slice(0,3).map(x=>x.trim()).join(" ← ");toast("Fel: "+String(m||$t("okänt")).slice(0,140)+(at?" · "+at.slice(0,160):""));clearTimeout(toast.t);toast.t=setTimeout(()=>{const el=document.getElementById("fkToast");if(el)el.classList.remove("on");},12000);}catch(x){}};
@@ -4384,7 +4389,7 @@ function remindHtml(){if(!notifOn("remind")||myState!=="ready"||!Array.isArray(M
   if(!due.length)return"";
   return`<article class="tip remind"><div class="lbl">${ic("calendar")} ${$t("Var du där?")}</div>${due.map(w=>`<div class="rmrow"><div><b>${esc(tnm(w,"home"))} – ${esc(tnm(w,"away"))}</b><div class="meta">${esc(dayLong(dayKey(new Date(w.kickoff))))}${w.venue?` · ${esc(w.venue)}`:""}</div></div>
     <div class="actions"><button class="btn small primary" data-wmdone="${esc(w.id)}">${$t("Ja, logga matchen")}</button><button class="btn small" data-wmno="${esc(w.id)}">${$t("Nej")}</button></div></div>`).join("")}</article>`;}
-function renderHome(){const el=document.getElementById("homeBody");if(!el)return;try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
+function renderHome(){const el=document.getElementById("homeBody");if(!el)return;requestAnimationFrame(()=>{if(typeof fitTagline==="function")fitTagline();});try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
   const ids=Object.keys(STATS).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="hem")renderHome();}).catch(()=>{});
   const ob=onboardHtml();
   // Så funkar Groundly visas bara för nya: besökare som inte loggat in, och medlemmar de första 14 dagarna
@@ -5250,7 +5255,7 @@ let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t)
 let theme="auto";try{let t=store.get("fk-theme");if(t==="dusk"||t==="dim")t="dark";if(t==="warm")t="light";if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
 const effTheme=()=>theme==="auto"?(sysDark()?"dark":"light"):theme;
 const effLookTheme=()=>DARKLOOK[look]?(lookTheme==="dark"?"dark":"light"):lookTheme==="auto"?(sysDark()?"dark":"light"):lookTheme;
-function applyTheme(){const r=document.documentElement;if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
+function applyTheme(){const r=document.documentElement;requestAnimationFrame(()=>{if(typeof fitTagline==="function")fitTagline();});if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
   if(acc!=="std")r.setAttribute("data-acc",acc);else r.removeAttribute("data-acc");
   if(look!=="std"){r.setAttribute("data-look",look);r.setAttribute("data-theme",effLookTheme());}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
   // fokuslägets karusellförslag: mörk variant använder appens mörka tema
