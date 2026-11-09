@@ -1338,9 +1338,8 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 <div class="msheet" id="moreSheet" hidden>
   <div class="msback" id="moreBack"></div>
   <div class="mspanel" role="dialog" aria-label="Fler vyer">
-    <button class="msi mswide" data-bn="resa"><b><svg class="ic" aria-hidden="true"><use href="#i-mpin"/></svg></b><span>Planera en fotbollsresa</span></button>
     <div class="msgrid">
-      <button class="msi" data-bn="profil"><b><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></b><span>Min profil</span></button>
+      <button class="msi" data-bn="resa"><b><svg class="ic" aria-hidden="true"><use href="#i-mpin"/></svg></b><span>Planera resa</span></button>
       <button class="msi" data-bn="matcher"><b><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg></b><span>Matcher</span></button>
       <button class="msi" data-bn="klubbar"><b><svg class="ic" aria-hidden="true"><use href="#i-ball"/></svg></b><span>Klubbar</span></button>
       <button class="msi" data-bn="landslag"><b><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg></b><span>Landslag</span></button>
@@ -1504,7 +1503,7 @@ const TAGLINES={"sv": "För oss som älskar fotboll.", "en": "For fans who love 
 // ---------- mode ----------
 // Tillbaka: hoppar man från en vy till en annan (t.ex. arena → landslag) sparas varifrån man kom,
 // så att mobilens bakåt-gest och knappen "Tillbaka till …" leder rätt.
-const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),resa:$t("Planera resa"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};
+const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),resa:$t("Planera resa"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Mitt konto")};
 let navPop=false,pendingJump=null,jumpFrom=null,topNav=false;
 // menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
 function goTop(m){if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";mySubAuto=true;arView="list";}topNav=true;try{setMode(m);}finally{topNav=false;}}
@@ -5251,6 +5250,8 @@ document.addEventListener("submit",async e=>{if(e.target.id!=="nameForm")return;
 // ---------- Min profil ----------
 const followersOf=uid=>Object.entries(PUBLIC).filter(([u,d])=>u!==uid&&d&&Array.isArray(d.fo)&&d.fo.includes(uid)).map(([u])=>u);
 function profSw(attr,on,title,sub){return`<label class="setsw"><input type="checkbox" ${attr}${on?" checked":""}><span><b>${title}</b><small>${sub}</small></span></label>`;}
+window.groundlyGoAccount=()=>{goTop("profil");window.scrollTo({top:0});};
+document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[data-gomod]")&&window.groundlyOpenMod)window.groundlyOpenMod();});
 function renderProfil(){const el=document.getElementById("profilBody");if(!el)return;
   if(!dbNs||!myId){el.innerHTML=`<div class="empty"><b>${$t("Logga in för att se din profil.")}</b><div>${$t("Med ett konto får du ett namn i communityn, kan följa andra groundhoppers och skriva matchberättelser.")}</div><div class="actions"><button class="btn primary" data-glogin>${$t("Logga in")}</button></div></div>`;return;}
   const name=MYNAME||"";const fav=favList()[0]&&C[favList()[0]];
@@ -5276,7 +5277,9 @@ function renderProfil(){const el=document.getElementById("profilBody");if(!el)re
       ${profSw(`data-profset="pub"`,!!MY.pub,$t("Synas i topplistorna"),$t("Bara antal i år: matcher, arenor, länder, landskamper och matcher med ditt favoritlag. Aldrig vilka matcher. Gäller topplistorna på Hem och Groundhoppers i Aktivitet."))}
       ${profSw(`data-profset="share"`,!!MY.share,$t("Visa mina senaste matcher för andra"),(PH()?$t("Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.",[PUB_N]):$t("Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar delas aldrig.",[PUB_N])))}
       ${profSw(`data-profset="showFo"`,!!MY.showFo,$t("Visa vilka jag följer"),$t("Då syns du som följare hos dem du följer, och du ser vilka som följer dig."))}
-      ${NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")}</article>`;}
+      ${NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")}</article>
+    <article class="tip"><div class="lbl">${$t("Konto")}</div><p class="meta" style="margin:0 0 8px">${$t("Inloggning, utloggning och radering av kontot.")}${isMod?" "+$t("Här finns också rättelser och feedback för moderatorer."):""}</p>
+      <div class="actions"><button class="btn small" data-gacct data-gacctdlg>${$t("Kontoinställningar")}</button>${isMod?`<button class="btn small" data-goMod="1">${$t("Rättelser och feedback")}</button>`:""}</div></article>`;}
 document.addEventListener("change",e=>{if(e.target.id!=="ccSel"||myState!=="ready")return;const v=e.target.value;mutate(d=>{d.cc=v;});toast(v==="none"?$t("Ingen flagga visas vid ditt namn."):$t("Flaggan är sparad."),"check");});
 document.addEventListener("change",e=>{const k=e.target.dataset&&e.target.dataset.profset;if(!k||myState!=="ready")return;const on=e.target.checked;
   mutate(d=>{d[k]=on;});if(k==="pub")setTimeout(()=>{try{syncStats();}catch(x){}},50);else setTimeout(syncPublic,50);
@@ -5590,7 +5593,7 @@ async function maybeAskPush(){if(!window.groundlyPush||store.get("fk-pushask")==
 function render(){
   const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),resa:$t("Välj stad och datum, se alla matcher där och spara resan."),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:(PH()?$t("Berättelser och bilder från andras fotbollsresor"):$t("Berättelser från andras fotbollsresor")),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
   {const sb=document.getElementById("sub");{const it=document.getElementById("intro");if(it)it.style.display=look==="modern"&&mode==="hem"?"none":"";}if(mode==="hem"){sb.textContent=$t("Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.");const kk=document.getElementById("kicker");if(kk)kk.textContent=$t("Möt. Upptäck. Upplev.");}else sb.textContent=SUB[mode];}
-  {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),resa:$t("Planera resa"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
+  {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),resa:$t("Planera resa"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Mitt konto")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
    const intro=document.getElementById("intro");if(intro)intro.hidden=mode!=="hem";}
   document.getElementById("foot").innerHTML=mode==="klubbar"
    ?`<div>${$t("Serie anges för säsongen 2026/27 där den är kontrollerad mot aktuella spelscheman; övriga visas som senast kända.")}</div>${AI_ON?`<div>${$t("Klubbar utanför listan slås upp av Claude och kan innehålla fel.")}</div>`:""}<div>${$t("Flaggor från flag-icons av Panayiotis Lipiridis (MIT-licens).")}</div>`

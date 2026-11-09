@@ -2525,5 +2525,10 @@
  "Tryck Vill gå på de matcher du vill se, så hamnar de i resan.": "Napauta Haluan mennä niissä otteluissa, jotka haluat nähdä, niin ne lisätään matkaan.",
  "Visa matcher": "Näytä ottelut",
  "Välj stad och datum och se alla matcher där": "Valitse kaupunki ja päivät ja näe kaikki ottelut siellä",
- "Välj stad och datum, se alla matcher där och spara resan.": "Valitse kaupunki ja päivät, näe kaikki ottelut siellä ja tallenna matka."
+ "Välj stad och datum, se alla matcher där och spara resan.": "Valitse kaupunki ja päivät, näe kaikki ottelut siellä ja tallenna matka.",
+ "Här finns också rättelser och feedback för moderatorer.": "Täällä ovat myös moderaattorien korjaukset ja palaute.",
+ "Inloggning, utloggning och radering av kontot.": "Kirjautuminen, uloskirjautuminen ja tilin poistaminen.",
+ "Konto": "Tili",
+ "Kontoinställningar": "Tilin asetukset",
+ "Mitt konto": "Oma tili"
 }

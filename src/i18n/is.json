@@ -2525,5 +2525,10 @@
  "Tryck Vill gå på de matcher du vill se, så hamnar de i resan.": "Ýttu á Langar að fara á leikjunum sem þú vilt sjá, þá bætast þeir í ferðina.",
  "Visa matcher": "Sýna leiki",
  "Välj stad och datum och se alla matcher där": "Veldu borg og dagsetningar og sjáðu alla leiki þar",
- "Välj stad och datum, se alla matcher där och spara resan.": "Veldu borg og dagsetningar, sjáðu alla leiki þar og vistaðu ferðina."
+ "Välj stad och datum, se alla matcher där och spara resan.": "Veldu borg og dagsetningar, sjáðu alla leiki þar og vistaðu ferðina.",
+ "Här finns också rättelser och feedback för moderatorer.": "Hér eru líka leiðréttingar og ábendingar fyrir stjórnendur.",
+ "Inloggning, utloggning och radering av kontot.": "Innskráning, útskráning og eyðing aðgangsins.",
+ "Konto": "Aðgangur",
+ "Kontoinställningar": "Stillingar aðgangs",
+ "Mitt konto": "Aðgangurinn minn"
 }

@@ -421,7 +421,8 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   document.addEventListener("click", e => {
     const t = e.target.closest && e.target.closest("[data-glogin],[data-gacct]"); if (!t) return;
     e.preventDefault(); e.stopPropagation();
-    if (t.hasAttribute("data-gacct")) openAccount(); else openLogin(t.dataset.glogin === "up" ? "up" : "in");
+    // kontoknappen öppnar sidan Mitt konto i appen; själva kontoinställningarna (logga ut, radera) finns längst ner där
+    if (t.hasAttribute("data-gacct")) { if (window.groundlyGoAccount && !t.hasAttribute("data-gacctdlg")) window.groundlyGoAccount(); else openAccount(); } else openLogin(t.dataset.glogin === "up" ? "up" : "in");
   }, true);
   window.groundlyLogin = openLogin;
 
