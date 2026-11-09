@@ -1525,11 +1525,11 @@ try{history.replaceState({m:mode,y:0},"");}catch(e){}window.__gmode=mode;
 document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>goTop(b.dataset.mode));
 // bottenmenyn
 const MORE_MODES=["profil","matcher","tabell","klubbar","landslag","arenor","tips","quiz"];
-document.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.fokustgl)return;try{if(t.checked)localStorage.setItem("fk-fokus","1");else localStorage.removeItem("fk-fokus");}catch(x){}location.replace(location.pathname);});
 // ---------- FÖRHANDSVISNING: fokusläge (?fokus=1 slår på, ?fokus=0 stänger av) ----------
 // Matcher får Communitys plats i menyraden, plusknappen loggar en match direkt och startsidan visar bara
 // matcher nära dig, logga-knappen och din säsong. Texterna översätts som resten av appen.
-const FOKUS=(()=>{try{const u=new URLSearchParams(location.search).get("fokus");if(u==="1")localStorage.setItem("fk-fokus","1");if(u==="0")localStorage.removeItem("fk-fokus");return localStorage.getItem("fk-fokus")==="1";}catch(e){return false;}})();
+// fokusläget är borttaget (nov 2026); karusellen finns som utseendet Modern
+try{localStorage.removeItem("fk-fokus");localStorage.removeItem("fk-fkstyle");}catch(e){}
 // Matcher ligger i menyraden; Community först under Mer (med pricken för nya inlägg)
 {MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"flode","forum","reportage");
   const cb=document.querySelector('.bnav [data-bn="community"]');if(cb){cb.dataset.bn="matcher";cb.innerHTML=`<svg class="ic" width="22" height="22" aria-hidden="true" style="width:22px;height:22px;vertical-align:0"><use href="#i-calendar"/></svg><span>${$t("Matcher")}</span>`;}
@@ -4408,9 +4408,8 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   // eller tills de loggat 3 matcher. Sedan försvinner rutan.
   if(myState==="ready"&&!MY.since&&dbNs)setTimeout(()=>{if(!MY.since)mutate(d=>{d.since=today();});},0);
   const fresh=isNewbie();
-  if(look==="modern"&&!FOKUS){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
-  {const it=document.getElementById("intro");if(it&&!FOKUS)it.style.display="";}
-  if(FOKUS){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=fokusHomeHtml(ob);return;}
+  if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
+  {const it=document.getElementById("intro");if(it)it.style.display="";}
   el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
@@ -4511,14 +4510,13 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   if(dd<=0){if(!m.kickoff)return"i dag";const h=Math.max(0,Math.ceil((Date.parse(m.kickoff)-Date.now())/36e5));return h<=0?$t("pågår"):$t("{0} tim",[h]);}
   return`${dd} ${dd===1?$t("dag"):$t("dagar")}`;}
 // Hem: tre matcher i taget, "Visa fler" fäller ut resten
-const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false,wkOpen:false};if(FOKUS){homeMore.wkOpen=true;}
+const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false,wkOpen:false};
 // fokusläge: en mening under rubriken (utan antal serier, så att den passar alla länder)
-function fokusCoverage(){return esc($t("Varje match räknas. Spara allt du ser och hitta nästa äventyr bland serier från hela världen."));}
 // fokusläge: en mening om vad appen är, matcher nära dig, logga en match, din säsong och vägar vidare
 // ---------- fokusläge, förslag: startsida med karuseller (scrolla i sidled), ljus eller mörk ----------
-// Växlas med ?stil=vanlig|ljus|mork (sparas i fk-fkstyle). Mörk använder appens mörka tema medan förslaget är valt.
+// Utseendet Modern: ljus eller mörk karusell efter vald Färg (data-fkc på roten).
 // Utseendet Modern = karusellstartsidan (ljus eller mörk efter Färg)
-function fkStyle(){if(typeof look!=="undefined"&&look==="modern")return effLookTheme()==="dark"?"mork":"ljus";try{const u=new URLSearchParams(location.search).get("stil");if(["vanlig","ljus","mork"].includes(u))localStorage.setItem("fk-fkstyle",u);const v=localStorage.getItem("fk-fkstyle");return["ljus","mork"].includes(v)&&FOKUS?v:"vanlig";}catch(e){return"vanlig";}}
+function fkStyle(){return typeof look!=="undefined"&&look==="modern"?(effLookTheme()==="dark"?"mork":"ljus"):"vanlig";}
 
 function fcBanner(m,badge,corner){const c=id=>(COLORS[id]||["#2f6b47","#ffffff"])[0];
   return`<div class="fcban" style="--ca:${c(m.home)};--cb:${c(m.away)}">${badge?`<span class="fcbadge">${badge}</span>`:""}${corner?`<span class="fccorner">${corner}</span>`:""}
@@ -4540,9 +4538,10 @@ function carouselHome(ob){const logged=myState==="ready";
   const hot=hypeCandidates().slice(0,8);
   const s1=fcSection($t("Veckans matcher"),'data-gomode="matcher"',hot.map((m,i)=>fcMatch(m,i===0?{badge:$t("Veckans match")}:{})).join(""));
   // helgen nära hemorten
-  let s2="";const p=homeLL();if(p){const[from,to]=weekendRange();const nowW=Date.now()-2*36e5;
+  // ingen hemort ännu, eller man har tryckt på "Nära …": visa hemortsformuläret (samma som på vanliga startsidan)
+  let s2="";const p=homeLL();if(!homeTown||homeEdit||!p){try{s2=weekendHtml();}catch(e){}}else if(p){const[from,to]=weekendRange();const nowW=Date.now()-2*36e5;
     const wk=MATCHES.filter(m=>m.kickoff?(mTs(m)>nowW&&koDay(m.kickoff)>=from&&koDay(m.kickoff)<=to):(m.dateFrom<=to&&m.dateTo>=from)).map(m=>{const ll=GEO[m.city];return{m,km:ll?roadKm(p.ll,ll):null};}).filter(x=>x.km!==null&&x.km<=300).sort((a,b)=>a.km-b.km).slice(0,10);
-    s2=fcSection($t("Nära dig i helgen"),'data-homeedit="1"',wk.map(x=>fcMatch(x.m,{badge:x.km<5?$t("i stan"):esc(milTxt(x.km)),btn:"tix"})).join(""));}
+    s2=fcSection($t("Nära dig i helgen"),'data-gomode="matcher"',wk.map(x=>fcMatch(x.m,{badge:x.km<5?$t("i stan"):esc(milTxt(x.km)),btn:"tix"})).join(""));}
   // min fotboll
   let s3="";if(logged){const y=myYearStats();const fl=favList();const tiles=[];
     tiles.push(`<button class="fcard fctile" data-gomine="1"><div class="fcstat"><div><b>${y.matches}</b><span>${$t("matcher")}</span></div><div><b>${y.arenas}</b><span>${$t("arenor")}</span></div><div><b>${y.countries}</b><span>${$t("länder")}</span></div></div><div class="fcbody"><b class="fct">${$t("Din säsong {0}",[YEAR])}</b><span class="fcs">${$t("Statistik, karta och listor")}</span></div></button>`);
@@ -4554,27 +4553,6 @@ function carouselHome(ob){const logged=myState==="ready";
     s3=fcSection($t("Min fotboll"),'data-gomine="1"',tiles.join(""));}
   else s3=`<article class="tip fkcta"><div><b>${$t("Varit på en match?")}</b><span class="meta">${$t("Spara den på tio sekunder, så börjar din groundhopperstatistik.")}</span></div><button class="btn primary" data-glogin="up">${ic("plus")} ${$t("Logga en match")}</button></article>`;
   return loc+modAlertHtml()+remindHtml()+s2+s1+ob+s3+cats;}
-function fokusHomeHtml(ob){
-  const st=fkStyle();const sw=(k,l)=>st===k?`<b>${l}</b>`:`<a href="?stil=${k}">${l}</a>`;
-  const head=`<div class="fkpreview">${$t("Förhandsvisning av fokusläget")} · <a href="?fokus=0">${$t("Tillbaka till nuvarande startsida")}</a><br>Utseende: ${sw("vanlig","Vanlig")} · ${sw("ljus","Karusell ljus")} · ${sw("mork","Karusell mörk")}</div>
-   <section class="fkhero"><h1>${$t("Hitta matcher nära dig och samla alla du har sett, stora som små.")}</h1><p>${fokusCoverage()}</p></section>`;
-  const logged=myState==="ready";const n=logged?(MY.attended||[]).length:0;
-  const cta=`<article class="tip fkcta"><div><b>${n?$tn(n,"Du har loggat 1 match","Du har loggat {n} matcher"):$t("Varit på en match?")}</b><span class="meta">${n?$t("Lägg till nästa och se statistiken växa."):$t("Spara den på tio sekunder, så börjar din groundhopperstatistik.")}</span></div>
-     <button class="btn primary" ${logged?'data-plus="log"':'data-glogin="up"'}>${ic("plus")} ${$t("Logga en match")}</button></article>`;
-  const go=(attr,icon,t)=>`<button class="fkgo" ${attr}>${ic(icon)}<span>${t}</span></button>`;
-  const more=`<section class="fkmore"><h3 class="sec">${$t("Upptäck mer")}</h3><div class="fkgrid">${go('data-gomode="tips"',"flame",$t("Derbyn och tips"))}${go('data-gomode="arenor"',"stadium",$t("Arenor"))}${go('data-gomode="klubbar"',"ball",$t("Klubbar"))}${go('data-gomode="tabell"',"table",$t("Tabeller"))}${go('data-gomode="landslag"',"globe",$t("Landslag"))}${go('data-gomode="flode"',"chat",$t("Community"))}</div></section>`;
-  let w="";try{w=weekendHtml();}catch(e){}let m="";try{m=mineSnap();}catch(e){}
-  // rubriken överst, sedan Veckans match som en mörk biljett
-  const [pv,hero]=head.split("\n   ");
-  if(st!=="vanlig")return pv+carouselHome(ob);
-  let t="";try{t=heroHtml().replace('class="tip hero"','class="tip hero fkdark"');}catch(e){}
-  return pv+hero+modAlertHtml()+ob+remindHtml()+w+t+cta+m+more;}
-
-const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
-// "visa mer" på Hem: fäll ut under, skärmen står still. Fälls något ihop och rutans topp hamnat ovanför skärmen, skrolla till rutans topp.
-document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;const card=t.closest("article");const idx=card?[...card.parentElement.children].indexOf(card):-1;
-  homeMore[k]=!homeMore[k];renderHome();
-  if(!homeMore[k]&&idx>=0){const c=document.getElementById("homeBody")?.children[idx];if(c){const top=c.getBoundingClientRect().top;const tb=document.querySelector(".topbar,header");const off=(tb?tb.offsetHeight:0)+8;if(top<off)window.scrollBy(0,top-off);}}});
 function derbyHtml(){const all=derbyNext();const list=homeMore.derby?all:all.slice(0,3);if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">${$t("Nästa derby")}</div><p class="meta">${$t("Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.")}</p></article>`:"";
   return`<article class="tip"><div class="lbl">${$t("Nästa derby i varje land")}</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc($t(land))}</span></div>
     <div class="mmain"><b>${esc($t(d[1]))}</b><span class="meta">${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div></div>`).join("")}</div>${moreBtn("derby",all.length)}</article>`;}
@@ -5323,7 +5301,6 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
   return`<div id="setOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="setT"><div class="compose askbox pvbox msbox setbox">
    <div class="mshead"><h2 id="setT">${$t("Inställningar")}</h2><button class="btn small" id="setClose">${$t("Klar")}</button></div>
    ${sec(`${ic("globe")} ${$t("Språk")}`,`<div class="chips wrapchips">${LANG_LIST.map(([k,l])=>`<button class="chip" data-lang-pick="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join("")}</div>${LANG!=="sv"?`<div class="actions"><button class="btn small" data-tropen="1">${ic("pencil")} ${$t("Förbättra översättningen")}</button>${MY.trHelp===true||isMod?`<button class="btn small" data-tlfix="1">${ic("pencil")} ${$t("Rätta texter där de står")}</button>`:""}</div><p class="hint" style="margin:0">${$t("Föreslå bättre texter och rösta på andras förslag.")} <button class="link" data-tlguide="1">${$t("Så gör du")}</button></p>`:""}`)}
-   ${isMod?sec("Förhandsvisning (bara moderatorer)",`<label class="setsw"><input type="checkbox" data-fokustgl="1"${FOKUS?" checked":""}><span><b>Fokusläge</b><small>Ny startsida med matcher nära dig, logga-knapp och din säsong. Matcher i menyraden.</small></span></label>`):""}
    ${sec($t("Påminnelser"),remindSecHtml())}
    ${sec($t("Avstånd"),`<div class="chips wrapchips">${[["auto",$t("Automatiskt")],["mil","mil"],["km","km"],["mi","miles"]].map(([k,l])=>`<button class="chip" data-unit-pick="${k}" aria-pressed="${unitPick===k}">${l}</button>`).join("")}</div><p class="hint">${$t("Automatiskt väljer efter ditt land: mil i Sverige och Norge, miles i Storbritannien och USA, annars km.")}</p>`)}
    ${sec($t("Logga|bild"),`<div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
@@ -5542,7 +5519,7 @@ async function maybeAskPush(){if(!window.groundlyPush||store.get("fk-pushask")==
 // ---------- render ----------
 function render(){
   const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:(PH()?$t("Berättelser och bilder från andras fotbollsresor"):$t("Berättelser från andras fotbollsresor")),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
-  {const sb=document.getElementById("sub");{const it=document.getElementById("intro");if(it)it.style.display=FOKUS&&mode==="hem"?"none":"";}if(mode==="hem"){sb.textContent=$t("Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.");const kk=document.getElementById("kicker");if(kk)kk.textContent=$t("Möt. Upptäck. Upplev.");}else sb.textContent=SUB[mode];}
+  {const sb=document.getElementById("sub");{const it=document.getElementById("intro");if(it)it.style.display=look==="modern"&&mode==="hem"?"none":"";}if(mode==="hem"){sb.textContent=$t("Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.");const kk=document.getElementById("kicker");if(kk)kk.textContent=$t("Möt. Upptäck. Upplev.");}else sb.textContent=SUB[mode];}
   {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
    const intro=document.getElementById("intro");if(intro)intro.hidden=mode!=="hem";}
   document.getElementById("foot").innerHTML=mode==="klubbar"
