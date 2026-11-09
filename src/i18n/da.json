@@ -2496,5 +2496,7 @@
  "Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Find kampe i hele verden, saml alle dem, du har set, og del oplevelserne med andre, der elsker fodbold.",
  "Pågår": "I gang",
  "Jag är där": "Jeg er her",
- "Är här {0}": "Er her {0}"
+ "Är här {0}": "Er her {0}",
+ "Inga av arenorna ligger på den här kartan. Välj en annan del av världen.": "Ingen af stadionerne ligger på dette kort. Vælg en anden del af verden.",
+ "Visar {0}. Tryck på en annan prick för att byta.": "Viser {0}. Tryk på en anden prik for at skifte."
 }

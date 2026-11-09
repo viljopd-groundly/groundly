@@ -2495,5 +2495,7 @@
  "Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Vind wedstrijden over de hele wereld, verzamel alle die je hebt gezien en deel de ervaringen met anderen die van voetbal houden.",
  "Pågår": "Bezig",
  "Jag är där": "Ik ben er",
- "Är här {0}": "Ben er {0}"
+ "Är här {0}": "Ben er {0}",
+ "Inga av arenorna ligger på den här kartan. Välj en annan del av världen.": "Geen van de stadions ligt op deze kaart. Kies een ander deel van de wereld.",
+ "Visar {0}. Tryck på en annan prick för att byta.": "{0} wordt getoond. Tik op een andere stip om te wisselen."
 }

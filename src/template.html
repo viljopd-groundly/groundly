@@ -612,7 +612,8 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .lmap{background:var(--surface);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow,none)}
 .lmapbox{border-radius:12px;overflow:hidden;background:color-mix(in srgb,#4f8fc0 15%,var(--surface))}
 .lmapsvg{display:block;width:100%;height:auto;max-height:460px}
-#liveMap{position:relative;touch-action:pan-y;user-select:none;-webkit-user-select:none}#liveMap.zoomed{touch-action:none}
+.toolbar #aViewChips{margin:0}#amapCard:not(:empty){margin-top:12px}
+.livemap{position:relative;touch-action:pan-y;user-select:none;-webkit-user-select:none}.livemap.zoomed{touch-action:none}
 .lmzoom{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:6px;z-index:2}
 .lmzoom button{all:unset;cursor:pointer;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.92);color:#1E3A2C;font:700 18px/1 system-ui;box-shadow:0 1px 4px rgba(0,0,0,.25)}
 .lmzoom button[hidden]{display:none}
@@ -1205,7 +1206,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
     <div class="selrow"><label class="selw"><span class="vh">Land</span><select id="aCountrySel" class="dsel"></select></label><label class="selw"><span class="vh">Sortera</span><select id="aSortSel" class="dsel"></select></label></div>
     <div class="lbl">Visa bara</div>
     <div class="chips wrapchips" role="group" aria-label="Filter" id="aFiltChips"></div>
-    <div class="toolbar"><div class="count" id="arenaCount"></div></div>
+    <div class="toolbar"><div class="count" id="arenaCount"></div><div class="chips" role="group" id="aViewChips"></div></div>
     <div class="list" id="arenaList"></div>
   </section>
 
@@ -2441,7 +2442,7 @@ function renderMine(){
     h+=`<div class="chips" role="group" aria-label="${$t("Arenor")}"><button class="chip" data-arview="list" aria-pressed="${arView!=="pass"}">${$t("Karta och lista")}</button><button class="chip" data-arview="pass" aria-pressed="${arView==="pass"}">${$t("Arenapass")}</button></div>`;
     if(arView==="pass")h+=renderPass();else{
     if(MY.attended.length){const pins=visitedPins();const reg=mapRegion||autoRegion(pins);
-      h+=`<div class="sechead"><h3 class="sec">${$t("Mina arenor på kartan")}</h3></div><div class="lmap"><div class="chips" role="group" aria-label="${$t("Karta")}">${[["se",$t("Sverige")],["eu",$t("Europa")],["world",$t("Världen")]].map(([k,l])=>`<button class="chip" data-mapr="${k}" aria-pressed="${reg===k}">${l}</button>`).join("")}</div><div class="lmapticket"><div class="lmstub" aria-hidden="true"><b>${$t("KARTA")}</b></div><div id="liveMap" class="lmapbox"><p class="hint">${$t("Laddar kartan…")}</p></div></div><p class="hint" id="lmapInfo">${$t("Tryck på en prick för att se arenan.")}</p></div><h3 class="sec">${$t("Dela kartan")}</h3><p class="hint">${$t("Kartan ovan som en bild att dela. Välj Sverige, Europa eller Världen ovanför kartan.")}</p>${fmtChips()}${studioHtml("map",$t("Karta över besökta arenor"))}`;}
+      h+=`<div class="sechead"><h3 class="sec">${$t("Mina arenor på kartan")}</h3></div><div class="lmap"><div class="chips" role="group" aria-label="${$t("Karta")}">${[["se",$t("Sverige")],["eu",$t("Europa")],["world",$t("Världen")]].map(([k,l])=>`<button class="chip" data-mapr="${k}" aria-pressed="${reg===k}">${l}</button>`).join("")}</div><div class="lmapticket"><div class="lmstub" aria-hidden="true"><b>${$t("KARTA")}</b></div><div id="liveMap" class="lmapbox livemap"><p class="hint">${$t("Laddar kartan…")}</p></div></div><p class="hint" id="lmapInfo">${$t("Tryck på en prick för att se arenan.")}</p></div><h3 class="sec">${$t("Dela kartan")}</h3><p class="hint">${$t("Kartan ovan som en bild att dela. Välj Sverige, Europa eller Världen ovanför kartan.")}</p>${fmtChips()}${studioHtml("map",$t("Karta över besökta arenor"))}`;}
     h+=`<h3 class="sec">${$t("Klubbar och arenor jag besökt")}</h3>`;
     h+=vis.length?`<div class="clist">${vis.filter(([id],i)=>i<MYMORE.vis||id===visOpen).map(([id,d])=>{const c=C[id];const games=MY.attended.filter(x=>x.home===id||x.away===id||(c.s&&x.venue&&arenaKey(x.venue)===arenaKey(c.s)));const open=visOpen===id;return`<div class="citem${open?" open":""}"><div class="mmain"><button class="cname" data-visopen="${esc(id)}" aria-expanded="${open}">${esc(c.n)}</button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}${games.length?` · ${games.length} ${games.length===1?$t("match"):$t("matcher")}`:""}</div>
       ${open?(games.length?seenRowsHtml(games):`<p class="hint">${$t("Inga sparade matcher med {0} än. Klubben är markerad som besökt.",[esc(c.n)])}</p>`)+`<div class="actions"><button class="btn small" data-open="${esc(id)}">${$t("Visa klubben")}</button></div>`:""}${c.s&&ratingsState==="ready"?`<div class="pactions"><button class="link" data-rate="${esc(id)}">${myRating(c)?$t("Ändra arenabetyg"):$t("Betygsätt arenan")}</button></div>`:""}</div>${d.via?"":delBtn("vis",id)}</div>`;}).join("")}</div>${moreBtns("vis",vis.length)}`
@@ -3835,9 +3836,22 @@ function renderArenas(){
   const sv=country;country=aCountry;let list;try{list=arenaList();}finally{country=sv;}
   document.getElementById("arenaCount").innerHTML=`<b>${list.length}</b> ${list.length===1?$t("arena"):$t("arenor")}${aq?$t(" för ”{0}”",[esc(aq)]):""}${(()=>{if(myState!=="ready")return"";const vs=visitedStadiums();const vk=new Set([...vs].map(arenaKey));const n=list.filter(x=>vk.has(x.k)).length;return n?` · <b>${n}</b> ${$t("{0} av dig",[n===1?$t("besökt"):$t("besökta")])}`:"";})()}`;
   const el=document.getElementById("arenaList");
+  document.getElementById("aViewChips").innerHTML=[["list",$t("Lista")],["map",$t("Karta")]].map(([k,l])=>`<button class="chip" data-aview="${k}" aria-pressed="${aView===k}">${k==="map"?ic("mpin")+" ":""}${l}</button>`).join("");
+  if(aView==="map"&&list.length){arenaMapView(el,list);return;}
   if(!list.length&&aFilt.has("vis")&&!visitedStadiums().size){el.innerHTML=`<div class="empty"><b>${$t("Du har inte loggat någon arena än.")}</b><div>${$t("Logga en match du varit på så hamnar arenan här.")}</div></div>`;return;}
   if(!list.length){el.innerHTML=`<div class="empty"><b>${$t("Ingen arena matchar.")}</b><div>${$t("Prova ett annat land, ta bort ett filter eller sök på stad eller klubb.")}</div></div>`;return;}
   el.innerHTML=list.slice(0,aLimit).map(arenaCard).join("")+(list.length>aLimit?`<button class="btn" data-amore="1">${$t("Visa fler ({0} kvar)",[list.length-aLimit])}</button>`:"");}
+// Arenor på karta: samma filter som listan. Prickens storlek efter publikkapacitet; tryck för att se arenakortet under kartan.
+let aView="list",aRegion=null,aPick=null;try{if(store.get("fk-aview")==="map")aView="map";const r=store.get("fk-aregion");if(r==="se"||r==="eu"||r==="world")aRegion=r;}catch(e){}
+function arenaMapView(el,list){const pins=list.map(x=>{const ll=GEO[x.city]||(x.clubs[0]&&GEO[x.clubs[0].city]);return ll?{s:x.s,ll,c:x.c,city:$t(x.city),n:Math.max(1,x.cap||1000),x}:null;}).filter(Boolean);
+  const reg=aRegion||(aCountry==="Sverige"?"se":pins.every(p=>inRegion(p.ll,MAPS.eu||{lon0:-30,lon1:45,lat0:34,lat1:72}))?"eu":"world");
+  el.innerHTML=`<div class="lmap"><div class="chips" role="group" aria-label="${$t("Karta")}">${[["se",$t("Sverige")],["eu",$t("Europa")],["world",$t("Världen")]].map(([k,l])=>`<button class="chip" data-aregion="${k}" aria-pressed="${reg===k}">${l}</button>`).join("")}</div>
+    <div id="arenaMap" class="lmapbox livemap"><p class="hint">${$t("Laddar kartan…")}</p></div><p class="hint" id="amapInfo"></p></div><div id="amapCard"></div>`;
+  drawLiveMap({id:"arenaMap",pins,region:reg,info:"amapInfo",empty:$t("Inga av arenorna ligger på den här kartan. Välj en annan del av världen."),
+    pick:p=>{aPick=p.x.k;const c=document.getElementById("amapCard");if(c){c.innerHTML=arenaCard(p.x);}const m=document.getElementById("arenaMap");m.querySelectorAll(".lpin.on").forEach(g=>g.classList.remove("on"));const i=m._pins.indexOf(p);const g=m.querySelector(`[data-lpin="${i}"]`);if(g)g.classList.add("on");
+      const info=document.getElementById("amapInfo");if(info)info.textContent=$t("Visar {0}. Tryck på en annan prick för att byta.",[p.s]);}}).then(()=>{if(!aPick)return;const m=document.getElementById("arenaMap");const p=m&&m._pins&&m._pins.find(q=>q.x.k===aPick);if(p)m._pick(p);});}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-aview],[data-aregion]");if(!b)return;
+  if(b.dataset.aview){aView=b.dataset.aview;store.set("fk-aview",aView);}else{aRegion=b.dataset.aregion;store.set("fk-aregion",aRegion);}renderArenas();});
 const isArenaBtn=t=>t.dataset.acountry||t.dataset.asort||t.dataset.afilt||t.dataset.amore;
 function arenaClick(t){
   if(t.dataset.acountry){aCountry=t.dataset.acountry;aSave();aLimit=40;}
@@ -4886,46 +4900,48 @@ document.addEventListener("submit",e=>{if(e.target.id==="obFav"){e.preventDefaul
 
 
 // ---------- karta i Varit på ----------
-async function drawLiveMap(){const el=document.getElementById("liveMap");if(!el)return;await loadMaps();if(!document.getElementById("liveMap"))return;
+// kartan används både för Mina arenor (Min fotboll) och alla arenor (Arenor). o: {id, pins, region, info, pick, empty}
+async function drawLiveMap(o={}){const id=o.id||"liveMap";let el=document.getElementById(id);if(!el)return;await loadMaps();el=document.getElementById(id);if(!el)return;
   if(!MAPS.eu.path){el.innerHTML=`<p class="hint">${$t("Kartan kunde inte laddas. Försök igen senare.")}</p>`;return;}
-  const all=visitedPins();const reg=mapRegion||autoRegion(all);const R=MAPS[reg];const isSe=reg==="se";
+  const all=o.pins||visitedPins();const reg=o.region||mapRegion||autoRegion(all);const R=MAPS[reg];const isSe=reg==="se";
   const pins=all.filter(p=>inRegion(p.ll,R)&&(!isSe||!p.c||p.c==="Sverige")).map(p=>({...p,xy:projPin(p.ll,R)})).sort((a,b)=>a.xy[1]-b.xy[1]);const out=all.length-pins.length;
   const sz=Math.max(R.w,R.h)/(reg==="world"?34:26);
   el.innerHTML=`<svg class="lmapsvg" viewBox="0 0 ${R.w} ${R.h}" role="img" aria-label="${$t("Karta med {0} {1}",[pins.length,pins.length===1?$t("arena"):$t("arenor")])}">${R.path2?`<path class="l2" d="${R.path2}"/>`:""}<path class="l1" d="${R.path}"/>${(()=>{const mx=Math.max(1,...pins.map(p=>p.n));const r0=sz*.16;return pins.map((p,i)=>{const r=r0*(1+.6*p.n/mx);return`<g class="lpin" data-lpin="${i}" tabindex="0" role="button" aria-label="${esc(p.s)}" transform="translate(${p.xy[0].toFixed(1)} ${p.xy[1].toFixed(1)})"><circle class="lp0" r="${(r+r0*.55).toFixed(2)}"/><circle class="lp1" r="${r.toFixed(2)}"/><circle class="lp2" r="${(r*.45).toFixed(2)}"/><circle class="lphit" r="${Math.max(r*2.2,sz*.35).toFixed(2)}"/></g>`;}).join("");})()}</svg>`;
-  el.insertAdjacentHTML("beforeend",`<div class="lmzoom" id="lmZoom"><button type="button" data-lmz="+" aria-label="${$t("Zooma in")}">+</button><button type="button" data-lmz="-" aria-label="${$t("Zooma ut")}">−</button><button type="button" data-lmz="0" hidden aria-label="${$t("Visa hela kartan")}">↺</button></div>`);
-  el._pins=pins;el.classList.remove("zoomed");LMZ.k=1;const info=document.getElementById("lmapInfo");
-  if(info)info.textContent=pins.length?$t("{0} {1} på kartan{2}. Tryck på en prick för att se arenan.",[pins.length,pins.length===1?$t("arena"):$t("arenor"),out?$t(" · {0} utanför",[out]):""]):out?$t("Inga av dina {0} arenor ligger på den här kartan.",[out]):$t("Arenorna syns här när du loggat matcher.");}
+  el.insertAdjacentHTML("beforeend",`<div class="lmzoom" ><button type="button" data-lmz="+" aria-label="${$t("Zooma in")}">+</button><button type="button" data-lmz="-" aria-label="${$t("Zooma ut")}">−</button><button type="button" data-lmz="0" hidden aria-label="${$t("Visa hela kartan")}">↺</button></div>`);
+  el._pins=pins;el._pick=o.pick||null;el.dataset.info=o.info||"lmapInfo";el.classList.remove("zoomed");LMZ.k=1;const info=document.getElementById(el.dataset.info);
+  if(info&&o.empty!==undefined)info.textContent=pins.length?$t("{0} {1} på kartan{2}. Tryck på en prick för att se arenan.",[pins.length,pins.length===1?$t("arena"):$t("arenor"),out?$t(" · {0} utanför",[out]):""]):o.empty;
+  else if(info)info.textContent=pins.length?$t("{0} {1} på kartan{2}. Tryck på en prick för att se arenan.",[pins.length,pins.length===1?$t("arena"):$t("arenor"),out?$t(" · {0} utanför",[out]):""]):out?$t("Inga av dina {0} arenor ligger på den här kartan.",[out]):$t("Arenorna syns här när du loggat matcher.");}
 // zooma och flytta kartan: nyp med två fingrar, dra med ett när den är inzoomad, dubbeltryck eller knapparna + och −
 const LMZ={k:1,max:10,drag:null,pts:new Map(),moved:0,lastTap:0};
 function lmBase(el){const sv=el&&el.querySelector(".lmapsvg");if(!sv)return null;if(!sv._b){const v=sv.viewBox.baseVal;sv._b=[v.x,v.y,v.width,v.height];sv._v=sv._b.slice();}return sv;}
 function lmApply(sv){const b=sv._b,v=sv._v;const k=b[2]/v[2];LMZ.k=k;
   v[0]=Math.min(Math.max(v[0],b[0]),b[0]+b[2]-v[2]);v[1]=Math.min(Math.max(v[1],b[1]),b[1]+b[3]-v[3]);
   sv.setAttribute("viewBox",v.map(x=>x.toFixed(2)).join(" "));
-  const el=document.getElementById("liveMap");(el._pins||[]).forEach((p,i)=>{const g=sv.querySelector(`[data-lpin="${i}"]`);if(g)g.setAttribute("transform",`translate(${p.xy[0].toFixed(1)} ${p.xy[1].toFixed(1)}) scale(${(1/Math.sqrt(k)).toFixed(3)})`);});
-  el.classList.toggle("zoomed",k>1.02);const z=document.getElementById("lmZoom");if(z)z.querySelector("[data-lmz='0']").hidden=k<=1.02;}
+  const el=sv.closest(".livemap");(el._pins||[]).forEach((p,i)=>{const g=sv.querySelector(`[data-lpin="${i}"]`);if(g)g.setAttribute("transform",`translate(${p.xy[0].toFixed(1)} ${p.xy[1].toFixed(1)}) scale(${(1/Math.sqrt(k)).toFixed(3)})`);});
+  el.classList.toggle("zoomed",k>1.02);const z=el.querySelector(".lmzoom");if(z)z.querySelector("[data-lmz='0']").hidden=k<=1.02;}
 function lmZoomAt(sv,f,cx,cy){const b=sv._b,v=sv._v;const k0=b[2]/v[2];const k1=Math.min(LMZ.max,Math.max(1,k0*f));const w=b[2]/k1,h=b[3]/k1;
   const px=v[0]+(cx??.5)*v[2],py=v[1]+(cy??.5)*v[3];sv._v=[px-(cx??.5)*w,py-(cy??.5)*h,w,h];lmApply(sv);}
 const lmRel=(sv,x,y)=>{const r=sv.getBoundingClientRect();return[(x-r.left)/r.width,(y-r.top)/r.height];};
-document.addEventListener("pointerdown",e=>{const el=e.target.closest&&e.target.closest("#liveMap");if(!el||e.target.closest(".lmzoom"))return;const sv=lmBase(el);if(!sv)return;
+document.addEventListener("pointerdown",e=>{const el=e.target.closest&&e.target.closest(".livemap");if(!el||e.target.closest(".lmzoom"))return;LMZ.el=el;const sv=lmBase(el);if(!sv)return;
   LMZ.pts.set(e.pointerId,[e.clientX,e.clientY]);LMZ.moved=0;try{el.setPointerCapture(e.pointerId);}catch(x){}
   if(LMZ.pts.size===2){const [a,c]=[...LMZ.pts.values()];LMZ.drag={pinch:true,d:Math.hypot(a[0]-c[0],a[1]-c[1]),v:sv._v.slice()};}
   else LMZ.drag={x:e.clientX,y:e.clientY,v:sv._v.slice()};});
-document.addEventListener("pointermove",e=>{if(!LMZ.pts.has(e.pointerId))return;const el=document.getElementById("liveMap");const sv=el&&lmBase(el);if(!sv||!LMZ.drag)return;
+document.addEventListener("pointermove",e=>{if(!LMZ.pts.has(e.pointerId))return;const el=LMZ.el;const sv=el&&lmBase(el);if(!sv||!LMZ.drag)return;
   LMZ.pts.set(e.pointerId,[e.clientX,e.clientY]);const r=sv.getBoundingClientRect();
   if(LMZ.drag.pinch&&LMZ.pts.size>=2){const [a,c]=[...LMZ.pts.values()];const d=Math.hypot(a[0]-c[0],a[1]-c[1]);const [cx,cy]=lmRel(sv,(a[0]+c[0])/2,(a[1]+c[1])/2);
     sv._v=LMZ.drag.v.slice();lmZoomAt(sv,d/LMZ.drag.d,cx,cy);LMZ.moved=99;e.preventDefault();return;}
   if(LMZ.k<=1.02)return;const dx=e.clientX-LMZ.drag.x,dy=e.clientY-LMZ.drag.y;LMZ.moved=Math.max(LMZ.moved,Math.abs(dx)+Math.abs(dy));
   const v=LMZ.drag.v;sv._v=[v[0]-dx/r.width*v[2],v[1]-dy/r.height*v[3],v[2],v[3]];lmApply(sv);e.preventDefault();},{passive:false});
-const lmUp=e=>{if(!LMZ.pts.has(e.pointerId))return;LMZ.pts.delete(e.pointerId);const el=document.getElementById("liveMap");const sv=el&&lmBase(el);
+const lmUp=e=>{if(!LMZ.pts.has(e.pointerId))return;LMZ.pts.delete(e.pointerId);const el=LMZ.el;const sv=el&&lmBase(el);
   if(LMZ.pts.size===1&&sv){const [p]=[...LMZ.pts.values()];LMZ.drag={x:p[0],y:p[1],v:sv._v.slice()};}else if(!LMZ.pts.size)LMZ.drag=null;
   // dubbeltryck: zooma in där man tryckte, eller tillbaka när man är långt inne
   if(e.type==="pointerup"&&sv&&LMZ.moved<8&&!LMZ.pts.size){const now=Date.now();if(now-LMZ.lastTap<300){const [cx,cy]=lmRel(sv,e.clientX,e.clientY);if(LMZ.k>=LMZ.max-.1){sv._v=sv._b.slice();lmApply(sv);}else lmZoomAt(sv,2.2,cx,cy);LMZ.lastTap=0;}else LMZ.lastTap=now;}};
 document.addEventListener("pointerup",e=>{lmUp(e);if(!LMZ.pts.size&&LMZ.moved)setTimeout(()=>{if(!LMZ.pts.size)LMZ.moved=0;},350);});document.addEventListener("pointercancel",lmUp);
-document.addEventListener("wheel",e=>{const el=e.target.closest&&e.target.closest("#liveMap");if(!el)return;const sv=lmBase(el);if(!sv)return;e.preventDefault();const [cx,cy]=lmRel(sv,e.clientX,e.clientY);lmZoomAt(sv,e.deltaY<0?1.25:.8,cx,cy);},{passive:false});
-document.addEventListener("click",e=>{const b=e.target.closest("[data-lmz]");if(!b)return;const sv=lmBase(document.getElementById("liveMap"));if(!sv)return;const z=b.dataset.lmz;
+document.addEventListener("wheel",e=>{const el=e.target.closest&&e.target.closest(".livemap");if(!el)return;const sv=lmBase(el);if(!sv)return;e.preventDefault();const [cx,cy]=lmRel(sv,e.clientX,e.clientY);lmZoomAt(sv,e.deltaY<0?1.25:.8,cx,cy);},{passive:false});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-lmz]");if(!b)return;LMZ.el=b.closest(".livemap");const sv=lmBase(LMZ.el);if(!sv)return;const z=b.dataset.lmz;
   if(z==="0"){sv._v=sv._b.slice();lmApply(sv);}else lmZoomAt(sv,z==="+"?1.8:1/1.8);});
-document.addEventListener("click",e=>{const g=e.target.closest("[data-lpin]");if(!g||LMZ.moved>=8)return;const el=document.getElementById("liveMap");const p=el&&el._pins&&el._pins[+g.dataset.lpin];if(!p)return;
-  const info=document.getElementById("lmapInfo");if(info)info.textContent=`${p.s}${p.city?", "+p.city:""} · ${p.n} ${p.n===1?$t("match"):$t("matcher")}`;
+document.addEventListener("click",e=>{const g=e.target.closest("[data-lpin]");if(!g||LMZ.moved>=8)return;const el=g.closest(".livemap");const p=el&&el._pins&&el._pins[+g.dataset.lpin];if(!p)return;
+  if(el._pick)el._pick(p);else{const info=document.getElementById(el.dataset.info||"lmapInfo");if(info)info.textContent=`${p.s}${p.city?", "+p.city:""} · ${p.n} ${p.n===1?$t("match"):$t("matcher")}`;}
   el.querySelectorAll(".lpin.on").forEach(x=>x.classList.remove("on"));g.classList.add("on");});
 document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.closest&&e.target.closest("[data-lpin]")){e.preventDefault();e.target.dispatchEvent(new MouseEvent("click",{bubbles:true}));}});
 

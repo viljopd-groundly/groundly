@@ -2495,5 +2495,7 @@
  "Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Trova partite in tutto il mondo, colleziona tutte quelle che hai visto e condividi le esperienze con chi ama il calcio.",
  "Pågår": "In corso",
  "Jag är där": "Ci sono",
- "Är här {0}": "Ci sono {0}"
+ "Är här {0}": "Ci sono {0}",
+ "Inga av arenorna ligger på den här kartan. Välj en annan del av världen.": "Nessuno degli stadi è su questa mappa. Scegli un'altra parte del mondo.",
+ "Visar {0}. Tryck på en annan prick för att byta.": "Stai vedendo {0}. Tocca un altro punto per cambiare."
 }

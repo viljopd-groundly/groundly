@@ -2495,5 +2495,7 @@
  "Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Löydä otteluita kaikkialta maailmasta, kerää kaikki näkemäsi ja jaa elämykset muiden jalkapalloa rakastavien kanssa.",
  "Pågår": "Käynnissä",
  "Jag är där": "Olen paikalla",
- "Är här {0}": "Paikalla {0}"
+ "Är här {0}": "Paikalla {0}",
+ "Inga av arenorna ligger på den här kartan. Välj en annan del av världen.": "Mikään stadioneista ei ole tällä kartalla. Valitse toinen osa maailmaa.",
+ "Visar {0}. Tryck på en annan prick för att byta.": "Näytetään {0}. Vaihda napauttamalla toista pistettä."
 }
