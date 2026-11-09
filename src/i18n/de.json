@@ -2531,5 +2531,11 @@
  "Inloggning, utloggning och radering av kontot.": "Anmelden, Abmelden und Konto löschen.",
  "Konto": "Konto",
  "Kontoinställningar": "Kontoeinstellungen",
- "Mitt konto": "Mein Konto"
+ "Mitt konto": "Mein Konto",
+ "{0} har delat en fotbollsresa med dig": "{0} hat eine Fußballreise mit dir geteilt",
+ "En fotbollsresa har delats med dig": "Eine Fußballreise wurde mit dir geteilt",
+ "Fotbollsresa till {0}, {1}": "Fußballreise nach {0}, {1}",
+ "Inga matcher valda i resan, men här är alla matcher i området.": "In der Reise sind keine Spiele ausgewählt, aber hier sind alle Spiele in der Gegend.",
+ "Resan och {0} matcher är sparade": "Die Reise und {0} Spiele sind gespeichert",
+ "Spara resan och matcherna": "Reise und Spiele speichern"
 }

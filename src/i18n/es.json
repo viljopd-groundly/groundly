@@ -2531,5 +2531,11 @@
  "Inloggning, utloggning och radering av kontot.": "Inicio de sesión, cierre de sesión y eliminación de la cuenta.",
  "Konto": "Cuenta",
  "Kontoinställningar": "Ajustes de la cuenta",
- "Mitt konto": "Mi cuenta"
+ "Mitt konto": "Mi cuenta",
+ "{0} har delat en fotbollsresa med dig": "{0} ha compartido un viaje de fútbol contigo",
+ "En fotbollsresa har delats med dig": "Se ha compartido contigo un viaje de fútbol",
+ "Fotbollsresa till {0}, {1}": "Viaje de fútbol a {0}, {1}",
+ "Inga matcher valda i resan, men här är alla matcher i området.": "No hay partidos elegidos en el viaje, pero aquí están todos los partidos de la zona.",
+ "Resan och {0} matcher är sparade": "El viaje y {0} partidos están guardados",
+ "Spara resan och matcherna": "Guardar el viaje y los partidos"
 }

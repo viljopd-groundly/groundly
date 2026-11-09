@@ -2619,5 +2619,11 @@
  "Inloggning, utloggning och radering av kontot.": "Sign-in, sign-out and deleting the account.",
  "Konto": "Account",
  "Kontoinställningar": "Account settings",
- "Mitt konto": "My account"
+ "Mitt konto": "My account",
+ "{0} har delat en fotbollsresa med dig": "{0} shared a football trip with you",
+ "En fotbollsresa har delats med dig": "A football trip has been shared with you",
+ "Fotbollsresa till {0}, {1}": "Football trip to {0}, {1}",
+ "Inga matcher valda i resan, men här är alla matcher i området.": "No matches picked in the trip, but here are all the matches in the area.",
+ "Resan och {0} matcher är sparade": "The trip and {0} matches are saved",
+ "Spara resan och matcherna": "Save the trip and the matches"
 }
