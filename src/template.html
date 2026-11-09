@@ -684,6 +684,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
   .mspanel{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:18px 18px 0 0;padding:16px 16px calc(84px + env(safe-area-inset-bottom,0px))}
   .mswide{display:flex!important;flex-direction:row!important;align-items:center;justify-content:flex-start;gap:12px;width:100%!important;align-self:stretch;max-width:none!important;box-sizing:border-box;margin-bottom:8px!important;padding:12px 16px!important;text-align:left}.mswide b{margin:0!important}
 .rform{display:grid;gap:10px}.rform .fld{display:grid;gap:4px;font-weight:600}.rform input{font:inherit;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box;min-width:0}.rown .rinp{display:flex;align-items:center;gap:8px}.rown .rinp input{max-width:120px}.rown .rinp b{font-weight:600}
+.rsugw{position:relative;display:block}.rsug{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:30;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.14);overflow:hidden}.rsugi{all:unset;box-sizing:border-box;display:flex;justify-content:space-between;gap:10px;width:100%;padding:11px 14px;cursor:pointer;font-weight:400}.rsugi+.rsugi{border-top:1px solid var(--line)}.rsugi:hover,.rsugi:focus-visible{background:var(--soft,var(--bg))}.rsugi b{font-weight:600;color:var(--fg)}
 .rdates{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .triplist{display:grid;gap:10px}.trip.past{opacity:.7}.trip.on{box-shadow:inset 0 0 0 2px var(--accent)}.tripm{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.tripm li{cursor:pointer}.tripact{margin:4px 0 8px}
 .msgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -4594,6 +4595,23 @@ function tripPicked(t,list){return(list||resaMatches(t)||[]).filter(x=>isWishM(x
 function tripLinks(q){const c=cityLL(q.city);const name=c?c.name:q.city;const out=q.to>q.from?q.to:addDays(q.from,1);
   return`${extLink(bookingUrl("",$t(name),q.from,out),adLabel($t("Hotell i {0}",[esc($t(name))])),"btn small")}${homeTown&&!homeIsLocal(name)?extLink(omioUrl(homeLL()?.name||homeTown,name),OMIO_ON?adLabel($t("Resa dit")):$t("Resa dit"),"btn small"):""}`;}
 // det man håller på att skriva i formuläret överlever omritningar (t.ex. när någon peppar en match)
+// stadsförslag: efter två bokstäver visas städer som börjar på (eller innehåller) det man skrivit, flest klubbar först
+let CITYIDX=null,CITYIDX_M=null;
+function cityIndex(){if(CITYIDX&&CITYIDX_M===MATCHES)return CITYIDX;CITYIDX_M=MATCHES;const m=new Map();const add=(name,ctry,w)=>{if(!name||!GEO[name])return;const k=name;let x=m.get(k);if(!x)m.set(k,x={name,ctry:ctry||"",w:0,keys:[]});if(ctry&&!x.ctry)x.ctry=ctry;x.w+=w;};
+  Object.values(C).forEach(c=>{if(c.city&&c.l!=="Landslag")add(c.city,c.c,1);});Object.keys(GEO).forEach(k=>add(k,"",0));
+  // städer med matcher i schemat de närmaste veckorna kommer först
+  const now=Date.now(),lim=now+60*864e5;(MATCHES||[]).forEach(mm=>{if(mm.city&&mm.kickoff){const t=mTs(mm);if(t>now&&t<lim)add(mm.city,mm.country,3);}});
+  CITYIDX=[...m.values()].map(x=>({...x,keys:[...new Set([norm(x.name),norm($t(x.name))])]}));return CITYIDX;}
+function citySuggest(q){const n=norm(q);if(n.length<2)return[];const out=[];
+  for(const x of cityIndex()){let r=9;for(const k of x.keys){if(k.startsWith(n))r=Math.min(r,0);else if(k.split(" ").some(w=>w.startsWith(n)))r=Math.min(r,1);else if(n.length>=3&&k.includes(n))r=Math.min(r,2);}if(r<9)out.push([r,x]);}
+  return out.sort((a,b)=>a[0]-b[0]||b[1].w-a[1].w||$t(a[1].name).localeCompare($t(b[1].name),LANG)).slice(0,6).map(a=>a[1]);}
+function showCitySug(){const inp=document.getElementById("rCity"),box=document.getElementById("rSug");if(!inp||!box)return;const L=citySuggest(inp.value);
+  if(!L.length||(L.length===1&&norm($t(L[0].name))===norm(inp.value))){box.hidden=true;inp.setAttribute("aria-expanded","false");return;}
+  box.innerHTML=L.map((x,i)=>`<button type="button" class="rsugi" role="option" data-rsug="${esc(x.name)}"><b>${esc($t(x.name))}</b>${x.ctry?`<span class="meta">${esc($t(x.ctry))}</span>`:""}</button>`).join("");box.hidden=false;inp.setAttribute("aria-expanded","true");}
+document.addEventListener("input",e=>{if(e.target&&e.target.id==="rCity")showCitySug();});
+document.addEventListener("focusout",e=>{if(e.target&&e.target.id==="rCity")setTimeout(()=>{const b=document.getElementById("rSug");if(b&&!b.contains(document.activeElement))b.hidden=true;},180);});
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-rsug]");if(!b)return;e.preventDefault();const inp=document.getElementById("rCity");if(!inp)return;
+  inp.value=$t(b.dataset.rsug);document.getElementById("rSug").hidden=true;RESA_DRAFT=null;document.getElementById("resaForm").requestSubmit?document.getElementById("resaForm").requestSubmit():document.getElementById("resaForm").dispatchEvent(new Event("submit",{cancelable:true,bubbles:true}));});
 let RESA_DRAFT=null;document.addEventListener("input",e=>{const id=e.target&&e.target.id;if(id!=="rCity"&&id!=="rFrom"&&id!=="rTo")return;RESA_DRAFT={city:document.getElementById("rCity").value,from:document.getElementById("rFrom").value,to:document.getElementById("rTo").value};});
 function renderResa(){const el=document.getElementById("resaList");if(!el)return;if(!RESA)RESA=resaDefault();const q=RESA;const D=RESA_DRAFT||q;
   const act=document.activeElement,fid=act&&["rCity","rFrom","rTo"].includes(act.id)?act.id:null,sel=fid==="rCity"?[act.selectionStart,act.selectionEnd]:null;
@@ -4605,7 +4623,7 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
       ${pk.length?`<ul class="tripm">${pk.map(x=>`<li class="mrow"${mrowAttr(x.m)}><b>${esc(dayLabel(koDay(x.m.kickoff)))} ${timeOf(x.m.kickoff)}</b> ${esc(tnm(x.m,"home"))} – ${esc(tnm(x.m,"away"))}</li>`).join("")}</ul>`:""}
       <div class="actions">${tripLinks(t)}${pk.length?`<button class="btn small" data-calmany="${esc(pk.map(x=>x.m._id).join(","))}">${ic("calendar")} ${pk.length===1?$t("Kalender"):$t("Alla i kalendern")}</button>`:""}<button class="btn small" data-tripshare="${esc(t.id)}">${ic("share")} ${$t("Dela")}</button><button class="link" data-tripdel="${esc(t.id)}">${$t("Ta bort")}</button></div></article>`;}).join("")}</div>`;}
   h+=`<article class="tip resaform"><div class="lbl">${$t("Planera en fotbollsresa")}</div>
-    <form id="resaForm" class="rform"><label class="fld">${$t("Stad")}<input id="rCity" list="cities" maxlength="60" value="${esc(D.city)}" placeholder="${$t("t.ex. Barcelona")}" autocomplete="off"></label>
+    <form id="resaForm" class="rform"><label class="fld">${$t("Stad")}<span class="rsugw"><input id="rCity" maxlength="60" value="${esc(D.city)}" placeholder="${$t("t.ex. Barcelona")}" autocomplete="off" autocapitalize="words" spellcheck="false" role="combobox" aria-autocomplete="list" aria-controls="rSug" aria-expanded="false"><div id="rSug" class="rsug" role="listbox" hidden></div></span></label>
     <div class="rdates"><label class="fld">${$t("Från")}<input id="rFrom" type="date" value="${esc(D.from)}" min="${today()}"></label><label class="fld">${$t("Till")}<input id="rTo" type="date" value="${esc(D.to)}" min="${today()}"></label></div>
     <div class="chips" role="group" aria-label="${$t("Avstånd från staden")}">${[10,50,150].map(km=>`<button type="button" class="chip" data-rr="${km}" aria-pressed="${!q.rc&&q.r===km}">${esc(milTxt(km).replace(/^\S+\s/,""))}</button>`).join("")}<button type="button" class="chip" data-rr="eget" aria-pressed="${!!q.rc}">${$t("Eget")}</button></div>
     ${q.rc?`<label class="fld rown">${$t("Eget avstånd")}<span class="rinp"><input id="rDist" type="number" inputmode="decimal" min="0.1" max="${Math.round(1000/(10/UNIT_PER_MIL[UNIT])*10)/10}" step="any" value="${esc(String(Math.round(q.r/(10/UNIT_PER_MIL[UNIT])*10)/10))}"><b>${UNIT==="mil"?"mil":UNIT==="mi"?"miles":"km"}</b></span></label>`:""}
