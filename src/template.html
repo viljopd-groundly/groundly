@@ -683,7 +683,8 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
   .msback{position:absolute;inset:0;background:rgba(0,0,0,.35)}
   .mspanel{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:18px 18px 0 0;padding:16px 16px calc(84px + env(safe-area-inset-bottom,0px))}
   .mswide{display:flex!important;flex-direction:row!important;align-items:center;justify-content:flex-start;gap:12px;width:100%!important;align-self:stretch;max-width:none!important;box-sizing:border-box;margin-bottom:8px!important;padding:12px 16px!important;text-align:left}.mswide b{margin:0!important}
-.rform{display:grid;gap:10px}.rform .fld{display:grid;gap:4px;font-weight:600}.rform input{font:inherit;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box;min-width:0}.rdates{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rform{display:grid;gap:10px}.rform .fld{display:grid;gap:4px;font-weight:600}.rform input{font:inherit;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box;min-width:0}.rown .rinp{display:flex;align-items:center;gap:8px}.rown .rinp input{max-width:120px}.rown .rinp b{font-weight:600}
+.rdates{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .triplist{display:grid;gap:10px}.trip.past{opacity:.7}.trip.on{box-shadow:inset 0 0 0 2px var(--accent)}.tripm{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.tripm li{cursor:pointer}.tripact{margin:4px 0 8px}
 .msgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
   body:has(.msheet:not([hidden])) .backpill{display:none!important}
@@ -2287,7 +2288,7 @@ const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
   wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,favNats:(Array.isArray(d&&d.favNats)?d.favNats:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&isNat(C[x])&&x!==d.favNat&&a.indexOf(x)===i).slice(0,MAXNAT),pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),since:d&&typeof d.since==="string"?d.since.slice(0,10):"",shareAsk:d&&d.shareAsk&&typeof d.shareAsk==="object"?{n:Math.min(9,+d.shareAsk.n||0),c:+d.shareAsk.c||0}:{n:0,c:0},vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),calSubs:Array.isArray(d&&d.calSubs)?d.calSubs.filter(x=>typeof x==="string").slice(0,50):[],follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,200):[],showFo:!!(d&&d.showFo===true),cc:d&&typeof d.cc==="string"&&/^(none|nt-[a-z-]+)$/.test(d.cc)?d.cc:null,
   ...(Array.isArray(d&&d.arSel)?{arSel:d.arSel.filter(x=>typeof x==="string").slice(0,60)}:{}),blocked:Array.isArray(d&&d.blocked)?d.blocked.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,500):[],
-  ...(d&&typeof d.ini==="string"&&d.ini?{ini:d.ini.slice(0,3)}:{}),trips:(Array.isArray(d&&d.trips)?d.trips:[]).filter(t=>t&&typeof t.id==="string"&&typeof t.city==="string"&&/^\d{4}-\d\d-\d\d$/.test(t.from||"")&&/^\d{4}-\d\d-\d\d$/.test(t.to||"")).map(t=>({id:t.id.slice(0,20),city:t.city.slice(0,60),from:t.from,to:t.to,r:[10,50,150].includes(t.r)?t.r:50})).slice(0,20),...(d&&(d.trHelp===true||d.trHelp===false)?{trHelp:d.trHelp}:{})};}
+  ...(d&&typeof d.ini==="string"&&d.ini?{ini:d.ini.slice(0,3)}:{}),trips:(Array.isArray(d&&d.trips)?d.trips:[]).filter(t=>t&&typeof t.id==="string"&&typeof t.city==="string"&&/^\d{4}-\d\d-\d\d$/.test(t.from||"")&&/^\d{4}-\d\d-\d\d$/.test(t.to||"")).map(t=>({id:t.id.slice(0,20),city:t.city.slice(0,60),from:t.from,to:t.to,r:Number.isFinite(t.r)&&t.r>=1&&t.r<=1000?Math.round(t.r):50})).slice(0,20),...(d&&(d.trHelp===true||d.trHelp===false)?{trHelp:d.trHelp}:{})};}
 const MAXFAV=6,MAXNAT=5;
 const natExtra=()=>myState==="ready"&&MY&&Array.isArray(MY.favNats)?MY.favNats.filter(id=>C[id]&&id!==MY.favNat):[];
 const isFavNat=id=>myState==="ready"&&!!MY&&(MY.favNat===id||natExtra().includes(id));
@@ -4574,7 +4575,7 @@ function derbyHtml(){const all=derbyNext();const list=homeMore.derby?all:all.sli
 let RESA=null,resaOpen=null,RESA_SH=null;
 // delade resor: ?resa=stad|från|till|avstånd|matchid,matchid&av=namn
 {try{const u=new URL(location.href);const r=u.searchParams.get("resa");if(r){const [city,from,to,rr,ids]=r.split("|");const ok=d=>/^\d{4}-\d\d-\d\d$/.test(d||"");
-  if(city&&ok(from)&&ok(to)){const td=dayKey(new Date());RESA={city:city.slice(0,60),from:from<td?td:from,to:to<td?td:to,r:[10,50,150].includes(+rr)?+rr:50};RESA_SH={city:RESA.city,from:RESA.from,to:RESA.to,ids:(ids||"").split(",").filter(x=>/^[^|,\s<>"]{1,60}$/.test(x)).slice(0,20),by:(u.searchParams.get("av")||"").slice(0,40)};
+  if(city&&ok(from)&&ok(to)){const td=dayKey(new Date());RESA={city:city.slice(0,60),from:from<td?td:from,to:to<td?td:to,r:+rr>=1&&+rr<=1000?Math.round(+rr):50};RESA.rc=![10,50,150].includes(RESA.r);RESA_SH={city:RESA.city,from:RESA.from,to:RESA.to,ids:(ids||"").split(",").filter(x=>/^[^|,\s<>"]{1,60}$/.test(x)).slice(0,20),by:(u.searchParams.get("av")||"").slice(0,40)};
     setTimeout(()=>{try{goTop("resa");window.scrollTo({top:0});}catch(e){}},0);}
   u.searchParams.delete("resa");u.searchParams.delete("av");history.replaceState(history.state,"",u.toString());}}catch(e){}}
 function tripShareUrl(t){const L=resaMatches(t)||[];const ids=tripPicked(t,L).map(x=>x.m._id);const first=(MYNAME&&!weakName(MYNAME)?MYNAME.split(" ")[0]:"");
@@ -4606,7 +4607,8 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
   h+=`<article class="tip resaform"><div class="lbl">${$t("Planera en fotbollsresa")}</div>
     <form id="resaForm" class="rform"><label class="fld">${$t("Stad")}<input id="rCity" list="cities" maxlength="60" value="${esc(D.city)}" placeholder="${$t("t.ex. Barcelona")}" autocomplete="off"></label>
     <div class="rdates"><label class="fld">${$t("Från")}<input id="rFrom" type="date" value="${esc(D.from)}" min="${today()}"></label><label class="fld">${$t("Till")}<input id="rTo" type="date" value="${esc(D.to)}" min="${today()}"></label></div>
-    <div class="chips" role="group" aria-label="${$t("Avstånd från staden")}">${[10,50,150].map(km=>`<button type="button" class="chip" data-rr="${km}" aria-pressed="${q.r===km}">${esc(milTxt(km).replace(/^\S+\s/,""))}</button>`).join("")}</div>
+    <div class="chips" role="group" aria-label="${$t("Avstånd från staden")}">${[10,50,150].map(km=>`<button type="button" class="chip" data-rr="${km}" aria-pressed="${!q.rc&&q.r===km}">${esc(milTxt(km).replace(/^\S+\s/,""))}</button>`).join("")}<button type="button" class="chip" data-rr="eget" aria-pressed="${!!q.rc}">${$t("Eget")}</button></div>
+    ${q.rc?`<label class="fld rown">${$t("Eget avstånd")}<span class="rinp"><input id="rDist" type="number" inputmode="decimal" min="0.1" max="${Math.round(1000/(10/UNIT_PER_MIL[UNIT])*10)/10}" step="any" value="${esc(String(Math.round(q.r/(10/UNIT_PER_MIL[UNIT])*10)/10))}"><b>${UNIT==="mil"?"mil":UNIT==="mi"?"miles":"km"}</b></span></label>`:""}
     <button class="btn primary" type="submit">${ic("search")} ${$t("Visa matcher")}</button></form></article>`;
   if(q.city){const c=cityLL(q.city);const L=resaMatches(q);
     if(!c)h+=`<div class="empty"><b>${$t("Hittar inte {0} på kartan.",[esc(q.city)])}</b><div>${$t("Prova en större stad i närheten.")}</div></div>`;
@@ -4631,7 +4633,8 @@ function calMany(ms){const ds=ms.map(m=>calData({...m,city:m.city&&$t(m.city)}))
   const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Groundly//SV",...ev,"END:VCALENDAR"].join("\r\n");
   const a=document.createElement("a");a.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(ics);a.download="groundly-resa.ics";document.body.appendChild(a);a.click();a.remove();toast($t("Kalenderfilen med {0} matcher laddas ner.",[ds.length]));}
 document.addEventListener("submit",e=>{if(e.target.id!=="resaForm")return;e.preventDefault();const g=id=>document.getElementById(id).value.trim();
-  let f=g("rFrom")||today(),t=g("rTo")||f;if(f<today())f=today();if(t<f)t=f;RESA={...RESA,city:g("rCity").slice(0,60),from:f,to:t};RESA_DRAFT=null;resaOpen=null;renderResa();
+  let f=g("rFrom")||today(),t=g("rTo")||f;if(f<today())f=today();if(t<f)t=f;{const d=document.getElementById("rDist");if(d&&RESA.rc){const v=parseFloat(String(d.value).replace(",","."));if(v>0)RESA.r=Math.max(1,Math.min(1000,Math.round(v*10/UNIT_PER_MIL[UNIT])));}}
+  RESA={...RESA,city:g("rCity").slice(0,60),from:f,to:t};RESA_DRAFT=null;resaOpen=null;renderResa();
   document.querySelector(".tripact,#resaList .empty")?.scrollIntoView({behavior:"smooth",block:"start"});});
 document.addEventListener("click",async e=>{const t=e.target.closest&&e.target.closest("[data-tripshare],[data-tripadopt]");if(!t)return;
   if(t.dataset.tripshare){const tr=myTrips().find(x=>x.id===t.dataset.tripshare);if(!tr)return;const c=cityLL(tr.city);const name=$t(c?c.name:tr.city);const L=resaMatches(tr)||[];const pk=tripPicked(tr,L);
@@ -4643,10 +4646,11 @@ document.addEventListener("click",async e=>{const t=e.target.closest&&e.target.c
       const have=new Set(d.wishMatches.map(w=>w.id));sm.forEach(m=>{if(!have.has(m._id))d.wishMatches.push(slim(m));});});
     RESA_SH=null;toast(sm.length?$t("Resan och {0} matcher är sparade",[sm.length]):$t("Resan är sparad"));renderResa();}});
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-rr],[data-tripsave],[data-tripopen],[data-tripdel],[data-calmany]");if(!t)return;
-  if(t.dataset.rr){RESA.r=+t.dataset.rr;const ci=document.getElementById("rCity");if(ci)RESA.city=ci.value.trim().slice(0,60);RESA_DRAFT=null;renderResa();return;}
+  if(t.dataset.rr==="eget"){RESA.rc=true;const ci=document.getElementById("rCity");if(ci)RESA.city=ci.value.trim().slice(0,60);RESA_DRAFT=null;renderResa();setTimeout(()=>{const d=document.getElementById("rDist");if(d){d.focus();d.select();}},0);return;}
+  if(t.dataset.rr){RESA.rc=false;RESA.r=+t.dataset.rr;const ci=document.getElementById("rCity");if(ci)RESA.city=ci.value.trim().slice(0,60);RESA_DRAFT=null;renderResa();return;}
   if(t.dataset.tripsave){const c=cityLL(RESA.city);if(!c||myState!=="ready")return;MY.trips=(MY.trips||[]).filter(x=>!(norm(x.city)===norm(c.name)&&x.from===RESA.from&&x.to===RESA.to));
     MY.trips.push({id:newId(),city:c.name,from:RESA.from,to:RESA.to,r:RESA.r});MY.trips=MY.trips.slice(-20);saveMy();toast($t("Resan är sparad"));renderResa();return;}
-  if(t.dataset.tripopen){const tr=myTrips().find(x=>x.id===t.dataset.tripopen);if(!tr)return;resaOpen=tr.id;RESA_DRAFT=null;RESA={city:tr.city,from:tr.from<today()?today():tr.from,to:tr.to<today()?today():tr.to,r:tr.r};renderResa();document.querySelector(".tripact")?.scrollIntoView({behavior:"smooth",block:"start"});return;}
+  if(t.dataset.tripopen){const tr=myTrips().find(x=>x.id===t.dataset.tripopen);if(!tr)return;resaOpen=tr.id;RESA_DRAFT=null;RESA={city:tr.city,from:tr.from<today()?today():tr.from,to:tr.to<today()?today():tr.to,r:tr.r,rc:![10,50,150].includes(tr.r)};renderResa();document.querySelector(".tripact")?.scrollIntoView({behavior:"smooth",block:"start"});return;}
   if(t.dataset.tripdel){MY.trips=myTrips().filter(x=>x.id!==t.dataset.tripdel);if(resaOpen===t.dataset.tripdel)resaOpen=null;saveMy();toast($t("Resan är borttagen"));renderResa();return;}
   if(t.dataset.calmany){const ms=t.dataset.calmany.split(",").map(id=>MATCHES.find(m=>m._id===id)).filter(Boolean);calMany(ms);}});
 function homeLL(){if(!homeTown)return null;const nq=norm(homeTown);const al=CITY_ALIAS[nq];if(al&&GEO[al])return{name:al,ll:GEO[al]};if(GEO_N[nq])return{name:GEO_N[nq][0],ll:GEO_N[nq][1]};

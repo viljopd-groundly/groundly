@@ -2536,5 +2536,6 @@
  "Fotbollsresa till {0}, {1}": "Fótboltaferð til {0}, {1}",
  "Inga matcher valda i resan, men här är alla matcher i området.": "Engir leikir valdir í ferðinni, en hér eru allir leikir á svæðinu.",
  "Resan och {0} matcher är sparade": "Ferðin og {0} leikir eru vistaðir",
- "Spara resan och matcherna": "Vista ferðina og leikina"
+ "Spara resan och matcherna": "Vista ferðina og leikina",
+ "Eget avstånd": "Eigin fjarlægð"
 }

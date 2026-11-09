@@ -2625,5 +2625,6 @@
  "Fotbollsresa till {0}, {1}": "Football trip to {0}, {1}",
  "Inga matcher valda i resan, men här är alla matcher i området.": "No matches picked in the trip, but here are all the matches in the area.",
  "Resan och {0} matcher är sparade": "The trip and {0} matches are saved",
- "Spara resan och matcherna": "Save the trip and the matches"
+ "Spara resan och matcherna": "Save the trip and the matches",
+ "Eget avstånd": "Custom distance"
 }

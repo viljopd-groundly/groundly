@@ -2536,5 +2536,6 @@
  "Fotbollsresa till {0}, {1}": "Jalkapallomatka: {0}, {1}",
  "Inga matcher valda i resan, men här är alla matcher i området.": "Matkaan ei ole valittu otteluita, mutta tässä ovat kaikki alueen ottelut.",
  "Resan och {0} matcher är sparade": "Matka ja {0} ottelua on tallennettu",
- "Spara resan och matcherna": "Tallenna matka ja ottelut"
+ "Spara resan och matcherna": "Tallenna matka ja ottelut",
+ "Eget avstånd": "Oma etäisyys"
 }

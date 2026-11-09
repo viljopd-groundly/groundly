@@ -2537,5 +2537,6 @@
  "Fotbollsresa till {0}, {1}": "Fotballreise til {0}, {1}",
  "Inga matcher valda i resan, men här är alla matcher i området.": "Ingen kamper valgt i reisen, men her er alle kampene i området.",
  "Resan och {0} matcher är sparade": "Reisen og {0} kamper er lagret",
- "Spara resan och matcherna": "Lagre reisen og kampene"
+ "Spara resan och matcherna": "Lagre reisen og kampene",
+ "Eget avstånd": "Egen avstand"
 }

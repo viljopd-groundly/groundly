@@ -2536,5 +2536,6 @@
  "Fotbollsresa till {0}, {1}": "Viaggio di calcio a {0}, {1}",
  "Inga matcher valda i resan, men här är alla matcher i området.": "Nessuna partita scelta nel viaggio, ma ecco tutte le partite della zona.",
  "Resan och {0} matcher är sparade": "Il viaggio e {0} partite sono salvati",
- "Spara resan och matcherna": "Salva il viaggio e le partite"
+ "Spara resan och matcherna": "Salva il viaggio e le partite",
+ "Eget avstånd": "Distanza personalizzata"
 }
