@@ -682,7 +682,10 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
   .msheet:not([hidden]){display:block;position:fixed;inset:0;z-index:58}
   .msback{position:absolute;inset:0;background:rgba(0,0,0,.35)}
   .mspanel{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:18px 18px 0 0;padding:16px 16px calc(84px + env(safe-area-inset-bottom,0px))}
-  .msgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .mswide{display:flex!important;flex-direction:row!important;align-items:center;justify-content:flex-start;gap:12px;width:100%!important;align-self:stretch;max-width:none!important;box-sizing:border-box;margin-bottom:8px!important;padding:12px 16px!important;text-align:left}.mswide b{margin:0!important}
+.rform{display:grid;gap:10px}.rform .fld{display:grid;gap:4px;font-weight:600}.rform input{font:inherit;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box;min-width:0}.rdates{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.triplist{display:grid;gap:10px}.trip.past{opacity:.7}.trip.on{box-shadow:inset 0 0 0 2px var(--accent)}.tripm{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.tripm li{cursor:pointer}.tripact{margin:4px 0 8px}
+.msgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
   body:has(.msheet:not([hidden])) .backpill{display:none!important}
   .plist{display:flex;flex-direction:column;gap:8px}
   .pitem{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;background:var(--bg);color:var(--fg)}
@@ -1261,6 +1264,9 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
   </section>
 
   <!-- Quiz -->
+  <section id="v-resa" hidden style="display:contents">
+    <div class="list" id="resaList"></div>
+  </section>
   <section id="v-quiz" hidden style="display:contents">
     <div class="list" id="quizList"></div>
   </section>
@@ -1325,12 +1331,14 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
       <button class="pitem" data-plus="log"><b><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></b><span><strong>Logga match</strong><small>En match du har sett, med resultat och arena</small></span></button>
       <button class="pitem" data-plus="ask"><b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span><strong>Fråga i forumet</strong><small>Få tips om arenor, biljetter och pubar</small></span></button>
       <button class="pitem" data-plus="rep"><b><svg class="ic" aria-hidden="true"><use href="#i-pencil"/></svg></b><span><strong>Skriv matchberättelse</strong><small>Berätta om resan, arenan och stämningen</small></span></button>
+      <button class="pitem" data-plus="trip"><b><svg class="ic" aria-hidden="true"><use href="#i-mpin"/></svg></b><span><strong>Planera en fotbollsresa</strong><small>Välj stad och datum och se alla matcher där</small></span></button>
     </div>
   </div>
 </div>
 <div class="msheet" id="moreSheet" hidden>
   <div class="msback" id="moreBack"></div>
   <div class="mspanel" role="dialog" aria-label="Fler vyer">
+    <button class="msi mswide" data-bn="resa"><b><svg class="ic" aria-hidden="true"><use href="#i-mpin"/></svg></b><span>Planera en fotbollsresa</span></button>
     <div class="msgrid">
       <button class="msi" data-bn="profil"><b><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></b><span>Min profil</span></button>
       <button class="msi" data-bn="matcher"><b><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg></b><span>Matcher</span></button>
@@ -1496,7 +1504,7 @@ const TAGLINES={"sv": "För oss som älskar fotboll.", "en": "For fans who love 
 // ---------- mode ----------
 // Tillbaka: hoppar man från en vy till en annan (t.ex. arena → landslag) sparas varifrån man kom,
 // så att mobilens bakåt-gest och knappen "Tillbaka till …" leder rätt.
-const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};
+const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),resa:$t("Planera resa"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};
 let navPop=false,pendingJump=null,jumpFrom=null,topNav=false;
 // menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
 function goTop(m){if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";mySubAuto=true;arView="list";}topNav=true;try{setMode(m);}finally{topNav=false;}}
@@ -1521,7 +1529,7 @@ function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)repPopOrder=nu
   pendingJump=null;if(m!==prev)clubStack=[];
   mode=m;store.set("fk-mode",m);window.__gmode=m;try{window.dispatchEvent(new CustomEvent("gmode",{detail:m}));}catch(e){}
   document.querySelectorAll(".mode").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===m)));
-  ["hem","klubbar","landslag","arenor","matcher","tabell","tips","quiz","flode","reportage","forum","mine","profil"].forEach(v=>{const s=document.getElementById("v-"+v);s.hidden=m!==v;s.style.display=m===v?"contents":"none";});
+  ["hem","klubbar","landslag","arenor","matcher","tabell","tips","quiz","resa","flode","reportage","forum","mine","profil"].forEach(v=>{const s=document.getElementById("v-"+v);s.hidden=m!==v;s.style.display=m===v?"contents":"none";});
   if(typeof syncNav==="function")syncNav();
   // ett fel i en vy får aldrig låsa menyn
   try{render();}catch(e){console.error("[groundly] render",e);try{toast($t("Något gick fel i vyn. Prova att ladda om sidan."));}catch(_){}}
@@ -1529,7 +1537,7 @@ function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)repPopOrder=nu
 try{history.replaceState({m:mode,y:0},"");}catch(e){}window.__gmode=mode;
 document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>goTop(b.dataset.mode));
 // bottenmenyn
-const MORE_MODES=["profil","matcher","tabell","klubbar","landslag","arenor","tips","quiz"];
+const MORE_MODES=["resa","profil","matcher","tabell","klubbar","landslag","arenor","tips","quiz"];
 // ---------- FÖRHANDSVISNING: fokusläge (?fokus=1 slår på, ?fokus=0 stänger av) ----------
 // Matcher får Communitys plats i menyraden, plusknappen loggar en match direkt och startsidan visar bara
 // matcher nära dig, logga-knappen och din säsong. Texterna översätts som resten av appen.
@@ -1549,6 +1557,7 @@ function closePlus(){const sh=document.getElementById("plusSheet");if(sh)sh.hidd
 // plusmenyn: logga match, skriv reportage eller fråga i forumet
 document.addEventListener("click",e=>{const b=e.target.closest("[data-plus],#plusBack");if(!b)return;closePlus();if(b.id==="plusBack")return;const k=b.dataset.plus;
   if(k==="log"){if(myState!=="ready"){goTop("mine");return;}openLogMatch(null,null);return;}
+  if(k==="trip"){goTop("resa");window.scrollTo({top:0});return;}
   if(k==="rep"){goTop("reportage");window.scrollTo({top:0});setTimeout(()=>{try{startRepDraft();}catch(x){}},0);return;}
   if(k==="ask"){goTop("forum");window.scrollTo({top:0});composing=true;forumMsg="";renderForum();setTimeout(()=>document.getElementById("fTitle")?.focus({preventScroll:true}),0);}},true);
 function closeMore(){closePlus();const sh=document.getElementById("moreSheet");if(sh)sh.hidden=true;document.getElementById("bnMore")?.setAttribute("aria-expanded","false");}
@@ -2279,7 +2288,7 @@ const myConfirm={};
 function normMy(d){try{d=d?JSON.parse(JSON.stringify(d)):{};}catch(e){d={};}return{attended:Array.isArray(d&&d.attended)?d.attended.filter(a=>a&&a.id):[],visited:{},
   wishClubs:Array.isArray(d&&d.wishClubs)?d.wishClubs.filter(x=>typeof x==="string"):[],wishMatches:Array.isArray(d&&d.wishMatches)?d.wishMatches.filter(w=>w&&w.id):[],favs:(Array.isArray(d&&d.favs)?d.favs:d&&typeof d.fav==="string"?[d.fav]:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&!isNat(C[x])&&a.indexOf(x)===i).slice(0,MAXFAV),fav:null,favNat:d&&typeof d.favNat==="string"&&C[d.favNat]?d.favNat:null,favNats:(Array.isArray(d&&d.favNats)?d.favNats:[]).filter((x,i,a)=>typeof x==="string"&&C[x]&&isNat(C[x])&&x!==d.favNat&&a.indexOf(x)===i).slice(0,MAXNAT),pub:!!(d&&d.pub===true),onboarded:!!(d&&d.onboarded===true),savedAt:d&&typeof d.savedAt==="string"?d.savedAt:null,derbies:Array.isArray(d&&d.derbies)?d.derbies.filter(x=>typeof x==="string").slice(0,200):[],share:!!(d&&d.share===true),since:d&&typeof d.since==="string"?d.since.slice(0,10):"",shareAsk:d&&d.shareAsk&&typeof d.shareAsk==="object"?{n:Math.min(9,+d.shareAsk.n||0),c:+d.shareAsk.c||0}:{n:0,c:0},vis2:!!(d&&d.vis2===true),homeCfg:normHomeCfg(d&&d.homeCfg),calSubs:Array.isArray(d&&d.calSubs)?d.calSubs.filter(x=>typeof x==="string").slice(0,50):[],follows:Array.isArray(d&&d.follows)?d.follows.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,200):[],showFo:!!(d&&d.showFo===true),cc:d&&typeof d.cc==="string"&&/^(none|nt-[a-z-]+)$/.test(d.cc)?d.cc:null,
   ...(Array.isArray(d&&d.arSel)?{arSel:d.arSel.filter(x=>typeof x==="string").slice(0,60)}:{}),blocked:Array.isArray(d&&d.blocked)?d.blocked.filter(x=>typeof x==="string"&&/^[A-Za-z0-9_-]{3,128}$/.test(x)).slice(0,500):[],
-  ...(d&&typeof d.ini==="string"&&d.ini?{ini:d.ini.slice(0,3)}:{}),...(d&&(d.trHelp===true||d.trHelp===false)?{trHelp:d.trHelp}:{})};}
+  ...(d&&typeof d.ini==="string"&&d.ini?{ini:d.ini.slice(0,3)}:{}),trips:(Array.isArray(d&&d.trips)?d.trips:[]).filter(t=>t&&typeof t.id==="string"&&typeof t.city==="string"&&/^\d{4}-\d\d-\d\d$/.test(t.from||"")&&/^\d{4}-\d\d-\d\d$/.test(t.to||"")).map(t=>({id:t.id.slice(0,20),city:t.city.slice(0,60),from:t.from,to:t.to,r:[10,50,150].includes(t.r)?t.r:50})).slice(0,20),...(d&&(d.trHelp===true||d.trHelp===false)?{trHelp:d.trHelp}:{})};}
 const MAXFAV=6,MAXNAT=5;
 const natExtra=()=>myState==="ready"&&MY&&Array.isArray(MY.favNats)?MY.favNats.filter(id=>C[id]&&id!==MY.favNat):[];
 const isFavNat=id=>myState==="ready"&&!!MY&&(MY.favNat===id||natExtra().includes(id));
@@ -3038,8 +3047,8 @@ const adLabel=t=>AFFILIATE?`${t}<small class="adtag">${$t("Annonslänk")}</small
 const SEEDMAP=new Map();PUBSEED.forEach(([st,src,url,note,pubs])=>SEEDMAP.set(arenaKey(st),{src,url,note,pubs}));
 let PUBS={},pubsState="loading",pubsNs=null,pubOpen=null,pubForm=null,pubMsg="",pubPending=0,pubQ=Promise.resolve();
 const enc=encodeURIComponent;
-function bookingUrl(s,city,date){const p=new URLSearchParams({ss:[s,city].filter(Boolean).join(", "),group_adults:"2",no_rooms:"1"});
-  if(date){p.set("checkin",date);p.set("checkout",addDays(date,1));}if(BOOKING_AID)p.set("aid",BOOKING_AID);const u="https://www.booking.com/searchresults.html?"+p.toString();
+function bookingUrl(s,city,date,out){const p=new URLSearchParams({ss:[s,city].filter(Boolean).join(", "),group_adults:"2",no_rooms:"1"});
+  if(date){p.set("checkin",date);p.set("checkout",out&&out>date?out:addDays(date,1));}if(BOOKING_AID)p.set("aid",BOOKING_AID);const u="https://www.booking.com/searchresults.html?"+p.toString();
   if(!TP.marker)return u;const q=new URLSearchParams({marker:TP.marker});if(TP.trs)q.set("trs",TP.trs);if(TP.p)q.set("p",TP.p);if(TP.campaign_id)q.set("campaign_id",TP.campaign_id);q.set("u",u);return"https://tp.media/r?"+q.toString();}
 const mapsSearch=q=>"https://www.google.com/maps/search/?api=1&query="+enc(q);
 const mapsDir=(s,city)=>"https://www.google.com/maps/dir/?api=1&destination="+enc([s,city].filter(Boolean).join(", "));
@@ -4562,6 +4571,62 @@ function derbyHtml(){const all=derbyNext();const list=homeMore.derby?all:all.sli
   return`<article class="tip"><div class="lbl">${$t("Nästa derby i varje land")}</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc($t(land))}</span></div>
     <div class="mmain"><b>${esc($t(d[1]))}</b><span class="meta">${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div></div>`).join("")}</div>${moreBtn("derby",all.length)}</article>`;}
 // helgens matcher nära hemorten
+// ---------- Planera en fotbollsresa: stad + datum → alla matcher i närheten, spara resan på kontot ----------
+let RESA=null,resaOpen=null;
+function resaDefault(){const[f,t]=weekendRange();return{city:"",from:f,to:t,r:50};}
+function cityLL(name){if(!name)return null;const nq=norm(name);const al=CITY_ALIAS[nq];if(al&&GEO[al])return{name:al,ll:GEO[al]};if(GEO_N[nq])return{name:GEO_N[nq][0],ll:GEO_N[nq][1]};
+  const ai=geoAi[nq]||loadGeoAi(nq);return ai&&ai.state==="done"?{name:ai.name,ll:ai.ll}:null;}
+function resaMatches(q){const c=cityLL(q.city);if(!c||dbState!=="ready")return null;const nowW=Date.now()-2*36e5;
+  return MATCHES.filter(m=>m.kickoff&&mTs(m)>nowW&&koDay(m.kickoff)>=q.from&&koDay(m.kickoff)<=q.to).map(m=>{const ll=GEO[m.city];return{m,km:ll?roadKm(c.ll,ll):null};})
+    .filter(x=>x.km!==null&&x.km<=q.r).sort((a,b)=>sortM(a.m,b.m));}
+const resaRange=(f,t)=>{const a=new Date(f+"T12:00:00"),b=new Date(t+"T12:00:00");const mo=d=>d.toLocaleDateString(LOC,{month:"short"}).replace(".","");
+  return f===t?`${a.getDate()} ${mo(a)}`:a.getMonth()===b.getMonth()?`${a.getDate()}–${b.getDate()} ${mo(b)}`:`${a.getDate()} ${mo(a)} – ${b.getDate()} ${mo(b)}`;};
+const myTrips=()=>myState==="ready"&&Array.isArray(MY.trips)?MY.trips:[];
+// matcher man markerat Vill gå (eller loggat) som hör till resan
+function tripPicked(t,list){return(list||resaMatches(t)||[]).filter(x=>isWishM(x.m._id)||isAtt(x.m._id));}
+function tripLinks(q){const c=cityLL(q.city);const name=c?c.name:q.city;const out=q.to>q.from?q.to:addDays(q.from,1);
+  return`${extLink(bookingUrl("",$t(name),q.from,out),adLabel($t("Hotell i {0}",[esc($t(name))])),"btn small")}${homeTown&&!homeIsLocal(name)?extLink(omioUrl(homeLL()?.name||homeTown,name),OMIO_ON?adLabel($t("Resa dit")):$t("Resa dit"),"btn small"):""}`;}
+function renderResa(){const el=document.getElementById("resaList");if(!el)return;if(!RESA)RESA=resaDefault();const q=RESA;
+  const trips=myTrips().slice().sort((a,b)=>a.from.localeCompare(b.from));
+  let h="";
+  if(trips.length){h+=`<h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${trips.map(t=>{const c=cityLL(t.city);const L=resaMatches(t);const pk=L?tripPicked(t,L):[];const past=t.to<today();const on=resaOpen===t.id;
+    return`<article class="tip trip${on?" on":""}${past?" past":""}"><div class="sechead"><h2 class="name">${esc($t(c?c.name:t.city))} <span class="meta">${esc(resaRange(t.from,t.to))}</span></h2><button class="link strong" data-tripopen="${esc(t.id)}">${$t("Visa matcher")}</button></div>
+      <p class="meta">${L?(pk.length?$tn(pk.length,"1 match du vill gå på","{n} matcher du vill gå på"):$t("Inga matcher valda än"))+" · "+$tn(L.length,"1 match i området","{n} matcher i området"):$t("Hämtar matchschemat…")}</p>
+      ${pk.length?`<ul class="tripm">${pk.map(x=>`<li class="mrow"${mrowAttr(x.m)}><b>${esc(dayLabel(koDay(x.m.kickoff)))} ${timeOf(x.m.kickoff)}</b> ${esc(tnm(x.m,"home"))} – ${esc(tnm(x.m,"away"))}</li>`).join("")}</ul>`:""}
+      <div class="actions">${tripLinks(t)}${pk.length?`<button class="btn small" data-calmany="${esc(pk.map(x=>x.m._id).join(","))}">${ic("calendar")} ${pk.length===1?$t("Kalender"):$t("Alla i kalendern")}</button>`:""}<button class="link" data-tripdel="${esc(t.id)}">${$t("Ta bort")}</button></div></article>`;}).join("")}</div>`;}
+  h+=`<article class="tip resaform"><div class="lbl">${$t("Planera en fotbollsresa")}</div>
+    <form id="resaForm" class="rform"><label class="fld">${$t("Stad")}<input id="rCity" list="cities" maxlength="60" value="${esc(q.city)}" placeholder="${$t("t.ex. Barcelona")}" autocomplete="off"></label>
+    <div class="rdates"><label class="fld">${$t("Från")}<input id="rFrom" type="date" value="${q.from}" min="${today()}"></label><label class="fld">${$t("Till")}<input id="rTo" type="date" value="${q.to}" min="${today()}"></label></div>
+    <div class="chips" role="group" aria-label="${$t("Avstånd från staden")}">${[10,50,150].map(km=>`<button type="button" class="chip" data-rr="${km}" aria-pressed="${q.r===km}">${esc(milTxt(km).replace(/^\S+\s/,""))}</button>`).join("")}</div>
+    <button class="btn primary" type="submit">${ic("search")} ${$t("Visa matcher")}</button></form></article>`;
+  if(q.city){const c=cityLL(q.city);const L=resaMatches(q);
+    if(!c)h+=`<div class="empty"><b>${$t("Hittar inte {0} på kartan.",[esc(q.city)])}</b><div>${$t("Prova en större stad i närheten.")}</div></div>`;
+    else if(!L)h+=`<p class="meta">${$t("Hämtar matchschemat…")}</p>`;
+    else{const name=$t(c.name);const saved=myTrips().find(t=>norm(t.city)===norm(c.name)&&t.from===q.from&&t.to===q.to);
+      h+=`<div class="sechead"><h3 class="sec">${$tn(L.length,"1 match nära {0}","{n} matcher nära {0}").replace("{0}",esc(name))} · ${esc(resaRange(q.from,q.to))}</h3></div>`;
+      h+=`<div class="actions tripact">${myState==="ready"?(saved?`<span class="pill">${ic("check")} ${$t("Resan är sparad")}</span>`:`<button class="btn primary small" data-tripsave="1">${ic("plus")} ${$t("Spara resan")}</button>`):`<button class="btn small" data-glogin="up">${$t("Logga in för att spara resan")}</button>`}${tripLinks(q)}</div>`;
+      if(!L.length)h+=`<div class="empty"><b>${$t("Inga matcher i schemat de dagarna.")}</b><div>${$t("Prova fler dagar eller ett större avstånd. Lägre serier läggs ofta in i schemat några veckor i förväg.")}</div></div>`;
+      else{h+=`<p class="hint">${$t("Tryck Vill gå på de matcher du vill se, så hamnar de i resan.")}</p>`;let last="";const now=Date.now();
+        L.forEach(x=>{const k=koDay(x.m.kickoff);if(k!==last){h+=`<h3 class="sec">${esc(dayLong(k))}</h3>`;last=k;}h+=matchRow(x.m,now,x.km);});}}}
+  else h+=`<p class="hint">${$t("Skriv en stad, välj datum och tryck Visa matcher. Resan sparas på ditt konto, och matcherna du trycker Vill gå på samlas där.")}</p>`;
+  el.innerHTML=h;}
+// flera matcher i en kalenderfil (.ics)
+function calMany(ms){const ds=ms.map(m=>calData({...m,city:m.city&&$t(m.city)})).filter(Boolean);if(!ds.length)return;
+  if(ds.length===1){const k="cm"+Date.now();CALREG[k]=ds[0];const b=document.createElement("button");b.dataset.cal=k;b.hidden=true;document.body.appendChild(b);b.click();b.remove();return;}
+  const day=x=>x.toISOString().slice(0,10).replace(/-/g,"");
+  const ev=ds.map((d,i)=>["BEGIN:VEVENT","UID:"+gcalStamp(d.st)+"-"+i+"@groundly","DTSTAMP:"+gcalStamp(new Date()),d.all?"DTSTART;VALUE=DATE:"+day(d.st):"DTSTART:"+gcalStamp(d.st),d.all?"DTEND;VALUE=DATE:"+day(d.en):"DTEND:"+gcalStamp(d.en),"SUMMARY:"+icsEsc(d.t),"LOCATION:"+icsEsc(d.loc),"DESCRIPTION:"+icsEsc(d.det),"END:VEVENT"].join("\r\n"));
+  const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Groundly//SV",...ev,"END:VCALENDAR"].join("\r\n");
+  const a=document.createElement("a");a.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(ics);a.download="groundly-resa.ics";document.body.appendChild(a);a.click();a.remove();toast($t("Kalenderfilen med {0} matcher laddas ner.",[ds.length]));}
+document.addEventListener("submit",e=>{if(e.target.id!=="resaForm")return;e.preventDefault();const g=id=>document.getElementById(id).value.trim();
+  let f=g("rFrom")||today(),t=g("rTo")||f;if(f<today())f=today();if(t<f)t=f;RESA={...RESA,city:g("rCity").slice(0,60),from:f,to:t};resaOpen=null;renderResa();
+  document.querySelector(".tripact,#resaList .empty")?.scrollIntoView({behavior:"smooth",block:"start"});});
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-rr],[data-tripsave],[data-tripopen],[data-tripdel],[data-calmany]");if(!t)return;
+  if(t.dataset.rr){RESA.r=+t.dataset.rr;const ci=document.getElementById("rCity");if(ci)RESA.city=ci.value.trim().slice(0,60);renderResa();return;}
+  if(t.dataset.tripsave){const c=cityLL(RESA.city);if(!c||myState!=="ready")return;MY.trips=(MY.trips||[]).filter(x=>!(norm(x.city)===norm(c.name)&&x.from===RESA.from&&x.to===RESA.to));
+    MY.trips.push({id:newId(),city:c.name,from:RESA.from,to:RESA.to,r:RESA.r});MY.trips=MY.trips.slice(-20);saveMy();toast($t("Resan är sparad"));renderResa();return;}
+  if(t.dataset.tripopen){const tr=myTrips().find(x=>x.id===t.dataset.tripopen);if(!tr)return;resaOpen=tr.id;RESA={city:tr.city,from:tr.from<today()?today():tr.from,to:tr.to<today()?today():tr.to,r:tr.r};renderResa();document.querySelector(".tripact")?.scrollIntoView({behavior:"smooth",block:"start"});return;}
+  if(t.dataset.tripdel){MY.trips=myTrips().filter(x=>x.id!==t.dataset.tripdel);if(resaOpen===t.dataset.tripdel)resaOpen=null;saveMy();toast($t("Resan är borttagen"));renderResa();return;}
+  if(t.dataset.calmany){const ms=t.dataset.calmany.split(",").map(id=>MATCHES.find(m=>m._id===id)).filter(Boolean);calMany(ms);}});
 function homeLL(){if(!homeTown)return null;const nq=norm(homeTown);const al=CITY_ALIAS[nq];if(al&&GEO[al])return{name:al,ll:GEO[al]};if(GEO_N[nq])return{name:GEO_N[nq][0],ll:GEO_N[nq][1]};
   const ai=geoAi[nq]||loadGeoAi(nq);return ai&&ai.state==="done"?{name:ai.name,ll:ai.ll}:null;}
 function weekendRange(){const d=new Date();const wd=(d.getDay()+6)%7;const fri=new Date(d);fri.setDate(d.getDate()+(wd<=4?4-wd:0));const sun=new Date(d);sun.setDate(d.getDate()+(6-wd));
@@ -5523,9 +5588,9 @@ async function maybeAskPush(){if(!window.groundlyPush||store.get("fk-pushask")==
   document.body.insertAdjacentHTML("beforeend",`<div id="pushAsk" class="pushask" role="dialog" aria-label="${esc($t("Påminnelser"))}"><p>${ic("calendar")} ${$t("Vill du få en påminnelse innan matchen, och en fråga efteråt om du var där?")}</p><div class="actions"><button class="btn small primary" data-pushask="1">${$t("Ja, påminn mig")}</button><button class="btn small" data-pushask="0">${$t("Inte nu")}</button></div></div>`);}
 // ---------- render ----------
 function render(){
-  const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:(PH()?$t("Berättelser och bilder från andras fotbollsresor"):$t("Berättelser från andras fotbollsresor")),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
+  const SUB={tabell:$t("Serietabeller räknade från matchresultaten i appen"),hem:$t("Ett community för dig som reser på fotboll – fråga, tipsa och inspireras av andra i forumet"),quiz:$t("Gissa flaggan – hur många landslag känner du igen?"),resa:$t("Välj stad och datum, se alla matcher där och spara resan."),landslag:$t("Världens 211 landslag med flagga och hemmaarena, plus Europas U21-lag och kommande mästerskap"),arenor:$t("Arenor med kapacitet, betyg, tillgänglighet och nästa match"),klubbar:$t("{0} klubbar · grundår, arena, kapacitet och meriter",[CLUBS.length]),matcher:$t("Matcher per ort, datum och avstånd · tider i din tidszon"),tips:$t("Derbyn värda resan och klubbar med en egen kultur"),forum:$t("Frågor och tips från andra som reser på fotboll"),reportage:(PH()?$t("Berättelser och bilder från andras fotbollsresor"):$t("Berättelser från andras fotbollsresor")),mine:$t("Matcher du varit på och klubbar du vill besöka"),profil:$t("Du i communityn: namn, vänner, det du skrivit och vad andra ser")};
   {const sb=document.getElementById("sub");{const it=document.getElementById("intro");if(it)it.style.display=look==="modern"&&mode==="hem"?"none":"";}if(mode==="hem"){sb.textContent=$t("Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.");const kk=document.getElementById("kicker");if(kk)kk.textContent=$t("Möt. Upptäck. Upplev.");}else sb.textContent=SUB[mode];}
-  {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
+  {const TT={hem:"",tabell:$t("Tabeller"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tips:$t("Tips"),quiz:$t("Quiz"),resa:$t("Planera resa"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Min profil")};const tt=document.getElementById("tbTitle");if(tt)tt.textContent=TT[mode]||"";
    const intro=document.getElementById("intro");if(intro)intro.hidden=mode!=="hem";}
   document.getElementById("foot").innerHTML=mode==="klubbar"
    ?`<div>${$t("Serie anges för säsongen 2026/27 där den är kontrollerad mot aktuella spelscheman; övriga visas som senast kända.")}</div>${AI_ON?`<div>${$t("Klubbar utanför listan slås upp av Claude och kan innehålla fel.")}</div>`:""}<div>${$t("Flaggor från flag-icons av Panayiotis Lipiridis (MIT-licens).")}</div>`
@@ -5543,7 +5608,7 @@ function render(){
    :mode==="forum"?`<div class="forumrules"><b>${$t("Forumregler")}</b><br>${$t("Håll god ton och hjälp varandra. Spam, hat, olagligt innehåll och personuppgifter om andra tas bort. Ser du något som inte hör hemma här, tryck Anmäl.")}</div><div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; moderatorerna kan dölja inlägg.")}</div>`
    :`<div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; sidans ägare kan dölja inlägg.")}</div>`;
   document.getElementById("foot").insertAdjacentHTML("beforeend",`<div><button class="link" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button> · <button class="link" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button></div>`);
-  if(mode==="klubbar"||mode==="landslag")renderClubs();else if(mode==="arenor")renderArenas();else if(mode==="matcher")renderMatches();else if(mode==="tabell")renderTable();else if(mode==="tips"||mode==="quiz")rerenderQuizHost();else if(mode==="mine")renderMine();else if(mode==="reportage")renderReports();else if(mode==="flode")renderFlode();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();else renderForum();}
+  if(mode==="klubbar"||mode==="landslag")renderClubs();else if(mode==="arenor")renderArenas();else if(mode==="matcher")renderMatches();else if(mode==="tabell")renderTable();else if(mode==="tips"||mode==="quiz")rerenderQuizHost();else if(mode==="mine")renderMine();else if(mode==="reportage")renderReports();else if(mode==="flode")renderFlode();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();else if(mode==="resa")renderResa();else renderForum();}
 document.body.insertAdjacentHTML("beforeend",`<datalist id="allNats">${Object.values(C).filter(c=>c.l==="Landslag").map(c=>`<option value="${esc(c.n)}">`).join("")}</datalist>`);
 document.getElementById("allClubs").innerHTML=Object.values(C).map(c=>`<option value="${esc(c.n)}">`).join("");
 setMode(mode);
