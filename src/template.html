@@ -677,7 +677,8 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
   .bn[aria-current="true"]{color:var(--accent)}
   .bn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
   .bnlog b{display:grid;place-items:center;width:46px;height:46px;margin-top:-22px;border-radius:50%;background:var(--accent);color:var(--chalk);font:700 28px/1 var(--f-body);box-shadow:0 4px 12px rgba(0,0,0,.2);border:3px solid var(--surface)}
-  .bnlog span{color:var(--accent);white-space:nowrap}
+  .bnlog span{color:inherit;white-space:nowrap} /* Skapa-texten i samma färg som de andra menyknapparna */
+.bnlog[aria-expanded="true"] span{color:var(--accent)}
   .msheet:not([hidden]){display:block;position:fixed;inset:0;z-index:58}
   .msback{position:absolute;inset:0;background:rgba(0,0,0,.35)}
   .mspanel{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:18px 18px 0 0;padding:16px 16px calc(84px + env(safe-area-inset-bottom,0px))}
@@ -1051,7 +1052,7 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 :root[data-look="ticket"] .tip.howto{background:var(--fg)}
 :root[data-look="ticket"] .bnav{background:var(--fg);border-top:0;box-shadow:none}
 :root[data-look="ticket"] .bn{color:#C9D2DE}:root[data-look="ticket"] .bn[aria-current="true"]{color:#fff}
-:root[data-look="ticket"] .bnlog b{background:var(--accent);border-color:var(--bg)}:root[data-look="ticket"] .bnlog span{color:#fff}
+:root[data-look="ticket"] .bnlog b{background:var(--accent);border-color:var(--bg)}
 /* --- Atlasen: groundhopparens karta --- */
 html:root[data-look="atlas"]:not(#_){--bg:#EDF0E4;--surface:#FAFBF7;--fg:#22332C;--muted:#5F6E64;--line:#C8D2B4;--chalk:#FAFBF7;
   --accent:#1F6F8B;--accent-soft:#D5E8EF;--pitch:#2E6B4F;--pitch-soft:#DCE8DA;--soft:color-mix(in srgb,#22332C 6%,transparent);--soft2:color-mix(in srgb,#22332C 11%,transparent);
@@ -1067,7 +1068,7 @@ html:root[data-look="atlas"]:not(#_){--bg:#EDF0E4;--surface:#FAFBF7;--fg:#22332C
 :root[data-look="atlas"] .bnav{background:var(--surface);box-shadow:none}
 :root[data-look="atlas"] .bnlog b{background:var(--fg);border-radius:16px;transform:rotate(45deg);border-color:var(--bg)}
 :root[data-look="atlas"] .bnlog b>*{transform:rotate(-45deg)}
-:root[data-look="atlas"] .bnlog span{color:var(--fg)}
+
 /* mörka varianter av utseendena */
 html:root[data-look="ticket"][data-theme="dark"]:not(#_){--bg:#121A30;--surface:#1C2642;--fg:#E8EDF5;--muted:#9AA6C0;--line:#2E3A5C;--chalk:#1C2642;--accent:#F2B84B;--accent-soft:#3A2E14;--pitch:#5FCF8A;--pitch-soft:#173A26;--soft:color-mix(in srgb,#E8EDF5 8%,transparent);--soft2:color-mix(in srgb,#E8EDF5 13%,transparent);--shadow:none;color-scheme:dark}
 html:root[data-look="ticket"][data-theme="dark"]{--guil:rgba(232,237,245,.035)}
