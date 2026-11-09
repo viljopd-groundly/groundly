@@ -712,7 +712,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 :root[data-style="soft"] .btn,:root[data-style="soft"] .chip,:root[data-style="soft"] .mini,:root[data-style="soft"] .themebtn,:root[data-style="soft"] .iconbtn{border-color:transparent;background:var(--soft)}
 @media (hover:hover){:root[data-style="soft"] .btn:hover,:root[data-style="soft"] .chip:hover,:root[data-style="soft"] .mini:hover{background:var(--soft2)}}
 :root[data-style="soft"] .btn.primary{background:var(--accent);border-color:var(--accent)}
-:root[data-style="soft"] .btn[aria-pressed="true"],:root[data-style="soft"] .mini[aria-pressed="true"]{border-color:transparent}
+:root[data-style="soft"] .btn[aria-pressed="true"],:root[data-style="soft"] .mini[aria-pressed="true"],:root[data-style="soft"] .mini[aria-pressed="true"]:hover,:root[data-style="soft"] .btn[aria-pressed="true"]:hover{border-color:transparent;background:var(--accent);color:var(--chalk)} /* valda knappar (Sparad, Peppad, Var där) ska synas tydligt */
 :root[data-style="soft"] .chip[aria-pressed="true"]{background:var(--fg);border-color:var(--fg)}
 @media (hover:hover){:root[data-style="soft"] .btn.primary:hover{filter:brightness(1.08)}}
 :root[data-style="soft"] .pub,:root[data-style="soft"] .simbtn,:root[data-style="soft"] .hcard,:root[data-style="soft"] .qopt,:root[data-style="soft"] .popt,:root[data-style="soft"] .matchfs,:root[data-style="soft"] .phtile,:root[data-style="soft"] .betadot{border-color:transparent}
@@ -1130,6 +1130,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 :root[data-look="kit"] .tip.howto .itile .ic{color:var(--accent)}
 /* knappar, val och tomma rutor som annars är genomskinliga blir ljusa, så att den mörka texten syns */
 :root[data-look="kit"] :is(.chip,.btn,.mini,.iconbtn,.empty):not(.primary):not([aria-pressed="true"]){background:var(--surface)}
+:root:root[data-look="kit"] :is(.btn,.mini)[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}:root:root[data-look="kit"][data-theme="dark"] :is(.btn,.mini)[aria-pressed="true"]{color:#17211C}
 :root[data-look="kit"] .tip.howto .itile:after{background:var(--accent);color:#fff}
 :root[data-look="kit"] .tip.howto .howeye{background:var(--accent-soft);color:var(--accent)}
 /* menyn längst ner: ljus med rundade hörn */
