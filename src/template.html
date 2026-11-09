@@ -4408,6 +4408,8 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   // eller tills de loggat 3 matcher. Sedan försvinner rutan.
   if(myState==="ready"&&!MY.since&&dbNs)setTimeout(()=>{if(!MY.since)mutate(d=>{d.since=today();});},0);
   const fresh=isNewbie();
+  if(look==="modern"&&!FOKUS){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
+  {const it=document.getElementById("intro");if(it&&!FOKUS)it.style.display="";}
   if(FOKUS){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=fokusHomeHtml(ob);return;}
   el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
 // tre saker man gör i appen: planera och boka, logga, och communityn
@@ -4515,7 +4517,8 @@ function fokusCoverage(){return esc($t("Varje match räknas. Spara allt du ser o
 // fokusläge: en mening om vad appen är, matcher nära dig, logga en match, din säsong och vägar vidare
 // ---------- fokusläge, förslag: startsida med karuseller (scrolla i sidled), ljus eller mörk ----------
 // Växlas med ?stil=vanlig|ljus|mork (sparas i fk-fkstyle). Mörk använder appens mörka tema medan förslaget är valt.
-function fkStyle(){try{const u=new URLSearchParams(location.search).get("stil");if(["vanlig","ljus","mork"].includes(u))localStorage.setItem("fk-fkstyle",u);const v=localStorage.getItem("fk-fkstyle");return["ljus","mork"].includes(v)&&FOKUS?v:"vanlig";}catch(e){return"vanlig";}}
+// Utseendet Modern = karusellstartsidan (ljus eller mörk efter Färg)
+function fkStyle(){if(typeof look!=="undefined"&&look==="modern")return effLookTheme()==="dark"?"mork":"ljus";try{const u=new URLSearchParams(location.search).get("stil");if(["vanlig","ljus","mork"].includes(u))localStorage.setItem("fk-fkstyle",u);const v=localStorage.getItem("fk-fkstyle");return["ljus","mork"].includes(v)&&FOKUS?v:"vanlig";}catch(e){return"vanlig";}}
 
 function fcBanner(m,badge,corner){const c=id=>(COLORS[id]||["#2f6b47","#ffffff"])[0];
   return`<div class="fcban" style="--ca:${c(m.home)};--cb:${c(m.away)}">${badge?`<span class="fcbadge">${badge}</span>`:""}${corner?`<span class="fccorner">${corner}</span>`:""}
@@ -5259,7 +5262,7 @@ let deepJump=null;
 const THEMES=[["light",$t("Ljust")],["dark",$t("Mörkt")]];
 const sysDark=()=>!!(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
-const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")],["kit",$t("Kvällsmatch")]];const DARKLOOK={kit:1};let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
+const LOOKS=[["std",$t("Groundly")],["modern",$t("Modern")],["ticket",$t("Biljetten")],["atlas",$t("Atlasen")],["kit",$t("Kvällsmatch")]];const DARKLOOK={kit:1};let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
 // textfärg i alla utseenden; tidigare val (röd, blå, vit, lila) faller tillbaka på standard
 const ACCS=[["std",$t("Standard"),""],["gold",$t("Gul"),"#F2C14E"],["green",$t("Grön"),"#2E9A57"],["orange",$t("Orange"),"#F07F2A"],["white",$t("Vit"),"#FFFFFF"]];let acc="std";try{let t=store.get("fk-acc");if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
 const LOOK_THEMES=THEMES;let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
@@ -5272,7 +5275,7 @@ const effTheme=()=>theme==="auto"?(sysDark()?"dark":"light"):theme;
 const effLookTheme=()=>DARKLOOK[look]?(lookTheme==="dark"?"dark":"light"):lookTheme==="auto"?(sysDark()?"dark":"light"):lookTheme;
 function applyTheme(){const r=document.documentElement;requestAnimationFrame(()=>{if(typeof fitTagline==="function")fitTagline();});if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
   if(acc!=="std")r.setAttribute("data-acc",acc);else r.removeAttribute("data-acc");
-  if(look!=="std"){r.setAttribute("data-look",look);r.setAttribute("data-theme",effLookTheme());}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
+  if(look==="modern"){r.removeAttribute("data-look");r.setAttribute("data-theme",effLookTheme());}else if(look!=="std"){r.setAttribute("data-look",look);r.setAttribute("data-theme",effLookTheme());}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
   // fokuslägets karusellförslag: mörk variant använder appens mörka tema
   {const st=fkStyle();r.toggleAttribute("data-fkc",st!=="vanlig");if(st==="mork")r.setAttribute("data-theme","dark");}
   const row=document.getElementById("themeRow");r.setAttribute("data-style",uiStyle);
