@@ -2579,5 +2579,8 @@
  "Lägg till {0} i resan": "Legg til {0} i turen",
  "Lägg till en stad i resan {0}": "Legg til en by i turen {0}",
  "Lägg till stad": "Legg til by",
- "Ta bort {0} från resan": "Fjern {0} fra turen"
+ "Ta bort {0} från resan": "Fjern {0} fra turen",
+ "Fotbollsresor": "Fotballturer",
+ "Matchschemat är bara inlagt till ungefär {0}. Senare matcher, särskilt i lägre serier, läggs in efter hand, så titta gärna igen längre fram.": "Kampprogrammet er bare lagt inn til omtrent {0}. Senere kamper, særlig i lavere divisjoner, legges inn etter hvert, så sjekk gjerne igjen senere.",
+ "Resor du planerar (städer, datum och vilka matcher du vill gå på) sparas på ditt konto och syns bara för dig. Appen jämför dina sparade matcher med matchschemat för att kunna varna om en avsparkstid ändras, och har du slagit på notiser kan du få ett meddelande om det. Delar du en resa skapas en länk med städerna, datumen, de valda matcherna och ditt visningsnamn. Den som får länken kan se det och spara en egen kopia.": "Turer du planlegger (byer, datoer og hvilke kamper du vil se) lagres på kontoen din og er bare synlige for deg. Appen sammenligner de lagrede kampene med kampprogrammet for å kunne varsle hvis et avsparkstidspunkt endres, og har du slått på varsler kan du få en melding om det. Deler du en tur, lages en lenke med byene, datoene, de valgte kampene og visningsnavnet ditt. Den som får lenken kan se dette og lagre sin egen kopi."
 }

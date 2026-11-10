@@ -2667,5 +2667,8 @@
  "Lägg till {0} i resan": "Add {0} to the trip",
  "Lägg till en stad i resan {0}": "Add a city to the trip {0}",
  "Lägg till stad": "Add city",
- "Ta bort {0} från resan": "Remove {0} from the trip"
+ "Ta bort {0} från resan": "Remove {0} from the trip",
+ "Fotbollsresor": "Football trips",
+ "Matchschemat är bara inlagt till ungefär {0}. Senare matcher, särskilt i lägre serier, läggs in efter hand, så titta gärna igen längre fram.": "The match schedule only runs to about {0}. Later matches, especially in lower divisions, are added over time, so check back later.",
+ "Resor du planerar (städer, datum och vilka matcher du vill gå på) sparas på ditt konto och syns bara för dig. Appen jämför dina sparade matcher med matchschemat för att kunna varna om en avsparkstid ändras, och har du slagit på notiser kan du få ett meddelande om det. Delar du en resa skapas en länk med städerna, datumen, de valda matcherna och ditt visningsnamn. Den som får länken kan se det och spara en egen kopia.": "Trips you plan (cities, dates and the matches you want to see) are saved on your account and only visible to you. The app compares your saved matches with the schedule so it can warn you if a kick-off time changes, and if you have turned on notifications you may get a message about it. If you share a trip, a link is created with the cities, dates, chosen matches and your display name. Anyone who gets the link can see this and save their own copy."
 }

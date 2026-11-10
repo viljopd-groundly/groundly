@@ -2578,5 +2578,8 @@
  "Lägg till {0} i resan": "{0} toevoegen aan de reis",
  "Lägg till en stad i resan {0}": "Stad toevoegen aan de reis {0}",
  "Lägg till stad": "Stad toevoegen",
- "Ta bort {0} från resan": "{0} uit de reis verwijderen"
+ "Ta bort {0} från resan": "{0} uit de reis verwijderen",
+ "Fotbollsresor": "Voetbalreizen",
+ "Matchschemat är bara inlagt till ungefär {0}. Senare matcher, särskilt i lägre serier, läggs in efter hand, så titta gärna igen längre fram.": "Het speelschema loopt maar tot ongeveer {0}. Latere wedstrijden, vooral in lagere divisies, worden gaandeweg toegevoegd, dus kijk later nog eens.",
+ "Resor du planerar (städer, datum och vilka matcher du vill gå på) sparas på ditt konto och syns bara för dig. Appen jämför dina sparade matcher med matchschemat för att kunna varna om en avsparkstid ändras, och har du slagit på notiser kan du få ett meddelande om det. Delar du en resa skapas en länk med städerna, datumen, de valda matcherna och ditt visningsnamn. Den som får länken kan se det och spara en egen kopia.": "Reizen die je plant (steden, data en de wedstrijden die je wilt zien) worden op je account opgeslagen en zijn alleen voor jou zichtbaar. De app vergelijkt je opgeslagen wedstrijden met het speelschema om je te waarschuwen als een aftraptijd verandert, en als je meldingen hebt aangezet kun je daar een bericht over krijgen. Als je een reis deelt, wordt een link gemaakt met de steden, data, gekozen wedstrijden en je weergavenaam. Wie de link krijgt, kan dat zien en een eigen kopie opslaan."
 }

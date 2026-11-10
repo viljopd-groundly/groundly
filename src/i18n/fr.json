@@ -2578,5 +2578,8 @@
  "Lägg till {0} i resan": "Ajouter {0} au voyage",
  "Lägg till en stad i resan {0}": "Ajouter une ville au voyage {0}",
  "Lägg till stad": "Ajouter une ville",
- "Ta bort {0} från resan": "Retirer {0} du voyage"
+ "Ta bort {0} från resan": "Retirer {0} du voyage",
+ "Fotbollsresor": "Voyages foot",
+ "Matchschemat är bara inlagt till ungefär {0}. Senare matcher, särskilt i lägre serier, läggs in efter hand, så titta gärna igen längre fram.": "Le calendrier ne va que jusqu'au {0} environ. Les matchs suivants, surtout dans les divisions inférieures, sont ajoutés au fur et à mesure, alors reviens voir plus tard.",
+ "Resor du planerar (städer, datum och vilka matcher du vill gå på) sparas på ditt konto och syns bara för dig. Appen jämför dina sparade matcher med matchschemat för att kunna varna om en avsparkstid ändras, och har du slagit på notiser kan du få ett meddelande om det. Delar du en resa skapas en länk med städerna, datumen, de valda matcherna och ditt visningsnamn. Den som får länken kan se det och spara en egen kopia.": "Les voyages que tu planifies (villes, dates et matchs que tu veux voir) sont enregistrés sur ton compte et visibles uniquement par toi. L'application compare tes matchs enregistrés au calendrier pour te prévenir si un horaire change, et si tu as activé les notifications, tu peux recevoir un message. Si tu partages un voyage, un lien est créé avec les villes, les dates, les matchs choisis et ton nom d'affichage. La personne qui reçoit le lien peut le voir et en enregistrer sa propre copie."
 }
