@@ -2492,7 +2492,6 @@
  "Länkar till hotell och resor": "Linkit hotelleihin ja matkoihin",
  "Knapparna Hotell och Resa går till Booking.com och Omio. En del av dem är annonslänkar: bokar du via dem kan Groundly få provision, utan att det kostar dig något extra. När du lämnar appen gäller deras villkor och integritetspolicy. Biljetter köper du alltid hos klubben.": "Hotelli- ja Matka-painikkeet vievät Booking.comiin ja Omioon. Osa niistä on mainoslinkkejä: jos varaat niiden kautta, Groundly voi saada provision ilman lisäkustannuksia sinulle. Kun poistut sovelluksesta, niiden ehdot ja tietosuojakäytäntö ovat voimassa. Liput ostetaan aina seuralta.",
  "Senast uppdaterad {0}.": "Päivitetty viimeksi {0}.",
- "Hitta matcher över hela världen, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Löydä otteluita kaikkialta maailmasta, kerää kaikki näkemäsi ja jaa elämykset muiden jalkapalloa rakastavien kanssa.",
  "Pågår": "Käynnissä",
  "Jag är där": "Olen paikalla",
  "Är här {0}": "Paikalla {0}",
@@ -2560,5 +2559,6 @@
  "Städerna med mest fotboll under perioden. Derbyn, högsta serien och arenor du inte besökt väger tyngre.": "Kaupungit, joissa on eniten jalkapalloa aikavälillä. Derbyt, pääsarja ja stadionit, joilla et ole käynyt, painavat enemmän.",
  "Vart ska jag åka?": "Minne lähtisin?",
  "Tillbaka till topplistan": "Takaisin listaan",
- "Mest fotboll i helgen:": "Eniten jalkapalloa viikonloppuna:"
+ "Mest fotboll i helgen:": "Eniten jalkapalloa viikonloppuna:",
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Löydä otteluita kaikkialta maailmasta, suunnittele seuraava jalkapallomatkasi, kerää kaikki näkemäsi ja jaa kokemukset muiden jalkapalloa rakastavien kanssa."
 }
