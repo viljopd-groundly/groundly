@@ -977,9 +977,9 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 @font-face{font-family:"GL Public";src:url(fonts/PublicSans.woff) format("woff");font-weight:100 900;font-display:swap}
 @font-face{font-family:"GL Familjen";src:url(fonts/Familjen.woff) format("woff");font-weight:400 700;font-display:swap}
 /* --- Biljetten: matchbiljett och matchprogram --- */
-html:root[data-look="ticket"]:not(#_){--bg:#E6ECF2;--surface:#FFFFFF;--fg:#18213D;--muted:#5B6683;--line:#C9D2DE;--chalk:#FFFFFF;
-  --accent:#9A6400;--accent-soft:#F6E7C1;--pitch:#1F5E43;--pitch-soft:#D6E9DF;--soft:color-mix(in srgb,#18213D 6%,transparent);--soft2:color-mix(in srgb,#18213D 11%,transparent);
-  --f-display:"GL Shoulders","Arial Narrow",sans-serif;--f-body:"GL Public",system-ui,sans-serif;--r:6px;--shadow:0 1px 0 #C9D2DE;color-scheme:light}
+html:root[data-look="ticket"]:not(#_){--bg:#C5D3E4;--surface:#FFFFFF;--fg:#18213D;--muted:#5B6683;--line:#C2CEDD;--chalk:#FFFFFF;
+  --accent:#1D4E9E;--accent-soft:#DCE6F4;--pitch:#1F5E43;--pitch-soft:#D6E9DF;--soft:color-mix(in srgb,#18213D 6%,transparent);--soft2:color-mix(in srgb,#18213D 11%,transparent);
+  --f-display:"GL Shoulders","Arial Narrow",sans-serif;--f-body:"GL Public",system-ui,sans-serif;--r:6px;--shadow:0 1px 0 #A9B9CE;color-scheme:light}
 /* biljettmönstret ligger i ett eget fast lager som ritas en gång, i stället för fast bakgrund som målades om vid varje scroll (laggade på iPhone) */
 html:root[data-look="ticket"] body{background:var(--bg)}
 html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;transform:translateZ(0);background-image:repeating-radial-gradient(circle at 120% -10%,transparent 0 9px,var(--guil,rgba(24,33,61,.035)) 9px 10px)}
@@ -1085,7 +1085,7 @@ html:root[data-look="atlas"]:not(#_){--bg:#EDF0E4;--surface:#FAFBF7;--fg:#22332C
 :root[data-look="atlas"] .bnlog b>*{transform:rotate(-45deg)}
 
 /* mörka varianter av utseendena */
-html:root[data-look="ticket"][data-theme="dark"]:not(#_){--bg:#121A30;--surface:#1C2642;--fg:#E8EDF5;--muted:#9AA6C0;--line:#2E3A5C;--chalk:#1C2642;--accent:#F2B84B;--accent-soft:#3A2E14;--pitch:#5FCF8A;--pitch-soft:#173A26;--soft:color-mix(in srgb,#E8EDF5 8%,transparent);--soft2:color-mix(in srgb,#E8EDF5 13%,transparent);--shadow:none;color-scheme:dark}
+html:root[data-look="ticket"][data-theme="dark"]:not(#_){--bg:#0B1224;--surface:#1A2440;--fg:#E8EDF5;--muted:#9AA6C0;--line:#2E3A5C;--chalk:#1C2642;--accent:#8AB4F8;--accent-soft:#1A2B4D;--pitch:#5FCF8A;--pitch-soft:#173A26;--soft:color-mix(in srgb,#E8EDF5 8%,transparent);--soft2:color-mix(in srgb,#E8EDF5 13%,transparent);--shadow:none;color-scheme:dark}
 html:root[data-look="ticket"][data-theme="dark"]{--guil:rgba(232,237,245,.035)}
 :root[data-look="ticket"][data-theme="dark"] .btn.primary,:root[data-look="ticket"][data-theme="dark"] .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#18213D}
 :root[data-look="ticket"][data-theme="dark"] .bnlog b{color:#18213D}
