@@ -2548,5 +2548,15 @@
  "Ny tid: {0} – {1}": "Novo horário: {0} – {1}",
  "Matchen är flyttad till {0}. Tidigare {1}.": "O jogo foi remarcado para {0}. Antes {1}.",
  "Avsparkstiden är klar: {0} – {1}": "Horário confirmado: {0} – {1}",
- "Matchen spelas {0}.": "O jogo será {0}."
+ "Matchen spelas {0}.": "O jogo será {0}.",
+ "{n} derbyn": "{n} clássicos",
+ "{n} nya arenor för dig": "{n} estádios novos para você",
+ "1 derby": "1 clássico",
+ "1 ny arena för dig": "1 estádio novo para você",
+ "Inom {0}": "Até {0}",
+ "Område": "Área",
+ "Period": "Período",
+ "Prova en längre period eller ett större område.": "Tente um período maior ou uma área maior.",
+ "Städerna med mest fotboll under perioden. Derbyn, högsta serien och arenor du inte besökt väger tyngre.": "As cidades com mais futebol no período. Clássicos, primeira divisão e estádios que você não visitou contam mais.",
+ "Vart ska jag åka?": "Para onde eu vou?"
 }

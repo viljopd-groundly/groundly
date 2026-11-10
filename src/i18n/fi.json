@@ -2548,5 +2548,15 @@
  "Ny tid: {0} – {1}": "Uusi aika: {0} – {1}",
  "Matchen är flyttad till {0}. Tidigare {1}.": "Ottelu on siirretty ajankohtaan {0}. Aiemmin {1}.",
  "Avsparkstiden är klar: {0} – {1}": "Aloitusaika vahvistettu: {0} – {1}",
- "Matchen spelas {0}.": "Ottelu pelataan {0}."
+ "Matchen spelas {0}.": "Ottelu pelataan {0}.",
+ "{n} derbyn": "{n} derbyä",
+ "{n} nya arenor för dig": "{n} uutta stadionia sinulle",
+ "1 derby": "1 derby",
+ "1 ny arena för dig": "1 uusi stadion sinulle",
+ "Inom {0}": "Enintään {0}",
+ "Område": "Alue",
+ "Period": "Aikaväli",
+ "Prova en längre period eller ett större område.": "Kokeile pidempää aikaväliä tai suurempaa aluetta.",
+ "Städerna med mest fotboll under perioden. Derbyn, högsta serien och arenor du inte besökt väger tyngre.": "Kaupungit, joissa on eniten jalkapalloa aikavälillä. Derbyt, pääsarja ja stadionit, joilla et ole käynyt, painavat enemmän.",
+ "Vart ska jag åka?": "Minne lähtisin?"
 }
