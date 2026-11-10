@@ -4611,7 +4611,9 @@ function showCitySug(){const inp=document.getElementById("rCity"),box=document.g
 document.addEventListener("input",e=>{if(e.target&&e.target.id==="rCity")showCitySug();});
 document.addEventListener("focusout",e=>{if(e.target&&e.target.id==="rCity")setTimeout(()=>{const b=document.getElementById("rSug");if(b&&!b.contains(document.activeElement))b.hidden=true;},180);});
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-rsug]");if(!b)return;e.preventDefault();const inp=document.getElementById("rCity");if(!inp)return;
-  inp.value=$t(b.dataset.rsug);document.getElementById("rSug").hidden=true;RESA_DRAFT=null;document.getElementById("resaForm").requestSubmit?document.getElementById("resaForm").requestSubmit():document.getElementById("resaForm").dispatchEvent(new Event("submit",{cancelable:true,bubbles:true}));});
+  // fyll bara i staden – man väljer datum och trycker Visa matcher själv, så skärmen hoppar inte
+  inp.value=$t(b.dataset.rsug);document.getElementById("rSug").hidden=true;inp.setAttribute("aria-expanded","false");
+  RESA_DRAFT={city:inp.value,from:document.getElementById("rFrom").value,to:document.getElementById("rTo").value};inp.blur();});
 let RESA_DRAFT=null;document.addEventListener("input",e=>{const id=e.target&&e.target.id;if(id!=="rCity"&&id!=="rFrom"&&id!=="rTo")return;RESA_DRAFT={city:document.getElementById("rCity").value,from:document.getElementById("rFrom").value,to:document.getElementById("rTo").value};});
 function renderResa(){const el=document.getElementById("resaList");if(!el)return;if(!RESA)RESA=resaDefault();const q=RESA;const D=RESA_DRAFT||q;
   const act=document.activeElement,fid=act&&["rCity","rFrom","rTo"].includes(act.id)?act.id:null,sel=fid==="rCity"?[act.selectionStart,act.selectionEnd]:null;
