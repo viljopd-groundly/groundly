@@ -45,6 +45,13 @@ async function boot() {
   try { fs = F.initializeFirestore(fbApp, { ignoreUndefinedProperties: true, localCache: F.persistentLocalCache && F.persistentMultipleTabManager ? F.persistentLocalCache({ tabManager: F.persistentMultipleTabManager() }) : undefined }); }
   catch (e) { try { fs = F.initializeFirestore(fbApp, { ignoreUndefinedProperties: true }); } catch (e2) { fs = F.getFirestore(fbApp); } }
   const st = S ? S.getStorage(fbApp) : null;
+  // anonym användningsstatistik: bara antal per sak och dag, utan användar-id (se USAGE_KEYS i appen)
+  window.groundlyUsage = async counts => {
+    if (!F.increment || /^(localhost|127\.)/.test(location.hostname) && !window.GROUNDLY_FIREBASE_BASE) return;
+    const day = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Stockholm" });
+    const d = {}; for (const [k, n] of Object.entries(counts)) if (Number.isInteger(n) && n > 0 && n < 1000) d[k] = F.increment(n);
+    if (Object.keys(d).length) await F.setDoc(F.doc(fs, "usage", day), d, { merge: true });
+  };
 
   // vänta på första inloggningsbeskedet
   let user = await new Promise(res => { const off = A.onAuthStateChanged(auth, u => { off(); res(u); }); });

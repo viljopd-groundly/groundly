@@ -568,7 +568,10 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .seenrow{display:grid;grid-template-columns:84px minmax(0,1fr);gap:8px;font-size:calc(14px*var(--fs))}
 .seenrow>span:last-child{display:flex;flex-direction:column;min-width:0}
 .seenrow .num{font-size:calc(12px*var(--fs));color:var(--muted);padding-top:2px}
-.askov{z-index:70}#privacyOv{z-index:10001}
+.askov{z-index:70}#privacyOv,#ustOv{z-index:10001}
+.ustnums{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin:6px 0}.ustnums div{display:grid;padding:10px;border-radius:10px;background:var(--soft)}.ustnums b{font-size:22px}.ustnums span{font-size:12px;color:var(--muted)}
+.usttab{width:100%;border-collapse:collapse;font-size:14px;margin:4px 0 8px}.usttab th{text-align:left;font-weight:600;color:var(--muted);font-size:12px;padding:4px}.usttab td{padding:5px 4px;border-top:1px solid var(--line)}.usttab td:not(:first-child),.usttab th:not(:first-child){text-align:right;white-space:nowrap}
+.ustbars{display:flex;align-items:flex-end;gap:2px;height:70px;margin:6px 0 4px}.ustbars i{flex:1;min-height:2px;background:var(--accent);border-radius:2px 2px 0 0}
 .askbox{max-width:420px;width:100%;box-sizing:border-box;background:var(--surface);align-self:center}
 .mdate,.seenrow .num,.nw{white-space:nowrap}
 .mrow{grid-template-columns:96px minmax(0,1fr)}
@@ -1537,7 +1540,31 @@ window.addEventListener("popstate",e=>{if(clubStack.length&&clubStack[clubStack.
   const y=st.y||0;window.scrollTo(0,y);requestAnimationFrame(()=>{if(Math.abs(window.scrollY-y)>2)window.scrollTo(0,y);});});
 // webbläsaren ska inte själv återställa scrollen vid bakåt: den gör det innan vyn hunnit bytas, så sidan hoppar (särskilt i Safari)
 try{history.scrollRestoration="manual";}catch(e){}
-function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)repPopOrder=null;
+// ---------- Anonym användningsstatistik ----------
+// Bara antal per sak och dag (usage/{datum}). Inget användar-id, ingen enhet, inga kakor.
+// Nycklarna måste finnas i USAGE_KEYS här och i firebase/firestore.rules.
+const USAGE_KEYS=new Set(["s", "s_in", "s_new", "s_pwa", "dark", "look_std", "look_modern", "look_ticket", "look_atlas", "look_kit", "lang_sv", "lang_nb", "lang_da", "lang_fi", "lang_is", "lang_de", "lang_en", "lang_es", "lang_fr", "lang_it", "lang_nl", "lang_pl", "lang_pt", "v_hem", "v_matcher", "v_mine", "v_resa", "v_flode", "v_forum", "v_reportage", "v_klubbar", "v_landslag", "v_tabell", "v_arenor", "v_tips", "v_quiz", "v_profil", "m_open", "log", "wish", "trip_new", "cal", "fav", "login_click", "trip_search", "trip_share", "trip_leg", "trip_log", "trip_top", "top_city", "home_top", "plus", "plus_log", "plus_trip", "plus_rep", "plus_ask", "out_hotel", "out_travel", "out_tix", "out_ext"]);
+let USE_Q={},USE_LAST=null;
+function track(k,n){if(!USAGE_KEYS.has(k))return;USE_Q[k]=(USE_Q[k]||0)+(n||1);}
+function flushUsage(){const q=USE_Q;if(!Object.keys(q).length||typeof window.groundlyUsage!=="function")return;USE_Q={};try{window.groundlyUsage(q).catch(()=>{});}catch(e){}}
+setInterval(flushUsage,60000);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")flushUsage();});
+window.addEventListener("pagehide",flushUsage);
+setTimeout(()=>{try{usageStart();}catch(e){}},1500);
+// ändringar i den egna loggen räknas som antal (inte vad)
+function usageDelta(){if(myState!=="ready")return;const c={a:(MY.attended||[]).length,w:(MY.wishMatches||[]).length,t:(MY.trips||[]).length};
+  if(USE_LAST){if(c.a>USE_LAST.a)track("log",c.a-USE_LAST.a);if(c.w>USE_LAST.w)track("wish",c.w-USE_LAST.w);if(c.t>USE_LAST.t)track("trip_new",c.t-USE_LAST.t);}USE_LAST=c;}
+const USE_CLICK=[["[data-mopen]","m_open"],["[data-calmany],[data-cal]","cal"],["[data-fav]","fav"],["[data-glogin]","login_click"],["[data-tripshare]","trip_share"],["[data-legadd]","trip_leg"],["[data-triplog]","trip_log"],
+  ['[data-resatab="top"]',"trip_top"],["[data-tophome],[data-gotop]","home_top"],["[data-topcity]","top_city"],['[aria-controls="plusSheet"]',"plus"]];
+document.addEventListener("click",e=>{const el=e.target&&e.target.closest?e.target:null;if(!el)return;
+  for(const[sel,k]of USE_CLICK)if(el.closest(sel)){track(k);if(k!=="top_city")break;}
+  const pl=el.closest("[data-plus]");if(pl)track("plus_"+pl.dataset.plus);
+  const a=el.closest("a[href^='http']");if(a){const h=a.href;track(/booking\.|tp\.media|travelpayouts|tp\.st/.test(h)?"out_hotel":/omio\./.test(h)?"out_travel":a.querySelector('use[href="#i-ticket"]')?"out_tix":"out_ext");}},true);
+document.addEventListener("submit",e=>{if(e.target&&e.target.id==="resaForm")track("trip_search");},true);
+function usageStart(){track("s");try{track("v_"+mode);}catch(e){}try{if(!store.get("fk-seen")){track("s_new");store.set("fk-seen","1");}}catch(e){}
+  try{if(matchMedia("(display-mode: standalone)").matches||navigator.standalone)track("s_pwa");}catch(e){}
+  try{track("look_"+(typeof look!=="undefined"&&look?look:"std"));track("lang_"+LANG);if(document.documentElement.dataset.theme==="dark"||(!document.documentElement.dataset.theme&&matchMedia("(prefers-color-scheme: dark)").matches))track("dark");}catch(e){}}
+function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)track("v_"+m);if(m!==prev)repPopOrder=null;
   if(!navPop){jumpFrom=pendingJump&&pendingJump!==m?pendingJump:(!topNav&&prev!==m?prev:null);
     if(prev!==m){try{history.replaceState({...(history.state||{}),m:prev,y:y0},"");history.pushState({m,from:jumpFrom,jump:!!jumpFrom},"");}catch(e){}}}
   pendingJump=null;if(m!==prev)clubStack=[];
@@ -2326,7 +2353,7 @@ async function retryPending(){const p=pendingLogg();if(!p||!myRef||retryBusy)ret
   try{await myRef.set(p);const now=pendingLogg();if(now&&now.savedAt===p.savedAt)store.del(PENDING_KEY);toast($t("Dina sparade matcher är nu uppladdade."));if(mode==="mine")renderMine();}catch(e){}finally{retryBusy=false;}}
 window.addEventListener("online",()=>{setTimeout(retryPending,1500);});
 setInterval(()=>{if(pendingLogg()&&navigator.onLine!==false)retryPending();},60000);
-function saveMy(){if(!myRef){myErr=$t("Logga in på claude.ai för att spara.");render();return;}
+function saveMy(){if(!myRef){myErr=$t("Logga in på claude.ai för att spara.");render();return;}try{usageDelta();}catch(e){}
   MY.savedAt=new Date().toISOString();const body=JSON.parse(JSON.stringify(MY));myPending++;store.set(PENDING_KEY,JSON.stringify(body));
   myQ=myQ.then(()=>myRef.set(body)).then(()=>{const now=pendingLogg();if(now&&now.savedAt===body.savedAt)store.del(PENDING_KEY);})
     .catch(e=>{if(e&&(e.code==="invalid_argument"||e.code==="quota_exceeded")){store.del(PENDING_KEY);myErr=e.code==="invalid_argument"?$t("Du har inte behörighet att spara på den här sidan. Be ägaren bjuda in dig så att du kan använda sidan."):$t("Det finns inte plats för fler sparade saker just nu.");toast(myErr);}
@@ -2594,7 +2621,7 @@ async function startMine(db,uid){
     // alla konton syns i topplistor och för vänner från start (en gång per konto, flaggan vis2); går att välja bort efteråt
     const fresh=!s.exists&&!pend;const data=s.exists?s.data():null;
     if(!myNewDone&&navigator.onLine!==false&&!(s.metadata&&s.metadata.fromCache)&&(fresh||(data&&data.vis2!==true&&!pend))){myNewDone=true;setTimeout(()=>{try{const was=MY.pub&&MY.share;mutate(d=>{d.pub=true;d.share=true;d.vis2=true;});if(!fresh&&!was)toast($t("Du syns nu i topplistorna och för vänner. Du kan välja bort det under Min fotboll."));}catch(e){}},400);}
-    if(pend&&(!server||!server.savedAt||String(pend.savedAt)>String(server.savedAt))){MY=normMy(pend);setTimeout(retryPending,500);}else{MY=normMy(server);if(pend)store.del(PENDING_KEY);}myState="ready";render();setTimeout(()=>{try{syncStats();}catch(e){}},800);},
+    if(pend&&(!server||!server.savedAt||String(pend.savedAt)>String(server.savedAt))){MY=normMy(pend);setTimeout(retryPending,500);}else{MY=normMy(server);if(pend)store.del(PENDING_KEY);}myState="ready";if(!USE_LAST){USE_LAST={a:(MY.attended||[]).length,w:(MY.wishMatches||[]).length,t:(MY.trips||[]).length};track("s_in");}render();setTimeout(()=>{try{syncStats();}catch(e){}},800);},
     ()=>{myState="none";render();});}
 
 // ---------- arenabetyg och tillgänglighet ----------
@@ -5231,7 +5258,7 @@ function privacyHtml(){return`<div id="privacyOv" class="phview on askov" role="
   <h3>${$t("Delning och topplistor")}</h3><p>${(PH()?$t("Som ny användare syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för andra, så att vänner kan följa dig. Du är också med i topplistorna med dina antal. Anteckningar, sällskap och bilder delas aldrig. Du kan välja bort båda när som helst under Min fotboll och på Hem, och då tas det delade bort."):$t("Som ny användare syns dina 40 senaste matcher (lag, resultat, arena och datum), antal matcher och arenor och ditt första favoritlag för andra, så att vänner kan följa dig. Du är också med i topplistorna med dina antal. Anteckningar och sällskap delas aldrig. Du kan välja bort båda när som helst under Min fotboll och på Hem, och då tas det delade bort."))} ${$t("Det du delar kan också synas i Aktivitet under Community.")}</p>
   <h3>${$t("Det som andra ser")}</h3><p>${$t("Foruminlägg, matchberättelser, kommentarer, klubblegender, kommentarer på tips, pubtips, arenabetyg, förslag på rättelser, quizresultat, gillningar, peppningar och röster syns för alla som använder appen, tillsammans med ditt visningsnamn. Topplistorna visar bara dina antal, och bara om du inte har valt bort det.")}</p>
   <h3>${$t("Var datan lagras")}</h3><p>${$t("Allt lagras hos Google Firebase. Appens ägare har teknisk åtkomst till databasen för drift och säkerhetskopior, men använder den inte för att läsa din logg. En säkerhetskopia tas varje vecka och sparas privat.")}</p>
-  <h3>${$t("Sparat i telefonen")}</h3><p>${$t("Inställningar, din hemort och en kopia av matchschemat sparas i telefonen så att appen öppnar snabbt, även utan täckning. Groundly använder inga spårningskakor och samlar ingen statistik om hur du använder appen.")}</p>
+  <h3>${$t("Sparat i telefonen")}</h3><p>${$t("Inställningar, din hemort och en kopia av matchschemat sparas i telefonen så att appen öppnar snabbt, även utan täckning.")} ${$t("Groundly använder inga spårningskakor. Appen räknar anonymt hur ofta sidor och knappar används, till exempel hur många som öppnar Planera resa en viss dag. Det sparas bara som antal per dag och kopplas aldrig till dig eller din telefon.")}</p>
   <h3>${$t("Plats")}</h3><p>${$t("Trycker du Använd min plats frågar telefonen först om lov. Positionen används bara i telefonen för att hitta närmaste ort och skickas aldrig till Groundly.")}</p>
   <h3>${$t("Länkar till hotell och resor")}</h3><p>${$t("Knapparna Hotell och Resa går till Booking.com och Omio. En del av dem är annonslänkar: bokar du via dem kan Groundly få provision, utan att det kostar dig något extra. När du lämnar appen gäller deras villkor och integritetspolicy. Biljetter köper du alltid hos klubben.")}</p>
   <h3>${$t("Moderering")}</h3><p>${$t("Moderatorer kan dölja inlägg, matchberättelser, kommentarer och legender, godkänna rättelser av klubbfakta och läsa det du skickar via Tyck till.")}</p>
@@ -5242,6 +5269,34 @@ function privacyHtml(){return`<div id="privacyOv" class="phview on askov" role="
   <p class="meta">${$t("Det här är en enkel sammanfattning på vanlig svenska, inte en juridisk text.")} ${$t("Senast uppdaterad {0}.",[repDateTxt("2026-11-10")])}</p>
   ${myState==="ready"?`<div class="actions"><button class="btn" type="button" id="pvWipe">${wipeArm?$t("Tryck igen för att radera allt"):$t("Radera min logg och mina inställningar")}</button></div><p class="hint" id="pvMsg"></p>`:""}
   <div class="actions"><button class="btn primary" type="button" id="pvClose">${$t("Stäng")}</button></div></div></div>`;}
+// ---------- Statistik för moderatorer: anonyma räknare per dag + nattlig sammanställning ur databasen ----------
+const UST_GROUPS=[["Besök",[["s","Besök (appen öppnad)"],["s_in","…varav inloggade"],["s_new","Nya besökare"],["s_pwa","Från hemskärmen (app)"]]],
+  ["Sidor",[["v_hem","Hem"],["v_matcher","Matcher"],["v_mine","Min fotboll"],["v_resa","Planera resa"],["v_flode","Community"],["v_forum","Forum"],["v_reportage","Matchberättelser"],["v_arenor","Arenor"],["v_tabell","Tabeller"],["v_klubbar","Klubbar"],["v_landslag","Landslag"],["v_tips","Tips"],["v_quiz","Quiz"],["v_profil","Mitt konto"]]],
+  ["Gjort",[["log","Loggade matcher"],["wish","Vill gå"],["m_open","Öppnat en match"],["cal","Kalender"],["fav","Favoritknappen"],["plus","Öppnat Skapa"],["plus_log","Skapa → Logga"],["plus_trip","Skapa → Resa"],["plus_rep","Skapa → Berättelse"],["plus_ask","Skapa → Forum"],["login_click","Tryckt Logga in"]]],
+  ["Resor",[["trip_search","Sökt resa"],["trip_new","Sparat resa"],["trip_leg","Lagt till stad"],["trip_share","Delat resa"],["trip_log","Loggat resa"],["trip_top","Öppnat topplistan"],["top_city","Valt stad i topplistan"],["home_top","Startsidans Mest fotboll"]]],
+  ["Klick ut",[["out_hotel","Hotell"],["out_travel","Resa (Omio)"],["out_tix","Biljetter"],["out_ext","Andra länkar"]]],
+  ["Utseende och språk",[["dark","Mörkt läge"],["look_std","Standard"],["look_modern","Modern"],["look_ticket","Biljetten"],["look_atlas","Atlas"],["look_kit","Kit"],...["sv","en","nb","da","fi","is","de","es","fr","it","nl","pl","pt"].map(l=>["lang_"+l,"Språk: "+l])]]];
+async function openStats(){if(!isMod||!dbNs)return;const o0=document.getElementById("ustOv");if(o0)o0.remove();
+  document.body.insertAdjacentHTML("beforeend",`<div id="ustOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="ustT"><div class="compose askbox pvbox ustbox"><h2 id="ustT">${ic("table")} Statistik</h2><div id="ustBody"><p class="meta">Hämtar…</p></div><div class="actions"><button class="btn primary" type="button" id="ustClose">${$t("Stäng")}</button></div></div></div>`);
+  const day=i=>new Date(Date.now()-i*864e5).toLocaleDateString("sv-SE",{timeZone:"Europe/Stockholm"});const days=[...Array(28)].map((_,i)=>day(i));
+  let docs,sum=null;try{docs=await Promise.all(days.map(d=>dbNs.doc("usage/"+d).get().then(x=>x&&x.exists?x.data():{}).catch(()=>({}))));sum=await dbNs.doc("usage/summary").get().then(x=>x&&x.exists?x.data():null).catch(()=>null);}catch(e){docs=days.map(()=>({}));}
+  const body=document.getElementById("ustBody");if(!body)return;const n=(d,k)=>Number(d&&d[k])||0;const tot=(a,b,k)=>docs.slice(a,b).reduce((s,d)=>s+n(d,k),0);
+  const fmt=v=>v.toLocaleString(LOC);const chg=(a,b)=>!b?(a?"ny":"–"):((a-b)/b*100>=0?"+":"")+Math.round((a-b)/b*100)+" %";
+  let h="";
+  if(sum&&sum.now){const x=sum.now;const row=(l,v)=>`<div><b>${fmt(v||0)}</b><span>${l}</span></div>`;
+    h+=`<h3>Användare och innehåll</h3><div class="ustnums">${row("användare",x.users)}${row("nya senaste 7 dagarna",x.new7)}${row("aktiva senaste 7 dagarna",x.active7)}${row("har loggat matcher",x.loggers)}${row("loggade matcher",x.attended)}${row("Vill gå-matcher",x.wish)}${row("sparade resor",x.trips)}${row("resor med flera städer",x.multi)}${row("har favoritlag",x.favs)}${row("har notiser på",x.push)}${row("foruminlägg",x.posts)}${row("matchberättelser",x.reports)}</div><p class="meta">Sammanställt ur databasen ${esc(String(sum.updated||"").slice(0,16).replace("T"," "))} (varje natt).</p>`;
+    const wk=Object.entries(sum.weeks||{}).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,8);
+    if(wk.length>1)h+=`<table class="usttab"><tr><th>Vecka</th><th>Användare</th><th>Nya</th><th>Aktiva</th><th>Matcher</th><th>Resor</th></tr>${wk.map(([w,v])=>`<tr><td>${esc(w)}</td><td>${fmt(v.users||0)}</td><td>${fmt(v.new7||0)}</td><td>${fmt(v.active7||0)}</td><td>${fmt(v.attended||0)}</td><td>${fmt(v.trips||0)}</td></tr>`).join("")}</table>`;}
+  else h+=`<p class="meta">Sammanställningen ur databasen kommer efter nattens körning.</p>`;
+  const mx=Math.max(1,...docs.map(d=>n(d,"s")));
+  h+=`<h3>Besök per dag (28 dagar)</h3><div class="ustbars">${docs.slice().reverse().map((d,i)=>`<i style="height:${Math.round(n(d,"s")/mx*100)}%" title="${esc(days[27-i])}: ${n(d,"s")}"></i>`).join("")}</div>`;
+  h+=`<p class="meta">Räknarna är anonyma: antal per sak och dag, aldrig vem. Senaste 7 dagarna jämförs med veckan innan.</p>`;
+  UST_GROUPS.forEach(([g,rows])=>{const rs=rows.map(([k,l])=>[l,tot(0,7,k),tot(7,14,k),tot(0,28,k)]).filter(r=>r[1]||r[2]||r[3]);if(!rs.length)return;
+    h+=`<h3>${g}</h3><table class="usttab"><tr><th></th><th>7 dagar</th><th>Förändring</th><th>28 dagar</th></tr>${rs.map(([l,a,b,c])=>`<tr><td>${esc(l)}</td><td><b>${fmt(a)}</b></td><td>${chg(a,b)}</td><td>${fmt(c)}</td></tr>`).join("")}</table>`;});
+  if(!docs.some(d=>Object.keys(d).length))h+=`<p class="meta">Inga räknare än. De börjar fyllas på när appen används.</p>`;
+  body.innerHTML=h;}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-ustats],#ustClose,#ustOv");if(!t)return;if(t.dataset&&t.dataset.ustats){openStats();return;}
+  if(t.id==="ustClose"||(t.id==="ustOv"&&e.target===t))document.getElementById("ustOv")?.remove();});
 function openPrivacy(){wipeArm=false;const o=document.getElementById("privacyOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",privacyHtml());const b=document.getElementById("pvClose");if(b)b.focus({preventScroll:true});const bx=document.querySelector(".pvbox");if(bx)bx.scrollTop=0;}
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-privacy],#pvClose,#pvWipe,#privacyOv");if(!t)return;
   if(t.dataset&&t.dataset.privacy){openPrivacy();if(t.dataset.terms){const h=document.getElementById("pvRules");if(h)setTimeout(()=>h.scrollIntoView({block:"start"}),30);}return;}
@@ -5461,7 +5516,7 @@ function renderProfil(){const el=document.getElementById("profilBody");if(!el)re
       ${profSw(`data-profset="showFo"`,!!MY.showFo,$t("Visa vilka jag följer"),$t("Då syns du som följare hos dem du följer, och du ser vilka som följer dig."))}
       ${NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")}</article>
     <article class="tip"><div class="lbl">${$t("Konto")}</div><p class="meta" style="margin:0 0 8px">${$t("Inloggning, utloggning och radering av kontot.")}${isMod?" "+$t("Här finns också rättelser och feedback för moderatorer."):""}</p>
-      <div class="actions"><button class="btn small" data-gacct data-gacctdlg>${$t("Kontoinställningar")}</button>${isMod?`<button class="btn small" data-goMod="1">${$t("Rättelser och feedback")}</button>`:""}</div></article>`;}
+      <div class="actions"><button class="btn small" data-gacct data-gacctdlg>${$t("Kontoinställningar")}</button>${isMod?`<button class="btn small" data-goMod="1">${$t("Rättelser och feedback")}</button><button class="btn small" data-ustats="1">${ic("table")} Statistik</button>`:""}</div></article>`;}
 document.addEventListener("change",e=>{if(e.target.id!=="ccSel"||myState!=="ready")return;const v=e.target.value;mutate(d=>{d.cc=v;});toast(v==="none"?$t("Ingen flagga visas vid ditt namn."):$t("Flaggan är sparad."),"check");});
 document.addEventListener("change",e=>{const k=e.target.dataset&&e.target.dataset.profset;if(!k||myState!=="ready")return;const on=e.target.checked;
   mutate(d=>{d[k]=on;});if(k==="pub")setTimeout(()=>{try{syncStats();}catch(x){}},50);else setTimeout(syncPublic,50);
