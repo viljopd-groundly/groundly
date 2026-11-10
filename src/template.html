@@ -517,7 +517,8 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .newtime{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--accent)}.newtime .ic{width:13px;height:13px}.mvtap{cursor:pointer}.tripwarn{margin:6px 0;padding:8px 10px;border-radius:10px;background:var(--soft);font-size:14px}.tripwarn .ic{width:14px;height:14px;vertical-align:-2px}
 .resatabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--soft);margin:0 0 4px}.resatabs button{all:unset;flex:1;text-align:center;padding:9px 10px;border-radius:999px;font-weight:600;cursor:pointer;font-size:15px}.resatabs button[aria-selected="true"]{background:var(--accent);color:var(--chalk,#fff)}
 .topform .rdates{display:grid;grid-template-columns:1fr 1fr;gap:10px}.topform .fld{display:grid;gap:4px;font-weight:600}.topform input{font:inherit;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box;min-width:0}.backtop,.tripact,#resaList .empty{scroll-margin-top:110px}.backtop{display:flex!important;align-items:center;justify-content:center;gap:8px;width:100%;box-sizing:border-box;margin:4px 0 10px;padding:14px 16px!important;font-size:17px!important;font-weight:700!important;border-radius:14px!important}.backtop .ic{width:18px;height:18px;transform:rotate(180deg);stroke-width:2.6}.backbot{margin-top:14px}
-.topform .chips{flex-wrap:wrap;overflow:visible}.topform .chips.topper{flex-wrap:nowrap;gap:6px}.topper .chip{flex:1 1 auto;min-width:0;padding-left:8px;padding-right:8px;justify-content:center;text-align:center;white-space:nowrap}.topform p{margin:0}.topcity{display:flex;align-items:baseline;gap:8px;min-width:0}.topcity .meta{flex:1;min-width:0}.toplist:not(.more) .topx{display:none}.toplist{list-style:none;margin:0;padding:0;display:grid;gap:8px}.toprow{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);cursor:pointer}
+.topform .chips{flex-wrap:wrap;overflow:visible}.topform .chips.topper{flex-wrap:nowrap;gap:6px}.topper .chip{flex:1 1 auto;min-width:0;padding-left:8px;padding-right:8px;justify-content:center;text-align:center;white-space:nowrap}.topform p{margin:0}.topcity{display:flex;align-items:baseline;gap:8px;min-width:0}.topcity .meta{flex:1;min-width:0}.topline{display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px;margin-top:6px;padding-top:10px;border-top:1px dashed var(--line);font-size:15px;line-height:1.5}.toplbl{color:var(--muted);font-weight:600}.topline .link{font-size:15px;padding:0}.topline .dotsep{color:var(--muted)}.topgo .ic{width:16px;height:16px;vertical-align:-3px}.fctopline{margin:-12px 0 4px}.fctopline .topline{border-top:0;padding-top:0}
+.toplist:not(.more) .topx{display:none}.toplist{list-style:none;margin:0;padding:0;display:grid;gap:8px}.toprow{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);cursor:pointer}
 .topn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--soft);color:var(--accent)}.toplist li:nth-child(-n+3) .topn{background:var(--accent);color:var(--chalk,#fff)}
 .topmain{flex:1;min-width:0;display:grid;gap:2px}.topmain b{font-size:17px}.topbits{font-weight:600;font-size:14px}.topmain .meta{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.topchev{flex:none;width:16px;height:16px;opacity:.5}
 .remind .rmrow{display:flex;flex-direction:column;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}.remind .rmrow:first-of-type{border-top:0;padding-top:2px}.remind .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
@@ -4581,7 +4582,7 @@ function carouselHome(ob){const logged=myState==="ready";
   // ingen hemort ännu, eller man har tryckt på "Nära …": visa hemortsformuläret (samma som på vanliga startsidan)
   let s2="";const p=homeLL();if(!homeTown||homeEdit||!p){try{s2=weekendHtml();}catch(e){}}else if(p){const[from,to]=weekendRange();const nowW=Date.now()-2*36e5;
     const wk=MATCHES.filter(m=>m.kickoff?(mTs(m)>nowW&&koDay(m.kickoff)>=from&&koDay(m.kickoff)<=to):(m.dateFrom<=to&&m.dateTo>=from)).map(m=>{const ll=GEO[m.city];return{m,km:ll?roadKm(p.ll,ll):null};}).filter(x=>x.km!==null&&x.km<=300).sort((a,b)=>a.km-b.km).slice(0,10);
-    s2=fcSection($t("Nära dig i helgen"),'data-gomode="matcher"',wk.map(x=>fcMatch(x.m,{badge:x.km<5?$t("i stan"):esc(milTxt(x.km)),btn:"tix"})).join(""));}
+    s2=fcSection($t("Nära dig i helgen"),'data-gomode="matcher"',wk.map(x=>fcMatch(x.m,{badge:x.km<5?$t("i stan"):esc(milTxt(x.km)),btn:"tix"})).join(""));{const tl=topLine();if(tl)s2+=`<div class="fctopline">${tl}</div>`;}}
   // min fotboll
   let s3="";if(logged){const y=myYearStats();const fl=favList();const tiles=[];
     tiles.push(`<button class="fcard fctile" data-gomine="1"><div class="fcstat"><div><b>${y.matches}</b><span>${$t("matcher")}</span></div><div><b>${y.arenas}</b><span>${$t("arenor")}</span></div><div><b>${y.countries}</b><span>${$t("länder")}</span></div></div><div class="fcbody"><b class="fct">${$t("Din säsong {0}",[YEAR])}</b><span class="fcs">${$t("Statistik, karta och listor")}</span></div></button>`);
@@ -4644,8 +4645,9 @@ let RESA_DRAFT=null;document.addEventListener("input",e=>{const id=e.target&&e.t
 // ---------- Vart ska jag åka? Städer med mest fotboll under en period ----------
 let RESA_TAB="plan",RESA_FROMTOP=null,TOPQ={p:"helg",s:"world",f:"",t:""},TOP_C=null,TOP_K="",topMore=false;
 function topRange(p){if(p==="helg")return weekendRange();if(p==="egen"){const t0=today();let f=TOPQ.f&&TOPQ.f>=t0?TOPQ.f:t0,t=TOPQ.t||addDays(f,6);if(t<f)t=f;return[f,t];}const t=today();return[t,addDays(t,p==="30"?29:6)];}
-function topCities(){const[f,t]=topRange(TOPQ.p);const ctry=homeCountry(),hl=homeLL();const s=TOPQ.s==="near"&&!hl?"world":TOPQ.s;
-  const k=[f,t,s,ctry,hl&&hl.name,MATCHES.length,myState].join("|");if(k===TOP_K&&TOP_C)return TOP_C;
+const TOP_CACHE={};
+function topCities(Q){Q=Q||TOPQ;const[f,t]=Q.p==="helg"?weekendRange():topRange(Q.p);const ctry=homeCountry(),hl=homeLL();const s=Q.s==="near"&&!hl?"world":Q.s;
+  const k=[f,t,s,ctry,hl&&hl.name,MATCHES.length,myState].join("|");if(TOP_CACHE[k])return TOP_CACHE[k];
   const seen=visitedStadiums(),now=Date.now()-2*36e5,by=new Map();
   MATCHES.forEach(m=>{if(!m.kickoff||mTs(m)<now||m.score)return;const d=koDay(m.kickoff);if(d<f||d>t)return;const ll=GEO[m.city];if(!ll)return;
     if(s==="ctry"&&m.country!==ctry)return;if(s==="near"&&roadKm(hl.ll,ll)>300)return;
@@ -4654,7 +4656,11 @@ function topCities(){const[f,t]=topRange(TOPQ.p);const ctry=homeCountry(),hl=hom
   const out=[...by.values()].map(c=>{c.score=c.ms.length+2*c.derby+.5*c.top+(myState==="ready"?c.fresh.size:0);
     c.best=c.ms.slice().sort((a,b)=>(derbyOf(b)?1:0)-(derbyOf(a)?1:0)||(String(a.tier)==="1"?0:1)-(String(b.tier)==="1"?0:1)||mTs(a)-mTs(b))[0];return c;})
     .sort((a,b)=>b.score-a.score||b.ms.length-a.ms.length).slice(0,30);
-  TOP_K=k;TOP_C={f,t,list:out,s};return TOP_C;}
+  for(const x in TOP_CACHE)if(Object.keys(TOP_CACHE).length>6)delete TOP_CACHE[x];TOP_CACHE[k]={f,t,list:out,s};return TOP_CACHE[k];}
+// en rad på startsidan: helgens städer med mest fotboll i hela världen
+function topLine(){if(dbState!=="ready")return"";let R;try{R=topCities({p:"helg",s:"world"});}catch(e){return"";}const L=R.list.slice(0,3);if(L.length<2)return"";
+  return`<div class="topline"><span class="toplbl">${$t("Mest fotboll i helgen:")}</span> ${L.map(c=>`<button class="link strong" data-topcity="${esc(c.city)}" data-tophome="1">${esc($t(c.city))}</button>`).join('<span class="dotsep"> · </span>')} <button class="link strong topgo" data-gotop="1" aria-label="${$t("Vart ska jag åka?")}">${ic("chev")}</button></div>`;}
+
 function topHtml(){if(dbState!=="ready")return`<p class="meta">${$t("Hämtar matchschemat…")}</p>`;const R=topCities();const hl=homeLL();
   const chip=(k,v,l)=>`<button type="button" class="chip" data-topq="${k}:${v}" aria-pressed="${(k==="p"?TOPQ.p:R.s)===v}">${l}</button>`;
   let h=`<article class="tip topform"><p class="meta">${$t("Städerna med mest fotboll under perioden. Derbyn, högsta serien och arenor du inte besökt väger tyngre.")}</p>
@@ -4668,11 +4674,12 @@ function topHtml(){if(dbState!=="ready")return`<p class="meta">${$t("Hämtar mat
       <span class="topbits">${bits.join(" · ")}</span><span class="meta">${dby?esc($t(dby[1]))+": ":""}${esc(tnm(b,"home"))} – ${esc(tnm(b,"away"))}, ${esc(koTxt(b.kickoff))}</span></span><svg class="ic topchev" aria-hidden="true"><use href="#i-chev"/></svg></button></li>`;}).join("")}</ol>`;
   if(R.list.length>10)h+=`<button class="link strong" data-topmore="1">${topMore?$t("Visa färre"):$t("Visa fler")}</button>`;
   return h;}
-document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-resatab],[data-topq],[data-topcity],[data-topmore],[data-backtop]");if(!t)return;
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-resatab],[data-topq],[data-topcity],[data-topmore],[data-backtop],[data-gotop]");if(!t)return;
   if(t.dataset.resatab){RESA_TAB=t.dataset.resatab;renderResa();return;}
+  if(t.dataset.gotop){TOPQ={...TOPQ,p:"helg",s:"world"};topMore=false;RESA_TAB="top";goTop("resa");window.scrollTo({top:0});renderResa();return;}
   if(t.dataset.topq){const[k,v]=t.dataset.topq.split(":");TOPQ={...TOPQ,[k]:v};topMore=false;renderResa();return;}
   if(t.dataset.topmore){topMore=!topMore;const ol=document.querySelector(".toplist");if(ol)ol.classList.toggle("more",topMore);t.textContent=topMore?$t("Visa färre"):$t("Visa fler");return;}
-  if(t.dataset.topcity){const R=topCities();RESA_FROMTOP={y:scrollY};RESA={city:t.dataset.topcity,from:R.f,to:R.t,r:10};RESA_DRAFT=null;resaOpen=null;RESA_TAB="plan";renderResa();
+  if(t.dataset.topcity){if(t.dataset.tophome){TOPQ={...TOPQ,p:"helg",s:"world"};topMore=false;if(mode!=="resa")goTop("resa");}const R=topCities();RESA_FROMTOP={y:t.dataset.tophome?0:scrollY};RESA={city:t.dataset.topcity,from:R.f,to:R.t,r:10};RESA_DRAFT=null;resaOpen=null;RESA_TAB="plan";renderResa();
     requestAnimationFrame(()=>document.querySelector(".backtop,.tripact,#resaList .empty")?.scrollIntoView({behavior:"smooth",block:"start"}));return;}
   if(t.dataset.backtop!==undefined){const y=RESA_FROMTOP?RESA_FROMTOP.y:0;RESA_TAB="top";renderResa();requestAnimationFrame(()=>window.scrollTo({top:y}));}});
 document.addEventListener("change",e=>{const id=e.target&&e.target.id;if(id!=="tFrom"&&id!=="tTo")return;TOPQ={...TOPQ,f:document.getElementById("tFrom").value,t:document.getElementById("tTo").value};
@@ -4764,12 +4771,12 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i
       <div class="actions">${tixMini(m)}${myBtns(m)}</div></article>`;
     return`<article class="tip wkbox"><div class="sechead"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></div><div class="chips" role="group" aria-label="${$t("Avstånd")}">${chips}</div>
       ${!list.length?`<p class="meta">${$t("Inga matcher i det inlagda schemat {0}.",[label])}</p>`:!near.length?`<p class="meta">${$t("Inget inom {0} {1}. Närmaste matcherna:",[milU(wkRadius),label])}</p>`:""}
-      ${pool.length?`<div class="wkrow">${pool.map(card).join("")}</div>${pool.length>1?`<div class="wkdots" aria-hidden="true">${pool.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}`:""}${vsw}</article>`;}
+      ${pool.length?`<div class="wkrow">${pool.map(card).join("")}</div>${pool.length>1?`<div class="wkdots" aria-hidden="true">${pool.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}`:""}${topLine()}${vsw}</article>`;}
   if(!homeMore.wkOpen){const sum=near.length?$t("{0} matcher inom {1} {2}",[near.length,milU(wkRadius),label]):list.length?$t("Inget inom {0} {1}. Närmaste matcherna:",[milU(wkRadius),label]):$t("Inga matcher i det inlagda schemat {0}.",[label]);
-    return`<article class="tip wkbox"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><p class="meta">${sum}</p>${pool.length?`<div class="dlist">${row(pool[0],false)}</div>`:""}<button class="link more" data-homemore="wkOpen" aria-expanded="false">${$t("Visa alla och välj avstånd")}</button>${vsw}</article>`;}
+    return`<article class="tip wkbox"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><p class="meta">${sum}</p>${pool.length?`<div class="dlist">${row(pool[0],false)}</div>`:""}<button class="link more" data-homemore="wkOpen" aria-expanded="false">${$t("Visa alla och välj avstånd")}</button>${topLine()}${vsw}</article>`;}
   return`<article class="tip wkbox"><div class="sechead"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></div><div class="chips" role="group" aria-label="${$t("Avstånd")}">${chips}</div>
     ${!list.length?`<p class="meta">${$t("Inga matcher i det inlagda schemat {0}.",[label])}</p>`:!near.length?`<p class="meta">${$t("Inget inom {0} {1}. Närmaste matcherna:",[milU(wkRadius),label])}</p>`:""}
-    <div class="dlist">${show.map(x=>row(x,true)).join("")}</div>${moreBtn("wk",pool.length)}<p class="hint">${DIST_NOTE}</p><button class="link more" data-homemore="wkOpen" aria-expanded="true">${$t("Visa mindre")}</button>${vsw}</article>`;}
+    <div class="dlist">${show.map(x=>row(x,true)).join("")}</div>${moreBtn("wk",pool.length)}<p class="hint">${DIST_NOTE}</p><button class="link more" data-homemore="wkOpen" aria-expanded="true">${$t("Visa mindre")}</button>${topLine()}${vsw}</article>`;}
 // veckans fråga
 const POLLS=[
  [$t("Bästa ståplatsläktaren?"),[$t("Gula väggen, Dortmund"),"Millerntor, St. Pauli","Ostseestadion, Rostock","Celtic Park, Glasgow",$t("Någon i Sverige")]],
