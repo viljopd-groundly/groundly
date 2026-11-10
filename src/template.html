@@ -522,6 +522,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .toplist:not(.more) .topx{display:none}.toplist{list-style:none;margin:4px 0 0;padding:0;display:grid}.toplist li+li .toprow{border-top:1px solid var(--line)}.toprow{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:12px;padding:12px 0;color:inherit;cursor:pointer}.topmorebtn{margin-top:6px}
 .topn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--soft);color:var(--accent)}.toplist li:nth-child(-n+3) .topn{background:var(--accent);color:var(--chalk,#fff)}
 .topmain{flex:1;min-width:0;display:grid;gap:2px}.topmain b{font-size:17px}.topbits{font-weight:600;font-size:14px}.topmain .meta{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.topchev{flex:none;width:16px;height:16px;opacity:.5}
+.recap{margin:6px 0 4px;padding:12px 14px;border-radius:12px;background:var(--soft)}.recapnums{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:4px}.recapnums span{display:grid;line-height:1.15;font-size:13px;color:var(--muted)}.tripok{color:var(--accent);font-weight:800}.recapnums b{font-size:22px;white-space:nowrap;color:var(--fg);font-family:var(--f-display,inherit)}
 .remind .rmrow{display:flex;flex-direction:column;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}.remind .rmrow:first-of-type{border-top:0;padding-top:2px}.remind .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
 .actdot{position:absolute;top:2px;right:calc(50% - 22px);min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#d64545;color:#fff;font:700 10px/17px var(--f-body);text-align:center;box-sizing:border-box;pointer-events:none}
 #bnMore,#m-community,.msi[data-bn="reportage"],#m-reportage,#m-forum,.bnav [data-bn="community"]{position:relative}.msi .actdot{right:8px;top:6px}#bnMore .actdot{right:14px;top:2px}#m-reportage .actdot,#m-forum .actdot{right:-6px;top:-6px}
@@ -694,7 +695,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .rform{display:grid;gap:10px}.rform .fld{display:grid;gap:4px;font-weight:600}.rform input{font:inherit;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box;min-width:0}.rown .rinp{display:flex;align-items:center;gap:8px}.rown .rinp input{max-width:120px}.rown .rinp b{font-weight:600}
 .rsugw{position:relative;display:block}.rsug{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:30;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.14);overflow:hidden}.rsugi{all:unset;box-sizing:border-box;display:flex;justify-content:space-between;gap:10px;width:100%;padding:11px 14px;cursor:pointer;font-weight:400}.rsugi+.rsugi{border-top:1px solid var(--line)}.rsugi:hover,.rsugi:focus-visible{background:var(--soft,var(--bg))}.rsugi b{font-weight:600;color:var(--fg)}
 .rdates{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.triplist{display:grid;gap:10px}.trip.past{opacity:.7}.trip.on{box-shadow:inset 0 0 0 2px var(--accent)}.tripm{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.tripm li{cursor:pointer}.tripact{margin:4px 0 8px}
+.triplist{display:grid;gap:10px}.trip.on{box-shadow:inset 0 0 0 2px var(--accent)}.tripm{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.tripm li{cursor:pointer}.tripact{margin:4px 0 8px}
 .msgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
   body:has(.msheet:not([hidden])) .backpill{display:none!important}
   .plist{display:flex;flex-direction:column;gap:8px}
@@ -4647,15 +4648,20 @@ let RESA_DRAFT=null;document.addEventListener("input",e=>{const id=e.target&&e.t
 let RESA_TAB="plan",RESA_FROMTOP=null,TOPQ={p:"helg",s:"world",f:"",t:""},TOP_C=null,TOP_K="",topMore=false;
 function topRange(p){if(p==="helg")return weekendRange();if(p==="egen"){const t0=today();let f=TOPQ.f&&TOPQ.f>=t0?TOPQ.f:t0,t=TOPQ.t||addDays(f,6);if(t<f)t=f;return[f,t];}const t=today();return[t,addDays(t,p==="30"?29:6)];}
 const TOP_CACHE={};
+// hur lockande en match är för en fotbollsresa: serienivå × fotbollsland, damfotboll och landslag
+const TOP_A=new Set(["England","Spanien","Tyskland","Italien","Frankrike"]),TOP_B=new Set(["Nederländerna","Portugal","Skottland","Belgien","Turkiet","Brasilien","Argentina","Grekland","Österrike","Schweiz","Danmark","Norge","Sverige","Finland","Island","Polen","Tjeckien","Kroatien","Serbien","Ukraina","USA","Mexiko","Japan","Irland","Rumänien","Ungern","Wales","Nordirland","Uruguay","Colombia","Chile","Sydkorea"]);
+function topW(m,ctry){const t=String(m.tier||"");const ch=C[m.home];if(ch&&isNat(ch))return 1.2;
+  const lw=t==="1"?1:t==="2"?.6:t==="3"?.4:t==="CUP"?.8:.3;const cw=m.country===ctry?1:TOP_A.has(m.country)?1:TOP_B.has(m.country)?.7:.35;return lw*cw*(ch&&isW(ch)?.85:1);}
 function topCities(Q){Q=Q||TOPQ;const[f,t]=Q.p==="helg"?weekendRange():topRange(Q.p);const ctry=homeCountry(),hl=homeLL();const s=Q.s==="near"&&!hl?"world":Q.s;
   const k=[f,t,s,ctry,hl&&hl.name,MATCHES.length,myState].join("|");if(TOP_CACHE[k])return TOP_CACHE[k];
-  const seen=visitedStadiums(),now=Date.now()-2*36e5,by=new Map();
+  const seen=visitedStadiums(),now=Date.now()-2*36e5,by=new Map();const favs=myState==="ready"?new Set([...favList(),...((MY.wishClubs)||[])]):new Set();
   MATCHES.forEach(m=>{if(!m.kickoff||mTs(m)<now||m.score)return;const d=koDay(m.kickoff);if(d<f||d>t)return;const ll=GEO[m.city];if(!ll)return;
     if(s==="ctry"&&m.country!==ctry)return;if(s==="near"&&roadKm(hl.ll,ll)>300)return;
-    let c=by.get(m.city);if(!c){c={city:m.city,country:m.country,ms:[],derby:0,top:0,arenas:new Set(),fresh:new Set()};by.set(m.city,c);}
-    c.ms.push(m);if(derbyOf(m))c.derby++;if(String(m.tier)==="1")c.top++;const st=C[m.home]&&C[m.home].s;if(st){c.arenas.add(st);if(myState==="ready"&&!seen.has(st))c.fresh.add(st);}});
-  const out=[...by.values()].map(c=>{c.score=c.ms.length+2*c.derby+.5*c.top+(myState==="ready"?c.fresh.size:0);
-    c.best=c.ms.slice().sort((a,b)=>(derbyOf(b)?1:0)-(derbyOf(a)?1:0)||(String(a.tier)==="1"?0:1)-(String(b.tier)==="1"?0:1)||mTs(a)-mTs(b))[0];return c;})
+    let c=by.get(m.city);if(!c){c={city:m.city,country:m.country,ms:[],derby:0,top:0,fav:0,w:0,arenas:new Set(),fresh:new Set()};by.set(m.city,c);}
+    const fv=favs.has(m.home)||favs.has(m.away);m.__w=topW(m,ctry)+(derbyOf(m)?1.5:0)+(fv?2:0);
+    c.ms.push(m);c.w+=m.__w;if(derbyOf(m))c.derby++;if(String(m.tier)==="1")c.top++;if(fv)c.fav++;const st=C[m.home]&&C[m.home].s;if(st){c.arenas.add(st);if(myState==="ready"&&!seen.has(st))c.fresh.add(st);}});
+  const out=[...by.values()].map(c=>{c.score=c.w+(myState==="ready"?.4*c.fresh.size:0);
+    c.best=c.ms.slice().sort((a,b)=>b.__w-a.__w||mTs(a)-mTs(b))[0];return c;})
     .sort((a,b)=>b.score-a.score||b.ms.length-a.ms.length).slice(0,30);
   for(const x in TOP_CACHE)if(Object.keys(TOP_CACHE).length>6)delete TOP_CACHE[x];TOP_CACHE[k]={f,t,list:out,s};return TOP_CACHE[k];}
 // en rad på startsidan: helgens städer med mest fotboll i hela världen
@@ -4686,18 +4692,35 @@ document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest
   if(t.dataset.backtop!==undefined){const y=RESA_FROMTOP?RESA_FROMTOP.y:0;RESA_TAB="top";renderResa();requestAnimationFrame(()=>window.scrollTo({top:y}));}});
 document.addEventListener("change",e=>{const id=e.target&&e.target.id;if(id!=="tFrom"&&id!=="tTo")return;TOPQ={...TOPQ,f:document.getElementById("tFrom").value,t:document.getElementById("tTo").value};
   if(TOPQ.f&&TOPQ.t&&TOPQ.t<TOPQ.f)TOPQ.t=TOPQ.f;topMore=false;renderResa();});
+// ---------- Efter resan: alla matcher i området de dagarna, även spelade ----------
+function tripAll(t){const c=cityLL(t.city);if(!c||dbState!=="ready")return null;
+  return MATCHES.filter(m=>m.kickoff&&koDay(m.kickoff)>=t.from&&koDay(m.kickoff)<=t.to).map(m=>{const ll=GEO[m.city];return{m,km:ll?roadKm(c.ll,ll):null};}).filter(x=>x.km!==null&&x.km<=t.r).sort((a,b)=>sortM(a.m,b.m));}
+const arenaOf=a=>(a.home&&C[a.home]&&C[a.home].s)||a.venue||null;
+function tripRecap(t){const L=tripAll(t);if(!L)return null;const pk=tripPicked(t,L);const seen=pk.filter(x=>isAtt(x.m._id));const toLog=pk.filter(x=>!isAtt(x.m._id)&&mPast(x.m));
+  const ids=new Set(seen.map(x=>x.m._id));const ar=new Set(MY.attended.filter(a=>ids.has(a.mid)).map(arenaOf).filter(Boolean));
+  const before=new Set(MY.attended.filter(a=>a.date<t.from).map(arenaOf).filter(Boolean));const fresh=[...ar].filter(a=>!before.has(a)).length;
+  const hl=homeLL(),c=cityLL(t.city);const km=hl&&c&&!homeIsLocal(c.name)?roadKm(hl.ll,c.ll):null;return{L,pk,seen,toLog,ar:ar.size,fresh,km};}
+function recapHtml(t){if(myState!=="ready")return"";const R=tripRecap(t);if(!R)return`<p class="meta">${$t("Hämtar matchschemat…")}</p>`;
+  if(!R.seen.length)return`<p class="meta">${R.toLog.length?$t("Resan är slut. Var du på matcherna? Logga dem med en knapptryckning."):$t("Resan är slut. Du loggade inga matcher på den här resan.")}</p>`;
+  const n=(v,l)=>`<span><b>${v}</b>${l}</span>`;
+  return`<div class="recap"><div class="lbl">${$t("Så blev resan")}</div><div class="recapnums">${n(R.seen.length,$tn(R.seen.length,"match","matcher"))}${n(R.ar,$tn(R.ar,"arena","arenor"))}${R.fresh?n(R.fresh,$tn(R.fresh,"ny arena","nya arenor")):""}${R.km?n(esc(milTxt(R.km).replace(/^\S+\s/,"")),$t("hemifrån")):""}</div></div>`;}
+function tripRecapBtns(t){if(myState!=="ready")return"";const R=tripRecap(t);if(!R)return"";
+  return`${R.toLog.length?`<button class="btn small primary" data-triplog="${esc(t.id)}">${ic("check")} ${R.toLog.length===1?$t("Logga matchen från resan"):$t("Logga alla {0} matcher från resan",[R.toLog.length])}</button>`:""}${R.seen.length?`<button class="btn small" data-tripshare="${esc(t.id)}">${ic("share")} ${$t("Dela resan")}</button>`:""}`;}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-triplog]");if(!b||myState!=="ready")return;const tr=myTrips().find(x=>x.id===b.dataset.triplog);if(!tr)return;const R=tripRecap(tr);if(!R||!R.toLog.length)return;
+  const ids=new Set(R.toLog.map(x=>x.m._id));mutate(d=>{d.attended=[...d.attended,...R.toLog.filter(x=>!d.attended.some(a=>a.mid===x.m._id)).map(x=>attendFromMatch(x.m))];d.wishMatches=d.wishMatches.filter(w=>!ids.has(w.id));});
+  toast($tn(ids.size,"1 match loggad","{n} matcher loggade"),"check");renderResa();});
 function renderResa(){const el=document.getElementById("resaList");if(!el)return;if(!RESA)RESA=resaDefault();const q=RESA;const D=RESA_DRAFT||q;
   const tabs=`<div class="seg resatabs" role="tablist">${[["plan",$t("Planera resa")+(myTrips().length&&RESA_TAB!=="plan"?` <span class="tabn">${myTrips().length}</span>`:"")],["top",$t("Vart ska jag åka?")]].map(([k,l])=>`<button role="tab" data-resatab="${k}" aria-selected="${RESA_TAB===k}">${l}</button>`).join("")}</div>`;
   if(RESA_TAB==="top"){el.innerHTML=tabs+topHtml();return;}
   const act=document.activeElement,fid=act&&["rCity","rFrom","rTo"].includes(act.id)?act.id:null,sel=fid==="rCity"?[act.selectionStart,act.selectionEnd]:null;
   const trips=myTrips().slice().sort((a,b)=>a.from.localeCompare(b.from));
   let h="",shH="";
-  if(trips.length){h+=`<h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${trips.map(t=>{const c=cityLL(t.city);const L=resaMatches(t);const pk=L?tripPicked(t,L):[];const past=t.to<today();const on=resaOpen===t.id;
-    return`<article class="tip trip${on?" on":""}${past?" past":""}"><div class="sechead"><h2 class="name">${esc($t(c?c.name:t.city))} <span class="meta">${esc(resaRange(t.from,t.to))}</span></h2><button class="link strong" data-tripopen="${esc(t.id)}">${$t("Visa matcher")}</button></div>
-      <p class="meta">${L?(pk.length?$tn(pk.length,"1 match du vill gå på","{n} matcher du vill gå på"):$t("Inga matcher valda än"))+" · "+$tn(L.length,"1 match i området","{n} matcher i området"):$t("Hämtar matchschemat…")}</p>
-      ${pk.length?`<ul class="tripm">${pk.map(x=>{const mv=moveOfM(x.m._id);return`<li class="mrow"${mrowAttr(x.m)}><b>${esc(dayLabel(koDay(x.m.kickoff)))} ${timeOf(x.m.kickoff)}</b> ${esc(tnm(x.m,"home"))} – ${esc(tnm(x.m,"away"))}${mv?` <span class="newtime">${$t("Ny tid")}</span> <span class="meta">${moveNote(mv)}</span>`:""}</li>`;}).join("")}</ul>`:""}
-      ${tripOut(t).map(x=>`<p class="tripwarn">${ic("calendar")} ${$t("{0} – {1} är flyttad till {2}, utanför resan.",[esc(tnm(x.m,"home")),esc(tnm(x.m,"away")),esc(koTxt(x.m.kickoff))])} <button class="link strong" data-wmok="${esc(x.w.id)}">${$t("OK")}</button></p>`).join("")}
-      <div class="actions">${tripLinks(t)}${pk.length?`<button class="btn small" data-calmany="${esc(pk.map(x=>x.m._id).join(","))}">${ic("calendar")} ${pk.length===1?$t("Kalender"):$t("Alla i kalendern")}</button>`:""}<button class="btn small" data-tripshare="${esc(t.id)}">${ic("share")} ${$t("Dela")}</button><button class="link" data-tripdel="${esc(t.id)}">${$t("Ta bort")}</button></div></article>`;}).join("")}</div>`;}
+  if(trips.length){h+=`<h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${trips.map(t=>{const c=cityLL(t.city);const past=t.to<today();const L=past?tripAll(t):resaMatches(t);const pk=L?tripPicked(t,L):[];const on=resaOpen===t.id;
+    return`<article class="tip trip${on?" on":""}${past?" past":""}"><div class="sechead"><h2 class="name">${esc($t(c?c.name:t.city))} <span class="meta">${esc(resaRange(t.from,t.to))}</span></h2>${past?"":`<button class="link strong" data-tripopen="${esc(t.id)}">${$t("Visa matcher")}</button>`}</div>
+      ${past?recapHtml(t):`<p class="meta">${L?(pk.length?$tn(pk.length,"1 match du vill gå på","{n} matcher du vill gå på"):$t("Inga matcher valda än"))+" · "+$tn(L.length,"1 match i området","{n} matcher i området"):$t("Hämtar matchschemat…")}</p>`}
+      ${pk.length?`<ul class="tripm">${pk.map(x=>{const mv=moveOfM(x.m._id);return`<li class="mrow"${mrowAttr(x.m)}><b>${esc(dayLabel(koDay(x.m.kickoff)))} ${timeOf(x.m.kickoff)}</b><span>${esc(tnm(x.m,"home"))} – ${esc(tnm(x.m,"away"))}${past&&x.m.score?` <b>${esc(x.m.score)}</b>`:""}${past&&isAtt(x.m._id)?` <span class="tripok">${OK}</span>`:""}${mv?` <span class="newtime">${$t("Ny tid")}</span> <span class="meta">${moveNote(mv)}</span>`:""}</span></li>`;}).join("")}</ul>`:""}
+      ${past?"":tripOut(t).map(x=>`<p class="tripwarn">${ic("calendar")} ${$t("{0} – {1} är flyttad till {2}, utanför resan.",[esc(tnm(x.m,"home")),esc(tnm(x.m,"away")),esc(koTxt(x.m.kickoff))])} <button class="link strong" data-wmok="${esc(x.w.id)}">${$t("OK")}</button></p>`).join("")}
+      <div class="actions">${past?tripRecapBtns(t):tripLinks(t)}${!past&&pk.length?`<button class="btn small" data-calmany="${esc(pk.map(x=>x.m._id).join(","))}">${ic("calendar")} ${pk.length===1?$t("Kalender"):$t("Alla i kalendern")}</button>`:""}${past?"":`<button class="btn small" data-tripshare="${esc(t.id)}">${ic("share")} ${$t("Dela")}</button>`}<button class="link" data-tripdel="${esc(t.id)}">${$t("Ta bort")}</button></div></article>`;}).join("")}</div>`;}
   h+=`<article class="tip resaform"><div class="lbl">${$t("Planera en fotbollsresa")}</div>
     <form id="resaForm" class="rform"><label class="fld">${$t("Stad")}<span class="rsugw"><input id="rCity" maxlength="60" value="${esc(D.city)}" placeholder="${$t("t.ex. Barcelona")}" autocomplete="off" autocapitalize="words" spellcheck="false" role="combobox" aria-autocomplete="list" aria-controls="rSug" aria-expanded="false"><div id="rSug" class="rsug" role="listbox" hidden></div></span></label>
     <div class="rdates"><label class="fld">${$t("Från")}<input id="rFrom" type="date" value="${esc(D.from)}" min="${today()}"></label><label class="fld">${$t("Till")}<input id="rTo" type="date" value="${esc(D.to)}" min="${today()}"></label></div>
@@ -4732,8 +4755,9 @@ document.addEventListener("submit",e=>{if(e.target.id!=="resaForm")return;e.prev
   RESA={...RESA,city:g("rCity").slice(0,60),from:f,to:t};RESA_DRAFT=null;resaOpen=null;RESA_FROMTOP=null;renderResa();
   document.querySelector(".tripact,#resaList .empty")?.scrollIntoView({behavior:"smooth",block:"start"});});
 document.addEventListener("click",async e=>{const t=e.target.closest&&e.target.closest("[data-tripshare],[data-tripadopt]");if(!t)return;
-  if(t.dataset.tripshare){const tr=myTrips().find(x=>x.id===t.dataset.tripshare);if(!tr)return;const c=cityLL(tr.city);const name=$t(c?c.name:tr.city);const L=resaMatches(tr)||[];const pk=tripPicked(tr,L);
-    const title=$t("Fotbollsresa till {0}, {1}",[name,resaRange(tr.from,tr.to)]);const text=pk.length?title+": "+pk.map(x=>`${dayLabel(koDay(x.m.kickoff))} ${timeOf(x.m.kickoff)} ${tnm(x.m,"home")} – ${tnm(x.m,"away")}`).join(", "):title;const url=tripShareUrl(tr);
+  if(t.dataset.tripshare){const tr=myTrips().find(x=>x.id===t.dataset.tripshare);if(!tr)return;const c=cityLL(tr.city);const name=$t(c?c.name:tr.city);const done=tr.to<today();const L=(done?tripAll(tr):resaMatches(tr))||[];const pk=tripPicked(tr,L);
+    let title=$t("Fotbollsresa till {0}, {1}",[name,resaRange(tr.from,tr.to)]);let text=pk.length?title+": "+pk.map(x=>`${dayLabel(koDay(x.m.kickoff))} ${timeOf(x.m.kickoff)} ${tnm(x.m,"home")} – ${tnm(x.m,"away")}`).join(", "):title;let url=tripShareUrl(tr);
+    if(done){const R=tripRecap(tr);if(R&&R.seen.length){title=$t("Min fotbollsresa till {0}",[name]);text=$t("Min fotbollsresa till {0}, {1}: {2} på {3}.",[name,resaRange(tr.from,tr.to),$tn(R.seen.length,"1 match","{n} matcher"),$tn(R.ar,"1 arena","{n} arenor")])+" "+R.seen.map(x=>`${tnm(x.m,"home")} – ${tnm(x.m,"away")}${x.m.score?" "+x.m.score:""}`).join(", ")+" #Groundly";url=location.origin+location.pathname;}}
     if(navigator.share){try{await navigator.share({title,text,url});}catch(err){}return;}
     try{await navigator.clipboard.writeText(text+"\n"+url);toast($t("Länken är kopierad."),"check");}catch(err){window.prompt($t("Kopiera länken:"),url);}return;}
   if(t.dataset.tripadopt){if(!RESA_SH||myState!=="ready")return;const c=cityLL(RESA_SH.city);if(!c)return;const sm=RESA_SH.ids.map(id=>MATCHES.find(m=>m._id===id)).filter(m=>m&&!mPast(m));

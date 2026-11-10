@@ -2560,5 +2560,17 @@
  "Vart ska jag åka?": "Dokąd pojechać?",
  "Tillbaka till topplistan": "Wróć do listy",
  "Mest fotboll i helgen:": "Najwięcej piłki w weekend:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Znajdź mecze na całym świecie, zaplanuj swój następny wyjazd piłkarski, zbieraj wszystkie, które widziałeś, i dziel się wrażeniami z innymi, którzy kochają piłkę."
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Znajdź mecze na całym świecie, zaplanuj swój następny wyjazd piłkarski, zbieraj wszystkie, które widziałeś, i dziel się wrażeniami z innymi, którzy kochają piłkę.",
+ "{n} matcher loggade": "Zapisano meczów: {n}",
+ "1 match loggad": "Zapisano 1 mecz",
+ "Dela resan": "Udostępnij wyjazd",
+ "hemifrån": "od domu",
+ "Logga alla {0} matcher från resan": "Zapisz wszystkie {0} mecze z wyjazdu",
+ "Logga matchen från resan": "Zapisz mecz z wyjazdu",
+ "Min fotbollsresa till {0}": "Mój wyjazd piłkarski do {0}",
+ "Min fotbollsresa till {0}, {1}: {2} på {3}.": "Mój wyjazd piłkarski do {0}, {1}: {2} na {3}.",
+ "ny arena": "nowy stadion",
+ "Resan är slut. Du loggade inga matcher på den här resan.": "Wyjazd się skończył. Nie zapisałeś żadnych meczów z tego wyjazdu.",
+ "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "Wyjazd się skończył. Byłeś na meczach? Zapisz je jednym dotknięciem.",
+ "Så blev resan": "Tak minął wyjazd"
 }

@@ -2560,5 +2560,17 @@
  "Vart ska jag åka?": "Waar ga ik heen?",
  "Tillbaka till topplistan": "Terug naar de lijst",
  "Mest fotboll i helgen:": "Meeste voetbal dit weekend:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Vind wedstrijden over de hele wereld, plan je volgende voetbalreis, verzamel alle wedstrijden die je hebt gezien en deel de ervaringen met anderen die van voetbal houden."
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Vind wedstrijden over de hele wereld, plan je volgende voetbalreis, verzamel alle wedstrijden die je hebt gezien en deel de ervaringen met anderen die van voetbal houden.",
+ "{n} matcher loggade": "{n} wedstrijden gelogd",
+ "1 match loggad": "1 wedstrijd gelogd",
+ "Dela resan": "Deel de reis",
+ "hemifrån": "van huis",
+ "Logga alla {0} matcher från resan": "Log alle {0} wedstrijden van de reis",
+ "Logga matchen från resan": "Log de wedstrijd van de reis",
+ "Min fotbollsresa till {0}": "Mijn voetbalreis naar {0}",
+ "Min fotbollsresa till {0}, {1}: {2} på {3}.": "Mijn voetbalreis naar {0}, {1}: {2} in {3}.",
+ "ny arena": "nieuw stadion",
+ "Resan är slut. Du loggade inga matcher på den här resan.": "De reis is voorbij. Je hebt op deze reis geen wedstrijden gelogd.",
+ "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "De reis is voorbij. Was je bij de wedstrijden? Log ze met één tik.",
+ "Så blev resan": "Zo ging de reis"
 }

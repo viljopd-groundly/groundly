@@ -2649,5 +2649,17 @@
  "Vart ska jag åka?": "Where should I go?",
  "Tillbaka till topplistan": "Back to the list",
  "Mest fotboll i helgen:": "Most football this weekend:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Find matches all over the world, plan your next football trip, collect every one you've seen and share the experience with others who love football."
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Find matches all over the world, plan your next football trip, collect every one you've seen and share the experience with others who love football.",
+ "{n} matcher loggade": "{n} matches logged",
+ "1 match loggad": "1 match logged",
+ "Dela resan": "Share the trip",
+ "hemifrån": "from home",
+ "Logga alla {0} matcher från resan": "Log all {0} matches from the trip",
+ "Logga matchen från resan": "Log the match from the trip",
+ "Min fotbollsresa till {0}": "My football trip to {0}",
+ "Min fotbollsresa till {0}, {1}: {2} på {3}.": "My football trip to {0}, {1}: {2} at {3}.",
+ "ny arena": "new ground",
+ "Resan är slut. Du loggade inga matcher på den här resan.": "The trip is over. You didn't log any matches on this trip.",
+ "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "The trip is over. Were you at the matches? Log them with one tap.",
+ "Så blev resan": "How the trip went"
 }

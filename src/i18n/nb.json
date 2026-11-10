@@ -2561,5 +2561,17 @@
  "Vart ska jag åka?": "Hvor skal jeg dra?",
  "Tillbaka till topplistan": "Tilbake til topplisten",
  "Mest fotboll i helgen:": "Mest fotball i helgen:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Finn kamper over hele verden, planlegg din neste fotballtur, samle alle du har sett og del opplevelsene med andre som elsker fotball."
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Finn kamper over hele verden, planlegg din neste fotballtur, samle alle du har sett og del opplevelsene med andre som elsker fotball.",
+ "{n} matcher loggade": "{n} kamper logget",
+ "1 match loggad": "1 kamp logget",
+ "Dela resan": "Del turen",
+ "hemifrån": "hjemmefra",
+ "Logga alla {0} matcher från resan": "Logg alle {0} kampene fra turen",
+ "Logga matchen från resan": "Logg kampen fra turen",
+ "Min fotbollsresa till {0}": "Min fotballtur til {0}",
+ "Min fotbollsresa till {0}, {1}: {2} på {3}.": "Min fotballtur til {0}, {1}: {2} på {3}.",
+ "ny arena": "ny arena",
+ "Resan är slut. Du loggade inga matcher på den här resan.": "Turen er over. Du logget ingen kamper på denne turen.",
+ "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "Turen er over. Var du på kampene? Logg dem med ett trykk.",
+ "Så blev resan": "Slik ble turen"
 }

@@ -2560,5 +2560,17 @@
  "Vart ska jag åka?": "Dove vado?",
  "Tillbaka till topplistan": "Torna alla classifica",
  "Mest fotboll i helgen:": "Più calcio nel weekend:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Trova partite in tutto il mondo, pianifica il tuo prossimo viaggio calcistico, raccogli tutte quelle che hai visto e condividi le esperienze con altri che amano il calcio."
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Trova partite in tutto il mondo, pianifica il tuo prossimo viaggio calcistico, raccogli tutte quelle che hai visto e condividi le esperienze con altri che amano il calcio.",
+ "{n} matcher loggade": "{n} partite registrate",
+ "1 match loggad": "1 partita registrata",
+ "Dela resan": "Condividi il viaggio",
+ "hemifrån": "da casa",
+ "Logga alla {0} matcher från resan": "Registra tutte le {0} partite del viaggio",
+ "Logga matchen från resan": "Registra la partita del viaggio",
+ "Min fotbollsresa till {0}": "Il mio viaggio calcistico a {0}",
+ "Min fotbollsresa till {0}, {1}: {2} på {3}.": "Il mio viaggio calcistico a {0}, {1}: {2} in {3}.",
+ "ny arena": "stadio nuovo",
+ "Resan är slut. Du loggade inga matcher på den här resan.": "Il viaggio è finito. Non hai registrato partite in questo viaggio.",
+ "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "Il viaggio è finito. Eri alle partite? Registrale con un tocco.",
+ "Så blev resan": "Com'è andato il viaggio"
 }

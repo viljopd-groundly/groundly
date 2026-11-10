@@ -2560,5 +2560,17 @@
  "Vart ska jag åka?": "Hvert á ég að fara?",
  "Tillbaka till topplistan": "Aftur á listann",
  "Mest fotboll i helgen:": "Mestur fótbolti um helgina:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Finndu leiki um allan heim, skipuleggðu næstu fótboltaferð, safnaðu öllum sem þú hefur séð og deildu upplifuninni með öðrum sem elska fótbolta."
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Finndu leiki um allan heim, skipuleggðu næstu fótboltaferð, safnaðu öllum sem þú hefur séð og deildu upplifuninni með öðrum sem elska fótbolta.",
+ "{n} matcher loggade": "{n} leikir skráðir",
+ "1 match loggad": "1 leikur skráður",
+ "Dela resan": "Deila ferðinni",
+ "hemifrån": "að heiman",
+ "Logga alla {0} matcher från resan": "Skrá alla {0} leikina úr ferðinni",
+ "Logga matchen från resan": "Skrá leikinn úr ferðinni",
+ "Min fotbollsresa till {0}": "Fótboltaferðin mín til {0}",
+ "Min fotbollsresa till {0}, {1}: {2} på {3}.": "Fótboltaferðin mín til {0}, {1}: {2} á {3}.",
+ "ny arena": "nýr völlur",
+ "Resan är slut. Du loggade inga matcher på den här resan.": "Ferðinni er lokið. Þú skráðir enga leiki í þessari ferð.",
+ "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "Ferðinni er lokið. Varstu á leikjunum? Skráðu þá með einum smelli.",
+ "Så blev resan": "Svona var ferðin"
 }

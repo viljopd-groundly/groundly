@@ -2560,5 +2560,17 @@
  "Vart ska jag åka?": "Minne lähtisin?",
  "Tillbaka till topplistan": "Takaisin listaan",
  "Mest fotboll i helgen:": "Eniten jalkapalloa viikonloppuna:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Löydä otteluita kaikkialta maailmasta, suunnittele seuraava jalkapallomatkasi, kerää kaikki näkemäsi ja jaa kokemukset muiden jalkapalloa rakastavien kanssa."
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Löydä otteluita kaikkialta maailmasta, suunnittele seuraava jalkapallomatkasi, kerää kaikki näkemäsi ja jaa kokemukset muiden jalkapalloa rakastavien kanssa.",
+ "{n} matcher loggade": "{n} ottelua kirjattu",
+ "1 match loggad": "1 ottelu kirjattu",
+ "Dela resan": "Jaa matka",
+ "hemifrån": "kotoa",
+ "Logga alla {0} matcher från resan": "Kirjaa kaikki {0} ottelua matkalta",
+ "Logga matchen från resan": "Kirjaa ottelu matkalta",
+ "Min fotbollsresa till {0}": "Jalkapallomatkani: {0}",
+ "Min fotbollsresa till {0}, {1}: {2} på {3}.": "Jalkapallomatkani: {0}, {1}: {2}, {3}.",
+ "ny arena": "uusi stadion",
+ "Resan är slut. Du loggade inga matcher på den här resan.": "Matka on ohi. Et kirjannut otteluita tältä matkalta.",
+ "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "Matka on ohi. Olitko otteluissa? Kirjaa ne yhdellä napautuksella.",
+ "Så blev resan": "Tällainen matka oli"
 }
