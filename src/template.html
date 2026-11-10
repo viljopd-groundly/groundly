@@ -1341,9 +1341,9 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
   <div class="mspanel" role="dialog" aria-label="Skapa">
     <div class="plist">
       <button class="pitem" data-plus="log"><b><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></b><span><strong>Logga match</strong><small>En match du har sett, med resultat och arena</small></span></button>
-      <button class="pitem" data-plus="ask"><b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span><strong>Fråga i forumet</strong><small>Få tips om arenor, biljetter och pubar</small></span></button>
-      <button class="pitem" data-plus="rep"><b><svg class="ic" aria-hidden="true"><use href="#i-pencil"/></svg></b><span><strong>Skriv matchberättelse</strong><small>Berätta om resan, arenan och stämningen</small></span></button>
       <button class="pitem" data-plus="trip"><b><svg class="ic" aria-hidden="true"><use href="#i-trip"/></svg></b><span><strong>Planera en fotbollsresa</strong><small>Välj stad och datum och se alla matcher där</small></span></button>
+      <button class="pitem" data-plus="rep"><b><svg class="ic" aria-hidden="true"><use href="#i-pencil"/></svg></b><span><strong>Skriv matchberättelse</strong><small>Berätta om resan, arenan och stämningen</small></span></button>
+      <button class="pitem" data-plus="ask"><b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span><strong>Fråga i forumet</strong><small>Få tips om arenor, biljetter och pubar</small></span></button>
     </div>
   </div>
 </div>
@@ -1560,6 +1560,8 @@ try{localStorage.removeItem("fk-fokus");localStorage.removeItem("fk-fkstyle");}c
 {MORE_MODES.splice(MORE_MODES.indexOf("matcher"),1,"flode","forum","reportage");
   const cb=document.querySelector('.bnav [data-bn="community"]');if(cb){cb.dataset.bn="matcher";cb.innerHTML=`<svg class="ic" width="22" height="22" aria-hidden="true" style="width:22px;height:22px;vertical-align:0"><use href="#i-calendar"/></svg><span>${$t("Matcher")}</span>`;}
   const mm=document.querySelector('#moreSheet [data-bn="matcher"]');if(mm){mm.dataset.bn="community";mm.id="m-community";mm.innerHTML=`<b><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></b><span>${$t("Community")}</span>`;mm.parentElement.prepend(mm);}
+  // ordning i Mer: det unika och det dagliga först, sedan uppslag, sist det lättsamma
+  {const g=document.querySelector("#moreSheet .msgrid");if(g)["resa","community","arenor","tabell","klubbar","landslag","tips","quiz"].forEach(k=>{const e=g.querySelector(`[data-bn="${k}"]`);if(e)g.appendChild(e);});}
 }
 // Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
 const isComm=m=>m==="flode"||m==="forum"||m==="reportage";
