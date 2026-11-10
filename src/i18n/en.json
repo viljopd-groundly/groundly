@@ -2661,5 +2661,11 @@
  "ny arena": "new ground",
  "Resan är slut. Du loggade inga matcher på den här resan.": "The trip is over. You didn't log any matches on this trip.",
  "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "The trip is over. Were you at the matches? Log them with one tap.",
- "Så blev resan": "How the trip went"
+ "Så blev resan": "How the trip went",
+ "{0} är tillagd i resan": "{0} has been added to the trip",
+ "En resa kan ha högst 6 städer.": "A trip can have at most 6 cities.",
+ "Lägg till {0} i resan": "Add {0} to the trip",
+ "Lägg till en stad i resan {0}": "Add a city to the trip {0}",
+ "Lägg till stad": "Add city",
+ "Ta bort {0} från resan": "Remove {0} from the trip"
 }

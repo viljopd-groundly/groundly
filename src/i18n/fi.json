@@ -2572,5 +2572,11 @@
  "ny arena": "uusi stadion",
  "Resan är slut. Du loggade inga matcher på den här resan.": "Matka on ohi. Et kirjannut otteluita tältä matkalta.",
  "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "Matka on ohi. Olitko otteluissa? Kirjaa ne yhdellä napautuksella.",
- "Så blev resan": "Tällainen matka oli"
+ "Så blev resan": "Tällainen matka oli",
+ "{0} är tillagd i resan": "{0} on lisätty matkaan",
+ "En resa kan ha högst 6 städer.": "Matkassa voi olla enintään 6 kaupunkia.",
+ "Lägg till {0} i resan": "Lisää {0} matkaan",
+ "Lägg till en stad i resan {0}": "Lisää kaupunki matkaan {0}",
+ "Lägg till stad": "Lisää kaupunki",
+ "Ta bort {0} från resan": "Poista {0} matkalta"
 }

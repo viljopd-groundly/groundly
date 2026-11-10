@@ -2573,5 +2573,11 @@
  "ny arena": "ny arena",
  "Resan är slut. Du loggade inga matcher på den här resan.": "Turen er over. Du logget ingen kamper på denne turen.",
  "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "Turen er over. Var du på kampene? Logg dem med ett trykk.",
- "Så blev resan": "Slik ble turen"
+ "Så blev resan": "Slik ble turen",
+ "{0} är tillagd i resan": "{0} er lagt til i turen",
+ "En resa kan ha högst 6 städer.": "En tur kan ha maks 6 byer.",
+ "Lägg till {0} i resan": "Legg til {0} i turen",
+ "Lägg till en stad i resan {0}": "Legg til en by i turen {0}",
+ "Lägg till stad": "Legg til by",
+ "Ta bort {0} från resan": "Fjern {0} fra turen"
 }

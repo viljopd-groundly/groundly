@@ -2572,5 +2572,11 @@
  "ny arena": "nieuw stadion",
  "Resan är slut. Du loggade inga matcher på den här resan.": "De reis is voorbij. Je hebt op deze reis geen wedstrijden gelogd.",
  "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "De reis is voorbij. Was je bij de wedstrijden? Log ze met één tik.",
- "Så blev resan": "Zo ging de reis"
+ "Så blev resan": "Zo ging de reis",
+ "{0} är tillagd i resan": "{0} is toegevoegd aan de reis",
+ "En resa kan ha högst 6 städer.": "Een reis kan maximaal 6 steden hebben.",
+ "Lägg till {0} i resan": "{0} toevoegen aan de reis",
+ "Lägg till en stad i resan {0}": "Stad toevoegen aan de reis {0}",
+ "Lägg till stad": "Stad toevoegen",
+ "Ta bort {0} från resan": "{0} uit de reis verwijderen"
 }

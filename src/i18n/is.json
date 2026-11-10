@@ -2572,5 +2572,11 @@
  "ny arena": "nýr völlur",
  "Resan är slut. Du loggade inga matcher på den här resan.": "Ferðinni er lokið. Þú skráðir enga leiki í þessari ferð.",
  "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "Ferðinni er lokið. Varstu á leikjunum? Skráðu þá með einum smelli.",
- "Så blev resan": "Svona var ferðin"
+ "Så blev resan": "Svona var ferðin",
+ "{0} är tillagd i resan": "{0} hefur verið bætt við ferðina",
+ "En resa kan ha högst 6 städer.": "Ferð getur haft mest 6 borgir.",
+ "Lägg till {0} i resan": "Bæta {0} við ferðina",
+ "Lägg till en stad i resan {0}": "Bæta borg við ferðina {0}",
+ "Lägg till stad": "Bæta við borg",
+ "Ta bort {0} från resan": "Fjarlægja {0} úr ferðinni"
 }

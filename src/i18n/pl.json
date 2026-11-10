@@ -2572,5 +2572,11 @@
  "ny arena": "nowy stadion",
  "Resan är slut. Du loggade inga matcher på den här resan.": "Wyjazd się skończył. Nie zapisałeś żadnych meczów z tego wyjazdu.",
  "Resan är slut. Var du på matcherna? Logga dem med en knapptryckning.": "Wyjazd się skończył. Byłeś na meczach? Zapisz je jednym dotknięciem.",
- "Så blev resan": "Tak minął wyjazd"
+ "Så blev resan": "Tak minął wyjazd",
+ "{0} är tillagd i resan": "Dodano {0} do wyjazdu",
+ "En resa kan ha högst 6 städer.": "Wyjazd może mieć najwyżej 6 miast.",
+ "Lägg till {0} i resan": "Dodaj {0} do wyjazdu",
+ "Lägg till en stad i resan {0}": "Dodaj miasto do wyjazdu {0}",
+ "Lägg till stad": "Dodaj miasto",
+ "Ta bort {0} från resan": "Usuń {0} z wyjazdu"
 }
