@@ -2537,5 +2537,16 @@
  "Inga matcher valda i resan, men här är alla matcher i området.": "Matkaan ei ole valittu otteluita, mutta tässä ovat kaikki alueen ottelut.",
  "Resan och {0} matcher är sparade": "Matka ja {0} ottelua on tallennettu",
  "Spara resan och matcherna": "Tallenna matka ja ottelut",
- "Eget avstånd": "Oma etäisyys"
+ "Eget avstånd": "Oma etäisyys",
+ "{0} – {1} är flyttad till {2}, utanför resan.": "{0} – {1} on siirretty ajankohtaan {2}, matkan ulkopuolelle.",
+ "Avsparkstiden är klar": "Aloitusaika on vahvistettu",
+ "Ny tid": "Uusi aika",
+ "Ny tid för en match du vill gå på": "Uusi aika ottelulle, jonne haluat mennä",
+ "OK": "OK",
+ "Tiden är uppdaterad": "Aika on päivitetty",
+ "Tidigare {0}": "Aiemmin {0}",
+ "Ny tid: {0} – {1}": "Uusi aika: {0} – {1}",
+ "Matchen är flyttad till {0}. Tidigare {1}.": "Ottelu on siirretty ajankohtaan {0}. Aiemmin {1}.",
+ "Avsparkstiden är klar: {0} – {1}": "Aloitusaika vahvistettu: {0} – {1}",
+ "Matchen spelas {0}.": "Ottelu pelataan {0}."
 }

@@ -2537,5 +2537,16 @@
  "Inga matcher valda i resan, men här är alla matcher i området.": "Engir leikir valdir í ferðinni, en hér eru allir leikir á svæðinu.",
  "Resan och {0} matcher är sparade": "Ferðin og {0} leikir eru vistaðir",
  "Spara resan och matcherna": "Vista ferðina og leikina",
- "Eget avstånd": "Eigin fjarlægð"
+ "Eget avstånd": "Eigin fjarlægð",
+ "{0} – {1} är flyttad till {2}, utanför resan.": "{0} – {1} hefur verið færður til {2}, utan ferðarinnar.",
+ "Avsparkstiden är klar": "Upphafstími staðfestur",
+ "Ny tid": "Nýr tími",
+ "Ny tid för en match du vill gå på": "Nýr tími á leik sem þú vilt sjá",
+ "OK": "Í lagi",
+ "Tiden är uppdaterad": "Tíminn er uppfærður",
+ "Tidigare {0}": "Áður {0}",
+ "Ny tid: {0} – {1}": "Nýr tími: {0} – {1}",
+ "Matchen är flyttad till {0}. Tidigare {1}.": "Leikurinn hefur verið færður til {0}. Áður {1}.",
+ "Avsparkstiden är klar: {0} – {1}": "Upphafstími staðfestur: {0} – {1}",
+ "Matchen spelas {0}.": "Leikurinn fer fram {0}."
 }

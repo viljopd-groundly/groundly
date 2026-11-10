@@ -2537,5 +2537,16 @@
  "Inga matcher valda i resan, men här är alla matcher i området.": "W podróży nie wybrano meczów, ale oto wszystkie mecze w okolicy.",
  "Resan och {0} matcher är sparade": "Podróż i {0} meczów zapisano",
  "Spara resan och matcherna": "Zapisz podróż i mecze",
- "Eget avstånd": "Własna odległość"
+ "Eget avstånd": "Własna odległość",
+ "{0} – {1} är flyttad till {2}, utanför resan.": "{0} – {1} przeniesiono na {2}, poza termin wyjazdu.",
+ "Avsparkstiden är klar": "Godzina rozpoczęcia potwierdzona",
+ "Ny tid": "Nowa godzina",
+ "Ny tid för en match du vill gå på": "Nowa godzina meczu, na który chcesz iść",
+ "OK": "OK",
+ "Tiden är uppdaterad": "Godzina zaktualizowana",
+ "Tidigare {0}": "Wcześniej {0}",
+ "Ny tid: {0} – {1}": "Nowa godzina: {0} – {1}",
+ "Matchen är flyttad till {0}. Tidigare {1}.": "Mecz przeniesiono na {0}. Wcześniej {1}.",
+ "Avsparkstiden är klar: {0} – {1}": "Godzina potwierdzona: {0} – {1}",
+ "Matchen spelas {0}.": "Mecz odbędzie się {0}."
 }

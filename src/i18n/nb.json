@@ -2538,5 +2538,16 @@
  "Inga matcher valda i resan, men här är alla matcher i området.": "Ingen kamper valgt i reisen, men her er alle kampene i området.",
  "Resan och {0} matcher är sparade": "Reisen og {0} kamper er lagret",
  "Spara resan och matcherna": "Lagre reisen og kampene",
- "Eget avstånd": "Egen avstand"
+ "Eget avstånd": "Egen avstand",
+ "{0} – {1} är flyttad till {2}, utanför resan.": "{0} – {1} er flyttet til {2}, utenfor turen.",
+ "Avsparkstiden är klar": "Avsparkstiden er klar",
+ "Ny tid": "Ny tid",
+ "Ny tid för en match du vill gå på": "Ny tid for en kamp du vil gå på",
+ "OK": "OK",
+ "Tiden är uppdaterad": "Tiden er oppdatert",
+ "Tidigare {0}": "Tidligere {0}",
+ "Ny tid: {0} – {1}": "Ny tid: {0} – {1}",
+ "Matchen är flyttad till {0}. Tidigare {1}.": "Kampen er flyttet til {0}. Tidligere {1}.",
+ "Avsparkstiden är klar: {0} – {1}": "Avsparkstiden er klar: {0} – {1}",
+ "Matchen spelas {0}.": "Kampen spilles {0}."
 }

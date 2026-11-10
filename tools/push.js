@@ -2,6 +2,7 @@
 // Kräver hemligheten FIREBASE_SA (tjänstekontots JSON). Saknas den avslutas skriptet utan att göra något.
 // Läser users/{uid}/data/push (token, val, tidszon, språk, vad som redan skickats) och users/{uid}/data/logg (Vill gå och loggade matcher).
 //   wish7: matchen i Vill gå är om en vecka          wish1: matchen är i morgon (skickas från kl 17)
+//   nt:    matchen i Vill gå har fått ny avsparkstid i schemat (eller fått en tid, om bara datumet var känt)
 //   log:   morgonen efter en match i Vill gå som inte loggats (från kl 9)
 // Spärrar: bara mellan 08 och 21 lokal tid, högst tre notiser per användare och sju dagar, varje notis bara en gång.
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
@@ -15,6 +16,10 @@ const I18N = {}; const tr = (lang, s, v) => { if (!(lang in I18N)) { try { I18N[
   const r = I18N[lang][s] || s; return v ? r.replace(/\{(\d)\}/g, (m, k) => v[k] != null ? v[k] : m) : r; };
 // klubbnamn på användarens språk (samma regler som i appen, förenklat: de översatta namnen ligger i i18n-filerna)
 const clubs = {}; try { require(path.join(ROOT, "src", "clubs.js")).forEach(r => { clubs[r[0]] = r[1]; }); } catch (e) {}
+// aktuellt schema (samma fil som appen läser): hemma|borta -> [{ko, comp}]
+const FX = new Map(); try { (JSON.parse(fs.readFileSync(path.join(ROOT, "site", "data", "fixtures-next.json"), "utf8")).rows || []).forEach(r => { if (!r[2]) return; const k = r[0] + "|" + r[1]; if (!FX.has(k)) FX.set(k, []); FX.get(k).push({ ko: r[2], comp: r[5] }); }); } catch (e) {}
+const fxNow = w => { if (!w.home || !w.away) return null; const t0 = Date.parse(w.kickoff || (w.dateFrom ? w.dateFrom + "T12:00:00Z" : "")); if (!t0) return null;
+  const c = (FX.get(w.home + "|" + w.away) || []).filter(x => (!w.comp || !x.comp || x.comp === w.comp) && Math.abs(Date.parse(x.ko) - t0) < 10 * 864e5); return c.length === 1 ? c[0].ko : null; };
 const team = (lang, id, name) => { const n = (id && clubs[id]) || name || ""; return tr(lang, n); };
 
 async function token() {
@@ -50,12 +55,18 @@ const enc = x => x === null || x === undefined ? { nullValue: null } : typeof x 
     let week = Object.values(sent).filter(t => now - Date.parse(t) < 7 * 864e5).length; if (week >= 3) { skip("veckotak"); continue; }
     const lr = await fetch(`${DB}/users/${uid}/data/logg`, { headers: H }); if (!lr.ok) { skip("ingen logg"); continue; }
     const L = Object.fromEntries(Object.entries((await lr.json()).fields || {}).map(([k, v]) => [k, dec(v)]));
-    const wish = (L.wishMatches || []).filter(w => w && w.id && w.kickoff), att = new Set((L.attended || []).map(a => a && a.mid).filter(Boolean));
+    const wish = (L.wishMatches || []).filter(w => w && w.id && (w.kickoff || w.dateFrom)), att = new Set((L.attended || []).map(a => a && a.mid).filter(Boolean));
     const fmt = d => new Intl.DateTimeFormat(LOC[lang], { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: tz }).format(new Date(d));
     const tm = d => new Intl.DateTimeFormat(LOC[lang], { hour: "2-digit", minute: "2-digit", timeZone: tz }).format(new Date(d));
     const out = [];
     for (const w of wish) {
-      const ko = Date.parse(w.kickoff), h = team(lang, w.home, w.homeName), a = team(lang, w.away, w.awayName), where = [w.venue, w.city && tr(lang, w.city)].filter(Boolean).join(", ");
+      const nk = fxNow(w), old = w.kickoff ? Date.parse(w.kickoff) : null;
+      const moved = nk && Date.parse(nk) > now && !att.has(w.id) && (old ? Math.abs(Date.parse(nk) - old) >= 5 * 6e4 : Date.parse(nk) - now < 30 * 864e5);
+      if (!w.kickoff && !nk) continue;
+      const ko = nk ? Date.parse(nk) : old, h = team(lang, w.home, w.homeName), a = team(lang, w.away, w.awayName), where = [w.venue, w.city && tr(lang, w.city)].filter(Boolean).join(", ");
+      if (moved && pr.wish !== false && !sent["nt:" + w.id + ":" + nk])
+        out.unshift(old ? { key: "nt:" + w.id + ":" + nk, title: tr(lang, "Ny tid: {0} – {1}", [h, a]), body: tr(lang, "Matchen är flyttad till {0}. Tidigare {1}.", [fmt(ko), fmt(old)]), url: "./?go=mine" }
+          : { key: "nt:" + w.id + ":" + nk, title: tr(lang, "Avsparkstiden är klar: {0} – {1}", [h, a]), body: tr(lang, "Matchen spelas {0}.", [[fmt(ko), where].filter(Boolean).join(", ")]), url: "./?go=mine" });
       if (pr.wish !== false && ko - now > 6 * 864e5 && ko - now <= 7 * 864e5 && !sent["w7:" + w.id])
         out.push({ key: "w7:" + w.id, title: tr(lang, "{0} – {1} om en vecka", [h, a]), body: tr(lang, "Matchen ligger i Vill gå. {0}.", [[fmt(ko), where].filter(Boolean).join(", ")]), url: "./?go=mine" });
       if (pr.wish !== false && ko - now > 6 * 36e5 && ko - now <= 36 * 36e5 && hour >= 17 && !sent["w1:" + w.id])

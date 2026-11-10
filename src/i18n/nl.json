@@ -2537,5 +2537,16 @@
  "Inga matcher valda i resan, men här är alla matcher i området.": "Er zijn geen wedstrijden gekozen in de reis, maar hier zijn alle wedstrijden in de omgeving.",
  "Resan och {0} matcher är sparade": "De reis en {0} wedstrijden zijn opgeslagen",
  "Spara resan och matcherna": "Reis en wedstrijden opslaan",
- "Eget avstånd": "Eigen afstand"
+ "Eget avstånd": "Eigen afstand",
+ "{0} – {1} är flyttad till {2}, utanför resan.": "{0} – {1} is verplaatst naar {2}, buiten de reis.",
+ "Avsparkstiden är klar": "Aftraptijd staat vast",
+ "Ny tid": "Nieuwe tijd",
+ "Ny tid för en match du vill gå på": "Nieuwe tijd voor een wedstrijd die je wilt zien",
+ "OK": "OK",
+ "Tiden är uppdaterad": "Tijd bijgewerkt",
+ "Tidigare {0}": "Eerder {0}",
+ "Ny tid: {0} – {1}": "Nieuwe tijd: {0} – {1}",
+ "Matchen är flyttad till {0}. Tidigare {1}.": "De wedstrijd is verplaatst naar {0}. Eerder {1}.",
+ "Avsparkstiden är klar: {0} – {1}": "Aftraptijd staat vast: {0} – {1}",
+ "Matchen spelas {0}.": "De wedstrijd wordt gespeeld op {0}."
 }

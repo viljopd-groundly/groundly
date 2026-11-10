@@ -2626,5 +2626,16 @@
  "Inga matcher valda i resan, men här är alla matcher i området.": "No matches picked in the trip, but here are all the matches in the area.",
  "Resan och {0} matcher är sparade": "The trip and {0} matches are saved",
  "Spara resan och matcherna": "Save the trip and the matches",
- "Eget avstånd": "Custom distance"
+ "Eget avstånd": "Custom distance",
+ "{0} – {1} är flyttad till {2}, utanför resan.": "{0} – {1} has moved to {2}, outside the trip.",
+ "Avsparkstiden är klar": "Kick-off time confirmed",
+ "Ny tid": "New time",
+ "Ny tid för en match du vill gå på": "New time for a match you want to see",
+ "OK": "OK",
+ "Tiden är uppdaterad": "Time updated",
+ "Tidigare {0}": "Previously {0}",
+ "Ny tid: {0} – {1}": "New time: {0} – {1}",
+ "Matchen är flyttad till {0}. Tidigare {1}.": "The match has moved to {0}. Previously {1}.",
+ "Avsparkstiden är klar: {0} – {1}": "Kick-off confirmed: {0} – {1}",
+ "Matchen spelas {0}.": "The match is played {0}."
 }
