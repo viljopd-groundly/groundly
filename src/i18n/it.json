@@ -2588,5 +2588,8 @@
  "Fotbollsresa till {0} {1} – tips?": "Viaggio calcistico a {0} {1} – consigli?",
  "Har någon tips om biljetter, var man ska sitta eller ställen nära arenan före och efter matchen?": "Qualcuno ha consigli su biglietti, dove sedersi o locali vicino allo stadio prima e dopo la partita?",
  "Jag ska gå på {0}.": "Vado a vedere {0}.",
- "Jag ska se de här matcherna:": "Vado a vedere queste partite:"
+ "Jag ska se de här matcherna:": "Vado a vedere queste partite:",
+ "Ta bort resan {0}?": "Eliminare il viaggio {0}?",
+ "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "Il viaggio sparirà dal tuo account. Le partite segnate Voglio andare restano in Il mio calcio.",
+ "Ja, ta bort": "Sì, elimina"
 }

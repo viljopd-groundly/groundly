@@ -2588,5 +2588,8 @@
  "Fotbollsresa till {0} {1} – tips?": "Voetbalreis naar {0} {1} – tips?",
  "Har någon tips om biljetter, var man ska sitta eller ställen nära arenan före och efter matchen?": "Heeft iemand tips over kaartjes, waar je moet zitten of plekken bij het stadion voor en na de wedstrijd?",
  "Jag ska gå på {0}.": "Ik ga naar {0}.",
- "Jag ska se de här matcherna:": "Ik ga deze wedstrijden zien:"
+ "Jag ska se de här matcherna:": "Ik ga deze wedstrijden zien:",
+ "Ta bort resan {0}?": "Reis {0} verwijderen?",
+ "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "De reis verdwijnt uit je account. Wedstrijden die je als Wil gaan hebt gemarkeerd blijven in Mijn voetbal.",
+ "Ja, ta bort": "Ja, verwijderen"
 }

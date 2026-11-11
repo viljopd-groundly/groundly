@@ -2589,5 +2589,8 @@
  "Fotbollsresa till {0} {1} – tips?": "Fodboldtur til {0} {1} – tips?",
  "Har någon tips om biljetter, var man ska sitta eller ställen nära arenan före och efter matchen?": "Har nogen tips om billetter, hvor man skal sidde, eller steder nær stadion før og efter kampen?",
  "Jag ska gå på {0}.": "Jeg skal til {0}.",
- "Jag ska se de här matcherna:": "Jeg skal se disse kampe:"
+ "Jag ska se de här matcherna:": "Jeg skal se disse kampe:",
+ "Ta bort resan {0}?": "Slet turen {0}?",
+ "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "Turen forsvinder fra din konto. Kampene, du har trykket Vil se, ligger stadig i Min fodbold.",
+ "Ja, ta bort": "Ja, slet"
 }
