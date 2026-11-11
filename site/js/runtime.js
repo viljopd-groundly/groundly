@@ -406,6 +406,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
         // först ett "borttaget"-märke (syns i cachens ändringar), sedan raderas dokumentet helt
         for (const c of OWN) { try { if (F.serverTimestamp && c !== "profiles" && c !== "feedback") await F.setDoc(F.doc(fs, c, uid), { _gone: true, _u: F.serverTimestamp() }); else await F.deleteDoc(F.doc(fs, c, uid)); } catch (e) { try { await F.deleteDoc(F.doc(fs, c, uid)); } catch (e2) {} } }
         try { await F.deleteDoc(F.doc(fs, "users", uid, "data", "logg")); } catch (e) {}
+        try { await F.deleteDoc(F.doc(fs, "users", uid, "data", "push")); } catch (e) {}
         await A.deleteUser(cu);
         try { localStorage.removeItem("fk-pending-logg"); } catch (e) {}
         say($t("Ditt konto är raderat."));

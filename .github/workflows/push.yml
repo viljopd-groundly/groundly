@@ -1,9 +1,7 @@
-# Påminnelser i telefonen: körs varje timme och skickar de notiser som är på tur (se tools/push.js).
-# Kräver hemligheten FIREBASE_SA (Settings → Secrets and variables → Actions). Utan den gör jobbet ingenting.
+# Påminnelser körs numera i det privata repot groundly-backup (där nyckeln FIREBASE_SA finns), varje timme.
+# Det här jobbet finns kvar för manuell körning om nyckeln någon gång läggs in här.
 name: Påminnelser
 on:
-  schedule:
-    - cron: "17 * * * *"
   workflow_dispatch:
     inputs:
       dry:

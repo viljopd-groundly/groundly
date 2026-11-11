@@ -1,4 +1,4 @@
-// Groundly: skickar påminnelser (webbpush) via Firebase Cloud Messaging. Körs varje timme i GitHub Actions (.github/workflows/push.yml).
+// Groundly: skickar påminnelser (webbpush) via Firebase Cloud Messaging. Körs varje timme i GitHub Actions i det privata repot groundly-backup (.github/workflows/push.yml).
 // Kräver hemligheten FIREBASE_SA (tjänstekontots JSON). Saknas den avslutas skriptet utan att göra något.
 // Läser users/{uid}/data/push (token, val, tidszon, språk, vad som redan skickats) och users/{uid}/data/logg (Vill gå och loggade matcher).
 //   wish7: matchen i Vill gå är om en vecka          wish1: matchen är i morgon (skickas från kl 17)
