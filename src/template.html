@@ -5574,7 +5574,10 @@ document.addEventListener("submit",async e=>{if(e.target.id!=="nameForm")return;
 // ---------- Min profil ----------
 const followersOf=uid=>Object.entries(PUBLIC).filter(([u,d])=>u!==uid&&d&&Array.isArray(d.fo)&&d.fo.includes(uid)).map(([u])=>u);
 function profSw(attr,on,title,sub){return`<label class="setsw"><input type="checkbox" ${attr}${on?" checked":""}><span><b>${title}</b><small>${sub}</small></span></label>`;}
-window.groundlyGoAccount=()=>{goTop("profil");window.scrollTo({top:0});};
+// avatarknappen växlar: första trycket öppnar Mitt konto, nästa tar dig tillbaka dit du var (samma ställe)
+let ACCT_FROM=null;
+window.groundlyGoAccount=()=>{if(mode==="profil"&&ACCT_FROM){const f=ACCT_FROM;ACCT_FROM=null;goTop(f.m);requestAnimationFrame(()=>window.scrollTo(0,f.y));return;}
+  ACCT_FROM=mode!=="profil"?{m:mode,y:window.scrollY}:null;goTop("profil");window.scrollTo({top:0});};
 document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[data-gomod]")&&window.groundlyOpenMod)window.groundlyOpenMod();});
 function renderProfil(){const el=document.getElementById("profilBody");if(!el)return;
   if(!dbNs||!myId){el.innerHTML=`<div class="empty"><b>${$t("Logga in för att se din profil.")}</b><div>${$t("Med ett konto får du ett namn i communityn, kan följa andra groundhoppers och skriva matchberättelser.")}</div><div class="actions"><button class="btn primary" data-glogin>${$t("Logga in")}</button></div></div>`;return;}
