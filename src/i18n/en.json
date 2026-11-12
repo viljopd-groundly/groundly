@@ -2680,5 +2680,7 @@
  "Jag ska se de här matcherna:": "I'm going to see these matches:",
  "Ta bort resan {0}?": "Delete the trip {0}?",
  "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "The trip will be removed from your account. Matches you marked Want to go stay in My football.",
- "Ja, ta bort": "Yes, delete"
+ "Ja, ta bort": "Yes, delete",
+ "Arenatur": "Stadium tour",
+ "Arenaturer i {0}": "Stadium tours in {0}"
 }

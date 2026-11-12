@@ -2591,5 +2591,7 @@
  "Jag ska se de här matcherna:": "Ég ætla að sjá þessa leiki:",
  "Ta bort resan {0}?": "Eyða ferðinni {0}?",
  "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "Ferðin hverfur af aðganginum þínum. Leikir sem þú merktir Vil fara verða áfram í Minn fótbolti.",
- "Ja, ta bort": "Já, eyða"
+ "Ja, ta bort": "Já, eyða",
+ "Arenatur": "Vallarferð",
+ "Arenaturer i {0}": "Vallarferðir í {0}"
 }

@@ -2591,5 +2591,7 @@
  "Jag ska se de här matcherna:": "Aion nähdä nämä ottelut:",
  "Ta bort resan {0}?": "Poistetaanko matka {0}?",
  "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "Matka poistuu tililtäsi. Ottelut, joihin painoit Haluan mennä, jäävät Oma jalkapallo -näkymään.",
- "Ja, ta bort": "Kyllä, poista"
+ "Ja, ta bort": "Kyllä, poista",
+ "Arenatur": "Stadionkierros",
+ "Arenaturer i {0}": "Stadionkierrokset: {0}"
 }

@@ -2591,5 +2591,7 @@
  "Jag ska se de här matcherna:": "Vado a vedere queste partite:",
  "Ta bort resan {0}?": "Eliminare il viaggio {0}?",
  "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "Il viaggio sparirà dal tuo account. Le partite segnate Voglio andare restano in Il mio calcio.",
- "Ja, ta bort": "Sì, elimina"
+ "Ja, ta bort": "Sì, elimina",
+ "Arenatur": "Tour dello stadio",
+ "Arenaturer i {0}": "Tour degli stadi a {0}"
 }

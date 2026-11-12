@@ -1545,7 +1545,7 @@ try{history.scrollRestoration="manual";}catch(e){}
 // ---------- Anonym användningsstatistik ----------
 // Bara antal per sak och dag (usage/{datum}). Inget användar-id, ingen enhet, inga kakor.
 // Nycklarna måste finnas i USAGE_KEYS här och i firebase/firestore.rules.
-const USAGE_KEYS=new Set(["s", "s_in", "s_new", "s_pwa", "dark", "look_std", "look_modern", "look_ticket", "look_atlas", "look_kit", "lang_sv", "lang_nb", "lang_da", "lang_fi", "lang_is", "lang_de", "lang_en", "lang_es", "lang_fr", "lang_it", "lang_nl", "lang_pl", "lang_pt", "v_hem", "v_matcher", "v_mine", "v_resa", "v_flode", "v_forum", "v_reportage", "v_klubbar", "v_landslag", "v_tabell", "v_arenor", "v_tips", "v_quiz", "v_profil", "m_open", "log", "wish", "trip_new", "cal", "fav", "login_click", "trip_search", "trip_share", "trip_leg", "trip_log", "trip_top", "top_city", "home_top", "plus", "plus_log", "plus_trip", "plus_rep", "plus_ask", "out_hotel", "out_travel", "out_tix", "out_ext", "c_SE", "c_NO", "c_DK", "c_FI", "c_IS", "c_DE", "c_GB", "c_IE", "c_NL", "c_BE", "c_FR", "c_ES", "c_PT", "c_IT", "c_CH", "c_AT", "c_PL", "c_CZ", "c_HU", "c_HR", "c_RS", "c_GR", "c_TR", "c_RO", "c_UA", "c_EE", "c_LV", "c_LT", "c_US", "c_CA", "c_MX", "c_BR", "c_AR", "c_AU", "c_JP", "c_TH", "c_AE", "c_ZA", "c_IN", "c_CN", "c_XX", "trip_ask"]);
+const USAGE_KEYS=new Set(["s", "s_in", "s_new", "s_pwa", "dark", "look_std", "look_modern", "look_ticket", "look_atlas", "look_kit", "lang_sv", "lang_nb", "lang_da", "lang_fi", "lang_is", "lang_de", "lang_en", "lang_es", "lang_fr", "lang_it", "lang_nl", "lang_pl", "lang_pt", "v_hem", "v_matcher", "v_mine", "v_resa", "v_flode", "v_forum", "v_reportage", "v_klubbar", "v_landslag", "v_tabell", "v_arenor", "v_tips", "v_quiz", "v_profil", "m_open", "log", "wish", "trip_new", "cal", "fav", "login_click", "trip_search", "trip_share", "trip_leg", "trip_log", "trip_top", "top_city", "home_top", "plus", "plus_log", "plus_trip", "plus_rep", "plus_ask", "out_hotel", "out_travel", "out_tix", "out_ext", "c_SE", "c_NO", "c_DK", "c_FI", "c_IS", "c_DE", "c_GB", "c_IE", "c_NL", "c_BE", "c_FR", "c_ES", "c_PT", "c_IT", "c_CH", "c_AT", "c_PL", "c_CZ", "c_HU", "c_HR", "c_RS", "c_GR", "c_TR", "c_RO", "c_UA", "c_EE", "c_LV", "c_LT", "c_US", "c_CA", "c_MX", "c_BR", "c_AR", "c_AU", "c_JP", "c_TH", "c_AE", "c_ZA", "c_IN", "c_CN", "c_XX", "trip_ask", "out_tour"]);
 let USE_Q={},USE_LAST=null;
 function track(k,n){if(!USAGE_KEYS.has(k))return;USE_Q[k]=(USE_Q[k]||0)+(n||1);}
 function flushUsage(){const q=USE_Q;if(!Object.keys(q).length||typeof window.groundlyUsage!=="function")return;USE_Q={};try{window.groundlyUsage(q).catch(()=>{});}catch(e){}}
@@ -1561,7 +1561,7 @@ const USE_CLICK=[["[data-mopen]","m_open"],["[data-calmany],[data-cal]","cal"],[
 document.addEventListener("click",e=>{const el=e.target&&e.target.closest?e.target:null;if(!el)return;
   for(const[sel,k]of USE_CLICK)if(el.closest(sel)){track(k);if(k!=="top_city")break;}
   const pl=el.closest("[data-plus]");if(pl)track("plus_"+pl.dataset.plus);
-  const a=el.closest("a[href^='http']");if(a){const h=a.href;track(/booking\.|tp\.media|travelpayouts|tp\.st/.test(h)?"out_hotel":/omio\./.test(h)?"out_travel":a.querySelector('use[href="#i-ticket"]')?"out_tix":"out_ext");}},true);
+  const a=el.closest("a[href^='http']");if(a){const h=a.href;let dh=h;try{dh=decodeURIComponent(h);}catch(e){}track(/getyourguide|tiqets/.test(dh)?"out_tour":/booking\./.test(dh)?"out_hotel":/omio\./.test(dh)?"out_travel":a.querySelector('use[href="#i-ticket"]')?"out_tix":"out_ext");}},true);
 document.addEventListener("submit",e=>{if(e.target&&e.target.id==="resaForm")track("trip_search");},true);
 // land: hemortens land (via klubbarna i staden), annars telefonens tidszon. Bara landskod, ingen position.
 const USE_CC=[["SE", "Sverige"], ["NO", "Norge"], ["DK", "Danmark"], ["FI", "Finland"], ["IS", "Island"], ["DE", "Tyskland"], ["GB", "Storbritannien"], ["IE", "Irland"], ["NL", "Nederländerna"], ["BE", "Belgien"], ["FR", "Frankrike"], ["ES", "Spanien"], ["PT", "Portugal"], ["IT", "Italien"], ["CH", "Schweiz"], ["AT", "Österrike"], ["PL", "Polen"], ["CZ", "Tjeckien"], ["HU", "Ungern"], ["HR", "Kroatien"], ["RS", "Serbien"], ["GR", "Grekland"], ["TR", "Turkiet"], ["RO", "Rumänien"], ["UA", "Ukraina"], ["EE", "Estland"], ["LV", "Lettland"], ["LT", "Litauen"], ["US", "USA"], ["CA", "Kanada"], ["MX", "Mexiko"], ["BR", "Brasilien"], ["AR", "Argentina"], ["AU", "Australien"], ["JP", "Japan"], ["TH", "Thailand"], ["AE", "Förenade arabemiraten"], ["ZA", "Sydafrika"], ["IN", "Indien"], ["CN", "Kina"], ["XX", "Övriga"]];
@@ -2183,7 +2183,7 @@ const tipArenaCard=([id,why])=>{const c=C[id];if(!c||!c.s)return"";const k=arena
         <div class="teams">${sharers.map(o=>`<button data-open="${esc(o.id)}">${crest(o.id,o.n,22)}${esc(o.n)}${favStar(o.id)}</button>`).join('<span class="vs">·</span>')}</div>
         <div class="mp">${c.cap?`<span class="pill">${$t("{0} platser",[fmtCap(c.cap)])}</span>`:""}${sf?`<span class="pill">${esc(SURF_LBL[sf.v])}</span>`:""}${visited?`<span class="pill t1">${$t("Besökt {0}",[OK])}</span>`:""}</div>
         <p>${esc($t(why))}</p>
-        <div class="actions">${extLink(mapsDir(c.s,c.city),$t("Hitta hit"),"btn small")}${extLink(bookingUrl(c.s,c.city),adLabel($t("Hotell")),"btn small")}${c.city?extLink(omioUrl(homeTown,c.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"btn small"):""}<button class="btn small" data-teamview="${esc(c.id)}">${$t("Kommande matcher")}</button></div>${tipFeedback("arena",id,c.id)}</article>`;};
+        <div class="actions">${extLink(mapsDir(c.s,c.city),$t("Hitta hit"),"btn small")}${extLink(bookingUrl(c.s,c.city),adLabel($t("Hotell")),"btn small")}${c.city?extLink(omioUrl(homeTown,c.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"btn small"):""}${tourLink(c)}<button class="btn small" data-teamview="${esc(c.id)}">${$t("Kommande matcher")}</button></div>${tipFeedback("arena",id,c.id)}</article>`;};
 const tipCultCard=([id,why])=>{const c=C[id];if(!c)return"";const up=dbState==="ready"?upcomingFor(id)[0]:null;
       return`<article class="tip tipx"${tipBand([id])}>
         <div class="tip-head tiph-c">${crest(id,c.n,40)}<div><h2 class="name">${esc(c.n)}</h2><span class="meta">${esc([cityLbl(c),$t(c.c)].join(", "))}${c.f?$t(" · grundad {0}",[c.f]):""}</span></div></div>
@@ -3095,6 +3095,19 @@ const OMIO_ON=!!(TP.marker&&OMIO.p);
 function omioUrl(from,to){const f=OMIO_FK[from],t=OMIO_FK[to];const u="https://www.omio.se/"+(f&&t?`?departure_fk=${enc(f)}&arrival_fk=${enc(t)}`:"");
   if(!OMIO_ON)return u;const q=new URLSearchParams({marker:TP.marker,p:OMIO.p});if(OMIO.campaign_id)q.set("campaign_id",OMIO.campaign_id);if(TP.trs)q.set("trs",TP.trs);q.set("u",u);return"https://tp.media/r?"+q.toString();}
 const omioLink=(from,to,cls)=>extLink(omioUrl(from,to),OMIO_ON?`${$t("Tåg, buss och flyg (Omio)")}<small class="adtag">${$t("Annonslänk")}</small>`:$t("Tåg, buss och flyg (Omio)"),cls||"btn small");
+// GetYourGuide (arenaturer och fotbollsmuseer) via Travelpayouts: fyll i p och campaign_id från deras länkgenerator för GetYourGuide.
+const GYG={p:"",campaign_id:""};
+const GYG_ON=!!(TP.marker&&GYG.p);
+function gygUrl(q){const u="https://www.getyourguide.com/s/?q="+encodeURIComponent(q);if(!GYG_ON)return u;
+  const x=new URLSearchParams({marker:TP.marker,p:GYG.p});if(GYG.campaign_id)x.set("campaign_id",GYG.campaign_id);if(TP.trs)x.set("trs",TP.trs);x.set("u",u);return"https://tp.media/r?"+x.toString();}
+// visa bara där det brukar finnas turer: arenor och städer med lag i högsta serien i starka fotbollsländer
+let TOUR_C=null,TOUR_K=-1;
+function tourSets(){if(TOUR_K===MATCHES.length&&TOUR_C)return TOUR_C;const ar=new Set(),ci=new Set();
+  const TC=new Set([...TOP_A,"Nederländerna","Portugal","Skottland","Turkiet","Brasilien","Argentina"]);MATCHES.forEach(m=>{if(String(m.tier)!=="1"||!TC.has(m.country))return;const c=C[m.home];if(!c||isNat(c)||isW(c))return;if(c.s)ar.add(c.s);if(m.city)ci.add(m.city);});
+  TOUR_K=MATCHES.length;TOUR_C={ar,ci};return TOUR_C;}
+const gygLabel=t=>GYG_ON?`${t}<small class="adtag">${$t("Annonslänk")}</small>`:t;
+function tourLink(c,cls){if(!c||!c.s||!tourSets().ar.has(c.s))return"";return extLink(gygUrl(c.s+" stadium tour"),gygLabel(`${ic("ticket")} ${$t("Arenatur")}`),cls||"btn small");}
+function tourCityLink(city,cls){if(!city||!tourSets().ci.has(city))return"";return extLink(gygUrl($t(city)+" stadium tour"),gygLabel($t("Arenaturer i {0}",[esc($t(city))])),cls||"btn small");}
 const AFFILIATE=!!(BOOKING_AID||TP.marker);
 const adLabel=t=>AFFILIATE?`${t}<small class="adtag">${$t("Annonslänk")}</small>`:t;
 const SEEDMAP=new Map();PUBSEED.forEach(([st,src,url,note,pubs])=>SEEDMAP.set(arenaKey(st),{src,url,note,pubs}));
@@ -3143,7 +3156,7 @@ function pubFormHtml(c){const f=pubForm||{crowd:""};
     <div class="actions"><button class="btn small primary" type="submit">${$t("Publicera tipset")}</button><button class="btn small" type="button" data-pubcancel="1">${$t("Avbryt")}</button></div></form>`;}
 function prepBlock(c){if(!c.s)return"";const pubs=pubList(c);const seed=SEEDMAP.get(arenaKey(c.s));const canTip=!!myId&&pubsState==="ready";
   return`<div class="prep" data-noclose="1"><h3>${$t("Inför matchen")}</h3>
-   <div class="actions">${extLink(bookingUrl(c.s,c.city),adLabel($t("Hotell nära arenan")),"btn small")}${extLink(mapsSearch($t("pub nära {0}, {1}",[c.s,c.city])),$t("Pubar på kartan"),"btn small")}<button class="btn small" data-tripfor="${esc(c.id)}" aria-expanded="${tripOpen===c.id}">${$t("Ta dig till arenan")}</button></div>${tripOpen===c.id?tripPanel(c):""}
+   <div class="actions">${extLink(bookingUrl(c.s,c.city),adLabel($t("Hotell nära arenan")),"btn small")}${tourLink(c)}${extLink(mapsSearch($t("pub nära {0}, {1}",[c.s,c.city])),$t("Pubar på kartan"),"btn small")}<button class="btn small" data-tripfor="${esc(c.id)}" aria-expanded="${tripOpen===c.id}">${$t("Ta dig till arenan")}</button></div>${tripOpen===c.id?tripPanel(c):""}
    <h4 class="pubhd">${$t("Pubtips före match")}</h4>
    ${seed&&seed.note?`<p class="notice">${esc($t(seed.note))}</p>`:""}
    ${pubs.length?`<div class="pubs">${pubs.slice(0,lim("pub:"+c.id,5)).map(pubItem).join("")}</div>${limBtns("pub:"+c.id,pubs.length,5)}`:`<p class="meta">${$t("Inga pubtips än. Vet du var man tar en öl före match här?")}</p>`}
@@ -4671,7 +4684,7 @@ function tripML(t,past){const seen=new Set(),out=[];for(const l of tripLegs(t)){
 function setLegs(tr,legs){legs=legs.slice().sort((a,b)=>a.from.localeCompare(b.from)||a.to.localeCompare(b.to));const f=legs[0];tr.city=f.city;tr.r=f.r;
   tr.from=legs.reduce((m,l)=>l.from<m?l.from:m,f.from);tr.to=legs.reduce((m,l)=>l.to>m?l.to:m,f.to);if(legs.length>1)tr.legs=legs;else delete tr.legs;}
 function legHotel(q){const c=cityLL(q.city);const name=c?c.name:q.city;const out=q.to>q.from?q.to:addDays(q.from,1);return extLink(bookingUrl("",$t(name),q.from,out),adLabel($t("Hotell i {0}",[esc($t(name))])),"btn small");}
-const tripLinksAll=t=>tripLegs(t).map((l,i)=>i?legHotel(l):tripLinks(l)).join("");
+const tripLinksAll=t=>tripLegs(t).map((l,i)=>(i?legHotel(l):tripLinks(l))+tourCityLink((cityLL(l.city)||{}).name)).join("");
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-tripadd],[data-addcancel],[data-legadd],[data-legdel],[data-legopen]");if(!b||myState!=="ready")return;
   if(b.dataset.tripadd){const tr=myTrips().find(x=>x.id===b.dataset.tripadd);if(!tr)return;RESA_ADDTO=tr.id;RESA_FROMTOP=null;RESA_DRAFT=null;resaOpen=null;const f=tr.to<today()?today():tr.to;RESA={city:"",from:f,to:addDays(f,1),r:50};RESA_TAB="plan";renderResa();
     requestAnimationFrame(()=>{const el=document.querySelector(".resaform");el?.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(()=>document.getElementById("rCity")?.focus(),350);});return;}
@@ -4815,7 +4828,7 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
           <div class="actions">${myState==="ready"?`<button class="btn primary small" data-tripadopt="1">${ic("plus")} ${sm.length?$t("Spara resan och matcherna"):$t("Spara resan")}</button>`:`<button class="btn primary small" data-glogin="up">${$t("Logga in för att spara resan")}</button>`}</div></article>`;}
       const backB=RESA_FROMTOP?`<button class="btn primary backtop" data-backtop>${ic("chev")} ${$t("Tillbaka till topplistan")}</button>`:"";h+=backB;
       h+=`<div class="sechead"><h3 class="sec">${$tn(L.length,"1 match nära {0}","{n} matcher nära {0}").replace("{0}",esc(name))} · ${esc(resaRange(q.from,q.to))}</h3></div>`;
-      h+=`<div class="actions tripact">${addT&&myState==="ready"?`<button class="btn primary small" data-legadd="1">${ic("plus")} ${$t("Lägg till {0} i resan",[esc(name)])}</button>${legHotel(q)}`:myState==="ready"?(saved?`<span class="pill">${ic("check")} ${$t("Resan är sparad")}</span>`:`<button class="btn primary small" data-tripsave="1">${ic("plus")} ${$t("Spara resan")}</button>`):`<button class="btn small" data-glogin="up">${$t("Logga in för att spara resan")}</button>`}${addT?"":tripLinks(q)}</div>`;
+      h+=`<div class="actions tripact">${addT&&myState==="ready"?`<button class="btn primary small" data-legadd="1">${ic("plus")} ${$t("Lägg till {0} i resan",[esc(name)])}</button>${legHotel(q)}`:myState==="ready"?(saved?`<span class="pill">${ic("check")} ${$t("Resan är sparad")}</span>`:`<button class="btn primary small" data-tripsave="1">${ic("plus")} ${$t("Spara resan")}</button>`):`<button class="btn small" data-glogin="up">${$t("Logga in för att spara resan")}</button>`}${addT?"":tripLinks(q)+tourCityLink(c.name)}</div>`;
       h+=horizonNote(q.to);
       if(!L.length)h+=`<div class="empty"><b>${$t("Inga matcher i schemat de dagarna.")}</b><div>${$t("Prova fler dagar eller ett större avstånd. Lägre serier läggs ofta in i schemat några veckor i förväg.")}</div></div>`;
       else{h+=`<p class="hint">${$t("Tryck Vill gå på de matcher du vill se, så hamnar de i resan.")}</p>`;let last="";const now=Date.now();
@@ -5293,7 +5306,7 @@ const UST_GROUPS=[["Besök",[["s","Besök (appen öppnad)"],["s_in","…varav in
   ["Sidor",[["v_hem","Hem"],["v_matcher","Matcher"],["v_mine","Min fotboll"],["v_resa","Planera resa"],["v_flode","Community"],["v_forum","Forum"],["v_reportage","Matchberättelser"],["v_arenor","Arenor"],["v_tabell","Tabeller"],["v_klubbar","Klubbar"],["v_landslag","Landslag"],["v_tips","Tips"],["v_quiz","Quiz"],["v_profil","Mitt konto"]]],
   ["Gjort",[["log","Loggade matcher"],["wish","Vill gå"],["m_open","Öppnat en match"],["cal","Kalender"],["fav","Favoritknappen"],["plus","Öppnat Skapa"],["plus_log","Skapa → Logga"],["plus_trip","Skapa → Resa"],["plus_rep","Skapa → Berättelse"],["plus_ask","Skapa → Forum"],["login_click","Tryckt Logga in"]]],
   ["Resor",[["trip_search","Sökt resa"],["trip_new","Sparat resa"],["trip_leg","Lagt till stad"],["trip_share","Delat resa"],["trip_ask","Frågat i forumet om resa"],["trip_log","Loggat resa"],["trip_top","Öppnat topplistan"],["top_city","Valt stad i topplistan"],["home_top","Startsidans Mest fotboll"]]],
-  ["Klick ut",[["out_hotel","Hotell"],["out_travel","Resa (Omio)"],["out_tix","Biljetter"],["out_ext","Andra länkar"]]],
+  ["Klick ut",[["out_hotel","Hotell"],["out_travel","Resa (Omio)"],["out_tour","Arenaturer"],["out_tix","Biljetter"],["out_ext","Andra länkar"]]],
   ["Länder",USE_CC.map(([k,n])=>["c_"+k,n]),1],
   ["Utseende och språk",[["dark","Mörkt läge"],["look_std","Standard"],["look_modern","Modern"],["look_ticket","Biljetten"],["look_atlas","Atlas"],["look_kit","Kit"],...["sv","en","nb","da","fi","is","de","es","fr","it","nl","pl","pt"].map(l=>["lang_"+l,"Språk: "+l])]]];
 async function openStats(){if(!isMod||!dbNs)return;const o0=document.getElementById("ustOv");if(o0)o0.remove();

@@ -2592,5 +2592,7 @@
  "Jag ska se de här matcherna:": "Jeg skal se disse kampe:",
  "Ta bort resan {0}?": "Slet turen {0}?",
  "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "Turen forsvinder fra din konto. Kampene, du har trykket Vil se, ligger stadig i Min fodbold.",
- "Ja, ta bort": "Ja, slet"
+ "Ja, ta bort": "Ja, slet",
+ "Arenatur": "Stadiontur",
+ "Arenaturer i {0}": "Stadionture i {0}"
 }
