@@ -2605,9 +2605,9 @@
  "Tryck Har biljett? på matchen": "Stuknij Masz bilet? przy meczu",
  "Du har biljett till {0} – {1}": "Masz bilet na {0} – {1}",
  "Matchen är {0}. Har du bokat hotell och resa? Planera allt i Groundly.": "Mecz jest {0}. Masz już hotel i podróż? Zaplanuj wszystko w Groundly.",
- "Saker att göra i {0}": "Atrakcje: {0}",
  "Aktiviteter": "Atrakcje",
  "Ta bort matchen": "Usuń mecz",
  "Ta bort matchen från Vill gå?": "Usunąć mecz z Chcę iść?",
- "Matchen är borttagen": "Mecz usunięty"
+ "Matchen är borttagen": "Mecz usunięty",
+ "Att göra i {0}": "Atrakcje: {0}"
 }
