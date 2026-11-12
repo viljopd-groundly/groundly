@@ -4807,7 +4807,7 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
   const pk=tripPicked(tr,tripML(tr,false)||[]);if(!pk.length)return;const line=m=>`${dayLabel(koDay(m.kickoff))} ${timeOf(m.kickoff)} ${tnm(m,"home")} – ${tnm(m,"away")}${m.venue?" ("+$t(m.venue)+")":""}`;
   const title=pk.length===1?$t("{0} – {1}: tips inför matchen?",[tnm(pk[0].m,"home"),tnm(pk[0].m,"away")]):$t("Fotbollsresa till {0} {1} – tips?",[tripName(tr),resaRange(tr.from,tr.to)]);
   const body=(pk.length===1?$t("Jag ska gå på {0}.",[line(pk[0].m)]):$t("Jag ska se de här matcherna:")+"\n"+pk.map(x=>"• "+line(x.m)).join("\n"))+"\n\n"+$t("Har någon tips om biljetter, var man ska sitta eller ställen nära arenan före och efter matchen?");
-  goTop("forum");window.scrollTo({top:0});composing=true;forumMsg="";composeKind="fraga";const hc=C[pk[0].m.home];composeClub=pk.length===1&&hc&&!isNat(hc)?hc.n:"";topSig="";renderForum();
+  composing=true;forumMsg="";composeKind="fraga";setMode("forum");window.scrollTo({top:0});const hc=C[pk[0].m.home];composeClub=pk.length===1&&hc&&!isNat(hc)?hc.n:"";topSig="";renderForum();
   setTimeout(()=>{const ti=document.getElementById("fTitle"),bo=document.getElementById("fBody");if(ti)ti.value=title.slice(0,120);if(bo){bo.value=body.slice(0,2000);bo.focus({preventScroll:true});bo.setSelectionRange(bo.value.length,bo.value.length);}},0);track("trip_ask");});
 // ---------- Att boka: checklista per resa (biljetter per match, hotell, resa, arenatur) ----------
 function tripCheck(t,pk){const nT=pk.filter(x=>hasTix(x.m._id)).length;const bk=t.bk||{};const legs=tripLegs(t);const c0=cityLL(legs[0].city);
