@@ -2615,5 +2615,13 @@
  "Öppnar kalendern i telefonen": "Öffnet den Kalender auf dem Handy",
  "Apple Kalender – alla på en gång": "Apple Kalender – alle auf einmal",
  "Apple, Outlook och andra – alla på en gång": "Apple, Outlook und andere – alle auf einmal",
- "Google Kalender, en match i taget:": "Google Kalender, ein Spiel nach dem anderen:"
+ "Google Kalender, en match i taget:": "Google Kalender, ein Spiel nach dem anderen:",
+ "{0} av {1} klart": "{0} von {1} erledigt",
+ "Att boka: {0} av {1} klart": "Noch buchen: {0} von {1} erledigt",
+ "Avslutad": "Beendet",
+ "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Kauf beim Verein, nicht auf Zweitmarktseiten. Tippe beim Spiel auf Ticket schon?, sobald du es hast.",
+ "Resan är slut – logga matcherna": "Die Reise ist vorbei – trag die Spiele ein",
+ "Ta bort resan": "Reise löschen",
+ "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Tippe auf Alle Spiele in der Gegend anzeigen und dann bei den gewünschten Spielen auf Will hin.",
+ "Visa alla matcher i området": "Alle Spiele in der Gegend anzeigen"
 }

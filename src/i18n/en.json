@@ -2703,5 +2703,13 @@
  "Öppnar kalendern i telefonen": "Opens the calendar on your phone",
  "Apple Kalender – alla på en gång": "Apple Calendar – all at once",
  "Apple, Outlook och andra – alla på en gång": "Apple, Outlook and others – all at once",
- "Google Kalender, en match i taget:": "Google Calendar, one match at a time:"
+ "Google Kalender, en match i taget:": "Google Calendar, one match at a time:",
+ "{0} av {1} klart": "{0} of {1} done",
+ "Att boka: {0} av {1} klart": "To book: {0} of {1} done",
+ "Avslutad": "Finished",
+ "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Buy from the club, not resale sites. Tap Got a ticket? on the match once you have it.",
+ "Resan är slut – logga matcherna": "The trip is over – log the matches",
+ "Ta bort resan": "Delete trip",
+ "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Tap Show all matches in the area and then Want to go on the matches you want to see.",
+ "Visa alla matcher i området": "Show all matches in the area"
 }

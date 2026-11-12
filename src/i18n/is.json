@@ -2614,5 +2614,13 @@
  "Öppnar kalendern i telefonen": "Opnar dagatalið í símanum",
  "Apple Kalender – alla på en gång": "Apple dagatal – allt í einu",
  "Apple, Outlook och andra – alla på en gång": "Apple, Outlook og önnur – allt í einu",
- "Google Kalender, en match i taget:": "Google dagatal, einn leikur í einu:"
+ "Google Kalender, en match i taget:": "Google dagatal, einn leikur í einu:",
+ "{0} av {1} klart": "{0} af {1} búið",
+ "Att boka: {0} av {1} klart": "Á eftir að bóka: {0} af {1} búið",
+ "Avslutad": "Lokið",
+ "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Keyptu hjá félaginu, ekki á endursölusíðum. Ýttu á Ertu með miða? við leikinn þegar þú ert kominn með hann.",
+ "Resan är slut – logga matcherna": "Ferðinni er lokið – skráðu leikina",
+ "Ta bort resan": "Eyða ferðinni",
+ "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Ýttu á Sýna alla leiki á svæðinu og svo Vil fara á leikina sem þú vilt sjá.",
+ "Visa alla matcher i området": "Sýna alla leiki á svæðinu"
 }

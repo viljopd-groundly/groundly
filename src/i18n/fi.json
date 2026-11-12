@@ -2614,5 +2614,13 @@
  "Öppnar kalendern i telefonen": "Avaa puhelimen kalenterin",
  "Apple Kalender – alla på en gång": "Apple-kalenteri – kaikki kerralla",
  "Apple, Outlook och andra – alla på en gång": "Apple, Outlook ja muut – kaikki kerralla",
- "Google Kalender, en match i taget:": "Google-kalenteri, yksi ottelu kerrallaan:"
+ "Google Kalender, en match i taget:": "Google-kalenteri, yksi ottelu kerrallaan:",
+ "{0} av {1} klart": "{0}/{1} valmis",
+ "Att boka: {0} av {1} klart": "Varattavaa: {0}/{1} valmis",
+ "Avslutad": "Päättynyt",
+ "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Osta seuralta, älä jälleenmyyntisivuilta. Napauta ottelussa Onko lippu?, kun sinulla on se.",
+ "Resan är slut – logga matcherna": "Matka on ohi – kirjaa ottelut",
+ "Ta bort resan": "Poista matka",
+ "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Napauta Näytä kaikki alueen ottelut ja sitten Haluan mennä niihin otteluihin, jotka haluat nähdä.",
+ "Visa alla matcher i området": "Näytä kaikki alueen ottelut"
 }

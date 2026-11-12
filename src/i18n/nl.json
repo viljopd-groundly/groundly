@@ -2614,5 +2614,13 @@
  "Öppnar kalendern i telefonen": "Opent de agenda op je telefoon",
  "Apple Kalender – alla på en gång": "Apple Agenda – allemaal tegelijk",
  "Apple, Outlook och andra – alla på en gång": "Apple, Outlook en andere – allemaal tegelijk",
- "Google Kalender, en match i taget:": "Google Agenda, één wedstrijd per keer:"
+ "Google Kalender, en match i taget:": "Google Agenda, één wedstrijd per keer:",
+ "{0} av {1} klart": "{0} van {1} klaar",
+ "Att boka: {0} av {1} klart": "Nog boeken: {0} van {1} klaar",
+ "Avslutad": "Afgelopen",
+ "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Koop via de club, niet via doorverkoopsites. Tik op Heb je een kaartje? bij de wedstrijd zodra je het hebt.",
+ "Resan är slut – logga matcherna": "De reis is voorbij – log de wedstrijden",
+ "Ta bort resan": "Reis verwijderen",
+ "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Tik op Alle wedstrijden in de buurt en daarna op Wil gaan bij de wedstrijden die je wilt zien.",
+ "Visa alla matcher i området": "Alle wedstrijden in de buurt"
 }
