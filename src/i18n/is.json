@@ -2593,5 +2593,16 @@
  "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "Ferðin hverfur af aðganginum þínum. Leikir sem þú merktir Vil fara verða áfram í Minn fótbolti.",
  "Ja, ta bort": "Já, eyða",
  "Arenatur": "Vallarferð",
- "Arenaturer i {0}": "Vallarferðir í {0}"
+ "Arenaturer i {0}": "Vallarferðir í {0}",
+ "Att boka": "Á eftir að bóka",
+ "Biljett": "Miði",
+ "Biljett klar": "Miði kominn",
+ "Biljetter: {0} av {1}": "Miðar: {0} af {1}",
+ "Boka": "Bóka",
+ "Har biljett {0}": "Með miða {0}",
+ "Har biljett?": "Ertu með miða?",
+ "Snyggt! Glöm inte hotell och resa.": "Flott! Ekki gleyma hóteli og ferð.",
+ "Tryck Har biljett? på matchen": "Ýttu á Ertu með miða? við leikinn",
+ "Du har biljett till {0} – {1}": "Þú átt miða á {0} – {1}",
+ "Matchen är {0}. Har du bokat hotell och resa? Planera allt i Groundly.": "Leikurinn er {0}. Ertu búin(n) að bóka hótel og ferð? Skipuleggðu allt í Groundly."
 }

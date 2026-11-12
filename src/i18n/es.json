@@ -2594,5 +2594,16 @@
  "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "El viaje desaparecerá de tu cuenta. Los partidos marcados como Quiero ir siguen en Mi fútbol.",
  "Ja, ta bort": "Sí, eliminar",
  "Arenatur": "Tour del estadio",
- "Arenaturer i {0}": "Tours de estadios en {0}"
+ "Arenaturer i {0}": "Tours de estadios en {0}",
+ "Att boka": "Por reservar",
+ "Biljett": "Entrada",
+ "Biljett klar": "Entrada lista",
+ "Biljetter: {0} av {1}": "Entradas: {0} de {1}",
+ "Boka": "Reservar",
+ "Har biljett {0}": "Tengo entrada {0}",
+ "Har biljett?": "¿Tienes entrada?",
+ "Snyggt! Glöm inte hotell och resa.": "¡Genial! No olvides hotel y viaje.",
+ "Tryck Har biljett? på matchen": "Toca ¿Tienes entrada? en el partido",
+ "Du har biljett till {0} – {1}": "Tienes entrada para {0} – {1}",
+ "Matchen är {0}. Har du bokat hotell och resa? Planera allt i Groundly.": "El partido es el {0}. ¿Has reservado hotel y viaje? Planéalo todo en Groundly."
 }

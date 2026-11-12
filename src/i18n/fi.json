@@ -2593,5 +2593,16 @@
  "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "Matka poistuu tililtäsi. Ottelut, joihin painoit Haluan mennä, jäävät Oma jalkapallo -näkymään.",
  "Ja, ta bort": "Kyllä, poista",
  "Arenatur": "Stadionkierros",
- "Arenaturer i {0}": "Stadionkierrokset: {0}"
+ "Arenaturer i {0}": "Stadionkierrokset: {0}",
+ "Att boka": "Varattavaa",
+ "Biljett": "Lippu",
+ "Biljett klar": "Lippu hankittu",
+ "Biljetter: {0} av {1}": "Liput: {0}/{1}",
+ "Boka": "Varaa",
+ "Har biljett {0}": "Lippu hankittu {0}",
+ "Har biljett?": "Onko lippu?",
+ "Snyggt! Glöm inte hotell och resa.": "Hienoa! Muista hotelli ja matka.",
+ "Tryck Har biljett? på matchen": "Napauta ottelussa Onko lippu?",
+ "Du har biljett till {0} – {1}": "Sinulla on lippu otteluun {0} – {1}",
+ "Matchen är {0}. Har du bokat hotell och resa? Planera allt i Groundly.": "Ottelu on {0}. Oletko varannut hotellin ja matkan? Suunnittele kaikki Groundlyssa."
 }

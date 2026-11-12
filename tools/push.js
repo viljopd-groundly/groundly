@@ -3,6 +3,7 @@
 // Läser users/{uid}/data/push (token, val, tidszon, språk, vad som redan skickats) och users/{uid}/data/logg (Vill gå och loggade matcher).
 //   wish7: matchen i Vill gå är om en vecka          wish1: matchen är i morgon (skickas från kl 17)
 //   nt:    matchen i Vill gå har fått ny avsparkstid i schemat (eller fått en tid, om bara datumet var känt)
+//   bk:    du har biljett (Har biljett) och matchen är om 5–14 dagar, men hotell är inte bockat i resan: påminnelse om hotell och resa
 //   log:   morgonen efter en match i Vill gå som inte loggats (från kl 9)
 // Spärrar: bara mellan 08 och 21 lokal tid, högst tre notiser per användare och sju dagar, varje notis bara en gång.
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
@@ -67,6 +68,11 @@ const enc = x => x === null || x === undefined ? { nullValue: null } : typeof x 
       if (moved && pr.wish !== false && !sent["nt:" + w.id + ":" + nk])
         out.unshift(old ? { key: "nt:" + w.id + ":" + nk, title: tr(lang, "Ny tid: {0} – {1}", [h, a]), body: tr(lang, "Matchen är flyttad till {0}. Tidigare {1}.", [fmt(ko), fmt(old)]), url: "./?go=mine" }
           : { key: "nt:" + w.id + ":" + nk, title: tr(lang, "Avsparkstiden är klar: {0} – {1}", [h, a]), body: tr(lang, "Matchen spelas {0}.", [[fmt(ko), where].filter(Boolean).join(", ")]), url: "./?go=mine" });
+      if (pr.wish !== false && w.tix && ko - now > 5 * 864e5 && ko - now <= 14 * 864e5 && !sent["bk:" + w.id]) {
+        const kd = new Date(ko).toISOString().slice(0, 10);
+        const hotelDone = (Array.isArray(L.trips) ? L.trips : []).some(t => t && t.bk && t.bk.h && t.from <= kd && t.to >= kd);
+        if (!hotelDone) out.push({ key: "bk:" + w.id, title: tr(lang, "Du har biljett till {0} – {1}", [h, a]), body: tr(lang, "Matchen är {0}. Har du bokat hotell och resa? Planera allt i Groundly.", [fmt(ko)]), url: "./?go=resa" });
+      }
       if (pr.wish !== false && ko - now > 6 * 864e5 && ko - now <= 7 * 864e5 && !sent["w7:" + w.id])
         out.push({ key: "w7:" + w.id, title: tr(lang, "{0} – {1} om en vecka", [h, a]), body: tr(lang, "Matchen ligger i Vill gå. {0}.", [[fmt(ko), where].filter(Boolean).join(", ")]), url: "./?go=mine" });
       if (pr.wish !== false && ko - now > 6 * 36e5 && ko - now <= 36 * 36e5 && hour >= 17 && !sent["w1:" + w.id])

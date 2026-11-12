@@ -2682,5 +2682,16 @@
  "Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.": "The trip will be removed from your account. Matches you marked Want to go stay in My football.",
  "Ja, ta bort": "Yes, delete",
  "Arenatur": "Stadium tour",
- "Arenaturer i {0}": "Stadium tours in {0}"
+ "Arenaturer i {0}": "Stadium tours in {0}",
+ "Att boka": "To book",
+ "Biljett": "Ticket",
+ "Biljett klar": "Ticket sorted",
+ "Biljetter: {0} av {1}": "Tickets: {0} of {1}",
+ "Boka": "Book",
+ "Har biljett {0}": "Got ticket {0}",
+ "Har biljett?": "Got a ticket?",
+ "Snyggt! Glöm inte hotell och resa.": "Nice! Don't forget hotel and travel.",
+ "Tryck Har biljett? på matchen": "Tap Got a ticket? on the match",
+ "Du har biljett till {0} – {1}": "You have a ticket for {0} – {1}",
+ "Matchen är {0}. Har du bokat hotell och resa? Planera allt i Groundly.": "The match is {0}. Have you booked hotel and travel? Plan it all in Groundly."
 }
