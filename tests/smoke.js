@@ -27,7 +27,7 @@ async function page(b, { lang = "sv", look = "", user = true, fs: data = null, h
   const srv = await start(); const b = await chromium.launch();
   try {
     // 1. Alla vyer öppnas utan fel, på svenska och engelska, i alla utseenden
-    for (const [lang, look] of [["sv", ""], ["en", "modern"], ["sv", "ticket"], ["sv", "kit"], ["sv", "atlas"]]) {
+    for (const [lang, look] of [["sv", ""], ["en", ""], ["sv", "ticket"], ["sv", "kit"], ["en", "modern"]]) {
       const { p, ctx, errs } = await page(b, { lang, look });
       for (const m of ["hem", "matcher", "klubbar", "landslag", "arenor", "tabell", "tips", "quiz", "resa", "flode", "reportage", "forum", "mine", "profil"]) { await p.evaluate(m => setMode(m), m); await p.waitForTimeout(150); }
       const raw = await p.evaluate(() => document.body.innerText.includes("${$t"));

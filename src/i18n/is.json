@@ -2559,7 +2559,6 @@
  "Vart ska jag åka?": "Hvert á ég að fara?",
  "Tillbaka till topplistan": "Aftur á listann",
  "Mest fotboll i helgen:": "Mestur fótbolti um helgina:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Finndu leiki um allan heim, skipuleggðu næstu fótboltaferð, safnaðu öllum sem þú hefur séð og deildu upplifuninni með öðrum sem elska fótbolta.",
  "{n} matcher loggade": "{n} leikir skráðir",
  "1 match loggad": "1 leikur skráður",
  "Dela resan": "Deila ferðinni",
@@ -2627,5 +2626,6 @@
  "Torsdag kväll: matcher nära din hemort i helgen.": "Fimmtudagskvöld: leikir nálægt heimabænum þínum um helgina.",
  "Helgens matcher nära {0}": "Leikir helgarinnar nálægt {0}",
  "1 match i helgen: {0}.": "1 leikur um helgina: {0}.",
- "{0} matcher i helgen, bland annat {1}.": "{0} leikir um helgina, meðal annars {1}."
+ "{0} matcher i helgen, bland annat {1}.": "{0} leikir um helgina, meðal annars {1}.",
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla allt du har sett och dela upplevelserna med andra som älskar fotboll.": "Finndu leiki um allan heim, skipuleggðu næstu fótboltaferð, safnaðu öllu sem þú hefur séð og deildu upplifuninni með öðrum sem elska fótbolta."
 }

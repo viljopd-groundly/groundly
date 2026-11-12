@@ -2559,7 +2559,6 @@
  "Vart ska jag åka?": "Minne lähtisin?",
  "Tillbaka till topplistan": "Takaisin listaan",
  "Mest fotboll i helgen:": "Eniten jalkapalloa viikonloppuna:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Löydä otteluita kaikkialta maailmasta, suunnittele seuraava jalkapallomatkasi, kerää kaikki näkemäsi ja jaa kokemukset muiden jalkapalloa rakastavien kanssa.",
  "{n} matcher loggade": "{n} ottelua kirjattu",
  "1 match loggad": "1 ottelu kirjattu",
  "Dela resan": "Jaa matka",
@@ -2627,5 +2626,6 @@
  "Torsdag kväll: matcher nära din hemort i helgen.": "Torstai-iltana: ottelut kotipaikkakuntasi lähellä viikonloppuna.",
  "Helgens matcher nära {0}": "Viikonlopun ottelut lähellä: {0}",
  "1 match i helgen: {0}.": "1 ottelu viikonloppuna: {0}.",
- "{0} matcher i helgen, bland annat {1}.": "{0} ottelua viikonloppuna, muun muassa {1}."
+ "{0} matcher i helgen, bland annat {1}.": "{0} ottelua viikonloppuna, muun muassa {1}.",
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla allt du har sett och dela upplevelserna med andra som älskar fotboll.": "Löydä otteluita kaikkialta maailmasta, suunnittele seuraava jalkapallomatkasi, kerää kaikki näkemäsi ja jaa kokemukset muiden jalkapalloa rakastavien kanssa."
 }

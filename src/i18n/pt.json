@@ -2559,7 +2559,6 @@
  "Vart ska jag åka?": "Para onde eu vou?",
  "Tillbaka till topplistan": "Voltar à lista",
  "Mest fotboll i helgen:": "Mais futebol no fim de semana:",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla alla du har sett och dela upplevelserna med andra som älskar fotboll.": "Encontre jogos no mundo todo, planeje sua próxima viagem de futebol, guarde todos os que você viu e compartilhe a experiência com outros que amam futebol.",
  "{n} matcher loggade": "{n} jogos registrados",
  "1 match loggad": "1 jogo registrado",
  "Dela resan": "Compartilhar a viagem",
@@ -2627,5 +2626,6 @@
  "Torsdag kväll: matcher nära din hemort i helgen.": "Quinta à noite: jogos perto da sua cidade no fim de semana.",
  "Helgens matcher nära {0}": "Jogos do fim de semana perto de {0}",
  "1 match i helgen: {0}.": "1 jogo no fim de semana: {0}.",
- "{0} matcher i helgen, bland annat {1}.": "{0} jogos no fim de semana, incluindo {1}."
+ "{0} matcher i helgen, bland annat {1}.": "{0} jogos no fim de semana, incluindo {1}.",
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla allt du har sett och dela upplevelserna med andra som älskar fotboll.": "Encontre jogos no mundo todo, planeje sua próxima viagem de futebol, guarde tudo o que você viu e compartilhe a experiência com outros que amam futebol."
 }
