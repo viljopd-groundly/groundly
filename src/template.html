@@ -5718,10 +5718,13 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    <p class="hint">${$t("Konto, inloggning och Radera mitt konto finns under knappen med din bokstav uppe till höger.")}</p>
   </div></div>`;}
 document.addEventListener("toggle",e=>{const d=e.target;if(!d||!d.classList||!d.classList.contains("setgrp"))return;if(d.open)SET_X.add(d.dataset.sk);else SET_X.delete(d.dataset.sk);if(d.open&&d.dataset.sk==="notif")setTimeout(fillPushBox,0);},true);
-function openSettings(){setOpen=true;setTimeout(fillPushBox,0);let ov=document.getElementById("setOv");const y=ov?ov.querySelector(".setbox").scrollTop:0;if(ov)ov.remove();document.body.insertAdjacentHTML("beforeend",settingsHtml());ov=document.getElementById("setOv");ov.querySelector(".setbox").scrollTop=y;}
+// redan öppen: byt bara innehållet i rutan (samma element, samma scroll), så att inget hoppar
+function openSettings(){setOpen=true;setTimeout(fillPushBox,0);const ov=document.getElementById("setOv");
+  if(ov){const box=ov.querySelector(".setbox");const y=box.scrollTop;const t=document.createElement("div");t.innerHTML=settingsHtml();const nb=t.querySelector(".setbox");box.innerHTML=nb.innerHTML;box.scrollTop=y;requestAnimationFrame(()=>{if(Math.abs(box.scrollTop-y)>1)box.scrollTop=y;});return;}
+  document.body.insertAdjacentHTML("beforeend",settingsHtml());}
 function closeSettings(){setOpen=false;document.getElementById("setOv")?.remove();}
 document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-look-pick],[data-looktheme-pick],[data-acc-pick]");if(!b)return;
-  if(b.dataset.fsPick){fsize=b.dataset.fsPick;store.set("fk-fs",fsize);applyTheme();if(setOpen){const ov=document.querySelector("#setOv .sheet,#setOv > *");const y=ov?ov.scrollTop:0;openSettings();const o2=document.querySelector("#setOv .sheet,#setOv > *");if(o2)o2.scrollTop=y;}return;}
+  if(b.dataset.fsPick){fsize=b.dataset.fsPick;store.set("fk-fs",fsize);applyTheme();if(setOpen)openSettings();return;}
   if(b.id==="themeBtn"){openSettings();return;}
   if(b.id==="setClose"||(b.id==="setOv"&&e.target===b)){closeSettings();return;}
   if(b.id==="setOv")return;
