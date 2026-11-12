@@ -2609,5 +2609,10 @@
  "Ta bort matchen": "Fjarlægja leik",
  "Ta bort matchen från Vill gå?": "Fjarlægja leikinn af Vil fara?",
  "Matchen är borttagen": "Leikur fjarlægður",
- "Att göra i {0}": "Afþreying í {0}"
+ "Att göra i {0}": "Afþreying í {0}",
+ "Apple Kalender": "Apple dagatal",
+ "Öppnar kalendern i telefonen": "Opnar dagatalið í símanum",
+ "Apple Kalender – alla på en gång": "Apple dagatal – allt í einu",
+ "Apple, Outlook och andra – alla på en gång": "Apple, Outlook og önnur – allt í einu",
+ "Google Kalender, en match i taget:": "Google dagatal, einn leikur í einu:"
 }

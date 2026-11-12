@@ -2609,5 +2609,10 @@
  "Ta bort matchen": "Poista ottelu",
  "Ta bort matchen från Vill gå?": "Poistetaanko ottelu Haluan mennä -listalta?",
  "Matchen är borttagen": "Ottelu poistettu",
- "Att göra i {0}": "Tekemistä: {0}"
+ "Att göra i {0}": "Tekemistä: {0}",
+ "Apple Kalender": "Apple-kalenteri",
+ "Öppnar kalendern i telefonen": "Avaa puhelimen kalenterin",
+ "Apple Kalender – alla på en gång": "Apple-kalenteri – kaikki kerralla",
+ "Apple, Outlook och andra – alla på en gång": "Apple, Outlook ja muut – kaikki kerralla",
+ "Google Kalender, en match i taget:": "Google-kalenteri, yksi ottelu kerrallaan:"
 }

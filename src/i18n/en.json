@@ -2698,5 +2698,10 @@
  "Ta bort matchen": "Remove match",
  "Ta bort matchen från Vill gå?": "Remove the match from Want to go?",
  "Matchen är borttagen": "Match removed",
- "Att göra i {0}": "Things to do in {0}"
+ "Att göra i {0}": "Things to do in {0}",
+ "Apple Kalender": "Apple Calendar",
+ "Öppnar kalendern i telefonen": "Opens the calendar on your phone",
+ "Apple Kalender – alla på en gång": "Apple Calendar – all at once",
+ "Apple, Outlook och andra – alla på en gång": "Apple, Outlook and others – all at once",
+ "Google Kalender, en match i taget:": "Google Calendar, one match at a time:"
 }

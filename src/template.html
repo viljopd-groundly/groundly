@@ -871,7 +871,7 @@ html:root:not([data-look]) .tip.hero{isolation:isolate}
 /* kalenderval */
 .calov{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;justify-content:center}
 .calpanel{background:var(--surface);color:var(--fg);width:100%;max-width:440px;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;box-shadow:0 -6px 24px rgba(0,0,0,.2)}
-@media (min-width:761px){.calov{align-items:center}.calpanel{border-radius:16px}}
+@media (min-width:761px){.calov{align-items:center}.calpanel{border-radius:16px}.calsub{margin:8px 0 0}.calopt.small{padding:8px 12px;font-size:14px}.calopt.small small{display:block;font-weight:400;color:var(--muted)}.calpanel{max-height:85vh;overflow:auto}}
 .calpanel h3{margin:0;font:700 calc(18px*var(--fs)) var(--f-display)}
 .calpanel .meta{margin:0 0 4px}
 .calopt{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;color:var(--fg);text-decoration:none;font-weight:600;background:var(--bg)}
@@ -4861,7 +4861,12 @@ function calMany(ms){const ds=ms.map(m=>calData({...m,city:m.city&&$t(m.city)}))
   const day=x=>x.toISOString().slice(0,10).replace(/-/g,"");
   const ev=ds.map((d,i)=>["BEGIN:VEVENT","UID:"+gcalStamp(d.st)+"-"+i+"@groundly","DTSTAMP:"+gcalStamp(new Date()),d.all?"DTSTART;VALUE=DATE:"+day(d.st):"DTSTART:"+gcalStamp(d.st),d.all?"DTEND;VALUE=DATE:"+day(d.en):"DTEND:"+gcalStamp(d.en),"SUMMARY:"+icsEsc(d.t),"LOCATION:"+icsEsc(d.loc),"DESCRIPTION:"+icsEsc(d.det),"END:VEVENT"].join("\r\n"));
   const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Groundly//SV",...ev,"END:VCALENDAR"].join("\r\n");
-  const a=document.createElement("a");a.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(ics);a.download="groundly-resa.ics";document.body.appendChild(a);a.click();a.remove();toast($t("Kalenderfilen med {0} matcher laddas ner.",[ds.length]));}
+  closeCal();const gl=ds.map(d=>{const u=calUrls(d);return`<a class="calopt small" href="${esc(u.g)}" target="_blank" rel="noopener"><b class="gc">G</b><span>${esc(d.t)}<small>${esc(d.st.toLocaleDateString(LOC,{weekday:"short",day:"numeric",month:"short"}))}</small></span></a>`;}).join("");
+  document.body.insertAdjacentHTML("beforeend",`<div id="calOv" class="calov" role="dialog" aria-modal="true" aria-label="${$t("Lägg till i kalender")}"><div class="calpanel">
+    <h3>${$t("Lägg till i kalender")}</h3><p class="meta">${$tn(ds.length,"1 match","{n} matcher")}</p>
+    <a class="calopt" href="${esc(icsHref(ics))}"${IOS?"":` download="groundly-resa.ics"`}><b class="ac">${ic("calendar")}</b><span>${IOS?$t("Apple Kalender – alla på en gång"):$t("Apple, Outlook och andra – alla på en gång")}<small>${IOS?$t("Öppnar kalendern i telefonen"):$t("Laddar ner en kalenderfil (.ics)")}</small></span></a>
+    <p class="meta calsub">${$t("Google Kalender, en match i taget:")}</p>${gl}
+    <button class="btn" type="button" data-calclose="1">${$t("Avbryt")}</button></div></div>`);}
 document.addEventListener("submit",e=>{if(e.target.id!=="resaForm")return;e.preventDefault();const g=id=>document.getElementById(id).value.trim();
   let f=g("rFrom")||today(),t=g("rTo")||f;if(f<today())f=today();if(t<f)t=f;{const d=document.getElementById("rDist");if(d&&RESA.rc){const v=parseFloat(String(d.value).replace(",","."));if(v>0)RESA.r=Math.max(1,Math.min(1000,Math.round(v*10/UNIT_PER_MIL[UNIT])));}}
   RESA={...RESA,city:g("rCity").slice(0,60),from:f,to:t};RESA_DRAFT=null;resaOpen=null;RESA_FROMTOP=null;renderResa();
@@ -5258,8 +5263,11 @@ function calUrls(d){const E=encodeURIComponent,day=x=>x.toISOString().slice(0,10
     "SUMMARY:"+icsEsc(d.t),"LOCATION:"+icsEsc(d.loc),"DESCRIPTION:"+icsEsc(d.det),"END:VEVENT","END:VCALENDAR"].join("\r\n");
   return{g:`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${E(d.t)}&dates=${g}&location=${E(d.loc)}&details=${E(d.det)}`,
     o:`https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=${E(d.t)}&startdt=${E(os)}&enddt=${E(oe)}&location=${E(d.loc)}&body=${E(d.det)}${d.all?"&allday=true":""}`,
-    ics:"data:text/calendar;charset=utf-8,"+E(ics)};}
+    ics:"data:text/calendar;charset=utf-8,"+E(ics),icsText:ics};}
+let ICS_URL=null;function icsHref(text){try{if(ICS_URL)URL.revokeObjectURL(ICS_URL);ICS_URL=URL.createObjectURL(new Blob([text],{type:"text/calendar;charset=utf-8"}));return ICS_URL;}catch(e){return"data:text/calendar;charset=utf-8,"+encodeURIComponent(text);}}
 const icsEsc=x=>String(x||"").replace(/\\/g,"\\\\").replace(/([,;])/g,"\\$1").replace(/\n/g,"\\n");
+// iPhone/iPad: öppna kalenderfilen direkt (då visar iOS "Lägg till i Kalender") i stället för att ladda ner den till Filer
+const IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
 function closeCal(){const o=document.getElementById("calOv");if(o)o.remove();}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-cal],#calOv,[data-calclose],#calOv a");if(!t)return;
   if(t.dataset.cal){e.preventDefault();e.stopPropagation();const d=CALREG[t.dataset.cal];if(!d)return;closeCal();const u=calUrls(d);
@@ -5268,7 +5276,7 @@ document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest
       <h3>${$t("Lägg till i kalender")}</h3><p class="meta">${esc(d.t)}</p>
       <a class="calopt" href="${esc(u.g)}" target="_blank" rel="noopener"><b class="gc">G</b>${$t("Google Kalender")}</a>
       <a class="calopt" href="${esc(u.o)}" target="_blank" rel="noopener"><b class="oc">O</b>${$t("Outlook")}</a>
-      <a class="calopt" href="${esc(u.ics)}" download="${esc(fn)}.ics"><b class="ac">${ic("calendar")}</b><span>${$t("Apple och andra kalendrar")}<small>${$t("Laddar ner en kalenderfil (.ics)")}</small></span></a>
+      <a class="calopt" href="${esc(icsHref(u.icsText))}"${IOS?"":` download="${esc(fn)}.ics"`}><b class="ac">${ic("calendar")}</b><span>${IOS?$t("Apple Kalender"):$t("Apple och andra kalendrar")}<small>${IOS?$t("Öppnar kalendern i telefonen"):$t("Laddar ner en kalenderfil (.ics)")}</small></span></a>
       <button class="btn" type="button" data-calclose="1">${$t("Avbryt")}</button></div></div>`);
     document.querySelector("#calOv .calopt")?.focus({preventScroll:true});return;}
   if(t.dataset.calclose||(t.id==="calOv"&&e.target===t)){closeCal();return;}
