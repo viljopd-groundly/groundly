@@ -342,7 +342,7 @@ a.link{color:var(--muted)}
 .homeform{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
 .homeform .fld{flex:1;min-width:180px}
 .hop a{color:var(--accent)}
-.planmode > :not(#matchViewChips):not(#matchList){display:none!important}
+.planmode > :not(#matchList):not(.mtop):not(#mActive){display:none!important}.planmode .mtop .search{visibility:hidden}
 .sims{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
 .simbtn{all:unset;box-sizing:border-box;cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:7px 10px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
 .simbtn b{font-size:calc(14px*var(--fs))}.simbtn small{font-size:calc(12px*var(--fs));color:var(--muted)}
@@ -532,6 +532,9 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .setgrp{border-top:1px solid var(--line);padding:2px 0}.setgrp>summary{list-style:none;display:flex;align-items:center;gap:10px;padding:12px 2px;cursor:pointer;font-weight:700;font-size:16px;line-height:1.25}.setgrp>summary::-webkit-details-marker{display:none}.setgrp>summary{-webkit-tap-highlight-color:transparent;outline:none}.setbox{overflow-anchor:none}
 /* rutan ska sitta fast upptill, annars flyttar den sig när en grupp fälls ut (den centreras) */#setOv{justify-content:flex-start!important;align-items:center}#setOv .setbox{margin-top:calc(env(safe-area-inset-top,0px) + 16px)!important;max-height:calc(100dvh - env(safe-area-inset-top,0px) - 32px)!important}
 .sgchev{flex:none;position:relative;width:30px;height:30px;margin-left:8px;border-radius:50%;background:var(--soft);transition:transform .2s,background-color .2s}.sgchev::after{content:"";position:absolute;inset:0;background:var(--fg);-webkit-mask:var(--chevd) center/16px no-repeat;mask:var(--chevd) center/16px no-repeat}.setgrp[open] .sgchev{transform:rotate(180deg);background:var(--accent)}.setgrp[open] .sgchev::after{background:var(--chalk,#fff)}.sgt{display:inline-flex;align-items:center;gap:8px;flex:0 1 auto;min-width:0;margin-right:auto}.sgt .ic{width:18px;height:18px}.sgs{font-weight:500;font-size:14px;color:var(--muted);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:45%}.sgs+*{margin-left:0}.setgrp .sgb{padding:0 2px 18px}.setgrp .sgb>.lbl{display:block;margin:18px 0 8px!important;line-height:1.2}.setgrp .sgb>.lbl:first-child{margin-top:2px!important}.setgrp .sgb>.chips{margin:0!important;gap:8px}.setgrp .sgb .logogrid{margin-top:4px}.setgrp .sgb .hint{margin-top:10px}.setlinks{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.mtop{display:flex;gap:8px;align-items:stretch}.mtop .search{flex:1;min-width:0;margin:0}.mfbtn{all:unset;box-sizing:border-box;flex:none;display:flex;align-items:center;gap:6px;padding:0 14px;border-radius:14px;background:var(--soft);color:var(--fg);font-weight:700;font-size:15px;cursor:pointer}.mfbtn b{background:var(--accent);color:var(--chalk,#fff);border-radius:999px;font-size:12px;min-width:20px;height:20px;display:grid;place-items:center;padding:0 5px;box-sizing:border-box}
+.mactive{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 4px}.mchip{all:unset;cursor:pointer;padding:5px 11px;border-radius:999px;background:var(--accent-soft);color:var(--fg);font-size:13px;font-weight:700}.mchip span[aria-hidden]{margin-left:2px;opacity:.7}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.mfbtn b[hidden],#matchTb[hidden],.mactive[hidden]{display:none!important}.mfsheet{position:fixed;inset:0;z-index:10050;display:flex;flex-direction:column;justify-content:flex-end}.mfsheet[hidden]{display:none}.msdim{position:absolute;inset:0;background:rgba(0,0,0,.5)}.mspanel{position:relative;background:var(--surface);color:var(--fg);border-radius:20px 20px 0 0;padding:10px 18px calc(16px + env(safe-area-inset-bottom,0px));max-height:85dvh;overflow:auto;box-shadow:0 -10px 30px rgba(0,0,0,.35);animation:msup .2s ease-out}@keyframes msup{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}.msgrab{width:40px;height:5px;border-radius:9px;background:var(--line);margin:0 auto 10px}.mshd{display:flex;align-items:center;justify-content:space-between}.mshd h3{margin:0;font-size:20px}.mspanel>.lbl{display:block;margin:16px 0 8px}.mspanel .chips{margin:0}.msgo{width:100%;margin-top:18px;justify-content:center}html.msopen{overflow:hidden}
 .tripdelask{display:grid;gap:4px;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--soft);box-shadow:inset 0 0 0 2px #c0392b}.tripdelask .actions{margin-top:6px}.btn.danger{background:#c0392b!important;border-color:#c0392b!important;color:#fff!important}
 .recap{margin:6px 0 4px;padding:12px 14px;border-radius:12px;background:var(--soft)}.recapnums{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:4px}.recapnums span{display:grid;line-height:1.15;font-size:13px;color:var(--muted)}.tripok{color:var(--accent);font-weight:800}.recapnums b{font-size:22px;white-space:nowrap;color:var(--fg);font-family:var(--f-display,inherit)}
 .remind .rmrow{display:flex;flex-direction:column;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}.remind .rmrow:first-of-type{border-top:0;padding-top:2px}.remind .lbl .ic{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
@@ -1244,33 +1247,36 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 
   <!-- Matcher -->
   <section id="v-matcher" hidden style="display:contents">
-    <div class="chips" role="group" aria-label="Visa" id="matchViewChips"></div>
-    <label class="search" for="city">
+    <div class="mtop"><label class="search" for="city">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-      <input id="city" type="search" placeholder="Sök stad, t.ex. Göteborg eller London" autocomplete="off" enterkeyhint="search">
+      <input id="city" type="search" placeholder="Sök stad" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="cityClear" hidden>Rensa</button>
-    </label>
+    </label><button class="mfbtn" id="mFiltBtn" type="button" aria-haspopup="dialog" aria-controls="mSheet"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filter</span><b id="mFiltN" hidden></b></button></div>
     <datalist id="cities"></datalist>
     <div class="sugg" id="citySug" hidden></div>
     <div class="lbl" id="radiusLbl" hidden>Avstånd</div>
     <div class="chips" role="group" aria-label="Avstånd" id="radiusChips" hidden></div>
     <div class="place" id="placeRow" hidden></div>
-    <div class="chips wrapchips" role="group" aria-label="Typ av matcher" id="gMatch"></div>
     <div class="chips" role="group" aria-label="Snabbval datum" id="datePresets"></div>
-    <details class="mfilt" id="mFilt">
-      <summary id="mFiltSum">Fler filter</summary>
-      <div class="mfbody">
-        <div class="lbl">Egna datum</div>
-        <div class="range">
-          <label class="fld" for="dFrom">Från<input id="dFrom" type="date"></label>
-          <label class="fld" for="dTo">Till<input id="dTo" type="date"></label>
-        </div>
-        <div class="lbl">Serie eller cup</div>
-        <div class="chips" role="group" aria-label="Serie eller cup" id="tierChips"></div>
-        <div id="doubleOpts" class="dopts" hidden></div>
+    <div class="mactive" id="mActive" hidden></div>
+    <div class="mfsheet" id="mSheet" hidden role="dialog" aria-modal="true" aria-labelledby="mSheetT"><div class="msdim" data-msclose="1"></div><div class="mspanel">
+      <div class="msgrab" aria-hidden="true"></div>
+      <div class="mshd"><h3 id="mSheetT">Filter</h3><button class="link strong" type="button" data-msreset="1">Rensa</button></div>
+      <div class="lbl">Visa</div>
+      <div class="chips wrapchips" role="group" aria-label="Visa" id="matchViewChips"></div>
+      <div class="lbl">Typ</div>
+      <div class="chips wrapchips" role="group" aria-label="Typ av matcher" id="gMatch"></div>
+      <div class="lbl">Serie eller cup</div>
+      <div class="chips wrapchips" role="group" aria-label="Serie eller cup" id="tierChips"></div>
+      <div class="lbl">Egna datum</div>
+      <div class="range">
+        <label class="fld" for="dFrom">Från<input id="dFrom" type="date"></label>
+        <label class="fld" for="dTo">Till<input id="dTo" type="date"></label>
       </div>
-    </details>
-    <div class="toolbar"><div class="count" id="matchCount"></div></div>
+      <div id="doubleOpts" class="dopts" hidden></div>
+      <button class="btn primary msgo" type="button" data-msclose="1" id="mSheetGo">Visa matcher</button>
+    </div></div>
+    <div class="toolbar" id="matchTb"><div class="count" id="matchCount"></div></div>
     <div class="list" id="matchList"></div>
   </section>
 
@@ -1860,10 +1866,28 @@ function nearInfo(city){const ll=GEO[city];if(!ll||!MATCHES.length)return null;c
   return NEAR_C[key]=r;}
 function nearBtn(city,cls){const ni=nearInfo(city);if(!ni)return "";return `<button class="${cls}" data-near="${esc(city)}" data-nr="${ni.mil}">${$t("{0} matcher inom {1}",[ni.n,milU(ni.mil)])}</button>`;}
 let citiesFor=null;
+// valda filter som små chips (tryck för att ta bort) och antal på Filter-knappen
+function mActiveSync(){const el=document.getElementById("mActive");if(!el)return;const pre=presets().some(([l,a,b])=>dFrom===a&&dTo===b);const ch=[];
+  if(matchView==="team")ch.push(["view",$t("Lag")]);if(matchView==="double")ch.push(["view",$t("Dubbelmatcher")]);if(matchView==="plan")ch.push(["view",$t("Planera med Claude")]);
+  if(mKind&&mKind!=="alla")ch.push(["kind",{herr:$t("Herr"),dam:$t("Dam"),landslag:$t("Landslag")}[mKind]||mKind]);
+  TIERS.forEach(([k,l])=>{if(tiers.has(k))ch.push(["tier:"+k,l]);});if(favOnly&&favList().length)ch.push(["fav",$t("Mina lag")]);
+  if(!pre&&matchView!=="team"&&matchView!=="plan")ch.push(["dates",dFrom===dTo?dayLabel(dFrom):`${dayLabel(dFrom)} – ${dayLabel(dTo)}`]);
+  el.hidden=!ch.length;el.innerHTML=ch.map(([k,l])=>`<button class="mchip" data-mrm="${esc(k)}">${esc(l)} <span aria-hidden="true">×</span><span class="sr">${$t("Ta bort")}</span></button>`).join("");
+  const n=ch.length;const b=document.getElementById("mFiltN");if(b){b.hidden=!n;b.textContent=n;}
+  const btn=document.getElementById("mFiltBtn");if(btn)btn.querySelector("span").textContent=$t("Filter");
+  const sh=document.getElementById("mSheetT");if(sh)sh.textContent=$t("Filter");}
+function mSheetOpen(on){const s=document.getElementById("mSheet");if(!s)return;if(s.parentElement!==document.body)document.body.appendChild(s);s.hidden=!on;document.documentElement.classList.toggle("msopen",on);}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("#mFiltBtn,[data-msclose],[data-msreset],[data-mrm]");if(!t)return;
+  if(t.id==="mFiltBtn"){mSheetOpen(true);return;}
+  if(t.dataset.msclose){mSheetOpen(false);return;}
+  if(t.dataset.msreset){matchView="list";store.set("fk-mview","list");mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}tiers.clear();favOnly=false;const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}renderMatches();return;}
+  const k=t.dataset.mrm;if(k==="view"){matchView="list";store.set("fk-mview","list");}else if(k==="kind"){mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}}else if(k.startsWith("tier:"))tiers.delete(k.slice(5));else if(k==="fav")favOnly=false;else if(k==="dates"){const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}}
+  renderMatches();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("mSheet")?.hidden)mSheetOpen(false);});
 function renderMatches(){matchKindChips();MLQ=null;
   document.getElementById("matchViewChips").innerHTML=[["list",$t("Matcher")],["team",$t("Lag")],["double",$t("Dubbelmatcher")],...(AI_ON?[["plan",$t("Planera med Claude")]]:[])].map(([k,l])=>`<button class="chip" data-mview="${k}" aria-pressed="${matchView===k}">${l}</button>`).join("");
   document.getElementById("doubleOpts").hidden=matchView!=="double";
-  document.getElementById("v-matcher").classList.toggle("planmode",matchView==="plan"||matchView==="team");if(matchView==="plan"){renderPlanner();return;}if(matchView==="team"){renderTeamView();return;}renderMatchList();if(matchView==="double"){MLQ=null;renderDouble();}}
+  document.getElementById("v-matcher").classList.toggle("planmode",matchView==="plan"||matchView==="team");if(matchView==="plan"||matchView==="team"){mActiveSync();const g=document.getElementById("mSheetGo");if(g)g.textContent=$t("Klar");}if(matchView==="plan"){renderPlanner();return;}if(matchView==="team"){renderTeamView();return;}renderMatchList();if(matchView==="double"){MLQ=null;renderDouble();}}
 function renderMatchList(){
   if(dTo<dFrom)dTo=dFrom;
   document.getElementById("dFrom").value=dFrom;document.getElementById("dTo").value=dTo;
@@ -1879,8 +1903,7 @@ function renderMatchList(){
     pr.innerHTML=`<span>${$t("Jag vet inte var")} <b>${esc(cityQ)}</b> ${$t("ligger.{0}",[st&&st.state==="err"?" "+esc(st.msg):""])}</span>${sampleFn===null?$t("<span>Prova en större ort i närheten.</span>"):`<button class="btn small primary" id="locate"${st&&st.state==="busy"?" disabled":""}>${st&&st.state==="busy"?"Letar…":$t("Hitta orten med Claude")}</button>`}`;}
   else if(hasQ&&radius>0&&place&&place.ai){pr.hidden=false;pr.innerHTML=`<span>${$t("Mäter från")} <b>${esc(place.name)}</b> ${$t("(position från Claude).")}</span>`;}
   else pr.hidden=true;
-  {const pre=presets().some(([l,a,b])=>dFrom===a&&dTo===b),n=(tiers.size?1:0)+(favOnly?1:0)+(pre||matchView==="double"?0:1);
-   const sum=document.getElementById("mFiltSum");if(sum)sum.innerHTML=`${matchView==="double"?$t("Fler filter och restid"):$t("Fler filter")}${n?`<span class="mfn">${$t("{0} valda",[n])}</span>`:""}`;}
+  mActiveSync();
   document.getElementById("tierChips").innerHTML=`<button class="chip" data-tier="all" aria-pressed="${tiers.size===0}">${$t("Alla")}</button>`+TIERS.map(([k,l])=>`<button class="chip" data-tier="${k}" aria-pressed="${tiers.has(k)}">${l}</button>`).join("")+(favList().length?`<button class="chip" data-favonly="1" aria-pressed="${favOnly}">${STAR(1)} ${favList().length===1?esc(C[favList()[0]].n):$t("Mina lag")}</button>`:"");
   if(citiesFor!==MATCHES){citiesFor=MATCHES;const cities=[...new Set([...MATCHES.map(m=>m.city),...Object.keys(GEO)])].filter(Boolean).sort((a,b)=>a.localeCompare(b,LANG));
     const html=cities.map(c=>`<option value="${esc(c)}">`).join("");const dl=document.getElementById("cities");if(dl.innerHTML!==html)dl.innerHTML=html;}
@@ -1893,6 +1916,8 @@ function renderMatchList(){
   const n=sel.length;const where=favOnly&&favList().length?$t(" med {0}",[favList().length===1?esc(C[favList()[0]].n):$t("dina favoritlag")]):!hasQ?$t(" i hela världen"):radius===0?` i ${esc(cityQ)}`:$t(" inom {0} från {1}",[milU(radius),esc(place&&place.ll?place.name:cityQ)]);
   const dTxt=dFrom===dTo?dayLong(dFrom):`${dayLong(dFrom)} – ${dayLong(dTo)}`;
   cn.innerHTML=`<b>${n}</b> ${n===1?$t("match"):$t("matcher")}${where} · ${esc(dTxt)}`;
+  // antalsraden behövs bara när den säger något mer än dagsrubrikerna (sökt ort eller Mina lag)
+  {const tb=document.getElementById("matchTb");if(tb)tb.hidden=!(hasQ||(favOnly&&favList().length)||matchView==="double");const g=document.getElementById("mSheetGo");if(g)g.textContent=matchView==="double"?$t("Klar"):n===1?$t("Visa 1 match"):$t("Visa {0} matcher",[n]);}
   if(!n){const maxDay=MATCHES.reduce((mx,m)=>{const k=m.kickoff?koDay(m.kickoff):m.dateTo;return k>mx?k:mx;},"");let why=$t("Prova fler dagar, ett större avstånd eller en annan serienivå.");
     if(dFrom>maxDay)why=$t("Schemat sträcker sig just nu till och med {0}, så det finns inga matcher inlagda för de här datumen än.",[esc(dayLong(maxDay))]);
     else if(hasQ&&radius>0&&place&&!place.ll)why=$t("Hitta orten först, så kan avståndet räknas ut.");

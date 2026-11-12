@@ -2630,5 +2630,8 @@
  "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla allt du har sett och dela upplevelserna med andra som älskar fotboll.": "Finndu leiki um allan heim, skipuleggðu næstu fótboltaferð, safnaðu öllu sem þú hefur séð og deildu upplifuninni með öðrum sem elska fótbolta.",
  "Hemort och avstånd": "Heimabær og fjarlægð",
  "I appen": "Í appinu",
- "Ingen hemort": "Enginn heimabær"
+ "Ingen hemort": "Enginn heimabær",
+ "Visa {0} matcher": "Sýna {0} leiki",
+ "Visa 1 match": "Sýna 1 leik",
+ "Sök stad": "Leita að borg"
 }

@@ -2630,5 +2630,8 @@
  "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla allt du har sett och dela upplevelserna med andra som älskar fotboll.": "Löydä otteluita kaikkialta maailmasta, suunnittele seuraava jalkapallomatkasi, kerää kaikki näkemäsi ja jaa kokemukset muiden jalkapalloa rakastavien kanssa.",
  "Hemort och avstånd": "Kotipaikkakunta ja etäisyys",
  "I appen": "Sovelluksessa",
- "Ingen hemort": "Ei kotipaikkakuntaa"
+ "Ingen hemort": "Ei kotipaikkakuntaa",
+ "Visa {0} matcher": "Näytä {0} ottelua",
+ "Visa 1 match": "Näytä 1 ottelu",
+ "Sök stad": "Hae kaupunkia"
 }

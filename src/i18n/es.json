@@ -2631,5 +2631,8 @@
  "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla allt du har sett och dela upplevelserna med andra som älskar fotboll.": "Encuentra partidos en todo el mundo, planea tu próximo viaje futbolero, guarda todo lo que has visto y comparte la experiencia con otros que aman el fútbol.",
  "Hemort och avstånd": "Ciudad y distancia",
  "I appen": "En la app",
- "Ingen hemort": "Sin ciudad"
+ "Ingen hemort": "Sin ciudad",
+ "Visa {0} matcher": "Ver {0} partidos",
+ "Visa 1 match": "Ver 1 partido",
+ "Sök stad": "Buscar ciudad"
 }
