@@ -30,7 +30,8 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # 24.04: Playwrights webbläsare (röktestet) stöds ännu inte på nyare Ubuntu
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
