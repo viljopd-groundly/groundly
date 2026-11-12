@@ -2606,5 +2606,8 @@
  "Du har biljett till {0} – {1}": "Je hebt een kaartje voor {0} – {1}",
  "Matchen är {0}. Har du bokat hotell och resa? Planera allt i Groundly.": "De wedstrijd is {0}. Heb je hotel en reis geboekt? Plan alles in Groundly.",
  "Saker att göra i {0}": "Te doen in {0}",
- "Aktiviteter": "Activiteiten"
+ "Aktiviteter": "Activiteiten",
+ "Ta bort matchen": "Wedstrijd verwijderen",
+ "Ta bort matchen från Vill gå?": "Wedstrijd verwijderen uit Wil gaan?",
+ "Matchen är borttagen": "Wedstrijd verwijderd"
 }

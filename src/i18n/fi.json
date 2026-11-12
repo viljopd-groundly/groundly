@@ -2606,5 +2606,8 @@
  "Du har biljett till {0} – {1}": "Sinulla on lippu otteluun {0} – {1}",
  "Matchen är {0}. Har du bokat hotell och resa? Planera allt i Groundly.": "Ottelu on {0}. Oletko varannut hotellin ja matkan? Suunnittele kaikki Groundlyssa.",
  "Saker att göra i {0}": "Tekemistä: {0}",
- "Aktiviteter": "Aktiviteetit"
+ "Aktiviteter": "Aktiviteetit",
+ "Ta bort matchen": "Poista ottelu",
+ "Ta bort matchen från Vill gå?": "Poistetaanko ottelu Haluan mennä -listalta?",
+ "Matchen är borttagen": "Ottelu poistettu"
 }

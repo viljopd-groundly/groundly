@@ -2607,5 +2607,8 @@
  "Du har biljett till {0} – {1}": "Du har billett til {0} – {1}",
  "Matchen är {0}. Har du bokat hotell och resa? Planera allt i Groundly.": "Kampen er {0}. Har du bestilt hotell og reise? Planlegg alt i Groundly.",
  "Saker att göra i {0}": "Ting å gjøre i {0}",
- "Aktiviteter": "Aktiviteter"
+ "Aktiviteter": "Aktiviteter",
+ "Ta bort matchen": "Fjern kampen",
+ "Ta bort matchen från Vill gå?": "Fjerne kampen fra Vil gå?",
+ "Matchen är borttagen": "Kampen er fjernet"
 }
