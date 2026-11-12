@@ -2623,5 +2623,10 @@
  "Resan är slut – logga matcherna": "Turen er slut – log kampene",
  "Ta bort resan": "Slet turen",
  "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Tryk Vis alle kampe i området og derefter Vil se på de kampe, du vil se.",
- "Visa alla matcher i området": "Vis alle kampe i området"
+ "Visa alla matcher i området": "Vis alle kampe i området",
+ "Helgens matcher nära dig": "Weekendens kampe nær dig",
+ "Torsdag kväll: matcher nära din hemort i helgen.": "Torsdag aften: kampe nær din hjemby i weekenden.",
+ "Helgens matcher nära {0}": "Weekendens kampe nær {0}",
+ "1 match i helgen: {0}.": "1 kamp i weekenden: {0}.",
+ "{0} matcher i helgen, bland annat {1}.": "{0} kampe i weekenden, blandt andet {1}."
 }

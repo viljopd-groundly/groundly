@@ -3220,12 +3220,12 @@ function locBtn(){return"geolocation"in navigator?`<button class="btn small" typ
 function nearestCity(lat,lng){let best=null,bd=1e9;for(const k in GEO){const d=haversine([lat,lng],GEO[k]);if(d<bd){bd=d;best=k;}}return best;}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-useloc]");if(!b)return;e.preventDefault();b.disabled=true;
   navigator.geolocation.getCurrentPosition(pos=>{const c=nearestCity(pos.coords.latitude,pos.coords.longitude);b.disabled=false;
-    if(!c){toast($t("Hittade ingen ort nära dig"));return;}homeTown=c;store.set("fk-home",c);homeEdit=false;toast($t("Hemort: {0}",[c]));render();},
+    if(!c){toast($t("Hittade ingen ort nära dig"));return;}homeTown=c;store.set("fk-home",c);pushHomeSync();homeEdit=false;toast($t("Hemort: {0}",[c]));render();},
    ()=>{b.disabled=false;toast($t("Kunde inte hämta din plats. Tillåt plats i webbläsaren eller skriv orten."));},{timeout:15000,maximumAge:6e5});});
 function homeRow(c){if(homeEdit)return`<form class="homeform" id="homeForm" data-noclose="1"><label class="fld" for="homeIn">${$t("Din hemort")}<input id="homeIn" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button>${locBtn()}<button class="btn small" type="button" data-homecancel="1">${$t("Avbryt")}</button></form>`;
   if(homeTown)return`<div class="actions">${extLink(transitUrl(homeTown,placeStr(c.s,c.city)),$t("Res hit från {0}",[esc(homeTown)]),"btn small")}<button class="link" data-homeedit="1">${$t("Byt hemort")}</button></div>`;
   return`<div class="actions"><button class="link" data-homeedit="1">${$t("Ange din hemort för en reselänk hela vägen hit")}</button></div>`;}
-document.addEventListener("submit",e=>{if(e.target.id!=="homeForm")return;e.preventDefault();homeTown=document.getElementById("homeIn").value.trim().slice(0,60);store.set("fk-home",homeTown);homeEdit=false;render();});
+document.addEventListener("submit",e=>{if(e.target.id!=="homeForm")return;e.preventDefault();homeTown=document.getElementById("homeIn").value.trim().slice(0,60);store.set("fk-home",homeTown);pushHomeSync();homeEdit=false;render();});
 const TR_YN=[["tr","kombi",$t("Lokaltrafik ingår i matchbiljetten")],["tr","extra",$t("Extratåg eller extrabussar på matchdagar")]];
 const TK_YN=[["tk","member",$t("Medlemskap krävs för att köpa biljett")]];
 const TXT=[["tr","station",$t("Närmaste station eller hållplats"),80,$t("t.ex. Köpenick S-Bahn")],["tr","walk",$t("Promenad därifrån (minuter)"),3,""],["tk","where",$t("Var köper man biljett?"),120,$t("t.ex. klubbens webbshop eller kassan på matchdagen")],["tk","price",$t("Billigaste biljetten, ungefär"),40,$t("t.ex. 15 € eller 180 kr")],["tk","away",$t("Bortasektion"),80,"t.ex. norra kortsidan"]];
@@ -5219,7 +5219,7 @@ function obClick(t){if(t.dataset.obex){obEx=!obEx;render();return;}if(t.dataset.
   if(t.dataset.oblog==="arc"){mySub="been";setMode("mine");setTimeout(()=>document.getElementById("arcOpen")?.click(),60);return;}}
 document.addEventListener("submit",e=>{if(e.target.id==="obFav"){e.preventDefault();const id=clubIdFromName(document.getElementById("obFavIn").value);
     if(!id||isNat(C[id])){toast($t("Hittade ingen klubb med det namnet."));return;}mutate(d=>{d.favs=[...new Set([...(d.favs||[]),id])].slice(0,MAXFAV);});toast($t("{0} är ditt favoritlag",[C[id].n]),"star");}
-  if(e.target.id==="obHome"){e.preventDefault();const v=document.getElementById("obHomeIn").value.trim().slice(0,60);if(!v)return;homeTown=v;store.set("fk-home",v);render();}});
+  if(e.target.id==="obHome"){e.preventDefault();const v=document.getElementById("obHomeIn").value.trim().slice(0,60);if(!v)return;homeTown=v;store.set("fk-home",v);pushHomeSync();render();}});
 
 
 // ---------- karta i Varit på ----------
@@ -5726,7 +5726,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setCl
   theme=b.dataset.themePick;store.set("fk-theme",theme);applyTheme();if(setOpen)openSettings();},true);
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&setOpen)closeSettings();});
 document.addEventListener("change",e=>{const k=e.target.dataset&&e.target.dataset.notif;if(!k)return;store.set("fk-n-"+k,e.target.checked?"1":"0");try{actBadge();}catch(x){}if(mode==="hem")renderHome();});
-document.addEventListener("submit",e=>{if(e.target.id!=="setHome")return;e.preventDefault();const v=document.getElementById("setHomeIn").value.trim().slice(0,60);homeTown=v;if(v)store.set("fk-home",v);else store.del("fk-home");toast(v?$t("Hemort: {0}",[v]):$t("Hemorten är borttagen"));render();});
+document.addEventListener("submit",e=>{if(e.target.id!=="setHome")return;e.preventDefault();const v=document.getElementById("setHomeIn").value.trim().slice(0,60);homeTown=v;if(v)store.set("fk-home",v);else store.del("fk-home");pushHomeSync();toast(v?$t("Hemort: {0}",[v]):$t("Hemorten är borttagen"));render();});
 
 // stoppa nyp-zoom i Safari (som ignorerar user-scalable=no), men låt kartorna zooma som vanligt
 (()=>{const onMap=e=>!!(e.target&&e.target.closest&&e.target.closest(".leaflet-container,.lmap"));
@@ -5889,7 +5889,10 @@ function remindSecHtml(){const favs=favList().filter(hasCal);
   return`<p class="hint" style="margin:0 0 6px">${$t("Lägg in dina lags matcher i kalendern, så missar du ingen.")}</p>
    ${favs.length?`<div class="calsubs">${favs.map(id=>isCalSub(id)?`<button class="calsub on" data-calsub="${esc(id)}"><span>${OK} <b>${esc(C[id].n)}</b></span><small>${$t("Tillagd i din kalender")}</small></button>`:`<button class="calsub" data-calsub="${esc(id)}"><span>${ic("calendar")} <b>${esc(C[id].n)}</b></span><small>${$t("Lägg till i kalendern")}</small></button>`).join("")}</div>`:`<p class="meta" style="margin:0">${$t("Välj ett favoritlag under Min fotboll, eller öppna en klubb och välj Prenumerera i kalendern.")}</p>`}
    <div id="pushBox"></div>`;}
-const PUSH_PREFS=[["wish",()=>$t("Matcher i Vill gå"),()=>$t("En vecka före och dagen före matchen.")],["log",()=>$t("Var du där?"),()=>$t("Morgonen efter en match i Vill gå, så att du kan logga den.")]];
+// hemorten följer med till påminnelserna (för Helgens matcher nära dig); bara stad och koordinater
+window.groundlyHome=()=>{try{const h=homeLL();return h&&h.ll?{name:h.name,lat:h.ll[0],lng:h.ll[1]}:null;}catch(e){return null;}};
+function pushHomeSync(){setTimeout(()=>{try{window.groundlyPush&&groundlyPush.setHome&&groundlyPush.setHome(window.groundlyHome());}catch(e){}},300);}
+const PUSH_PREFS=[["wish",()=>$t("Matcher i Vill gå"),()=>$t("En vecka före och dagen före matchen.")],["log",()=>$t("Var du där?"),()=>$t("Morgonen efter en match i Vill gå, så att du kan logga den.")],["wk",()=>$t("Helgens matcher nära dig"),()=>$t("Torsdag kväll: matcher nära din hemort i helgen.")]];
 async function fillPushBox(){const box=document.getElementById("pushBox");if(!box||!window.groundlyPush)return;let st="none";try{st=await groundlyPush.state();}catch(e){}
   if(st==="none"){box.innerHTML="";return;}
   const head=`<h3 class="sec" style="margin-top:14px">${$t("Påminnelser i telefonen")}</h3>`;
@@ -5897,7 +5900,7 @@ async function fillPushBox(){const box=document.getElementById("pushBox");if(!bo
   if(st==="ios-home"){box.innerHTML=head+`<p class="meta" style="margin:0">${$t("På iPhone fungerar påminnelser när Groundly ligger på hemskärmen. Tryck på Dela i Safari, välj Lägg till på hemskärmen och öppna appen därifrån.")}</p>`;return;}
   if(st==="blocked"){box.innerHTML=head+`<p class="meta" style="margin:0">${$t("Notiser är blockerade för Groundly i webbläsarens inställningar. Tillåt dem där för att få påminnelser.")}</p>`;return;}
   if(st==="off"){box.innerHTML=head+`<p class="hint" style="margin:0">${$t("Få en notis om matcher du vill gå på, och en fråga morgonen efter om du var där. Högst tre i veckan och aldrig på natten.")}</p><div class="actions"><button class="btn small primary" data-pushon="1">${$t("Slå på påminnelser")}</button></div>`;return;}
-  const pr=Object.assign({wish:true,log:true},await groundlyPush.prefs()||{});
+  const pr=Object.assign({wish:true,log:true,wk:true},await groundlyPush.prefs()||{});
   box.innerHTML=head+PUSH_PREFS.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-pushpref="${k}"${pr[k]!==false?" checked":""}><span><b>${l()}</b><small>${d()}</small></span></label>`).join("")+`<div class="actions"><button class="link" data-pushoff="1">${$t("Stäng av påminnelser på den här enheten")}</button></div>`;}
 window.addEventListener("groundly-push",()=>{if(setOpen)fillPushBox();});
 async function pushOn(){if(!window.groundlyPush)return;try{const r=await groundlyPush.enable();if(r==="on")toast($t("Påminnelserna är påslagna."),"check");else if(r==="blocked")toast($t("Notiser är blockerade för Groundly i webbläsarens inställningar. Tillåt dem där för att få påminnelser."));}catch(e){toast($t("Det gick inte att slå på påminnelserna just nu."));}fillPushBox();}

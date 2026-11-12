@@ -465,9 +465,11 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
       const d = await F.getDoc(pushRef()); const x = d.exists() ? d.data() : {};
       const tokens = (x.tokens || []).filter(t => t.t !== token).slice(-4).concat([{ t: token, at: new Date().toISOString(), ua: navigator.userAgent.slice(0, 120) }]);
       let tz = "Europe/Stockholm"; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || tz; } catch (e) {}
-      await F.setDoc(pushRef(), { on: true, tokens, prefs: { wish: true, log: true, ...(x.prefs || {}), ...(prefs || {}) }, tz, lang: LANGC, sent: x.sent || {} });
+      const home = (window.groundlyHome && window.groundlyHome()) || x.home || null;
+      await F.setDoc(pushRef(), { on: true, tokens, prefs: { wish: true, log: true, wk: true, ...(x.prefs || {}), ...(prefs || {}) }, tz, lang: LANGC, sent: x.sent || {}, ...(home ? { home } : {}) });
       return "on";
     },
+    setHome: async home => { if (!getUser()) return; try { const d = await F.getDoc(pushRef()); if (!d.exists()) return; const x = d.data(); if (JSON.stringify(x.home || null) === JSON.stringify(home || null)) return; await F.setDoc(pushRef(), { ...x, home: home || null }); } catch (e) {} },
     setPrefs: async prefs => { if (!getUser()) return; const d = await F.getDoc(pushRef()); const x = d.exists() ? d.data() : {}; await F.setDoc(pushRef(), { ...x, prefs: { ...(x.prefs || {}), ...prefs } }); },
     disable: async () => {
       if (!getUser()) return "off"; const tok = localStorage.getItem("fk-push-token");

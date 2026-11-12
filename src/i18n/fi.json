@@ -2622,5 +2622,10 @@
  "Resan är slut – logga matcherna": "Matka on ohi – kirjaa ottelut",
  "Ta bort resan": "Poista matka",
  "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Napauta Näytä kaikki alueen ottelut ja sitten Haluan mennä niihin otteluihin, jotka haluat nähdä.",
- "Visa alla matcher i området": "Näytä kaikki alueen ottelut"
+ "Visa alla matcher i området": "Näytä kaikki alueen ottelut",
+ "Helgens matcher nära dig": "Viikonlopun ottelut lähelläsi",
+ "Torsdag kväll: matcher nära din hemort i helgen.": "Torstai-iltana: ottelut kotipaikkakuntasi lähellä viikonloppuna.",
+ "Helgens matcher nära {0}": "Viikonlopun ottelut lähellä: {0}",
+ "1 match i helgen: {0}.": "1 ottelu viikonloppuna: {0}.",
+ "{0} matcher i helgen, bland annat {1}.": "{0} ottelua viikonloppuna, muun muassa {1}."
 }

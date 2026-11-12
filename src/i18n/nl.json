@@ -2622,5 +2622,10 @@
  "Resan är slut – logga matcherna": "De reis is voorbij – log de wedstrijden",
  "Ta bort resan": "Reis verwijderen",
  "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Tik op Alle wedstrijden in de buurt en daarna op Wil gaan bij de wedstrijden die je wilt zien.",
- "Visa alla matcher i området": "Alle wedstrijden in de buurt"
+ "Visa alla matcher i området": "Alle wedstrijden in de buurt",
+ "Helgens matcher nära dig": "Wedstrijden dit weekend bij jou in de buurt",
+ "Torsdag kväll: matcher nära din hemort i helgen.": "Donderdagavond: wedstrijden bij je woonplaats dit weekend.",
+ "Helgens matcher nära {0}": "Wedstrijden dit weekend bij {0}",
+ "1 match i helgen: {0}.": "1 wedstrijd dit weekend: {0}.",
+ "{0} matcher i helgen, bland annat {1}.": "{0} wedstrijden dit weekend, onder meer {1}."
 }

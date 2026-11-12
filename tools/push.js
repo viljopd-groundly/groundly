@@ -4,6 +4,7 @@
 //   wish7: matchen i Vill gå är om en vecka          wish1: matchen är i morgon (skickas från kl 17)
 //   nt:    matchen i Vill gå har fått ny avsparkstid i schemat (eller fått en tid, om bara datumet var känt)
 //   bk:    du har biljett (Har biljett) och matchen är om 5–14 dagar, men hotell är inte bockat i resan: påminnelse om hotell och resa
+//   wk:    torsdag kväll: helgens matcher nära hemorten (pref wk, kräver home i push-dokumentet)
 //   log:   morgonen efter en match i Vill gå som inte loggats (från kl 9)
 // Spärrar: bara mellan 08 och 21 lokal tid, högst tre notiser per användare och sju dagar, varje notis bara en gång.
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
@@ -21,6 +22,21 @@ const clubs = {}; try { require(path.join(ROOT, "src", "clubs.js")).forEach(r =>
 const FX = new Map(); try { (JSON.parse(fs.readFileSync(path.join(ROOT, "site", "data", "fixtures-next.json"), "utf8")).rows || []).forEach(r => { if (!r[2]) return; const k = r[0] + "|" + r[1]; if (!FX.has(k)) FX.set(k, []); FX.get(k).push({ ko: r[2], comp: r[5] }); }); } catch (e) {}
 const fxNow = w => { if (!w.home || !w.away) return null; const t0 = Date.parse(w.kickoff || (w.dateFrom ? w.dateFrom + "T12:00:00Z" : "")); if (!t0) return null;
   const c = (FX.get(w.home + "|" + w.away) || []).filter(x => (!w.comp || !x.comp || x.comp === w.comp) && Math.abs(Date.parse(x.ko) - t0) < 10 * 864e5); return c.length === 1 ? c[0].ko : null; };
+// helgens matcher nära hemorten: schemat + databasens matcher, klubbarnas städer och koordinater från src/
+let CLUBS = {}, GEO = {}, DBM = [];
+try { for (const r of require(path.join(ROOT, "src", "clubs.js"))) CLUBS[r[0]] = { n: r[1], city: r[4], l: r[6], t: r[7] }; } catch (e) {}
+try { GEO = require(path.join(ROOT, "src", "geo.js")); } catch (e) {}
+try { DBM = (JSON.parse(fs.readFileSync(path.join(ROOT, "site", "data", "dbmatches.json"), "utf8")).docs || []).map(d => d.data).filter(m => m && m.kickoff && m.city); } catch (e) {}
+const km = (a, b) => { const R = 6371, r = x => x * Math.PI / 180, dLa = r(b[0] - a[0]), dLo = r(b[1] - a[1]); const h = Math.sin(dLa / 2) ** 2 + Math.cos(r(a[0])) * Math.cos(r(b[0])) * Math.sin(dLo / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)) * 1.2; };
+function weekendNear(home, days, maxKm) {
+  const ll = [home.lat, home.lng], out = [], seen = new Set();
+  const FXR = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, "site", "data", "fixtures-next.json"), "utf8")).rows || []; } catch (e) { return []; } })();
+  for (const r of FXR) { if (!r[2] || !days.includes(r[3]) || r[4]) continue; const H = CLUBS[r[0]], A = CLUBS[r[1]]; if (!H || !A || !GEO[H.city]) continue; const d = km(ll, GEO[H.city]); if (d > maxKm) continue;
+    const k = r[0] + "|" + r[1] + "|" + r[3]; if (seen.has(k)) continue; seen.add(k); out.push({ ko: r[2], h: H.n, a: A.n, tier: +r[6] || 9, d }); }
+  for (const m of DBM) { const day = String(m.kickoff).slice(0, 10); if (!days.includes(day) || m.score || !GEO[m.city]) continue; const d = km(ll, GEO[m.city]); if (d > maxKm) continue;
+    const k = (m.home || m.homeName) + "|" + (m.away || m.awayName) + "|" + day; if (seen.has(k)) continue; seen.add(k); out.push({ ko: m.kickoff, h: m.homeName, a: m.awayName, tier: +m.tier || 9, d }); }
+  return out.sort((x, y) => x.tier - y.tier || Date.parse(x.ko) - Date.parse(y.ko));
+}
 const team = (lang, id, name) => { const n = (id && clubs[id]) || name || ""; return tr(lang, n); };
 
 async function token() {
@@ -79,6 +95,23 @@ const enc = x => x === null || x === undefined ? { nullValue: null } : typeof x 
         out.push({ key: "w1:" + w.id, title: tr(lang, "I morgon: {0} – {1}", [h, a]), body: tr(lang, "Avspark {0}{1}. Trevlig match!", [tm(ko), where ? " · " + where : ""]), url: "./?go=mine" });
       if (pr.log !== false && now - ko > 3 * 36e5 && now - ko <= 40 * 36e5 && hour >= 9 && !att.has(w.id) && !sent["lg:" + w.id])
         out.push({ key: "lg:" + w.id, title: tr(lang, "Var du på {0} – {1}?", [h, a]), body: tr(lang, "Logga matchen, så växer din statistik."), url: "./?go=hem" });
+    }
+    // torsdag kväll: helgens matcher nära hemorten (lägst prioritet, efter påminnelserna ovan)
+    if (pr.wk !== false && P.home && typeof P.home.lat === "number") {
+      const wd = new Intl.DateTimeFormat("en-GB", { weekday: "short", timeZone: tz }).format(new Date());
+      if (wd === "Thu" && hour >= 17) {
+        const ymd = new Intl.DateTimeFormat("en-CA", { timeZone: tz }).format(new Date());
+        const add = n => { const d = new Date(ymd + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+        const key = "wk:" + add(2);
+        if (!sent[key]) {
+          const L3 = weekendNear(P.home, [add(1), add(2), add(3)], 50);
+          if (L3.length) {
+            const day = d => new Intl.DateTimeFormat(LOC[lang], { weekday: "short", timeZone: tz }).format(new Date(d));
+            const list = L3.slice(0, 3).map(x => `${day(x.ko)} ${tm(x.ko)} ${x.h} – ${x.a}`).join(", ");
+            out.push({ key, title: tr(lang, "Helgens matcher nära {0}", [P.home.name]), body: L3.length === 1 ? tr(lang, "1 match i helgen: {0}.", [list]) : tr(lang, "{0} matcher i helgen, bland annat {1}.", [L3.length, list]), url: "./?go=matcher" });
+          }
+        }
+      }
     }
     let dirty = false; const bad = new Set();
     for (const n of out) {

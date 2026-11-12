@@ -2622,5 +2622,10 @@
  "Resan är slut – logga matcherna": "Le voyage est terminé – enregistre les matchs",
  "Ta bort resan": "Supprimer le voyage",
  "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Appuie sur Voir tous les matchs de la zone puis sur Je veux y aller pour les matchs que tu veux voir.",
- "Visa alla matcher i området": "Voir tous les matchs de la zone"
+ "Visa alla matcher i området": "Voir tous les matchs de la zone",
+ "Helgens matcher nära dig": "Les matchs du week-end près de chez toi",
+ "Torsdag kväll: matcher nära din hemort i helgen.": "Jeudi soir : les matchs près de ta ville ce week-end.",
+ "Helgens matcher nära {0}": "Les matchs du week-end près de {0}",
+ "1 match i helgen: {0}.": "1 match ce week-end : {0}.",
+ "{0} matcher i helgen, bland annat {1}.": "{0} matchs ce week-end, dont {1}."
 }
