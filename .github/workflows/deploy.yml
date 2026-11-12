@@ -68,6 +68,14 @@ jobs:
       - name: Bygg sidan
         run: node scripts/build-web.js
 
+      # Röktest: öppnar appen i en mobil webbläsare och klickar igenom det viktigaste (tests/smoke.js).
+      # Går något sönder stoppas publiceringen och den förra versionen ligger kvar.
+      - name: Röktest
+        run: |
+          npm i --no-save --no-audit --no-fund --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node tests/smoke.js
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
