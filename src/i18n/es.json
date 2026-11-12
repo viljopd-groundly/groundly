@@ -2628,5 +2628,8 @@
  "Helgens matcher nära {0}": "Partidos del fin de semana cerca de {0}",
  "1 match i helgen: {0}.": "1 partido este fin de semana: {0}.",
  "{0} matcher i helgen, bland annat {1}.": "{0} partidos este fin de semana, entre ellos {1}.",
- "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla allt du har sett och dela upplevelserna med andra som älskar fotboll.": "Encuentra partidos en todo el mundo, planea tu próximo viaje futbolero, guarda todo lo que has visto y comparte la experiencia con otros que aman el fútbol."
+ "Hitta matcher över hela världen, planera din nästa fotbollsresa, samla allt du har sett och dela upplevelserna med andra som älskar fotboll.": "Encuentra partidos en todo el mundo, planea tu próximo viaje futbolero, guarda todo lo que has visto y comparte la experiencia con otros que aman el fútbol.",
+ "Hemort och avstånd": "Ciudad y distancia",
+ "I appen": "En la app",
+ "Ingen hemort": "Sin ciudad"
 }
