@@ -1,0 +1,8 @@
+{
+  "appId": "football.groundly.app",
+  "appName": "Groundly",
+  "webDir": "www",
+  "android": { "backgroundColor": "#0B1224" },
+  "ios": { "backgroundColor": "#0B1224", "contentInset": "never" },
+  "server": { "androidScheme": "https" }
+}

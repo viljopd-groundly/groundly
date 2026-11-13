@@ -1,0 +1,10 @@
+{
+  "name": "groundly-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Groundly som app för Android och iPhone (Capacitor-skal runt webbappen i ../site)",
+  "scripts": {
+    "prepare-web": "node scripts/prepare.js",
+    "sync": "node scripts/prepare.js && npx cap sync"
+  }
+}
