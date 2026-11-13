@@ -1816,7 +1816,7 @@ function autoUnit(){const l=String((navigator.languages&&navigator.languages[0])
   if(LANG==="sv"||LANG==="nb")return"mil";if(["GB","US","LR","MM"].includes(reg))return"mi";return"km";}
 let unitPick=(()=>{const v=store.get("fk-unit");return UNIT_PER_MIL[v]?v:"auto";})();
 let UNIT=unitPick==="auto"?autoUnit():unitPick;
-const UNIT_STEPS={mil:[1,5,10,25],km:[10,50,100,250],mi:[10,30,60,150]};
+const UNIT_STEPS={mil:[5,10,25],km:[50,100,250],mi:[30,60,150]};
 const RADII_FOR=()=>[0,...UNIT_STEPS[UNIT].map(v=>Math.round(v/UNIT_PER_MIL[UNIT]*1000)/1000)];
 const radEq=(a,b)=>Math.abs(a-b)<0.01;
 const sortM=(a,b)=>(a.kickoff?Date.parse(a.kickoff):Date.parse(a.dateFrom+"T23:59:00"))-(b.kickoff?Date.parse(b.kickoff):Date.parse(b.dateFrom+"T23:59:00"))||a.homeName.localeCompare(b.homeName,LANG);
