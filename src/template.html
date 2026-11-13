@@ -447,6 +447,8 @@ button{touch-action:manipulation}
 html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .sugg{display:flex;flex-wrap:wrap;gap:6px;margin-top:-4px}
 .sugg[hidden]{display:none}
+.sugg .sgl{flex-basis:100%;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.65;margin:4px 0 -2px}
+.sugg .chip small{opacity:.65;font-weight:500;margin-left:4px}
 .adtag{font-size:10px;font-weight:600;opacity:.7;margin-left:6px;text-transform:uppercase;letter-spacing:.04em}
 .teamhead{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
 #teamSug .crest{margin-right:6px}
@@ -1249,7 +1251,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
   <section id="v-matcher" hidden style="display:contents">
     <div class="mtop"><label class="search" for="city">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-      <input id="city" type="search" placeholder="Sök stad" autocomplete="off" enterkeyhint="search">
+      <input id="city" type="search" placeholder="Sök stad, lag, land eller serie" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="cityClear" hidden>Rensa</button>
     </label><button class="mfbtn" id="mFiltBtn" type="button" aria-haspopup="dialog" aria-controls="mSheet"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filter</span><b id="mFiltN" hidden></b></button></div>
     <datalist id="cities"></datalist>
@@ -1491,6 +1493,9 @@ const CITY_ALIAS={rome:"Rom",roma:"Rom",naples:"Neapel",napoli:"Neapel",munich:"
 let mode="hem";// appen öppnar alltid på Hem
 let q="",country="alla",openClub=null;
 let cityQ="",tiers=new Set();
+// sökning på lag, land eller serie i stället för ort: null | {t:"team"|"country"|"league", v, l}
+let MQ=null;
+const mqOk=m=>MQ.t==="team"?(m.home===MQ.v||m.away===MQ.v):MQ.t==="country"?m.country===MQ.v:m.comp===MQ.v;
 let MATCHES=[],dbState="loading",META=null;
 // säsongen 2026/27 i de stora ligorna, från öppen data (openfootball, CC0): [hemma, borta, avspark|null, datum, resultat, serie, nivå]
 let FIXTURES=[],FX_UPDATED=null,DBM=null,dbFailed=false;
@@ -1870,7 +1875,7 @@ let citiesFor=null;
 function mActiveSync(){const el=document.getElementById("mActive");if(!el)return;const pre=presets().some(([l,a,b])=>dFrom===a&&dTo===b);const ch=[];
   if(matchView==="team")ch.push(["view",$t("Lag")]);if(matchView==="double")ch.push(["view",$t("Dubbelmatcher")]);if(matchView==="plan")ch.push(["view",$t("Planera med Claude")]);
   if(mKind&&mKind!=="alla")ch.push(["kind",{herr:$t("Herr"),dam:$t("Dam"),landslag:$t("Landslag")}[mKind]||mKind]);
-  TIERS.forEach(([k,l])=>{if(tiers.has(k))ch.push(["tier:"+k,l]);});if(favOnly&&favList().length)ch.push(["fav",$t("Mina lag")]);
+  if(MQ)ch.push(["q",MQ.l]);TIERS.forEach(([k,l])=>{if(tiers.has(k))ch.push(["tier:"+k,l]);});if(favOnly&&favList().length)ch.push(["fav",$t("Mina lag")]);
   if(!pre&&matchView!=="team"&&matchView!=="plan")ch.push(["dates",dFrom===dTo?dayLabel(dFrom):`${dayLabel(dFrom)} – ${dayLabel(dTo)}`]);
   el.hidden=!ch.length;el.innerHTML=ch.map(([k,l])=>`<button class="mchip" data-mrm="${esc(k)}">${esc(l)} <span aria-hidden="true">×</span><span class="sr">${$t("Ta bort")}</span></button>`).join("");
   const n=ch.length;const b=document.getElementById("mFiltN");if(b){b.hidden=!n;b.textContent=n;}
@@ -1881,7 +1886,7 @@ document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest
   if(t.id==="mFiltBtn"){mSheetOpen(true);return;}
   if(t.dataset.msclose){mSheetOpen(false);return;}
   if(t.dataset.msreset){matchView="list";store.set("fk-mview","list");mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}tiers.clear();favOnly=false;const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}renderMatches();return;}
-  const k=t.dataset.mrm;if(k==="view"){matchView="list";store.set("fk-mview","list");}else if(k==="kind"){mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}}else if(k.startsWith("tier:"))tiers.delete(k.slice(5));else if(k==="fav")favOnly=false;else if(k==="dates"){const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}}
+  const k=t.dataset.mrm;if(k==="q"){MQ=null;cityEl.value="";cityQ="";document.getElementById("cityClear").hidden=true;}else if(k==="view"){matchView="list";store.set("fk-mview","list");}else if(k==="kind"){mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}}else if(k.startsWith("tier:"))tiers.delete(k.slice(5));else if(k==="fav")favOnly=false;else if(k==="dates"){const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}}
   renderMatches();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("mSheet")?.hidden)mSheetOpen(false);});
 // dra rutan nedåt för att stänga (från greppet/rubriken, eller var som helst när rutan är scrollad högst upp)
@@ -1918,14 +1923,14 @@ function renderMatchList(){
   const el=document.getElementById("matchList"),cn=document.getElementById("matchCount");
   if(dbState!=="ready"){cn.textContent="";
     el.innerHTML=`<div class="empty">${dbState==="loading"?$t("Hämtar matchschemat…"):dbState==="none"?$t("<b>Matchschemat kan inte visas här.</b><div>Öppna sidan inloggad på claude.ai för att se matcher. Klubbsöket fungerar ändå.</div>"):$t("<b>Matchschemat är tomt.</b><div>Inga matcher är inlagda ännu.</div>")}</div>`;return;}
-  const sel=[];MATCHES.forEach(m=>{if(!inDates(m))return;if(!gOkM(m))return;if(tiers.size&&!tiers.has(tierOf(m)))return;if(favOnly&&favList().length){if(isFav(m.home)||isFav(m.away))sel.push([m,-1]);return;}const d=placeDist(m,place);if(d===null)return;sel.push([m,d]);});
+  const sel=[];MATCHES.forEach(m=>{if(!inDates(m))return;if(!gOkM(m))return;if(tiers.size&&!tiers.has(tierOf(m)))return;if(MQ&&!mqOk(m))return;if(favOnly&&favList().length){if(isFav(m.home)||isFav(m.away))sel.push([m,-1]);return;}if(MQ){sel.push([m,-1]);return;}const d=placeDist(m,place);if(d===null)return;sel.push([m,d]);});
   const byDay=new Map(),tbd=[];
   sel.sort((a,b)=>sortM(a[0],b[0])).forEach(x=>{if(!x[0].kickoff){tbd.push(x);return;}const k=dayKey(new Date(x[0].kickoff));if(!byDay.has(k))byDay.set(k,[]);byDay.get(k).push(x);});
-  const n=sel.length;const where=favOnly&&favList().length?$t(" med {0}",[favList().length===1?esc(C[favList()[0]].n):$t("dina favoritlag")]):!hasQ?$t(" i hela världen"):radius===0?` i ${esc(cityQ)}`:$t(" inom {0} från {1}",[milU(radius),esc(place&&place.ll?place.name:cityQ)]);
+  const n=sel.length;const where=MQ?(MQ.t==="team"?$t(" med {0}",[esc(MQ.l)]):$t(" i {0}",[esc(MQ.l)])):favOnly&&favList().length?$t(" med {0}",[favList().length===1?esc(C[favList()[0]].n):$t("dina favoritlag")]):!hasQ?$t(" i hela världen"):radius===0?` i ${esc(cityQ)}`:$t(" inom {0} från {1}",[milU(radius),esc(place&&place.ll?place.name:cityQ)]);
   const dTxt=dFrom===dTo?dayLong(dFrom):`${dayLong(dFrom)} – ${dayLong(dTo)}`;
   cn.innerHTML=`<b>${n}</b> ${n===1?$t("match"):$t("matcher")}${where} · ${esc(dTxt)}`;
   // antalsraden behövs bara när den säger något mer än dagsrubrikerna (sökt ort eller Mina lag)
-  {const tb=document.getElementById("matchTb");if(tb)tb.hidden=!(hasQ||(favOnly&&favList().length)||matchView==="double");const g=document.getElementById("mSheetGo");if(g)g.textContent=matchView==="double"?$t("Klar"):n===1?$t("Visa 1 match"):$t("Visa {0} matcher",[n]);}
+  {const tb=document.getElementById("matchTb");if(tb)tb.hidden=!(hasQ||MQ||(favOnly&&favList().length)||matchView==="double");const g=document.getElementById("mSheetGo");if(g)g.textContent=matchView==="double"?$t("Klar"):n===1?$t("Visa 1 match"):$t("Visa {0} matcher",[n]);}
   if(!n){const maxDay=MATCHES.reduce((mx,m)=>{const k=m.kickoff?koDay(m.kickoff):m.dateTo;return k>mx?k:mx;},"");let why=$t("Prova fler dagar, ett större avstånd eller en annan serienivå.");
     if(dFrom>maxDay)why=$t("Schemat sträcker sig just nu till och med {0}, så det finns inga matcher inlagda för de här datumen än.",[esc(dayLong(maxDay))]);
     else if(hasQ&&radius>0&&place&&!place.ll)why=$t("Hitta orten först, så kan avståndet räknas ut.");
@@ -3977,20 +3982,40 @@ const qEl=document.getElementById("q"),cityEl=document.getElementById("city");
 let qT;qEl.addEventListener("input",()=>{clearTimeout(qT);qT=setTimeout(()=>{q=qEl.value.trim();openClub=null;document.getElementById("qClear").hidden=!q;renderClubs();},120);});
 document.getElementById("qClear").onclick=()=>{qEl.value="";q="";document.getElementById("qClear").hidden=true;renderClubs();qEl.focus();};
 let CITY_LIST=[];
+function mqIndex(){if(mqIndex.f===MATCHES)return mqIndex.r;const used=new Set(),ctry=new Set(),comps=new Set();
+  MATCHES.forEach(m=>{if(m.home)used.add(m.home);if(m.away)used.add(m.away);if(m.country)ctry.add(m.country);if(m.comp)comps.add(m.comp);});
+  mqIndex.f=MATCHES;return mqIndex.r={used,ctry:[...ctry],comps:[...comps]};}
+// träffar för en text: [[typ, värde, etikett, undertext]], bästa först per grupp
+function mqHits(txt){const nq=norm(txt);if(nq.length<2)return{teams:[],ctry:[],comps:[]};const ix=mqIndex();
+  const sc=(...names)=>{let b=0;for(const x of names){const v=norm(x);if(!v)continue;if(v===nq)return 3;if(v.startsWith(nq))b=Math.max(b,2);else if((" "+v).includes(" "+nq))b=Math.max(b,1.5);else if(nq.length>=3&&v.includes(nq))b=Math.max(b,1);}return b;};
+  const teams=[];for(const id in C){const c=C[id];const s0=sc(c.n,$t(c.n),c.a);if(!s0)continue;teams.push([s0+(ix.used.has(id)?1:0),id,c]);}
+  teams.sort((a,b)=>b[0]-a[0]||a[2].n.localeCompare(b[2].n,LANG));
+  const ctry=ix.ctry.map(c=>[sc(c,$t(c)),c]).filter(x=>x[0]).sort((a,b)=>b[0]-a[0]);
+  const comps=ix.comps.map(c=>[sc(c,$t(c)),c]).filter(x=>x[0]).sort((a,b)=>b[0]-a[0]);
+  return{teams:teams.slice(0,5).map(([,id,c])=>["team",id,$t(c.n),isNat(c)?$t(c.l):c.city?$t(c.city):""]),ctry:ctry.slice(0,3).map(([,c])=>["country",c,$t(c),""]),comps:comps.slice(0,3).map(([,c])=>["league",c,$t(c),""])};}
 function citySugg(){const box=document.getElementById("citySug");const nq=norm(cityEl.value);
   if(!nq||document.activeElement!==cityEl){box.hidden=true;return;}
   if(!CITY_LIST.length)CITY_LIST=[...new Set([...MATCHES.map(m=>m.city),...Object.keys(GEO)])].filter(Boolean).sort((a,b)=>a.localeCompare(b,LANG));
-  const hits=CITY_LIST.filter(c=>norm(c).startsWith(nq)).concat(CITY_LIST.filter(c=>!norm(c).startsWith(nq)&&norm(c).includes(nq))).slice(0,6);
-  if(!hits.length||(hits.length===1&&norm(hits[0])===nq)){box.hidden=true;return;}
-  box.innerHTML=hits.map(c=>`<button type="button" class="chip" data-citypick="${esc(c)}">${esc(c)}</button>`).join("");box.hidden=false;}
-function pickCity(c){cityEl.value=c;cityQ=c;document.getElementById("cityClear").hidden=false;document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}
-cityEl.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(cT);cityQ=cityEl.value.trim();document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}});
+  let hits=CITY_LIST.filter(c=>norm(c).startsWith(nq)).concat(CITY_LIST.filter(c=>!norm(c).startsWith(nq)&&norm(c).includes(nq))).slice(0,4);
+  if(hits.length===1&&norm(hits[0])===nq&&!MQ)hits=[];
+  const h=mqHits(cityEl.value);const isSel=(t,v)=>MQ&&MQ.t===t&&MQ.v===v;
+  const grp=(lbl,arr)=>arr.length?`<div class="sgl">${lbl}</div>`+arr.map(([t,v,l,sub])=>`<button type="button" class="chip" data-mqpick="${esc(t)}" data-mqv="${esc(v)}" data-mql="${esc(l)}" aria-pressed="${isSel(t,v)}">${esc(l)}${sub?`<small>${esc(sub)}</small>`:""}</button>`).join(""):"";
+  const html=(hits.length?`<div class="sgl">${$t("Städer")}</div>`+hits.map(c=>`<button type="button" class="chip" data-citypick="${esc(c)}">${esc(c)}</button>`).join(""):"")
+    +grp($t("Lag"),h.teams)+grp($t("Länder"),h.ctry)+grp($t("Serier och cuper"),h.comps);
+  if(!html){box.hidden=true;return;}
+  box.innerHTML=html;box.hidden=false;}
+function pickMQ(t,v,l){MQ={t,v,l};cityEl.value=l;cityQ="";document.getElementById("cityClear").hidden=false;document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}
+// skriven text utan att välja i listan: exakt namn på land/serie/lag (och inte en känd ort) blir en sådan sökning
+function mqExact(txt){const nq=norm(txt);if(!nq||CITY_LIST.some(c=>norm(c)===nq)||GEO[txt])return null;const h=mqHits(txt);
+  for(const x of [...h.ctry,...h.comps,...h.teams])if(norm(x[2])===nq||norm(x[1])===nq)return{t:x[0],v:x[1],l:x[2]};return null;}
+function pickCity(c){MQ=null;cityEl.value=c;cityQ=c;document.getElementById("cityClear").hidden=false;document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}
+cityEl.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(cT);MQ=mqExact(cityEl.value.trim());cityQ=MQ?"":cityEl.value.trim();document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}});
 cityEl.addEventListener("blur",()=>setTimeout(()=>{document.getElementById("citySug").hidden=true;},200));
 cityEl.addEventListener("input",citySugg);
 document.getElementById("citySug").addEventListener("pointerdown",e=>e.preventDefault());
-document.getElementById("citySug").addEventListener("click",e=>{const b=e.target.closest("[data-citypick]");if(b)pickCity(b.dataset.citypick);});
-let cT;cityEl.addEventListener("input",()=>{clearTimeout(cT);cT=setTimeout(()=>{cityQ=cityEl.value.trim();document.getElementById("cityClear").hidden=!cityQ;renderMatches();},300);});
-document.getElementById("cityClear").onclick=()=>{cityEl.value="";cityQ="";document.getElementById("cityClear").hidden=true;renderMatches();cityEl.focus();};
+document.getElementById("citySug").addEventListener("click",e=>{const b=e.target.closest("[data-citypick]");if(b){pickCity(b.dataset.citypick);return;}const q2=e.target.closest("[data-mqpick]");if(q2)pickMQ(q2.dataset.mqpick,q2.dataset.mqv,q2.dataset.mql);});
+let cT;cityEl.addEventListener("input",()=>{clearTimeout(cT);cT=setTimeout(()=>{const v=cityEl.value.trim();MQ=mqExact(v);cityQ=MQ?"":v;document.getElementById("cityClear").hidden=!v;renderMatches();citySugg();},300);});
+document.getElementById("cityClear").onclick=()=>{MQ=null;cityEl.value="";cityQ="";document.getElementById("cityClear").hidden=true;renderMatches();cityEl.focus();};
 document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.target.closest("button,[data-club]");if(!t)return;
   if(!t.matches("button")&&e.target.closest("[data-noclose]"))return;
   if(t.dataset.cmore){clubLimit+=60;renderClubs();return;}
@@ -4031,10 +4056,10 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.dataset.tblc!==undefined){const ls=tblLeagues(true).filter(x=>x.c===t.dataset.tblc);if(ls.length){tblLeague=ls[0].l;tblHL=null;store.set("fk-tbl",tblLeague);}renderTable();return;}
   if(t.dataset.tbll!==undefined){tblLeague=t.dataset.tbll;tblHL=null;store.set("fk-tbl",tblLeague);renderTable();return;}
   if(t.id==="askAi"){askClaude();return;}
-  if(t.dataset.city){e.stopPropagation();cityEl.value=t.dataset.city;cityQ=t.dataset.city;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),6);radius=0;setMode("matcher");window.scrollTo({top:0});return;}
+  if(t.dataset.city){e.stopPropagation();MQ=null;cityEl.value=t.dataset.city;cityQ=t.dataset.city;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),6);radius=0;setMode("matcher");window.scrollTo({top:0});return;}
   if(t.id==="locate"){locateWithClaude();return;}
   if(t.dataset.tips){tipsQ="";{const qi=document.getElementById("tipsQ");if(qi)qi.value="";}tipsTab=t.dataset.tips;store.set("fk-tips",tipsTab);rerenderQuizHost();return;}
-  if(t.dataset.near){cityEl.value=t.dataset.near;cityQ=t.dataset.near;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),29);radius=+t.dataset.nr||5;store.set("fk-radius",String(radius));
+  if(t.dataset.near){MQ=null;cityEl.value=t.dataset.near;cityQ=t.dataset.near;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),29);radius=+t.dataset.nr||5;store.set("fk-radius",String(radius));
     // nollställ andra filter så att alla matcher i närheten syns (lagvy, Herr/Dam, serie och "bara mina lag" kunde ligga kvar)
     matchView="list";mKind="alla";if(typeof tiers!=="undefined")tiers.clear();favOnly=false;
     setMode("matcher");requestAnimationFrame(()=>{const el=document.getElementById("matchCount");const tb=document.querySelector(".topbar");if(el)window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-(tb?tb.offsetHeight:0)-12)});});return;}

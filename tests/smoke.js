@@ -92,6 +92,8 @@ async function page(b, { lang = "sv", look = "", user = true, fs: data = null, h
       await p.evaluate(() => { const m = MATCHES.find(x => x.kickoff && mTs(x) > Date.now()); document.body.insertAdjacentHTML("beforeend", calBtn(m, "btn", "Kal")); document.querySelector("[data-cal]:last-of-type").click(); });
       await p.waitForTimeout(200);
       check("kalender öppnar val (ingen direktnedladdning)", await p.evaluate(() => document.querySelectorAll("#calOv .calopt").length === 3));
+      check("sök lag i Matcher", await p.evaluate(() => { const m = MATCHES.find(x => x.home && C[x.home] && x.kickoff); if (!m) return false; dFrom = today(); dTo = addDays(today(), 400); pickMQ("team", m.home, C[m.home].n); const n = +document.getElementById("matchCount").querySelector("b").textContent; const ok = n > 0 && n === MATCHES.filter(x => inDates(x) && gOkM(x) && (x.home === m.home || x.away === m.home)).length; document.getElementById("cityClear").click(); return ok && MQ === null; }));
+      check("sökförslag för lag och land", await p.evaluate(() => { const h = mqHits(C[MATCHES.find(x => x.home && C[x.home]).home].n); return h.teams.length > 0; }));
       check("anonym statistik finns", await p.evaluate(() => typeof track === "function" && USAGE_KEYS.size > 50));
       check("logga/kalender: inga sidfel", !errs.length, errs.slice(0, 2).join(" | "));
       await ctx.close();
