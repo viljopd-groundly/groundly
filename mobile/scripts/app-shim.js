@@ -24,6 +24,12 @@
     var h = a.getAttribute("href");
     if (h && REMOTE.test(h)) a.setAttribute("href", LIVE + h.replace(/^\.\//, ""));
   }, true);
+  // iPhone: webbvyn går ända upp under klockan/notchen, så toppraden får luft där
+  var st = document.createElement("style");
+  st.textContent = ".topbar{padding-top:calc(10px + env(safe-area-inset-top,0px))!important}" +
+    ".wrap{padding-top:calc(16px + env(safe-area-inset-top,0px))!important}" +
+    ".topbar{margin-top:calc(-16px - env(safe-area-inset-top,0px))!important}";
+  document.documentElement.appendChild(st);
   // ingen service worker i appen (filerna ligger redan lokalt)
   if (navigator.serviceWorker) {
     try { navigator.serviceWorker.register = function () { return Promise.reject(new Error("app")); }; } catch (e) {}

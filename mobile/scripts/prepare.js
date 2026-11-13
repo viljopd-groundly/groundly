@@ -12,9 +12,9 @@ let html = fs.readFileSync(idx, "utf8");
 // shimmet måste köras före allt annat
 html = html.replace(/<head>/i, '<head><script src="js/app-shim.js"></script>');
 // förhandsvisning (skärmdumpar i simulatorn): bläddrar själv mellan vyerna
-if (process.env.PREVIEW) html = html.replace(/<\/body>/i, `<script>(function(){var v=["hem","matcher","resa","mine"],i=0;
-  function next(){try{if(typeof goTop==="function")goTop(v[i]);else setMode(v[i]);window.scrollTo(0,0);}catch(e){}i++;if(i<v.length)setTimeout(next,10000);}
-  setTimeout(next,12000);})();</script></body>`);
+if (process.env.PREVIEW) html += `<script>(function(){var v=["hem","matcher","resa","mine"],i=0;
+  function next(){try{var b=document.querySelector('.bnav [data-bn="'+v[i]+'"]');if(b)b.click();else goTop(v[i]);window.scrollTo(0,0);}catch(e){}i++;if(i<v.length)setTimeout(next,10000);}
+  setTimeout(next,12000);})();</script>`;
 fs.writeFileSync(idx, html);
 const kb = d => fs.readdirSync(d, { withFileTypes: true }).reduce((s, e) => s + (e.isDirectory() ? kb(path.join(d, e.name)) : fs.statSync(path.join(d, e.name)).size), 0);
 console.log(`www/ klar: ${(kb(OUT) / 1048576).toFixed(1)} MB`);
