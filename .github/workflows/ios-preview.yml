@@ -1,0 +1,54 @@
+name: iPhone-förhandsvisning
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["mobile/**", ".github/workflows/ios-preview.yml"]
+permissions:
+  contents: write
+concurrency: { group: ios-preview, cancel-in-progress: true }
+jobs:
+  build:
+    runs-on: macos-15
+    defaults: { run: { working-directory: mobile } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Bygg webbappen
+        working-directory: .
+        run: node scripts/build-web.js
+      - name: Capacitor
+        env: { PREVIEW: "1" }
+        run: |
+          npm install --no-audit --no-fund @capacitor/core@^7 @capacitor/cli@^7 @capacitor/ios@^7 @capacitor/assets@^3
+          node scripts/prepare.js
+          [ -d ios ] || npx cap add ios
+          npx capacitor-assets generate --ios --iconBackgroundColor '#0B1224' --splashBackgroundColor '#0B1224' --splashBackgroundColorDark '#0B1224' || echo "ikoner: hoppar över"
+          npx cap sync ios
+      - name: Bygg för simulatorn
+        run: |
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App -configuration Debug -sdk iphonesimulator \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet
+      - name: Starta och ta skärmdumpar
+        run: |
+          DEV=$(xcrun simctl list devices available -j | python3 -c "import json,sys;d=json.load(sys.stdin)['devices'];c=[x for k in sorted(d) if 'iOS' in k for x in d[k] if x['name'].startswith('iPhone 16') or x['name'].startswith('iPhone 17')];print(c[-1]['udid'])")
+          xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
+          xcrun simctl status_bar "$DEV" override --time 9:41 --batteryState charged --batteryLevel 100 --cellularBars 4 || true
+          APP=$(find build/Build/Products/Debug-iphonesimulator -maxdepth 1 -name "*.app" | head -1)
+          xcrun simctl install "$DEV" "$APP"
+          xcrun simctl launch "$DEV" football.groundly.app
+          mkdir -p shots
+          sleep 9;  xcrun simctl io "$DEV" screenshot shots/1-start.png
+          sleep 8;  xcrun simctl io "$DEV" screenshot shots/2-hem.png
+          sleep 10; xcrun simctl io "$DEV" screenshot shots/3-matcher.png
+          sleep 10; xcrun simctl io "$DEV" screenshot shots/4-resa.png
+          sleep 10; xcrun simctl io "$DEV" screenshot shots/5-min-fotboll.png
+          xcrun simctl ui "$DEV" appearance dark; xcrun simctl terminate "$DEV" football.groundly.app; xcrun simctl launch "$DEV" football.groundly.app
+          sleep 20; xcrun simctl io "$DEV" screenshot shots/6-hem-morkt.png
+          ls -la shots
+      - name: Lägg upp skärmdumparna
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          gh release delete ios-preview --yes --cleanup-tag 2>/dev/null || true
+          gh release create ios-preview shots/*.png --prerelease --title "Groundly på iPhone (simulator)" --notes "Skärmdumpar från iPhone-simulatorn $(date -u +%F)."
