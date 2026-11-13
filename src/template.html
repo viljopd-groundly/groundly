@@ -942,7 +942,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 .profhead{display:flex;gap:12px;align-items:center}
 .profhead h2{margin:0}
 .pav{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--chalk);font:800 calc(20px*var(--fs)) var(--f-display);flex:0 0 auto}
-.proflist{display:flex;flex-direction:column;gap:6px}
+.proflist{display:flex;flex-direction:column;gap:6px}.pfmore[hidden]{display:none!important}.pftog{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:8px;padding:8px 12px;border-radius:12px;background:var(--soft);color:var(--fg);font-weight:700;font-size:14px}.pftog[aria-expanded="true"] .sgchev{transform:rotate(180deg);background:var(--accent)}.pftog[aria-expanded="true"] .sgchev::after{background:var(--chalk,#fff)}
 .plink{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:2px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
 .plink.static{cursor:default}
 @media (hover:hover){.plink:not(.static):hover{border-color:var(--accent)}}
@@ -5654,8 +5654,8 @@ function renderProfil(){const el=document.getElementById("profilBody");if(!el)re
       <h3 class="sec">${$t("Följer dig")} <span class="meta">(${fw.length})</span></h3>${ppl(fw,MY.showFo?$t("Ingen följer dig än."):$t("Syns bara för dem som valt att visa vilka de följer."),true)}</article>
     ${friendsHtml()}
     <article class="tip"><div class="lbl">${$t("Det du skrivit")}</div>
-      <h3 class="sec">${$t("Matchberättelser")} <span class="meta">(${reps.length})</span></h3>${reps.length?`<div class="proflist">${reps.slice(0,8).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${r.draft?$t("Utkast · syns bara för dig"):esc(ago(r.at))}</span></button>`).join("")}</div>`:`<p class="meta">${$t("Inga matchberättelser än.")} <button class="link strong" data-gomode="reportage">${$t("Skriv matchberättelse")}</button></p>`}
-      <h3 class="sec">${$t("Forumtrådar")} <span class="meta">(${ths.length})</span></h3>${ths.length?`<div class="proflist">${ths.slice(0,8).map(t=>`<button class="plink" data-upthread="${esc(t.key)}"><b>${esc(t.title)}</b><span class="meta">${esc(ago(t.at))}</span></button>`).join("")}</div>`:`<p class="meta">${$t("Inga trådar än.")} <button class="link strong" data-gomode="forum">${$t("Till forumet")}</button></p>`}</article>
+      <h3 class="sec">${$t("Matchberättelser")} <span class="meta">(${reps.length})</span></h3>${reps.length?profFold("rep",reps.slice(0,50).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${r.draft?$t("Utkast · syns bara för dig"):esc(ago(r.at))}</span></button>`)):`<p class="meta">${$t("Inga matchberättelser än.")} <button class="link strong" data-gomode="reportage">${$t("Skriv matchberättelse")}</button></p>`}
+      <h3 class="sec">${$t("Forumtrådar")} <span class="meta">(${ths.length})</span></h3>${ths.length?profFold("th",ths.slice(0,50).map(t=>`<button class="plink" data-upthread="${esc(t.key)}"><b>${esc(t.title)}</b><span class="meta">${esc(ago(t.at))}</span></button>`)):`<p class="meta">${$t("Inga trådar än.")} <button class="link strong" data-gomode="forum">${$t("Till forumet")}</button></p>`}</article>
     <article class="tip"><div class="lbl">${$t("Inställningar för communityn")}</div>
       <label class="fld" for="ccSel">${$t("Land (flagga vid ditt namn)")}<select id="ccSel"><option value="none"${MY.cc==="none"?" selected":""}>${$t("Visa ingen flagga")}</option>${Object.values(C).filter(c=>c.l==="Landslag").map(c=>[c.id,$t(c.n)]).sort((a,b)=>a[1].localeCompare(b[1],LANG)).map(([id,n])=>`<option value="${id}"${myCc()===id?" selected":""}>${esc(n)}</option>`).join("")}</select></label>
       <p class="hint">${$t("Din profilbild är märket för ditt första favoritlag. Byt favoritlag under Min fotboll.")}</p>
@@ -5665,6 +5665,11 @@ function renderProfil(){const el=document.getElementById("profilBody");if(!el)re
       ${NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join("")}</article>
     <article class="tip"><div class="lbl">${$t("Konto")}</div><p class="meta" style="margin:0 0 8px">${$t("Inloggning, utloggning och radering av kontot.")}${isMod?" "+$t("Här finns också rättelser och feedback för moderatorer."):""}</p>
       <div class="actions"><button class="btn small" data-gacct data-gacctdlg>${$t("Kontoinställningar")}</button>${isMod?`<button class="btn small" data-goMod="1">${$t("Rättelser och feedback")}</button><button class="btn small" data-ustats="1">${ic("table")} Statistik</button>`:""}</div></article>`;}
+// Det du skrivit: visa de två senaste, resten fälls ut under (utan omritning, så inget hoppar)
+const PROF_MORE={rep:false,th:false};
+function profFold(k,rows){const open=PROF_MORE[k];const more=rows.length-2;
+  return`<div class="proflist">${rows.slice(0,2).join("")}${more>0?`<div class="proflist pfmore" data-pfm="${k}"${open?"":" hidden"}>${rows.slice(2).join("")}</div>`:""}</div>${more>0?`<button class="pftog" data-pftog="${k}" aria-expanded="${open}"><span>${open?$t("Visa färre"):$t("Visa alla ({0})",[rows.length])}</span><span class="sgchev" aria-hidden="true"></span></button>`:""}`;}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-pftog]");if(!b)return;const k=b.dataset.pftog;PROF_MORE[k]=!PROF_MORE[k];const box=document.querySelector(`[data-pfm="${k}"]`);if(box)box.hidden=!PROF_MORE[k];b.setAttribute("aria-expanded",PROF_MORE[k]);b.querySelector("span").textContent=PROF_MORE[k]?$t("Visa färre"):$t("Visa alla ({0})",[box?box.children.length+2:0]);});
 document.addEventListener("change",e=>{if(e.target.id!=="ccSel"||myState!=="ready")return;const v=e.target.value;mutate(d=>{d.cc=v;});toast(v==="none"?$t("Ingen flagga visas vid ditt namn."):$t("Flaggan är sparad."),"check");});
 document.addEventListener("change",e=>{const k=e.target.dataset&&e.target.dataset.profset;if(!k||myState!=="ready")return;const on=e.target.checked;
   mutate(d=>{d[k]=on;});if(k==="pub")setTimeout(()=>{try{syncStats();}catch(x){}},50);else setTimeout(syncPublic,50);
