@@ -1,9 +1,6 @@
 name: iPhone-förhandsvisning
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: ["mobile/**", ".github/workflows/ios-preview.yml"]
 permissions:
   contents: write
 concurrency: { group: ios-preview, cancel-in-progress: true }
