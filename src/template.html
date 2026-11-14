@@ -897,7 +897,7 @@ html:root:not([data-look]) .tip.hero{isolation:isolate}
 .commtabs button{all:unset;position:relative;box-sizing:border-box;cursor:pointer;text-align:center;font:600 calc(15px*var(--fs)) var(--f-body);color:var(--muted);padding:9px 10px;border-radius:9px}
 .commtabs button[aria-current="true"]{background:var(--accent);color:var(--chalk)}
 .commtabs button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-@media (min-width:761px){.commtabs{display:none}}
+
 
 /* månadens skribenter */
 .writers{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:2px}
@@ -1176,6 +1176,55 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 .accdot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 1px var(--line)}
 /* toppraden: ogenomskinlig i stället för suddig glaseffekt, som annars räknas om vid varje scrollsteg */
 :root[data-look] .topbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--bg)}
+
+/* ---------- dator: toppmeny i full bredd, bredare innehåll ---------- */
+.dnav{display:none}
+@media (min-width:761px){
+  html{overflow-x:clip}
+  .modes{display:none!important}
+  .wrap{max-width:1120px;padding-left:24px;padding-right:24px}
+  .topbar{display:flex!important;align-items:center;gap:14px;margin:-16px calc(50% - 50vw) 4px!important;padding:10px max(24px,calc(50vw - 560px))!important;border-radius:0!important;border:0!important;border-bottom:1px solid var(--line)!important;overflow:visible!important}
+  .topbar .tbtitle{display:none!important}
+  .topbar .brand{flex:none}
+  .dnav{display:flex;align-items:center;gap:2px;flex:1;min-width:0;margin-left:10px}
+  .dn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font:600 calc(14.5px*var(--fs)) var(--f-body);color:var(--muted);padding:8px 12px;border-radius:999px}
+  .dn .ic{width:15px;height:15px}
+  #dMore .ic{transform:rotate(90deg);transition:transform .15s}#dMore[aria-expanded="true"] .ic{transform:rotate(-90deg)}
+  .dn:hover{color:var(--fg);background:var(--soft)}
+  .dn[aria-current="true"]{color:var(--accent);background:var(--accent-soft)}
+  .dn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  .dplus{margin-left:auto;background:var(--accent);color:var(--chalk,#fff);padding:8px 16px 8px 12px}
+  .dplus:hover{background:var(--accent);color:var(--chalk,#fff);filter:brightness(1.08)}
+  .dplus .ic{width:17px;height:17px}
+  /* Mer och Skapa fälls ner under knappen */
+  .msheet:not([hidden]){display:block;position:fixed;inset:0;z-index:58}
+  .msheet .msback{position:absolute;inset:0;background:transparent}
+  .msheet .mspanel{position:absolute;top:var(--ddy,64px);left:var(--ddx,24px);width:min(440px,calc(100vw - 32px));padding:12px;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:0 12px 32px rgba(0,0,0,.18)}
+  #moreSheet .msgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  #moreSheet .msi[data-bn="resa"],#moreSheet .msi[data-bn="community"]{display:none}
+  .msi{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;font:600 14px var(--f-body);color:var(--fg)}
+  .msi b{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--soft);color:var(--accent);flex:none}
+  .msi .ic{width:18px;height:18px}
+  .msi:hover{background:var(--soft)}
+  .msi[aria-current="true"]{background:var(--accent-soft);color:var(--accent)}
+  #plusSheet .plist{display:flex;flex-direction:column;gap:4px}
+  #plusSheet .pitem{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:12px;align-items:center;padding:10px;border-radius:12px;color:var(--fg)}
+  #plusSheet .pitem:hover{background:var(--soft)}
+  #plusSheet .pitem b{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent);flex:none}
+  #plusSheet .pitem .ic{width:19px;height:19px}
+  #plusSheet .pitem span{display:flex;flex-direction:column;gap:2px}
+  #plusSheet .pitem strong{font:700 14.5px var(--f-body)}
+  #plusSheet .pitem small{font-size:13px;color:var(--muted)}
+}
+@media (min-width:761px) and (max-width:1120px){.topbar .gacc-btn .gl{display:none}.topbar .gacc-btn{width:38px;padding:0!important;justify-content:center}}
+@media (min-width:761px) and (max-width:1000px){.dn{padding:8px 8px;font-size:14px}.dnav{margin-left:2px}.dplus{font-size:0;padding:8px 10px}.dplus .ic{width:18px;height:18px}.topbar .betadot{display:none}.topbar{gap:8px}}
+@media (min-width:761px){.topbar{margin-left:calc(50% - 50vw + var(--sbw,0px)/2)!important;margin-right:calc(50% - 50vw + var(--sbw,0px)/2)!important;padding-left:max(24px,calc(50vw - var(--sbw,0px)/2 - 560px))!important;padding-right:max(24px,calc(50vw - var(--sbw,0px)/2 - 560px))!important}}
+/* startsidan på bred skärm: korten två och två */
+@media (min-width:1024px){
+  #homeBody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;gap:14px;align-items:start}
+  #homeBody>*{margin:0!important;min-width:0}
+  #homeBody>.howto,#homeBody>.community,#homeBody>.homecust,#homeBody>.wide{grid-column:1/-1}
+}
 </style>
 
 <div class="wrap">
@@ -1196,6 +1245,15 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 
   <header class="topbar">
     <button class="brand" data-bn="hem" aria-label="Groundly, till startsidan"><img class="logo blogo" id="brandLogo" src="logos/stadion.png" width="34" height="34" alt="" decoding="async"><span class="wordmark"><span>Ground</span>ly</span><span class="betadot" title="Betaversion">beta</span></button>
+    <nav class="dnav" aria-label="Huvudmeny">
+      <button class="dn" data-bn="hem">Hem</button>
+      <button class="dn" data-bn="matcher">Matcher</button>
+      <button class="dn" data-bn="resa">Planera resa</button>
+      <button class="dn" data-bn="community">Community</button>
+      <button class="dn" data-bn="mine">Min fotboll</button>
+      <button class="dn" id="dMore" data-dd="more" aria-expanded="false" aria-controls="moreSheet">Mer<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+      <button class="dn dplus" id="dPlus" data-dd="plus" aria-expanded="false" aria-controls="plusSheet"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>Skapa</button>
+    </nav>
     <span class="tbtitle" id="tbTitle"></span>
     <button class="iconbtn" id="themeBtn" aria-haspopup="dialog" aria-label="Inställningar" title="Inställningar"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
   </header>
@@ -1623,22 +1681,25 @@ try{localStorage.removeItem("fk-fokus");localStorage.removeItem("fk-fkstyle");}c
 const isComm=m=>m==="flode"||m==="forum"||m==="reportage";
 const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"flode";}catch(e){return"flode";}};
 function syncNav(){if(isComm(mode))try{store.set("fk-comm",mode);}catch(e){}document.querySelectorAll("[data-bn]").forEach(b=>b.setAttribute("aria-current",String(b.dataset.bn===mode||(b.dataset.bn==="community"&&isComm(mode)))));
-  const more=document.getElementById("bnMore");if(more)more.setAttribute("aria-current",String(MORE_MODES.includes(mode)));}
-function closePlus(){const sh=document.getElementById("plusSheet");if(sh)sh.hidden=true;document.getElementById("bnLog")?.setAttribute("aria-expanded","false");}
+  const more=document.getElementById("bnMore");if(more)more.setAttribute("aria-current",String(MORE_MODES.includes(mode)));const dm=document.getElementById("dMore");if(dm)dm.setAttribute("aria-current",String(["tabell","klubbar","landslag","arenor","tips","quiz"].includes(mode)));}
+function closePlus(){const sh=document.getElementById("plusSheet");if(sh)sh.hidden=true;document.getElementById("dPlus")?.setAttribute("aria-expanded","false");document.getElementById("bnLog")?.setAttribute("aria-expanded","false");}
 // plusmenyn: logga match, skriv reportage eller fråga i forumet
 document.addEventListener("click",e=>{const b=e.target.closest("[data-plus],#plusBack");if(!b)return;closePlus();if(b.id==="plusBack")return;const k=b.dataset.plus;
   if(k==="log"){if(myState!=="ready"){goTop("mine");return;}openLogMatch(null,null);return;}
   if(k==="trip"){goTop("resa");window.scrollTo({top:0});return;}
   if(k==="rep"){goTop("reportage");window.scrollTo({top:0});setTimeout(()=>{try{startRepDraft();}catch(x){}},0);return;}
   if(k==="ask"){goTop("forum");window.scrollTo({top:0});composing=true;forumMsg="";renderForum();setTimeout(()=>document.getElementById("fTitle")?.focus({preventScroll:true}),0);}},true);
-function closeMore(){closePlus();const sh=document.getElementById("moreSheet");if(sh)sh.hidden=true;document.getElementById("bnMore")?.setAttribute("aria-expanded","false");}
+{const sbw=()=>document.documentElement.style.setProperty("--sbw",(innerWidth-document.documentElement.clientWidth)+"px");sbw();addEventListener("resize",sbw);addEventListener("load",sbw);}
+function ddPos(sh,btn){const r=btn.getBoundingClientRect();const w=Math.min(440,innerWidth-32);const x=btn.id==="dPlus"?r.right-w:r.left;sh.style.setProperty("--ddx",Math.max(16,Math.min(x,innerWidth-w-16))+"px");sh.style.setProperty("--ddy",(r.bottom+8)+"px");}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-dd]");if(!b)return;e.stopPropagation();const plus=b.dataset.dd==="plus";const sh=document.getElementById(plus?"plusSheet":"moreSheet");const open=sh.hidden;closeMore();if(open){ddPos(sh,b);sh.hidden=false;b.setAttribute("aria-expanded","true");}},true);
+function closeMore(){closePlus();document.getElementById("dMore")?.setAttribute("aria-expanded","false");document.getElementById("dPlus")?.setAttribute("aria-expanded","false");const sh=document.getElementById("moreSheet");if(sh)sh.hidden=true;document.getElementById("bnMore")?.setAttribute("aria-expanded","false");}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMore,#bnLog,#moreBack");if(!b)return;
   if(b.id==="moreBack"){closeMore();return;}
   if(b.id==="bnMore"){const sh=document.getElementById("moreSheet");const open=sh.hidden;sh.hidden=!open;b.setAttribute("aria-expanded",String(open));return;}
   if(b.id==="bnLog"){const sh=document.getElementById("plusSheet");const open=sh.hidden;closeMore();if(open){sh.hidden=false;b.setAttribute("aria-expanded","true");}return;}
   const to=b.dataset.bn==="community"?(isComm(mode)?mode:commLast()):b.dataset.bn;
   closeMore();if(to!==mode||to==="mine")goTop(to);window.scrollTo({top:0});},true);
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMore();closePlus();}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("moreSheet").hidden){closeMore();}if(e.key==="Escape"){closeMore();closePlus();}});
 
 // ---------- clubs ----------
 // Länder grupperade per världsdel (från landslagens förbund). Värdet "kont:Europa" visar hela världsdelen.
