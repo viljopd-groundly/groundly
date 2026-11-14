@@ -592,7 +592,6 @@
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "Seus {0} jogos mais recentes (times, resultado, estádio e data). Anotações e fotos nunca são compartilhadas.",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "Seus estádios em um mapa, fotos dos jogos registrados e os jogos de Quero ir direto no calendário.",
  "dina favoritlag": "seus clubes favoritos",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Seus jogos e clubes ficam salvos na sua conta Groundly. Se você registrou jogos na versão antiga do app no claude.ai: salve um backup lá e depois, após entrar, escolha Importar backup aqui.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Seus jogos só aparecem para você. Quer que amigos possam te seguir? Então seus {0} jogos mais recentes (times, resultado, estádio e data) ficam visíveis para todos que abrirem o app. Anotações, companhia e fotos nunca são compartilhadas.",
  "Dina matcher syns inte längre för andra.": "Seus jogos não aparecem mais para os outros.",
  "Dina matcher syns nu för andra.": "Seus jogos agora aparecem para os outros.",
@@ -2636,5 +2635,6 @@
  "Sök stad": "Buscar cidade",
  "Serier och cuper": "Ligas e taças",
  "Städer": "Cidades",
- "Sök stad, lag, land eller serie": "Pesquisar cidade, equipa, país ou liga"
+ "Sök stad, lag, land eller serie": "Pesquisar cidade, equipa, país ou liga",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Os teus jogos e clubes ficam guardados na tua conta Groundly, para os veres em todos os teus dispositivos."
 }

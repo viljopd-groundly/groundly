@@ -592,7 +592,6 @@
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "Je {0} laatste wedstrijden (teams, uitslag, stadion en datum). Notities en foto's worden nooit gedeeld.",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "Je stadions op een kaart, foto's bij gelogde wedstrijden en Wil ik heen-wedstrijden rechtstreeks in je agenda.",
  "dina favoritlag": "je favoriete clubs",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Je wedstrijden en clubs worden in je Groundly-account opgeslagen. Heb je wedstrijden gelogd in de oude versie van de app op claude.ai: sla daar een back-up op en kies hier na het inloggen Back-up inlezen.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Je wedstrijden zijn alleen voor jou zichtbaar. Wil je dat vrienden je kunnen volgen? Dan worden je {0} laatste wedstrijden (teams, uitslag, stadion en datum) getoond aan iedereen die de app kan openen. Notities, gezelschap en foto's worden nooit gedeeld.",
  "Dina matcher syns inte längre för andra.": "Je wedstrijden zijn niet meer zichtbaar voor anderen.",
  "Dina matcher syns nu för andra.": "Je wedstrijden zijn nu zichtbaar voor anderen.",
@@ -2636,5 +2635,6 @@
  "Sök stad": "Zoek stad",
  "Serier och cuper": "Competities en bekers",
  "Städer": "Steden",
- "Sök stad, lag, land eller serie": "Zoek stad, team, land of competitie"
+ "Sök stad, lag, land eller serie": "Zoek stad, team, land of competitie",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Je wedstrijden en clubs worden opgeslagen in je Groundly-account, zodat je ze op al je apparaten hebt."
 }

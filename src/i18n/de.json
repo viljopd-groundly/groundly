@@ -592,7 +592,6 @@
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "Deine {0} letzten Spiele (Teams, Ergebnis, Stadion und Datum). Notizen und Bilder werden nie geteilt.",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "Deine Stadien auf einer Karte, Bilder von eingetragenen Spielen und Will-hin-Spiele direkt in den Kalender.",
  "dina favoritlag": "deine Lieblingsvereine",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Deine Spiele und Vereine werden in deinem Groundly-Konto gespeichert. Hast du in der alten Version der App auf claude.ai Spiele eingetragen: Speichere dort eine Sicherung und wähle nach dem Anmelden hier Sicherung einlesen.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Deine Spiele siehst nur du. Sollen Freunde dir folgen können? Dann werden deine {0} letzten Spiele (Teams, Ergebnis, Stadion und Datum) allen angezeigt, die die App öffnen können. Notizen, Begleitung und Bilder werden nie geteilt.",
  "Dina matcher syns inte längre för andra.": "Deine Spiele sind für andere nicht mehr sichtbar.",
  "Dina matcher syns nu för andra.": "Deine Spiele sind jetzt für andere sichtbar.",
@@ -2637,5 +2636,6 @@
  "Sök stad": "Stadt suchen",
  "Serier och cuper": "Ligen und Pokale",
  "Städer": "Städte",
- "Sök stad, lag, land eller serie": "Stadt, Team, Land oder Liga suchen"
+ "Sök stad, lag, land eller serie": "Stadt, Team, Land oder Liga suchen",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Deine Spiele und Vereine werden in deinem Groundly-Konto gespeichert, sodass du auf all deinen Geräten darauf zugreifen kannst."
 }

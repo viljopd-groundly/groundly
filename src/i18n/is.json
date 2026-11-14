@@ -592,7 +592,6 @@
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "{0} nýjustu leikirnir þínir (lið, úrslit, völlur og dagsetning). Athugasemdum og myndum er aldrei deilt.",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "Vellirnir þínir á korti, myndir af skráðum leikjum og Langar að fara-leikir beint í dagatalið.",
  "dina favoritlag": "uppáhaldsliðin þín",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Leikirnir þínir og félögin eru vistuð á Groundly-reikningnum þínum. Ef þú skráðir leiki í gömlu útgáfunni af appinu á claude.ai: vistaðu afrit þar og veldu svo Lesa inn afrit hér eftir innskráningu.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Aðeins þú sérð leikina þína. Viltu að vinir geti fylgt þér? Þá birtast {0} nýjustu leikirnir þínir (lið, úrslit, völlur og dagsetning) öllum sem opna appið. Athugasemdum, félagsskap og myndum er aldrei deilt.",
  "Dina matcher syns inte längre för andra.": "Leikirnir þínir sjást ekki lengur hjá öðrum.",
  "Dina matcher syns nu för andra.": "Leikirnir þínir sjást nú hjá öðrum.",
@@ -2636,5 +2635,6 @@
  "Sök stad": "Leita að borg",
  "Serier och cuper": "Deildir og bikarar",
  "Städer": "Borgir",
- "Sök stad, lag, land eller serie": "Leita að borg, liði, landi eða deild"
+ "Sök stad, lag, land eller serie": "Leita að borg, liði, landi eða deild",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Leikirnir og félögin þín vistast á Groundly-reikningnum þínum svo þú náir í þau í öllum tækjunum þínum."
 }

@@ -54,7 +54,7 @@ const swaps = [
    `Du kan läsa matchberättelserna. Logga in för att skriva och kommentera.</span><button class="btn small primary" data-glogin>Logga in</button>`],
   [`"Logga in på claude.ai för att spara."`, `"Logga in för att spara."`],
   [`<b>Logga in för att spara.</b><div>Dina matcher och klubbar sparas på ditt claude.ai-konto, så du behöver öppna sidan inloggad.</div>`,
-   `<b>Logga in för att spara.</b><div>Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.</div><div style="margin-top:10px">${LOGIN}</div>`],
+   `<b>Logga in för att spara.</b><div>Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.</div><div style="margin-top:10px">${LOGIN}</div>`],
   [`Betygen kan inte visas här. Öppna sidan inloggad på claude.ai.`, `Betygen kunde inte hämtas.`],
   [`"Logga in på claude.ai för att skicka."`, `"Logga in för att skicka."`],
   [`följer med ditt claude.ai-konto.`, `följer med ditt Groundly-konto.`],

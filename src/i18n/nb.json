@@ -592,7 +592,6 @@
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "De {0} siste kampene dine (lag, resultat, arena og dato). Notater og bilder deles aldri.",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "Arenaene dine på et kart, bilde av loggede kamper og Vil gå-kamper rett til kalenderen.",
  "dina favoritlag": "favorittlagene dine",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Kampene og klubbene dine lagres på Groundly-kontoen din. Har du logget kamper i den gamle versjonen av appen på claude.ai: lagre en sikkerhetskopi der, og velg deretter Les inn sikkerhetskopi her etter innlogging.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Kampene dine vises bare for deg. Vil du at venner skal kunne følge deg? Da vises de {0} siste kampene dine (lag, resultat, arena og dato) for alle som kan åpne appen. Notater, følge og bilder deles aldri.",
  "Dina matcher syns inte längre för andra.": "Kampene dine vises ikke lenger for andre.",
  "Dina matcher syns nu för andra.": "Kampene dine vises nå for andre.",
@@ -2637,5 +2636,6 @@
  "Sök stad": "Søk by",
  "Serier och cuper": "Serier og cuper",
  "Städer": "Byer",
- "Sök stad, lag, land eller serie": "Søk by, lag, land eller serie"
+ "Sök stad, lag, land eller serie": "Søk by, lag, land eller serie",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Kampene og klubbene dine lagres på Groundly-kontoen din, så du når dem på alle enhetene dine."
 }

@@ -592,7 +592,6 @@
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "Tes {0} derniers matchs (équipes, score, stade et date). Les notes et les photos ne sont jamais partagées.",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "Tes stades sur une carte, des photos des matchs enregistrés et les matchs J'ai envie d'y aller directement dans ton agenda.",
  "dina favoritlag": "tes clubs favoris",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Tes matchs et tes clubs sont enregistrés dans ton compte Groundly. Si tu as enregistré des matchs dans l'ancienne version de l'appli sur claude.ai : fais-y une sauvegarde puis, après connexion, choisis ici Importer une sauvegarde.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Tes matchs ne sont visibles que par toi. Tu veux que tes amis puissent te suivre ? Alors tes {0} derniers matchs (équipes, score, stade et date) seront visibles par tous ceux qui ouvrent l'appli. Les notes, les accompagnants et les photos ne sont jamais partagés.",
  "Dina matcher syns inte längre för andra.": "Tes matchs ne sont plus visibles par les autres.",
  "Dina matcher syns nu för andra.": "Tes matchs sont maintenant visibles par les autres.",
@@ -2636,5 +2635,6 @@
  "Sök stad": "Chercher une ville",
  "Serier och cuper": "Championnats et coupes",
  "Städer": "Villes",
- "Sök stad, lag, land eller serie": "Rechercher ville, équipe, pays ou championnat"
+ "Sök stad, lag, land eller serie": "Rechercher ville, équipe, pays ou championnat",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Tes matchs et clubs sont enregistrés sur ton compte Groundly, pour les retrouver sur tous tes appareils."
 }

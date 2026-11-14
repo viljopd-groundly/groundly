@@ -592,7 +592,6 @@
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "{0} viimeisintä otteluasi (joukkueet, tulos, stadion ja päivämäärä). Muistiinpanoja ja kuvia ei koskaan jaeta.",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "Stadionisi kartalla, kuvat kirjatuista otteluista ja Haluan mennä -ottelut suoraan kalenteriin.",
  "dina favoritlag": "suosikkijoukkueesi",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Ottelusi ja seurasi tallennetaan Groundly-tilillesi. Jos kirjasit otteluita sovelluksen vanhaan versioon claude.ai:ssa: tallenna siellä varmuuskopio ja valitse kirjautumisen jälkeen täällä Tuo varmuuskopio.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Ottelusi näkyvät vain sinulle. Haluatko, että kaverit voivat seurata sinua? Silloin {0} viimeisintä otteluasi (joukkueet, tulos, stadion ja päivämäärä) näkyvät kaikille sovelluksen avaajille. Muistiinpanoja, seuraa ja kuvia ei koskaan jaeta.",
  "Dina matcher syns inte längre för andra.": "Ottelusi eivät enää näy muille.",
  "Dina matcher syns nu för andra.": "Ottelusi näkyvät nyt muille.",
@@ -2636,5 +2635,6 @@
  "Sök stad": "Hae kaupunkia",
  "Serier och cuper": "Sarjat ja cupit",
  "Städer": "Kaupungit",
- "Sök stad, lag, land eller serie": "Hae kaupunkia, joukkuetta, maata tai sarjaa"
+ "Sök stad, lag, land eller serie": "Hae kaupunkia, joukkuetta, maata tai sarjaa",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Ottelusi ja seurasi tallennetaan Groundly-tilillesi, joten löydät ne kaikilta laitteiltasi."
 }

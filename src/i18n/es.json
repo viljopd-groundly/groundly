@@ -592,7 +592,6 @@
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "Tus {0} últimos partidos (equipos, resultado, estadio y fecha). Las notas y las fotos nunca se comparten.",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "Tus estadios en un mapa, fotos de los partidos registrados y los partidos de Quiero ir directamente al calendario.",
  "dina favoritlag": "tus equipos favoritos",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Tus partidos y clubes se guardan en tu cuenta de Groundly. Si registraste partidos en la versión antigua de la app en claude.ai, guarda allí una copia de seguridad y, después de iniciar sesión, elige aquí Importar copia de seguridad.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Tus partidos solo los ves tú. ¿Quieres que tus amigos puedan seguirte? Entonces tus {0} últimos partidos (equipos, resultado, estadio y fecha) serán visibles para todos los que abran la app. Las notas, los acompañantes y las fotos nunca se comparten.",
  "Dina matcher syns inte längre för andra.": "Tus partidos ya no son visibles para los demás.",
  "Dina matcher syns nu för andra.": "Tus partidos ahora son visibles para los demás.",
@@ -2637,5 +2636,6 @@
  "Sök stad": "Buscar ciudad",
  "Serier och cuper": "Ligas y copas",
  "Städer": "Ciudades",
- "Sök stad, lag, land eller serie": "Buscar ciudad, equipo, país o liga"
+ "Sök stad, lag, land eller serie": "Buscar ciudad, equipo, país o liga",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Tus partidos y clubes se guardan en tu cuenta de Groundly, para que puedas verlos en todos tus dispositivos."
 }

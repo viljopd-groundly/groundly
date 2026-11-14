@@ -592,7 +592,6 @@
  "Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.": "Le tue {0} partite più recenti (squadre, risultato, stadio e data). Note e foto non vengono mai condivise.",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "I tuoi stadi su una mappa, foto delle partite registrate e le partite di Voglio andare direttamente nel calendario.",
  "dina favoritlag": "le tue squadre del cuore",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Le tue partite e i tuoi club sono salvati nel tuo account Groundly. Se hai registrato partite nella vecchia versione dell'app su claude.ai: salva lì un backup e poi, dopo l'accesso, scegli qui Importa backup.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Le tue partite le vedi solo tu. Vuoi che gli amici possano seguirti? Allora le tue {0} partite più recenti (squadre, risultato, stadio e data) saranno visibili a chiunque apra l'app. Note, compagnia e foto non vengono mai condivise.",
  "Dina matcher syns inte längre för andra.": "Le tue partite non sono più visibili agli altri.",
  "Dina matcher syns nu för andra.": "Le tue partite ora sono visibili agli altri.",
@@ -2636,5 +2635,6 @@
  "Sök stad": "Cerca città",
  "Serier och cuper": "Campionati e coppe",
  "Städer": "Città",
- "Sök stad, lag, land eller serie": "Cerca città, squadra, paese o campionato"
+ "Sök stad, lag, land eller serie": "Cerca città, squadra, paese o campionato",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Le tue partite e i tuoi club vengono salvati sul tuo account Groundly, così li ritrovi su tutti i tuoi dispositivi."
 }

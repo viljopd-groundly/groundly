@@ -351,7 +351,6 @@
  "Din säsong": "Your season",
  "Din säsong {0}": "Your season {0}",
  "Dina arenor på en karta, bild på loggade matcher och Vill gå-matcher direkt till kalendern.": "Your grounds on a map, photos on logged matches and Want to go matches straight to your calendar.",
- "Dina matcher och klubbar sparas på ditt Groundly-konto. Har du loggat matcher i den gamla versionen av appen på claude.ai: spara en säkerhetskopia där och välj sedan Läs in säkerhetskopia här efter inloggning.": "Your matches and clubs are saved to your Groundly account. If you logged matches in the old version of the app on claude.ai: save a backup there and then choose Import backup here after logging in.",
  "Dina matcher syns bara för dig. Vill du att vänner ska kunna följa dig? Då visas dina {0} senaste matcher (lag, resultat, arena och datum) för alla som kan öppna appen. Anteckningar, sällskap och bilder delas aldrig.": "Your matches are only visible to you. Want friends to be able to follow you? Then your {0} latest matches (teams, result, ground and date) are shown to everyone who can open the app. Notes, companions and photos are never shared.",
  "Dina matcher syns inte längre för andra.": "Your matches are no longer visible to others.",
  "Dina matcher syns nu för andra.": "Your matches are now visible to others.",
@@ -2725,5 +2724,6 @@
  "Sök stad": "Search city",
  "Serier och cuper": "Leagues and cups",
  "Städer": "Cities",
- "Sök stad, lag, land eller serie": "Search city, team, country or league"
+ "Sök stad, lag, land eller serie": "Search city, team, country or league",
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Your matches and clubs are saved to your Groundly account, so you can reach them on all your devices."
 }
