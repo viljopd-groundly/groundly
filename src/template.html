@@ -4807,6 +4807,11 @@ function carouselHome(ob){const logged=myState==="ready";
     s3=fcSection($t("Min fotboll"),'data-gomine="1"',tiles.join(""));}
   else s3=`<article class="tip fkcta"><div><b>${$t("Varit på en match?")}</b><span class="meta">${$t("Spara den på tio sekunder, så börjar din groundhopperstatistik.")}</span></div><button class="btn primary" data-glogin="up">${ic("plus")} ${$t("Logga en match")}</button></article>`;
   return loc+modAlertHtml()+moveHtml()+remindHtml()+s2+s1+ob+s3+cats;}
+const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
+// "visa mer" på Hem: fäll ut under, skärmen står still. Fälls något ihop och rutans topp hamnat ovanför skärmen, skrolla till rutans topp.
+document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;const card=t.closest("article");const idx=card?[...card.parentElement.children].indexOf(card):-1;
+  homeMore[k]=!homeMore[k];renderHome();
+  if(!homeMore[k]&&idx>=0){const c=document.getElementById("homeBody")?.children[idx];if(c){const top=c.getBoundingClientRect().top;const tb=document.querySelector(".topbar,header");const off=(tb?tb.offsetHeight:0)+8;if(top<off)window.scrollBy(0,top-off);}}});
 function derbyHtml(){const all=derbyNext();const list=homeMore.derby?all:all.slice(0,3);if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">${$t("Nästa derby")}</div><p class="meta">${$t("Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.")}</p></article>`:"";
   return`<article class="tip"><div class="lbl">${$t("Nästa derby i varje land")}</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc($t(land))}</span></div>
     <div class="mmain"><b>${esc($t(d[1]))}</b><span class="meta">${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div></div>`).join("")}</div>${moreBtn("derby",all.length)}</article>`;}
