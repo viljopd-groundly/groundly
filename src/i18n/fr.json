@@ -2638,10 +2638,12 @@
  "Sök stad, lag, land eller serie": "Rechercher ville, équipe, pays ou championnat",
  "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Tes matchs et clubs sont enregistrés sur ton compte Groundly, pour les retrouver sur tous tes appareils.",
  "Biljetter går oftast att köpa på plats, de brukar vara billiga och du kommer nära planen.": "Les billets s'achètent souvent sur place, ils sont bon marché et on est près du terrain.",
- "Form senaste fem: {0} {1} vinster, {2} {3}.": "Forme, cinq derniers : {0} {1} victoires, {2} {3}.",
  "Ligans bästa målskytt {0} ({1} mål) spelar för {2}.": "Le meilleur buteur du championnat, {0} ({1} buts), joue pour {2}.",
  "Om matchen": "À propos du match",
  "Senaste mötet: {0} – {1} {2} ({3}).": "Dernière confrontation : {0} – {1} {2} ({3}).",
  "Tabellen: {0} på plats {1}, {2} på plats {3} av {4}.": "Classement : {0} à la {1}e place, {2} à la {3}e sur {4}.",
- "Toppmöte.": "Choc au sommet."
+ "Toppmöte.": "Choc au sommet.",
+ "1 vinst": "1 victoire",
+ "{n} vinster": "{n} victoires",
+ "Form senaste fem: {0} {1}, {2} {3}.": "Forme, cinq derniers : {0} {1}, {2} {3}."
 }

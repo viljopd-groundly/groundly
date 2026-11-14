@@ -4500,7 +4500,7 @@ function matchFacts(m,opt){const out=[];const hn=tnm(m,"home"),an=tnm(m,"away");
   if(H&&A&&H.r[3]>0){const hp=H.r[2],ap=A.r[2];
     out.push((hp<=3&&ap<=3?$t("Toppmöte.")+" ":"")+$t("Tabellen: {0} på plats {1}, {2} på plats {3} av {4}.",[esc(hn),hp,esc(an),ap,H.n]));
     const w=f=>(String(f||"").slice(-5).match(/W/g)||[]).length;
-    if(H.r[10]&&A.r[10])out.push($t("Form senaste fem: {0} {1} vinster, {2} {3}.",[esc(hn),w(H.r[10]),esc(an),w(A.r[10])]));}
+    const wn=n=>$tn(n,"1 vinst","{n} vinster");if(H.r[10]&&A.r[10])out.push($t("Form senaste fem: {0} {1}, {2} {3}.",[esc(hn),wn(w(H.r[10])),esc(an),wn(w(A.r[10]))]));}
   if(FX_PAST&&m.home&&m.away){const ko=m.kickoff?m.kickoff.slice(0,10):"9999";let last=null;
     for(const r of FX_PAST){if(r[4]&&((r[0]===m.home&&r[1]===m.away)||(r[0]===m.away&&r[1]===m.home))&&r[3]<ko&&(!last||r[3]>last[3]))last=r;}
     if(last){const nm=id=>id===m.home?hn:an;out.push($t("Senaste mötet: {0} – {1} {2} ({3}).",[esc(nm(last[0])),esc(nm(last[1])),esc(last[4]),esc(dayLabel(last[3]))]));}}
@@ -4511,7 +4511,8 @@ function matchFacts(m,opt){const out=[];const hn=tnm(m,"home"),an=tnm(m,"away");
 const factsList=m=>{const f=matchFacts(m);return f.length?`<ul class="mfacts">${f.map(x=>`<li>${x}</li>`).join("")}</ul>`:"";};
 function heroWhy(m){const dby=derbyOf(m),fav=isFav(m.home)||isFav(m.away);
   return dby?`${esc($t(dby[1]))}. ${esc($t(String(dby[4]||"")).split(". ")[0])}.`:fav?$t("Ditt favoritlag spelar."):`${esc(m.comp||"")}${!smallM(m)&&C[m.home]&&C[m.home].cap?$t(" inför upp till {0} åskådare",[C[m.home].cap.toLocaleString(LOC)]):""}.`;}
-function heroSlide(m,i){const k="hero"+i,open=!!homeMore[k];
+// Mer om matchen gäller alla matcher i karusellen: öppna en gång, bläddra och se fakta för varje
+function heroSlide(m,i){const k="hero",open=!!homeMore[k];
   return`<div class="heroslide">
     <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,40)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,40)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>
     <div class="cd">${$t("{0} kl {1} ·",[esc(dayLabel(dayKey(new Date(m.kickoff)))),timeOf(m.kickoff)])} <b>${countdown(m.kickoff)}</b></div>
