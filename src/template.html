@@ -1264,6 +1264,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 :root[data-look="ticket"] #homeBody>.tip.heroswipe>.lbl{font-size:calc(26px*var(--fs))!important;font-weight:800!important;letter-spacing:.005em!important}
 #homeBody>.tip>.sechead:first-child{align-items:baseline}
 .wknear{margin:-4px 0 0}
+.wkrow{align-items:flex-start;overflow-y:hidden;box-sizing:content-box}
 </style>
 
 <div class="wrap">
@@ -4693,7 +4694,7 @@ function remindHtml(){if(!notifOn("remind")||myState!=="ready"||!Array.isArray(M
   if(!due.length)return"";
   return`<article class="tip remind"><div class="lbl">${ic("calendar")} ${$t("Var du där?")}</div>${due.map(w=>`<div class="rmrow"><div><b>${esc(tnm(w,"home"))} – ${esc(tnm(w,"away"))}</b><div class="meta">${esc(dayLong(dayKey(new Date(w.kickoff))))}${w.venue?` · ${esc(w.venue)}`:""}</div></div>
     <div class="actions"><button class="btn small primary" data-wmdone="${esc(w.id)}">${$t("Ja, logga matchen")}</button><button class="btn small" data-wmno="${esc(w.id)}">${$t("Nej")}</button></div></div>`).join("")}</article>`;}
-function renderHome(){const el=document.getElementById("homeBody");if(!el)return;requestAnimationFrame(()=>{if(typeof fitTagline==="function")fitTagline();});try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
+function renderHome(){const el=document.getElementById("homeBody");if(!el)return;requestAnimationFrame(()=>{if(typeof fitTagline==="function")fitTagline();requestAnimationFrame(()=>fitRows(el));});try{requestAnimationFrame(()=>toneHome(el));}catch(e){}
   const ids=Object.keys(STATS).filter(id=>id!==myId&&!(id in NAMES));if(ids.length&&userNs)userNs.profiles(ids).then(ps=>{ids.forEach(id=>{NAMES[id]=(ps[id]&&ps[id].name)||"";});if(mode==="hem")renderHome();}).catch(()=>{});
   const ob=onboardHtml();
   // Så funkar Groundly visas bara för nya: besökare som inte loggat in, och medlemmar de första 14 dagarna
@@ -5107,7 +5108,14 @@ function weekendRange(){const d=new Date();const wd=(d.getDay()+6)%7;const fri=n
   return[wd>=4?today():dayKey(fri),dayKey(sun)];}
 let wkRadius=15;
 const wkView="swipe"; // helgtipsen visas alltid som kort i sidled
-document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));if(r.closest(".hot"))hotIdx=i;if(r.closest(".heroswipe"))heroIdx=i;const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));},true);
+document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));if(r.closest(".hot"))hotIdx=i;if(r.closest(".heroswipe"))heroIdx=i;const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));fitRow(r);},true);
+// karusellerna (Veckans match, Tips för helgen, Hett just nu) är lika höga som kortet som visas, inte som det högsta
+function fitRow(r){const w=r.clientWidth+12;if(!w)return;const i=Math.max(0,Math.min(r.children.length-1,Math.round(r.scrollLeft/w)));const c=r.children[i];if(!c)return;
+  // mitt i en svepning: höjden mellan de två korten, så att rutan glider i stället för att hoppa
+  const f=r.scrollLeft/w,a=r.children[Math.floor(f)],b=r.children[Math.ceil(f)];let h=c.offsetHeight;if(a&&b&&a!==b){const t=f-Math.floor(f);h=a.offsetHeight*(1-t)+b.offsetHeight*t;}
+  r.style.height=Math.ceil(h)+"px";}
+function fitRows(root){(root||document).querySelectorAll(".wkrow").forEach(fitRow);}
+addEventListener("resize",()=>fitRows());
 function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i dag"):$t("i helgen");
   if(!homeTown||homeEdit)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p>${$t("Ange din hemort så visar vi matcher nära dig {0}.",[label])}</p><form class="homeform" id="homeForm"><label class="fld" for="homeIn">${$t("Din hemort")}<input id="homeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button>${locBtn()}</form></article>`;
   const p=homeLL();if(!p)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p class="meta">${$t("Hittar inte {0} på kartan. Prova en större ort i närheten.",[esc(homeTown)])}</p><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></article>`;
