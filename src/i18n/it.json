@@ -2636,5 +2636,12 @@
  "Serier och cuper": "Campionati e coppe",
  "Städer": "Città",
  "Sök stad, lag, land eller serie": "Cerca città, squadra, paese o campionato",
- "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Le tue partite e i tuoi club vengono salvati sul tuo account Groundly, così li ritrovi su tutti i tuoi dispositivi."
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Le tue partite e i tuoi club vengono salvati sul tuo account Groundly, così li ritrovi su tutti i tuoi dispositivi.",
+ "Biljetter går oftast att köpa på plats, de brukar vara billiga och du kommer nära planen.": "I biglietti di solito si comprano allo stadio, costano poco e si è vicini al campo.",
+ "Form senaste fem: {0} {1} vinster, {2} {3}.": "Forma, ultime cinque: {0} {1} vittorie, {2} {3}.",
+ "Ligans bästa målskytt {0} ({1} mål) spelar för {2}.": "Il capocannoniere del campionato, {0} ({1} gol), gioca nel {2}.",
+ "Om matchen": "Sulla partita",
+ "Senaste mötet: {0} – {1} {2} ({3}).": "Ultimo incontro: {0} – {1} {2} ({3}).",
+ "Tabellen: {0} på plats {1}, {2} på plats {3} av {4}.": "Classifica: {0} al {1}º posto, {2} al {3}º su {4}.",
+ "Toppmöte.": "Scontro al vertice."
 }

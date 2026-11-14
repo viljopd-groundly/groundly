@@ -2637,5 +2637,12 @@
  "Serier och cuper": "Serier og cuper",
  "Städer": "Byer",
  "Sök stad, lag, land eller serie": "Søk by, lag, land eller serie",
- "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Kampene og klubbene dine lagres på Groundly-kontoen din, så du når dem på alle enhetene dine."
+ "Dina matcher och klubbar sparas på ditt Groundly-konto, så att du når dem på alla dina enheter.": "Kampene og klubbene dine lagres på Groundly-kontoen din, så du når dem på alle enhetene dine.",
+ "Biljetter går oftast att köpa på plats, de brukar vara billiga och du kommer nära planen.": "Billetter kan som regel kjøpes på stadion, de er ofte billige og du kommer nær banen.",
+ "Form senaste fem: {0} {1} vinster, {2} {3}.": "Form siste fem: {0} {1} seire, {2} {3}.",
+ "Ligans bästa målskytt {0} ({1} mål) spelar för {2}.": "Seriens toppscorer {0} ({1} mål) spiller for {2}.",
+ "Om matchen": "Om kampen",
+ "Senaste mötet: {0} – {1} {2} ({3}).": "Forrige møte: {0} – {1} {2} ({3}).",
+ "Tabellen: {0} på plats {1}, {2} på plats {3} av {4}.": "Tabellen: {0} på {1}. plass, {2} på {3}. plass av {4}.",
+ "Toppmöte.": "Toppoppgjør."
 }

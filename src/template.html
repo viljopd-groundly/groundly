@@ -1246,6 +1246,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
   #homeBody>*{margin:0!important;min-width:0}
   #homeBody>.howto,#homeBody>.community,#homeBody>.homecust,#homeBody>.wide{grid-column:1/-1}
 }
+.mfacts{margin:6px 0 4px;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px;line-height:1.45}.mfacts li::marker{color:var(--accent)}
 </style>
 
 <div class="wrap">
@@ -2255,12 +2256,13 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
   const tix=past||!H?"":`<div class="actions">${H.tix?`<a class="btn small primary" href="${esc(H.tix)}" target="_blank" rel="noopener">${ic("ticket")} ${$t("Köp biljetter hos {0}",[esc(H.n)])}</a>`:hu?`<a class="btn small primary" href="${esc(hu)}" target="_blank" rel="noopener">${ic("ticket")} ${$t("Biljetter på {0} hemsida",[esc(/[sxz]$/i.test(H.n)?H.n:H.n+"s")])}</a>`:""}<a class="${H.tix||hu?"link":"btn small primary"}" href="${esc(srch(H))}" target="_blank" rel="noopener">${$t("Sök biljettsidan")}</a></div><p class="meta">${$t("Köp via klubben, inte andrahandssajter.")}</p>${tp.tk?`<div class="mstk">${tp.tk}</div>`:""}`;
   const awayTix=!past&&A&&!isNat(A)&&!(H&&isNat(H))?`<p class="meta">${$t("Håller du på {0}? Bortabiljetter säljs ofta via bortaklubben:",[esc(A.n)])} <a class="link" href="${esc(A.tix||webUrl(A)||srch(A))}" target="_blank" rel="noopener">${A.tix?$t("köp hos"):$t("gå till")} ${esc(A.n)}</a>.</p>`:"";
   const det=H&&!past?`<dl class="detail">${tp.tr}${webRow(H)}</dl>`:"";
-  const cap=H&&H.s===m.venue&&H.cap?$t(" · {0} platser",[fmtCap(H.cap)]):"";
+  const cap=H&&H.s===m.venue&&H.cap&&!smallM(m)?$t(" · {0} platser",[fmtCap(H.cap)]):"";const facts=past?"":factsList(m);
   return`<div id="msOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="msT"><div class="compose askbox pvbox msbox">
     <div class="mshead"><div class="mp">${comp}${past?`<span class="pill">${$t("Spelad")}</span>`:""}</div><button class="btn small" id="msClose">${$t("Stäng")}</button></div>
     <h2 id="msT" class="msteams">${team(m.home,m.homeName)}<span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span>${team(m.away,m.awayName)}</h2>
     <p class="msmeta"><b>${when}</b><br>${esc(m.venue||$t("Arena ej angiven"))}${cap} · ${esc(m.city||"")}${m.country?", "+esc($t(m.country)):""}</p>
     ${past?goalsHtml(m):""}
+    ${facts?`<h3>${$t("Om matchen")}</h3>${facts}`:""}
     ${past?"":`<h3>${$t("Biljetter")}</h3>${tix||`<p class="meta">${$t("Vi har ingen biljettlänk för den här matchen.")}</p>`}${awayTix}`}
     ${det}
     ${past||!m.city||homeIsLocal(m.city)?"":`<h3 id="msResa">${$t("Resa")}</h3><div class="actions">${omioLink(homeTown,m.city)}${homeTown?extLink(transitUrl(homeTown,placeStr(m.venue,m.city)),$t("Resväg från {0}",[esc(homeTown)]),"btn small"):""}</div>`}
@@ -2268,7 +2270,7 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
     ${past?"":`<p class="hint">${$t("Tider kan flyttas, till exempel för tv. Kolla hos klubben innan du bokar resa.")}</p>`}
   </div></div>`;}
 let msId=null;
-function openMatchSheet(id){const m=matchById(id);if(!m)return;msId=id;if(!XD.events&&m.score)loadXD("events").then(refreshMatchSheet);const o=document.getElementById("msOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",matchSheetHtml(m));const b=document.getElementById("msClose");if(b)b.focus({preventScroll:true});}
+function openMatchSheet(id){const m=matchById(id);if(!m)return;msId=id;factsLoad(refreshMatchSheet);if(!XD.events&&m.score)loadXD("events").then(refreshMatchSheet);const o=document.getElementById("msOv");if(o)o.remove();document.body.insertAdjacentHTML("beforeend",matchSheetHtml(m));const b=document.getElementById("msClose");if(b)b.focus({preventScroll:true});}
 function closeMatchSheet(){const o=document.getElementById("msOv");if(o)o.remove();msId=null;}
 function refreshMatchSheet(){if(!msId)return;const o=document.getElementById("msOv");const m=matchById(msId);if(!o||!m)return;const sc=o.querySelector(".msbox").scrollTop;o.outerHTML=matchSheetHtml(m);const n=document.querySelector("#msOv .msbox");if(n)n.scrollTop=sc;}
 document.addEventListener("click",e=>{const ov=document.getElementById("msOv");
@@ -4489,14 +4491,32 @@ function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return ms>-
 function hypeBtn(m,mini){if(mPast(m))return"";const n=hypeCount(m._id);return dbNs&&myId?`<button class="btn small${mini?" hypemini":""}" data-hype="${esc(m._id)}" aria-pressed="${iHype(m._id)}"${mini?` aria-label="${iHype(m._id)?$t("Peppad"):$t("Peppa")}"`:""}${hypeBusy?" disabled":""}>${ic("flame",iHype(m._id)?"on":"")}${mini?"":" "+(iHype(m._id)?$t("Peppad"):$t("Peppa"))}${n?`<span class="hcnt" aria-label="${$t("{0} peppade",[n])}">${n}</span>`:""}</button>`:n?(mini?`<span class="meta" aria-label="${$t("Peppad av {0}",[n])}">${ic("flame")} ${n}</span>`:`<span class="meta">${ic("flame")} ${$t("Peppad av {0}",[n])}</span>`):"";}
 // Veckans match: de fem hetaste matcherna som kort i sidled inne i samma ruta. Varje kort fälls ut för sig.
 let heroIdx=0;
+// fakta om en match: tabelläge, form, senaste mötet, ligans bästa målskytt och (för mindre matcher) praktiska tips
+const womenM=m=>WLEAGUES.has(m.comp||"")||isW(C[m.home]);
+const smallM=m=>womenM(m)||(tierOf(m)==="3"&&!isNat(C[m.home]||{}));
+function stRow(comp,id){const L=XD.standings&&XD.standings.leagues&&XD.standings.leagues[comp];if(!L||!L.groups||!id)return null;for(const g of L.groups){const r=g.rows.find(x=>x[0]===id);if(r)return{r,n:g.rows.length};}return null;}
+function factsLoad(cb){const need=["standings","players"].filter(n=>!XD[n]);if(!need.length)return false;Promise.all(need.map(loadXD)).then(cb,()=>{});return true;}
+function matchFacts(m,opt){const out=[];const hn=tnm(m,"home"),an=tnm(m,"away");const H=stRow(m.comp,m.home),A=stRow(m.comp,m.away);
+  if(H&&A&&H.r[3]>0){const hp=H.r[2],ap=A.r[2];
+    out.push((hp<=3&&ap<=3?$t("Toppmöte.")+" ":"")+$t("Tabellen: {0} på plats {1}, {2} på plats {3} av {4}.",[esc(hn),hp,esc(an),ap,H.n]));
+    const w=f=>(String(f||"").slice(-5).match(/W/g)||[]).length;
+    if(H.r[10]&&A.r[10])out.push($t("Form senaste fem: {0} {1} vinster, {2} {3}.",[esc(hn),w(H.r[10]),esc(an),w(A.r[10])]));}
+  if(FX_PAST&&m.home&&m.away){const ko=m.kickoff?m.kickoff.slice(0,10):"9999";let last=null;
+    for(const r of FX_PAST){if(r[4]&&((r[0]===m.home&&r[1]===m.away)||(r[0]===m.away&&r[1]===m.home))&&r[3]<ko&&(!last||r[3]>last[3]))last=r;}
+    if(last){const nm=id=>id===m.home?hn:an;out.push($t("Senaste mötet: {0} – {1} {2} ({3}).",[esc(nm(last[0])),esc(nm(last[1])),esc(last[4]),esc(dayLabel(last[3]))]));}}
+  const P=XD.players&&XD.players.leagues&&XD.players.leagues[m.comp];const g=P&&P.goals&&P.goals[0];
+  if(g&&(g[1]===m.home||g[1]===m.away))out.push($t("Ligans bästa målskytt {0} ({1} mål) spelar för {2}.",[esc(g[0]),g[2],esc(g[1]===m.home?hn:an)]));
+  if(smallM(m)&&!(opt&&opt.noTip))out.push($t("Biljetter går oftast att köpa på plats, de brukar vara billiga och du kommer nära planen."));
+  return out;}
+const factsList=m=>{const f=matchFacts(m);return f.length?`<ul class="mfacts">${f.map(x=>`<li>${x}</li>`).join("")}</ul>`:"";};
 function heroWhy(m){const dby=derbyOf(m),fav=isFav(m.home)||isFav(m.away);
-  return dby?`${esc($t(dby[1]))}. ${esc($t(String(dby[4]||"")).split(". ")[0])}.`:fav?$t("Ditt favoritlag spelar."):`${esc(m.comp||"")}${C[m.home]&&C[m.home].cap?$t(" inför upp till {0} åskådare",[C[m.home].cap.toLocaleString(LOC)]):""}.`;}
+  return dby?`${esc($t(dby[1]))}. ${esc($t(String(dby[4]||"")).split(". ")[0])}.`:fav?$t("Ditt favoritlag spelar."):`${esc(m.comp||"")}${!smallM(m)&&C[m.home]&&C[m.home].cap?$t(" inför upp till {0} åskådare",[C[m.home].cap.toLocaleString(LOC)]):""}.`;}
 function heroSlide(m,i){const k="hero"+i,open=!!homeMore[k];
   return`<div class="heroslide">
     <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,40)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,40)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>
     <div class="cd">${$t("{0} kl {1} ·",[esc(dayLabel(dayKey(new Date(m.kickoff)))),timeOf(m.kickoff)])} <b>${countdown(m.kickoff)}</b></div>
     <div class="venue">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}</div>
-    <button class="link more" data-homemore="${k}" aria-expanded="${open}">${open?$t("Mindre om matchen"):$t("Mer om matchen")}</button>${open?`<p>${heroWhy(m)}</p>
+    <button class="link more" data-homemore="${k}" aria-expanded="${open}">${open?$t("Mindre om matchen"):$t("Mer om matchen")}</button>${open?`<p>${heroWhy(m)}</p>${factsList(m)}
     <div class="actions">${tixMini(m,"btn small primary")}${hypeBtn(m)}${myBtns(m).replace(/class="mini"/g,'class="btn small"')}${hotelLink(m,"btn small")}${tripLink(m).replace('class="mini"','class="btn small"')}</div>`:""}</div>`;}
 function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==="loading"?`<article class="tip hero"><p class="meta">${$t("Hämtar matchschemat…")}</p></article>`:"";
   const show=list.slice(0,5);if(heroIdx>=show.length)heroIdx=0;
@@ -4809,7 +4829,7 @@ function carouselHome(ob){const logged=myState==="ready";
   return loc+modAlertHtml()+moveHtml()+remindHtml()+s2+s1+ob+s3+cats;}
 const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
 // "visa mer" på Hem: fäll ut under, skärmen står still. Fälls något ihop och rutans topp hamnat ovanför skärmen, skrolla till rutans topp.
-document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;const card=t.closest("article");const idx=card?[...card.parentElement.children].indexOf(card):-1;
+document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;if(/^hero/.test(k))factsLoad(()=>renderHome());const card=t.closest("article");const idx=card?[...card.parentElement.children].indexOf(card):-1;
   homeMore[k]=!homeMore[k];renderHome();
   if(!homeMore[k]&&idx>=0){const c=document.getElementById("homeBody")?.children[idx];if(c){const top=c.getBoundingClientRect().top;const tb=document.querySelector(".topbar,header");const off=(tb?tb.offsetHeight:0)+8;if(top<off)window.scrollBy(0,top-off);}}});
 function derbyHtml(){const all=derbyNext();const list=homeMore.derby?all:all.slice(0,3);if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">${$t("Nästa derby")}</div><p class="meta">${$t("Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.")}</p></article>`:"";
