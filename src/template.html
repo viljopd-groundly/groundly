@@ -1247,6 +1247,16 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
   #homeBody>.howto,#homeBody>.community,#homeBody>.homecust,#homeBody>.wide{grid-column:1/-1}
 }
 .mfacts{margin:6px 0 4px;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px;line-height:1.45}.mfacts li::marker{color:var(--accent)}
+/* Tips för helgen: kompaktare kort */
+.tip.hero.wkc{padding-top:12px!important;padding-bottom:12px!important}
+.tip.hero.wkc .teams.big{gap:2px;font-size:calc(17px*var(--fs))!important}
+.tip.hero.wkc .teams.big .crest{width:26px!important;height:26px!important}
+.tip.hero.wkc .cd{margin:6px 0 0;font-size:14px}
+.tip.hero.wkc{gap:4px!important}.tip.hero.wkc .meta{margin:0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tip.hero.wkc .actions{margin-top:8px}
+.wkdist{display:inline-block;font-weight:700;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-right:4px;vertical-align:1px}
+.wkbox>.chips .chip{padding-top:5px;padding-bottom:5px;font-size:14px}
+.wkbox .wkrow{margin-top:8px;margin-bottom:0;padding-bottom:2px}
 </style>
 
 <div class="wrap">
@@ -5102,10 +5112,10 @@ function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i
       <div class="mmain"><b>${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))}${favStar(m.home)||favStar(m.away)}</b><span class="meta">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</span></div>${full?`<span class="mp">${tixMini(m)}${myBtns(m)}</span>`:""}</div>`;
   // alternativ vy: bläddra i sidled bland kort som liknar Veckans match
   const vsw="";
-  if(wkView==="swipe"){const card=({m,km})=>`<article class="tip hero wkcard"><div class="lbl">${km<5?$t("i stan"):esc(milTxt(km))}</div>
-      <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,34)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,34)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>
-      <div class="cd">${m.kickoff?`${esc(dayLabel(dayKey(new Date(m.kickoff))))} ${$t("kl")} ${timeOf(m.kickoff)} · <b>${countdown(m.kickoff)}</b>`:$t("datum ej klart")}</div>
-      <p class="meta">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}${wPill(m)}</p>
+  if(wkView==="swipe"){const card=({m,km})=>`<article class="tip hero wkcard wkc">
+      <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,26)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,26)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>
+      <div class="cd"><span class="wkdist">${km<5?$t("i stan"):esc(milTxt(km))}</span> ${m.kickoff?`${esc(dayLabel(dayKey(new Date(m.kickoff))))} ${$t("kl")} ${timeOf(m.kickoff)}`:$t("datum ej klart")}</div>
+      <p class="meta">${esc([m.venue,$t(m.city)].filter(Boolean).join(" · "))}${m.comp?" · "+esc(m.comp):""}</p>
       <div class="actions">${tixMini(m)}${myBtns(m)}</div></article>`;
     return`<article class="tip wkbox"><div class="sechead"><div class="lbl">${$t("Tips för helgen · nära {0}",[esc(p.name)])}</div><button class="link" data-homeedit="1">${$t("Byt hemort")}</button></div><div class="chips" role="group" aria-label="${$t("Avstånd")}">${chips}</div>
       ${!list.length?`<p class="meta">${$t("Inga matcher i det inlagda schemat {0}.",[label])}</p>`:!near.length?`<p class="meta">${$t("Inget inom {0} {1}. Närmaste matcherna:",[milU(wkRadius),label])}</p>`:""}
