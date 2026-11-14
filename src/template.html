@@ -1264,7 +1264,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 :root[data-look="ticket"] #homeBody>.tip.heroswipe>.lbl{font-size:calc(26px*var(--fs))!important;font-weight:800!important;letter-spacing:.005em!important}
 #homeBody>.tip>.sechead:first-child{align-items:baseline}
 .wknear{margin:-4px 0 0}
-.wkrow{align-items:flex-start;overflow-y:hidden;box-sizing:content-box}
+.wkrow{align-items:flex-start;overflow-y:hidden;box-sizing:content-box;transition:height .22s ease}
 </style>
 
 <div class="wrap">
@@ -5108,12 +5108,11 @@ function weekendRange(){const d=new Date();const wd=(d.getDay()+6)%7;const fri=n
   return[wd>=4?today():dayKey(fri),dayKey(sun)];}
 let wkRadius=15;
 const wkView="swipe"; // helgtipsen visas alltid som kort i sidled
-document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));if(r.closest(".hot"))hotIdx=i;if(r.closest(".heroswipe"))heroIdx=i;const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));fitRow(r);},true);
+document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("wkrow"))return;const i=Math.round(r.scrollLeft/(r.clientWidth+12));if(r.closest(".hot"))hotIdx=i;if(r.closest(".heroswipe"))heroIdx=i;const d=r.parentElement.querySelectorAll(".wkdots i");d.forEach((x,k)=>x.classList.toggle("on",k===i));clearTimeout(r._fit);r._fit=setTimeout(()=>fitRow(r),160);},true);
+// höjden ändras först när svepet har stannat; mitt i svepet stör det snäppningen på iPhone
+document.addEventListener("scrollend",e=>{const r=e.target;if(r.classList&&r.classList.contains("wkrow")){clearTimeout(r._fit);fitRow(r);}},true);
 // karusellerna (Veckans match, Tips för helgen, Hett just nu) är lika höga som kortet som visas, inte som det högsta
-function fitRow(r){const w=r.clientWidth+12;if(!w)return;const i=Math.max(0,Math.min(r.children.length-1,Math.round(r.scrollLeft/w)));const c=r.children[i];if(!c)return;
-  // mitt i en svepning: höjden mellan de två korten, så att rutan glider i stället för att hoppa
-  const f=r.scrollLeft/w,a=r.children[Math.floor(f)],b=r.children[Math.ceil(f)];let h=c.offsetHeight;if(a&&b&&a!==b){const t=f-Math.floor(f);h=a.offsetHeight*(1-t)+b.offsetHeight*t;}
-  r.style.height=Math.ceil(h)+"px";}
+function fitRow(r){const w=r.clientWidth+12;if(!w)return;const i=Math.max(0,Math.min(r.children.length-1,Math.round(r.scrollLeft/w)));const c=r.children[i];if(!c)return;const h=c.offsetHeight+"px";if(r.style.height!==h)r.style.height=h;}
 function fitRows(root){(root||document).querySelectorAll(".wkrow").forEach(fitRow);}
 addEventListener("resize",()=>fitRows());
 function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i dag"):$t("i helgen");
