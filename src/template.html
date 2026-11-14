@@ -1219,6 +1219,27 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 @media (min-width:761px) and (max-width:1120px){.topbar .gacc-btn .gl{display:none}.topbar .gacc-btn{width:38px;padding:0!important;justify-content:center}}
 @media (min-width:761px) and (max-width:1000px){.dn{padding:8px 8px;font-size:14px}.dnav{margin-left:2px}.dplus{font-size:0;padding:8px 10px}.dplus .ic{width:18px;height:18px}.topbar .betadot{display:none}.topbar{gap:8px}}
 @media (min-width:761px){.topbar{margin-left:calc(50% - 50vw + var(--sbw,0px)/2)!important;margin-right:calc(50% - 50vw + var(--sbw,0px)/2)!important;padding-left:max(24px,calc(50vw - var(--sbw,0px)/2 - 560px))!important;padding-right:max(24px,calc(50vw - var(--sbw,0px)/2 - 560px))!important}}
+/* Matcher på bred skärm: listan till vänster, filtren alltid synliga till höger */
+@media (min-width:1024px){
+  #v-matcher:not([hidden]):not(.planmode){display:grid!important;grid-template-columns:minmax(0,1fr) 300px;column-gap:24px;row-gap:14px;align-items:start;grid-auto-flow:row dense}
+  #v-matcher:not(.planmode)>*{grid-column:1;min-width:0}
+  #v-matcher:not(.planmode)>#mSheet,#v-matcher:not(.planmode)>#mSheet[hidden]{grid-column:2;grid-row:1/span 12;display:block!important;inset:auto;position:sticky;top:78px;z-index:1;align-self:start}
+  #v-matcher #mSheet .msdim,#v-matcher #mSheet .msgrab,#v-matcher #mSheet .msx,#v-matcher #mSheet #mSheetGo{display:none!important}
+  #v-matcher #mSheet .mspanel{position:static;animation:none;max-height:calc(100vh - 100px);overflow:auto;border-radius:16px;border:1px solid var(--line);box-shadow:var(--shadow,none);padding:14px 16px 16px;touch-action:auto}
+  #v-matcher #mSheet .mshd h3{font-size:17px}
+  #v-matcher:not(.planmode) #mFiltBtn,#v-matcher:not(.planmode) #mActive{display:none!important}
+  #v-matcher #mSheet .range{display:grid;grid-template-columns:1fr;gap:8px}
+}
+/* Planera resa på bred skärm: formuläret till vänster, mina resor till höger */
+.tripcol{display:contents}
+@media (min-width:1024px){
+  #resaList{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 24px;align-items:start;grid-auto-flow:row dense}
+  #resaList>*{grid-column:1/-1;margin:0!important;min-width:0}
+  #resaList>.tripcol{display:flex;flex-direction:column;gap:10px;grid-column:2}
+  #resaList>.tripcol>h3.sec{margin:0}
+  #resaList:has(>.tripcol)>.resaform{grid-column:1;position:sticky;top:78px}
+  #resaList:not(:has(>.tripcol))>.resaform{max-width:720px}
+}
 /* startsidan på bred skärm: korten två och två */
 @media (min-width:1024px){
   #homeBody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;gap:14px;align-items:start}
@@ -1942,7 +1963,8 @@ function mActiveSync(){const el=document.getElementById("mActive");if(!el)return
   const n=ch.length;const b=document.getElementById("mFiltN");if(b){b.hidden=!n;b.textContent=n;}
   const btn=document.getElementById("mFiltBtn");if(btn)btn.querySelector("span").textContent=$t("Filter");
   const sh=document.getElementById("mSheetT");if(sh)sh.textContent=$t("Filter");}
-function mSheetOpen(on){const s=document.getElementById("mSheet");if(!s)return;if(s.parentElement!==document.body)document.body.appendChild(s);s.hidden=!on;document.documentElement.classList.toggle("msopen",on);}
+function mSheetHome(){const s=document.getElementById("mSheet"),tb=document.getElementById("matchTb");if(s&&tb&&s.parentElement===document.body&&innerWidth>=1024){s.hidden=true;document.documentElement.classList.remove("msopen");tb.parentElement.insertBefore(s,tb);}}addEventListener("resize",mSheetHome);
+function mSheetOpen(on){const s=document.getElementById("mSheet");if(!s)return;if(innerWidth>=1024){mSheetHome();return;}if(s.parentElement!==document.body)document.body.appendChild(s);s.hidden=!on;document.documentElement.classList.toggle("msopen",on);}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("#mFiltBtn,[data-msclose],[data-msreset],[data-mrm]");if(!t)return;
   if(t.id==="mFiltBtn"){mSheetOpen(true);return;}
   if(t.dataset.msclose){mSheetOpen(false);return;}
@@ -4964,7 +4986,7 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
   const act=document.activeElement,fid=act&&["rCity","rFrom","rTo"].includes(act.id)?act.id:null,sel=fid==="rCity"?[act.selectionStart,act.selectionEnd]:null;
   const trips=myTrips().slice().sort((a,b)=>a.from.localeCompare(b.from));
   let h="",shH="";
-  if(trips.length){h+=`<h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${trips.map(t=>{const c=cityLL(t.city);const past=t.to<today();const L=tripML(t,past);const pk=L?tripPicked(t,L):[];const legs=tripLegs(t);const on=resaOpen===t.id;const exp=TRIP_X.has(t.id)||on||TRIP_DEL===t.id||pk.some(x=>WISH_DEL===x.m._id);
+  if(trips.length){h+=`<div class="tripcol"><h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${trips.map(t=>{const c=cityLL(t.city);const past=t.to<today();const L=tripML(t,past);const pk=L?tripPicked(t,L):[];const legs=tripLegs(t);const on=resaOpen===t.id;const exp=TRIP_X.has(t.id)||on||TRIP_DEL===t.id||pk.some(x=>WISH_DEL===x.m._id);
     let sum;if(past){const R=myState==="ready"?tripRecap(t):null;sum=R&&R.seen.length?$tn(R.seen.length,"1 match","{n} matcher")+" · "+$tn(R.ar,"1 arena","{n} arenor"):R&&R.toLog.length?$t("Resan är slut – logga matcherna"):$t("Avslutad");}
     else if(!L)sum=$t("Hämtar matchschemat…");else if(!pk.length)sum=$t("Inga matcher valda än");else{const I=tripItems(t,pk);sum=$tn(pk.length,"1 match","{n} matcher")+" · "+$t("Att boka: {0} av {1} klart",[I.done,I.total]);}
     const head=`<button class="triphead" data-tripx="${esc(t.id)}" aria-expanded="${exp}"><span class="thmain"><span class="name">${esc(tripName(t))}</span> <span class="meta">${esc(resaRange(t.from,t.to))}</span><span class="thsum">${esc(sum)}</span></span><svg class="ic thchev" aria-hidden="true"><use href="#i-chev"/></svg></button>`;
@@ -4975,7 +4997,7 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
       ${pk.length?`<ul class="tripm">${pk.map(x=>{const mv=moveOfM(x.m._id);return`<li class="mrow"${mrowAttr(x.m)}><b>${esc(dayLabel(koDay(x.m.kickoff)))} ${timeOf(x.m.kickoff)}</b><span>${esc(tnm(x.m,"home"))} – ${esc(tnm(x.m,"away"))}${past&&x.m.score?` <b>${esc(x.m.score)}</b>`:""}${past&&isAtt(x.m._id)?` <span class="tripok">${OK}</span>`:""}${!past&&isWishM(x.m._id)?` ${tixBtn(x.m._id,"mini tripTix")}`:""}${!past&&isWishM(x.m._id)?`<button class="wdel" data-wdel="${esc(x.m._id)}" aria-label="${$t("Ta bort matchen")}">×</button>`:""}${WISH_DEL===x.m._id?`<div class="wdelask" role="alert"><b>${$t("Ta bort matchen från Vill gå?")}</b><div class="actions"><button class="btn small danger" data-wdelok="${esc(x.m._id)}">${$t("Ja, ta bort")}</button><button class="btn small" data-wdelno="1">${$t("Avbryt")}</button></div></div>`:""}${mv?` <span class="newtime">${$t("Ny tid")}</span> <span class="meta">${moveNote(mv)}</span>`:""}</span></li>`;}).join("")}</ul>`:""}
       ${!past&&pk.length?tripCheck(t,pk):""}
       ${past?"":tripOut(t).map(x=>`<p class="tripwarn">${ic("calendar")} ${$t("{0} – {1} är flyttad till {2}, utanför resan.",[esc(tnm(x.m,"home")),esc(tnm(x.m,"away")),esc(koTxt(x.m.kickoff))])} <button class="link strong" data-wmok="${esc(x.w.id)}">${$t("OK")}</button></p>`).join("")}
-      <div class="actions">${past?tripRecapBtns(t):pk.length?"":tripLinksAll(t)}${!past&&pk.length?`<button class="btn small" data-calmany="${esc(pk.map(x=>x.m._id).join(","))}">${ic("calendar")} ${pk.length===1?$t("Kalender"):$t("Alla i kalendern")}</button>`:""}${!past&&pk.length?`<button class="btn small" data-tripask="${esc(t.id)}">${ic("chat")} ${$t("Fråga i forumet")}</button>`:""}<button class="btn small tmore" data-tripmenu="${esc(t.id)}" aria-expanded="${TRIP_MENU===t.id}" aria-label="${$t("Fler val")}">⋯</button></div>${TRIP_MENU===t.id?`<div class="actions tripmenu">${past?"":`${legs.length<6?`<button class="btn small" data-tripadd="${esc(t.id)}">${ic("plus")} ${$t("Lägg till stad")}</button>`:""}<button class="btn small" data-tripshare="${esc(t.id)}">${ic("share")} ${$t("Dela")}</button>`}<button class="btn small" data-tripdel="${esc(t.id)}">${$t("Ta bort resan")}</button></div>`:""}${TRIP_DEL===t.id?`<div class="tripdelask" role="alert"><b>${$t("Ta bort resan {0}?",[esc(tripName(t))])}</b><span class="meta">${$t("Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.")}</span><div class="actions"><button class="btn small danger" data-tripdelok="${esc(t.id)}">${$t("Ja, ta bort")}</button><button class="btn small" data-tripdelno="1">${$t("Avbryt")}</button></div></div>`:""}</article>`;}).join("")}</div>`;}
+      <div class="actions">${past?tripRecapBtns(t):pk.length?"":tripLinksAll(t)}${!past&&pk.length?`<button class="btn small" data-calmany="${esc(pk.map(x=>x.m._id).join(","))}">${ic("calendar")} ${pk.length===1?$t("Kalender"):$t("Alla i kalendern")}</button>`:""}${!past&&pk.length?`<button class="btn small" data-tripask="${esc(t.id)}">${ic("chat")} ${$t("Fråga i forumet")}</button>`:""}<button class="btn small tmore" data-tripmenu="${esc(t.id)}" aria-expanded="${TRIP_MENU===t.id}" aria-label="${$t("Fler val")}">⋯</button></div>${TRIP_MENU===t.id?`<div class="actions tripmenu">${past?"":`${legs.length<6?`<button class="btn small" data-tripadd="${esc(t.id)}">${ic("plus")} ${$t("Lägg till stad")}</button>`:""}<button class="btn small" data-tripshare="${esc(t.id)}">${ic("share")} ${$t("Dela")}</button>`}<button class="btn small" data-tripdel="${esc(t.id)}">${$t("Ta bort resan")}</button></div>`:""}${TRIP_DEL===t.id?`<div class="tripdelask" role="alert"><b>${$t("Ta bort resan {0}?",[esc(tripName(t))])}</b><span class="meta">${$t("Resan försvinner från ditt konto. Matcherna du tryckt Vill gå på ligger kvar i Min fotboll.")}</span><div class="actions"><button class="btn small danger" data-tripdelok="${esc(t.id)}">${$t("Ja, ta bort")}</button><button class="btn small" data-tripdelno="1">${$t("Avbryt")}</button></div></div>`:""}</article>`;}).join("")}</div></div>`;}
   const addT=RESA_ADDTO&&myTrips().find(x=>x.id===RESA_ADDTO);if(RESA_ADDTO&&!addT)RESA_ADDTO=null;
   h+=`<article class="tip resaform${addT?" adding":""}">${addT?`<div class="addhead"><div class="lbl">${$t("Lägg till en stad i resan {0}",[esc(tripName(addT))])}</div><button type="button" class="addx" data-addcancel aria-label="${$t("Stäng")}">×</button></div>`:`<div class="lbl">${$t("Planera en fotbollsresa")}</div>`}
     <form id="resaForm" class="rform"><label class="fld">${$t("Stad")}<span class="rsugw"><input id="rCity" maxlength="60" value="${esc(D.city)}" placeholder="${$t("t.ex. Barcelona")}" autocomplete="off" autocapitalize="words" spellcheck="false" role="combobox" aria-autocomplete="list" aria-controls="rSug" aria-expanded="false"><div id="rSug" class="rsug" role="listbox" hidden></div></span></label>
