@@ -2620,7 +2620,6 @@
  "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Kjøp via klubben, ikke bruktsider. Trykk Har billett? på kampen når du har den.",
  "Resan är slut – logga matcherna": "Turen er over – logg kampene",
  "Ta bort resan": "Slett turen",
- "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Trykk Vis alle kamper i området og deretter Vil gå på kampene du vil se.",
  "Visa alla matcher i området": "Vis alle kamper i området",
  "Helgens matcher nära dig": "Helgens kamper nær deg",
  "Torsdag kväll: matcher nära din hemort i helgen.": "Torsdag kveld: kamper nær hjemstedet ditt i helgen.",
@@ -2651,5 +2650,6 @@
  "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Loggen din ble oppdatert et annet sted. Gjør endringen på nytt.",
  "Lägg till i resan": "Legg til i reisen",
  "I resan {0}": "I reisen {0}",
- "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Trykk Legg til i reisen på kampene du vil se. De lagres også under Vil gå."
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Trykk Legg til i reisen på kampene du vil se. De lagres også under Vil gå.",
+ "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Trykk Vis alle kamper i området og deretter Legg til i reisen på kampene du vil se."
 }

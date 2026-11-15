@@ -2708,7 +2708,6 @@
  "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Buy from the club, not resale sites. Tap Got a ticket? on the match once you have it.",
  "Resan är slut – logga matcherna": "The trip is over – log the matches",
  "Ta bort resan": "Delete trip",
- "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Tap Show all matches in the area and then Want to go on the matches you want to see.",
  "Visa alla matcher i området": "Show all matches in the area",
  "Helgens matcher nära dig": "This weekend's matches near you",
  "Torsdag kväll: matcher nära din hemort i helgen.": "Thursday evening: matches near your home town this weekend.",
@@ -2739,5 +2738,6 @@
  "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Your log was updated from somewhere else. Please make the change again.",
  "Lägg till i resan": "Add to trip",
  "I resan {0}": "In trip {0}",
- "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tap Add to trip on the matches you want to see. They're also saved under Want to go."
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tap Add to trip on the matches you want to see. They're also saved under Want to go.",
+ "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Tap Show all matches in the area, then Add to trip on the matches you want to see."
 }

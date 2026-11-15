@@ -2619,7 +2619,6 @@
  "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Keyptu hjá félaginu, ekki á endursölusíðum. Ýttu á Ertu með miða? við leikinn þegar þú ert kominn með hann.",
  "Resan är slut – logga matcherna": "Ferðinni er lokið – skráðu leikina",
  "Ta bort resan": "Eyða ferðinni",
- "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Ýttu á Sýna alla leiki á svæðinu og svo Vil fara á leikina sem þú vilt sjá.",
  "Visa alla matcher i området": "Sýna alla leiki á svæðinu",
  "Helgens matcher nära dig": "Leikir helgarinnar nálægt þér",
  "Torsdag kväll: matcher nära din hemort i helgen.": "Fimmtudagskvöld: leikir nálægt heimabænum þínum um helgina.",
@@ -2650,5 +2649,6 @@
  "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Skráin þín var uppfærð annars staðar. Gerðu breytinguna aftur.",
  "Lägg till i resan": "Bæta við ferðina",
  "I resan {0}": "Í ferðinni {0}",
- "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Ýttu á Bæta við ferðina á leikjunum sem þú vilt sjá. Þeir vistast líka undir Langar að fara."
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Ýttu á Bæta við ferðina á leikjunum sem þú vilt sjá. Þeir vistast líka undir Langar að fara.",
+ "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Ýttu á Sýna alla leiki á svæðinu og svo Bæta við ferðina á leikjunum sem þú vilt sjá."
 }

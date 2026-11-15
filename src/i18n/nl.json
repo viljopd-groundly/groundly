@@ -2619,7 +2619,6 @@
  "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Koop via de club, niet via doorverkoopsites. Tik op Heb je een kaartje? bij de wedstrijd zodra je het hebt.",
  "Resan är slut – logga matcherna": "De reis is voorbij – log de wedstrijden",
  "Ta bort resan": "Reis verwijderen",
- "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Tik op Alle wedstrijden in de buurt en daarna op Wil gaan bij de wedstrijden die je wilt zien.",
  "Visa alla matcher i området": "Alle wedstrijden in de buurt",
  "Helgens matcher nära dig": "Wedstrijden dit weekend bij jou in de buurt",
  "Torsdag kväll: matcher nära din hemort i helgen.": "Donderdagavond: wedstrijden bij je woonplaats dit weekend.",
@@ -2650,5 +2649,6 @@
  "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Je logboek is ergens anders bijgewerkt. Doe de wijziging opnieuw.",
  "Lägg till i resan": "Toevoegen aan reis",
  "I resan {0}": "In de reis {0}",
- "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tik op Toevoegen aan reis bij de wedstrijden die je wilt zien. Ze worden ook bewaard onder Wil ik heen."
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tik op Toevoegen aan reis bij de wedstrijden die je wilt zien. Ze worden ook bewaard onder Wil ik heen.",
+ "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Tik op Toon alle wedstrijden in de buurt en daarna op Toevoegen aan reis bij de wedstrijden die je wilt zien."
 }

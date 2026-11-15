@@ -2620,7 +2620,6 @@
  "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Kauf beim Verein, nicht auf Zweitmarktseiten. Tippe beim Spiel auf Ticket schon?, sobald du es hast.",
  "Resan är slut – logga matcherna": "Die Reise ist vorbei – trag die Spiele ein",
  "Ta bort resan": "Reise löschen",
- "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Tippe auf Alle Spiele in der Gegend anzeigen und dann bei den gewünschten Spielen auf Will hin.",
  "Visa alla matcher i området": "Alle Spiele in der Gegend anzeigen",
  "Helgens matcher nära dig": "Spiele am Wochenende in deiner Nähe",
  "Torsdag kväll: matcher nära din hemort i helgen.": "Donnerstagabend: Spiele in der Nähe deines Heimatorts am Wochenende.",
@@ -2651,5 +2650,6 @@
  "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Dein Logbuch wurde an anderer Stelle aktualisiert. Bitte nimm die Änderung erneut vor.",
  "Lägg till i resan": "Zur Reise hinzufügen",
  "I resan {0}": "In der Reise {0}",
- "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tippe bei den Spielen, die du sehen willst, auf Zur Reise hinzufügen. Sie werden auch unter Will hin gespeichert."
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tippe bei den Spielen, die du sehen willst, auf Zur Reise hinzufügen. Sie werden auch unter Will hin gespeichert.",
+ "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Tippe auf Alle Spiele in der Umgebung zeigen und dann bei den gewünschten Spielen auf Zur Reise hinzufügen."
 }

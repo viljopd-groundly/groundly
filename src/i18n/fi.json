@@ -2619,7 +2619,6 @@
  "Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.": "Osta seuralta, älä jälleenmyyntisivuilta. Napauta ottelussa Onko lippu?, kun sinulla on se.",
  "Resan är slut – logga matcherna": "Matka on ohi – kirjaa ottelut",
  "Ta bort resan": "Poista matka",
- "Tryck Visa alla matcher i området och sedan Vill gå på de matcher du vill se.": "Napauta Näytä kaikki alueen ottelut ja sitten Haluan mennä niihin otteluihin, jotka haluat nähdä.",
  "Visa alla matcher i området": "Näytä kaikki alueen ottelut",
  "Helgens matcher nära dig": "Viikonlopun ottelut lähelläsi",
  "Torsdag kväll: matcher nära din hemort i helgen.": "Torstai-iltana: ottelut kotipaikkakuntasi lähellä viikonloppuna.",
@@ -2650,5 +2649,6 @@
  "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Lokisi päivitettiin muualla. Tee muutos uudelleen.",
  "Lägg till i resan": "Lisää matkaan",
  "I resan {0}": "Matkassa {0}",
- "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Napauta Lisää matkaan otteluissa, jotka haluat nähdä. Ne tallentuvat myös kohtaan Haluan mennä."
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Napauta Lisää matkaan otteluissa, jotka haluat nähdä. Ne tallentuvat myös kohtaan Haluan mennä.",
+ "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Napauta Näytä kaikki alueen ottelut ja sitten Lisää matkaan otteluissa, jotka haluat nähdä."
 }
