@@ -4956,6 +4956,10 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
   // fyll bara i staden – man väljer datum och trycker Visa matcher själv, så skärmen hoppar inte
   inp.value=$t(b.dataset.rsug);document.getElementById("rSug").hidden=true;inp.setAttribute("aria-expanded","false");
   RESA_DRAFT={city:inp.value,from:document.getElementById("rFrom").value,to:document.getElementById("rTo").value};inp.blur();});
+// visa resultatet för vald stad: rulla dit direkt och kontrollera igen strax efter
+// (på iPhone kunde en mjuk rullning avbrytas när man tryckt på en rad högt upp, och man hamnade vid Mina resor)
+function resaToResult(){let user=false;const stop=()=>{user=true;};addEventListener("touchstart",stop,{once:true,passive:true});addEventListener("wheel",stop,{once:true,passive:true});const go=()=>{if(user)return;const el=document.querySelector("#resaList .backtop,#resaList .tripact,#resaList .empty");if(!el)return;const tb=document.querySelector(".topbar");const off=(tb?tb.getBoundingClientRect().height:0)+8;const y=el.getBoundingClientRect().top+scrollY-off;if(Math.abs(scrollY-y)>30)window.scrollTo({top:Math.max(0,y)});};
+  requestAnimationFrame(()=>requestAnimationFrame(go));setTimeout(go,350);setTimeout(go,800);}
 // behåll det som redan är ifyllt (stad och datum) när man byter avstånd
 function resaKeepForm(){const g=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};const ci=g("rCity");if(document.getElementById("rCity"))RESA.city=ci.slice(0,60);
   let f=g("rFrom"),t=g("rTo");if(f){if(f<today())f=today();RESA.from=f;}if(t){RESA.to=t<RESA.from?RESA.from:t;}else if(RESA.to<RESA.from)RESA.to=RESA.from;}
@@ -5005,7 +5009,7 @@ document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest
   if(t.dataset.topq){const[k,v]=t.dataset.topq.split(":");TOPQ={...TOPQ,[k]:v};topMore=false;renderResa();return;}
   if(t.dataset.topmore){topMore=!topMore;const ol=document.querySelector(".toplist");if(ol)ol.classList.toggle("more",topMore);t.textContent=topMore?$t("Visa färre"):$t("Visa fler");return;}
   if(t.dataset.topcity){const hy=scrollY;if(t.dataset.tophome){TOPQ={...TOPQ,p:"helg",s:"world"};topMore=false;if(mode!=="resa")goTop("resa");}const R=topCities();RESA_FROMTOP=t.dataset.tophome?{y:0,home:true,hy}:{y:scrollY};RESA={city:t.dataset.topcity,from:R.f,to:R.t,r:10};RESA_DRAFT=null;resaOpen=null;RESA_TAB="plan";renderResa();
-    requestAnimationFrame(()=>document.querySelector(".backtop,.tripact,#resaList .empty")?.scrollIntoView({behavior:"smooth",block:"start"}));return;}
+    resaToResult();return;}
   if(t.dataset.backtop!==undefined){if(RESA_FROMTOP&&RESA_FROMTOP.home){const hy=RESA_FROMTOP.hy||0;RESA_FROMTOP=null;goTop("hem");requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:hy})));return;}const y=RESA_FROMTOP?RESA_FROMTOP.y:0;RESA_TAB="top";renderResa();requestAnimationFrame(()=>window.scrollTo({top:y}));}});
 document.addEventListener("change",e=>{const id=e.target&&e.target.id;if(id!=="tFrom"&&id!=="tTo")return;TOPQ={...TOPQ,f:document.getElementById("tFrom").value,t:document.getElementById("tTo").value};
   if(TOPQ.f&&TOPQ.t&&TOPQ.t<TOPQ.f)TOPQ.t=TOPQ.f;topMore=false;renderResa();});
