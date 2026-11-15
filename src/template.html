@@ -1269,7 +1269,12 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 .tripcheck li.ckcity{display:block;font-weight:800;font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);margin:10px 0 0;padding:0;border:0;background:none}
 .nexttrip .ntmain{all:unset;cursor:pointer;display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;width:100%;margin-top:4px}
 .nexttrip .ntcity{font-family:var(--f-display);font-weight:700;font-size:calc(24px*var(--fs));line-height:1.15;color:var(--fg)}
-.nexttrip .ntwhen{font-weight:800;color:var(--accent);font-size:15px;white-space:nowrap}
+.nexttrip .ntwhen{font-weight:800;color:var(--chalk,#fff);background:var(--accent);font-size:14px;white-space:nowrap;padding:4px 10px 4px 8px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
+.nexttrip .ntwhen .ic{width:15px;height:15px}
+#homeBody>.tip.nexttrip,.tip.nexttrip{border:2px solid var(--accent)!important;background-image:linear-gradient(135deg,color-mix(in srgb,var(--accent) 16%,transparent),color-mix(in srgb,var(--accent) 4%,transparent) 60%)!important}
+.nexttrip .ntic{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--chalk,#fff);margin-right:10px;vertical-align:middle;flex:none}
+.nexttrip .ntic .ic{width:19px;height:19px;color:var(--chalk,#fff)!important}.nexttrip .ntwhen .ic{color:var(--chalk,#fff)!important}
+#homeBody>.tip.nexttrip>.sechead:first-child>.lbl{display:flex;align-items:center}
 .nexttrip .meta{margin:2px 0 0}.nexttrip .ntnext{margin:6px 0 0;font-size:14px}
 .ntbar{height:6px;border-radius:999px;background:var(--soft);margin-top:10px;overflow:hidden}.ntbar i{display:block;height:100%;background:var(--accent);border-radius:999px}
 :root[data-look="ticket"] .nexttrip .ntcity{text-transform:uppercase;font-weight:800}
@@ -4745,8 +4750,8 @@ function nextTripHtml(){if(myState!=="ready")return"";const td=today();const t=m
   const when=days<=0?$t("Pågår nu"):days===1?$t("I morgon"):$t("Om {0} dagar",[days]);
   const I=pk.length?tripItems(t,pk):null;const nx=pk[0]&&pk[0].m;
   const bits=[esc(resaRange(t.from,t.to))];if(L)bits.push(pk.length?$tn(pk.length,"1 match","{n} matcher"):$t("Inga matcher valda än"));if(I)bits.push($t("Att boka: {0} av {1} klart",[I.done,I.total]));
-  return`<article class="tip nexttrip"><div class="sechead"><div class="lbl">${$t("Din nästa resa")}</div><button class="link" data-nexttrip="${esc(t.id)}">${$t("Visa resan")}</button></div>
-    <button class="ntmain" data-nexttrip="${esc(t.id)}"><span class="ntcity">${esc(tripName(t))}</span><span class="ntwhen">${esc(when)}</span></button>
+  return`<article class="tip nexttrip"><div class="sechead"><div class="lbl"><span class="ntic" aria-hidden="true">${ic("trip")}</span>${$t("Din nästa resa")}</div><button class="link" data-nexttrip="${esc(t.id)}">${$t("Visa resan")}</button></div>
+    <button class="ntmain" data-nexttrip="${esc(t.id)}"><span class="ntcity">${esc(tripName(t))}</span><span class="ntwhen">${ic("clock")} ${esc(when)}</span></button>
     <p class="meta">${bits.join(" · ")}</p>
     ${nx?`<p class="ntnext">${$t("Nästa match")}: <b>${esc(tnm(nx,"home"))} – ${esc(tnm(nx,"away"))}</b> · ${esc(dayLabel(koDay(nx.kickoff)))} ${timeOf(nx.kickoff)}</p>`:""}
     ${I&&I.total?`<div class="ntbar" role="img" aria-label="${esc($t("Att boka: {0} av {1} klart",[I.done,I.total]))}"><i style="width:${Math.round(I.done/I.total*100)}%"></i></div>`:""}</article>`;}
