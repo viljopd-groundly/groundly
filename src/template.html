@@ -4956,6 +4956,9 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
   // fyll bara i staden – man väljer datum och trycker Visa matcher själv, så skärmen hoppar inte
   inp.value=$t(b.dataset.rsug);document.getElementById("rSug").hidden=true;inp.setAttribute("aria-expanded","false");
   RESA_DRAFT={city:inp.value,from:document.getElementById("rFrom").value,to:document.getElementById("rTo").value};inp.blur();});
+// behåll det som redan är ifyllt (stad och datum) när man byter avstånd
+function resaKeepForm(){const g=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};const ci=g("rCity");if(document.getElementById("rCity"))RESA.city=ci.slice(0,60);
+  let f=g("rFrom"),t=g("rTo");if(f){if(f<today())f=today();RESA.from=f;}if(t){RESA.to=t<RESA.from?RESA.from:t;}else if(RESA.to<RESA.from)RESA.to=RESA.from;}
 let RESA_DRAFT=null;document.addEventListener("input",e=>{const id=e.target&&e.target.id;if(id!=="rCity"&&id!=="rFrom"&&id!=="rTo")return;RESA_DRAFT={city:document.getElementById("rCity").value,from:document.getElementById("rFrom").value,to:document.getElementById("rTo").value};});
 // ---------- Vart ska jag åka? Städer med mest fotboll under en period ----------
 let RESA_TAB="plan",RESA_FROMTOP=null,TOPQ={p:"helg",s:"world",f:"",t:""},TOP_C=null,TOP_K="",topMore=false;
@@ -5124,8 +5127,8 @@ document.addEventListener("click",async e=>{const t=e.target.closest&&e.target.c
       const have=new Set(d.wishMatches.map(w=>w.id));sm.forEach(m=>{if(!have.has(m._id))d.wishMatches.push(slim(m));});});
     RESA_SH=null;toast(sm.length?$t("Resan och {0} matcher är sparade",[sm.length]):$t("Resan är sparad"));renderResa();}});
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-rr],[data-tripsave],[data-tripopen],[data-tripdel],[data-tripdelok],[data-tripdelno],[data-calmany]");if(!t)return;
-  if(t.dataset.rr==="eget"){RESA.rc=true;const ci=document.getElementById("rCity");if(ci)RESA.city=ci.value.trim().slice(0,60);RESA_DRAFT=null;renderResa();setTimeout(()=>{const d=document.getElementById("rDist");if(d){d.focus();d.select();}},0);return;}
-  if(t.dataset.rr){RESA.rc=false;RESA.r=+t.dataset.rr;const ci=document.getElementById("rCity");if(ci)RESA.city=ci.value.trim().slice(0,60);RESA_DRAFT=null;renderResa();return;}
+  if(t.dataset.rr==="eget"){RESA.rc=true;resaKeepForm();RESA_DRAFT=null;renderResa();setTimeout(()=>{const d=document.getElementById("rDist");if(d){d.focus();d.select();}},0);return;}
+  if(t.dataset.rr){RESA.rc=false;RESA.r=+t.dataset.rr;resaKeepForm();RESA_DRAFT=null;renderResa();return;}
   if(t.dataset.tripsave){const c=cityLL(RESA.city);if(!c||myState!=="ready")return;MY.trips=(MY.trips||[]).filter(x=>!(norm(x.city)===norm(c.name)&&x.from===RESA.from&&x.to===RESA.to));
     {const nid=newId();TRIP_X.add(nid);MY.trips.push({id:nid,city:c.name,from:RESA.from,to:RESA.to,r:RESA.r});}MY.trips=MY.trips.slice(-20);saveMy();toast($t("Resan är sparad"));renderResa();return;}
   if(t.dataset.tripopen){RESA_FROMTOP=null;const tr=myTrips().find(x=>x.id===t.dataset.tripopen);if(!tr)return;resaOpen=tr.id;RESA_DRAFT=null;RESA={city:tr.city,from:tr.from<today()?today():tr.from,to:tr.to<today()?today():tr.to,r:tr.r,rc:![50,150].includes(tr.r)};renderResa();document.querySelector(".tripact")?.scrollIntoView({behavior:"smooth",block:"start"});return;}
