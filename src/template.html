@@ -4744,12 +4744,14 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
   {const it=document.getElementById("intro");if(it)it.style.display="";}
   el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+nextTripHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+// resans datum som visas: från första till sista valda matchen (sökperioden används bara för att hitta matcher)
+function tripSpan(t,pk){const ds=(pk||[]).map(x=>x.m.kickoff&&koDay(x.m.kickoff)).filter(Boolean).sort();return ds.length?{from:ds[0],to:ds[ds.length-1]}:{from:t.from,to:t.to};}
 // Din nästa resa: överst på startsidan när man har en kommande eller pågående resa
 function nextTripHtml(){if(myState!=="ready")return"";const td=today();const t=myTrips().filter(t=>t.to>=td).sort((a,b)=>a.from.localeCompare(b.from))[0];if(!t)return"";
-  const L=tripML(t);const pk=L?tripPicked(t,L).filter(x=>!mPast(x.m)):[];const days=Math.round((new Date(t.from+"T12:00:00")-new Date(td+"T12:00:00"))/864e5);
+  const L=tripML(t);const pkA=L?tripPicked(t,L):[];const pk=pkA.filter(x=>!mPast(x.m));const sp=tripSpan(t,pkA);const days=Math.round((new Date(sp.from+"T12:00:00")-new Date(td+"T12:00:00"))/864e5);
   const when=days<=0?$t("Pågår nu"):days===1?$t("I morgon"):$t("Om {0} dagar",[days]);
   const I=pk.length?tripItems(t,pk):null;const nx=pk[0]&&pk[0].m;
-  const bits=[esc(resaRange(t.from,t.to))];if(L)bits.push(pk.length?$tn(pk.length,"1 match","{n} matcher"):$t("Inga matcher valda än"));if(I)bits.push($t("Att boka: {0} av {1} klart",[I.done,I.total]));
+  const bits=[esc(resaRange(sp.from,sp.to))];if(L)bits.push(pk.length?$tn(pk.length,"1 match","{n} matcher"):$t("Inga matcher valda än"));if(I)bits.push($t("Att boka: {0} av {1} klart",[I.done,I.total]));
   return`<article class="tip nexttrip"><div class="sechead"><div class="lbl"><span class="ntic" aria-hidden="true">${ic("trip")}</span>${$t("Din nästa resa")}</div><button class="link" data-nexttrip="${esc(t.id)}">${$t("Visa resan")}</button></div>
     <button class="ntmain" data-nexttrip="${esc(t.id)}"><span class="ntcity">${esc(tripName(t))}</span><span class="ntwhen">${ic("clock")} ${esc(when)}</span></button>
     <p class="meta">${bits.join(" · ")}</p>
@@ -5114,7 +5116,7 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
   if(trips.length){h+=`<div class="tripcol"><h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${trips.map(t=>{const c=cityLL(t.city);const past=t.to<today();const L=tripML(t,past);const pk=L?tripPicked(t,L):[];const legs=tripLegs(t);const on=resaOpen===t.id;const exp=TRIP_X.has(t.id)||on||TRIP_DEL===t.id||pk.some(x=>WISH_DEL===x.m._id);
     let sum;if(past){const R=myState==="ready"?tripRecap(t):null;sum=R&&R.seen.length?$tn(R.seen.length,"1 match","{n} matcher")+" · "+$tn(R.ar,"1 arena","{n} arenor"):R&&R.toLog.length?$t("Resan är slut – logga matcherna"):$t("Avslutad");}
     else if(!L)sum=$t("Hämtar matchschemat…");else if(!pk.length)sum=$t("Inga matcher valda än");else{const I=tripItems(t,pk);sum=$tn(pk.length,"1 match","{n} matcher")+" · "+$t("Att boka: {0} av {1} klart",[I.done,I.total]);}
-    const head=`<button class="triphead" data-tripx="${esc(t.id)}" aria-expanded="${exp}"><span class="thmain"><span class="name">${esc(tripName(t))}</span> <span class="meta">${esc(resaRange(t.from,t.to))}</span><span class="thsum">${esc(sum)}</span></span><svg class="ic thchev" aria-hidden="true"><use href="#i-chev"/></svg></button>`;
+    const head=`<button class="triphead" data-tripx="${esc(t.id)}" aria-expanded="${exp}"><span class="thmain"><span class="name">${esc(tripName(t))}</span> <span class="meta">${esc(resaRange(tripSpan(t,pk).from,tripSpan(t,pk).to))}</span><span class="thsum">${esc(sum)}</span></span><svg class="ic thchev" aria-hidden="true"><use href="#i-chev"/></svg></button>`;
     if(!exp)return`<article class="tip trip closed${past?" past":""}">${head}</article>`;
     return`<article class="tip trip${on?" on":""}${past?" past":""}">${head}${past?"":`<div class="tripview"><button class="link strong" data-tripopen="${esc(t.id)}">${$t("Visa alla matcher i området")}</button></div>`}
       ${legs.length>1?`<div class="triplegs">${legs.map((l,i)=>`<span class="leg">${past?`<b>${esc(legName(l))}</b> ${esc(resaRange(l.from,l.to))}`:`<button class="legopen" data-legopen="${esc(t.id)}:${i}"><b>${esc(legName(l))}</b> ${esc(resaRange(l.from,l.to))}</button>`}${past?"":`<button class="legdel" data-legdel="${esc(t.id)}:${i}" aria-label="${$t("Ta bort {0} från resan",[esc(legName(l))])}">×</button>`}</span>`).join("")}</div>`:""}
