@@ -5047,12 +5047,16 @@ function tripItems(t,pk){const nT=pk.filter(x=>hasTix(x.m._id)).length;const bk=
   const missing=pk.filter(x=>!hasTix(x.m._id));const tl=missing.map(x=>{const u=matchTixUrl(x.m);return u?`<a class="btn small" href="${esc(u)}" target="_blank" rel="noopener">${ic("ticket")} ${esc(tnm(x.m,"home"))}</a>`:"";}).join("");
   const rows=[`<li class="${missing.length?"":"done"}"><span class="ckbox ro">${missing.length?"":OK}</span><span class="cklbl">${pk.length===1?(nT?$t("Biljett klar"):$t("Biljett")):$t("Biljetter: {0} av {1}",[nT,pk.length])}</span>${missing.length?`<span class="cklinks">${tl}</span>`:""}</li>`];
   let done=missing.length?0:1,total=1;
-  if(legs.length>1){
-    // resa till flera städer: hotell och arenatur/att göra per stad (bara städer där man valt en match, annars alla)
-    const has=l=>(resaMatches(l)||[]).some(x=>pk.some(p=>p.m._id===x.m._id));const use=legs.some(has)?legs.filter(has):legs;
-    use.forEach((l,i)=>{const nm=(cityLL(l.city)||{}).name||l.city,key=norm(nm).replace(/[^a-z0-9]+/g,"-");
+  // städer där matcherna spelas (orter inom ca 4 mil från varandra räknas som samma stad, t.ex. Badalona hör till Barcelona)
+  const groups=[];const legC=legs.map(l=>cityLL(l.city)).filter(Boolean);
+  pk.slice().sort((a,b)=>(a.m.kickoff||"").localeCompare(b.m.kickoff||"")).forEach(x=>{const ll=GEO[x.m.city];const d=koDay(x.m.kickoff);if(!ll)return;
+    let g=groups.find(g=>roadKm(g.ll,ll)<=40);if(!g){const lc=legC.find(c=>c.ll&&roadKm(c.ll,ll)<=40);g={name:lc?lc.name:x.m.city,ll:lc&&lc.ll?lc.ll:ll,from:d,to:d};groups.push(g);}
+    if(d<g.from)g.from=d;if(d>g.to)g.to=d;});
+  const use=groups.length>1?groups:legs.length>1?legs.map(l=>{const c=cityLL(l.city)||{};return{name:c.name||l.city,from:l.from,to:l.to};}):null;
+  if(use){
+    use.forEach((g,i)=>{const nm=g.name,key=norm(nm).replace(/[^a-z0-9]+/g,"-");
       rows.push(`<li class="ckcity">${esc($t(nm))}</li>`);
-      const hd=!!(bk["h:"+key]||(i===0&&bk.h));rows.push(row("h:"+key,hd,$t("Hotell i {0}",[esc($t(nm))]),legHotel(l)));total++;if(hd)done++;
+      const hd=!!(bk["h:"+key]||(i===0&&bk.h));rows.push(row("h:"+key,hd,$t("Hotell i {0}",[esc($t(nm))]),legHotel({city:nm,from:g.from,to:g.to>g.from?addDays(g.to,1):g.to})));total++;if(hd)done++;
       if(tourSets().ci.has(nm)){const d=!!(bk["t:"+key]||(i===0&&bk.t));rows.push(row("t:"+key,d,$t("Arenatur i {0}",[esc($t(nm))]),tourCityLink(nm)));total++;if(d)done++;}
       else if(!homeIsLocal(nm)){const d=!!(bk["t:"+key]||(i===0&&bk.t));rows.push(row("t:"+key,d,$t("Att göra i {0}",[esc($t(nm))]),doCityLink(nm)));total++;if(d)done++;}});
     if(away){rows.push(row("r",bk.r,$t("Resa dit"),extLink(omioUrl(homeLL()?.name||homeTown,c0.name),OMIO_ON?adLabel($t("Boka")):$t("Boka"),"btn small")));total++;if(bk.r)done++;}
