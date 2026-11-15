@@ -2651,5 +2651,6 @@
  "I resan {0}": "Matkassa {0}",
  "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Napauta Lisää matkaan otteluissa, jotka haluat nähdä. Ne tallentuvat myös kohtaan Haluan mennä.",
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Napauta Näytä kaikki alueen ottelut ja sitten Lisää matkaan otteluissa, jotka haluat nähdä.",
- "{0} finns redan i resan, datumen är uppdaterade": "{0} on jo matkassa, päivämäärät on päivitetty"
+ "{0} finns redan i resan, datumen är uppdaterade": "{0} on jo matkassa, päivämäärät on päivitetty",
+ "Arenatur i {0}": "Stadionkierros: {0}"
 }

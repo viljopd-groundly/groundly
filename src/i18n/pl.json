@@ -2651,5 +2651,6 @@
  "I resan {0}": "W podróży {0}",
  "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Stuknij Dodaj do podróży przy meczach, które chcesz zobaczyć. Zapiszą się też w Chcę iść.",
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Stuknij Pokaż wszystkie mecze w okolicy, a potem Dodaj do podróży przy meczach, które chcesz zobaczyć.",
- "{0} finns redan i resan, datumen är uppdaterade": "{0} jest już w podróży, daty zostały zaktualizowane"
+ "{0} finns redan i resan, datumen är uppdaterade": "{0} jest już w podróży, daty zostały zaktualizowane",
+ "Arenatur i {0}": "Zwiedzanie stadionu: {0}"
 }

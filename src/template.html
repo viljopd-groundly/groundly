@@ -1266,6 +1266,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 .wknear{margin:-4px 0 0}
 .wkrow{align-items:flex-start;overflow-y:hidden;box-sizing:content-box;transition:height .22s ease}
 .mini.addtrip[aria-pressed="false"]{border-color:var(--accent);color:var(--accent);font-weight:700}
+.tripcheck li.ckcity{display:block;font-weight:800;font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);margin:10px 0 0;padding:0;border:0;background:none}
 </style>
 
 <div class="wrap">
@@ -5046,13 +5047,25 @@ function tripItems(t,pk){const nT=pk.filter(x=>hasTix(x.m._id)).length;const bk=
   const missing=pk.filter(x=>!hasTix(x.m._id));const tl=missing.map(x=>{const u=matchTixUrl(x.m);return u?`<a class="btn small" href="${esc(u)}" target="_blank" rel="noopener">${ic("ticket")} ${esc(tnm(x.m,"home"))}</a>`:"";}).join("");
   const rows=[`<li class="${missing.length?"":"done"}"><span class="ckbox ro">${missing.length?"":OK}</span><span class="cklbl">${pk.length===1?(nT?$t("Biljett klar"):$t("Biljett")):$t("Biljetter: {0} av {1}",[nT,pk.length])}</span>${missing.length?`<span class="cklinks">${tl}</span>`:""}</li>`];
   let done=missing.length?0:1,total=1;
+  if(legs.length>1){
+    // resa till flera städer: hotell och arenatur/att göra per stad (bara städer där man valt en match, annars alla)
+    const has=l=>(resaMatches(l)||[]).some(x=>pk.some(p=>p.m._id===x.m._id));const use=legs.some(has)?legs.filter(has):legs;
+    use.forEach((l,i)=>{const nm=(cityLL(l.city)||{}).name||l.city,key=norm(nm).replace(/[^a-z0-9]+/g,"-");
+      rows.push(`<li class="ckcity">${esc($t(nm))}</li>`);
+      const hd=!!(bk["h:"+key]||(i===0&&bk.h));rows.push(row("h:"+key,hd,$t("Hotell i {0}",[esc($t(nm))]),legHotel(l)));total++;if(hd)done++;
+      if(tourSets().ci.has(nm)){const d=!!(bk["t:"+key]||(i===0&&bk.t));rows.push(row("t:"+key,d,$t("Arenatur i {0}",[esc($t(nm))]),tourCityLink(nm)));total++;if(d)done++;}
+      else if(!homeIsLocal(nm)){const d=!!(bk["t:"+key]||(i===0&&bk.t));rows.push(row("t:"+key,d,$t("Att göra i {0}",[esc($t(nm))]),doCityLink(nm)));total++;if(d)done++;}});
+    if(away){rows.push(row("r",bk.r,$t("Resa dit"),extLink(omioUrl(homeLL()?.name||homeTown,c0.name),OMIO_ON?adLabel($t("Boka")):$t("Boka"),"btn small")));total++;if(bk.r)done++;}
+    return{rows,done,total,missing:missing.length};}
   rows.push(row("h",bk.h,$t("Hotell"),legs.map(legHotel).join("")));total++;if(bk.h)done++;
   if(away){rows.push(row("r",bk.r,$t("Resa dit"),extLink(omioUrl(homeLL()?.name||homeTown,c0.name),OMIO_ON?adLabel($t("Boka")):$t("Boka"),"btn small")));total++;if(bk.r)done++;}
   if(tour||acts){rows.push(tour?row("t",bk.t,$t("Arenatur"),lns.map(n=>tourCityLink(n)).join("")):row("t",bk.t,$t("Aktiviteter"),lns.map(n=>doCityLink(n)).join("")));total++;if(bk.t)done++;}
   return{rows,done,total,missing:missing.length};}
 function tripCheck(t,pk){const I=tripItems(t,pk);return`<div class="tripcheck"><div class="lbl">${$t("Att boka")} <span class="ckprog">${$t("{0} av {1} klart",[I.done,I.total])}</span></div><ul>${I.rows.join("")}</ul>${I.missing?`<p class="meta ckhint">${$t("Köp via klubben, inte andrahandssajter. Tryck Har biljett? på matchen när du har den.")}</p>`:""}</div>`;}
-document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-tripbk]");if(!b||myState!=="ready")return;const[id,k]=b.dataset.tripbk.split(":");const tr=myTrips().find(x=>x.id===id);if(!tr)return;
-  const bk={...(tr.bk||{})};if(bk[k])delete bk[k];else bk[k]=true;if(Object.keys(bk).length)tr.bk=bk;else delete tr.bk;saveMy();renderResa();});
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-tripbk]");if(!b||myState!=="ready")return;const raw=b.dataset.tripbk,ci=raw.indexOf(":"),id=raw.slice(0,ci),k=raw.slice(ci+1);const tr=myTrips().find(x=>x.id===id);if(!tr)return;
+  const bk={...(tr.bk||{})};const first=b.closest("ul")&&[...b.closest("ul").querySelectorAll("[data-tripbk]")].find(x=>x.dataset.tripbk.slice(ci+1).startsWith(k.split(":")[0]+":"))===b;
+  // gamla kryss (för hela resan) gäller första staden; bocka ur dem också
+  if(k.includes(":")&&first&&bk[k.split(":")[0]]&&!bk[k]){delete bk[k.split(":")[0]];}else if(bk[k])delete bk[k];else bk[k]=true;if(Object.keys(bk).length)tr.bk=bk;else delete tr.bk;saveMy();renderResa();});
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-wdel],[data-wdelok],[data-wdelno]");if(!b||myState!=="ready")return;e.stopPropagation();
   if(b.dataset.wdel){WISH_DEL=WISH_DEL===b.dataset.wdel?null:b.dataset.wdel;renderResa();return;}
   if(b.dataset.wdelno){WISH_DEL=null;renderResa();return;}

@@ -2740,5 +2740,6 @@
  "I resan {0}": "In trip {0}",
  "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tap Add to trip on the matches you want to see. They're also saved under Want to go.",
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Tap Show all matches in the area, then Add to trip on the matches you want to see.",
- "{0} finns redan i resan, datumen är uppdaterade": "{0} is already in the trip, the dates are updated"
+ "{0} finns redan i resan, datumen är uppdaterade": "{0} is already in the trip, the dates are updated",
+ "Arenatur i {0}": "Stadium tour in {0}"
 }

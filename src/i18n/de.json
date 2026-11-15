@@ -2652,5 +2652,6 @@
  "I resan {0}": "In der Reise {0}",
  "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tippe bei den Spielen, die du sehen willst, auf Zur Reise hinzufügen. Sie werden auch unter Will hin gespeichert.",
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Tippe auf Alle Spiele in der Umgebung zeigen und dann bei den gewünschten Spielen auf Zur Reise hinzufügen.",
- "{0} finns redan i resan, datumen är uppdaterade": "{0} ist schon in der Reise, die Daten wurden angepasst"
+ "{0} finns redan i resan, datumen är uppdaterade": "{0} ist schon in der Reise, die Daten wurden angepasst",
+ "Arenatur i {0}": "Stadionführung in {0}"
 }
