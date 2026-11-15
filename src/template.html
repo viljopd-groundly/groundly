@@ -801,7 +801,7 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 :root[data-style="flat"] .topbar{background:color-mix(in srgb,var(--surface) 90%,transparent)}
 :root[data-style="flat"] .hero,:root[data-style="flat"] .onboard{border:0;border-radius:var(--r);padding:14px;background:linear-gradient(160deg,var(--accent-soft),var(--surface) 70%)}
 :root[data-style="flat"] .favcard{border-width:0 0 0 0;border-radius:var(--r)}
-:root[data-style="flat"] .favcard:not(.tone){background:var(--accent-soft)}
+:root[data-style="flat"] .favcard:not(.tone){background:var(--surface)}
 .backpill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:58;font:600 calc(14px*var(--fs)) var(--f-body);padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--fg);color:var(--bg);box-shadow:0 4px 18px rgba(0,0,0,.18);cursor:pointer;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
 .backpill[hidden]{display:none}
 @media (min-width:900px){.backpill{bottom:24px}}
