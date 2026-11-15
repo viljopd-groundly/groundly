@@ -2651,5 +2651,6 @@
  "Lägg till i resan": "Legg til i reisen",
  "I resan {0}": "I reisen {0}",
  "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Trykk Legg til i reisen på kampene du vil se. De lagres også under Vil gå.",
- "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Trykk Vis alle kamper i området og deretter Legg til i reisen på kampene du vil se."
+ "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Trykk Vis alle kamper i området og deretter Legg til i reisen på kampene du vil se.",
+ "{0} finns redan i resan, datumen är uppdaterade": "{0} er allerede i reisen, datoene er oppdatert"
 }

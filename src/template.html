@@ -4906,7 +4906,9 @@ function tripPicked(t,list){return(list||resaMatches(t)||[]).filter(x=>isWishM(x
 const tripOut=t=>wishMoves().filter(x=>x.old&&koDay(x.old)>=t.from&&koDay(x.old)<=t.to&&(koDay(x.m.kickoff)<t.from||koDay(x.m.kickoff)>t.to));
 // ---------- Resor med flera städer: varje stopp (ben) har egen stad, egna datum och eget avstånd ----------
 let RESA_ADDTO=null,TRIP_DEL=null,WISH_DEL=null,TRIP_MENU=null;const TRIP_X=new Set();
-const tripLegs=t=>Array.isArray(t.legs)&&t.legs.length>1?t.legs:[{city:t.city,from:t.from,to:t.to,r:t.r}];
+// samma stad får bara finnas en gång i en resa: dubbletter slås ihop till en etapp med det tidigaste och senaste datumet
+function legsMerge(L){const out=[];for(const l of L){const o=out.find(x=>norm(x.city)===norm(l.city));if(o){if(l.from<o.from)o.from=l.from;if(l.to>o.to)o.to=l.to;o.r=Math.max(o.r||0,l.r||0)||o.r;}else out.push({...l});}return out;}
+const tripLegs=t=>Array.isArray(t.legs)&&t.legs.length>1?legsMerge(t.legs):[{city:t.city,from:t.from,to:t.to,r:t.r}];
 const legName=l=>{const c=cityLL(l.city);return $t(c?c.name:l.city);};
 const tripName=t=>tripLegs(t).map(legName).join(" → ");
 function tripML(t,past){const seen=new Set(),out=[];for(const l of tripLegs(t)){const L=past?tripAll(l):resaMatches(l);if(!L)return null;L.forEach(x=>{if(!seen.has(x.m._id)){seen.add(x.m._id);out.push(x);}});}return out.sort((a,b)=>sortM(a.m,b.m));}
@@ -4920,9 +4922,10 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
   if(b.dataset.legopen){const[id,i]=b.dataset.legopen.split(":");const tr=myTrips().find(x=>x.id===id);const l=tr&&tripLegs(tr)[+i];if(!l)return;RESA_FROMTOP=null;RESA_ADDTO=null;resaOpen=tr.id;RESA_DRAFT=null;RESA={city:l.city,from:l.from<today()?today():l.from,to:l.to<today()?today():l.to,r:l.r,rc:![50,150].includes(l.r)};renderResa();requestAnimationFrame(()=>document.querySelector(".tripact")?.scrollIntoView({behavior:"smooth",block:"start"}));return;}
   if(b.dataset.addcancel!==undefined){RESA_ADDTO=null;renderResa();return;}
   if(b.dataset.legadd){const tr=myTrips().find(x=>x.id===RESA_ADDTO);const c=cityLL(RESA.city);if(!tr||!c)return;const legs=tripLegs(tr).map(l=>({...l}));
-    if(legs.length>=6){toast($t("En resa kan ha högst 6 städer."));return;}
-    if(!legs.some(l=>norm(l.city)===norm(c.name)&&l.from===RESA.from&&l.to===RESA.to))legs.push({city:c.name,from:RESA.from,to:RESA.to,r:RESA.r});setLegs(tr,legs);saveMy();
-    RESA_ADDTO=null;resaOpen=tr.id;RESA={...RESA,city:""};toast($t("{0} är tillagd i resan",[$t(c.name)]),"check");renderResa();requestAnimationFrame(()=>document.querySelector(".trip.on")?.scrollIntoView({behavior:"smooth",block:"start"}));return;}
+    const same=legs.find(l=>norm(l.city)===norm(c.name));
+    if(!same&&legs.length>=6){toast($t("En resa kan ha högst 6 städer."));return;}
+    if(same){if(RESA.from<same.from)same.from=RESA.from;if(RESA.to>same.to)same.to=RESA.to;}else legs.push({city:c.name,from:RESA.from,to:RESA.to,r:RESA.r});setLegs(tr,legsMerge(legs));saveMy();
+    RESA_ADDTO=null;resaOpen=tr.id;RESA={...RESA,city:""};toast(same?$t("{0} finns redan i resan, datumen är uppdaterade",[$t(c.name)]):$t("{0} är tillagd i resan",[$t(c.name)]),"check");renderResa();requestAnimationFrame(()=>document.querySelector(".trip.on")?.scrollIntoView({behavior:"smooth",block:"start"}));return;}
   if(b.dataset.legdel){const[id,i]=b.dataset.legdel.split(":");const tr=myTrips().find(x=>x.id===id);if(!tr)return;const legs=tripLegs(tr).filter((_,k)=>k!==+i);if(!legs.length)return;setLegs(tr,legs);saveMy();renderResa();}});
 // hur långt fram matchschemat räcker: dagen då 97 % av kommande matcher är passerade (enstaka långt framlagda matcher räknas inte)
 let HZ_C=null,HZ_K=-1;

@@ -2650,5 +2650,6 @@
  "Lägg till i resan": "Bæta við ferðina",
  "I resan {0}": "Í ferðinni {0}",
  "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Ýttu á Bæta við ferðina á leikjunum sem þú vilt sjá. Þeir vistast líka undir Langar að fara.",
- "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Ýttu á Sýna alla leiki á svæðinu og svo Bæta við ferðina á leikjunum sem þú vilt sjá."
+ "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Ýttu á Sýna alla leiki á svæðinu og svo Bæta við ferðina á leikjunum sem þú vilt sjá.",
+ "{0} finns redan i resan, datumen är uppdaterade": "{0} er þegar í ferðinni, dagsetningarnar eru uppfærðar"
 }

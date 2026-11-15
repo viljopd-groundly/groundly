@@ -55,7 +55,7 @@ async function page(b, { lang = "sv", look = "", user = true, fs: data = null, h
       check("resa: bocka hotell", await p.evaluate(() => myTrips()[0].bk && myTrips()[0].bk.h === true));
       await p.evaluate(() => document.querySelector("[data-tripx]").click()); await p.waitForTimeout(200);
       check("resa: fäll ihop", await p.evaluate(() => !!document.querySelector(".trip.closed")));
-      await p.evaluate(() => document.querySelector("[data-tripx]").click()); await p.evaluate(() => document.querySelector("[data-tripmenu]").click()); await p.waitForTimeout(150);
+      await p.evaluate(() => document.querySelector("[data-tripx]").click()); await p.waitForTimeout(150);
       await p.evaluate(() => document.querySelector(".tripmenu [data-tripadd]").click()); await p.waitForTimeout(300);
       const c2 = await p.evaluate(c => { const m = MATCHES.find(x => x.kickoff && x.city && x.city !== c && GEO[x.city]); return m && m.city; }, city);
       await p.fill("#rCity", c2); await p.click("#resaForm button[type=submit]"); await p.waitForTimeout(300);
