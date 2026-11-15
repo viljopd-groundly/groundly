@@ -1054,7 +1054,7 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .heroswipe .wkrow>.heroslide{flex:0 0 100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always}.heroswipe .heroslide>.teams{margin-top:2px}
 .wkdots{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}.wkdots i.on{background:var(--accent);width:18px;border-radius:4px}
 /* Tips för helgen ligger överst och ska synas mest: mörkare överkant */
-.tip.wkbox{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,var(--surface)) 0,color-mix(in srgb,var(--accent) 7%,var(--surface)) 64px,var(--surface) 140px)!important;border-top:4px solid color-mix(in srgb,var(--accent) 70%,var(--surface))!important}
+.tip.wkbox{border-top:2px solid var(--accent)!important}
 .wkcard .teams.big{flex-direction:column;align-items:flex-start;gap:4px;font-size:calc(18px*var(--fs))}.wkcard .teams.big .vs{display:none}
 .wkcard .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .wkview{display:flex;gap:14px;margin-top:8px}.wkview .link{color:var(--muted)}.wkview .link.on{color:var(--fg);font-weight:700;text-decoration:none}
@@ -1271,7 +1271,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 .nexttrip .ntcity{font-family:var(--f-display);font-weight:700;font-size:calc(24px*var(--fs));line-height:1.15;color:var(--fg)}
 .nexttrip .ntwhen{font-weight:800;color:var(--chalk,#fff);background:var(--accent);font-size:14px;white-space:nowrap;padding:4px 10px 4px 8px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
 .nexttrip .ntwhen .ic{width:15px;height:15px}
-#homeBody>.tip.nexttrip,.tip.nexttrip{border-top:2px solid var(--accent)!important;box-shadow:inset 0 0 0 999px color-mix(in srgb,var(--accent) 6%,transparent)!important}
+#homeBody>.tip.nexttrip,.tip.nexttrip{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,var(--surface)) 0,color-mix(in srgb,var(--accent) 7%,var(--surface)) 64px,var(--surface) 140px)!important;border-top:4px solid color-mix(in srgb,var(--accent) 70%,var(--surface))!important}
 .nexttrip .ntic{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--chalk,#fff);margin-right:10px;vertical-align:middle;flex:none}
 .nexttrip .ntic .ic{width:19px;height:19px;color:var(--chalk,#fff)!important}.nexttrip .ntwhen .ic{color:var(--chalk,#fff)!important}
 #homeBody>.tip.nexttrip>.sechead:first-child>.lbl{display:flex;align-items:center}
