@@ -143,7 +143,7 @@ async function boot() {
         // gemensamma dokument tas inte bort direkt utan töms och märks, så att cachade kopior också försvinner
         async delete() { try { if (CAN_DELTA && !/^(users|mod|meta|config)\//.test(ref.path)) await F.setDoc(ref, { _gone: true, _u: F.serverTimestamp() }); else await F.deleteDoc(ref); } catch (e) { throw mapErr(e); } },
         async get() { try { return docSnap(await F.getDoc(ref)); } catch (e) { throw mapErr(e); } },
-        onSnapshot(next, onErr) { return F.onSnapshot(ref, s => next(docSnap(s)), e => onErr && onErr(mapErr(e))); }
+        onSnapshot(next, onErr) { return F.onSnapshot(ref, { includeMetadataChanges: true }, s => next(docSnap(s)), e => onErr && onErr(mapErr(e))); }
       };
     },
     collection(name) {

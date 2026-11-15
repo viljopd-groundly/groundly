@@ -13,7 +13,7 @@ export const getDoc=async r=>dsnap(r);export const getDocs=async r=>csnap(r);
 export const setDoc=async(r,d,o)=>{if(!canWrite(r.path))throw deny();if(r.path.startsWith("usage/"))D=load();if(Object.values(d||{}).some(v=>v&&v.__inc)){const cur=D[r.path]||{};for(const[k,v]of Object.entries(d))cur[k]=v&&v.__inc?(cur[k]||0)+v.__inc:v;D[r.path]=cur;save();fire(r.path);return;}D[r.path]=fixSt(o&&o.merge?{...(D[r.path]||{}),...JSON.parse(JSON.stringify(d))}:JSON.parse(JSON.stringify(d)));save();fire(r.path)};
 export const updateDoc=async(r,d)=>{if(!canWrite(r.path))throw deny();D[r.path]=fixSt({...(D[r.path]||{}),...JSON.parse(JSON.stringify(d))});save();fire(r.path)};
 export const deleteDoc=async r=>{if(!canWrite(r.path))throw deny();delete D[r.path];save();fire(r.path)};
-export const onSnapshot=(r,next,err)=>{if(r.path.startsWith("users/")&&r.path.split("/")[1]!==uid()){setTimeout(()=>err&&err(deny()),0);return()=>{}}
+export const onSnapshot=(r,next,err,err2)=>{if(next&&typeof next==="object"&&!next.next){next=err;err=err2;}if(r.path.startsWith("users/")&&r.path.split("/")[1]!==uid()){setTimeout(()=>err&&err(deny()),0);return()=>{}}
   const f=()=>next(r.k==="doc"?dsnap(r):csnap(r));f.p=r.path;subs.add(f);setTimeout(f,0);return()=>subs.delete(f)};
 
 const fixSt=d=>{if(d&&d._u&&d._u.__st)d._u={__ts:Date.now()};return d};
