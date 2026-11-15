@@ -571,7 +571,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:10
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dsel{appearance:none;-webkit-appearance:none;font:600 calc(14px*var(--fs)) var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 15px;max-width:100%;cursor:pointer;text-overflow:ellipsis}
 .selw:after{content:"";position:absolute;right:15px;top:50%;width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none;color:var(--muted)}
-.dsel.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.dsel.on{background:var(--fg)!important;color:var(--bg)!important;border-color:var(--fg)!important}
 .selw:has(.dsel.on):after{color:var(--bg)}
 .steam{flex-direction:column;align-items:stretch}
 .sthead{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%}
