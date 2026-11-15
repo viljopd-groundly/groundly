@@ -2653,5 +2653,10 @@
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Touche Afficher tous les matchs du secteur, puis Ajouter au voyage sur ceux que tu veux voir.",
  "{0} finns redan i resan, datumen är uppdaterade": "{0} est déjà dans le voyage, les dates sont mises à jour",
  "Arenatur i {0}": "Visite de stade à {0}",
- "Att göra": "À faire"
+ "Att göra": "À faire",
+ "Din nästa resa": "Ton prochain voyage",
+ "I morgon": "Demain",
+ "Om {0} dagar": "Dans {0} jours",
+ "Pågår nu": "En cours",
+ "Visa resan": "Voir le voyage"
 }

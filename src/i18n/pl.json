@@ -2653,5 +2653,10 @@
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Stuknij Pokaż wszystkie mecze w okolicy, a potem Dodaj do podróży przy meczach, które chcesz zobaczyć.",
  "{0} finns redan i resan, datumen är uppdaterade": "{0} jest już w podróży, daty zostały zaktualizowane",
  "Arenatur i {0}": "Zwiedzanie stadionu: {0}",
- "Att göra": "Atrakcje"
+ "Att göra": "Atrakcje",
+ "Din nästa resa": "Twoja następna podróż",
+ "I morgon": "Jutro",
+ "Om {0} dagar": "Za {0} dni",
+ "Pågår nu": "Trwa teraz",
+ "Visa resan": "Zobacz podróż"
 }

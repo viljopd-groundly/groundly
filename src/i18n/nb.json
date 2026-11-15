@@ -2654,5 +2654,10 @@
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Trykk Vis alle kamper i området og deretter Legg til i reisen på kampene du vil se.",
  "{0} finns redan i resan, datumen är uppdaterade": "{0} er allerede i reisen, datoene er oppdatert",
  "Arenatur i {0}": "Stadionomvisning i {0}",
- "Att göra": "Å gjøre"
+ "Att göra": "Å gjøre",
+ "Din nästa resa": "Din neste reise",
+ "I morgon": "I morgen",
+ "Om {0} dagar": "Om {0} dager",
+ "Pågår nu": "Pågår nå",
+ "Visa resan": "Vis reisen"
 }

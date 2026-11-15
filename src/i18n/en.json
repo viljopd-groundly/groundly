@@ -2742,5 +2742,10 @@
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Tap Show all matches in the area, then Add to trip on the matches you want to see.",
  "{0} finns redan i resan, datumen är uppdaterade": "{0} is already in the trip, the dates are updated",
  "Arenatur i {0}": "Stadium tour in {0}",
- "Att göra": "Things to do"
+ "Att göra": "Things to do",
+ "Din nästa resa": "Your next trip",
+ "I morgon": "Tomorrow",
+ "Om {0} dagar": "In {0} days",
+ "Pågår nu": "Happening now",
+ "Visa resan": "View trip"
 }

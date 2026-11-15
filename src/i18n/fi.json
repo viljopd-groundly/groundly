@@ -2653,5 +2653,10 @@
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Napauta Näytä kaikki alueen ottelut ja sitten Lisää matkaan otteluissa, jotka haluat nähdä.",
  "{0} finns redan i resan, datumen är uppdaterade": "{0} on jo matkassa, päivämäärät on päivitetty",
  "Arenatur i {0}": "Stadionkierros: {0}",
- "Att göra": "Tekemistä"
+ "Att göra": "Tekemistä",
+ "Din nästa resa": "Seuraava matkasi",
+ "I morgon": "Huomenna",
+ "Om {0} dagar": "{0} päivän päästä",
+ "Pågår nu": "Käynnissä",
+ "Visa resan": "Näytä matka"
 }

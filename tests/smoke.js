@@ -102,6 +102,7 @@ async function page(b, { lang = "sv", look = "", user = true, fs: data = null, h
         const del = merge3(base, { ...base, attended: [{ id: "a1" }] }, srv).attended.map(x => x.id).join(",");
         return ids === "a1,a2,a3,a4,a9" && r.trips.length === 2 && r.fav === "y" && del === "a1,a3,a4";
       }));
+      check("Din nästa resa visas på startsidan", await p.evaluate(() => { if (myState !== "ready") return true; const keep = MY.trips; MY.trips = [{ id: "nt1", city: "London", from: addDays(today(), 3), to: addDays(today(), 5) }]; goTop("hem"); renderHome(); const ok = !!document.querySelector(".nexttrip"); MY.trips = keep; renderHome(); return ok; }));
       check("sök lag i Matcher", await p.evaluate(() => { const m = MATCHES.find(x => x.home && C[x.home] && x.kickoff); if (!m) return false; dFrom = today(); dTo = addDays(today(), 400); pickMQ("team", m.home, C[m.home].n); const n = +document.getElementById("matchCount").querySelector("b").textContent; const ok = n > 0 && n === MATCHES.filter(x => inDates(x) && gOkM(x) && (x.home === m.home || x.away === m.home)).length; document.getElementById("cityClear").click(); return ok && MQ === null; }));
       check("sökförslag för lag och land", await p.evaluate(() => { const h = mqHits(C[MATCHES.find(x => x.home && C[x.home]).home].n); return h.teams.length > 0; }));
       check("anonym statistik finns", await p.evaluate(() => typeof track === "function" && USAGE_KEYS.size > 50));

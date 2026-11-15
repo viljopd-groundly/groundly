@@ -1267,6 +1267,12 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 .wkrow{align-items:flex-start;overflow-y:hidden;box-sizing:content-box;transition:height .22s ease}
 .mini.addtrip[aria-pressed="false"]{border-color:var(--accent);color:var(--accent);font-weight:700}
 .tripcheck li.ckcity{display:block;font-weight:800;font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);margin:10px 0 0;padding:0;border:0;background:none}
+.nexttrip .ntmain{all:unset;cursor:pointer;display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;width:100%;margin-top:4px}
+.nexttrip .ntcity{font-family:var(--f-display);font-weight:700;font-size:calc(24px*var(--fs));line-height:1.15;color:var(--fg)}
+.nexttrip .ntwhen{font-weight:800;color:var(--accent);font-size:15px;white-space:nowrap}
+.nexttrip .meta{margin:2px 0 0}.nexttrip .ntnext{margin:6px 0 0;font-size:14px}
+.ntbar{height:6px;border-radius:999px;background:var(--soft);margin-top:10px;overflow:hidden}.ntbar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+:root[data-look="ticket"] .nexttrip .ntcity{text-transform:uppercase;font-weight:800}
 </style>
 
 <div class="wrap">
@@ -4732,7 +4738,22 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   const fresh=isNewbie();
   if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
   {const it=document.getElementById("intro");if(it)it.style.display="";}
-  el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+  el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+nextTripHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+// Din nästa resa: överst på startsidan när man har en kommande eller pågående resa
+function nextTripHtml(){if(myState!=="ready")return"";const td=today();const t=myTrips().filter(t=>t.to>=td).sort((a,b)=>a.from.localeCompare(b.from))[0];if(!t)return"";
+  const L=tripML(t);const pk=L?tripPicked(t,L).filter(x=>!mPast(x.m)):[];const days=Math.round((new Date(t.from+"T12:00:00")-new Date(td+"T12:00:00"))/864e5);
+  const when=days<=0?$t("Pågår nu"):days===1?$t("I morgon"):$t("Om {0} dagar",[days]);
+  const I=pk.length?tripItems(t,pk):null;const nx=pk[0]&&pk[0].m;
+  const bits=[esc(resaRange(t.from,t.to))];if(L)bits.push(pk.length?$tn(pk.length,"1 match","{n} matcher"):$t("Inga matcher valda än"));if(I)bits.push($t("Att boka: {0} av {1} klart",[I.done,I.total]));
+  return`<article class="tip nexttrip"><div class="sechead"><div class="lbl">${$t("Din nästa resa")}</div><button class="link" data-nexttrip="${esc(t.id)}">${$t("Visa resan")}</button></div>
+    <button class="ntmain" data-nexttrip="${esc(t.id)}"><span class="ntcity">${esc(tripName(t))}</span><span class="ntwhen">${esc(when)}</span></button>
+    <p class="meta">${bits.join(" · ")}</p>
+    ${nx?`<p class="ntnext">${$t("Nästa match")}: <b>${esc(tnm(nx,"home"))} – ${esc(tnm(nx,"away"))}</b> · ${esc(dayLabel(koDay(nx.kickoff)))} ${timeOf(nx.kickoff)}</p>`:""}
+    ${I&&I.total?`<div class="ntbar" role="img" aria-label="${esc($t("Att boka: {0} av {1} klart",[I.done,I.total]))}"><i style="width:${Math.round(I.done/I.total*100)}%"></i></div>`:""}</article>`;}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-nexttrip]");if(!b)return;const id=b.dataset.nexttrip;
+  RESA_TAB="plan";RESA_ADDTO=null;TRIP_X.add(id);goTop("resa");renderResa();
+  const go=()=>{const el=document.querySelector(`[data-tripx="${CSS.escape(id)}"]`);if(!el)return;const tb=document.querySelector(".topbar");window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-(tb?tb.getBoundingClientRect().height:0)-10)});};
+  requestAnimationFrame(()=>requestAnimationFrame(go));setTimeout(go,350);});
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
   return`<article class="tip howto">${fresh?`<div class="howeye">${$t("Ny här?")}</div>`:""}<h2 class="name">${$t("Så funkar Groundly")}</h2><p class="howsub">${$t("Tre saker du gör i appen. Tryck för att börja.")}</p>
