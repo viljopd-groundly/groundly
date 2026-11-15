@@ -5054,11 +5054,11 @@ function tripItems(t,pk){const nT=pk.filter(x=>hasTix(x.m._id)).length;const bk=
     if(d<g.from)g.from=d;if(d>g.to)g.to=d;});
   const use=groups.length>1?groups:legs.length>1?legs.map(l=>{const c=cityLL(l.city)||{};return{name:c.name||l.city,from:l.from,to:l.to};}):null;
   if(use){
-    use.forEach((g,i)=>{const nm=g.name,key=norm(nm).replace(/[^a-z0-9]+/g,"-");
-      rows.push(`<li class="ckcity">${esc($t(nm))}</li>`);
-      const hd=!!(bk["h:"+key]||(i===0&&bk.h));rows.push(row("h:"+key,hd,$t("Hotell i {0}",[esc($t(nm))]),legHotel({city:nm,from:g.from,to:g.to>g.from?addDays(g.to,1):g.to})));total++;if(hd)done++;
-      if(tourSets().ci.has(nm)){const d=!!(bk["t:"+key]||(i===0&&bk.t));rows.push(row("t:"+key,d,$t("Arenatur i {0}",[esc($t(nm))]),tourCityLink(nm)));total++;if(d)done++;}
-      else if(!homeIsLocal(nm)){const d=!!(bk["t:"+key]||(i===0&&bk.t));rows.push(row("t:"+key,d,$t("Att göra i {0}",[esc($t(nm))]),doCityLink(nm)));total++;if(d)done++;}});
+    // en rad per sak, med en länk per stad
+    rows.push(row("h",bk.h,$t("Hotell"),use.map(g=>legHotel({city:g.name,from:g.from,to:g.to>g.from?addDays(g.to,1):g.to})).join("")));total++;if(bk.h)done++;
+    const tc=use.filter(g=>tourSets().ci.has(g.name)),ac=use.filter(g=>!tourSets().ci.has(g.name)&&!homeIsLocal(g.name));
+    if(tc.length){rows.push(row("t",bk.t,$t("Arenatur"),tc.map(g=>tourCityLink(g.name)).join("")));total++;if(bk.t)done++;}
+    if(ac.length){rows.push(row("a",bk.a,$t("Att göra"),ac.map(g=>doCityLink(g.name)).join("")));total++;if(bk.a)done++;}
     if(away){rows.push(row("r",bk.r,$t("Resa dit"),extLink(omioUrl(homeLL()?.name||homeTown,c0.name),OMIO_ON?adLabel($t("Boka")):$t("Boka"),"btn small")));total++;if(bk.r)done++;}
     return{rows,done,total,missing:missing.length};}
   rows.push(row("h",bk.h,$t("Hotell"),legs.map(legHotel).join("")));total++;if(bk.h)done++;

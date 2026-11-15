@@ -2652,5 +2652,6 @@
  "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Touche Ajouter au voyage sur les matchs que tu veux voir. Ils sont aussi enregistrés dans J'ai envie d'y aller.",
  "Tryck Visa alla matcher i området och sedan Lägg till i resan på de matcher du vill se.": "Touche Afficher tous les matchs du secteur, puis Ajouter au voyage sur ceux que tu veux voir.",
  "{0} finns redan i resan, datumen är uppdaterade": "{0} est déjà dans le voyage, les dates sont mises à jour",
- "Arenatur i {0}": "Visite de stade à {0}"
+ "Arenatur i {0}": "Visite de stade à {0}",
+ "Att göra": "À faire"
 }
