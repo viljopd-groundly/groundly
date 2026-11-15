@@ -2646,5 +2646,6 @@
  "1 vinst": "1 sigur",
  "{n} vinster": "{n} sigrar",
  "Form senaste fem: {0} {1}, {2} {3}.": "Form, síðustu fimm: {0} {1}, {2} {3}.",
- "Tillbaka till startsidan": "Aftur á forsíðu"
+ "Tillbaka till startsidan": "Aftur á forsíðu",
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Skráin þín var uppfærð annars staðar. Gerðu breytinguna aftur."
 }

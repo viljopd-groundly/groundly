@@ -91,7 +91,7 @@ async function boot() {
   const CAN_DELTA = !!(F.query && F.where && F.serverTimestamp && F.Timestamp);
   const clean = d => { if (!d || typeof d !== "object") return d; if (!("_u" in d) && !("_gone" in d)) return d; const x = { ...d }; delete x._u; delete x._gone; return x; };
   const stamp = data => CAN_DELTA && data && typeof data === "object" ? { ...data, _u: F.serverTimestamp() } : data;
-  const docSnap = s => { const raw = s.exists() ? s.data() : undefined; const gone = !!(raw && raw._gone); return { id: s.id, exists: s.exists() && !gone, data: () => gone ? undefined : clean(raw) }; };
+  const docSnap = s => { const raw = s.exists() ? s.data() : undefined; const gone = !!(raw && raw._gone); return { id: s.id, exists: s.exists() && !gone, data: () => gone ? undefined : clean(raw), metadata: { fromCache: !!(s.metadata && s.metadata.fromCache), hasPendingWrites: !!(s.metadata && s.metadata.hasPendingWrites) } }; };
   // ---------- cache + ändringar ----------
   // Ett jobb (privata repot) bygger varannan timme en kopia av de gemensamma samlingarna i meta/cache (+ meta/cache-<namn>-<n>).
   // Appen läser kopian (1–3 dokument) och lyssnar sedan bara på dokument som ändrats efter att den byggdes,

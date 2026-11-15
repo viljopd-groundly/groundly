@@ -94,6 +94,14 @@ async function page(b, { lang = "sv", look = "", user = true, fs: data = null, h
       check("kalender öppnar val (ingen direktnedladdning)", await p.evaluate(() => document.querySelectorAll("#calOv .calopt").length === 3));
       check("Mer om matchen på Hem fäller ut", await p.evaluate(() => { goTop("hem"); const b = document.querySelector('[data-homemore^="hero"]'); if (!b) return true; b.click(); const ok = document.querySelector('[data-homemore^="hero"]').getAttribute("aria-expanded") === "true"; document.querySelector('[data-homemore^="hero"]').click(); return ok && typeof moreBtn === "function"; }));
       check("matchfakta (tabell/form) för en dammatch", await p.evaluate(async () => { await Promise.all([loadXD("standings"), loadXD("players")]); const m = MATCHES.find(x => x.home && x.away && womenM(x) && stRow(x.comp, x.home)); if (!m) return true; const f = matchFacts(m); return f.length >= 2 && !/åskådare/.test(heroWhy(m)); }));
+      check("gammal cachekopia skriver inte över kontot (3-vägssammanslagning)", await p.evaluate(() => {
+        const base = { attended: [{ id: "a1" }, { id: "a2" }], trips: [], fav: "x" };
+        const mine = { attended: [{ id: "a1" }, { id: "a2" }, { id: "a9" }], trips: [], fav: "x" };
+        const srv = { attended: [{ id: "a1" }, { id: "a2" }, { id: "a3" }, { id: "a4" }], trips: [{ id: "t1" }, { id: "t2" }], fav: "y" };
+        const r = merge3(base, mine, srv); const ids = r.attended.map(x => x.id).join(",");
+        const del = merge3(base, { ...base, attended: [{ id: "a1" }] }, srv).attended.map(x => x.id).join(",");
+        return ids === "a1,a2,a3,a4,a9" && r.trips.length === 2 && r.fav === "y" && del === "a1,a3,a4";
+      }));
       check("sök lag i Matcher", await p.evaluate(() => { const m = MATCHES.find(x => x.home && C[x.home] && x.kickoff); if (!m) return false; dFrom = today(); dTo = addDays(today(), 400); pickMQ("team", m.home, C[m.home].n); const n = +document.getElementById("matchCount").querySelector("b").textContent; const ok = n > 0 && n === MATCHES.filter(x => inDates(x) && gOkM(x) && (x.home === m.home || x.away === m.home)).length; document.getElementById("cityClear").click(); return ok && MQ === null; }));
       check("sökförslag för lag och land", await p.evaluate(() => { const h = mqHits(C[MATCHES.find(x => x.home && C[x.home]).home].n); return h.teams.length > 0; }));
       check("anonym statistik finns", await p.evaluate(() => typeof track === "function" && USAGE_KEYS.size > 50));

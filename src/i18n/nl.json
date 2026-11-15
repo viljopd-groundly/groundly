@@ -2646,5 +2646,6 @@
  "1 vinst": "1 zege",
  "{n} vinster": "{n} zeges",
  "Form senaste fem: {0} {1}, {2} {3}.": "Vorm, laatste vijf: {0} {1}, {2} {3}.",
- "Tillbaka till startsidan": "Terug naar start"
+ "Tillbaka till startsidan": "Terug naar start",
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Je logboek is ergens anders bijgewerkt. Doe de wijziging opnieuw."
 }

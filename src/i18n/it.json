@@ -2646,5 +2646,6 @@
  "1 vinst": "1 vittoria",
  "{n} vinster": "{n} vittorie",
  "Form senaste fem: {0} {1}, {2} {3}.": "Forma, ultime cinque: {0} {1}, {2} {3}.",
- "Tillbaka till startsidan": "Torna alla home"
+ "Tillbaka till startsidan": "Torna alla home",
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Il tuo registro è stato aggiornato da un altro dispositivo. Ripeti la modifica."
 }

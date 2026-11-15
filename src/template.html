@@ -2508,12 +2508,31 @@ const PENDING_KEY="fk-pending-logg";
 function pendingLogg(){try{const v=JSON.parse(store.get(PENDING_KEY)||"null");return v&&v.savedAt?v:null;}catch(e){return null;}}
 let retryBusy=false;
 async function retryPending(){const p=pendingLogg();if(!p||!myRef||retryBusy)return;retryBusy=true;
-  try{await myRef.set(p);const now=pendingLogg();if(now&&now.savedAt===p.savedAt)store.del(PENDING_KEY);toast($t("Dina sparade matcher är nu uppladdade."));if(mode==="mine")renderMine();}catch(e){}finally{retryBusy=false;}}
+  try{if(bigLoss(p)){store.del(PENDING_KEY);return;}await myRef.set(p);MY_SRV=p;const now=pendingLogg();if(now&&now.savedAt===p.savedAt)store.del(PENDING_KEY);toast($t("Dina sparade matcher är nu uppladdade."));if(mode==="mine")renderMine();}catch(e){}finally{retryBusy=false;}}
 window.addEventListener("online",()=>{setTimeout(retryPending,1500);});
 setInterval(()=>{if(pendingLogg()&&navigator.onLine!==false)retryPending();},60000);
-function saveMy(){if(!myRef){myErr=$t("Logga in på claude.ai för att spara.");render();return;}try{usageDelta();}catch(e){}
+// Skydd mot att en gammal kopia skriver över kontot (hände 14 nov 2026: en webbläsare visade en tre veckor gammal
+// kopia från sin lokala cache, och en ändring där sparade hela den gamla loggen över den riktiga).
+// 1) Så länge bara den lokala cachen har svarat sparas inget; ändringarna läggs sedan ovanpå det färska från servern.
+// 2) En sparning som tar bort många loggade matcher eller resor på en gång jämfört med serverns senaste läge stoppas.
+let MY_SRV=null,MY_BASE=null,myStale=false,myDirty=false;
+const myKeyOf=x=>x&&typeof x==="object"?(x.id||x.mid||JSON.stringify(x)):String(x);
+function merge3(base,mine,srv){const out={...srv};const keys=new Set([...Object.keys(base||{}),...Object.keys(mine||{})]);
+  for(const k of keys){if(k==="savedAt"||k==="_u")continue;const b=base?base[k]:undefined,m=mine?mine[k]:undefined;if(JSON.stringify(b)===JSON.stringify(m))continue;
+    if(Array.isArray(m)&&(Array.isArray(b)||b===undefined)&&(Array.isArray(srv[k])||srv[k]===undefined)){
+      const bm=new Map((b||[]).map(x=>[myKeyOf(x),x])),mm=new Map(m.map(x=>[myKeyOf(x),x]));
+      let res=(srv[k]||[]).filter(x=>{const id=myKeyOf(x);return !(bm.has(id)&&!mm.has(id));}).map(x=>{const id=myKeyOf(x);return bm.has(id)&&mm.has(id)&&JSON.stringify(bm.get(id))!==JSON.stringify(mm.get(id))?mm.get(id):x;});
+      const have=new Set(res.map(myKeyOf));m.forEach(x=>{const id=myKeyOf(x);if(!bm.has(id)&&!have.has(id))res.push(x);});out[k]=res;}
+    else out[k]=m;}
+  return out;}
+function bigLoss(body){if(!MY_SRV)return false;const n=(o,k)=>Array.isArray(o&&o[k])?o[k].length:0;
+  return n(MY_SRV,"attended")-n(body,"attended")>=3||n(MY_SRV,"trips")-n(body,"trips")>=2;}
+function saveMy(){if(!myRef){myErr=$t("Logga in på claude.ai för att spara.");render();return;}
+  if(myStale){myDirty=true;return;}
+  if(bigLoss(MY)&&!window.__allowBigDelete){console.warn("[Groundly] sparning stoppad: skulle ta bort många matcher/resor");MY=normMy(JSON.parse(JSON.stringify(MY_SRV)));toast($t("Din logg har uppdaterats från ett annat ställe. Gör ändringen igen."));render();return;}
+  try{usageDelta();}catch(e){}
   MY.savedAt=new Date().toISOString();const body=JSON.parse(JSON.stringify(MY));myPending++;store.set(PENDING_KEY,JSON.stringify(body));
-  myQ=myQ.then(()=>myRef.set(body)).then(()=>{const now=pendingLogg();if(now&&now.savedAt===body.savedAt)store.del(PENDING_KEY);})
+  myQ=myQ.then(()=>myRef.set(body)).then(()=>{MY_SRV=body;const now=pendingLogg();if(now&&now.savedAt===body.savedAt)store.del(PENDING_KEY);})
     .catch(e=>{if(e&&(e.code==="invalid_argument"||e.code==="quota_exceeded")){store.del(PENDING_KEY);myErr=e.code==="invalid_argument"?$t("Du har inte behörighet att spara på den här sidan. Be ägaren bjuda in dig så att du kan använda sidan."):$t("Det finns inte plats för fler sparade saker just nu.");toast(myErr);}
       else toast($t("Ingen kontakt just nu. Ändringen är sparad i telefonen och skickas när du har nät."));render();})
     .finally(()=>{setTimeout(()=>{myPending--;},2500);});}
@@ -2778,6 +2797,12 @@ async function startMine(db,uid){
   if(!db||!uid){myState="none";if(mode==="mine")renderMine();return;}
   try{myRef=db.doc("data/users/"+uid+"/logg");}catch(e){myState="none";return;}
   myRef.onSnapshot(s=>{if(myPending>0)return;const server=s.exists?s.data():{};const pend=pendingLogg();
+    const fromCache=!!(s.metadata&&s.metadata.fromCache);
+    if(fromCache&&!MY_SRV){if(!myStale){myStale=true;MY_BASE=JSON.parse(JSON.stringify(server));}}
+    else if(!fromCache){const wasStale=myStale;myStale=false;MY_SRV=JSON.parse(JSON.stringify(server));
+      // ändringar gjorda medan bara cachen visades läggs ovanpå det färska
+      if(wasStale&&myDirty&&MY_BASE){myDirty=false;MY=normMy(merge3(MY_BASE,JSON.parse(JSON.stringify(MY)),server));MY_BASE=null;myState="ready";render();saveMy();return;}
+      MY_BASE=null;myDirty=false;}
     // nytt konto (ingen logg sparad än): syns i topplistor och för vänner från start, går att välja bort
     // alla konton syns i topplistor och för vänner från start (en gång per konto, flaggan vis2); går att välja bort efteråt
     const fresh=!s.exists&&!pend;const data=s.exists?s.data():null;

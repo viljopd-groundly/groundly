@@ -2735,5 +2735,6 @@
  "1 vinst": "1 win",
  "{n} vinster": "{n} wins",
  "Form senaste fem: {0} {1}, {2} {3}.": "Form, last five: {0} {1}, {2} {3}.",
- "Tillbaka till startsidan": "Back to home"
+ "Tillbaka till startsidan": "Back to home",
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Your log was updated from somewhere else. Please make the change again."
 }

@@ -2647,5 +2647,6 @@
  "1 vinst": "1 Sieg",
  "{n} vinster": "{n} Siege",
  "Form senaste fem: {0} {1}, {2} {3}.": "Form, letzte fünf: {0} {1}, {2} {3}.",
- "Tillbaka till startsidan": "Zurück zur Startseite"
+ "Tillbaka till startsidan": "Zurück zur Startseite",
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Dein Logbuch wurde an anderer Stelle aktualisiert. Bitte nimm die Änderung erneut vor."
 }

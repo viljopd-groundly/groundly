@@ -2647,5 +2647,6 @@
  "1 vinst": "1 sejr",
  "{n} vinster": "{n} sejre",
  "Form senaste fem: {0} {1}, {2} {3}.": "Form, seneste fem: {0} {1}, {2} {3}.",
- "Tillbaka till startsidan": "Tilbage til forsiden"
+ "Tillbaka till startsidan": "Tilbage til forsiden",
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Din log blev opdateret et andet sted. Lav ændringen igen."
 }
