@@ -4747,8 +4747,8 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
 // resans datum som visas: från första till sista valda matchen (sökperioden används bara för att hitta matcher)
 function tripSpan(t,pk){const ds=(pk||[]).map(x=>x.m.kickoff&&koDay(x.m.kickoff)).filter(Boolean).sort();return ds.length?{from:ds[0],to:ds[ds.length-1]}:{from:t.from,to:t.to};}
 // Din nästa resa: överst på startsidan när man har en kommande eller pågående resa
-function nextTripHtml(){if(myState!=="ready")return"";const td=today();const t=myTrips().filter(t=>t.to>=td).sort((a,b)=>a.from.localeCompare(b.from))[0];if(!t)return"";
-  const L=tripML(t);const pkA=L?tripPicked(t,L):[];const pk=pkA.filter(x=>!mPast(x.m));const sp=tripSpan(t,pkA);const days=Math.round((new Date(sp.from+"T12:00:00")-new Date(td+"T12:00:00"))/864e5);
+function nextTripHtml(){if(myState!=="ready")return"";const td=today();const cand=myTrips().filter(t=>t.to>=td).map(t=>{const L=tripML(t);return{t,L,pkA:L?tripPicked(t,L):[]};}).filter(x=>x.pkA.length).sort((a,b)=>tripSpan(a.t,a.pkA).from.localeCompare(tripSpan(b.t,b.pkA).from));if(!cand.length)return"";
+  const{t,L,pkA}=cand[0];const pk=pkA.filter(x=>!mPast(x.m));const sp=tripSpan(t,pkA);const days=Math.round((new Date(sp.from+"T12:00:00")-new Date(td+"T12:00:00"))/864e5);
   const when=days<=0?$t("Pågår nu"):days===1?$t("I morgon"):$t("Om {0} dagar",[days]);
   const I=pk.length?tripItems(t,pk):null;const nx=pk[0]&&pk[0].m;
   const bits=[esc(resaRange(sp.from,sp.to))];if(L)bits.push(pk.length?$tn(pk.length,"1 match","{n} matcher"):$t("Inga matcher valda än"));if(I)bits.push($t("Att boka: {0} av {1} klart",[I.done,I.total]));
@@ -5111,7 +5111,9 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
   const tabs=`<div class="seg resatabs" role="tablist">${[["plan",$t("Planera resa")+(myTrips().length&&RESA_TAB!=="plan"?` <span class="tabn">${myTrips().length}</span>`:"")],["top",$t("Vart ska jag åka?")]].map(([k,l])=>`<button role="tab" data-resatab="${k}" aria-selected="${RESA_TAB===k}">${l}</button>`).join("")}</div>`;
   if(RESA_TAB==="top"){el.innerHTML=tabs+topHtml();return;}
   const act=document.activeElement,fid=act&&["rCity","rFrom","rTo"].includes(act.id)?act.id:null,sel=fid==="rCity"?[act.selectionStart,act.selectionEnd]:null;
-  const trips=myTrips().slice().sort((a,b)=>a.from.localeCompare(b.from));
+  // kommande resor utan valda matcher visas inte (utom den man just planerar); de finns kvar och dyker upp när man väljer en match
+  const planning=t=>RESA&&RESA.city&&norm(t.city)===norm(RESA.city)&&t.from===RESA.from&&t.to===RESA.to;
+  const trips=myTrips().filter(t=>{if(t.to<today()||planning(t)||resaOpen===t.id||RESA_ADDTO===t.id)return true;const L=tripML(t);return !L||tripPicked(t,L).length>0;}).sort((a,b)=>a.from.localeCompare(b.from));
   let h="",shH="";
   if(trips.length){h+=`<div class="tripcol"><h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${trips.map(t=>{const c=cityLL(t.city);const past=t.to<today();const L=tripML(t,past);const pk=L?tripPicked(t,L):[];const legs=tripLegs(t);const on=resaOpen===t.id;const exp=TRIP_X.has(t.id)||on||TRIP_DEL===t.id||pk.some(x=>WISH_DEL===x.m._id);
     let sum;if(past){const R=myState==="ready"?tripRecap(t):null;sum=R&&R.seen.length?$tn(R.seen.length,"1 match","{n} matcher")+" · "+$tn(R.ar,"1 arena","{n} arenor"):R&&R.toLog.length?$t("Resan är slut – logga matcherna"):$t("Avslutad");}
