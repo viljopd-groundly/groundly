@@ -1655,7 +1655,7 @@ const TAGLINES={"sv": "För oss som älskar fotboll.", "en": "For fans who love 
 const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),arenor:$t("Arenor"),matcher:$t("Matcher"),tabell:$t("Tabeller"),tips:$t("Tips"),quiz:$t("Quiz"),resa:$t("Planera resa"),reportage:$t("Matchberättelser"),flode:$t("Aktivitet"),forum:$t("Forum"),mine:$t("Min fotboll"),profil:$t("Mitt konto")};
 let navPop=false,pendingJump=null,jumpFrom=null,topNav=false;
 // menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
-function goTop(m){if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";mySubAuto=true;arView="list";}if(m==="resa"&&typeof RESA_TAB!=="undefined")RESA_TAB="plan";topNav=true;try{setMode(m);}finally{topNav=false;}}
+function goTop(m){if(typeof TRIP_FROMHOME!=="undefined")TRIP_FROMHOME=null;if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";mySubAuto=true;arView="list";}if(m==="resa"&&typeof RESA_TAB!=="undefined")RESA_TAB="plan";topNav=true;try{setMode(m);}finally{topNav=false;}}
 function syncBack(){let b=document.getElementById("backPill");
   if(!b){document.body.insertAdjacentHTML("beforeend",`<button id="backPill" class="backpill" hidden></button>`);b=document.getElementById("backPill");b.onclick=()=>{if(clubStack.length){if(history.state&&history.state.cjump)history.back();else clubBack();return;}if(history.state&&history.state.jump)history.back();else if(jumpFrom)setMode(jumpFrom);};}
   const top=clubStack.length?clubStack[clubStack.length-1]:null;const on=!!top||!!(jumpFrom&&jumpFrom!==mode);b.hidden=!on;
@@ -4757,9 +4757,11 @@ function nextTripHtml(){if(myState!=="ready")return"";const td=today();const can
     <p class="meta">${bits.join(" · ")}</p>
     ${nx?`<p class="ntnext">${$t("Nästa match")}: <b>${esc(tnm(nx,"home"))} – ${esc(tnm(nx,"away"))}</b> · ${esc(dayLabel(koDay(nx.kickoff)))} ${timeOf(nx.kickoff)}</p>`:""}
     ${I&&I.total?`<div class="ntbar" role="img" aria-label="${esc($t("Att boka: {0} av {1} klart",[I.done,I.total]))}"><i style="width:${Math.round(I.done/I.total*100)}%"></i></div>`:""}</article>`;}
-document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-nexttrip]");if(!b)return;const id=b.dataset.nexttrip;
-  RESA_TAB="plan";RESA_ADDTO=null;TRIP_X.add(id);goTop("resa");renderResa();
-  const go=()=>{const el=document.querySelector(`[data-tripx="${CSS.escape(id)}"]`);if(!el)return;const tb=document.querySelector(".topbar");window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-(tb?tb.getBoundingClientRect().height:0)-10)});};
+let TRIP_FROMHOME=null;
+document.addEventListener("click",e=>{const bh=e.target.closest&&e.target.closest("[data-backhome]");if(bh){const hy=TRIP_FROMHOME?TRIP_FROMHOME.hy:0;TRIP_FROMHOME=null;goTop("hem");requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:hy})));return;}
+  const b=e.target.closest&&e.target.closest("[data-nexttrip]");if(!b)return;const id=b.dataset.nexttrip;const hy=scrollY;
+  RESA_TAB="plan";RESA_ADDTO=null;TRIP_X.add(id);goTop("resa");TRIP_FROMHOME={hy};renderResa();
+  const go=()=>{const el=document.querySelector("#resaList [data-backhome]")||document.querySelector(`[data-tripx="${CSS.escape(id)}"]`);if(!el)return;const tb=document.querySelector(".topbar");window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+scrollY-(tb?tb.getBoundingClientRect().height:0)-10)});};
   requestAnimationFrame(()=>requestAnimationFrame(go));setTimeout(go,350);});
 // tre saker man gör i appen: planera och boka, logga, och communityn
 function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" ${attr}>${ic(icon)}<b>${t}</b><small>${sub}</small></button>`;
@@ -5115,6 +5117,7 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
   const planning=t=>RESA&&RESA.city&&norm(t.city)===norm(RESA.city)&&t.from===RESA.from&&t.to===RESA.to;
   const trips=myTrips().filter(t=>{if(t.to<today()||planning(t)||resaOpen===t.id||RESA_ADDTO===t.id)return true;const L=tripML(t);return !L||tripPicked(t,L).length>0;}).sort((a,b)=>a.from.localeCompare(b.from));
   let h="",shH="";
+  if(TRIP_FROMHOME&&mode==="resa")h+=`<button class="btn primary backtop" data-backhome>${ic("chev")} ${$t("Tillbaka till startsidan")}</button>`;
   if(trips.length){h+=`<div class="tripcol"><h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${trips.map(t=>{const c=cityLL(t.city);const past=t.to<today();const L=tripML(t,past);const pk=L?tripPicked(t,L):[];const legs=tripLegs(t);const on=resaOpen===t.id;const exp=TRIP_X.has(t.id)||on||TRIP_DEL===t.id||pk.some(x=>WISH_DEL===x.m._id);
     let sum;if(past){const R=myState==="ready"?tripRecap(t):null;sum=R&&R.seen.length?$tn(R.seen.length,"1 match","{n} matcher")+" · "+$tn(R.ar,"1 arena","{n} arenor"):R&&R.toLog.length?$t("Resan är slut – logga matcherna"):$t("Avslutad");}
     else if(!L)sum=$t("Hämtar matchschemat…");else if(!pk.length)sum=$t("Inga matcher valda än");else{const I=tripItems(t,pk);sum=$tn(pk.length,"1 match","{n} matcher")+" · "+$t("Att boka: {0} av {1} klart",[I.done,I.total]);}
