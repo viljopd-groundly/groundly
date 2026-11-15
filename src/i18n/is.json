@@ -2647,5 +2647,8 @@
  "{n} vinster": "{n} sigrar",
  "Form senaste fem: {0} {1}, {2} {3}.": "Form, síðustu fimm: {0} {1}, {2} {3}.",
  "Tillbaka till startsidan": "Aftur á forsíðu",
- "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Skráin þín var uppfærð annars staðar. Gerðu breytinguna aftur."
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Skráin þín var uppfærð annars staðar. Gerðu breytinguna aftur.",
+ "Lägg till i resan": "Bæta við ferðina",
+ "I resan {0}": "Í ferðinni {0}",
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Ýttu á Bæta við ferðina á leikjunum sem þú vilt sjá. Þeir vistast líka undir Langar að fara."
 }

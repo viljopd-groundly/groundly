@@ -1265,6 +1265,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 #homeBody>.tip>.sechead:first-child{align-items:baseline}
 .wknear{margin:-4px 0 0}
 .wkrow{align-items:flex-start;overflow-y:hidden;box-sizing:content-box;transition:height .22s ease}
+.mini.addtrip[aria-pressed="false"]{border-color:var(--accent);color:var(--accent);font-weight:700}
 </style>
 
 <div class="wrap">
@@ -2589,11 +2590,13 @@ const putBack=(xs,gone)=>{const have=new Set(xs.map(x=>x&&x.id));return[...xs,..
 const matchById=id=>MATCHES.find(m=>m._id===id);
 const slim=m=>({id:m._id,home:m.home||null,away:m.away||null,homeName:m.homeName,awayName:m.awayName,kickoff:m.kickoff||null,dateFrom:m.dateFrom||null,dateTo:m.dateTo||null,venue:m.venue||null,city:m.city||null,country:m.country||null,comp:m.comp||null});
 function attendFromMatch(m){return{id:newId(),mid:m._id,home:m.home||null,away:m.away||null,homeName:m.homeName,awayName:m.awayName,date:m.kickoff?dayKey(new Date(m.kickoff)):(m.dateFrom||today()),score:m.score?String(m.score).slice(0,12):null,note:"",venue:m.venue||null,city:m.city||null,country:m.country||null,comp:m.comp||null};}
+// i reseplaneraren heter Vill gå-knappen "Lägg till i resan" (matchen sparas ändå som Vill gå)
+let MYBTN_CTX="";
 function myBtns(m){if(!m._id||myState!=="ready")return"";const past=m.kickoff&&Date.parse(m.kickoff)<Date.now();
   // under matchen (ca 2 timmar från avspark) heter knappen "Jag är där", efteråt "Jag var där"
   const live=past&&Date.now()-Date.parse(m.kickoff)<2*36e5;
   if(past)return`<button class="mini" data-attend="${esc(m._id)}" aria-pressed="${isAtt(m._id)}">${isAtt(m._id)?(live?$t("Är här {0}",[OK]):$t("Var där {0}",[OK])):(live?$t("Jag är där"):$t("Jag var där"))}</button>`;
-  return`<button class="mini" data-wishm="${esc(m._id)}" aria-pressed="${isWishM(m._id)}">${isWishM(m._id)?$t("Sparad {0}",[OK]):$t("Vill gå")}</button>${isWishM(m._id)?tixBtn(m._id):""}`;}
+  const inR=MYBTN_CTX==="resa";return`<button class="mini${inR?" addtrip":""}" data-wishm="${esc(m._id)}" aria-pressed="${isWishM(m._id)}">${isWishM(m._id)?(inR?$t("I resan {0}",[OK]):$t("Sparad {0}",[OK])):(inR?"+ "+$t("Lägg till i resan"):$t("Vill gå"))}</button>${isWishM(m._id)?tixBtn(m._id):""}`;}
 const hasTix=id=>myState==="ready"&&Array.isArray(MY.wishMatches)&&MY.wishMatches.some(w=>w.id===id&&w.tix);
 const tixBtn=(id,cls)=>`<button class="${cls||"mini"} tixtog" data-tixm="${esc(id)}" aria-pressed="${hasTix(id)}">${ic("ticket")} ${hasTix(id)?$t("Har biljett {0}",[OK]):$t("Har biljett?")}</button>`;
 function logBtn(c){if(myState!=="ready"||!C[c.id])return"";const nM=MY.attended.filter(a=>a.home===c.id||a.away===c.id).length;
@@ -5087,8 +5090,8 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
       h+=`<div class="actions tripact">${addT&&myState==="ready"?`<button class="btn primary small" data-legadd="1">${ic("plus")} ${$t("Lägg till {0} i resan",[esc(name)])}</button>${legHotel(q)}`:myState==="ready"?(saved?`<span class="pill">${ic("check")} ${$t("Resan är sparad")}</span>`:`<button class="btn primary small" data-tripsave="1">${ic("plus")} ${$t("Spara resan")}</button>`):`<button class="btn small" data-glogin="up">${$t("Logga in för att spara resan")}</button>`}${addT?"":tripLinks(q)+tourCityLink(c.name)+doCityLink(c.name)}</div>`;
       h+=horizonNote(q.to);
       if(!L.length)h+=`<div class="empty"><b>${$t("Inga matcher i schemat de dagarna.")}</b><div>${$t("Prova fler dagar eller ett större avstånd. Lägre serier läggs ofta in i schemat några veckor i förväg.")}</div></div>`;
-      else{h+=`<p class="hint">${$t("Tryck Vill gå på de matcher du vill se, så hamnar de i resan.")}</p>`;let last="";const now=Date.now();
-        L.forEach(x=>{const k=koDay(x.m.kickoff);if(k!==last){h+=`<h3 class="sec">${esc(dayLong(k))}</h3>`;last=k;}h+=matchRow(x.m,now,x.km);});if(backB)h+=backB.replace("backtop","backtop backbot");}}}
+      else{h+=`<p class="hint">${myState==="ready"?$t("Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå."):$t("Tryck Vill gå på de matcher du vill se, så hamnar de i resan.")}</p>`;let last="";const now=Date.now();
+        MYBTN_CTX="resa";try{L.forEach(x=>{const k=koDay(x.m.kickoff);if(k!==last){h+=`<h3 class="sec">${esc(dayLong(k))}</h3>`;last=k;}h+=matchRow(x.m,now,x.km);});}finally{MYBTN_CTX="";}if(backB)h+=backB.replace("backtop","backtop backbot");}}}
   else h+=`<p class="hint">${$t("Skriv en stad, välj datum och tryck Visa matcher. Resan sparas på ditt konto, och matcherna du trycker Vill gå på samlas där.")}</p>`;
   el.innerHTML=tabs+shH+h;if(fid){const f=document.getElementById(fid);if(f){f.focus({preventScroll:true});if(sel)try{f.setSelectionRange(sel[0],sel[1]);}catch(e){}}}}
 // flera matcher i en kalenderfil (.ics)

@@ -2736,5 +2736,8 @@
  "{n} vinster": "{n} wins",
  "Form senaste fem: {0} {1}, {2} {3}.": "Form, last five: {0} {1}, {2} {3}.",
  "Tillbaka till startsidan": "Back to home",
- "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Your log was updated from somewhere else. Please make the change again."
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Your log was updated from somewhere else. Please make the change again.",
+ "Lägg till i resan": "Add to trip",
+ "I resan {0}": "In trip {0}",
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tap Add to trip on the matches you want to see. They're also saved under Want to go."
 }

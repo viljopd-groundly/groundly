@@ -2648,5 +2648,8 @@
  "{n} vinster": "{n} seire",
  "Form senaste fem: {0} {1}, {2} {3}.": "Form siste fem: {0} {1}, {2} {3}.",
  "Tillbaka till startsidan": "Tilbake til startsiden",
- "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Loggen din ble oppdatert et annet sted. Gjør endringen på nytt."
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Loggen din ble oppdatert et annet sted. Gjør endringen på nytt.",
+ "Lägg till i resan": "Legg til i reisen",
+ "I resan {0}": "I reisen {0}",
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Trykk Legg til i reisen på kampene du vil se. De lagres også under Vil gå."
 }

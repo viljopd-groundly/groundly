@@ -2647,5 +2647,8 @@
  "{n} vinster": "{n} victoires",
  "Form senaste fem: {0} {1}, {2} {3}.": "Forme, cinq derniers : {0} {1}, {2} {3}.",
  "Tillbaka till startsidan": "Retour à l'accueil",
- "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Ton journal a été mis à jour ailleurs. Refais la modification."
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Ton journal a été mis à jour ailleurs. Refais la modification.",
+ "Lägg till i resan": "Ajouter au voyage",
+ "I resan {0}": "Dans le voyage {0}",
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Touche Ajouter au voyage sur les matchs que tu veux voir. Ils sont aussi enregistrés dans J'ai envie d'y aller."
 }

@@ -2648,5 +2648,8 @@
  "{n} vinster": "{n} Siege",
  "Form senaste fem: {0} {1}, {2} {3}.": "Form, letzte fünf: {0} {1}, {2} {3}.",
  "Tillbaka till startsidan": "Zurück zur Startseite",
- "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Dein Logbuch wurde an anderer Stelle aktualisiert. Bitte nimm die Änderung erneut vor."
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Dein Logbuch wurde an anderer Stelle aktualisiert. Bitte nimm die Änderung erneut vor.",
+ "Lägg till i resan": "Zur Reise hinzufügen",
+ "I resan {0}": "In der Reise {0}",
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tippe bei den Spielen, die du sehen willst, auf Zur Reise hinzufügen. Sie werden auch unter Will hin gespeichert."
 }

@@ -2647,5 +2647,8 @@
  "{n} vinster": "{n} zeges",
  "Form senaste fem: {0} {1}, {2} {3}.": "Vorm, laatste vijf: {0} {1}, {2} {3}.",
  "Tillbaka till startsidan": "Terug naar start",
- "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Je logboek is ergens anders bijgewerkt. Doe de wijziging opnieuw."
+ "Din logg har uppdaterats från ett annat ställe. Gör ändringen igen.": "Je logboek is ergens anders bijgewerkt. Doe de wijziging opnieuw.",
+ "Lägg till i resan": "Toevoegen aan reis",
+ "I resan {0}": "In de reis {0}",
+ "Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå.": "Tik op Toevoegen aan reis bij de wedstrijden die je wilt zien. Ze worden ook bewaard onder Wil ik heen."
 }
