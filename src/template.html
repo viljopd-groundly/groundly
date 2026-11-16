@@ -1282,7 +1282,9 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 /* egen regel: ett id i :is()-listan ovan höjer hela regelns vikt och tar över t.ex. valda knappar */
 html:root[data-look="kit"] #updBar{--fg:#000000;--muted:#4A5260;--line:#D7DDE6;--bg:#E6EAF0;--accent:var(--acc-l,#1E5FA0);color:var(--fg)}
 html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
-@media (min-width:1024px){#homeBody>.hmas{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+@media (min-width:1024px){#homeBody>.hmas{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch}
+/* spalterna slutar i samma höjd: sista rutan i varje spalt sträcks ut */
+#homeBody>.hmas>div>:last-child{flex:1 1 auto}#homeBody>.hmas.hbuild{align-items:start}#homeBody>.hmas.hbuild>div>:last-child{flex:none}
 #homeBody>.hmas>div{display:flex;flex-direction:column;gap:14px;min-width:0}#homeBody>.hmas>div>*{margin:0!important}}
 </style>
 
@@ -4754,8 +4756,9 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
 const HOME_WIDE=e=>e.matches(".howto,.community,.homecust,.wide,.intro,.hometag")||!e.matches(".tip,article");
 function homeMasonry(el){if(innerWidth<1024)return;const kids=[...el.children];el.textContent="";let cols=null;
   for(const k of kids){if(HOME_WIDE(k)){el.appendChild(k);cols=null;continue;}
-    if(!cols){const w=document.createElement("div");w.className="hmas";cols=[document.createElement("div"),document.createElement("div")];cols.forEach(c=>w.appendChild(c));el.appendChild(w);}
-    (cols[0].offsetHeight<=cols[1].offsetHeight?cols[0]:cols[1]).appendChild(k);}}
+    if(!cols){const w=document.createElement("div");w.className="hmas hbuild";cols=[document.createElement("div"),document.createElement("div")];cols.forEach(c=>w.appendChild(c));el.appendChild(w);}
+    const h0=cols[0].offsetHeight,h1=cols[1].offsetHeight;(h0||h1?(h0<=h1?cols[0]:cols[1]):(cols[0].children.length<=cols[1].children.length?cols[0]:cols[1])).appendChild(k);}
+  el.querySelectorAll(".hbuild").forEach(w=>w.classList.remove("hbuild"));}
 {let wide=innerWidth>=1024;addEventListener("resize",()=>{const w=innerWidth>=1024;if(w!==wide){wide=w;if(typeof mode!=="undefined"&&mode==="hem")renderHome();}});}
 // resans datum som visas: från första till sista valda matchen (sökperioden används bara för att hitta matcher)
 function tripSpan(t,pk){const ds=(pk||[]).map(x=>x.m.kickoff&&koDay(x.m.kickoff)).filter(Boolean).sort();return ds.length?{from:ds[0],to:ds[ds.length-1]}:{from:t.from,to:t.to};}
