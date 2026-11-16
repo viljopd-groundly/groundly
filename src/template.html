@@ -1917,7 +1917,7 @@ function renderClubs(){if(mode==="landslag")return renderNat();genderChips("gClu
   if(nq.length>=3&&list.length<3){const r=ai[nq]||loadAi(nq);
     if(r&&r.state==="done"&&r.data)h+=clubCard(r.data,true);
     else h+=`<div class="empty"><div>${list.length?$t("Letar du efter en annan klubb?"):`${$t("Ingen klubb i listan matchar")} <b>${esc(q)}</b>.`}</div>
-      <div>${$t("Listan innehåller {0} klubbar.{1}",[CLUBS.length,AI_ON?$t(" Claude kan slå upp fakta om andra klubbar i världen."):$t(" Saknas en klubb kan du föreslå den via Tyck till.")])}</div>
+      <div>${$t("Listan innehåller {0} klubbar och {1} landslag.{2}",[CLUBS.length-CLUBS.filter(c=>isNat(C[c[0]])).length,CLUBS.filter(c=>isNat(C[c[0]])).length,AI_ON?$t(" Claude kan slå upp fakta om andra klubbar i världen."):$t(" Saknas en klubb kan du föreslå den via Tyck till.")])}</div>
       ${r&&r.state==="err"?`<div>${esc(r.msg)}</div>`:""}
       ${sampleFn===null?(AI_ON?`<div>${$t("Uppslag via Claude fungerar inte i den här vyn.")}</div>`:""):`<button class="btn primary" id="askAi"${r&&r.state==="busy"?" disabled":""}>${r&&r.state==="busy"?$t("Claude letar…"):$t("Fråga Claude om ”{0}”",[esc(q)])}</button>`}</div>`;}
   else if(!list.length)h=`<div class="empty">${$t("Ingen klubb matchar. {0}",[AI_ON?$t("Skriv minst tre bokstäver för att fråga Claude."):$t("Prova ett annat stavsätt eller ett annat land.")])}</div>`;

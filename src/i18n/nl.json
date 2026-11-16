@@ -1213,7 +1213,6 @@
  "Lissabon": "Lissabon",
  "Lissabon, Portugal": "Lissabon, Portugal",
  "Lissabonderbyt": "Derby van Lissabon",
- "Listan innehåller {0} klubbar.{1}": "De lijst bevat {0} clubs.{1}",
  "Liten arena": "Klein stadion",
  "Liten idyll vid vattnet": "Klein idylle aan het water",
  "Liten klubb från en stad med runt 50 000 invånare norr om polcirkeln som har blivit norska mästare och skrällt mot Europas storklubbar.": "Kleine club uit een stad met zo'n 50.000 inwoners ten noorden van de poolcirkel, die Noors kampioen werd en Europese topclubs verraste.",
@@ -2674,5 +2673,6 @@
  "Lägg till fler matcher i:": "Meer wedstrijden toevoegen in:",
  "Välj de matcher du vill se på resan.": "Kies de wedstrijden die je op de reis wilt zien.",
  "Välj matcher i:": "Wedstrijden kiezen in:",
- "Resan är uppdaterad": "Reis bijgewerkt"
+ "Resan är uppdaterad": "Reis bijgewerkt",
+ "Listan innehåller {0} klubbar och {1} landslag.{2}": "De lijst bevat {0} clubs en {1} nationale teams.{2}"
 }
