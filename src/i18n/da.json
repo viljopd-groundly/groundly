@@ -2665,5 +2665,10 @@
  "Nästa": "Næste",
  "Du har sparat en resa till {0} men inte valt några matcher än.": "Du har gemt en rejse til {0}, men ikke valgt nogen kampe endnu.",
  "Ingen resa planerad än. Var vill du se fotboll härnäst?": "Ingen rejse planlagt endnu. Hvor vil du se fodbold næste gang?",
- "Välj matcher": "Vælg kampe"
+ "Välj matcher": "Vælg kampe",
+ "Du har lagt till {0} matcher i {1} men inte sparat resan.": "Du har tilføjet {0} kampe i {1}, men ikke gemt rejsen.",
+ "Du har lagt till 1 match i {0} men inte sparat resan.": "Du har tilføjet 1 kamp i {0}, men ikke gemt rejsen.",
+ "Fortsätt utan att spara": "Fortsæt uden at gemme",
+ "Glöm inte att spara resan": "Glem ikke at gemme rejsen",
+ "Stanna kvar": "Bliv her"
 }

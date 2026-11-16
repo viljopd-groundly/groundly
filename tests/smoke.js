@@ -78,6 +78,20 @@ async function page(b, { lang = "sv", look = "", user = true, fs: data = null, h
       check("resa: inga sidfel", !errs.length, errs.slice(0, 2).join(" | "));
       await ctx.close();
     }
+    // 2b. Påminnelse om osparad resa när man lämnar planeraren
+    {
+      const { p, ctx, errs } = await page(b);
+      const city = await p.evaluate(() => { const now = Date.now(); const m = MATCHES.find(x => x.kickoff && mTs(x) > now + 3 * 864e5 && x.city && GEO[x.city] && String(x.tier) === "1"); return m && m.city; });
+      const d = await p.evaluate(() => { const t = today(); return [addDays(t, 3), addDays(t, 12)]; });
+      await p.evaluate(() => goTop("resa"));
+      await p.fill("#rCity", city); await p.fill("#rFrom", d[0]); await p.fill("#rTo", d[1]); await p.click("#resaForm button[type=submit]"); await p.waitForTimeout(400);
+      await p.evaluate(() => document.querySelectorAll("#resaList [data-wishm]")[0].click()); await p.waitForTimeout(300);
+      await p.evaluate(() => goTop("hem")); await p.waitForTimeout(200);
+      check("resa: påminnelse om osparad resa", await p.evaluate(() => !!document.getElementById("tripAsk") && mode === "resa"));
+      await p.evaluate(() => document.getElementById("taSave").click()); await p.waitForTimeout(300);
+      check("resa: spara från påminnelsen", await p.evaluate(() => mode === "hem" && myTrips().length === 1 && !document.getElementById("tripAsk")), errs.join(" | "));
+      await ctx.close();
+    }
     // 3. Logga match, tidsändring, kalenderval, statistikkö
     {
       const { p, ctx, errs } = await page(b);

@@ -1726,7 +1726,7 @@ function usageCountry(){const byName={};USE_CC.forEach(([k,n])=>byName[n]=k);["E
 function usageStart(){track("s");try{track("v_"+mode);}catch(e){}setTimeout(()=>{try{track("c_"+usageCountry());}catch(e){}},4000);try{if(!store.get("fk-seen")){track("s_new");store.set("fk-seen","1");}}catch(e){}
   try{if(matchMedia("(display-mode: standalone)").matches||navigator.standalone)track("s_pwa");}catch(e){}
   try{track("look_"+(typeof look!=="undefined"&&look?look:"std"));track("lang_"+LANG);if(document.documentElement.dataset.theme==="dark"||(!document.documentElement.dataset.theme&&matchMedia("(prefers-color-scheme: dark)").matches))track("dark");}catch(e){}}
-function setMode(m){const prev=mode,y0=window.scrollY;if(m!==prev)track("v_"+m);if(m!==prev)repPopOrder=null;
+function setMode(m){const prev=mode,y0=window.scrollY;if(prev==="resa"&&m!=="resa"&&typeof resaGuard==="function"){const pop=navPop;if(resaGuard(()=>setMode(m))){if(pop){try{history.pushState({m:"resa"},"");}catch(e){}}return;}}if(m!==prev)track("v_"+m);if(m!==prev)repPopOrder=null;
   if(!navPop){jumpFrom=pendingJump&&pendingJump!==m?pendingJump:(!topNav&&prev!==m?prev:null);
     if(prev!==m){try{history.replaceState({...(history.state||{}),m:prev,y:y0},"");history.pushState({m,from:jumpFrom,jump:!!jumpFrom},"");}catch(e){}}}
   pendingJump=null;if(m!==prev)clubStack=[];
@@ -2758,7 +2758,7 @@ function myClick(t){
   if(t.id==="amOpen"){addingMatch=true;fillVenueList();renderMine();setTimeout(()=>document.getElementById("amHome")?.focus(),0);return;}
   if(t.id==="amCancel"){addingMatch=false;renderMine();return;}
   if(t.dataset.tixm){const id=t.dataset.tixm;const on=!hasTix(id);mutate(d=>{d.wishMatches=d.wishMatches.map(w=>w.id===id?(on?{...w,tix:true}:(({tix,...r})=>r)(w)):w);});if(on)toast($t("Snyggt! Glöm inte hotell och resa."),"check");track("tix");return;}
-  if(t.dataset.wishm){const m=matchById(t.dataset.wishm);if(!m)return;const adding=!isWishM(m._id);mutate(d=>{d.wishMatches=isWishM(m._id)?d.wishMatches.filter(w=>w.id!==m._id):[...d.wishMatches,slim(m)];});if(adding)setTimeout(maybeAskPush,600);return;}
+  if(t.dataset.wishm){const m=matchById(t.dataset.wishm);if(!m)return;const adding=!isWishM(m._id);if(adding&&mode==="resa"&&typeof RESA_PICKED!=="undefined")RESA_PICKED.add(m._id);mutate(d=>{d.wishMatches=isWishM(m._id)?d.wishMatches.filter(w=>w.id!==m._id):[...d.wishMatches,slim(m)];});if(adding)setTimeout(maybeAskPush,600);return;}
   if(t.dataset.attend){const m=matchById(t.dataset.attend);if(!m)return;let added=null;mutate(d=>{if(isAtt(m._id))d.attended=d.attended.filter(a=>a.mid!==m._id);else{added=attendFromMatch(m);d.attended=[...d.attended,added];}d.wishMatches=d.wishMatches.filter(w=>w.id!==m._id);});if(added&&!added.score)askScore(added.id);return;}
   if(t.dataset.wmdone){const w=MY.wishMatches.find(x=>x.id===t.dataset.wmdone);if(!w)return;
     mutate(d=>{d.wishMatches=d.wishMatches.filter(x=>x.id!==w.id);if(!d.attended.some(a=>a.mid===w.id))d.attended.push({id:newId(),mid:w.id,home:w.home,away:w.away,homeName:w.homeName,awayName:w.awayName,date:w.kickoff?dayKey(new Date(w.kickoff)):(w.dateFrom||today()),score:null,note:"",venue:w.venue,city:w.city,country:w.country,comp:w.comp});});mySub="been";{const a=MY.attended.find(x=>x.mid===w.id);if(a&&!a.score)askScore(a.id);}return;}
@@ -5082,13 +5082,13 @@ function topHtml(){if(dbState!=="ready")return`<p class="meta">${$t("Hämtar mat
   if(R.list.length>10)h+=`<button class="link strong more topmorebtn" data-topmore="1">${topMore?$t("Visa färre"):$t("Visa fler")}</button></article>`;
   return h;}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-resatab],[data-topq],[data-topcity],[data-topmore],[data-backtop],[data-gotop]");if(!t)return;
-  if(t.dataset.resatab){RESA_TAB=t.dataset.resatab;renderResa();return;}
+  if(t.dataset.resatab){const go=()=>{RESA_TAB=t.dataset.resatab;renderResa();};if(t.dataset.resatab!=="plan"&&resaGuard(go))return;go();return;}
   if(t.dataset.gotop){TOPQ={...TOPQ,p:"helg",s:"world"};topMore=false;goTop("resa");RESA_TAB="top";window.scrollTo({top:0});renderResa();return;}
   if(t.dataset.topq){const[k,v]=t.dataset.topq.split(":");TOPQ={...TOPQ,[k]:v};topMore=false;renderResa();return;}
   if(t.dataset.topmore){topMore=!topMore;const ol=document.querySelector(".toplist");if(ol)ol.classList.toggle("more",topMore);t.textContent=topMore?$t("Visa färre"):$t("Visa fler");return;}
   if(t.dataset.topcity){const hy=scrollY;if(t.dataset.tophome){TOPQ={...TOPQ,p:"helg",s:"world"};topMore=false;if(mode!=="resa")goTop("resa");}const R=topCities();RESA_FROMTOP=t.dataset.tophome?{y:0,home:true,hy}:{y:scrollY};RESA={city:t.dataset.topcity,from:R.f,to:R.t,r:10};RESA_DRAFT=null;resaOpen=null;RESA_TAB="plan";renderResa();
     resaToResult();return;}
-  if(t.dataset.backtop!==undefined){if(RESA_FROMTOP&&RESA_FROMTOP.home){const hy=RESA_FROMTOP.hy||0;RESA_FROMTOP=null;goTop("hem");requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:hy})));return;}const y=RESA_FROMTOP?RESA_FROMTOP.y:0;RESA_TAB="top";renderResa();requestAnimationFrame(()=>window.scrollTo({top:y}));}});
+  if(t.dataset.backtop!==undefined){if(resaGuard(()=>t.isConnected?t.click():goTop("hem")))return;if(RESA_FROMTOP&&RESA_FROMTOP.home){const hy=RESA_FROMTOP.hy||0;RESA_FROMTOP=null;goTop("hem");requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:hy})));return;}const y=RESA_FROMTOP?RESA_FROMTOP.y:0;RESA_TAB="top";renderResa();requestAnimationFrame(()=>window.scrollTo({top:y}));}});
 document.addEventListener("change",e=>{const id=e.target&&e.target.id;if(id!=="tFrom"&&id!=="tTo")return;TOPQ={...TOPQ,f:document.getElementById("tFrom").value,t:document.getElementById("tTo").value};
   if(TOPQ.f&&TOPQ.t&&TOPQ.t<TOPQ.f)TOPQ.t=TOPQ.f;topMore=false;renderResa();});
 // ---------- Efter resan: alla matcher i området de dagarna, även spelade ----------
@@ -5215,6 +5215,7 @@ function calMany(ms){const ds=ms.map(m=>calData({...m,city:m.city&&$t(m.city)}))
     <button class="btn" type="button" data-calclose="1">${$t("Avbryt")}</button></div></div>`);}
 document.addEventListener("submit",e=>{if(e.target.id!=="resaForm")return;e.preventDefault();const g=id=>document.getElementById(id).value.trim();
   let f=g("rFrom")||today(),t=g("rTo")||f;if(f<today())f=today();if(t<f)t=f;{const d=document.getElementById("rDist");if(d&&RESA.rc){const v=parseFloat(String(d.value).replace(",","."));if(v>0)RESA.r=Math.max(1,Math.min(1000,Math.round(v*10/UNIT_PER_MIL[UNIT])));}}
+  {const nc=g("rCity").slice(0,60);if(RESA&&(norm(nc)!==norm(RESA.city||"")||f!==RESA.from||t!==RESA.to)&&resaGuard(()=>e.target.isConnected&&e.target.requestSubmit()))return;}
   RESA={...RESA,city:g("rCity").slice(0,60),from:f,to:t};RESA_DRAFT=null;resaOpen=null;RESA_FROMTOP=null;renderResa();
   document.querySelector(".tripact,#resaList .empty")?.scrollIntoView({behavior:"smooth",block:"start"});});
 document.addEventListener("click",async e=>{const t=e.target.closest&&e.target.closest("[data-tripshare],[data-tripadopt]");if(!t)return;
@@ -5230,13 +5231,30 @@ document.addEventListener("click",async e=>{const t=e.target.closest&&e.target.c
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-rr],[data-tripsave],[data-tripopen],[data-tripdel],[data-tripdelok],[data-tripdelno],[data-calmany]");if(!t)return;
   if(t.dataset.rr==="eget"){RESA.rc=true;resaKeepForm();RESA_DRAFT=null;renderResa();setTimeout(()=>{const d=document.getElementById("rDist");if(d){if(!d.placeholder)d.placeholder=d.value;d.value="";d.focus();}},0);return;}
   if(t.dataset.rr){RESA.rc=false;RESA.r=+t.dataset.rr;resaKeepForm();RESA_DRAFT=null;renderResa();return;}
-  if(t.dataset.tripsave){const c=cityLL(RESA.city);if(!c||myState!=="ready")return;MY.trips=(MY.trips||[]).filter(x=>!(norm(x.city)===norm(c.name)&&x.from===RESA.from&&x.to===RESA.to));
-    {const nid=newId();TRIP_X.add(nid);MY.trips.push({id:nid,city:c.name,from:RESA.from,to:RESA.to,r:RESA.r});}MY.trips=MY.trips.slice(-20);saveMy();toast($t("Resan är sparad"));renderResa();return;}
+  if(t.dataset.tripsave){resaSaveTrip();renderResa();return;}
   if(t.dataset.tripopen){RESA_FROMTOP=null;const tr=myTrips().find(x=>x.id===t.dataset.tripopen);if(!tr)return;resaOpen=tr.id;RESA_DRAFT=null;RESA={city:tr.city,from:tr.from<today()?today():tr.from,to:tr.to<today()?today():tr.to,r:tr.r,rc:![50,150].includes(tr.r)};renderResa();document.querySelector(".tripact")?.scrollIntoView({behavior:"smooth",block:"start"});return;}
   if(t.dataset.tripdel){TRIP_DEL=TRIP_DEL===t.dataset.tripdel?null:t.dataset.tripdel;renderResa();requestAnimationFrame(()=>document.querySelector(".tripdelask")?.scrollIntoView({behavior:"smooth",block:"nearest"}));return;}
   if(t.dataset.tripdelno){TRIP_DEL=null;renderResa();return;}
   if(t.dataset.tripdelok){const id=t.dataset.tripdelok;TRIP_DEL=null;MY.trips=myTrips().filter(x=>x.id!==id);if(resaOpen===id)resaOpen=null;if(RESA_ADDTO===id)RESA_ADDTO=null;saveMy();toast($t("Resan är borttagen"));renderResa();return;}
   if(t.dataset.calmany){const ms=t.dataset.calmany.split(",").map(id=>MATCHES.find(m=>m._id===id)).filter(Boolean);calMany(ms);}});
+function resaSaveTrip(){const c=RESA&&cityLL(RESA.city);if(!c||myState!=="ready")return false;MY.trips=(MY.trips||[]).filter(x=>!(norm(x.city)===norm(c.name)&&x.from===RESA.from&&x.to===RESA.to));
+  {const nid=newId();TRIP_X.add(nid);MY.trips.push({id:nid,city:c.name,from:RESA.from,to:RESA.to,r:RESA.r});}MY.trips=MY.trips.slice(-20);saveMy();toast($t("Resan är sparad"));return true;}
+// påminnelse: man har lagt till matcher i planeraren men inte sparat resan
+const RESA_PICKED=new Set();let RESA_ASKED="";
+function resaUnsaved(){try{if(mode!=="resa"||RESA_TAB!=="plan"||myState!=="ready"||!RESA||!RESA.city||RESA_ADDTO||resaOpen)return null;const c=cityLL(RESA.city);if(!c)return null;
+  if(myTrips().some(t=>norm(t.city)===norm(c.name)&&t.from===RESA.from&&t.to===RESA.to))return null;const L=resaMatches(RESA);if(!L)return null;
+  const ids=L.filter(x=>RESA_PICKED.has(x.m._id)&&isWishM(x.m._id)).map(x=>x.m._id);if(!ids.length)return null;
+  const key=norm(c.name)+"|"+RESA.from+"|"+RESA.to+"|"+ids.join(",");if(key===RESA_ASKED)return null;return{name:$t(c.name),n:ids.length,key};}catch(e){return null;}}
+function resaGuard(next){const u=resaUnsaved();if(!u)return false;let ov=document.getElementById("tripAsk");if(ov)ov.remove();
+  document.body.insertAdjacentHTML("beforeend",`<div id="tripAsk" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="taT"><div class="compose askbox">
+    <h2 id="taT">${$t("Glöm inte att spara resan")}</h2><p>${u.n===1?$t("Du har lagt till 1 match i {0} men inte sparat resan.",[esc(u.name)]):$t("Du har lagt till {0} matcher i {1} men inte sparat resan.",[u.n,esc(u.name)])}</p>
+    <div class="actions"><button class="btn primary" type="button" id="taSave">${ic("plus")} ${$t("Spara resan")}</button><button class="btn" type="button" id="taLeave">${$t("Fortsätt utan att spara")}</button><button class="btn" type="button" id="taStay">${$t("Stanna kvar")}</button></div></div></div>`);
+  ov=document.getElementById("tripAsk");setTimeout(()=>document.getElementById("taSave")?.focus(),30);const close=()=>ov.remove();
+  document.getElementById("taSave").onclick=()=>{close();resaSaveTrip();RESA_ASKED=u.key;next();};
+  document.getElementById("taLeave").onclick=()=>{close();RESA_ASKED=u.key;next();};
+  document.getElementById("taStay").onclick=close;ov.onclick=e=>{if(e.target===ov)close();};
+  ov.onkeydown=e=>{if(e.key==="Escape")close();};return true;}
+window.addEventListener("beforeunload",e=>{if(resaUnsaved()){e.preventDefault();e.returnValue="";}});
 function homeLL(){if(!homeTown)return null;const nq=norm(homeTown);const al=CITY_ALIAS[nq];if(al&&GEO[al])return{name:al,ll:GEO[al]};if(GEO_N[nq])return{name:GEO_N[nq][0],ll:GEO_N[nq][1]};
   const ai=geoAi[nq]||loadGeoAi(nq);return ai&&ai.state==="done"?{name:ai.name,ll:ai.ll}:null;}
 // söndag kväll (från kl 18) räknas nästa helg, så att tipsen och topplistan inte visar helgens sista rester

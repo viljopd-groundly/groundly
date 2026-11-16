@@ -2753,5 +2753,10 @@
  "Nästa": "Next",
  "Du har sparat en resa till {0} men inte valt några matcher än.": "You've saved a trip to {0} but haven't picked any matches yet.",
  "Ingen resa planerad än. Var vill du se fotboll härnäst?": "No trip planned yet. Where do you want to watch football next?",
- "Välj matcher": "Pick matches"
+ "Välj matcher": "Pick matches",
+ "Du har lagt till {0} matcher i {1} men inte sparat resan.": "You've added {0} matches in {1} but haven't saved the trip.",
+ "Du har lagt till 1 match i {0} men inte sparat resan.": "You've added 1 match in {0} but haven't saved the trip.",
+ "Fortsätt utan att spara": "Continue without saving",
+ "Glöm inte att spara resan": "Don't forget to save the trip",
+ "Stanna kvar": "Stay here"
 }

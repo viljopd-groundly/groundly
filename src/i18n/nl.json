@@ -2664,5 +2664,10 @@
  "Nästa": "Volgende",
  "Du har sparat en resa till {0} men inte valt några matcher än.": "Je hebt een reis naar {0} opgeslagen maar nog geen wedstrijden gekozen.",
  "Ingen resa planerad än. Var vill du se fotboll härnäst?": "Nog geen reis gepland. Waar wil je hierna voetbal zien?",
- "Välj matcher": "Kies wedstrijden"
+ "Välj matcher": "Kies wedstrijden",
+ "Du har lagt till {0} matcher i {1} men inte sparat resan.": "Je hebt {0} wedstrijden in {1} toegevoegd maar de reis niet opgeslagen.",
+ "Du har lagt till 1 match i {0} men inte sparat resan.": "Je hebt 1 wedstrijd in {0} toegevoegd maar de reis niet opgeslagen.",
+ "Fortsätt utan att spara": "Doorgaan zonder opslaan",
+ "Glöm inte att spara resan": "Vergeet de reis niet op te slaan",
+ "Stanna kvar": "Hier blijven"
 }

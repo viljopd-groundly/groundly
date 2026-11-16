@@ -2665,5 +2665,10 @@
  "Nästa": "Weiter",
  "Du har sparat en resa till {0} men inte valt några matcher än.": "Du hast eine Reise nach {0} gespeichert, aber noch keine Spiele gewählt.",
  "Ingen resa planerad än. Var vill du se fotboll härnäst?": "Noch keine Reise geplant. Wo willst du als Nächstes Fußball sehen?",
- "Välj matcher": "Spiele wählen"
+ "Välj matcher": "Spiele wählen",
+ "Du har lagt till {0} matcher i {1} men inte sparat resan.": "Du hast {0} Spiele in {1} hinzugefügt, aber die Reise nicht gespeichert.",
+ "Du har lagt till 1 match i {0} men inte sparat resan.": "Du hast 1 Spiel in {0} hinzugefügt, aber die Reise nicht gespeichert.",
+ "Fortsätt utan att spara": "Ohne Speichern fortfahren",
+ "Glöm inte att spara resan": "Vergiss nicht, die Reise zu speichern",
+ "Stanna kvar": "Hier bleiben"
 }
