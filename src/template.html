@@ -4766,7 +4766,13 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   const fresh=isNewbie();
   if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
   {const it=document.getElementById("intro");if(it)it.style.display="";}
-  el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();homeMasonry(el);}
+  const html=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();
+  // ritas bara om när innehållet faktiskt ändrats (under laddningen anropas detta många gånger med samma innehåll; varje omritning fick sidan att hacka)
+  const wide=innerWidth>=1024;if(el._html===html&&el._wide===wide&&el.childElementCount)return;el._html=html;el._wide=wide;
+  const sx=[...el.querySelectorAll(".wkrow,.hscroll")].map(r=>r.scrollLeft);
+  el.innerHTML=html;homeMasonry(el);
+  // behåll var man bläddrat i karusellerna om samma rutor finns kvar
+  const rs=[...el.querySelectorAll(".wkrow,.hscroll")];if(rs.length===sx.length)rs.forEach((r,i)=>{if(sx[i])r.scrollLeft=sx[i];});}
 // bred skärm: rutorna läggs i två spalter, varje ruta i den spalt som är kortast just då (inga luckor)
 const HOME_WIDE=e=>e.matches(".howto,.community,.homecust,.wide,.intro,.hometag")||!e.matches(".tip,article");
 function homeMasonry(el){if(innerWidth<1024)return;const kids=[...el.children];el.textContent="";let cols=null;
