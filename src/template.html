@@ -1258,11 +1258,11 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 .wkbox>.chips .chip{padding-top:5px;padding-bottom:5px;font-size:14px}
 .wkbox .wkrow{margin-top:8px;margin-bottom:0;padding-bottom:2px}
 /* Startsidan: alla rutor har samma rubrikstil som "Din säsong" */
-#homeBody>.tip>.lbl:first-child,#homeBody>.tip>.sechead:first-child>.lbl{font-family:var(--f-display);font-weight:600;font-size:calc(21px*var(--fs));line-height:1.15;color:var(--fg);text-transform:none;letter-spacing:0;margin:0!important;flex:1;min-width:0}
-#homeBody>.tip>.lbl:first-child .ic,#homeBody>.tip>.sechead:first-child>.lbl .ic{width:20px;height:20px;vertical-align:-3px;color:var(--accent)}
-:root[data-look="ticket"] #homeBody>.tip>.lbl:first-child,:root[data-look="ticket"] #homeBody>.tip>.sechead:first-child>.lbl{text-transform:uppercase;font-weight:800;letter-spacing:.005em;font-size:calc(26px*var(--fs));line-height:1.1}
-:root[data-look="ticket"] #homeBody>.tip.heroswipe>.lbl{font-size:calc(26px*var(--fs))!important;font-weight:800!important;letter-spacing:.005em!important;padding-left:0!important}
-#homeBody>.tip>.sechead:first-child{align-items:baseline}
+#homeBody>.tip>.lbl:first-child,#homeBody>.hmas>div>.tip>.lbl:first-child,#homeBody>.tip>.sechead:first-child>.lbl,#homeBody>.hmas>div>.tip>.sechead:first-child>.lbl{font-family:var(--f-display);font-weight:600;font-size:calc(21px*var(--fs));line-height:1.15;color:var(--fg);text-transform:none;letter-spacing:0;margin:0!important;flex:1;min-width:0}
+#homeBody>.tip>.lbl:first-child .ic,#homeBody>.hmas>div>.tip>.lbl:first-child .ic,#homeBody>.tip>.sechead:first-child>.lbl .ic,#homeBody>.hmas>div>.tip>.sechead:first-child>.lbl .ic{width:20px;height:20px;vertical-align:-3px;color:var(--accent)}
+:root[data-look="ticket"] #homeBody>.tip>.lbl:first-child,:root[data-look="ticket"] #homeBody>.hmas>div>.tip>.lbl:first-child,:root[data-look="ticket"] #homeBody>.tip>.sechead:first-child>.lbl,:root[data-look="ticket"] #homeBody>.hmas>div>.tip>.sechead:first-child>.lbl{text-transform:uppercase;font-weight:800;letter-spacing:.005em;font-size:calc(26px*var(--fs));line-height:1.1}
+:root[data-look="ticket"] #homeBody>.tip.heroswipe>.lbl,:root[data-look="ticket"] #homeBody>.hmas>div>.tip.heroswipe>.lbl{font-size:calc(26px*var(--fs))!important;font-weight:800!important;letter-spacing:.005em!important;padding-left:0!important}
+#homeBody>.tip>.sechead:first-child,#homeBody>.hmas>div>.tip>.sechead:first-child{align-items:baseline}
 .wknear{margin:-4px 0 0}
 .wkrow{align-items:flex-start;overflow-y:hidden;box-sizing:content-box;transition:height .22s ease}
 .mini.addtrip[aria-pressed="false"]{border-color:var(--accent);color:var(--accent);font-weight:700}
@@ -1271,16 +1271,18 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 .nexttrip .ntcity{font-family:var(--f-display);font-weight:700;font-size:calc(24px*var(--fs));line-height:1.15;color:var(--fg)}
 .nexttrip .ntwhen{font-weight:800;color:var(--chalk,#fff);background:var(--accent);font-size:14px;white-space:nowrap;padding:4px 10px 4px 8px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
 .nexttrip .ntwhen .ic{width:15px;height:15px}
-#homeBody>.tip.nexttrip,.tip.nexttrip{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,var(--surface)) 0,color-mix(in srgb,var(--accent) 7%,var(--surface)) 64px,var(--surface) 140px)!important;border-top:4px solid color-mix(in srgb,var(--accent) 70%,var(--surface))!important}
+#homeBody>.tip.nexttrip,#homeBody>.hmas>div>.tip.nexttrip,.tip.nexttrip{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,var(--surface)) 0,color-mix(in srgb,var(--accent) 7%,var(--surface)) 64px,var(--surface) 140px)!important;border-top:4px solid color-mix(in srgb,var(--accent) 70%,var(--surface))!important}
 .nexttrip .ntic{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--chalk,#fff);margin-right:10px;vertical-align:middle;flex:none}
 .nexttrip .ntic .ic{width:19px;height:19px;color:var(--chalk,#fff)!important}.nexttrip .ntwhen .ic{color:var(--chalk,#fff)!important}
-#homeBody>.tip.nexttrip>.sechead:first-child>.lbl{display:flex;align-items:center}
+#homeBody>.tip.nexttrip>.sechead:first-child>.lbl,#homeBody>.hmas>div>.tip.nexttrip>.sechead:first-child>.lbl{display:flex;align-items:center}
 .nexttrip .meta{margin:2px 0 0}.nexttrip .ntnext{margin:6px 0 0;font-size:14px}
 .ntbar{height:6px;border-radius:999px;background:var(--soft);margin-top:10px;overflow:hidden}.ntbar i{display:block;height:100%;background:var(--accent);border-radius:999px}
 :root[data-look="ticket"] .nexttrip .ntcity{text-transform:uppercase;font-weight:800}
 /* egen regel: ett id i :is()-listan ovan höjer hela regelns vikt och tar över t.ex. valda knappar */
 html:root[data-look="kit"] #updBar{--fg:#000000;--muted:#4A5260;--line:#D7DDE6;--bg:#E6EAF0;--accent:var(--acc-l,#1E5FA0);color:var(--fg)}
 html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+@media (min-width:1024px){#homeBody>.hmas{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+#homeBody>.hmas>div{display:flex;flex-direction:column;gap:14px;min-width:0}#homeBody>.hmas>div>*{margin:0!important}}
 </style>
 
 <div class="wrap">
@@ -4746,7 +4748,14 @@ function renderHome(){const el=document.getElementById("homeBody");if(!el)return
   const fresh=isNewbie();
   if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
   {const it=document.getElementById("intro");if(it)it.style.display="";}
-  el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();}
+  el.innerHTML=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();homeMasonry(el);}
+// bred skärm: rutorna läggs i två spalter, varje ruta i den spalt som är kortast just då (inga luckor)
+const HOME_WIDE=e=>e.matches(".howto,.community,.homecust,.wide,.intro,.hometag")||!e.matches(".tip,article");
+function homeMasonry(el){if(innerWidth<1024)return;const kids=[...el.children];el.textContent="";let cols=null;
+  for(const k of kids){if(HOME_WIDE(k)){el.appendChild(k);cols=null;continue;}
+    if(!cols){const w=document.createElement("div");w.className="hmas";cols=[document.createElement("div"),document.createElement("div")];cols.forEach(c=>w.appendChild(c));el.appendChild(w);}
+    (cols[0].offsetHeight<=cols[1].offsetHeight?cols[0]:cols[1]).appendChild(k);}}
+{let wide=innerWidth>=1024;addEventListener("resize",()=>{const w=innerWidth>=1024;if(w!==wide){wide=w;if(typeof mode!=="undefined"&&mode==="hem")renderHome();}});}
 // resans datum som visas: från första till sista valda matchen (sökperioden används bara för att hitta matcher)
 function tripSpan(t,pk){const ds=(pk||[]).map(x=>x.m.kickoff&&koDay(x.m.kickoff)).filter(Boolean).sort();return ds.length?{from:ds[0],to:ds[ds.length-1]}:{from:t.from,to:t.to};}
 // Din nästa resa: överst på startsidan när man har en kommande eller pågående resa
