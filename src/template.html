@@ -1295,6 +1295,11 @@ html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!importa
   .wkarr{all:unset;box-sizing:border-box;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:20px;line-height:1;color:var(--fg);background:var(--soft);margin:0 8px}
   .wkarr:hover{background:var(--accent);color:var(--chalk,#fff)}
 }
+.hscroll.hsd>.drow,.hscroll.hsn>.hcard{flex:0 0 82%;scroll-snap-align:start;box-sizing:border-box}
+.hscroll.hsn>.hcard{flex-direction:column;justify-content:space-between}
+.hsnav{display:none}
+@media (hover:hover) and (pointer:fine){.hsnav{display:flex;justify-content:center;gap:4px;margin-top:4px}}
+@media (min-width:1024px){.hscroll>.fitem,.hscroll.hsd>.drow,.hscroll.hsn>.hcard{flex-basis:calc(50% - 4px)}.hscroll.hops>.fitem{flex-basis:calc(50% - 4px)}}
 </style>
 
 <div class="wrap">
@@ -4938,9 +4943,9 @@ const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeM
 document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;if(/^hero/.test(k))factsLoad(()=>renderHome());const card=t.closest("article");const idx=card?[...card.parentElement.children].indexOf(card):-1;
   if(homeMore[k]===null)homeMore[k]=!(innerWidth>=1024);else homeMore[k]=!homeMore[k];renderHome();
   if(!homeMore[k]&&idx>=0){const c=document.getElementById("homeBody")?.children[idx];if(c){const top=c.getBoundingClientRect().top;const tb=document.querySelector(".topbar,header");const off=(tb?tb.offsetHeight:0)+8;if(top<off)window.scrollBy(0,top-off);}}});
-function derbyHtml(){const all=derbyNext();const list=homeMore.derby?all:all.slice(0,3);if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">${$t("Nästa derby")}</div><p class="meta">${$t("Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.")}</p></article>`:"";
-  return`<article class="tip"><div class="lbl">${$t("Nästa derby i varje land")}</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc($t(land))}</span></div>
-    <div class="mmain"><b>${esc($t(d[1]))}</b><span class="meta">${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div></div>`).join("")}</div>${moreBtn("derby",all.length)}</article>`;}
+function derbyHtml(){const all=derbyNext();const list=all;if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">${$t("Nästa derby")}</div><p class="meta">${$t("Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.")}</p></article>`:"";
+  return`<article class="tip"><div class="lbl">${$t("Nästa derby i varje land")}</div><div class="hscroll hsd">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc($t(land))}</span></div>
+    <div class="mmain"><b>${esc($t(d[1]))}</b><span class="meta">${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))} · ${esc(m.kickoff?dayLabel(dayKey(new Date(m.kickoff)))+" "+timeOf(m.kickoff):"spelas "+rangeTxt(m))}</span></div></div>`).join("")}</div></article>`;}
 // helgens matcher nära hemorten
 // ---------- Planera en fotbollsresa: stad + datum → alla matcher i närheten, spara resan på kontot ----------
 let RESA=null,resaOpen=null,RESA_SH=null;
@@ -5230,7 +5235,10 @@ document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.clas
 document.addEventListener("scrollend",e=>{const r=e.target;if(r.classList&&r.classList.contains("wkrow")){clearTimeout(r._fit);fitRow(r);}},true);
 // karusellerna (Veckans match, Tips för helgen, Hett just nu) är lika höga som kortet som visas, inte som det högsta
 function fitRow(r){const w=r.clientWidth+12;if(!w)return;const i=Math.max(0,Math.min(r.children.length-1,Math.round(r.scrollLeft/w)));const c=r.children[i];if(!c)return;const h=c.offsetHeight+"px";if(r.style.height!==h)r.style.height=h;}
-function fitRows(root){(root||document).querySelectorAll(".wkrow").forEach(r=>{fitRow(r);wkArrows(r);});}
+function fitRows(root){(root||document).querySelectorAll(".wkrow").forEach(r=>{fitRow(r);wkArrows(r);});(root||document).querySelectorAll(".hscroll").forEach(hsArrows);}
+// vågräta listor (vännernas matcher, derbyn, nyheter): pilar under listan på dator
+function hsArrows(h){if(h.dataset.arr||h.children.length<2)return;h.dataset.arr=1;h.insertAdjacentHTML("afterend",`<div class="hsnav"><button type="button" class="wkarr" data-hsarr="-1" aria-label="${$t("Föregående")}">‹</button><button type="button" class="wkarr" data-hsarr="1" aria-label="${$t("Nästa")}">›</button></div>`);}
+document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest("[data-hsarr]");if(!a)return;const h=a.closest(".hsnav").previousElementSibling;if(!h)return;h.scrollBy({left:+a.dataset.hsarr*h.clientWidth*.8,behavior:"smooth"});});
 // med mus (dator) går det inte att svepa: pilar på var sida om prickarna, och prickarna går att klicka på
 function wkArrows(r){const d=r.nextElementSibling;if(!d||!d.classList.contains("wkdots")||d.dataset.arr||r.children.length<2)return;d.dataset.arr=1;d.removeAttribute("aria-hidden");
   d.insertAdjacentHTML("afterbegin",`<button type="button" class="wkarr" data-wkarr="-1" aria-label="${$t("Föregående")}">‹</button>`);d.insertAdjacentHTML("beforeend",`<button type="button" class="wkarr" data-wkarr="1" aria-label="${$t("Nästa")}">›</button>`);}
@@ -5307,7 +5315,7 @@ const MON=L_MO3;
 const newsDate=d=>{const[y,m,dd]=d.split("-").map(Number);return`${dd} ${MON[m-1]}${y!==new Date().getFullYear()?" "+y:""}`;};
 // bara nyheter från det senaste halvåret, högst 10 under "Fler nyheter"
 const newsList=()=>NEWS.filter(n=>Date.now()-Date.parse(n[0])<183*864e5).slice(0,10);
-function newsHtml(){const all=newsList();if(!all.length)return"";const list=homeMore.news?all:all.slice(0,1);return`<article class="tip"><div class="lbl">${$t("Nytt i appen")}</div><div class="dlist">${list.map(([d,t,x,go])=>`<button class="hcard news" data-gomode="${go}"><span class="htxt"><b>${esc(t)}</b><span class="meta">${esc(x)}</span></span><span class="meta nd">${esc(newsDate(d))}</span></button>`).join("")}</div>${all.length>1?`<button class="link more" data-homemore="news">${homeMore.news?$t("Visa färre"):$t("Fler nyheter ({0})",[all.length-1])}</button>`:""}</article>`;}
+function newsHtml(){const all=newsList();if(!all.length)return"";const list=all;return`<article class="tip"><div class="lbl">${$t("Nytt i appen")}</div><div class="hscroll hsn">${list.map(([d,t,x,go])=>`<button class="hcard news" data-gomode="${go}"><span class="htxt"><b>${esc(t)}</b><span class="meta">${esc(x)}</span></span><span class="meta nd">${esc(newsDate(d))}</span></button>`).join("")}</div></article>`;}
 
 // ---------- matcharkiv (äldre säsonger från openfootball, hämtas vid behov) ----------
 const ARC_ORDER=["se.1","se.2","se.3s","en.1","en.2","en.3","en.4","en.5","de.1","de.2","de.3","es.1","es.2","it.1","it.2","fr.1","fr.2","nl.1","pt.1","sco.1","no.1","no.2","dk.1","dk.2","fi.1","uefa.cl","en.fa","en.lc","de.cup","no.cup","dk.cup"];
@@ -5740,7 +5748,7 @@ function friendsHtml(){if(myState!=="ready"||!dbNs||!myId)return"";
   const hops=others.length?`<h3 class="sec">${$t("Groundhoppers att följa")}</h3><div class="hscroll hops">${others.slice(0,12).map(([u,d])=>`<div class="fitem"><div class="mmain"><b>${esc(who(u))}</b><div class="venue">${$t("{0} {1} · {2} arenor",[+d.n,+d.n===1?$t("match"):$t("matcher"),+d.ar||0])}${d.fav&&C[d.fav]?$t(" · håller på {0}",[esc(C[d.fav].n)]):""}</div></div>
       <button class="btn small${isFollow(u)?"":" primary"}" data-follow="${esc(u)}" aria-pressed="${isFollow(u)}">${isFollow(u)?$t("{0} Följer",[ic("check")]):$t("Följ")}</button></div>`).join("")}</div>`
     :`<p class="meta">${$t("Ingen annan delar sina matcher än.")}</p>`;
-  return`<article class="tip friends"><div class="lbl">${$t("Vänner")}</div><h2 class="name">${$t("Vad har vännerna sett?")}</h2>${feedH}${hops}${share}</article>`;}
+  return`<article class="tip friends"><div class="lbl">${$t("Vad har vännerna sett?")}</div>${feedH}${hops}${share}</article>`;}
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-share],[data-follow],[data-cheer],[data-hopall]");if(!t||myState!=="ready")return;
   if(t.dataset.share!==undefined){const on=t.dataset.share==="1";mutate(d=>{d.share=on;});setTimeout(syncPublic,50);toast(on?$t("Dina matcher syns nu för andra."):$t("Dina matcher syns inte längre för andra."));return;}
   if(t.dataset.hopall){hopAll=!hopAll;renderHome();return;}
