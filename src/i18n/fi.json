@@ -2659,5 +2659,7 @@
  "Om {0} dagar": "{0} päivän päästä",
  "Pågår nu": "Käynnissä",
  "Visa resan": "Näytä matka",
- "Inga matcher nära dig {0}.": "Ei otteluita lähelläsi {0}."
+ "Inga matcher nära dig {0}.": "Ei otteluita lähelläsi {0}.",
+ "Föregående": "Edellinen",
+ "Nästa": "Seuraava"
 }

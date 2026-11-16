@@ -2660,5 +2660,7 @@
  "Om {0} dagar": "Om {0} dager",
  "Pågår nu": "Pågår nå",
  "Visa resan": "Vis reisen",
- "Inga matcher nära dig {0}.": "Ingen kamper nær deg {0}."
+ "Inga matcher nära dig {0}.": "Ingen kamper nær deg {0}.",
+ "Föregående": "Forrige",
+ "Nästa": "Neste"
 }

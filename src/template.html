@@ -1284,8 +1284,17 @@ html:root[data-look="kit"] #updBar{--fg:#000000;--muted:#4A5260;--line:#D7DDE6;-
 html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
 @media (min-width:1024px){#homeBody>.hmas{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch}
 /* spalterna slutar i samma höjd: sista rutan i varje spalt sträcks ut */
-#homeBody>.hmas>div>:last-child{flex:1 1 auto}#homeBody>.hmas.hbuild{align-items:start}#homeBody>.hmas.hbuild>div>:last-child{flex:none}
+#homeBody>.hmas>div>:last-child{flex:1 1 auto}#homeBody>.hmas>div>.tip{align-content:start;justify-content:flex-start}#homeBody>.hmas.hbuild{align-items:start}#homeBody>.hmas.hbuild>div>:last-child{flex:none}
 #homeBody>.hmas>div{display:flex;flex-direction:column;gap:14px;min-width:0}#homeBody>.hmas>div>*{margin:0!important}}
+/* rubriken direkt i en ruta ska inte växa (rutan kan vara en flex-kolumn); bara i .sechead tar den resten av raden */
+#homeBody>.tip>.lbl:first-child,#homeBody>.hmas>div>.tip>.lbl:first-child{flex:none}
+.wkarr{display:none}
+@media (hover:hover) and (pointer:fine){
+  .wkdots{align-items:center}
+  .wkdots>i{cursor:pointer}
+  .wkarr{all:unset;box-sizing:border-box;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:20px;line-height:1;color:var(--fg);background:var(--soft);margin:0 8px}
+  .wkarr:hover{background:var(--accent);color:var(--chalk,#fff)}
+}
 </style>
 
 <div class="wrap">
@@ -4578,7 +4587,7 @@ const factsList=m=>{const f=matchFacts(m);return f.length?`<ul class="mfacts">${
 function heroWhy(m){const dby=derbyOf(m),fav=isFav(m.home)||isFav(m.away);
   return dby?`${esc($t(dby[1]))}. ${esc($t(String(dby[4]||"")).split(". ")[0])}.`:fav?$t("Ditt favoritlag spelar."):`${esc(m.comp||"")}${!smallM(m)&&C[m.home]&&C[m.home].cap?$t(" inför upp till {0} åskådare",[C[m.home].cap.toLocaleString(LOC)]):""}.`;}
 // Mer om matchen gäller alla matcher i karusellen: öppna en gång, bläddra och se fakta för varje
-function heroSlide(m,i){const k="hero",open=!!homeMore[k];
+function heroSlide(m,i){const k="hero",open=homeMore[k]===null?innerWidth>=1024:!!homeMore[k];if(open&&!homeMore._fl){homeMore._fl=1;factsLoad(()=>renderHome());}
   return`<div class="heroslide">
     <div class="teams big"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,40)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">–</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,40)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>
     <div class="cd">${$t("{0} kl {1} ·",[esc(dayLabel(dayKey(new Date(m.kickoff)))),timeOf(m.kickoff)])} <b>${countdown(m.kickoff)}</b></div>
@@ -4880,7 +4889,8 @@ function derbyCd(m){const day=m.kickoff?dayKey(new Date(m.kickoff)):m.dateFrom;i
   if(dd<=0){if(!m.kickoff)return"i dag";const h=Math.max(0,Math.ceil((Date.parse(m.kickoff)-Date.now())/36e5));return h<=0?$t("pågår"):$t("{0} tim",[h]);}
   return`${dd} ${dd===1?$t("dag"):$t("dagar")}`;}
 // Hem: tre matcher i taget, "Visa fler" fäller ut resten
-const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:false,wkOpen:false};
+// Veckans match: på bred skärm är "Mer om matchen" utfällt från början (rutan är ändå hög där); null = inte valt själv
+const homeMore={wk:false,derby:false,news:false,hot:false,board:false,hero:null,wkOpen:false};
 // fokusläge: en mening under rubriken (utan antal serier, så att den passar alla länder)
 // fokusläge: en mening om vad appen är, matcher nära dig, logga en match, din säsong och vägar vidare
 // ---------- fokusläge, förslag: startsida med karuseller (scrolla i sidled), ljus eller mörk ----------
@@ -4926,7 +4936,7 @@ function carouselHome(ob){const logged=myState==="ready";
 const moreBtn=(k,n)=>n>3?`<button class="link more" data-homemore="${k}">${homeMore[k]?$t("Visa färre"):$t("Visa fler ({0})",[n-3])}</button>`:"";
 // "visa mer" på Hem: fäll ut under, skärmen står still. Fälls något ihop och rutans topp hamnat ovanför skärmen, skrolla till rutans topp.
 document.addEventListener("click",e=>{const t=e.target.closest("[data-homemore]");if(!t)return;const k=t.dataset.homemore;if(/^hero/.test(k))factsLoad(()=>renderHome());const card=t.closest("article");const idx=card?[...card.parentElement.children].indexOf(card):-1;
-  homeMore[k]=!homeMore[k];renderHome();
+  if(homeMore[k]===null)homeMore[k]=!(innerWidth>=1024);else homeMore[k]=!homeMore[k];renderHome();
   if(!homeMore[k]&&idx>=0){const c=document.getElementById("homeBody")?.children[idx];if(c){const top=c.getBoundingClientRect().top;const tb=document.querySelector(".topbar,header");const off=(tb?tb.offsetHeight:0)+8;if(top<off)window.scrollBy(0,top-off);}}});
 function derbyHtml(){const all=derbyNext();const list=homeMore.derby?all:all.slice(0,3);if(!list.length)return dbState==="ready"?`<article class="tip"><div class="lbl">${$t("Nästa derby")}</div><p class="meta">${$t("Inga derbyn i det inlagda schemat just nu. Se alla heta derbyn under Tips.")}</p></article>`:"";
   return`<article class="tip"><div class="lbl">${$t("Nästa derby i varje land")}</div><div class="dlist">${list.map(({m,d,land})=>`<div class="drow mrow"${mrowAttr(m)}><div class="dcd"><b>${esc(derbyCd(m))}</b><span>${esc($t(land))}</span></div>
@@ -5220,7 +5230,13 @@ document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.clas
 document.addEventListener("scrollend",e=>{const r=e.target;if(r.classList&&r.classList.contains("wkrow")){clearTimeout(r._fit);fitRow(r);}},true);
 // karusellerna (Veckans match, Tips för helgen, Hett just nu) är lika höga som kortet som visas, inte som det högsta
 function fitRow(r){const w=r.clientWidth+12;if(!w)return;const i=Math.max(0,Math.min(r.children.length-1,Math.round(r.scrollLeft/w)));const c=r.children[i];if(!c)return;const h=c.offsetHeight+"px";if(r.style.height!==h)r.style.height=h;}
-function fitRows(root){(root||document).querySelectorAll(".wkrow").forEach(fitRow);}
+function fitRows(root){(root||document).querySelectorAll(".wkrow").forEach(r=>{fitRow(r);wkArrows(r);});}
+// med mus (dator) går det inte att svepa: pilar på var sida om prickarna, och prickarna går att klicka på
+function wkArrows(r){const d=r.nextElementSibling;if(!d||!d.classList.contains("wkdots")||d.dataset.arr||r.children.length<2)return;d.dataset.arr=1;d.removeAttribute("aria-hidden");
+  d.insertAdjacentHTML("afterbegin",`<button type="button" class="wkarr" data-wkarr="-1" aria-label="${$t("Föregående")}">‹</button>`);d.insertAdjacentHTML("beforeend",`<button type="button" class="wkarr" data-wkarr="1" aria-label="${$t("Nästa")}">›</button>`);}
+function wkGo(r,i){const n=r.children.length;i=Math.max(0,Math.min(n-1,i));r.scrollTo({left:i*(r.clientWidth+12),behavior:"smooth"});}
+document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest("[data-wkarr],.wkdots>i");if(!a)return;const d=a.closest(".wkdots"),r=d&&d.previousElementSibling;if(!r||!r.classList.contains("wkrow"))return;
+  const cur=Math.round(r.scrollLeft/(r.clientWidth+12));if(a.dataset.wkarr)wkGo(r,cur+ +a.dataset.wkarr);else wkGo(r,[...d.querySelectorAll("i")].indexOf(a));});
 addEventListener("resize",()=>fitRows());
 function weekendHtml(){const[from,to]=weekendRange();const label=from===to?$t("i dag"):$t("i helgen");
   if(!homeTown||homeEdit)return`<article class="tip"><div class="lbl">${$t("Tips för helgen")}</div><p>${$t("Ange din hemort så visar vi matcher nära dig {0}.",[label])}</p><form class="homeform" id="homeForm"><label class="fld" for="homeIn">${$t("Din hemort")}<input id="homeIn" list="cities" maxlength="60" value="${esc(homeTown)}" placeholder="${$t("t.ex. Jönköping")}"></label><button class="btn small primary" type="submit">${$t("Spara")}</button>${locBtn()}</form></article>`;

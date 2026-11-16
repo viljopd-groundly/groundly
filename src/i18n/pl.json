@@ -2659,5 +2659,7 @@
  "Om {0} dagar": "Za {0} dni",
  "Pågår nu": "Trwa teraz",
  "Visa resan": "Zobacz podróż",
- "Inga matcher nära dig {0}.": "Brak meczów w pobliżu {0}."
+ "Inga matcher nära dig {0}.": "Brak meczów w pobliżu {0}.",
+ "Föregående": "Poprzedni",
+ "Nästa": "Następny"
 }
