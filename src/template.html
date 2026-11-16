@@ -5191,7 +5191,7 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
   if(q.city){const c=cityLL(q.city);const L=resaMatches(q);
     if(!c)h+=`<div class="empty"><b>${$t("Hittar inte {0} på kartan.",[esc(q.city)])}</b><div>${$t("Prova en större stad i närheten.")}</div></div>`;
     else if(!L)h+=`<p class="meta">${$t("Hämtar matchschemat…")}</p>`;
-    else{const name=$t(c.name);const saved=myTrips().find(t=>norm(t.city)===norm(c.name)&&t.from===q.from&&t.to===q.to);
+    else{const name=$t(c.name);const saved=myTrips().find(t=>norm(t.city)===norm(c.name)&&t.from===q.from&&t.to===q.to)||(resaOpen&&myTrips().find(t=>t.id===resaOpen&&tripLegs(t).some(l=>norm(l.city)===norm(c.name))));
       if(RESA_SH&&norm(RESA_SH.city)===norm(c.name)&&RESA_SH.from===q.from&&RESA_SH.to===q.to){const sm=RESA_SH.ids.map(id=>MATCHES.find(m=>m._id===id)).filter(m=>m&&!mPast(m));
         shH=`<article class="tip tripshared"><div class="lbl">${ic("share")} ${RESA_SH.by?$t("{0} har delat en fotbollsresa med dig",[esc(RESA_SH.by)]):$t("En fotbollsresa har delats med dig")}</div><h2 class="name">${esc(name)} <span class="meta">${esc(resaRange(q.from,q.to))}</span></h2>
           ${sm.length?`<ul class="tripm">${sm.map(m=>`<li class="mrow"${mrowAttr(m)}><b>${esc(dayLabel(koDay(m.kickoff)))} ${timeOf(m.kickoff)}</b> ${esc(tnm(m,"home"))} – ${esc(tnm(m,"away"))}</li>`).join("")}</ul>`:`<p class="meta">${$t("Inga matcher valda i resan, men här är alla matcher i området.")}</p>`}
@@ -5220,6 +5220,11 @@ function calMany(ms){const ds=ms.map(m=>calData({...m,city:m.city&&$t(m.city)}))
 document.addEventListener("submit",e=>{if(e.target.id!=="resaForm")return;e.preventDefault();const g=id=>document.getElementById(id).value.trim();
   let f=g("rFrom")||today(),t=g("rTo")||f;if(f<today())f=today();if(t<f)t=f;{const d=document.getElementById("rDist");if(d&&RESA.rc){const v=parseFloat(String(d.value).replace(",","."));if(v>0)RESA.r=Math.max(1,Math.min(1000,Math.round(v*10/UNIT_PER_MIL[UNIT])));}}
   {const nc=g("rCity").slice(0,60);if(RESA&&(norm(nc)!==norm(RESA.city||"")||f!==RESA.from||t!==RESA.to)&&resaGuard(()=>e.target.isConnected&&e.target.requestSubmit()))return;}
+  // en öppnad sparad resa: samma stad med nya datum (eller avstånd) uppdaterar resan i stället för att bli en ny
+  {const tr=resaOpen&&myState==="ready"&&myTrips().find(x=>x.id===resaOpen);const nc=cityLL(g("rCity").slice(0,60));
+    if(tr&&nc){const legs=tripLegs(tr).map(l=>({...l}));const lg=legs.find(l=>norm((cityLL(l.city)||{}).name||l.city)===norm(nc.name));
+      if(lg){const ch=lg.from!==f||lg.to!==t||lg.r!==RESA.r;lg.from=f;lg.to=t;lg.r=RESA.r;if(ch){setLegs(tr,legsMerge(legs));saveMy();toast($t("Resan är uppdaterad"),"check");}
+        RESA={...RESA,city:nc.name,from:f,to:t};RESA_DRAFT=null;RESA_FROMTOP=null;renderResa();document.querySelector(".tripact,#resaList .empty")?.scrollIntoView({behavior:"smooth",block:"start"});return;}}}
   RESA={...RESA,city:g("rCity").slice(0,60),from:f,to:t};RESA_DRAFT=null;resaOpen=null;RESA_FROMTOP=null;renderResa();
   document.querySelector(".tripact,#resaList .empty")?.scrollIntoView({behavior:"smooth",block:"start"});});
 document.addEventListener("click",async e=>{const t=e.target.closest&&e.target.closest("[data-tripshare],[data-tripadopt]");if(!t)return;

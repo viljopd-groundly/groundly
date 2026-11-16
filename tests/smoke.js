@@ -92,6 +92,8 @@ async function page(b, { lang = "sv", look = "", user = true, fs: data = null, h
       check("resa: spara från påminnelsen", await p.evaluate(() => mode === "hem" && myTrips().length === 1 && !document.getElementById("tripAsk")), errs.join(" | "));
       await p.evaluate(() => goTop("resa")); await p.waitForTimeout(300);
       check("resa: knapp Lägg till fler matcher", await p.evaluate(() => { const b = document.querySelector(".trip .tripmore [data-tripopen]"); if (!b) return false; b.click(); return !!document.querySelector("#resaList [data-wishm]"); }));
+      { const nt = await p.evaluate(() => addDays(today(), 14)); await p.fill("#rTo", nt); await p.click("#resaForm button[type=submit]"); await p.waitForTimeout(400);
+        check("resa: ändra datum på sparad resa", await p.evaluate(nt => myTrips().length === 1 && myTrips()[0].to === nt, nt)); }
       await ctx.close();
     }
     // 3. Logga match, tidsändring, kalenderval, statistikkö
