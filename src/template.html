@@ -1300,6 +1300,7 @@ html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!importa
 .hsnav{display:none}
 @media (hover:hover) and (pointer:fine){.hsnav{display:flex;justify-content:center;gap:4px;margin-top:4px}}
 @media (min-width:1024px){.hscroll>.fitem,.hscroll.hsd>.drow,.hscroll.hsn>.hcard{flex-basis:calc(50% - 4px)}.hscroll.hops>.fitem{flex-basis:calc(50% - 4px)}}
+.nexttrip .ntempty{margin:6px 0 2px;font-size:15px}.nexttrip .topline{margin-top:10px}
 </style>
 
 <div class="wrap">
@@ -4776,8 +4777,13 @@ function homeMasonry(el){if(innerWidth<1024)return;const kids=[...el.children];e
 {let wide=innerWidth>=1024;addEventListener("resize",()=>{const w=innerWidth>=1024;if(w!==wide){wide=w;if(typeof mode!=="undefined"&&mode==="hem")renderHome();}});}
 // resans datum som visas: från första till sista valda matchen (sökperioden används bara för att hitta matcher)
 function tripSpan(t,pk){const ds=(pk||[]).map(x=>x.m.kickoff&&koDay(x.m.kickoff)).filter(Boolean).sort();return ds.length?{from:ds[0],to:ds[ds.length-1]}:{from:t.from,to:t.to};}
+// ingen planerad resa: samma ruta med en uppmaning att planera
+function noTripHtml(t){const head=`<div class="sechead"><div class="lbl"><span class="ntic" aria-hidden="true">${ic("trip")}</span>${$t("Din nästa resa")}</div></div>`;
+  if(t)return`<article class="tip nexttrip">${head}<p class="ntempty">${$t("Du har sparat en resa till {0} men inte valt några matcher än.",[esc($t(tripName(t)))])}</p><div class="actions"><button class="btn primary small" data-nexttrip="${esc(t.id)}">${$t("Välj matcher")}</button></div></article>`;
+  return`<article class="tip nexttrip">${head}<p class="ntempty">${$t("Ingen resa planerad än. Var vill du se fotboll härnäst?")}</p>
+    <div class="actions"><button class="btn primary small" data-gomode="resa">${ic("plus")} ${$t("Planera resa")}</button><button class="btn small" data-gotop="1">${$t("Vart ska jag åka?")}</button></div></article>`;}
 // Din nästa resa: överst på startsidan när man har en kommande eller pågående resa
-function nextTripHtml(){if(myState!=="ready")return"";const td=today();const cand=myTrips().filter(t=>t.to>=td).map(t=>{const L=tripML(t);return{t,L,pkA:L?tripPicked(t,L):[]};}).filter(x=>x.pkA.length).sort((a,b)=>tripSpan(a.t,a.pkA).from.localeCompare(tripSpan(b.t,b.pkA).from));if(!cand.length)return"";
+function nextTripHtml(){const td=today();if(myState!=="ready")return noTripHtml(null);const cand=myTrips().filter(t=>t.to>=td).map(t=>{const L=tripML(t);return{t,L,pkA:L?tripPicked(t,L):[]};}).filter(x=>x.pkA.length).sort((a,b)=>tripSpan(a.t,a.pkA).from.localeCompare(tripSpan(b.t,b.pkA).from));if(!cand.length)return noTripHtml(myTrips().filter(t=>t.to>=td).sort((a,b)=>a.from.localeCompare(b.from))[0]||null);
   const{t,L,pkA}=cand[0];const pk=pkA.filter(x=>!mPast(x.m));const sp=tripSpan(t,pkA);const days=Math.round((new Date(sp.from+"T12:00:00")-new Date(td+"T12:00:00"))/864e5);
   const when=days<=0?$t("Pågår nu"):days===1?$t("I morgon"):$t("Om {0} dagar",[days]);
   const I=pk.length?tripItems(t,pk):null;const nx=pk[0]&&pk[0].m;

@@ -2661,5 +2661,8 @@
  "Visa resan": "Näytä matka",
  "Inga matcher nära dig {0}.": "Ei otteluita lähelläsi {0}.",
  "Föregående": "Edellinen",
- "Nästa": "Seuraava"
+ "Nästa": "Seuraava",
+ "Du har sparat en resa till {0} men inte valt några matcher än.": "Olet tallentanut matkan kohteeseen {0}, mutta et ole vielä valinnut otteluita.",
+ "Ingen resa planerad än. Var vill du se fotboll härnäst?": "Ei vielä suunniteltua matkaa. Missä haluat nähdä jalkapalloa seuraavaksi?",
+ "Välj matcher": "Valitse ottelut"
 }

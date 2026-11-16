@@ -2661,5 +2661,8 @@
  "Visa resan": "Sjá ferðina",
  "Inga matcher nära dig {0}.": "Engir leikir nálægt þér {0}.",
  "Föregående": "Fyrri",
- "Nästa": "Næsta"
+ "Nästa": "Næsta",
+ "Du har sparat en resa till {0} men inte valt några matcher än.": "Þú hefur vistað ferð til {0} en ekki valið neina leiki enn.",
+ "Ingen resa planerad än. Var vill du se fotboll härnäst?": "Engin ferð skipulögð enn. Hvar viltu sjá fótbolta næst?",
+ "Välj matcher": "Velja leiki"
 }

@@ -2662,5 +2662,8 @@
  "Visa resan": "Vis reisen",
  "Inga matcher nära dig {0}.": "Ingen kamper nær deg {0}.",
  "Föregående": "Forrige",
- "Nästa": "Neste"
+ "Nästa": "Neste",
+ "Du har sparat en resa till {0} men inte valt några matcher än.": "Du har lagret en reise til {0}, men ikke valgt noen kamper ennå.",
+ "Ingen resa planerad än. Var vill du se fotboll härnäst?": "Ingen reise planlagt ennå. Hvor vil du se fotball neste gang?",
+ "Välj matcher": "Velg kamper"
 }

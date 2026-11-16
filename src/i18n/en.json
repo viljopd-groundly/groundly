@@ -2750,5 +2750,8 @@
  "Visa resan": "View trip",
  "Inga matcher nära dig {0}.": "No matches near you {0}.",
  "Föregående": "Previous",
- "Nästa": "Next"
+ "Nästa": "Next",
+ "Du har sparat en resa till {0} men inte valt några matcher än.": "You've saved a trip to {0} but haven't picked any matches yet.",
+ "Ingen resa planerad än. Var vill du se fotboll härnäst?": "No trip planned yet. Where do you want to watch football next?",
+ "Välj matcher": "Pick matches"
 }

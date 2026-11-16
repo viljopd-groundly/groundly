@@ -2662,5 +2662,8 @@
  "Visa resan": "Ver viaje",
  "Inga matcher nära dig {0}.": "No hay partidos cerca de ti {0}.",
  "Föregående": "Anterior",
- "Nästa": "Siguiente"
+ "Nästa": "Siguiente",
+ "Du har sparat en resa till {0} men inte valt några matcher än.": "Has guardado un viaje a {0} pero aún no has elegido partidos.",
+ "Ingen resa planerad än. Var vill du se fotboll härnäst?": "Aún no hay viaje planeado. ¿Dónde quieres ver fútbol la próxima vez?",
+ "Välj matcher": "Elegir partidos"
 }
