@@ -1265,7 +1265,7 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 :root[data-look="ticket"] #homeBody>.tip.heroswipe>.lbl,:root[data-look="ticket"] #homeBody>.hmas>div>.tip.heroswipe>.lbl{font-size:calc(26px*var(--fs))!important;font-weight:800!important;letter-spacing:.005em!important;padding-left:0!important}
 #homeBody>.tip>.sechead:first-child,#homeBody>.hmas>div>.tip>.sechead:first-child{align-items:baseline}
 .wknear{margin:-4px 0 0}
-.wkrow{align-items:flex-start;overflow-y:hidden;box-sizing:content-box;transition:height .22s ease}
+.wkrow{align-items:stretch;overflow-y:hidden;box-sizing:content-box}
 .mini.addtrip[aria-pressed="false"]{border-color:var(--accent);color:var(--accent);font-weight:700}
 .tripcheck li.ckcity{display:block;font-weight:800;font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);margin:10px 0 0;padding:0;border:0;background:none}
 .nexttrip .ntmain{all:unset;cursor:pointer;display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;width:100%;margin-top:4px}
@@ -5246,11 +5246,15 @@ document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.clas
 // höjden ändras först när svepet har stannat; mitt i svepet stör det snäppningen på iPhone
 document.addEventListener("scrollend",e=>{const r=e.target;if(r.classList&&r.classList.contains("wkrow")){clearTimeout(r._fit);fitRow(r);}},true);
 // karusellerna (Veckans match, Tips för helgen, Hett just nu) är lika höga som kortet som visas, inte som det högsta
-function fitRow(r){const w=r.clientWidth+12;if(!w)return;const i=Math.max(0,Math.min(r.children.length-1,Math.round(r.scrollLeft/w)));const c=r.children[i];if(!c)return;const h=c.offsetHeight+"px";if(r.style.height!==h)r.style.height=h;}
+// karusellens höjd är låst till det högsta kortet, så att rutan inte hoppar när man bläddrar
+function fitRow(r){if(!r.clientWidth||!r.children.length)return;r.style.height="";}
 function fitRows(root){(root||document).querySelectorAll(".wkrow").forEach(r=>{fitRow(r);wkArrows(r);});(root||document).querySelectorAll(".hscroll").forEach(hsArrows);}
 // vågräta listor (vännernas matcher, derbyn, nyheter): pilar under listan på dator
 function hsArrows(h){if(h.dataset.arr||h.children.length<2)return;h.dataset.arr=1;h.insertAdjacentHTML("afterend",`<div class="hsnav"><button type="button" class="wkarr" data-hsarr="-1" aria-label="${$t("Föregående")}">‹</button><button type="button" class="wkarr" data-hsarr="1" aria-label="${$t("Nästa")}">›</button></div>`);}
 document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest("[data-hsarr]");if(!a)return;const h=a.closest(".hsnav").previousElementSibling;if(!h)return;h.scrollBy({left:+a.dataset.hsarr*h.clientWidth*.8,behavior:"smooth"});});
+// pilar läggs till på alla karuseller och vågräta listor, var de än ritas (startsidan, Community, Min fotboll …)
+{let q=0;const scan=()=>{q=0;document.querySelectorAll(".wkrow").forEach(wkArrows);document.querySelectorAll(".hscroll").forEach(hsArrows);};
+  new MutationObserver(()=>{if(!q)q=requestAnimationFrame(scan);}).observe(document.documentElement,{childList:true,subtree:true});}
 // med mus (dator) går det inte att svepa: pilar på var sida om prickarna, och prickarna går att klicka på
 function wkArrows(r){const d=r.nextElementSibling;if(!d||!d.classList.contains("wkdots")||d.dataset.arr||r.children.length<2)return;d.dataset.arr=1;d.removeAttribute("aria-hidden");
   d.insertAdjacentHTML("afterbegin",`<button type="button" class="wkarr" data-wkarr="-1" aria-label="${$t("Föregående")}">‹</button>`);d.insertAdjacentHTML("beforeend",`<button type="button" class="wkarr" data-wkarr="1" aria-label="${$t("Nästa")}">›</button>`);}
