@@ -2670,5 +2670,9 @@
  "Du har lagt till 1 match i {0} men inte sparat resan.": "Du har lagt til 1 kamp i {0}, men ikke lagret reisen.",
  "Fortsätt utan att spara": "Fortsett uten å lagre",
  "Glöm inte att spara resan": "Ikke glem å lagre reisen",
- "Stanna kvar": "Bli her"
+ "Stanna kvar": "Bli her",
+ "Lägg till fler matcher": "Legg til flere kamper",
+ "Lägg till fler matcher i:": "Legg til flere kamper i:",
+ "Välj de matcher du vill se på resan.": "Velg kampene du vil se på reisen.",
+ "Välj matcher i:": "Velg kamper i:"
 }

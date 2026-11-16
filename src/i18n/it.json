@@ -2669,5 +2669,9 @@
  "Du har lagt till 1 match i {0} men inte sparat resan.": "Hai aggiunto 1 partita a {0} ma non hai salvato il viaggio.",
  "Fortsätt utan att spara": "Continua senza salvare",
  "Glöm inte att spara resan": "Non dimenticare di salvare il viaggio",
- "Stanna kvar": "Resta qui"
+ "Stanna kvar": "Resta qui",
+ "Lägg till fler matcher": "Aggiungi altre partite",
+ "Lägg till fler matcher i:": "Aggiungi altre partite a:",
+ "Välj de matcher du vill se på resan.": "Scegli le partite che vuoi vedere durante il viaggio.",
+ "Välj matcher i:": "Scegli partite a:"
 }

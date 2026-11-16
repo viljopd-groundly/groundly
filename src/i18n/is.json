@@ -2669,5 +2669,9 @@
  "Du har lagt till 1 match i {0} men inte sparat resan.": "Þú hefur bætt við 1 leik í {0} en ekki vistað ferðina.",
  "Fortsätt utan att spara": "Halda áfram án þess að vista",
  "Glöm inte att spara resan": "Ekki gleyma að vista ferðina",
- "Stanna kvar": "Vera hér"
+ "Stanna kvar": "Vera hér",
+ "Lägg till fler matcher": "Bæta við fleiri leikjum",
+ "Lägg till fler matcher i:": "Bæta við fleiri leikjum í:",
+ "Välj de matcher du vill se på resan.": "Veldu leikina sem þú vilt sjá í ferðinni.",
+ "Välj matcher i:": "Velja leiki í:"
 }

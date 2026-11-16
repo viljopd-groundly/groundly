@@ -90,6 +90,8 @@ async function page(b, { lang = "sv", look = "", user = true, fs: data = null, h
       check("resa: påminnelse om osparad resa", await p.evaluate(() => !!document.getElementById("tripAsk") && mode === "resa"));
       await p.evaluate(() => document.getElementById("taSave").click()); await p.waitForTimeout(300);
       check("resa: spara från påminnelsen", await p.evaluate(() => mode === "hem" && myTrips().length === 1 && !document.getElementById("tripAsk")), errs.join(" | "));
+      await p.evaluate(() => goTop("resa")); await p.waitForTimeout(300);
+      check("resa: knapp Lägg till fler matcher", await p.evaluate(() => { const b = document.querySelector(".trip .tripmore [data-tripopen]"); if (!b) return false; b.click(); return !!document.querySelector("#resaList [data-wishm]"); }));
       await ctx.close();
     }
     // 3. Logga match, tidsändring, kalenderval, statistikkö

@@ -2758,5 +2758,9 @@
  "Du har lagt till 1 match i {0} men inte sparat resan.": "You've added 1 match in {0} but haven't saved the trip.",
  "Fortsätt utan att spara": "Continue without saving",
  "Glöm inte att spara resan": "Don't forget to save the trip",
- "Stanna kvar": "Stay here"
+ "Stanna kvar": "Stay here",
+ "Lägg till fler matcher": "Add more matches",
+ "Lägg till fler matcher i:": "Add more matches in:",
+ "Välj de matcher du vill se på resan.": "Choose the matches you want to see on the trip.",
+ "Välj matcher i:": "Choose matches in:"
 }

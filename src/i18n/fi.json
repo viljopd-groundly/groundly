@@ -2669,5 +2669,9 @@
  "Du har lagt till 1 match i {0} men inte sparat resan.": "Lisäsit 1 ottelun kohteessa {0}, mutta et tallentanut matkaa.",
  "Fortsätt utan att spara": "Jatka tallentamatta",
  "Glöm inte att spara resan": "Muista tallentaa matka",
- "Stanna kvar": "Pysy tässä"
+ "Stanna kvar": "Pysy tässä",
+ "Lägg till fler matcher": "Lisää otteluita",
+ "Lägg till fler matcher i:": "Lisää otteluita kohteessa:",
+ "Välj de matcher du vill se på resan.": "Valitse ottelut, jotka haluat nähdä matkalla.",
+ "Välj matcher i:": "Valitse otteluita kohteessa:"
 }
