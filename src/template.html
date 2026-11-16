@@ -3647,8 +3647,10 @@ let stOpen=null,visOpen=null;
 function seenRowsHtml(list){return`<div class="seenlist">${list.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(a=>`<div class="seenrow"><span class="num">${esc(fmtDate(a.date))}</span><span><b>${esc(tnm(a,"home"))} ${a.score?`<span class="num">${esc(a.score)}</span>`:"–"} ${esc(tnm(a,"away"))}</b><span class="meta">${esc([a.venue,$t(a.city)].filter(Boolean).join(" · ")||$t("Arena ej angiven"))}${a.comp?" · "+esc(a.comp):""}${derbyOfAtt(a)?` · ${ic("flame")} ${esc($t(derbyOfAtt(a)[1]))}`:""}</span></span></div>`).join("")}</div>`;}
 let stKind="alla",stSort="n",stCountry="",stLeague="";
 try{const a=store.get("fk-stkind"),b=store.get("fk-stsort");if(["alla","klubb","landslag"].includes(a))stKind=a;if(["n","az","last"].includes(b))stSort=b;}catch(e){}
+// lag som loggats med bara namn (t.ex. från arkivet) kopplas till klubben med samma namn, så att märket får klubbens färger
+let CLUB_BY_NAME=null;function clubIdByName(name){if(!name)return null;if(!CLUB_BY_NAME){CLUB_BY_NAME=new Map();for(const id in C){const c=C[id];[c.n,...(Array.isArray(c.a)?c.a:c.a?[c.a]:[])].forEach(x=>{const k=norm(x||"");if(k&&!CLUB_BY_NAME.has(k))CLUB_BY_NAME.set(k,id);});}}return CLUB_BY_NAME.get(norm(name))||null;}
 function seenTeams(){const m=new Map();
-  MY.attended.forEach(a=>{[[a.home,a.homeName,"h"],[a.away,a.awayName,"a"]].forEach(([id,name,side])=>{const c=id&&C[id];const nm=c?c.n:String(name||"").trim();if(!nm)return;
+  MY.attended.forEach(a=>{[[a.home,a.homeName,"h"],[a.away,a.awayName,"a"]].forEach(([id,name,side])=>{if(!(id&&C[id]))id=clubIdByName(name)||id;const c=id&&C[id];const nm=c?c.n:String(name||"").trim();if(!nm)return;
     const k=c?"id:"+id:"n:"+norm(nm);if(!m.has(k))m.set(k,{k,id:c?id:null,name:nm,nat:c?isNat(c):false,n:0,home:0,away:0,w:0,d:0,l:0,last:"",first:"",games:[]});
     const t=m.get(k);t.n++;t.games.push(a);if(side==="h")t.home++;else t.away++;if(!t.last||a.date>t.last)t.last=a.date;if(!t.first||a.date<t.first)t.first=a.date;
     const sc=scoreOf(a);if(sc){const[my,op]=side==="h"?sc:[sc[1],sc[0]];if(my>op)t.w++;else if(my===op)t.d++;else t.l++;}});});
