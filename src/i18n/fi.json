@@ -2677,5 +2677,7 @@
  "Listan innehåller {0} klubbar och {1} landslag.{2}": "Listassa on {0} seuraa ja {1} maajoukkuetta.{2}",
  "{0} är tillagd i resan {1}": "{0} lisättiin matkaan {1}",
  "Lägg till {0} i resan {1}": "Lisää {0} matkaan {1}",
- "Spara som egen resa": "Tallenna erillisenä matkana"
+ "Spara som egen resa": "Tallenna erillisenä matkana",
+ "inga matcher": "ei otteluita",
+ "Städer i {0}": "Kaupungit: {0}"
 }

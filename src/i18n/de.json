@@ -2678,5 +2678,7 @@
  "Listan innehåller {0} klubbar och {1} landslag.{2}": "Die Liste enthält {0} Vereine und {1} Nationalmannschaften.{2}",
  "{0} är tillagd i resan {1}": "{0} wurde zur Reise {1} hinzugefügt",
  "Lägg till {0} i resan {1}": "{0} zur Reise {1} hinzufügen",
- "Spara som egen resa": "Als eigene Reise speichern"
+ "Spara som egen resa": "Als eigene Reise speichern",
+ "inga matcher": "keine Spiele",
+ "Städer i {0}": "Städte in {0}"
 }
