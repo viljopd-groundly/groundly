@@ -129,6 +129,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .teams button{all:unset;cursor:pointer;border-bottom:1px dotted var(--muted)}
 .teams button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .teams .vs{color:var(--muted);font-weight:500;margin:0 6px}
+.teams.scored{display:flex;flex-direction:column;gap:5px}.teams.scored .srow{display:flex;align-items:center;gap:10px;min-width:0}.teams.scored .sg{min-width:1.3em;text-align:center;font-size:1.1em;color:var(--muted)}.teams.scored .srow.win .sg{color:var(--text)}.teams.scored .sx{margin-left:calc(1.3em + 10px)}.teams.scored .srow button{display:inline-flex;align-items:center;gap:6px;min-width:0}.teams.scored .srow .crest{margin:0;flex:none}
 .venue{font-size:calc(13px*var(--fs));color:var(--muted);min-width:0}
 .mp{display:flex;gap:6px;flex-wrap:wrap}
 .empty{text-align:center;color:var(--muted);padding:26px 14px;background:var(--surface);border-radius:var(--r);border:1px dashed var(--line);display:flex;flex-direction:column;gap:10px;align-items:center}
@@ -1845,6 +1846,10 @@ function clubMatches(){const lc=leagueCountry();const byCountryQ=lc&&country!==l
 function upcomingFor(id){const now=Date.now()-2*36e5;return MATCHES.filter(m=>(m.home===id||m.away===id)&&(m.kickoff?Date.parse(m.kickoff)>now:m.dateTo>=today())).sort(sortM).slice(0,4);}
 function lum(h){const n=parseInt(h.slice(1),16);const f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4);};return .2126*f(n>>16&255)+.7152*f(n>>8&255)+.0722*f(n&255);}
 const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
+// spelad match: lagen på varsin rad med målen till vänster ("2  Kina" / "2  Bahrain")
+function scoredTeams(m){const r=m&&m.score&&/^\s*(\d+)\s*[-–]\s*(\d+)\s*(.*)$/.exec(String(m.score));if(!r)return"";const a=+r[1],b=+r[2],ex=r[3].trim();
+  const row=(id,nm,side,g,win)=>`<span class="srow${win?" win":""}"><b class="num sg">${g}</b><button data-open="${esc(id)}">${crest(id,nm,24)}${esc(tnm(m,side))}${favStar(id)}</button></span>`;
+  return`<div class="teams scored">${row(m.home,m.homeName,"home",a,a>b)}${row(m.away,m.awayName,"away",b,b>a)}${ex?`<span class="sx meta">${esc(ex.slice(0,24))}</span>`:""}</div>`;}
 function crestInitials(n){const w=String(n||"").replace(/[^\p{L}\p{N} ]/gu," ").split(/\s+/).filter(x=>x&&!/^(fc|if|ik|fk|sk|bk|ac|as|cf|sc|cd|afc|the|de|of|1)$/i.test(x));return(w.length>=2?w.slice(0,3).map(x=>x[0]).join(""):(w[0]||"?").slice(0,3)).toUpperCase();}
 function crest(id,name,size){size=size||40;const lg=LOGOS[id];const cls=`crest${size<30?" sm":""}`;const st=`width:${size}px;height:${size}px`;
   if(lg)return`<img class="${cls} logo" src="${esc(lg)}" alt="" style="${st}" loading="lazy">`;
@@ -2139,7 +2144,7 @@ function renderTeamRes(){const el=document.getElementById("teamRes");if(!el)retu
 function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36e5;
   return`<div class="match mrow"${m._id?` data-mrow="${esc(m._id)}"`:""}>
    ${m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
-   <div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>
+   ${scoredTeams(m)||`<div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>`}
    <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc($t(m.city))}, ${esc($t(m.country))}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>${commLine(m)}
    <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?$t("I orten"):$t("{0} bort",[milTxt(km)])}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
   </div>`;}
