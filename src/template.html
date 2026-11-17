@@ -4830,7 +4830,10 @@ function introHtml(fresh){const tile=(attr,icon,t,sub)=>`<button class="itile" $
 const HOME_BLOCKS=[["nexttrip","Din nästa resa",true],["weekend","Tips för helgen",true],["hero","Veckans match",true],["mine","Din säsong",true],["latest","Community",true],
   ["friends","Vänner",false],["derby","Nästa derby i varje land",false],["poll","Veckans fråga",false],["invite","Tipsa en kompis",false],["news","Nytt i appen",false]];
 // Topplistor, Månadens groundhopper, skribenter, arena och Quizledare är borttagna härifrån: de finns i Hett just nu och i Community-rutan
-function isNewbie(){if(myState!=="ready")return true;if((MY.attended||[]).length>=3)return false;const s=MY.since||today();return(Date.parse(today())-Date.parse(s))/864e5<14;}
+// under laddningen gissar vi med förra besökets svar, så att rutan inte blinkar fram och försvinner
+function isNewbie(){let r;if(myState==="loading"){try{const v=localStorage.getItem("gl-newbie");return v===null?false:v==="1";}catch(e){return false;}}
+  if(myState!=="ready")r=true;else if((MY.attended||[]).length>=3)r=false;else{const s=MY.since||today();r=(Date.parse(today())-Date.parse(s))/864e5<14;}
+  try{localStorage.setItem("gl-newbie",r?"1":"0");}catch(e){}return r;}
 const HOME_FN={nexttrip:()=>nextTripHtml(),intro:()=>isNewbie()?introHtml():"",hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),writers:()=>writersHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
 function normHomeCfg(c){const keys=HOME_BLOCKS.map(x=>x[0]);if(!c||typeof c!=="object")return null;const order=Array.isArray(c.order)?c.order.filter((k,i,a)=>keys.includes(k)&&a.indexOf(k)===i):[];
   const on={};if(c.on&&typeof c.on==="object")keys.forEach(k=>{if(typeof c.on[k]==="boolean")on[k]=c.on[k];});
