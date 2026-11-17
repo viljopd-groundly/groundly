@@ -142,7 +142,7 @@ module.exports=[
 ["jip","JIPPO","jippo joensuu","Finland","Joensuu",null,"Ykkösliiga",2,"Mehtimäki",1000,"",[],1],
 ["jäp","JäPS","japs jarvenpaa traskanda","Finland","Träskända",null,"Ykkösliiga",2,"Keskuskenttä",2000,"",[],1],
 ["k04","Klubi 04","klubi 04 hjk helsinki","Finland","Helsingfors",2004,"Ykkösliiga",2,"Bolt Arena",10770,"",[],1],
-["ktp","KTP","ktp kotka","Finland","Kotka",1927,"Ykkösliiga",2,"Arto Tolsa Areena",4780,"",[],1],
+["ktp","KTP","ktp kotka kooteepee","Finland","Kotka",1927,"Ykkösliiga",2,"Arto Tolsa Areena",4780,"",[],1],
 ["käp","KäPa","kapa kapylan pallo helsinki","Finland","Helsingfors",null,"Ykkösliiga",2,"Brahenkenttä",1200,"",[],1],
 ["mp","Mikkelin Palloilijat","mp mikkeli s:t michel","Finland","S:t Michel",1929,"Ykkösliiga",2,"Mikkelin Urheilupuisto",7000,"",[],1],
 ["pk35","PK-35","pk-35 helsinki","Finland","Helsingfors",null,"Ykkösliiga",2,"Mustapekka Areena",2200,"",[],1],
