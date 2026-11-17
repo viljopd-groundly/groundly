@@ -2679,5 +2679,8 @@
  "Lägg till {0} i resan {1}": "Lisää {0} matkaan {1}",
  "Spara som egen resa": "Tallenna erillisenä matkana",
  "inga matcher": "ei otteluita",
- "Städer i {0}": "Kaupungit: {0}"
+ "Städer i {0}": "Kaupungit: {0}",
+ "inom {0}": "{0} säteellä",
+ "Matcher på din resa": "Ottelut matkallasi",
+ "Ny stad i resan {0}": "Uusi kaupunki matkaan {0}"
 }

@@ -2679,5 +2679,8 @@
  "Lägg till {0} i resan {1}": "Bæta {0} við ferðina {1}",
  "Spara som egen resa": "Vista sem sérstaka ferð",
  "inga matcher": "engir leikir",
- "Städer i {0}": "Borgir í {0}"
+ "Städer i {0}": "Borgir í {0}",
+ "inom {0}": "innan {0}",
+ "Matcher på din resa": "Leikir í ferðinni þinni",
+ "Ny stad i resan {0}": "Ný borg í ferðinni {0}"
 }

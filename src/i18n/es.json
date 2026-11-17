@@ -2680,5 +2680,8 @@
  "Lägg till {0} i resan {1}": "Añadir {0} al viaje {1}",
  "Spara som egen resa": "Guardar como viaje aparte",
  "inga matcher": "sin partidos",
- "Städer i {0}": "Ciudades de {0}"
+ "Städer i {0}": "Ciudades de {0}",
+ "inom {0}": "a menos de {0}",
+ "Matcher på din resa": "Partidos en tu viaje",
+ "Ny stad i resan {0}": "Nueva ciudad en el viaje {0}"
 }
