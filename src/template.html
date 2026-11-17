@@ -1852,7 +1852,7 @@ function clubCard(c,isAi){const sel=openClub===c.id;const pr=isAi?null:pairOf(c.
   let h=`<div class="card${sel?" sel":""}" role="button" tabindex="0" aria-expanded="${sel}" data-club="${esc(c.id)}">
    <div class="main crow">${crest(LOGOS[c.id]||!pr?c.id:base.id,shownName,42)}<div class="ctxt"><p class="name">${esc(shownName)}${favStar(c.id)}${pr&&!isW(c)&&isFav(pr)?favStar(pr):""}</p><div class="meta">${esc([cityLbl(c),$t(c.c)].filter(Boolean).join(", "))}</div></div></div>
    <div class="yr">${c.f?`<b>${c.f}</b><small>${$t("grundad")}</small>`:c.l==="U21-landslag"?"":`<small>${$t("grundår saknas")}</small>`}</div>
-   <div class="pills">${c.l==="Landslag"?`<span class="pill ec">${$t("Landslag")}</span>`:c.l==="U21-landslag"?`<span class="pill ec">U21</span>`:""}${c.l?tierPill(c.t,c.l):""}${isAi?`<span class="pill ai">${$t("Svar från Claude")}</span>`:""}${!isAi&&!c.v?`<span class="pill">${$t("Senast kända serie")}</span>`:""}${isAi?"":clubMyPills(c)+ratingPill(c)}${pr&&!sel?`<span class="pill">${$t("Herr • Dam")}</span>`:""}</div>
+   <div class="pills">${c.l==="Landslag"?`<span class="pill ec">${$t("Landslag")}</span>`:c.l==="U21-landslag"?`<span class="pill ec">U21</span>`:""}${c.l?tierPill(c.t,c.l):""}${isAi?`<span class="pill ai">${$t("Svar från Claude")}</span>`:""}${c.user?`${c.l?`<span class="pill lg">${esc(c.l)}</span>`:""}<span class="pill">${$t("Föreslagen av en användare")}</span>`:!isAi&&!c.v?`<span class="pill">${$t("Senast kända serie")}</span>`:""}${isAi?"":clubMyPills(c)+ratingPill(c)}${pr&&!sel?`<span class="pill">${$t("Herr • Dam")}</span>`:""}</div>
    ${pr&&sel?`<div class="cteams" role="group" aria-label="${$t("Lag")}"><button type="button" data-cteam="${esc(isW(c)?pr:c.id)}" aria-pressed="${!isW(c)}">${$t("Herr")}</button><button type="button" data-cteam="${esc(isW(c)?c.id:pr)}" aria-pressed="${isW(c)}">${$t("Dam")}</button></div>`:""}`;
   if(sel){const up=isAi?[]:upcomingFor(c.id);
    h+=`<dl class="detail">
@@ -1913,14 +1913,14 @@ function renderClubs(){if(mode==="landslag")return renderNat();genderChips("gClu
   document.getElementById("leagueW").hidden=lgs.length<2;
   if(lgs.length>=2)setSel("leagueSel",[["",$t("Alla serier")],...lgs.map(([l,t])=>[l,l+(t?$t(" (nivå {0})",[t]):"")])],league);
   const list=clubGroups(clubMatches());
-  document.getElementById("clubCount").innerHTML=`<b>${list.length}</b> ${country==="landslag"?$t("landslag"):$t("klubbar")}${league?$t(" i {0}",[esc(lgT(league))]):q?$t(" för ”{0}”",[esc(q)]):""}${league&&hasTable(league)?` <button class="btn small" data-tbl="${esc(league)}">${ic("table")} ${$t("Visa tabell")}</button>`:""}`;
+  document.getElementById("clubCount").innerHTML=`<b>${list.length}</b> ${country==="landslag"?$t("landslag"):$tn(list.length,"klubb","klubbar")}${league?$t(" i {0}",[esc(lgT(league))]):q?$t(" för ”{0}”",[esc(q)]):""}${league&&hasTable(league)?` <button class="btn small" data-tbl="${esc(league)}">${ic("table")} ${$t("Visa tabell")}</button>`:""}`;
   const lk=q+"|"+country+"|"+league+"|"+gender;if(lk!==clubLimitKey){clubLimitKey=lk;clubLimit=60;}
   let h=list.slice(0,clubLimit).map(c=>clubCard(c,false)).join("")+(list.length>clubLimit?`<button class="btn" data-cmore="1">${$t("Visa fler ({0} kvar)",[list.length-clubLimit])}</button>`:"");
   const nq=norm(q);
   if(nq.length>=3&&list.length<3){const r=ai[nq]||loadAi(nq);
     if(r&&r.state==="done"&&r.data)h+=clubCard(r.data,true);
     else h+=`<div class="empty"><div>${list.length?$t("Letar du efter en annan klubb?"):`${$t("Ingen klubb i listan matchar")} <b>${esc(q)}</b>.`}</div>
-      <div>${$t("Listan innehåller {0} klubbar och {1} landslag.{2}",[CLUBS.length-CLUBS.filter(c=>isNat(C[c[0]])).length,CLUBS.filter(c=>isNat(C[c[0]])).length,AI_ON?$t(" Claude kan slå upp fakta om andra klubbar i världen."):$t(" Saknas en klubb kan du föreslå den via Tyck till.")])}</div>
+      <div>${$t("Listan innehåller {0} klubbar och {1} landslag.{2}",[CLUBS.length-CLUBS.filter(c=>isNat(C[c[0]])).length,CLUBS.filter(c=>isNat(C[c[0]])).length,AI_ON?$t(" Claude kan slå upp fakta om andra klubbar i världen."):""])}</div><div><button class="btn small" type="button" data-clubsug="${esc(q||"")}">${ic("plus")} ${$t("Föreslå en klubb")}</button></div>
       ${r&&r.state==="err"?`<div>${esc(r.msg)}</div>`:""}
       ${sampleFn===null?(AI_ON?`<div>${$t("Uppslag via Claude fungerar inte i den här vyn.")}</div>`:""):`<button class="btn primary" id="askAi"${r&&r.state==="busy"?" disabled":""}>${r&&r.state==="busy"?$t("Claude letar…"):$t("Fråga Claude om ”{0}”",[esc(q)])}</button>`}</div>`;}
   else if(!list.length)h=`<div class="empty">${$t("Ingen klubb matchar. {0}",[AI_ON?$t("Skriv minst tre bokstäver för att fråga Claude."):$t("Prova ett annat stavsätt eller ett annat land.")])}</div>`;
@@ -2517,7 +2517,7 @@ async function forumClick(t){
 (async()=>{try{userNs=await window.claude?.use?.("user")??null;}catch(e){userNs=null}
   // can("data.write") gäller den låsta roten, inte det egna forumdokumentet – ett nekat skrivförsök avgör i stället
   if(userNs){try{myId=await userNs.id();isMod=await userNs.canEdit();}catch(e){}}
-  let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startTl(db);startSocial(db);startFeedback(db);loadMyName();
+  let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startTl(db);startSocial(db);startFeedback(db);startClubSug(db);loadMyName();
   if(!db){forumState="none";if(mode==="forum")renderForum();return;}
   db.collection("forum").onSnapshot(s=>{queueFlode();const f={};s.docs.forEach(d=>{f[d.id]=d.data();});FORUM=f;forumState="ready";try{actBadge();}catch(e){}if(mode==="forum")renderForum();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();},()=>{forumState="none";if(mode==="forum")renderForum();});
   db.doc("mod/hidden").onSnapshot(s=>{HIDDEN=s.exists&&Array.isArray(s.data().keys)?s.data().keys:[];if(mode==="forum")renderForum();},()=>{});
@@ -2672,7 +2672,7 @@ function renderMine(){
   if(mySub==="home"){
     h+=favCards()+natCard()+favAddRow();const st=myStatsHtml();h+=st||(MY.attended.length?"":`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><div class="actions"><button class="btn primary" data-mysub="been">${$t("+ Lägg till match")}</button></div>`);
   }else if(mySub==="mod"){
-    const r=fixReviewHtml()+feedbackReviewHtml();
+    const r=fixReviewHtml()+clubSugReviewHtml()+feedbackReviewHtml();
     h+=`<div class="sechead"><h3 class="sec">${ic("shield")} ${$t("Moderering")}</h3></div>`+(isMod?(r||`<div class="empty">${$t("Inga nya rättelser eller meddelanden.")}</div>`):`<div class="empty">${$t("Bara moderatorer ser det här.")}</div>`);
   }else if(mySub==="been"){
     if(noFav&&!addingMatch)h+=`<p class="hint favnudge">${ic("heart")} ${$t("Välj favoritlag så får de egna kort med statistik här.")} <button class="link strong" data-mysub="home">${$t("Välj favoritlag")}</button></p>`;
@@ -5902,6 +5902,49 @@ function feedbackReviewHtml(){if(!isMod)return"";const all=[];Object.entries(FEE
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-flaghide]");if(!t||!isMod||!dbNs)return;const k=t.dataset.flaghide;
   try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,k])]});HIDDEN=[...new Set([...HIDDEN,k])];const done=[...new Set([...fbDone,t.dataset.fbkey])].slice(-1000);fbDone=done;await dbNs.doc("mod/feedback").set({done});toast($t("Innehållet är dolt."),"check");renderMine();}catch(x){toast($t("Kunde inte spara."));}});
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-fbdone]");if(!t||!isMod||!dbNs)return;const done=[...new Set([...fbDone,t.dataset.fbdone])].slice(-1000);fbDone=done;renderMine();try{await dbNs.doc("mod/feedback").set({done});}catch(x){toast($t("Kunde inte spara."));}});
+
+
+// ---------- föreslå en klubb ----------
+// clubsug/{uid}.items=[{id,n,c,city,l,s,at}] (användarens egna förslag), mod/clubs={list:[{id,n,c,city,l,s,by}],done:["uid:id"]} (godkända syns för alla)
+let CLUBSUG={},CLUBX=[],clubXDone=[];
+function applyClubX(list){let added=0;(list||[]).forEach(x=>{if(!x||!x.id||!x.n||C[x.id])return;const row=[x.id,x.n,String(x.n).toLowerCase(),x.c||"",x.city||"",null,x.l||"",null,x.s||null,null,null,null,null,null];CLUBS.push(row);
+  C[x.id]={id:x.id,n:x.n,a:row[2],c:row[3],city:row[4],f:null,l:row[6],t:null,s:row[8],cap:null,nick:null,h:null,v:null,conf:null,user:true};added++;});
+  if(added){try{if(mode==="klubbar"&&typeof renderClubs==="function")renderClubs();}catch(e){}}}
+function startClubSug(db){if(!db)return;
+  db.doc("mod/clubs").onSnapshot(s=>{const d=s.exists?s.data():{};CLUBX=Array.isArray(d.list)?d.list:[];clubXDone=Array.isArray(d.done)?d.done:[];applyClubX(CLUBX);if(isMod&&mode==="mine")renderMine();},()=>{});
+  if(isMod)db.collection("clubsug").onSnapshot(s=>{const o={};s.docs.forEach(d=>{o[d.id]=d.data();});CLUBSUG=o;resolveNames(Object.keys(o).filter(id=>id!==myId&&!(id in NAMES)));if(mode==="mine")renderMine();},()=>{});}
+function ctryFromInput(v){const n=norm(v||"");if(!n)return"";const m=ctryIndex();if(m.has(n))return m.get(n);for(const[k,c]of m)if(k.startsWith(n))return c;return"";}
+function openClubSug(name){if(!myId){toast($t("Logga in för att föreslå en klubb."));return;}const o=document.getElementById("csOv");if(o)o.remove();
+  const ctrys=[...new Set([...ctryIndex().values()])].map(c=>$t(c)).sort((a,b)=>a.localeCompare(b,LANG));
+  document.body.insertAdjacentHTML("beforeend",`<div id="csOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="csT"><form class="compose askbox" id="csForm">
+    <h2 id="csT">${$t("Föreslå en klubb")}</h2><p class="meta">${$t("Saknas en klubb? Fyll i det du vet. En moderator kollar förslaget, och sedan syns klubben för alla.")}</p>
+    <label class="fld" for="csN">${$t("Klubbens namn")}<input id="csN" maxlength="60" required value="${esc(name||"")}" autocomplete="off"></label>
+    <label class="fld" for="csC">${$t("Land")}<input id="csC" list="csCl" maxlength="40" required autocomplete="off" placeholder="${$t("t.ex. Sverige")}"><datalist id="csCl">${ctrys.map(c=>`<option value="${esc(c)}">`).join("")}</datalist></label>
+    <label class="fld" for="csCity">${$t("Stad")}<input id="csCity" maxlength="50" required autocomplete="off" placeholder="${$t("t.ex. Skövde")}"></label>
+    <label class="fld" for="csL">${$t("Serie")}<input id="csL" maxlength="60" required autocomplete="off" placeholder="${$t("t.ex. Division 3 Mellersta Götaland")}"></label>
+    <label class="fld" for="csS">${$t("Arena (om du vet)")}<input id="csS" maxlength="60" autocomplete="off"></label>
+    <p class="err" id="csErr"></p>
+    <div class="actions"><button class="btn primary" type="submit">${$t("Skicka förslaget")}</button><button class="btn" type="button" id="csCancel">${$t("Avbryt")}</button></div></form></div>`);
+  const ov=document.getElementById("csOv");ov.onclick=e=>{if(e.target===ov||e.target.id==="csCancel")ov.remove();};ov.onkeydown=e=>{if(e.key==="Escape")ov.remove();};
+  setTimeout(()=>{const x=document.getElementById(name?"csC":"csN");if(x)x.focus();},30);}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-clubsug]");if(!t)return;e.preventDefault();openClubSug(t.dataset.clubsug);});
+document.addEventListener("submit",async e=>{if(e.target.id!=="csForm")return;e.preventDefault();const g=id=>document.getElementById(id).value.trim();const err=document.getElementById("csErr");
+  const n=g("csN"),c=ctryFromInput(g("csC")),city=g("csCity"),l=g("csL"),st=g("csS");
+  if(!c){err.textContent=$t("Välj ett land i listan.");return;}
+  const dup=Object.values(C).find(x=>norm(x.n)===norm(n)&&x.c===c);if(dup){err.innerHTML=`${$t("{0} finns redan i listan.",[esc(dup.n)])} <button class="link strong" type="button" data-club="${esc(dup.id)}">${$t("Visa klubben")}</button>`;return;}
+  if(!dbNs||!myId){err.textContent=$t("Kunde inte spara.");return;}
+  const mine=((CLUBSUG[myId]||{}).items||[]).slice(-19);const item={id:newId(),n,c,city,l,at:new Date().toISOString()};if(st)item.s=st;mine.push(item);
+  try{await dbNs.doc("clubsug/"+myId).set({items:mine});CLUBSUG={...CLUBSUG,[myId]:{items:mine}};document.getElementById("csOv")?.remove();toast($t("Tack! En moderator kollar förslaget."),"check");}
+  catch(x){err.textContent=$t("Kunde inte spara.");}});
+function clubSugReviewHtml(){if(!isMod)return"";const all=[];Object.entries(CLUBSUG).forEach(([u,d])=>(d&&Array.isArray(d.items)?d.items:[]).forEach(x=>{if(x&&x.id&&x.n)all.push({...x,uid:u,key:u+":"+x.id});}));
+  const open=all.filter(x=>!clubXDone.includes(x.key)).sort((a,b)=>String(b.at).localeCompare(String(a.at)));if(!open.length)return"";
+  return`<h3 class="sec">${$t("Klubbförslag")} <span class="meta">${$t("(bara moderatorer ser detta)")}</span></h3><div class="flist">${open.map(x=>`<div class="fitem fbitem"><div class="mmain"><div><b>${esc(x.n)}</b> <span class="meta">${$t("från")} ${esc(who(x.uid))} · ${esc(ago(x.at))}</span></div>
+    <div class="meta">${esc([x.city,$t(x.c),x.l,x.s].filter(Boolean).join(" · "))}${x.city&&!GEO[x.city]?` · ${$t("staden saknas på kartan")}`:""}</div></div>
+    <div class="actions"><button class="btn small primary" data-csok="${esc(x.key)}">${$t("Godkänn")}</button><button class="btn small" data-csno="${esc(x.key)}">${$t("Avvisa")}</button></div></div>`).join("")}</div>`;}
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-csok],[data-csno]");if(!t||!isMod||!dbNs)return;const key=t.dataset.csok||t.dataset.csno;const[u,id]=key.split(":");
+  const x=((CLUBSUG[u]||{}).items||[]).find(i=>i.id===id);const done=[...new Set([...clubXDone,key])].slice(-2000);let list=CLUBX.slice();
+  if(t.dataset.csok&&x){const cid="u-"+u.slice(0,6)+"-"+id;const city=(cityLL(x.city)||{}).name||x.city;list=list.filter(c=>c.id!==cid).concat([{id:cid,n:x.n,c:x.c,city,l:x.l,...(x.s?{s:x.s}:{}),by:u}]);}
+  try{await dbNs.doc("mod/clubs").set({list,done});CLUBX=list;clubXDone=done;applyClubX(list);toast(t.dataset.csok?$t("{0} är tillagd bland klubbarna.",[esc(x?x.n:"")]):$t("Förslaget är avvisat."),"check");renderMine();}catch(err){toast($t("Kunde inte spara."));}});
 
 // ---------- namn och profiler ----------
 let MYNAME=null;
