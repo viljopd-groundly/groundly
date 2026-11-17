@@ -94,6 +94,10 @@ async function page(b, { lang = "sv", look = "", user = true, fs: data = null, h
       check("resa: knapp Lägg till fler matcher", await p.evaluate(() => { const b = document.querySelector(".trip .tripmore [data-tripopen]"); if (!b) return false; b.click(); return !!document.querySelector("#resaList [data-wishm]"); }));
       { const nt = await p.evaluate(() => addDays(today(), 14)); await p.fill("#rTo", nt); await p.click("#resaForm button[type=submit]"); await p.waitForTimeout(400);
         check("resa: ändra datum på sparad resa", await p.evaluate(nt => myTrips().length === 1 && myTrips()[0].to === nt, nt)); }
+      { const c2 = await p.evaluate(c1 => { const t = today(), e = addDays(t, 14); const m = MATCHES.find(x => x.city && x.city !== c1 && GEO[x.city] && GEO[c1] && roadKm(GEO[x.city], GEO[c1]) > 150 && x.kickoff && koDay(x.kickoff) > t && koDay(x.kickoff) <= e); return m && m.city; }, city);
+        if (c2) { await p.fill("#rCity", c2); await p.click("#resaForm button[type=submit]"); await p.waitForTimeout(400);
+          await p.evaluate(() => [...document.querySelectorAll("#resaList [data-wishm]")].find(b => !isWishM(b.dataset.wishm))?.click()); await p.waitForTimeout(300);
+          check("resa: ny stad i öppen resa läggs till i resan", await p.evaluate(() => myTrips().length === 1 && tripLegs(myTrips()[0]).length === 2)); } }
       await ctx.close();
     }
     // 3. Logga match, tidsändring, kalenderval, statistikkö

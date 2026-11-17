@@ -2674,5 +2674,8 @@
  "Välj de matcher du vill se på resan.": "Escolha os jogos que quer ver na viagem.",
  "Välj matcher i:": "Escolher jogos em:",
  "Resan är uppdaterad": "Viagem atualizada",
- "Listan innehåller {0} klubbar och {1} landslag.{2}": "A lista contém {0} clubes e {1} seleções.{2}"
+ "Listan innehåller {0} klubbar och {1} landslag.{2}": "A lista contém {0} clubes e {1} seleções.{2}",
+ "{0} är tillagd i resan {1}": "{0} adicionada à viagem {1}",
+ "Lägg till {0} i resan {1}": "Adicionar {0} à viagem {1}",
+ "Spara som egen resa": "Guardar como viagem separada"
 }

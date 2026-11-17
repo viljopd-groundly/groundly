@@ -2674,5 +2674,8 @@
  "Välj de matcher du vill se på resan.": "Veldu leikina sem þú vilt sjá í ferðinni.",
  "Välj matcher i:": "Velja leiki í:",
  "Resan är uppdaterad": "Ferðin er uppfærð",
- "Listan innehåller {0} klubbar och {1} landslag.{2}": "Listinn inniheldur {0} félög og {1} landslið.{2}"
+ "Listan innehåller {0} klubbar och {1} landslag.{2}": "Listinn inniheldur {0} félög og {1} landslið.{2}",
+ "{0} är tillagd i resan {1}": "{0} hefur verið bætt við ferðina {1}",
+ "Lägg till {0} i resan {1}": "Bæta {0} við ferðina {1}",
+ "Spara som egen resa": "Vista sem sérstaka ferð"
 }
