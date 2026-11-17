@@ -2706,5 +2706,18 @@
  "Tack! En moderator kollar förslaget.": "Bedankt! Een moderator controleert het voorstel.",
  "Välj ett land i listan.": "Kies een land uit de lijst.",
  "Föreslagen av en användare": "Voorgesteld door een gebruiker",
- "klubb": "club"
+ "klubb": "club",
+ "{0} klubbar har märke.": "{0} clubs hebben een logo.",
+ "{n} är dolda.": "{n} zijn verborgen.",
+ "1 är dold.": "1 is verborgen.",
+ "Dölj ett enskilt märke på klubbens kort.": "Verberg een los logo op de clubkaart.",
+ "Dölj klubbmärket": "Logo verbergen",
+ "Klubbmärken": "Clublogo's",
+ "Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.": "Clublogo's zijn eigendom van de clubs en worden alleen getoond om de teams te herkennen. Groundly is niet verbonden aan clubs, competities of bonden.",
+ "Riktiga klubbmärken visas": "Echte clublogo's worden getoond",
+ "Riktiga klubbmärken är avstängda": "Echte clublogo's staan uit",
+ "Slå på för alla": "Aanzetten voor iedereen",
+ "Sparat": "Opgeslagen",
+ "Stäng av för alla": "Uitzetten voor iedereen",
+ "Visa klubbmärket": "Logo tonen"
 }

@@ -262,6 +262,9 @@ if(process.env.API_FOOTBALL_KEY){const KEY=process.env.API_FOOTBALL_KEY.trim();c
         const useG=evOk&&ownG.length&&(ownG[0][2]>apiG),useA=asOk&&ownA.length&&(ownA[0][2]>apiA);
         if(useG||useA){extra.players[lname]={...P,...(useG?{goals:ownG}:{}),...(useA?{assists:ownA}:{}),own:[useG?"goals":null,useA?"assists":null].filter(Boolean)};choice[lname]=`egen ${useG?"skytteliga ("+ownG[0][2]+" vs API "+apiG+")":""}${useA?" assist ("+ownA[0][2]+" vs API "+apiA+")":""}`;}}
       apiStat.egnaSpelarligor=choice;}
+    // klubbmärken: vårt klubb-id -> API-Footballs lag-id (bilderna hämtas i ett eget steg, de räknas inte mot kvoten)
+    try{const LF=path.join(TOOLS,"logo_ids.json");let L={};try{L=JSON.parse(fs.readFileSync(LF,"utf8"));}catch(e){}let nNew=0;
+      for(const[a,b]of Object.entries(teamMap)){if(b&&!/^w?nt-/.test(b)&&!L[b]&&+a>0){L[b]=+a;nNew++;}}fs.writeFileSync(LF,JSON.stringify(L));apiStat.klubbmärken={kända:Object.keys(L).length,nya:nNew};}catch(e){apiStat.klubbmärken="fel: "+String(e.message).slice(0,80);}
     apiStat.anrop=calls;apiStat.okändaLag=Object.entries(unmatched).sort((a,b)=>b[1]-a[1]).slice(0,25).map(x=>x[0]);
   }catch(e){apiStat.fel=String(e.message).slice(0,200);apiStat.anrop=calls;}
 }else apiStat.info="API_FOOTBALL_KEY saknas, hoppar över API-Football";

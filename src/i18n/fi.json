@@ -2706,5 +2706,18 @@
  "Tack! En moderator kollar förslaget.": "Kiitos! Moderaattori tarkistaa ehdotuksen.",
  "Välj ett land i listan.": "Valitse maa listalta.",
  "Föreslagen av en användare": "Käyttäjän ehdottama",
- "klubb": "seura"
+ "klubb": "seura",
+ "{0} klubbar har märke.": "{0} seuralla on logo.",
+ "{n} är dolda.": "{n} on piilotettu.",
+ "1 är dold.": "1 on piilotettu.",
+ "Dölj ett enskilt märke på klubbens kort.": "Piilota yksittäinen logo seuran kortilta.",
+ "Dölj klubbmärket": "Piilota logo",
+ "Klubbmärken": "Seurojen logot",
+ "Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.": "Logot kuuluvat seuroille ja näytetään vain joukkueiden tunnistamiseksi. Groundly ei ole yhteydessä seuroihin, sarjoihin tai liittoihin.",
+ "Riktiga klubbmärken visas": "Oikeat seuralogot näytetään",
+ "Riktiga klubbmärken är avstängda": "Oikeat seuralogot on poistettu käytöstä",
+ "Slå på för alla": "Ota käyttöön kaikille",
+ "Sparat": "Tallennettu",
+ "Stäng av för alla": "Poista käytöstä kaikilta",
+ "Visa klubbmärket": "Näytä logo"
 }

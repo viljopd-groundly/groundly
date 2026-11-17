@@ -55,13 +55,19 @@ jobs:
           cat "$RUNNER_TEMP/summary.json" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Hämta nya klubbmärken
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.nightly)
+        continue-on-error: true
+        run: |
+          [ -f tools/logo_ids.json ] && node tools/fetch-logos.js | tee -a "$GITHUB_STEP_SUMMARY" || echo "inga klubbmärken att hämta"
+
       - name: Spara nya data i repot
         if: github.event_name != 'push'
         run: |
           rm -f tools/prev_events.json
           git config user.name "groundly-bot"
           git config user.email "groundly-bot@users.noreply.github.com"
-          git add site/data site/archive tools/last-run.json $(ls tools/ev_assist.json 2>/dev/null)
+          git add site/data site/archive site/logos/c tools/last-run.json $(ls tools/ev_assist.json tools/logo_ids.json tools/logo_bad.json 2>/dev/null)
           git diff --cached --quiet || git commit -m "Nattuppdatering $(date -u +%F)"
           # någon kan ha pushat under körningen (t.ex. en kodändring) – lägg datan ovanpå
           for i in 1 2 3; do git pull --rebase -q origin main && git push && break; sleep 5; done

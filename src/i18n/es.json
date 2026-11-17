@@ -2707,5 +2707,18 @@
  "Tack! En moderator kollar förslaget.": "¡Gracias! Un moderador revisará la sugerencia.",
  "Välj ett land i listan.": "Elige un país de la lista.",
  "Föreslagen av en användare": "Sugerido por un usuario",
- "klubb": "club"
+ "klubb": "club",
+ "{0} klubbar har märke.": "{0} clubes tienen escudo.",
+ "{n} är dolda.": "{n} están ocultos.",
+ "1 är dold.": "1 está oculto.",
+ "Dölj ett enskilt märke på klubbens kort.": "Oculta un escudo concreto en la ficha del club.",
+ "Dölj klubbmärket": "Ocultar escudo",
+ "Klubbmärken": "Escudos de clubes",
+ "Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.": "Los escudos pertenecen a sus clubes y solo se muestran para identificar a los equipos. Groundly no tiene relación con ningún club, liga o federación.",
+ "Riktiga klubbmärken visas": "Se muestran los escudos reales",
+ "Riktiga klubbmärken är avstängda": "Los escudos reales están desactivados",
+ "Slå på för alla": "Activar para todos",
+ "Sparat": "Guardado",
+ "Stäng av för alla": "Desactivar para todos",
+ "Visa klubbmärket": "Mostrar escudo"
 }

@@ -1563,6 +1563,10 @@ const CLUBS=/*CLUBS*/[];
 const COLORS=/*COLORS*/{};
 // Riktiga loggor läggs här när klubben gett tillstånd: id -> bildadress. Då ersätter loggan färgbrickan.
 const LOGOS={};
+// klubbmärken från API-Football (för identifiering). mod/crests={on:bool, off:[id]} styr av/på för alla och per klubb.
+const LOGO_IDS=/*LOGOIDS*/[];let CREST={on:true,off:[]};
+function applyCrests(){for(const k of Object.keys(LOGOS))delete LOGOS[k];if(!CREST.on)return;const off=new Set(CREST.off||[]);for(const id of LOGO_IDS)if(!off.has(id))LOGOS[id]="logos/c/"+encodeURIComponent(id)+".png";}
+applyCrests();
 const FLAGS={};
 const CUPS=/*CUPS*/[];
 const SEASONS=/*SEASONS*/{};
@@ -2518,7 +2522,7 @@ async function forumClick(t){
 (async()=>{try{userNs=await window.claude?.use?.("user")??null;}catch(e){userNs=null}
   // can("data.write") gäller den låsta roten, inte det egna forumdokumentet – ett nekat skrivförsök avgör i stället
   if(userNs){try{myId=await userNs.id();isMod=await userNs.canEdit();}catch(e){}}
-  let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startTl(db);startSocial(db);startFeedback(db);startClubSug(db);loadMyName();
+  let db=null;try{db=await window.claude?.use?.("db")??null;}catch(e){db=null}dbNs=db;startMine(db,myId);startRatings(db);startPubs(db);startQuiz(db);startReports(db);startHome(db);startTipNotes(db);startFixes(db);startTl(db);startSocial(db);startFeedback(db);startClubSug(db);startCrests(db);loadMyName();
   if(!db){forumState="none";if(mode==="forum")renderForum();return;}
   db.collection("forum").onSnapshot(s=>{queueFlode();const f={};s.docs.forEach(d=>{f[d.id]=d.data();});FORUM=f;forumState="ready";try{actBadge();}catch(e){}if(mode==="forum")renderForum();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();},()=>{forumState="none";if(mode==="forum")renderForum();});
   db.doc("mod/hidden").onSnapshot(s=>{HIDDEN=s.exists&&Array.isArray(s.data().keys)?s.data().keys:[];if(mode==="forum")renderForum();},()=>{});
@@ -2673,8 +2677,8 @@ function renderMine(){
   if(mySub==="home"){
     h+=favCards()+natCard()+favAddRow();const st=myStatsHtml();h+=st||(MY.attended.length?"":`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><div class="actions"><button class="btn primary" data-mysub="been">${$t("+ Lägg till match")}</button></div>`);
   }else if(mySub==="mod"){
-    const r=fixReviewHtml()+clubSugReviewHtml()+feedbackReviewHtml();
-    h+=`<div class="sechead"><h3 class="sec">${ic("shield")} ${$t("Moderering")}</h3></div>`+(isMod?(r||`<div class="empty">${$t("Inga nya rättelser eller meddelanden.")}</div>`):`<div class="empty">${$t("Bara moderatorer ser det här.")}</div>`);
+    const r=fixReviewHtml()+clubSugReviewHtml()+feedbackReviewHtml();const cm=crestModHtml();
+    h+=`<div class="sechead"><h3 class="sec">${ic("shield")} ${$t("Moderering")}</h3></div>`+(isMod?(r||`<div class="empty">${$t("Inga nya rättelser eller meddelanden.")}</div>`)+cm:`<div class="empty">${$t("Bara moderatorer ser det här.")}</div>`);
   }else if(mySub==="been"){
     if(noFav&&!addingMatch)h+=`<p class="hint favnudge">${ic("heart")} ${$t("Välj favoritlag så får de egna kort med statistik här.")} <button class="link strong" data-mysub="home">${$t("Välj favoritlag")}</button></p>`;
     if(pendingLogg())h+=`<p class="notice">${ic("offline")} ${$t("Du har ändringar som väntar på nät. De skickas automatiskt när kontakten är tillbaka.")} <button class="link strong" data-retrysave="1">${$t("Försök nu")}</button></p>`;
@@ -5563,7 +5567,7 @@ function fixAll(){const out=[];Object.entries(FIXES).forEach(([uid,d])=>{(d&&Arr
 // "saknas – föreslå": öppnar rättelseformuläret med fältet förvalt (eller ber om inloggning)
 function suggestBtn(c,field,label){return dbNs&&myId?`<button class="link" data-fixopen="${esc(c.id)}" data-fixfield="${field}">${label}</button>`:`<button class="link" data-glogin>${$t("Logga in och föreslå")}</button>`;}
 let fixField=null;
-function fixButton(c){return dbNs&&myId?`<button class="btn small" data-fixopen="${esc(c.id)}" aria-expanded="${fixOpen===c.id}">${ic("pencil")} ${$t("Föreslå rättelse")}</button>`:"";}
+function fixButton(c){return crestModBtn(c)+(dbNs&&myId?`<button class="btn small" data-fixopen="${esc(c.id)}" aria-expanded="${fixOpen===c.id}">${ic("pencil")} ${$t("Föreslå rättelse")}</button>`:"");}
 function fixForm(c){if(fixOpen!==c.id)return"";
   return`<form class="compose fixform" data-fixclub="${esc(c.id)}" data-noclose="1"><h2>${$t("Föreslå rättelse för {0}",[esc(c.n)])}</h2>
     <label class="fld" for="fxF">${$t("Vad är fel?")}<select id="fxF">${FIX_FIELDS.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select></label>
@@ -5911,6 +5915,20 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-flag
   try{await dbNs.doc("mod/hidden").set({keys:[...new Set([...HIDDEN,k])]});HIDDEN=[...new Set([...HIDDEN,k])];const done=[...new Set([...fbDone,t.dataset.fbkey])].slice(-1000);fbDone=done;await dbNs.doc("mod/feedback").set({done});toast($t("Innehållet är dolt."),"check");renderMine();}catch(x){toast($t("Kunde inte spara."));}});
 document.addEventListener("click",async e=>{const t=e.target.closest("[data-fbdone]");if(!t||!isMod||!dbNs)return;const done=[...new Set([...fbDone,t.dataset.fbdone])].slice(-1000);fbDone=done;renderMine();try{await dbNs.doc("mod/feedback").set({done});}catch(x){toast($t("Kunde inte spara."));}});
 
+
+
+// ---------- klubbmärken: av/på (moderatorer) ----------
+function startCrests(db){if(!db)return;db.doc("mod/crests").onSnapshot(s=>{const d=s.exists?s.data():{};const nx={on:d.on!==false,off:Array.isArray(d.off)?d.off:[]};
+  if(JSON.stringify(nx)===JSON.stringify(CREST))return;CREST=nx;applyCrests();try{render();if(mode==="hem")renderHome();}catch(e){}},()=>{});}
+function crestModBtn(c){if(!isMod||!c||!LOGO_IDS.includes(c.id))return"";const hid=(CREST.off||[]).includes(c.id);
+  return`<button class="btn small" data-crestx="${esc(c.id)}">${ic(hid?"image":"x")} ${hid?$t("Visa klubbmärket"):$t("Dölj klubbmärket")}</button>`;}
+function crestModHtml(){if(!isMod||!LOGO_IDS.length)return"";const n=(CREST.off||[]).length;
+  return`<h3 class="sec">${$t("Klubbmärken")}</h3><div class="fitem"><div class="mmain"><div><b>${CREST.on?$t("Riktiga klubbmärken visas"):$t("Riktiga klubbmärken är avstängda")}</b></div><div class="meta">${$t("{0} klubbar har märke.",[LOGO_IDS.length])}${n?" "+$tn(n,"1 är dold.","{n} är dolda."):""} ${$t("Dölj ett enskilt märke på klubbens kort.")}</div></div>
+    <div class="actions"><button class="btn small${CREST.on?"":" primary"}" data-crestall="${CREST.on?"0":"1"}">${CREST.on?$t("Stäng av för alla"):$t("Slå på för alla")}</button></div></div>`;}
+async function saveCrests(nx){if(!isMod||!dbNs)return;try{await dbNs.doc("mod/crests").set(nx);CREST=nx;applyCrests();render();toast($t("Sparat"),"check");}catch(e){toast($t("Kunde inte spara."));}}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-crestx],[data-crestall]");if(!t||!isMod)return;e.preventDefault();e.stopPropagation();
+  if(t.dataset.crestall)saveCrests({on:t.dataset.crestall==="1",off:CREST.off||[]});
+  else{const id=t.dataset.crestx;const off=new Set(CREST.off||[]);off.has(id)?off.delete(id):off.add(id);saveCrests({on:CREST.on,off:[...off]});}},true);
 
 // ---------- föreslå en klubb ----------
 // clubsug/{uid}.items=[{id,n,c,city,l,s,at}] (användarens egna förslag), mod/clubs={list:[{id,n,c,city,l,s,by}],done:["uid:id"]} (godkända syns för alla)
@@ -6408,6 +6426,7 @@ function render(){
    :mode==="profil"?`<div>${$t("Det du skriver i forum och matchberättelser syns för alla. Dina loggade matcher syns bara om du slår på det här.")}</div>`
    :mode==="forum"?`<div class="forumrules"><b>${$t("Forumregler")}</b><br>${$t("Håll god ton och hjälp varandra. Spam, hat, olagligt innehåll och personuppgifter om andra tas bort. Ser du något som inte hör hemma här, tryck Anmäl.")}</div><div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; moderatorerna kan dölja inlägg.")}</div>`
    :`<div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; sidans ägare kan dölja inlägg.")}</div>`;
+  if(CREST.on&&LOGO_IDS.length)document.getElementById("foot").insertAdjacentHTML("beforeend",`<div>${$t("Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.")}</div>`);
   document.getElementById("foot").insertAdjacentHTML("beforeend",`<div><button class="link" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button> · <button class="link" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button></div>`);
   if(mode==="klubbar"||mode==="landslag")renderClubs();else if(mode==="arenor")renderArenas();else if(mode==="matcher")renderMatches();else if(mode==="tabell")renderTable();else if(mode==="tips"||mode==="quiz")rerenderQuizHost();else if(mode==="mine")renderMine();else if(mode==="reportage")renderReports();else if(mode==="flode")renderFlode();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();else if(mode==="resa")renderResa();else renderForum();}
 document.body.insertAdjacentHTML("beforeend",`<datalist id="allNats">${Object.values(C).filter(c=>c.l==="Landslag").map(c=>`<option value="${esc(c.n)}">`).join("")}</datalist>`);

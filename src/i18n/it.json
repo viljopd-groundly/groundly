@@ -2706,5 +2706,18 @@
  "Tack! En moderator kollar förslaget.": "Grazie! Un moderatore controllerà il suggerimento.",
  "Välj ett land i listan.": "Scegli un paese dall'elenco.",
  "Föreslagen av en användare": "Suggerito da un utente",
- "klubb": "club"
+ "klubb": "club",
+ "{0} klubbar har märke.": "{0} club hanno uno stemma.",
+ "{n} är dolda.": "{n} sono nascosti.",
+ "1 är dold.": "1 è nascosto.",
+ "Dölj ett enskilt märke på klubbens kort.": "Nascondi un singolo stemma dalla scheda del club.",
+ "Dölj klubbmärket": "Nascondi stemma",
+ "Klubbmärken": "Stemmi dei club",
+ "Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.": "Gli stemmi appartengono ai rispettivi club e servono solo a identificare le squadre. Groundly non è affiliato a club, leghe o federazioni.",
+ "Riktiga klubbmärken visas": "Gli stemmi reali sono visibili",
+ "Riktiga klubbmärken är avstängda": "Gli stemmi reali sono disattivati",
+ "Slå på för alla": "Attiva per tutti",
+ "Sparat": "Salvato",
+ "Stäng av för alla": "Disattiva per tutti",
+ "Visa klubbmärket": "Mostra stemma"
 }

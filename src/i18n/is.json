@@ -2706,5 +2706,18 @@
  "Tack! En moderator kollar förslaget.": "Takk! Stjórnandi fer yfir tillöguna.",
  "Välj ett land i listan.": "Veldu land af listanum.",
  "Föreslagen av en användare": "Tillaga frá notanda",
- "klubb": "félag"
+ "klubb": "félag",
+ "{0} klubbar har märke.": "{0} félög eru með merki.",
+ "{n} är dolda.": "{n} eru falin.",
+ "1 är dold.": "1 er falið.",
+ "Dölj ett enskilt märke på klubbens kort.": "Feldu stakt merki á korti félagsins.",
+ "Dölj klubbmärket": "Fela merkið",
+ "Klubbmärken": "Félagsmerki",
+ "Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.": "Félagsmerkin tilheyra félögunum og eru aðeins sýnd til að auðkenna liðin. Groundly tengist engum félögum, deildum eða samböndum.",
+ "Riktiga klubbmärken visas": "Raunveruleg félagsmerki eru sýnd",
+ "Riktiga klubbmärken är avstängda": "Slökkt er á raunverulegum félagsmerkjum",
+ "Slå på för alla": "Kveikja fyrir alla",
+ "Sparat": "Vistað",
+ "Stäng av för alla": "Slökkva fyrir alla",
+ "Visa klubbmärket": "Sýna merkið"
 }

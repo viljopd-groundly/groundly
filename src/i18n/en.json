@@ -2795,5 +2795,18 @@
  "Tack! En moderator kollar förslaget.": "Thanks! A moderator will check the suggestion.",
  "Välj ett land i listan.": "Choose a country from the list.",
  "Föreslagen av en användare": "Suggested by a user",
- "klubb": "club"
+ "klubb": "club",
+ "{0} klubbar har märke.": "{0} clubs have a crest.",
+ "{n} är dolda.": "{n} are hidden.",
+ "1 är dold.": "1 is hidden.",
+ "Dölj ett enskilt märke på klubbens kort.": "Hide a single crest on the club's card.",
+ "Dölj klubbmärket": "Hide crest",
+ "Klubbmärken": "Club crests",
+ "Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.": "Club crests belong to their clubs and are shown only to identify the teams. Groundly is not affiliated with any club, league or federation.",
+ "Riktiga klubbmärken visas": "Real club crests are shown",
+ "Riktiga klubbmärken är avstängda": "Real club crests are turned off",
+ "Slå på för alla": "Turn on for everyone",
+ "Sparat": "Saved",
+ "Stäng av för alla": "Turn off for everyone",
+ "Visa klubbmärket": "Show crest"
 }

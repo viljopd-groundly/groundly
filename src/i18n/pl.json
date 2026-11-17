@@ -2706,5 +2706,18 @@
  "Tack! En moderator kollar förslaget.": "Dzięki! Moderator sprawdzi propozycję.",
  "Välj ett land i listan.": "Wybierz kraj z listy.",
  "Föreslagen av en användare": "Zaproponowany przez użytkownika",
- "klubb": "klub"
+ "klubb": "klub",
+ "{0} klubbar har märke.": "{0} klubów ma herb.",
+ "{n} är dolda.": "{n} jest ukrytych.",
+ "1 är dold.": "1 jest ukryty.",
+ "Dölj ett enskilt märke på klubbens kort.": "Ukryj pojedynczy herb na karcie klubu.",
+ "Dölj klubbmärket": "Ukryj herb",
+ "Klubbmärken": "Herby klubów",
+ "Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.": "Herby należą do klubów i są pokazywane tylko w celu identyfikacji drużyn. Groundly nie jest powiązane z żadnym klubem, ligą ani związkiem.",
+ "Riktiga klubbmärken visas": "Prawdziwe herby są widoczne",
+ "Riktiga klubbmärken är avstängda": "Prawdziwe herby są wyłączone",
+ "Slå på för alla": "Włącz dla wszystkich",
+ "Sparat": "Zapisano",
+ "Stäng av för alla": "Wyłącz dla wszystkich",
+ "Visa klubbmärket": "Pokaż herb"
 }

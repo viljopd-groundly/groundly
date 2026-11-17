@@ -2707,5 +2707,18 @@
  "Tack! En moderator kollar förslaget.": "Danke! Ein Moderator prüft den Vorschlag.",
  "Välj ett land i listan.": "Wähle ein Land aus der Liste.",
  "Föreslagen av en användare": "Von einem Nutzer vorgeschlagen",
- "klubb": "Verein"
+ "klubb": "Verein",
+ "{0} klubbar har märke.": "{0} Vereine haben ein Wappen.",
+ "{n} är dolda.": "{n} sind ausgeblendet.",
+ "1 är dold.": "1 ist ausgeblendet.",
+ "Dölj ett enskilt märke på klubbens kort.": "Einzelne Wappen auf der Vereinskarte ausblenden.",
+ "Dölj klubbmärket": "Wappen ausblenden",
+ "Klubbmärken": "Vereinswappen",
+ "Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.": "Vereinswappen gehören den jeweiligen Vereinen und dienen nur zur Kennzeichnung der Teams. Groundly steht in keiner Verbindung zu Vereinen, Ligen oder Verbänden.",
+ "Riktiga klubbmärken visas": "Echte Vereinswappen werden angezeigt",
+ "Riktiga klubbmärken är avstängda": "Echte Vereinswappen sind ausgeschaltet",
+ "Slå på för alla": "Für alle einschalten",
+ "Sparat": "Gespeichert",
+ "Stäng av för alla": "Für alle ausschalten",
+ "Visa klubbmärket": "Wappen anzeigen"
 }

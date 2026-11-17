@@ -2707,5 +2707,18 @@
  "Tack! En moderator kollar förslaget.": "Tak! En moderator tjekker forslaget.",
  "Välj ett land i listan.": "Vælg et land i listen.",
  "Föreslagen av en användare": "Foreslået af en bruger",
- "klubb": "klub"
+ "klubb": "klub",
+ "{0} klubbar har märke.": "{0} klubber har klubmærke.",
+ "{n} är dolda.": "{n} er skjult.",
+ "1 är dold.": "1 er skjult.",
+ "Dölj ett enskilt märke på klubbens kort.": "Skjul et enkelt mærke på klubbens kort.",
+ "Dölj klubbmärket": "Skjul klubmærket",
+ "Klubbmärken": "Klubmærker",
+ "Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.": "Klubmærkerne tilhører klubberne og vises kun for at identificere holdene. Groundly har ingen tilknytning til klubber, ligaer eller forbund.",
+ "Riktiga klubbmärken visas": "Rigtige klubmærker vises",
+ "Riktiga klubbmärken är avstängda": "Rigtige klubmærker er slået fra",
+ "Slå på för alla": "Slå til for alle",
+ "Sparat": "Gemt",
+ "Stäng av för alla": "Slå fra for alle",
+ "Visa klubbmärket": "Vis klubmærket"
 }
