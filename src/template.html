@@ -4616,7 +4616,7 @@ function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==
 function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl=favList();
   const nx=dbState==="ready"&&fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
   return`<article class="tip"><div class="sechead"><h2 class="name">${$t("Din säsong {0}",[YEAR])}</h2><button class="link strong" data-gomine="1">${$t("Min fotboll")}</button></div>
-    <div class="stats"><div><b>${s.matches}</b><span>${$t("matcher")}</span></div><div><b>${s.arenas}</b><span>${$t("arenor")}</span></div><div><b>${s.countries}</b><span>${$t("länder")}</span></div><div><b>${s.nat}</b><span>${$t("landskamper")}</span></div></div>
+    <div class="stats"><div><b>${s.matches}</b><span>${$tn(s.matches,"match","matcher")}</span></div><div><b>${s.arenas}</b><span>${$tn(s.arenas,"arena","arenor")}</span></div><div><b>${s.countries}</b><span>${$tn(s.countries,"land","länder")}</span></div><div><b>${s.nat}</b><span>${$tn(s.nat,"landskamp","landskamper")}</span></div></div>
     ${nx?`<div class="anext"><b>${fl.length===1?$t("Nästa för ditt lag:"):$t("Nästa för dina lag:")}</b> ${esc(dayLabel(dayKey(new Date(nx.kickoff))))} ${timeOf(nx.kickoff)}<br>${esc(tnm(nx,"home"))} – ${esc(tnm(nx,"away"))}</div>`:fl.length?"":`<p class="hint">${$t("Välj favoritlag under Min fotboll så visas deras nästa match här.")}</p>`}</article>`;}
 // Månadens skribenter: reportage 3 p, ny forumtråd 2 p, svar i forumet och kommentar 1 p (bara den här månaden)
 function writersRank(){const m=new Date().toISOString().slice(0,7);const W={};const add=(uid,k,pts)=>{if(!uid)return;const w=W[uid]||(W[uid]={uid,rep:0,post:0,pts:0});w[k]++;w.pts+=pts;};
@@ -4949,7 +4949,7 @@ function carouselHome(ob){const logged=myState==="ready";
     s2=fcSection($t("Nära dig i helgen"),'data-gomode="matcher"',wk.map(x=>fcMatch(x.m,{badge:x.km<5?$t("i stan"):esc(milTxt(x.km)),btn:"tix"})).join(""));{const tl=topLine();if(tl)s2+=`<div class="fctopline">${tl}</div>`;}}
   // min fotboll
   let s3="";if(logged){const y=myYearStats();const fl=favList();const tiles=[];
-    tiles.push(`<button class="fcard fctile" data-gomine="1"><div class="fcstat"><div><b>${y.matches}</b><span>${$t("matcher")}</span></div><div><b>${y.arenas}</b><span>${$t("arenor")}</span></div><div><b>${y.countries}</b><span>${$t("länder")}</span></div></div><div class="fcbody"><b class="fct">${$t("Din säsong {0}",[YEAR])}</b><span class="fcs">${$t("Statistik, karta och listor")}</span></div></button>`);
+    tiles.push(`<button class="fcard fctile" data-gomine="1"><div class="fcstat"><div><b>${y.matches}</b><span>${$tn(y.matches,"match","matcher")}</span></div><div><b>${y.arenas}</b><span>${$tn(y.arenas,"arena","arenor")}</span></div><div><b>${y.countries}</b><span>${$tn(y.countries,"land","länder")}</span></div></div><div class="fcbody"><b class="fct">${$t("Din säsong {0}",[YEAR])}</b><span class="fcs">${$t("Statistik, karta och listor")}</span></div></button>`);
     const nx=fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
     if(nx)tiles.push(fcMatch(nx,{badge:$t("Ditt lag")}));
     const last=(MY.attended||[]).slice().sort((a,b)=>b.date.localeCompare(a.date))[0];
