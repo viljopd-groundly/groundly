@@ -2683,5 +2683,9 @@
  "inom {0}": "binnen {0}",
  "Matcher på din resa": "Wedstrijden op je reis",
  "Ny stad i resan {0}": "Nieuwe stad in de reis {0}",
- "landskamp": "interland"
+ "landskamp": "interland",
+ "Tryck Lägg till i resan på de matcher du vill se.": "Tik op Toevoegen aan reis bij de wedstrijden die je wilt zien.",
+ "Skriv en stad, välj datum och tryck Visa matcher. Tryck sedan Lägg till i resan på de matcher du vill se. Resan sparas på ditt konto.": "Typ een stad, kies data en tik op Wedstrijden tonen. Tik daarna op Toevoegen aan reis bij de wedstrijden die je wilt zien. De reis wordt in je account opgeslagen.",
+ "Ta bort matchen från resan?": "Wedstrijd uit de reis verwijderen?",
+ "Resan försvinner från ditt konto. Matcherna du lagt till ligger kvar i Min fotboll.": "De reis verdwijnt uit je account. De toegevoegde wedstrijden blijven in Mijn voetbal."
 }

@@ -2772,5 +2772,9 @@
  "inom {0}": "within {0}",
  "Matcher på din resa": "Matches on your trip",
  "Ny stad i resan {0}": "New city in the trip {0}",
- "landskamp": "international"
+ "landskamp": "international",
+ "Tryck Lägg till i resan på de matcher du vill se.": "Tap Add to trip on the matches you want to see.",
+ "Skriv en stad, välj datum och tryck Visa matcher. Tryck sedan Lägg till i resan på de matcher du vill se. Resan sparas på ditt konto.": "Enter a city, pick dates and tap Show matches. Then tap Add to trip on the matches you want to see. The trip is saved to your account.",
+ "Ta bort matchen från resan?": "Remove the match from the trip?",
+ "Resan försvinner från ditt konto. Matcherna du lagt till ligger kvar i Min fotboll.": "The trip will be removed from your account. The matches you added stay in My football."
 }

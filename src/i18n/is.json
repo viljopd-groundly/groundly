@@ -2683,5 +2683,9 @@
  "inom {0}": "innan {0}",
  "Matcher på din resa": "Leikir í ferðinni þinni",
  "Ny stad i resan {0}": "Ný borg í ferðinni {0}",
- "landskamp": "landsleikur"
+ "landskamp": "landsleikur",
+ "Tryck Lägg till i resan på de matcher du vill se.": "Ýttu á Bæta við ferðina á leikjunum sem þú vilt sjá.",
+ "Skriv en stad, välj datum och tryck Visa matcher. Tryck sedan Lägg till i resan på de matcher du vill se. Resan sparas på ditt konto.": "Skrifaðu borg, veldu dagsetningar og ýttu á Sýna leiki. Ýttu svo á Bæta við ferðina á leikjunum sem þú vilt sjá. Ferðin vistast á aðganginum þínum.",
+ "Ta bort matchen från resan?": "Fjarlægja leikinn úr ferðinni?",
+ "Resan försvinner från ditt konto. Matcherna du lagt till ligger kvar i Min fotboll.": "Ferðin hverfur af aðganginum þínum. Leikirnir sem þú bættir við verða áfram í Minn fótbolti."
 }

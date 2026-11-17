@@ -2684,5 +2684,9 @@
  "inom {0}": "inden for {0}",
  "Matcher på din resa": "Kampe på din rejse",
  "Ny stad i resan {0}": "Ny by i rejsen {0}",
- "landskamp": "landskamp"
+ "landskamp": "landskamp",
+ "Tryck Lägg till i resan på de matcher du vill se.": "Tryk Tilføj til rejsen på de kampe, du vil se.",
+ "Skriv en stad, välj datum och tryck Visa matcher. Tryck sedan Lägg till i resan på de matcher du vill se. Resan sparas på ditt konto.": "Skriv en by, vælg datoer og tryk Vis kampe. Tryk derefter Tilføj til rejsen på de kampe, du vil se. Rejsen gemmes på din konto.",
+ "Ta bort matchen från resan?": "Fjern kampen fra rejsen?",
+ "Resan försvinner från ditt konto. Matcherna du lagt till ligger kvar i Min fotboll.": "Rejsen forsvinder fra din konto. Kampene, du har tilføjet, bliver i Min fodbold."
 }

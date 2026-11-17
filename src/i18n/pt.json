@@ -2683,5 +2683,9 @@
  "inom {0}": "num raio de {0}",
  "Matcher på din resa": "Jogos na tua viagem",
  "Ny stad i resan {0}": "Nova cidade na viagem {0}",
- "landskamp": "jogo internacional"
+ "landskamp": "jogo internacional",
+ "Tryck Lägg till i resan på de matcher du vill se.": "Toque em Adicionar à viagem nos jogos que quer ver.",
+ "Skriv en stad, välj datum och tryck Visa matcher. Tryck sedan Lägg till i resan på de matcher du vill se. Resan sparas på ditt konto.": "Escreva uma cidade, escolha as datas e toque em Ver jogos. Depois toque em Adicionar à viagem nos jogos que quer ver. A viagem fica guardada na sua conta.",
+ "Ta bort matchen från resan?": "Remover o jogo da viagem?",
+ "Resan försvinner från ditt konto. Matcherna du lagt till ligger kvar i Min fotboll.": "A viagem será removida da sua conta. Os jogos que adicionou ficam em O meu futebol."
 }

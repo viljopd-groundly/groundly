@@ -2683,5 +2683,9 @@
  "inom {0}": "w promieniu {0}",
  "Matcher på din resa": "Mecze w twojej podróży",
  "Ny stad i resan {0}": "Nowe miasto w podróży {0}",
- "landskamp": "mecz reprezentacji"
+ "landskamp": "mecz reprezentacji",
+ "Tryck Lägg till i resan på de matcher du vill se.": "Stuknij Dodaj do podróży przy meczach, które chcesz zobaczyć.",
+ "Skriv en stad, välj datum och tryck Visa matcher. Tryck sedan Lägg till i resan på de matcher du vill se. Resan sparas på ditt konto.": "Wpisz miasto, wybierz daty i stuknij Pokaż mecze. Potem stuknij Dodaj do podróży przy wybranych meczach. Podróż zapisze się na twoim koncie.",
+ "Ta bort matchen från resan?": "Usunąć mecz z podróży?",
+ "Resan försvinner från ditt konto. Matcherna du lagt till ligger kvar i Min fotboll.": "Podróż zniknie z twojego konta. Dodane mecze zostaną w Mój futbol."
 }
