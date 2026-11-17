@@ -5177,6 +5177,10 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
     if(TRIP_X.has(id)||resaOpen===id||TRIP_DEL===id){TRIP_X.delete(id);if(resaOpen===id)resaOpen=null;if(TRIP_MENU===id)TRIP_MENU=null;if(TRIP_DEL===id)TRIP_DEL=null;WISH_DEL=null;}else TRIP_X.add(id);renderResa();
     if(y0!==null){const fix=()=>{const c1=document.querySelector(`[data-tripx="${CSS.escape(id)}"]`);if(c1){const d=c1.getBoundingClientRect().top-y0;if(Math.abs(d)>0.5)window.scrollBy(0,d);}};fix();requestAnimationFrame(fix);try{b.blur();}catch(x){}}return;}
   if(b.dataset.tripmenu){TRIP_MENU=TRIP_MENU===b.dataset.tripmenu?null:b.dataset.tripmenu;renderResa();}});
+// dator: formuläret börjar i höjd med första resekortet (under rubriken Mina resor)
+function alignResaForm(){const f=document.querySelector("#resaList>.resaform"),c=document.querySelector("#resaList>.tripcol .triplist");if(!f)return;f.style.removeProperty("margin-top");
+  if(!c||innerWidth<1024||getComputedStyle(document.getElementById("resaList")).display!=="grid")return;const d=c.getBoundingClientRect().top-f.getBoundingClientRect().top;if(d>0&&d<120)f.style.setProperty("margin-top",d+"px","important");}
+addEventListener("resize",()=>{if(typeof mode!=="undefined"&&mode==="resa")alignResaForm();});try{document.fonts.ready.then(()=>alignResaForm());}catch(e){}
 function renderResa(){const el=document.getElementById("resaList");if(!el)return;if(!RESA)RESA=resaDefault();const q=RESA;const D=RESA_DRAFT||q;
   const tabs=`<div class="seg resatabs" role="tablist">${[["plan",$t("Planera resa")+(myTrips().length&&RESA_TAB!=="plan"?` <span class="tabn">${myTrips().length}</span>`:"")],["top",$t("Vart ska jag åka?")]].map(([k,l])=>`<button role="tab" data-resatab="${k}" aria-selected="${RESA_TAB===k}">${l}</button>`).join("")}</div>`;
   if(RESA_TAB==="top"){el.innerHTML=tabs+topHtml();return;}
@@ -5221,7 +5225,7 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
       else{h+=`<p class="hint">${myState==="ready"?$t("Tryck Lägg till i resan på de matcher du vill se. De sparas också under Vill gå."):$t("Tryck Vill gå på de matcher du vill se, så hamnar de i resan.")}</p>`;let last="";const now=Date.now();
         MYBTN_CTX="resa";try{L.forEach(x=>{const k=koDay(x.m.kickoff);if(k!==last){h+=`<h3 class="sec">${esc(dayLong(k))}</h3>`;last=k;}h+=matchRow(x.m,now,x.km);});}finally{MYBTN_CTX="";}if(backB)h+=backB.replace("backtop","backtop backbot");}}}
   else h+=`<p class="hint">${$t("Skriv en stad, välj datum och tryck Visa matcher. Resan sparas på ditt konto, och matcherna du trycker Vill gå på samlas där.")}</p>`;
-  el.innerHTML=tabs+shH+h;if(fid){const f=document.getElementById(fid);if(f){f.focus({preventScroll:true});if(sel)try{f.setSelectionRange(sel[0],sel[1]);}catch(e){}}}}
+  el.innerHTML=tabs+shH+h;alignResaForm();requestAnimationFrame(alignResaForm);if(fid){const f=document.getElementById(fid);if(f){f.focus({preventScroll:true});if(sel)try{f.setSelectionRange(sel[0],sel[1]);}catch(e){}}}}
 // flera matcher i en kalenderfil (.ics)
 function calMany(ms){const ds=ms.map(m=>calData({...m,city:m.city&&$t(m.city)})).filter(Boolean);if(!ds.length)return;
   if(ds.length===1){const k="cm"+Date.now();CALREG[k]=ds[0];const b=document.createElement("button");b.dataset.cal=k;b.hidden=true;document.body.appendChild(b);b.click();b.remove();return;}
