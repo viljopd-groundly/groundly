@@ -1055,6 +1055,7 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .wkrow>.wkcard{flex:0 0 100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;margin:0}
 @media (min-width:1024px){.hot .hotcard .hotlist,.hothome .hotlist{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);grid-template-columns:repeat(2,minmax(0,1fr));column-gap:44px;row-gap:8px}}
 .hotcard{background:var(--bg);border-radius:14px;padding:14px 18px}.hotcard h3{margin:0 0 2px;font:700 calc(16px*var(--fs)) var(--f-body)}.hotcard .hotlist{margin-top:8px}.hotcard .hotm{min-width:0}.hotcard .hotm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotm small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotrow{min-width:0}
+.hsplit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 18px}.hsplit .hcol{display:flex;flex-direction:column;gap:8px;min-width:0}.hsplit .hcol>.lbl{display:flex;align-items:center;gap:6px}.hsplit .hcard{border:1px solid var(--line);border-radius:12px;padding:10px 14px}
 .hrow{align-items:stretch}.hrow>.hcard{align-items:center;padding:14px 18px}.hrow>.hcard .htxt b{font-size:calc(17px*var(--fs))}.hothome{border:1px solid var(--line)}.hotopen{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;min-width:0;flex:1}.hotopen:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}.hotopen b{text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 25%,transparent);text-underline-offset:3px}.hypemini{gap:4px;padding-left:12px;padding-right:12px}.hypemini .hcnt{margin-left:0}.hothome .hotlist{margin-top:6px}
 .heroswipe .wkrow>.heroslide{flex:0 0 100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always}.heroswipe .heroslide>.teams{margin-top:2px}
 .wkdots{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}.wkdots i.on{background:var(--accent);width:18px;border-radius:4px}
@@ -4721,12 +4722,13 @@ function flodeKeep(fn){const el=document.getElementById("flodeList");if(el&&!el.
 window.addEventListener("scroll",()=>{if(mode==="flode"){const el=document.getElementById("flodeList");if(el&&el.style.minHeight)flodeFit();}},{passive:true});
 window.addEventListener("gmode",e=>{if(e.detail!=="flode"){const el=document.getElementById("flodeList");if(el)el.style.minHeight="";}});
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-flkind]");if(!t)return;flodeKeep(()=>{flodeKind=t.dataset.flkind;delete LIM.flo;renderFlode();});});
-function latestHtml(){const parts=[];
+function latestHtml(){const parts=[];let nRep=0;
   if(repState==="ready"){const reps=allReps().filter(r=>!r.draft);const last=reps.slice().sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0];
     const ym=new Date().toISOString().slice(0,7);const pop=reps.filter(r=>String(r.at).startsWith(ym)).map(r=>({r,n:likeCount(r.key)})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
     const card=(r,lbl,extra)=>`<button class="hcard" data-homerep="${esc(r.key)}">${r.photos.length?phImg(r.photos[0],"hthumb"):""}<span class="htxt"><span class="lbl">${lbl}</span><b>${esc(r.title)}</b><span class="meta">${esc(who(r.uid))} · ${esc(ago(r.at))}${extra||""}</span></span></button>`;
     if(last)parts.push(card(last,$t("Senaste matchberättelsen")));if(pop&&(!last||pop.r.key!==last.key))parts.push(card(pop.r,$t("Månadens populäraste"),` · ${ic("heart")} ${pop.n}`));
     if(!reps.length)parts.push(`<button class="hcard" data-gorep="1"><span class="htxt"><span class="lbl">${$t("Matchberättelser")}</span><b>${$t("Inga matchberättelser än")}</b><span class="meta">${$t("Bli först att berätta om en resa")}</span></span></button>`);}
+  nRep=parts.length;
   if(forumState==="ready"){const ps=allPosts();const th=ps.filter(p=>!p.parent&&p.title);const lastAt=t=>ps.filter(p=>p.parent===t.key).reduce((m,p)=>p.at>m?p.at:m,t.at);
     const last=th.slice().sort((a,b)=>lastAt(b).localeCompare(lastAt(a)))[0];
     const ym=new Date().toISOString().slice(0,7);const hot=th.map(t=>({t,n:ps.filter(p=>p.parent===t.key&&String(p.at).startsWith(ym)).length})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
@@ -4734,7 +4736,10 @@ function latestHtml(){const parts=[];
     if(last)parts.push(card(last,$t("Senast i forumet")));if(hot&&(!last||hot.t.key!==last.key))parts.push(card(hot.t,$t("Hetast i forumet denna månad"),$t(" · {0} svar",[hot.n])));}
   // Hett just nu först, sedan senaste berättelserna och trådarna – ett kort i taget, bläddra i sidled
   let hot="";try{hot=hotHtml("pepp");}catch(e){}
-  const cards=[hot,...parts.map(x=>x.replace('class="hcard"','class="hcard wkcard"'))].filter(Boolean);
+  // dator: matchberättelser och forum sida vid sida i ett kort
+  const wideC=innerWidth>=1024&&parts.length>1&&nRep>0&&nRep<parts.length;
+  const cards=wideC?[hot,`<div class="wkcard hsplit"><div class="hcol"><span class="lbl">${ic("pencil")} ${$t("Matchberättelser")}</span>${parts.slice(0,nRep).join("")}</div><div class="hcol"><span class="lbl">${ic("chat")} ${$t("Forum")}</span>${parts.slice(nRep).join("")}</div></div>`].filter(Boolean)
+    :[hot,...parts.map(x=>x.replace('class="hcard"','class="hcard wkcard"'))].filter(Boolean);
   return`<article class="tip community"><div class="sechead"><h2 class="name">${$t("Community")}</h2><button class="link strong" data-bn="community">${$t("Visa alla")}</button></div><p class="meta">${$t("Här hjälper groundhoppers varandra: ställ frågor om arenor och resor, tipsa om pubar och derbyn och läs andras matchberättelser.")}</p>${cards.length?`<div class="wkrow hrow">${cards.join("")}</div>${cards.length>1?`<div class="wkdots" aria-hidden="true">${cards.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}`:""}
     
     ${writersStrip()}</article>`;}
