@@ -21,5 +21,9 @@ for (const [id, aid] of Object.entries(ids)) {
   } catch (e) { bad[id] = now; fail++; }
   execFileSync("sleep", ["0.05"]);
 }
+// platshållare ("image not available", "official logo soon", tom sköld): samma bild hos många olika klubbar tas bort
+const crypto = require("crypto"), byHash = {};
+for (const f of fs.readdirSync(DIR)) { if (!f.endsWith(".png")) continue; const h = crypto.createHash("md5").update(fs.readFileSync(path.join(DIR, f))).digest("hex"); (byHash[h] = byHash[h] || []).push(f); }
+let ph = 0; for (const fl of Object.values(byHash)) if (fl.length >= 5) for (const f of fl) { fs.unlinkSync(path.join(DIR, f)); bad[f.slice(0, -4)] = now; ph++; }
 fs.writeFileSync(BADF, JSON.stringify(bad));
-console.log(JSON.stringify({ klubbmärken: { hämtade: got, misslyckade: fail, totalt: fs.readdirSync(DIR).length } }));
+console.log(JSON.stringify({ klubbmärken: { hämtade: got, misslyckade: fail, platshållare: ph, totalt: fs.readdirSync(DIR).length } }));
