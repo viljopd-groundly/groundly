@@ -4843,7 +4843,7 @@ function nextTripHtml0(){const td=today();if(myState!=="ready")return noTripHtml
   const nCity=new Set(pk.map(x=>x.m.city||(C[x.m.home]||{}).city).filter(Boolean)).size||1;const comps=[...new Set(pk.map(x=>x.m.comp).filter(Boolean))];
   const flags=ctrys.map(c=>[c,ntIdOf(c)]).filter(x=>x[1]&&FLAGS[x[1]]).slice(0,3).map(([c,id])=>`<img class="ntflag" src="${FLAGS[id]}" alt="${esc($t(c))}" title="${esc($t(c))}">`).join("");
   const S=[[pk.length,$tn(pk.length,"match","matcher")],[newA,$tn(newA,"ny arena","nya arenor")],[newT,$tn(newT,"nytt lag","nya lag")],[nCity,$tn(nCity,"stad","städer")]];
-  const chips=comps.length?`<div class="ntcomps">${comps.slice(0,4).map(c=>`<span class="pill">${esc($t(c))}</span>`).join("")}${comps.length>4?`<span class="pill">+${comps.length-4}</span>`:""}</div>`:"";
+  const chips=comps.length?`<div class="ntcomps">${comps.slice(0,5).map(c=>`<span class="pill">${esc($t(c))}</span>`).join("")}${comps.length>5?`<span class="pill">+${comps.length-5}</span>`:""}</div>`:"";
   const bar=I&&I.total?`<div class="ntbk"><span>${$t("Att boka: {0} av {1} klart",[I.done,I.total])}</span><div class="ntbar" role="img" aria-label="${esc($t("Att boka: {0} av {1} klart",[I.done,I.total]))}"><i style="width:${Math.round(I.done/I.total*100)}%"></i></div></div>`:"";
   const head=`<div class="sechead"><div class="lbl">${$t("Din nästa resa")}</div><button class="link" data-nexttrip="${esc(t.id)}">${$t("Visa resan")}</button></div>`;
   const city=`<span class="ntcity">${esc(tripName(t))}${flags?`<span class="ntflags">${flags}</span>`:""}</span>`;
