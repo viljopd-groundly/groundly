@@ -1056,7 +1056,13 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .wkrow>.wkcard{flex:0 0 100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;margin:0}
 @media (min-width:1024px){.hot .hotcard .hotlist,.hothome .hotlist{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);grid-template-columns:repeat(2,minmax(0,1fr));column-gap:44px;row-gap:8px}}
 .hotcard{background:var(--bg);border-radius:14px;padding:14px 18px}.hotcard h3{margin:0 0 2px;font:700 calc(16px*var(--fs)) var(--f-body)}.hotcard .hotlist{margin-top:8px}.hotcard .hotm{min-width:0}.hotcard .hotm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotm small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotcard .hotrow{min-width:0}
-.ntflags{display:inline-flex;gap:4px;margin-right:10px;vertical-align:middle;position:relative;top:-2px}.ntflags .crest{margin:0}.ntstats{margin:12px 0 4px}.ntstats .ic{display:block;width:18px;height:18px;margin:0 auto 4px;color:var(--accent);opacity:.85}.ntcomps{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
+.ntflags{display:inline-flex;gap:5px;margin-left:10px;vertical-align:middle;position:relative;top:-2px}.ntflag{width:26px;height:19px;object-fit:cover;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--text) 18%,transparent)}
+.ntbk{margin-top:12px}.ntbk>span{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}.ntbk .ntbar{margin-top:0}
+.nexttrip.ntlay-a .ntmain{text-align:left}.ntstub{display:flex!important;align-items:stretch;justify-content:flex-start!important;gap:0;padding:0!important;width:100%}.ntstub .ntl{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0;padding-right:14px}.ntstub .ntr{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:84px;padding-left:14px;border-left:2px dashed var(--line)}.ntstub .ntr b{font-family:var(--f-mono);font-size:34px;line-height:1;color:var(--accent)}.ntstub .ntr span{font-size:12px;color:var(--muted);white-space:nowrap}
+.ntline{display:flex;flex-wrap:wrap;gap:4px 14px;margin:12px 0 2px;font-size:14px;color:var(--muted)}.ntline b{color:var(--text);font-family:var(--f-mono);font-size:16px}
+.ntcal{display:flex!important;align-items:center;justify-content:flex-start!important;gap:14px;text-align:left}.ntdate{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:60px;padding:6px 8px;border-radius:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--accent) 10%,transparent)}.ntdate span{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}.ntdate b{font-family:var(--f-mono);font-size:28px;line-height:1.05}.ntcal .ntl{display:flex;flex-direction:column;gap:4px;min-width:0}.ntsoon{color:var(--accent)}
+.ntgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin:12px 0 2px}.ntgrid div{display:flex;align-items:baseline;gap:8px}.ntgrid b{font-family:var(--f-mono);font-size:20px;color:var(--accent);min-width:1.4em;text-align:right}.ntgrid span{color:var(--muted);font-size:14px}
+.ntstats{margin:12px 0 4px}.ntcomps{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
 .ntsched{list-style:none;margin:14px 0 6px;padding:0;display:flex;flex-direction:column;gap:8px}.ntsched button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:flex;flex-direction:column;gap:6px;padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--text) 6%,transparent)}
 .ntsched button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.ntd{display:flex;align-items:baseline;gap:8px;font-size:14px;color:var(--muted);line-height:1.2}.ntd b{font-family:var(--f-mono);font-size:15px;color:var(--text)}.ntsched li.ntnow .ntd b{color:var(--accent)}
 .ntm{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;min-width:0}.nth,.nta{display:flex;align-items:center;gap:8px;min-width:0;flex:0 1 auto}.nth>span,.nta>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ntm .crest{margin:0;flex:none}.ntv{color:var(--muted);font-weight:500}.ntmore{margin:6px 0 0;font-size:14px}
@@ -4831,16 +4837,29 @@ function nextTripHtml0(){const td=today();if(myState!=="ready")return noTripHtml
   const I=pk.length?tripItems(t,pk):null;const nx=pk[0]&&pk[0].m;
   const bits=[esc(resaRange(sp.from,sp.to))];if(L&&!pk.length)bits.push($t("Inga matcher valda än"));if(I)bits.push($t("Att boka: {0} av {1} klart",[I.done,I.total]));
   // länder (flaggor), arenor (varav nya för dig), dagar och serier
-  const ctrys=[...new Set(pk.map(x=>x.m.country||(C[x.m.home]||{}).c).filter(Boolean))];const flags=ctrys.map(c=>ntIdOf(c)).filter(Boolean).slice(0,3).map((id,i)=>crest(id,ctrys[i],26)).join("");
+  const ctrys=[...new Set(pk.map(x=>x.m.country||(C[x.m.home]||{}).c).filter(Boolean))];
   const seenA=new Set(myState==="ready"?visitedPins().map(v=>v.s.toLowerCase()):[]);const ars=[...new Set(pk.map(x=>(x.m.venue||(C[x.m.home]||{}).s||"").toLowerCase()).filter(Boolean))];const newA=ars.filter(a=>!seenA.has(a)).length;
   const seenT=new Set(myState==="ready"?seenTeams().map(x=>x.k):[]);const tk=(id,nm)=>id&&C[id]?"id:"+id:"n:"+norm(nm||"");const teams=[...new Set(pk.flatMap(x=>[tk(x.m.home,x.m.homeName),tk(x.m.away,x.m.awayName)]))].filter(k=>k!=="n:");const newT=teams.filter(k=>!seenT.has(k)).length;
   const nCity=new Set(pk.map(x=>x.m.city||(C[x.m.home]||{}).city).filter(Boolean)).size||1;const comps=[...new Set(pk.map(x=>x.m.comp).filter(Boolean))];
-  const stats=pk.length?`<div class="stats ntstats"><div>${ic("ball")}<b>${pk.length}</b><span>${$tn(pk.length,"match","matcher")}</span></div><div>${ic("stadium")}<b>${newA}</b><span>${$tn(newA,"ny arena","nya arenor")}</span></div><div>${ic("shield")}<b>${newT}</b><span>${$tn(newT,"nytt lag","nya lag")}</span></div><div>${ic("mpin")}<b>${nCity}</b><span>${$tn(nCity,"stad","städer")}</span></div></div>`:"";
+  const flags=ctrys.map(c=>[c,ntIdOf(c)]).filter(x=>x[1]&&FLAGS[x[1]]).slice(0,3).map(([c,id])=>`<img class="ntflag" src="${FLAGS[id]}" alt="${esc($t(c))}" title="${esc($t(c))}">`).join("");
+  const S=[[pk.length,$tn(pk.length,"match","matcher")],[newA,$tn(newA,"ny arena","nya arenor")],[newT,$tn(newT,"nytt lag","nya lag")],[nCity,$tn(nCity,"stad","städer")]];
   const chips=comps.length?`<div class="ntcomps">${comps.slice(0,4).map(c=>`<span class="pill">${esc($t(c))}</span>`).join("")}${comps.length>4?`<span class="pill">+${comps.length-4}</span>`:""}</div>`:"";
-  return`<article class="tip nexttrip"><div class="sechead"><div class="lbl"><span class="ntic" aria-hidden="true">${ic("trip")}</span>${$t("Din nästa resa")}</div><button class="link" data-nexttrip="${esc(t.id)}">${$t("Visa resan")}</button></div>
-    <button class="ntmain" data-nexttrip="${esc(t.id)}"><span class="ntcity">${flags?`<span class="ntflags">${flags}</span>`:""}${esc(tripName(t))}</span><span class="ntwhen">${ic("clock")} ${esc(when)}</span></button>
-    <p class="meta">${bits.join(" · ")}</p>${stats}${chips}
-    ${I&&I.total?`<div class="ntbar" role="img" aria-label="${esc($t("Att boka: {0} av {1} klart",[I.done,I.total]))}"><i style="width:${Math.round(I.done/I.total*100)}%"></i></div>`:""}</article>`;}
+  const bar=I&&I.total?`<div class="ntbk"><span>${$t("Att boka: {0} av {1} klart",[I.done,I.total])}</span><div class="ntbar" role="img" aria-label="${esc($t("Att boka: {0} av {1} klart",[I.done,I.total]))}"><i style="width:${Math.round(I.done/I.total*100)}%"></i></div></div>`:"";
+  const head=`<div class="sechead"><div class="lbl">${$t("Din nästa resa")}</div><button class="link" data-nexttrip="${esc(t.id)}">${$t("Visa resan")}</button></div>`;
+  const city=`<span class="ntcity">${esc(tripName(t))}${flags?`<span class="ntflags">${flags}</span>`:""}</span>`;
+  const range=esc(resaRange(sp.from,sp.to))+(L&&!pk.length?" · "+$t("Inga matcher valda än"):"");
+  const lay=(()=>{try{return store.get("fk-ntl")||"b";}catch(e){return"b";}})();
+  if(lay==="a"){ // biljett: stad till vänster, nedräkning i en avriven stub till höger, siffror som en textrad
+    const big=days<=0?"✓":String(days),lab=days<=0?$t("Pågår nu"):days===1?$t("dag kvar"):$t("dagar kvar");
+    return`<article class="tip nexttrip ntlay-a">${head}<button class="ntmain ntstub" data-nexttrip="${esc(t.id)}"><span class="ntl">${city}<span class="meta">${range}</span></span><span class="ntr"><b>${big}</b><span>${esc(lab)}</span></span></button>
+      ${pk.length?`<p class="ntline">${S.map(([n,l])=>`<span><b>${n}</b> ${esc(l)}</span>`).join("")}</p>`:""}${chips}${bar}</article>`;}
+  if(lay==="c"){ // kalender: datumblock till vänster, stad och nedräkning till höger, siffror i två kolumner
+    const d0=new Date(sp.from+"T12:00:00");const mon=d0.toLocaleDateString(LANG,{month:"short"}).replace(".","");
+    return`<article class="tip nexttrip ntlay-c">${head}<button class="ntmain ntcal" data-nexttrip="${esc(t.id)}"><span class="ntdate"><span>${esc(mon)}</span><b>${d0.getDate()}</b></span><span class="ntl">${city}<span class="meta">${range} · <b class="ntsoon">${esc(when)}</b></span></span></button>
+      ${pk.length?`<div class="ntgrid">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${chips}${bar}</article>`;}
+  // b (standard): rutor
+  return`<article class="tip nexttrip ntlay-b">${head}<button class="ntmain" data-nexttrip="${esc(t.id)}">${city}<span class="ntwhen">${ic("clock")} ${esc(when)}</span></button>
+    <p class="meta">${range}</p>${pk.length?`<div class="stats ntstats">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${chips}${bar}</article>`;}
 let TRIP_FROMHOME=null;
 document.addEventListener("click",e=>{const bh=e.target.closest&&e.target.closest("[data-backhome]");if(bh){const hy=TRIP_FROMHOME?TRIP_FROMHOME.hy:0;TRIP_FROMHOME=null;goTop("hem");requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:hy})));return;}
   const b=e.target.closest&&e.target.closest("[data-nexttrip]");if(!b)return;const id=b.dataset.nexttrip;const hy=scrollY;
