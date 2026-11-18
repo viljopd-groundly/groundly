@@ -4838,11 +4838,11 @@ function nextTripHtml0(){const td=today();if(myState!=="ready")return noTripHtml
   const I=pk.length?tripItems(t,pk):null;const nx=pk[0]&&pk[0].m;
   const bits=[esc(resaRange(sp.from,sp.to))];if(L&&!pk.length)bits.push($t("Inga matcher valda än"));if(I)bits.push($t("Att boka: {0} av {1} klart",[I.done,I.total]));
   // länder (flaggor), arenor (varav nya för dig), dagar och serier
-  const ctrys=[...new Set(pk.map(x=>x.m.country||(C[x.m.home]||{}).c).filter(Boolean))];
+  const ctrys=tripCtrys(t,pk);
   const seenA=new Set(myState==="ready"?visitedPins().map(v=>v.s.toLowerCase()):[]);const ars=[...new Set(pk.map(x=>(x.m.venue||(C[x.m.home]||{}).s||"").toLowerCase()).filter(Boolean))];const newA=ars.filter(a=>!seenA.has(a)).length;
   const seenT=new Set(myState==="ready"?seenTeams().map(x=>x.k):[]);const tk=(id,nm)=>id&&C[id]?"id:"+id:"n:"+norm(nm||"");const teams=[...new Set(pk.flatMap(x=>[tk(x.m.home,x.m.homeName),tk(x.m.away,x.m.awayName)]))].filter(k=>k!=="n:");const newT=teams.filter(k=>!seenT.has(k)).length;
   const nCity=new Set(pk.map(x=>x.m.city||(C[x.m.home]||{}).city).filter(Boolean)).size||1;const comps=[...new Set(pk.map(x=>x.m.comp).filter(Boolean))];
-  const flags=ctrys.map(c=>[c,ntIdOf(c)]).filter(x=>x[1]&&FLAGS[x[1]]).slice(0,3).map(([c,id])=>`<img class="ntflag" src="${FLAGS[id]}" alt="${esc($t(c))}" title="${esc($t(c))}">`).join("");
+  const flags=flagImgs(ctrys);
   const S=[[pk.length,$tn(pk.length,"match","matcher")],[newA,$tn(newA,"ny arena","nya arenor")],[newT,$tn(newT,"nytt lag","nya lag")],[nCity,$tn(nCity,"stad","städer")]];
   const chips=comps.length?`<div class="ntcomps">${comps.slice(0,6).map(c=>`<span class="pill">${esc($t(c))}</span>`).join("")}${comps.length>6?`<span class="pill">+${comps.length-6}</span>`:""}</div>`:"";
   const bar=I&&I.total?`<div class="ntbk"><span>${$t("Att boka: {0} av {1} klart",[I.done,I.total])}</span><div class="ntbar" role="img" aria-label="${esc($t("Att boka: {0} av {1} klart",[I.done,I.total]))}"><i style="width:${Math.round(I.done/I.total*100)}%"></i></div></div>`:"";
@@ -4863,9 +4863,10 @@ function nextTripHtml0(){const td=today();if(myState!=="ready")return noTripHtml
     <p class="meta">${range}</p>${pk.length?`<div class="stats ntstats">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${chips}${bar}</article>`;}
 // flaggor för resans länder: från valda matcher, annars från resans städer (högst tre)
 function flagImgs(ctrys){return ctrys.map(c=>[c,ntIdOf(c)]).filter(x=>x[1]&&FLAGS[x[1]]).slice(0,3).map(([c,id])=>`<img class="ntflag" src="${FLAGS[id]}" alt="${esc($t(c))}" title="${esc($t(c))}">`).join("");}
-function tripFlags(t,pk){let cs=[...new Set((pk||[]).map(x=>x.m.country||(C[x.m.home]||{}).c).filter(Boolean))];
-  if(!cs.length){const ci=cityIndex();cs=[...new Set(tripLegs(t).map(l=>{const c=cityLL(l.city);const x=c&&ci.find(y=>y.name===c.name);return x&&x.ctry;}).filter(Boolean))];}
-  const f=flagImgs(cs);return f?`<span class="ntflags">${f}</span>`:"";}
+// länder: resans städer först (i ordning), sedan matchernas städer; landet tas från staden, inte från lagen
+function cityCtry(name){if(!name)return"";const c=cityLL(name);const nm=c?c.name:name;const x=cityIndex().find(y=>y.name===nm);return x&&x.ctry||"";}
+function tripCtrys(t,pk){const a=tripLegs(t).map(l=>cityCtry(l.city));(pk||[]).forEach(x=>a.push(cityCtry(x.m.city)||x.m.country||(C[x.m.home]||{}).c||""));return[...new Set(a.filter(Boolean))];}
+function tripFlags(t,pk){const f=flagImgs(tripCtrys(t,pk));return f?`<span class="ntflags">${f}</span>`:"";}
 let TRIP_FROMHOME=null;
 document.addEventListener("click",e=>{const bh=e.target.closest&&e.target.closest("[data-backhome]");if(bh){const hy=TRIP_FROMHOME?TRIP_FROMHOME.hy:0;TRIP_FROMHOME=null;goTop("hem");requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:hy})));return;}
   const b=e.target.closest&&e.target.closest("[data-nexttrip]");if(!b)return;const id=b.dataset.nexttrip;const hy=scrollY;
