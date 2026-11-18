@@ -4630,7 +4630,7 @@ function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==
     <div class="wkrow">${show.map(heroSlide).join("")}</div>${show.length>1?`<div class="wkdots" aria-hidden="true">${show.map((_,i)=>`<i${i===heroIdx?' class="on"':""}></i>`).join("")}</div>`:""}</article>`;}
 function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl=favList();
   const nx=dbState==="ready"&&fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
-  return`<article class="tip"><div class="sechead"><h2 class="name">${$t("Din säsong {0}",[YEAR])}</h2><button class="link strong" data-gomine="1">${$t("Min fotboll")}</button></div>
+  return`<article class="tip season"><div class="sechead"><h2 class="name">${$t("Din säsong {0}",[YEAR])}</h2><button class="link strong" data-gomine="1">${$t("Min fotboll")}</button></div>
     <div class="stats"><div><b>${s.matches}</b><span>${$tn(s.matches,"match","matcher")}</span></div><div><b>${s.arenas}</b><span>${$tn(s.arenas,"arena","arenor")}</span></div><div><b>${s.countries}</b><span>${$tn(s.countries,"land","länder")}</span></div><div><b>${s.nat}</b><span>${$tn(s.nat,"landskamp","landskamper")}</span></div></div>
     ${nx?`<div class="anext"><b>${fl.length===1?$t("Nästa för ditt lag:"):$t("Nästa för dina lag:")}</b> ${esc(dayLabel(dayKey(new Date(nx.kickoff))))} ${timeOf(nx.kickoff)}<br>${esc(tnm(nx,"home"))} – ${esc(tnm(nx,"away"))}</div>`:fl.length?"":`<p class="hint">${$t("Välj favoritlag under Min fotboll så visas deras nästa match här.")}</p>`}</article>`;}
 // Månadens skribenter: reportage 3 p, ny forumtråd 2 p, svar i forumet och kommentar 1 p (bara den här månaden)
@@ -4807,6 +4807,8 @@ const HOME_WIDE=e=>e.matches(".howto,.community,.homecust,.wide,.intro,.hometag"
 function homeMasonry(el){if(innerWidth<1024)return;const kids=[...el.children];el.textContent="";let cols=null;
   for(const k of kids){if(HOME_WIDE(k)){el.appendChild(k);cols=null;continue;}
     if(!cols){const w=document.createElement("div");w.className="hmas hbuild";cols=[document.createElement("div"),document.createElement("div")];cols.forEach(c=>w.appendChild(c));el.appendChild(w);}
+    // fast plats: Veckans match till vänster, Din säsong till höger
+    if(k.matches(".hero")){cols[0].appendChild(k);continue;}if(k.matches(".season")){cols[1].appendChild(k);continue;}
     const h0=cols[0].offsetHeight,h1=cols[1].offsetHeight;(h0||h1?(h0<=h1?cols[0]:cols[1]):(cols[0].children.length<=cols[1].children.length?cols[0]:cols[1])).appendChild(k);}
   el.querySelectorAll(".hbuild").forEach(w=>w.classList.remove("hbuild"));}
 {let wide=innerWidth>=1024;addEventListener("resize",()=>{const w=innerWidth>=1024;if(w!==wide){wide=w;if(typeof mode!=="undefined"&&mode==="hem")renderHome();}});}
