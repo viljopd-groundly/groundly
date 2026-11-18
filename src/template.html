@@ -4848,7 +4848,7 @@ function nextTripHtml0(){const td=today();if(myState!=="ready")return noTripHtml
   const head=`<div class="sechead"><div class="lbl">${$t("Din nästa resa")}</div><button class="link" data-nexttrip="${esc(t.id)}">${$t("Visa resan")}</button></div>`;
   const city=`<span class="ntcity">${esc(tripName(t))}${flags?`<span class="ntflags">${flags}</span>`:""}</span>`;
   const range=esc(resaRange(sp.from,sp.to))+(L&&!pk.length?" · "+$t("Inga matcher valda än"):"");
-  const lay=(()=>{try{return store.get("fk-ntl")||"b";}catch(e){return"b";}})();
+  const lay=(()=>{try{return store.get("fk-ntl")||"a";}catch(e){return"a";}})();
   if(lay==="a"){ // biljett: stad till vänster, nedräkning i en avriven stub till höger, siffror som en textrad
     const big=days<=0?"✓":String(days),lab=days<=0?$t("Pågår nu"):days===1?$t("dag kvar"):$t("dagar kvar");
     return`<article class="tip nexttrip ntlay-a">${head}<button class="ntmain ntstub" data-nexttrip="${esc(t.id)}"><span class="ntl">${city}<span class="meta">${range}</span></span><span class="ntr"><b>${big}</b><span>${esc(lab)}</span></span></button>
