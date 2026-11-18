@@ -4852,7 +4852,7 @@ function nextTripHtml0(){const td=today();if(myState!=="ready")return noTripHtml
   if(lay==="a"){ // biljett: stad till vänster, nedräkning i en avriven stub till höger, siffror som en textrad
     const big=days<=0?"✓":String(days),lab=days<=0?$t("Pågår nu"):days===1?$t("dag kvar"):$t("dagar kvar");
     return`<article class="tip nexttrip ntlay-a">${head}<button class="ntmain ntstub" data-nexttrip="${esc(t.id)}"><span class="ntl">${city}<span class="meta">${range}</span></span><span class="ntr"><b>${big}</b><span>${esc(lab)}</span></span></button>
-      ${pk.length?`<p class="ntline">${S.map(([n,l])=>`<span><b>${n}</b> ${esc(l)}</span>`).join("")}</p>`:""}${chips}${bar}</article>`;}
+      ${pk.length?`<div class="stats ntstats">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${chips}${bar}</article>`;}
   if(lay==="c"){ // kalender: datumblock till vänster, stad och nedräkning till höger, siffror i två kolumner
     const d0=new Date(sp.from+"T12:00:00");const mon=d0.toLocaleDateString(LANG,{month:"short"}).replace(".","");
     return`<article class="tip nexttrip ntlay-c">${head}<button class="ntmain ntcal" data-nexttrip="${esc(t.id)}"><span class="ntdate"><span>${esc(mon)}</span><b>${d0.getDate()}</b></span><span class="ntl">${city}<span class="meta">${range} · <b class="ntsoon">${esc(when)}</b></span></span></button>
