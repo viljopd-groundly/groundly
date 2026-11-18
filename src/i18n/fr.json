@@ -2721,5 +2721,9 @@
  "Stäng av för alla": "Désactiver pour tous",
  "Visa klubbmärket": "Afficher le blason",
  "+{n} matcher till": "+{n} autres matchs",
- "+1 match till": "+1 autre match"
+ "+1 match till": "+1 autre match",
+ "nytt lag": "nouvelle équipe",
+ "nya lag": "nouvelles équipes",
+ "stad": "ville",
+ "städer": "villes"
 }

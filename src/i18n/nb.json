@@ -2722,5 +2722,9 @@
  "Stäng av för alla": "Slå av for alle",
  "Visa klubbmärket": "Vis klubbmerket",
  "+{n} matcher till": "+{n} kamper til",
- "+1 match till": "+1 kamp til"
+ "+1 match till": "+1 kamp til",
+ "nytt lag": "nytt lag",
+ "nya lag": "nye lag",
+ "stad": "by",
+ "städer": "byer"
 }

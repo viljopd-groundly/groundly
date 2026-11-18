@@ -2810,5 +2810,9 @@
  "Stäng av för alla": "Turn off for everyone",
  "Visa klubbmärket": "Show crest",
  "+{n} matcher till": "+{n} more matches",
- "+1 match till": "+1 more match"
+ "+1 match till": "+1 more match",
+ "nytt lag": "new team",
+ "nya lag": "new teams",
+ "stad": "city",
+ "städer": "cities"
 }

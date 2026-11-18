@@ -2721,5 +2721,9 @@
  "Stäng av för alla": "Poista käytöstä kaikilta",
  "Visa klubbmärket": "Näytä logo",
  "+{n} matcher till": "+{n} ottelua lisää",
- "+1 match till": "+1 ottelu lisää"
+ "+1 match till": "+1 ottelu lisää",
+ "nytt lag": "uusi joukkue",
+ "nya lag": "uutta joukkuetta",
+ "stad": "kaupunki",
+ "städer": "kaupunkia"
 }
