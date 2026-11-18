@@ -2719,5 +2719,7 @@
  "Slå på för alla": "Kveikja fyrir alla",
  "Sparat": "Vistað",
  "Stäng av för alla": "Slökkva fyrir alla",
- "Visa klubbmärket": "Sýna merkið"
+ "Visa klubbmärket": "Sýna merkið",
+ "+{n} matcher till": "+{n} leikir í viðbót",
+ "+1 match till": "+1 leikur í viðbót"
 }

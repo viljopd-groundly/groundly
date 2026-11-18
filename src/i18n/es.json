@@ -2720,5 +2720,7 @@
  "Slå på för alla": "Activar para todos",
  "Sparat": "Guardado",
  "Stäng av för alla": "Desactivar para todos",
- "Visa klubbmärket": "Mostrar escudo"
+ "Visa klubbmärket": "Mostrar escudo",
+ "+{n} matcher till": "+{n} partidos más",
+ "+1 match till": "+1 partido más"
 }

@@ -271,6 +271,8 @@
 "+ Nytt inlägg",
 "+ Skriv matchberättelse",
 "+ Tipsa om en pub",
+"+{n} matcher till",
+"+1 match till",
 "<b>Matchschemat kunde inte hämtas.</b><div>Kontrollera anslutningen och ladda om sidan. Klubbsöket fungerar ändå.</div>",
 "<b>Matchschemat är tomt.</b><div>Inga matcher är inlagda ännu.</div>",
 "<span>Prova en större ort i närheten.</span>",
