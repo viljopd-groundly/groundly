@@ -4860,6 +4860,11 @@ function nextTripHtml0(){const td=today();if(myState!=="ready")return noTripHtml
   // b (standard): rutor
   return`<article class="tip nexttrip ntlay-b">${head}<button class="ntmain" data-nexttrip="${esc(t.id)}">${city}<span class="ntwhen">${ic("clock")} ${esc(when)}</span></button>
     <p class="meta">${range}</p>${pk.length?`<div class="stats ntstats">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${chips}${bar}</article>`;}
+// flaggor för resans länder: från valda matcher, annars från resans städer (högst tre)
+function flagImgs(ctrys){return ctrys.map(c=>[c,ntIdOf(c)]).filter(x=>x[1]&&FLAGS[x[1]]).slice(0,3).map(([c,id])=>`<img class="ntflag" src="${FLAGS[id]}" alt="${esc($t(c))}" title="${esc($t(c))}">`).join("");}
+function tripFlags(t,pk){let cs=[...new Set((pk||[]).map(x=>x.m.country||(C[x.m.home]||{}).c).filter(Boolean))];
+  if(!cs.length){const ci=cityIndex();cs=[...new Set(tripLegs(t).map(l=>{const c=cityLL(l.city);const x=c&&ci.find(y=>y.name===c.name);return x&&x.ctry;}).filter(Boolean))];}
+  const f=flagImgs(cs);return f?`<span class="ntflags">${f}</span>`:"";}
 let TRIP_FROMHOME=null;
 document.addEventListener("click",e=>{const bh=e.target.closest&&e.target.closest("[data-backhome]");if(bh){const hy=TRIP_FROMHOME?TRIP_FROMHOME.hy:0;TRIP_FROMHOME=null;goTop("hem");requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:hy})));return;}
   const b=e.target.closest&&e.target.closest("[data-nexttrip]");if(!b)return;const id=b.dataset.nexttrip;const hy=scrollY;
@@ -5250,7 +5255,7 @@ function renderResa(){const el=document.getElementById("resaList");if(!el)return
   if(trips.length){h+=`<div class="tripcol"><h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${trips.map(t=>{const c=cityLL(t.city);const past=t.to<today();const L=tripML(t,past);const pk=L?tripPicked(t,L):[];const legs=tripLegs(t);const on=resaOpen===t.id;const exp=TRIP_X.has(t.id)||on||TRIP_DEL===t.id||pk.some(x=>WISH_DEL===x.m._id);
     let sum;if(past){const R=myState==="ready"?tripRecap(t):null;sum=R&&R.seen.length?$tn(R.seen.length,"1 match","{n} matcher")+" · "+$tn(R.ar,"1 arena","{n} arenor"):R&&R.toLog.length?$t("Resan är slut – logga matcherna"):$t("Avslutad");}
     else if(!L)sum=$t("Hämtar matchschemat…");else if(!pk.length)sum=$t("Inga matcher valda än");else{const I=tripItems(t,pk);sum=$tn(pk.length,"1 match","{n} matcher")+" · "+$t("Att boka: {0} av {1} klart",[I.done,I.total]);}
-    const head=`<button class="triphead" data-tripx="${esc(t.id)}" aria-expanded="${exp}"><span class="thmain"><span class="name">${esc(tripName(t))}</span> <span class="meta">${esc(resaRange(tripSpan(t,pk).from,tripSpan(t,pk).to))}</span><span class="thsum">${esc(sum)}</span></span><svg class="ic thchev" aria-hidden="true"><use href="#i-chev"/></svg></button>`;
+    const head=`<button class="triphead" data-tripx="${esc(t.id)}" aria-expanded="${exp}"><span class="thmain"><span class="name">${esc(tripName(t))}${tripFlags(t,pk)}</span> <span class="meta">${esc(resaRange(tripSpan(t,pk).from,tripSpan(t,pk).to))}</span><span class="thsum">${esc(sum)}</span></span><svg class="ic thchev" aria-hidden="true"><use href="#i-chev"/></svg></button>`;
     if(!exp)return`<article class="tip trip closed${past?" past":""}">${head}</article>`;
     return`<article class="tip trip${on?" on":""}${past?" past":""}">${head}
       ${legs.length>1?`<div class="triplegs">${legs.map((l,i)=>`<span class="leg">${past?`<b>${esc(legName(l))}</b> ${esc(resaRange(l.from,l.to))}`:`<button class="legopen" data-legopen="${esc(t.id)}:${i}"><b>${esc(legName(l))}</b> ${esc(resaRange(l.from,l.to))}</button>`}${past?"":`<button class="legdel" data-legdel="${esc(t.id)}:${i}" aria-label="${$t("Ta bort {0} från resan",[esc(legName(l))])}">×</button>`}</span>`).join("")}</div>`:""}
