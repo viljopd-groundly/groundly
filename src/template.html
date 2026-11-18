@@ -1,6 +1,6 @@
 <title>Groundly</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="icon" id="favLink" href="logos/stadion.png">
+<link rel="icon" id="favLink" href="logos/dynamisk.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
@@ -1332,7 +1332,7 @@ html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!importa
   </div>
 
   <header class="topbar">
-    <button class="brand" data-bn="hem" aria-label="Groundly, till startsidan"><img class="logo blogo" id="brandLogo" src="logos/stadion.png" width="34" height="34" alt="" decoding="async"><span class="wordmark"><span>Ground</span>ly</span><span class="betadot" title="Betaversion">beta</span></button>
+    <button class="brand" data-bn="hem" aria-label="Groundly, till startsidan"><img class="logo blogo" id="brandLogo" src="logos/dynamisk.png" width="34" height="34" alt="" decoding="async"><span class="wordmark"><span>Ground</span>ly</span><span class="betadot" title="Betaversion">beta</span></button>
     <nav class="dnav" aria-label="Huvudmeny">
       <button class="dn" data-bn="hem">Hem</button>
       <button class="dn" data-bn="matcher">Matcher</button>
@@ -6136,12 +6136,12 @@ const THEMES=[["light",$t("Ljust")],["dark",$t("Mörkt")]];
 const sysDark=()=>!!(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
 const STYLES=[["soft",$t("Mjuka kort")],["flat",$t("Platt")],["frame",$t("Med ramar")]];
 // Modern och Atlasen är gömda (koden finns kvar); den som hade dem får Groundly
-const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["kit",$t("Kvällsmatch")]];const DARKLOOK={kit:1};let look="std";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
+const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["kit",$t("Kvällsmatch")]];const DARKLOOK={kit:1};let look="ticket";try{const t=store.get("fk-look");if(LOOKS.some(x=>x[0]===t))look=t;}catch(e){}
 // textfärg i alla utseenden; tidigare val (röd, blå, vit, lila) faller tillbaka på standard
-const ACCS=[["std",$t("Standard"),""],["gold",$t("Gul"),"#F2C14E"],["green",$t("Grön"),"#2E9A57"],["orange",$t("Orange"),"#F07F2A"],["white",$t("Vit"),"#FFFFFF"]];let acc="std";try{let t=store.get("fk-acc");if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
-const LOOK_THEMES=THEMES;let lookTheme="auto";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
+const ACCS=[["std",$t("Standard"),""],["gold",$t("Gul"),"#F2C14E"],["green",$t("Grön"),"#2E9A57"],["orange",$t("Orange"),"#F07F2A"],["white",$t("Vit"),"#FFFFFF"]];let acc="green";try{let t=store.get("fk-acc");if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
+const LOOK_THEMES=THEMES;let lookTheme="dark";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
 const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
-let uiStyle="soft";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
+let uiStyle="frame";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 // Halvmörkt (dusk) är borttaget; den som hade valt det får Mörkt
 // Halvmörkt och Dämpat blir Mörkt, Varmt blir Ljust
 let theme="auto";try{let t=store.get("fk-theme");if(t==="dusk"||t==="dim")t="dark";if(t==="warm")t="light";if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
@@ -6158,7 +6158,7 @@ applyTheme();try{matchMedia("(prefers-color-scheme: dark)").addEventListener("ch
 // ---------- inställningar: logga, utseende, notiser, hemort ----------
 const BRAND_LOGOS=[["stadion",$t("Stadion")],["enkel",$t("Stadion ljus")],
   ["boll",$t("Boll")],["boll-orange",$t("Boll orange")],["plats",$t("Kartnål")],["g-gron",$t("G grön")],["g-orange","G orange"],["dynamisk","G i farten"]];
-let logoPick="stadion";try{const l=store.get("fk-logo");if(BRAND_LOGOS.some(x=>x[0]===l))logoPick=l;}catch(e){}
+let logoPick="dynamisk";try{const l=store.get("fk-logo");if(BRAND_LOGOS.some(x=>x[0]===l))logoPick=l;}catch(e){}
 function applyLogo(){const src=`logos/${logoPick}.png`;const im=document.getElementById("brandLogo");if(im&&im.getAttribute("src")!==src)im.setAttribute("src",src);
   const fl=document.getElementById("favLink");if(fl)fl.setAttribute("href",src);}
 applyLogo();
