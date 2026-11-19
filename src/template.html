@@ -2096,7 +2096,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElemen
  document.addEventListener("touchmove",e=>{if(!pan)return;dy=Math.max(0,e.touches[0].clientY-y0);if(dy>0){pan.style.transform=`translateY(${dy}px)`;if(e.cancelable)e.preventDefault();}},{passive:false});
  document.addEventListener("touchend",()=>{if(!pan)return;const p=pan;pan=null;const fast=dy>40&&dy/(Date.now()-t0)>0.5;p.style.transition="transform .18s ease-out";
    if(dy>110||fast){p.style.transform="translateY(100%)";setTimeout(()=>{mSheetOpen(false);p.style.transform="";p.style.transition="";},180);}else{p.style.transform="";setTimeout(()=>{p.style.transition="";},200);}},{passive:true});}
-function renderMatches(){matchKindChips();MLQ=null;
+function renderMatches(){mPend=false;matchKindChips();MLQ=null;
   document.getElementById("matchViewChips").innerHTML=[["list",$t("Matcher")],["team",$t("Lag")],["double",$t("Dubbelmatcher")],...(AI_ON?[["plan",$t("Planera med Claude")]]:[])].map(([k,l])=>`<button class="chip" data-mview="${k}" aria-pressed="${matchView===k}">${l}</button>`).join("");
   document.getElementById("doubleOpts").hidden=matchView!=="double";
   document.getElementById("v-matcher").classList.toggle("planmode",matchView==="plan"||matchView==="team");if(matchView==="plan"||matchView==="team"){mActiveSync();const g=document.getElementById("mSheetGo");if(g)g.textContent=$t("Klar");}if(matchView==="plan"){renderPlanner();return;}if(matchView==="team"){renderTeamView();return;}renderMatchList();if(matchView==="double"){MLQ=null;renderDouble();}}
@@ -4270,42 +4270,49 @@ function arenaClick(t){
 const qEl=document.getElementById("q"),cityEl=document.getElementById("city");
 let qT;qEl.addEventListener("input",()=>{clearTimeout(qT);qT=setTimeout(()=>{q=qEl.value.trim();openClub=null;document.getElementById("qClear").hidden=!q;renderClubs();},120);});
 document.getElementById("qClear").onclick=()=>{qEl.value="";q="";document.getElementById("qClear").hidden=true;renderClubs();qEl.focus();};
-let CITY_LIST=[];
+let CITY_LIST=[],CITY_NL=null,mPend=false;
 function mqIndex(){if(mqIndex.f===MATCHES)return mqIndex.r;const used=new Set(),ctry=new Set(),comps=new Set();
   MATCHES.forEach(m=>{if(m.home)used.add(m.home);if(m.away)used.add(m.away);if(m.country)ctry.add(m.country);if(m.comp)comps.add(m.comp);});
   mqIndex.f=MATCHES;return mqIndex.r={used,ctry:[...ctry],comps:[...comps]};}
 // träffar för en text: [[typ, värde, etikett, undertext]], bästa först per grupp
-function mqHits(txt){const nq=norm(txt);if(nq.length<2)return{teams:[],ctry:[],comps:[]};const ix=mqIndex();
-  const sc=(...names)=>{let b=0;for(const x of names){const v=norm(x);if(!v)continue;if(v===nq)return 3;if(v.startsWith(nq))b=Math.max(b,2);else if((" "+v).includes(" "+nq))b=Math.max(b,1.5);else if(nq.length>=3&&v.includes(nq))b=Math.max(b,1);}return b;};
-  const teams=[];for(const id in C){const c=C[id];const s0=sc(c.n,$t(c.n),c.a);if(!s0)continue;teams.push([s0+(ix.used.has(id)?1:0),id,c]);}
+// normaliserade namn sparas, så att sökningen inte räknar om tusentals klubbnamn för varje bokstav
+const NORMC=new Map();const normC=x=>{if(!x)return"";let v=NORMC.get(x);if(v===undefined){v=norm(x);NORMC.set(x,v);}return v;};
+let MQH_K=null,MQH_V=null;
+function mqHits(txt){const nq=norm(txt);if(nq.length<2)return{teams:[],ctry:[],comps:[]};if(MQH_K===nq+"|"+LANG)return MQH_V;const ix=mqIndex();
+  const sc=(...names)=>{let b=0;for(const x of names){const v=normC(x);if(!v)continue;if(v===nq)return 3;if(v.startsWith(nq))b=Math.max(b,2);else if((" "+v).includes(" "+nq))b=Math.max(b,1.5);else if(nq.length>=3&&v.includes(nq))b=Math.max(b,1);}return b;};
+  const teams=[];for(const id in C){const c=C[id];const sn=sc(c.n,$t(c.n)),s0=Math.max(sn,sc(c.a))+(sn?.5:0)-(/\(dam\)|\bII$/.test(c.n)?.3:0);if(s0<=0)continue;teams.push([s0+(ix.used.has(id)?1:0),id,c]);}
   teams.sort((a,b)=>b[0]-a[0]||a[2].n.localeCompare(b[2].n,LANG));
   const ctry=ix.ctry.map(c=>[sc(c,$t(c)),c]).filter(x=>x[0]).sort((a,b)=>b[0]-a[0]);
   const comps=ix.comps.map(c=>[sc(c,$t(c)),c]).filter(x=>x[0]).sort((a,b)=>b[0]-a[0]);
-  return{teams:teams.slice(0,5).map(([,id,c])=>["team",id,$t(c.n),isNat(c)?$t(c.l):c.city?$t(c.city):""]),ctry:ctry.slice(0,3).map(([,c])=>["country",c,$t(c),""]),comps:comps.slice(0,3).map(([,c])=>["league",c,$t(c),""])};}
+  const res={teams:teams.slice(0,5).map(([,id,c])=>["team",id,$t(c.n),isNat(c)?$t(c.l):c.city?$t(c.city):""]),ctry:ctry.slice(0,3).map(([,c])=>["country",c,$t(c),""]),comps:comps.slice(0,3).map(([,c])=>["league",c,$t(c),""])};MQH_K=nq+"|"+LANG;MQH_V=res;return res;}
 function citySugg(){const box=document.getElementById("citySug");const nq=norm(cityEl.value);
   if(!nq||document.activeElement!==cityEl){box.hidden=true;return;}
   if(!CITY_LIST.length)CITY_LIST=[...new Set([...MATCHES.map(m=>m.city),...Object.keys(GEO)])].filter(Boolean).sort((a,b)=>a.localeCompare(b,LANG));
-  let hits=CITY_LIST.filter(c=>norm(c).startsWith(nq)).concat(CITY_LIST.filter(c=>!norm(c).startsWith(nq)&&norm(c).includes(nq))).slice(0,4);
-  if(hits.length===1&&norm(hits[0])===nq&&!MQ)hits=[];
+  if(!CITY_NL||CITY_NL.src!==CITY_LIST){CITY_NL=CITY_LIST.map(c=>[c,norm(c)]);CITY_NL.src=CITY_LIST;}
+  let hits=CITY_NL.filter(x=>x[1].startsWith(nq)).concat(CITY_NL.filter(x=>!x[1].startsWith(nq)&&x[1].includes(nq))).slice(0,4).map(x=>x[0]);
+  // staden visas alltid först, även när man skrivit hela namnet (förut försvann den och bara lagen syntes)
+  hits.sort((a,b)=>(norm(b)===nq)-(norm(a)===nq));
   const h=mqHits(cityEl.value);const isSel=(t,v)=>MQ&&MQ.t===t&&MQ.v===v;
   const grp=(lbl,arr)=>arr.length?`<div class="sgl">${lbl}</div>`+arr.map(([t,v,l,sub])=>`<button type="button" class="chip" data-mqpick="${esc(t)}" data-mqv="${esc(v)}" data-mql="${esc(l)}" aria-pressed="${isSel(t,v)}">${esc(l)}${sub?`<small>${esc(sub)}</small>`:""}</button>`).join(""):"";
-  const html=(hits.length?`<div class="sgl">${$t("Städer")}</div>`+hits.map(c=>`<button type="button" class="chip" data-citypick="${esc(c)}">${esc(c)}</button>`).join(""):"")
+  const html=(hits.length?`<div class="sgl">${$t("Städer")}</div>`+hits.map(c=>`<button type="button" class="chip" data-citypick="${esc(c)}" aria-pressed="${!MQ&&norm(cityQ)===norm(c)}">${esc(c)}</button>`).join(""):"")
     +grp($t("Lag"),h.teams)+grp($t("Länder"),h.ctry)+grp($t("Serier och cuper"),h.comps);
   if(!html){box.hidden=true;return;}
-  box.innerHTML=html;box.hidden=false;}
+  if(box.innerHTML!==html)box.innerHTML=html;box.hidden=false;}// rör inte knapparna om inget ändrats (annars kan ett tryck missas)
 function pickMQ(t,v,l){mWiden();MQ={t,v,l};cityEl.value=l;cityQ="";document.getElementById("cityClear").hidden=false;document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}
 // skriven text utan att välja i listan: exakt namn på land/serie/lag (och inte en känd ort) blir en sådan sökning
-function mqExact(txt){const nq=norm(txt);if(!nq||CITY_LIST.some(c=>norm(c)===nq)||GEO[txt])return null;const h=mqHits(txt);
+function mqExact(txt){const nq=norm(txt);if(!nq||CITY_LIST.some(c=>normC(c)===nq)||GEO[txt])return null;const h=mqHits(txt);
   for(const x of [...h.ctry,...h.comps,...h.teams])if(norm(x[2])===nq||norm(x[1])===nq)return{t:x[0],v:x[1],l:x[2]};return null;}
 function pickCity(c){mWiden();MQ=null;cityEl.value=c;cityQ=c;document.getElementById("cityClear").hidden=false;document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}
 cityEl.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(cT);if(cityEl.value.trim()&&!MQ&&!cityQ)mWiden();MQ=mqExact(cityEl.value.trim());cityQ=MQ?"":cityEl.value.trim();
     // halvskrivet stadsnamn ("Lond") blir den stad appen hittade ("London")
     if(cityQ){const pl=resolvePlace();if(pl&&pl.ll&&pl.name&&norm(pl.name)!==norm(cityQ)){cityQ=pl.name;cityEl.value=pl.name;}}document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}});
-cityEl.addEventListener("blur",()=>setTimeout(()=>{document.getElementById("citySug").hidden=true;},200));
+cityEl.addEventListener("blur",()=>setTimeout(()=>{document.getElementById("citySug").hidden=true;if(mPend)renderMatches();},200));
 cityEl.addEventListener("input",citySugg);
 document.getElementById("citySug").addEventListener("pointerdown",e=>e.preventDefault());
 document.getElementById("citySug").addEventListener("click",e=>{const b=e.target.closest("[data-citypick]");if(b){pickCity(b.dataset.citypick);return;}const q2=e.target.closest("[data-mqpick]");if(q2)pickMQ(q2.dataset.mqpick,q2.dataset.mqv,q2.dataset.mql);});
-let cT;cityEl.addEventListener("input",()=>{clearTimeout(cT);cT=setTimeout(()=>{const v=cityEl.value.trim();if(v&&!MQ&&!cityQ)mWiden();MQ=mqExact(v);cityQ=MQ?"":v;document.getElementById("cityClear").hidden=!v;renderMatches();citySugg();},300);});
+let cT;cityEl.addEventListener("input",()=>{clearTimeout(cT);cT=setTimeout(()=>{const v=cityEl.value.trim();if(v&&!MQ&&!cityQ)mWiden();MQ=mqExact(v);cityQ=MQ?"":v;document.getElementById("cityClear").hidden=!v;citySugg();
+  // medan förslagen visas ritas matchlistan inte om (den ligger ändå bakom tangentbordet) – då svarar ett tryck på ett förslag direkt
+  if(!document.getElementById("citySug").hidden&&document.activeElement===cityEl)mPend=true;else renderMatches();},300);});
 document.getElementById("cityClear").onclick=()=>{MQ=null;cityEl.value="";cityQ="";document.getElementById("cityClear").hidden=true;renderMatches();cityEl.focus();};
 document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.target.closest("button,[data-club]");if(!t)return;
   if(!t.matches("button")&&e.target.closest("[data-noclose]"))return;
