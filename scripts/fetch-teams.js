@@ -13,7 +13,7 @@ function geocode(q) { if (q in GEOC) return GEOC[q]; let r = null;
 // Flera länder på en gång: JOBS="Argentina=^liga profesional;Brazil=^serie (a|b)$" skriver tools/teams_world.json
 const jobs = (process.env.JOBS || "").split(";").map(x => x.trim()).filter(Boolean).map(x => { const i = x.indexOf("="); return [x.slice(0, i).trim(), x.slice(i + 1).trim()]; });
 if (jobs.length) { const res = []; for (const [c, m] of jobs) { try { res.push(fetchCountry(c, new RegExp(m, "i"), true)); } catch (e) { res.push({ country: c, error: String(e.message).slice(0, 200) }); } }
-  fs.writeFileSync(path.join(__dirname, "..", "tools", "teams_world.json"), JSON.stringify({ fetched: new Date().toISOString(), countries: res }, null, 1));
+  fs.writeFileSync(path.join(__dirname, "..", "tools", (process.env.OUT || "teams_world.json")), JSON.stringify({ fetched: new Date().toISOString(), countries: res }, null, 1));
   console.log(res.map(r => `${r.country}: ${(r.leagues || []).map(l => `${l.name} ${l.teams.length}`).join(", ") || r.error}`).join("\n")); process.exit(0); }
 const country = process.env.COUNTRY || "Sweden", re = new RegExp(process.env.MATCH || ".", "i");
 const out = fetchCountry(country, re);
