@@ -1,0 +1,3000 @@
+{
+ "fetched": "2026-11-19T14:10:37.901Z",
+ "countries": [
+  {
+   "country": "Italy",
+   "fetched": "2026-11-19T14:06:00.397Z",
+   "all": [
+    "135 | Serie A | League",
+    "547 | Super Cup | Cup",
+    "136 | Serie B | League",
+    "137 | Coppa Italia | Cup",
+    "138 | Serie C - Girone A | League",
+    "139 | Serie A Women | League",
+    "942 | Serie C - Girone B | League",
+    "943 | Serie C - Girone C | League",
+    "426 | Serie D - Girone A | League",
+    "427 | Serie D - Girone B | League",
+    "428 | Serie D - Girone C | League",
+    "429 | Serie D - Girone D | League",
+    "430 | Serie D - Girone E | League",
+    "431 | Serie D - Girone F | League",
+    "432 | Serie D - Girone G | League",
+    "433 | Serie D - Girone H | League",
+    "434 | Serie D - Girone I | League",
+    "704 | Coppa Italia Primavera | Cup",
+    "705 | Campionato Primavera - 1 | League",
+    "706 | Campionato Primavera - 2 | League",
+    "817 | Super Cup Primavera | Cup",
+    "891 | Coppa Italia Serie C | Cup",
+    "892 | Coppa Italia Serie D | Cup",
+    "975 | Serie C - Relegation - Play-offs | League",
+    "976 | Serie C - Promotion - Play-offs | League",
+    "974 | Serie C - Supercoppa Lega Finals | League",
+    "997 | Serie D - Promotion - Play-offs | League",
+    "998 | Serie D - Relegation - Play-offs | League",
+    "999 | Serie D - Championship Round | League",
+    "1171 | Coppa Italia Women | Cup",
+    "1198 | Serie A Cup Women | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 426,
+     "name": "Serie D - Girone A",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-09-01",
+       "2020-05-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-18",
+       "2022-05-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-04",
+       "2023-05-07",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-10",
+       "2024-05-05",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-07",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-06",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-06",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 878,
+       "name": "Alessandria",
+       "founded": 1912,
+       "venue": {
+        "name": "Stadio Giuseppe Moccagatta",
+        "city": "Alessandria",
+        "capacity": 7694,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.9202,
+        8.6166
+       ]
+      },
+      {
+       "id": 1714,
+       "name": "Gozzano",
+       "founded": 1924,
+       "venue": {
+        "name": "Stadio Alfredo D'Albertas",
+        "city": "Gozzano",
+        "capacity": 4000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.7574,
+        8.4187
+       ]
+      },
+      {
+       "id": 9429,
+       "name": "Borgosesia",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale",
+        "city": "Borgosesia",
+        "capacity": 2500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.7152,
+        8.2822
+       ]
+      },
+      {
+       "id": 9430,
+       "name": "Bra",
+       "founded": 1913,
+       "venue": {
+        "name": "Stadio Comunale Attilio Bravi",
+        "city": "Bra",
+        "capacity": 1230,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.6977,
+        7.8543
+       ]
+      },
+      {
+       "id": 9433,
+       "name": "Fezzanese",
+       "founded": 1930,
+       "venue": {
+        "name": "Stadio Miro Luperi",
+        "city": "Sarzana",
+        "capacity": 4500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.1178,
+        9.9621
+       ]
+      },
+      {
+       "id": 9437,
+       "name": "Ligorna",
+       "founded": 1922,
+       "venue": {
+        "name": "Campo Sportivo Ligorna",
+        "city": "Genova",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        44.4476,
+        8.9975
+       ]
+      },
+      {
+       "id": 9439,
+       "name": "Sanremese",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Luigi Cichero",
+        "city": "Sanremo",
+        "capacity": 4850,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.817,
+        7.7751
+       ]
+      },
+      {
+       "id": 17808,
+       "name": "Asti",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Vincenzo Cesin Bosia",
+        "city": "Asti",
+        "capacity": 6000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.826,
+        8.2027
+       ]
+      },
+      {
+       "id": 17810,
+       "name": "Derthona",
+       "founded": 1908,
+       "venue": {
+        "name": "Stadio Fausto Coppi",
+        "city": "Tortona",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.8967,
+        8.8641
+       ]
+      },
+      {
+       "id": 17811,
+       "name": "Imperia",
+       "founded": 1970,
+       "venue": {
+        "name": "Stadio Nino Ciccione",
+        "city": "Imperia",
+        "capacity": 3900,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.8979,
+        8.0381
+       ]
+      },
+      {
+       "id": 17814,
+       "name": "Saluzzo",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Amedeo Damiano",
+        "city": "Saluzzo",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.6522,
+        7.4783
+       ]
+      },
+      {
+       "id": 17815,
+       "name": "Sestri Levante",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Giuseppe Sivori",
+        "city": "Sestri Levante",
+        "capacity": 1800,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.2715,
+        9.3959
+       ]
+      },
+      {
+       "id": 19970,
+       "name": "Chisola",
+       "founded": null,
+       "venue": {
+        "name": "Campo Dino Marola",
+        "city": "Vinovo",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        44.9483,
+        7.6338
+       ]
+      },
+      {
+       "id": 26505,
+       "name": "Biellese",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 26507,
+       "name": "Celle Varazze",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 26514,
+       "name": "Valenzana",
+       "founded": 1906,
+       "venue": {
+        "name": "Stadio Comunale",
+        "city": null,
+        "capacity": 2200,
+        "surface": "grass"
+       },
+       "matches": 34
+      },
+      {
+       "id": 28191,
+       "name": "Lascaris",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28192,
+       "name": "Millesimo",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 427,
+     "name": "Serie D - Girone B",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-09-01",
+       "2020-05-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-19",
+       "2022-05-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-04",
+       "2023-05-07",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-10",
+       "2024-05-05",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-08",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-06",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-05",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 491,
+       "name": "Chievo",
+       "founded": 1929,
+       "venue": {
+        "name": "Stadio Marc'Antonio Bentegodi",
+        "city": "Verona",
+        "capacity": 39211,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.4425,
+        10.9857
+       ]
+      },
+      {
+       "id": 872,
+       "name": "Piacenza",
+       "founded": 1919,
+       "venue": {
+        "name": "Stadio Leonardo Garilli",
+        "city": "Piacenza",
+        "capacity": 21668,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.0296,
+        9.6901
+       ]
+      },
+      {
+       "id": 1707,
+       "name": "Virtus Verona",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Gavagnin-Nocini",
+        "city": "Verona",
+        "capacity": 1421,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.4425,
+        10.9857
+       ]
+      },
+      {
+       "id": 9445,
+       "name": "Brusaporto",
+       "founded": null,
+       "venue": {
+        "name": "Campo Sportivo Comunale Brusaporto",
+        "city": "Brusaporto",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.6708,
+        9.7614
+       ]
+      },
+      {
+       "id": 9457,
+       "name": "Scanzorosciate",
+       "founded": 1967,
+       "venue": {
+        "name": "Stadio Comunale Unione Sportiva Scanzorosciate",
+        "city": "Scanzorosciate",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.7108,
+        9.7351
+       ]
+      },
+      {
+       "id": 9459,
+       "name": "Tritium",
+       "founded": 1908,
+       "venue": {
+        "name": "Stadio Comunale La Rocca",
+        "city": "Trezzo sull&apos;Adda",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": null
+      },
+      {
+       "id": 9460,
+       "name": "Villa Valle",
+       "founded": null,
+       "venue": {
+        "name": "Campo Sportivo Comunale Villa D'Almè",
+        "city": "Villa D&apos;Almè",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": null
+      },
+      {
+       "id": 9462,
+       "name": "Virtus Ciserano Bergamo",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Carlo Rossoni",
+        "city": "Ciserano",
+        "capacity": 1000,
+        "surface": null
+       },
+       "matches": 34,
+       "ll": [
+        45.5853,
+        9.6009
+       ]
+      },
+      {
+       "id": 9465,
+       "name": "Caldiero Terme",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale di Caldiero",
+        "city": "Caldiero",
+        "capacity": 3500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.4033,
+        11.1768
+       ]
+      },
+      {
+       "id": 9485,
+       "name": "Fiorenzuola",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale",
+        "city": "Fiorenzuola d&apos;Arda",
+        "capacity": 4000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": null
+      },
+      {
+       "id": 17140,
+       "name": "Real Calepina",
+       "founded": 2020,
+       "venue": {
+        "name": "Campo Sportivo Comunale Libico",
+        "city": "Grumello del Monte",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.6372,
+        9.8768
+       ]
+      },
+      {
+       "id": 17904,
+       "name": "Leon Monza e Brianza",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 22307,
+       "name": "Club Milano",
+       "founded": 2017,
+       "venue": {
+        "name": "Vista Vision Stadium",
+        "city": "Pero",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        45.5102,
+        9.0894
+       ]
+      },
+      {
+       "id": 22329,
+       "name": "Pro Palazzolo",
+       "founded": 1913,
+       "venue": {
+        "name": "Stadio Comunale",
+        "city": "Palazzolo sull&apos;Oglio",
+        "capacity": 4000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": null
+      },
+      {
+       "id": 24205,
+       "name": "Milan II",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 26519,
+       "name": "Rovato Vertovese",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28193,
+       "name": "Nibbiano & Valtidone",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28194,
+       "name": "Pavonese",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 428,
+     "name": "Serie D - Girone C",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-09-01",
+       "2020-05-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-18",
+       "2022-05-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-04",
+       "2023-05-07",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-10",
+       "2024-05-05",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-08",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-07",
+       "2026-05-24",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-06",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 877,
+       "name": "Triestina",
+       "founded": 1918,
+       "venue": {
+        "name": "Stadio Nereo Rocco",
+        "city": "Trieste",
+        "capacity": 32454,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.6227,
+        13.7926
+       ]
+      },
+      {
+       "id": 881,
+       "name": "Bassano Virtus",
+       "founded": 1920,
+       "venue": {
+        "name": "Stadio Rino Mercante",
+        "city": "Bassano del Grappa",
+        "capacity": 2952,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.7716,
+        11.7513
+       ]
+      },
+      {
+       "id": 1592,
+       "name": "Campodarsego",
+       "founded": 1974,
+       "venue": {
+        "name": "Centro Sportivo Il Gabbiano",
+        "city": "Campodarsego",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.4991,
+        11.9235
+       ]
+      },
+      {
+       "id": 1704,
+       "name": "Mestre",
+       "founded": 1927,
+       "venue": {
+        "name": "Stadio Francesco Baracca",
+        "city": "Mestre",
+        "capacity": 8074,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.5005,
+        12.2503
+       ]
+      },
+      {
+       "id": 9461,
+       "name": "Virtus Bolzano",
+       "founded": null,
+       "venue": {
+        "name": "Campo Calcio Righi",
+        "city": "Bozen",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        46.6559,
+        11.2302
+       ]
+      },
+      {
+       "id": 9468,
+       "name": "Cjarlins Muzane",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Via Rizzolo",
+        "city": "Carlino",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.8022,
+        13.1882
+       ]
+      },
+      {
+       "id": 9469,
+       "name": "Clodiense",
+       "founded": 2011,
+       "venue": {
+        "name": "Stadio Aldo e Dino Ballarin",
+        "city": "Chioggia",
+        "capacity": 3622,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.2179,
+        12.2271
+       ]
+      },
+      {
+       "id": 9471,
+       "name": "Este",
+       "founded": null,
+       "venue": {
+        "name": "Nuovo Stadio Comunale",
+        "city": "Este",
+        "capacity": 1200,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.2202,
+        11.6589
+       ]
+      },
+      {
+       "id": 9472,
+       "name": "Legnago Salus",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Mario Sandrini",
+        "city": "Legnago",
+        "capacity": 2152,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.1863,
+        11.3006
+       ]
+      },
+      {
+       "id": 9473,
+       "name": "Luparense",
+       "founded": 1965,
+       "venue": {
+        "name": "Stadio Comunale Gianni Casée",
+        "city": "San Martino di Lupari",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.6449,
+        11.866
+       ]
+      },
+      {
+       "id": 17133,
+       "name": "FC Obermais",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 24683,
+       "name": "Brian Lignano",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Guido Teghil",
+        "city": "Lignano Sabbiadoro",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.6752,
+        13.099
+       ]
+      },
+      {
+       "id": 24685,
+       "name": "Calvi Noale",
+       "founded": 1925,
+       "venue": {
+        "name": "Stadio Comunale \"Azzurri d'Italia\"",
+        "city": "Noale",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.5533,
+        12.0724
+       ]
+      },
+      {
+       "id": 26504,
+       "name": "Altavilla",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 26508,
+       "name": "Conegliano",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28195,
+       "name": "LME",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28196,
+       "name": "Sandona",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28197,
+       "name": "Schio",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 429,
+     "name": "Serie D - Girone D",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-09-01",
+       "2020-05-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-19",
+       "2022-05-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-04",
+       "2023-05-07",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-10",
+       "2024-05-05",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-08",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-07",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-06",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 1589,
+       "name": "Pistoiese",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Marcello Melani",
+        "city": "Pistoia",
+        "capacity": 13195,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.941,
+        10.9149
+       ]
+      },
+      {
+       "id": 1591,
+       "name": "Pontedera",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Ettore Mannucci",
+        "city": "Pontedera",
+        "capacity": 4014,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        43.6691,
+        10.6442
+       ]
+      },
+      {
+       "id": 1706,
+       "name": "Pro Patria",
+       "founded": 1919,
+       "venue": {
+        "name": "Stadio Carlo Speroni",
+        "city": "Busto Arsizio",
+        "capacity": 4504,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.6136,
+        8.8807
+       ]
+      },
+      {
+       "id": 9444,
+       "name": "Arconatese",
+       "founded": 1926,
+       "venue": {
+        "name": "Centro Sportivo Comunale Roberto Battaglia",
+        "city": "Busto Garolfo",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.5456,
+        8.8833
+       ]
+      },
+      {
+       "id": 9448,
+       "name": "Castellanzese",
+       "founded": 1921,
+       "venue": {
+        "name": "Stadio Comunale Giovanni Provasi",
+        "city": "Castellanza",
+        "capacity": 2500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.6116,
+        8.8997
+       ]
+      },
+      {
+       "id": 9456,
+       "name": "Pro Sesto",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Ernesto Breda",
+        "city": "Sesto San Giovanni",
+        "capacity": 4475,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.5331,
+        9.219
+       ]
+      },
+      {
+       "id": 9483,
+       "name": "Correggese",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Walter Borelli",
+        "city": "Correggio",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.7557,
+        10.7628
+       ]
+      },
+      {
+       "id": 9484,
+       "name": "Crema",
+       "founded": 1908,
+       "venue": {
+        "name": "Stadio Giuseppe Voltini",
+        "city": "Crema",
+        "capacity": 4095,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.3583,
+        9.6759
+       ]
+      },
+      {
+       "id": 9487,
+       "name": "Lentigione",
+       "founded": 1948,
+       "venue": {
+        "name": "Immergas Stadium - Levantini",
+        "city": "Lentigione",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.8671,
+        10.4712
+       ]
+      },
+      {
+       "id": 17563,
+       "name": "USD Casatese",
+       "founded": 1940,
+       "venue": {
+        "name": "Campo Sportivo Comunale n.2",
+        "city": "Casatenovo",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        45.6979,
+        9.3122
+       ]
+      },
+      {
+       "id": 17809,
+       "name": "Città di Varese",
+       "founded": 2019,
+       "venue": {
+        "name": "Stadio Franco Ossola",
+        "city": "Varese",
+        "capacity": 8146,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.8344,
+        8.8005
+       ]
+      },
+      {
+       "id": 18177,
+       "name": "Varesina",
+       "founded": null,
+       "venue": {
+        "name": "Campo Comunale",
+        "city": "Venegono Superiore",
+        "capacity": 1200,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        45.7472,
+        8.8967
+       ]
+      },
+      {
+       "id": 19983,
+       "name": "Sant'Angelo",
+       "founded": 1907,
+       "venue": {
+        "name": "Stadio Carlo Chiesa",
+        "city": "Sant&apos;Angelo Lodigiano",
+        "capacity": 4100,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": null
+      },
+      {
+       "id": 24686,
+       "name": "Cittadella Vis Modena",
+       "founded": null,
+       "venue": {
+        "name": "Allegretti Campo A",
+        "city": "San Damaso",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        41.8723,
+        12.4556
+       ]
+      },
+      {
+       "id": 24695,
+       "name": "Oltrepò",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 26512,
+       "name": "Pavia",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 26518,
+       "name": "Coriano",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28201,
+       "name": "Solbiatese",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 430,
+     "name": "Serie D - Girone E",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-09-01",
+       "2020-05-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-18",
+       "2022-05-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-04",
+       "2023-05-07",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-10",
+       "2024-05-05",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-08",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-07",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-06",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 516,
+       "name": "Ternana",
+       "founded": 1925,
+       "venue": {
+        "name": "Stadio Libero Liberati",
+        "city": "Terni",
+        "capacity": 17460,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        42.562,
+        12.6353
+       ]
+      },
+      {
+       "id": 889,
+       "name": "Lucchese",
+       "founded": 1905,
+       "venue": {
+        "name": "Stadio Porta Elisa",
+        "city": "Lucca",
+        "capacity": 7386,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.8479,
+        10.5173
+       ]
+      },
+      {
+       "id": 1583,
+       "name": "Robur Siena",
+       "founded": 1904,
+       "venue": {
+        "name": "Stadio Comunale Artemio Franchi - Montepaschi Arena",
+        "city": "Siena",
+        "capacity": 15373,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.1672,
+        11.4676
+       ]
+      },
+      {
+       "id": 1680,
+       "name": "Prato",
+       "founded": 1908,
+       "venue": {
+        "name": "Stadio Lungobisenzio",
+        "city": "Prato",
+        "capacity": 6750,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.8758,
+        11.1096
+       ]
+      },
+      {
+       "id": 1699,
+       "name": "Gavorrano",
+       "founded": 1930,
+       "venue": {
+        "name": "Stadio Romeo Malservisi",
+        "city": "Bagno di Gavorrano",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        42.9393,
+        10.8869
+       ]
+      },
+      {
+       "id": 9435,
+       "name": "Ghivizzano Borgo Mozzano",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Carraia",
+        "city": "Coreglia Antelminelli",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.0637,
+        10.5255
+       ]
+      },
+      {
+       "id": 9441,
+       "name": "Seravezza",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Buon Riposo",
+        "city": "Pozzi Seravezza",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.9759,
+        10.2138
+       ]
+      },
+      {
+       "id": 9488,
+       "name": "Mezzolara",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Pietro Zucchini",
+        "city": "Budrio",
+        "capacity": 1300,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.5393,
+        11.5335
+       ]
+      },
+      {
+       "id": 9490,
+       "name": "Sasso Marconi Zola",
+       "founded": null,
+       "venue": {
+        "name": "Centro Sportivo Enrico Filippetti",
+        "city": "Zola Predosa",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        44.4849,
+        11.2348
+       ]
+      },
+      {
+       "id": 9497,
+       "name": "Flaminia",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Turiddu Madami",
+        "city": "Civita Castellana",
+        "capacity": 1300,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        42.2952,
+        12.4092
+       ]
+      },
+      {
+       "id": 9498,
+       "name": "Grassina",
+       "founded": null,
+       "venue": {
+        "name": "Stadio di Grassina",
+        "city": "Bagno a Ripoli",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.7248,
+        11.295
+       ]
+      },
+      {
+       "id": 9500,
+       "name": "Montevarchi Calcio",
+       "founded": 1902,
+       "venue": {
+        "name": "Stadio Gastone Brilli Peri",
+        "city": "Montevarchi",
+        "capacity": 7200,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.5235,
+        11.5676
+       ]
+      },
+      {
+       "id": 9502,
+       "name": "San Donato Tavarnelle",
+       "founded": 2006,
+       "venue": {
+        "name": "Stadio Comunale Pianigiani",
+        "city": "Tavarnelle Val di Pesa",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.5612,
+        11.173
+       ]
+      },
+      {
+       "id": 9504,
+       "name": "Scandicci",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Turri",
+        "city": "Firenze",
+        "capacity": 1800,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.7698,
+        11.2556
+       ]
+      },
+      {
+       "id": 13168,
+       "name": "Progresso",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Progresso",
+        "city": "Castel Maggiore",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        44.5757,
+        11.3648
+       ]
+      },
+      {
+       "id": 19986,
+       "name": "Tau Altopascio",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Altopascio",
+        "city": "Altopascio",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        43.815,
+        10.6744
+       ]
+      },
+      {
+       "id": 19988,
+       "name": "Terranuova Traiana",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Mario Matteini",
+        "city": "Terranuova Bracciolini",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.5589,
+        11.6086
+       ]
+      },
+      {
+       "id": 28202,
+       "name": "Rondinella",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 431,
+     "name": "Serie D - Girone F",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-09-01",
+       "2020-05-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-19",
+       "2022-05-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-04",
+       "2023-05-14",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-10",
+       "2024-05-05",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-08",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-07",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-06",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 897,
+       "name": "Ancona",
+       "founded": 1948,
+       "venue": {
+        "name": "Stadio del Conero",
+        "city": "Ancona",
+        "capacity": 23983,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.5643,
+        13.5262
+       ]
+      },
+      {
+       "id": 900,
+       "name": "Maceratese",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Helvia Recina",
+        "city": "Macerata",
+        "capacity": 9000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.3072,
+        13.4357
+       ]
+      },
+      {
+       "id": 1683,
+       "name": "Teramo",
+       "founded": 1929,
+       "venue": {
+        "name": "Stadio Gaetano Bonolis",
+        "city": "Teramo",
+        "capacity": 8840,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        42.6825,
+        13.7625
+       ]
+      },
+      {
+       "id": 9496,
+       "name": "Foligno Calcio",
+       "founded": 1928,
+       "venue": {
+        "name": "Stadio Enzo Blasone",
+        "city": "Foligno",
+        "capacity": 5650,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        42.9532,
+        12.6918
+       ]
+      },
+      {
+       "id": 9505,
+       "name": "Sporting Trestina",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Lorenzo Casini",
+        "city": "Trestina",
+        "capacity": 666,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.3664,
+        12.2318
+       ]
+      },
+      {
+       "id": 9516,
+       "name": "Real Giulianova",
+       "founded": 1924,
+       "venue": {
+        "name": "Stadio Rubens Fadini",
+        "city": "Giulianova",
+        "capacity": 5625,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        42.7492,
+        13.9549
+       ]
+      },
+      {
+       "id": 9517,
+       "name": "Recanatese",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Nicola Tubaldi",
+        "city": "Recanati",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.401,
+        13.5636
+       ]
+      },
+      {
+       "id": 9518,
+       "name": "Notaresco",
+       "founded": 1968,
+       "venue": {
+        "name": "Stadio Comunale Vincenzo Savini",
+        "city": "Notaresco",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        42.6479,
+        13.9025
+       ]
+      },
+      {
+       "id": 19987,
+       "name": "Termoli Calcio",
+       "founded": 1920,
+       "venue": {
+        "name": "Stadio Gino Cannarsa",
+        "city": "Termoli",
+        "capacity": 3300,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        42.0037,
+        14.984
+       ]
+      },
+      {
+       "id": 19992,
+       "name": "Vigor Senigallia",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Goffredo Bianchelli",
+        "city": "Senigallia",
+        "capacity": 4000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        43.6774,
+        13.2106
+       ]
+      },
+      {
+       "id": 22302,
+       "name": "Atletico Ascoli",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Don Mauro Bartolini",
+        "city": "Ascoli Piceno",
+        "capacity": 1500,
+        "surface": null
+       },
+       "matches": 34,
+       "ll": [
+        42.8489,
+        13.6215
+       ]
+      },
+      {
+       "id": 22308,
+       "name": "Fossombrone",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Fossombrone",
+        "city": "Fossombrone",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        43.6962,
+        12.8233
+       ]
+      },
+      {
+       "id": 22312,
+       "name": "L'Aquila",
+       "founded": 1927,
+       "venue": {
+        "name": "Stadio Gran Sasso d'Italia",
+        "city": "L’Aquila",
+        "capacity": 6763,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        42.351,
+        13.4103
+       ]
+      },
+      {
+       "id": 28204,
+       "name": "Angelana",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28205,
+       "name": "Lanciano FC",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28206,
+       "name": "Montecchio Gallo",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28207,
+       "name": "Pietralunga",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28209,
+       "name": "Santegidiese",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 432,
+     "name": "Serie D - Girone G",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-09-01",
+       "2020-05-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-19",
+       "2022-05-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-04",
+       "2023-05-14",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-10",
+       "2024-05-05",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-08",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-07",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-05",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 874,
+       "name": "Trastevere",
+       "founded": 1934,
+       "venue": {
+        "name": "Centro Sportivo Vittorio Bachelet",
+        "city": "Roma",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        41.8933,
+        12.4829
+       ]
+      },
+      {
+       "id": 890,
+       "name": "Paganese",
+       "founded": 1926,
+       "venue": {
+        "name": "Stadio Marcello Torre",
+        "city": "Pagani",
+        "capacity": 5093,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.7403,
+        14.607
+       ]
+      },
+      {
+       "id": 1586,
+       "name": "Albalonga",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Pio XII",
+        "city": "Albano Laziale",
+        "capacity": 4000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        41.7289,
+        12.6583
+       ]
+      },
+      {
+       "id": 9524,
+       "name": "Budoni",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale San Teodoro",
+        "city": "San Teodoro",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        37.846,
+        14.702
+       ]
+      },
+      {
+       "id": 9526,
+       "name": "Città di Anagni",
+       "founded": null,
+       "venue": {
+        "name": "Campo Sportivo Caslini Andrea",
+        "city": "Colleferro",
+        "capacity": 2500,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        41.727,
+        13.0042
+       ]
+      },
+      {
+       "id": 9528,
+       "name": "Latte Dolce",
+       "founded": 1973,
+       "venue": {
+        "name": "Stadio Comunale Latte Dolce",
+        "city": "Sassari",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        40.7235,
+        8.5613
+       ]
+      },
+      {
+       "id": 9544,
+       "name": "Gelbison",
+       "founded": 1956,
+       "venue": {
+        "name": "Stadio Marcello Torre",
+        "city": "Pagani",
+        "capacity": 5093,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.7403,
+        14.607
+       ]
+      },
+      {
+       "id": 17834,
+       "name": "Unipomezia",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Franco Maniscalco",
+        "city": "Pomezia",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        41.6675,
+        12.5048
+       ]
+      },
+      {
+       "id": 17841,
+       "name": "Afragolese",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Domenico Iorio",
+        "city": "Casalnuovo",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        38.0614,
+        15.0622
+       ]
+      },
+      {
+       "id": 19984,
+       "name": "Sarrabus Ogliastra",
+       "founded": 2022,
+       "venue": {
+        "name": "Campo Sportivo Is Arranas",
+        "city": "Tertenia",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        39.6968,
+        9.5777
+       ]
+      },
+      {
+       "id": 22300,
+       "name": "Anzio",
+       "founded": 1924,
+       "venue": {
+        "name": "Stadio Massimo Bruschini",
+        "city": "Anzio",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        41.4601,
+        12.6245
+       ]
+      },
+      {
+       "id": 24700,
+       "name": "Sarnese",
+       "founded": 1926,
+       "venue": {
+        "name": "Stadio Felice Squitieri",
+        "city": "Sarno",
+        "capacity": 7000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.8108,
+        14.6198
+       ]
+      },
+      {
+       "id": 24762,
+       "name": "Atletico Lodigiani",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 26523,
+       "name": "Monastir",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28210,
+       "name": "Aranova",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28211,
+       "name": "Certosa V. Campagnano",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28212,
+       "name": "Ossese",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28213,
+       "name": "Venafro",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 433,
+     "name": "Serie D - Girone H",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-09-01",
+       "2020-05-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-19",
+       "2022-05-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-04",
+       "2023-05-14",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-10",
+       "2024-05-05",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-08",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-07",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-06",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 873,
+       "name": "Virtus Francavilla",
+       "founded": 1946,
+       "venue": {
+        "name": "Stadio Giovanni Paolo II",
+        "city": "Francavilla Fontana",
+        "capacity": 3360,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.5353,
+        17.5772
+       ]
+      },
+      {
+       "id": 1690,
+       "name": "Melfi",
+       "founded": 1929,
+       "venue": {
+        "name": "Stadio Arturo Valerio",
+        "city": "Melfi",
+        "capacity": 4100,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.9879,
+        15.647
+       ]
+      },
+      {
+       "id": 1695,
+       "name": "Fidelis Andria",
+       "founded": 1971,
+       "venue": {
+        "name": "Stadio Degli Ulivi",
+        "city": "Andria",
+        "capacity": 9141,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        41.2326,
+        16.3096
+       ]
+      },
+      {
+       "id": 1703,
+       "name": "Bisceglie",
+       "founded": 1913,
+       "venue": {
+        "name": "Stadio Gustavo Ventura",
+        "city": "Bisceglie",
+        "capacity": 8000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        41.2457,
+        16.493
+       ]
+      },
+      {
+       "id": 5608,
+       "name": "Turris",
+       "founded": 1944,
+       "venue": {
+        "name": "Stadio Amerigo Liguori",
+        "city": "Torre del Greco",
+        "capacity": 5300,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.7946,
+        14.3672
+       ]
+      },
+      {
+       "id": 9536,
+       "name": "Nardò",
+       "founded": 1925,
+       "venue": {
+        "name": "Heffort Sport Village",
+        "city": "Parabita",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.0582,
+        18.1289
+       ]
+      },
+      {
+       "id": 9541,
+       "name": "Brindisi",
+       "founded": 1912,
+       "venue": {
+        "name": "Stadio Franco Fanuzzi",
+        "city": "Brindisi",
+        "capacity": 7600,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.649,
+        17.9381
+       ]
+      },
+      {
+       "id": 9543,
+       "name": "Francavilla",
+       "founded": 1931,
+       "venue": {
+        "name": "Stadio Nunzio Fittipaldi",
+        "city": "Francavilla in Sinni",
+        "capacity": 1200,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.0802,
+        16.2032
+       ]
+      },
+      {
+       "id": 9545,
+       "name": "Gladiator",
+       "founded": 1912,
+       "venue": {
+        "name": "Stadio Mario Piccirillo",
+        "city": "Santa Maria Capua Vetere",
+        "capacity": 4000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        41.0885,
+        14.2568
+       ]
+      },
+      {
+       "id": 9546,
+       "name": "Gravina",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Comunale Stefano Vicino",
+        "city": "Gravina in Puglia",
+        "capacity": 6000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        40.8253,
+        16.4116
+       ]
+      },
+      {
+       "id": 9548,
+       "name": "Nocerina",
+       "founded": 1910,
+       "venue": {
+        "name": "Stadio San Francesco",
+        "city": "Nocera Inferiore",
+        "capacity": 9998,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.7472,
+        14.6523
+       ]
+      },
+      {
+       "id": 17858,
+       "name": "Real Aversa",
+       "founded": 1920,
+       "venue": {
+        "name": "Stadio Augusto Bisceglia",
+        "city": "Aversa",
+        "capacity": 2565,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.9846,
+        14.2046
+       ]
+      },
+      {
+       "id": 19975,
+       "name": "Martina Franca",
+       "founded": 1947,
+       "venue": {
+        "name": "Stadio Gian Domenico Tursi",
+        "city": "Martina Franca",
+        "capacity": 3976,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.7042,
+        17.34
+       ]
+      },
+      {
+       "id": 19991,
+       "name": "USD Palmese",
+       "founded": 1914,
+       "venue": {
+        "name": "Stadio Comunale Di Palma Campania",
+        "city": "Palma Campania",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.8674,
+        14.55
+       ]
+      },
+      {
+       "id": 22311,
+       "name": "Ischia",
+       "founded": 1922,
+       "venue": {
+        "name": "Stadio Comunale Vincenzo Mazzella",
+        "city": "Ischia",
+        "capacity": 5428,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.7342,
+        13.9471
+       ]
+      },
+      {
+       "id": 22313,
+       "name": "Manfredonia",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Miramare",
+        "city": "Manfredonia",
+        "capacity": 4076,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        41.6319,
+        15.9233
+       ]
+      },
+      {
+       "id": 28203,
+       "name": "Ebolitana",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28208,
+       "name": "Real Forio 2014",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 434,
+     "name": "Serie D - Girone I",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-09-01",
+       "2020-05-03",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-19",
+       "2022-05-15",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-09-18",
+       "2023-05-07",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-09-10",
+       "2024-05-05",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-09-08",
+       "2025-05-04",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-09-07",
+       "2026-05-17",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-06",
+       "2027-05-02",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 894,
+       "name": "Siracusa",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Nicola de Simone",
+        "city": "Siracusa",
+        "capacity": 4980,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        37.0741,
+        15.2913
+       ]
+      },
+      {
+       "id": 1681,
+       "name": "Vibonese",
+       "founded": 1928,
+       "venue": {
+        "name": "Stadio Luigi Razza",
+        "city": "Vibo Valentia",
+        "capacity": 6000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.6835,
+        16.1095
+       ]
+      },
+      {
+       "id": 1692,
+       "name": "Reggina",
+       "founded": 1914,
+       "venue": {
+        "name": "Stadio Oreste Granillo",
+        "city": "Reggio Calabria",
+        "capacity": 25314,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.0927,
+        15.6351
+       ]
+      },
+      {
+       "id": 9557,
+       "name": "Licata",
+       "founded": 1931,
+       "venue": {
+        "name": "Stadio Comunale Saraceno",
+        "city": "Ravanusa",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        37.2682,
+        13.9731
+       ]
+      },
+      {
+       "id": 17862,
+       "name": "Trapani 1905",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Polisportivo Provinciale",
+        "city": "Trapani",
+        "capacity": 7787,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.0282,
+        12.5459
+       ]
+      },
+      {
+       "id": 20303,
+       "name": "Ragusa",
+       "founded": 1940,
+       "venue": {
+        "name": "Stadio Aldo Campo",
+        "city": "Ragusa",
+        "capacity": 3500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        36.9056,
+        14.7088
+       ]
+      },
+      {
+       "id": 22310,
+       "name": "Igea Virtus",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Carlo Stagno d'Alcontres",
+        "city": "Barcellona Pozzo di Gotto",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.1556,
+        15.2286
+       ]
+      },
+      {
+       "id": 24690,
+       "name": "Enna",
+       "founded": 1942,
+       "venue": {
+        "name": "Stadio Generale Gaeta",
+        "city": "Enna",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        37.5608,
+        14.2726
+       ]
+      },
+      {
+       "id": 24694,
+       "name": "Nissa",
+       "founded": 1929,
+       "venue": {
+        "name": "Stadio Marco Tomaselli",
+        "city": "Caltanissetta",
+        "capacity": 15000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        37.4687,
+        14.0389
+       ]
+      },
+      {
+       "id": 24699,
+       "name": "Sambiase",
+       "founded": 1962,
+       "venue": {
+        "name": "Stadio Guido D'Ippolito",
+        "city": "Lamezia Terme",
+        "capacity": 3878,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.9683,
+        16.3054
+       ]
+      },
+      {
+       "id": 24763,
+       "name": "CastrumFavara",
+       "founded": 1984,
+       "venue": {
+        "name": "Stadio Comunale Giovanni Bruccoleri",
+        "city": "Favara",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        37.3162,
+        13.6624
+       ]
+      },
+      {
+       "id": 26510,
+       "name": "Gela",
+       "founded": 1975,
+       "venue": {
+        "name": "Stadio Vincenzo Presti",
+        "city": "Gela",
+        "capacity": 4200,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        37.0682,
+        14.2575
+       ]
+      },
+      {
+       "id": 26516,
+       "name": "Vigor Lamezia",
+       "founded": 1919,
+       "venue": {
+        "name": "Stadio Guido D'Ippolito",
+        "city": "Lamezia Terme",
+        "capacity": 3878,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.9683,
+        16.3054
+       ]
+      },
+      {
+       "id": 26521,
+       "name": "AC Palermo",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 26522,
+       "name": "Milazzo",
+       "founded": null,
+       "venue": {
+        "name": "Stadio Grotta Polifemo",
+        "city": "Milazzo",
+        "capacity": 2500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.2309,
+        15.2381
+       ]
+      },
+      {
+       "id": 28198,
+       "name": "Calcio Avola",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28199,
+       "name": "Digiesse PraiaTortora",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      },
+      {
+       "id": 28200,
+       "name": "Modica",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 34
+      }
+     ],
+     "fixtures": 306
+    }
+   ]
+  }
+ ]
+}
