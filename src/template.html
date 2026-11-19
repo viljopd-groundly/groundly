@@ -585,6 +585,10 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .selw:after{content:"";position:absolute;right:15px;top:50%;width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none;color:var(--muted)}
 .dsel.on{background:var(--fg)!important;color:var(--bg)!important;border-color:var(--fg)!important}
 .selw:has(.dsel.on):after{color:var(--bg)}
+/* vald rullista följer samma färg som valda knappar (chips) i varje utseende */
+:root[data-style="flat"] .dsel.on{background:var(--accent)!important;border-color:var(--accent)!important;color:var(--chalk)!important}:root[data-style="flat"] .selw:has(.dsel.on):after{color:var(--chalk)}
+:root[data-look="ticket"] .dsel.on{color:#fff!important}:root[data-look="ticket"] .selw:has(.dsel.on):after{color:#fff}
+[data-look="ticket"][data-theme="dark"] .dsel.on{background:var(--accent)!important;border-color:var(--accent)!important;color:#18213D!important}[data-look="ticket"][data-theme="dark"] .selw:has(.dsel.on):after{color:#18213D}
 .steam{flex-direction:column;align-items:stretch}
 .sthead{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%}
 .sthead:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
