@@ -25,7 +25,7 @@ let html = fs.readFileSync(path.join(SRC, "template.html"), "utf8")
   .replace("/*CUPS*/[]", JSON.stringify(R("cups.js")))
   .replace("/*SEASONS*/{}", JSON.stringify(R("seasons.js")))
   .replace("/*WEB*/{}", JSON.stringify(webAll()))
-  .replace("/*WLEAGUES*/[]", JSON.stringify(R("clubs_women.js").leagues))
+  .replace("/*WLEAGUES*/[]", JSON.stringify(R("clubs_women.js").leagues.concat(R("clubs_x26.js").wleagues||[])))
   .replace("/*LOGOIDS*/[]", JSON.stringify((() => { try { return fs.readdirSync(path.join(SITE, "logos", "c")).filter(f => f.endsWith(".png")).map(f => f.slice(0, -4)).sort(); } catch (e) { return []; } })()));
 
 // ---- AI på/av: på bara om firebase-config.js har en aiEndpoint ----

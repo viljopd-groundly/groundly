@@ -130,6 +130,10 @@ const API=[
 // damserier: lag-id från API-Football -> vårt id (se scripts/build-women.py)
 let WOMEN={teams:{},leagues:[]};try{WOMEN=JSON.parse(fs.readFileSync(path.join(TOOLS,"women_ids.json"),"utf8"));}catch(e){}
 for(const l of WOMEN.leagues)API.push([l[0],l[1],l[2],l[3],l[4],new RegExp(l[5],"i"),true]);
+// fler serier (andraligor, England nivå 7, Segunda Federación, Serie D – se scripts/build-x26.py) + Copa Libertadores och damernas Champions League
+let X26=[];try{X26=JSON.parse(fs.readFileSync(path.join(TOOLS,"x26_leagues.json"),"utf8"));}catch(e){}
+for(const l of X26)API.push([l[0],l[1],l[2],l[3],l[4],new RegExp(l[5],"i")]);
+API.push(["Copa Libertadores","*","World","CUP","conmebol.lib",/^conmebol libertadores$/],["Champions League dam","*","World","CUP","uefa.wcl",/^uefa champions league women$/,true]);
 // landskamper (herr): API-lagnamn på engelska matchas mot landslagens söknamn (tools/nationals.json)
 let NATS=[];try{NATS=JSON.parse(fs.readFileSync(path.join(TOOLS,"nationals.json"),"utf8"));}catch(e){}
 const nn=x=>String(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();

@@ -234,3 +234,4 @@ module.exports.push(...require("./clubs_africa.js"));
 module.exports.push(...require("./clubs_ncam.js"));
 module.exports.push(...require("./clubs_asia.js"));
 module.exports.push(...require("./clubs_sam.js"));
+module.exports.push(...require("./clubs_x26.js"));
