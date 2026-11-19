@@ -80,7 +80,9 @@ jobs:
       - name: Röktest
         run: |
           npm i --no-save --no-audit --no-fund --no-package-lock playwright@1.56.1
-          npx playwright install --with-deps chromium
+          # systempaketen kommer från Ubuntus servrar, som ibland är nere: försök några gånger, annars bara webbläsaren (runnern har oftast det som behövs)
+          for i in 1 2 3; do npx playwright install --with-deps chromium && break; echo "försök $i misslyckades"; sleep 20; done || true
+          npx playwright install chromium
           node tests/smoke.js
 
       - uses: actions/upload-pages-artifact@v3
