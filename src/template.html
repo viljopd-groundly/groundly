@@ -2006,7 +2006,8 @@ let UNIT=unitPick==="auto"?autoUnit():unitPick;
 const UNIT_STEPS={mil:[5,10,25],km:[50,100,250],mi:[30,60,150]};
 const RADII_FOR=()=>[0,...UNIT_STEPS[UNIT].map(v=>Math.round(v/UNIT_PER_MIL[UNIT]*1000)/1000)];
 const radEq=(a,b)=>Math.abs(a-b)<0.01;
-const sortM=(a,b)=>(a.kickoff?Date.parse(a.kickoff):Date.parse(a.dateFrom+"T23:59:00"))-(b.kickoff?Date.parse(b.kickoff):Date.parse(b.dateFrom+"T23:59:00"))||a.homeName.localeCompare(b.homeName,LANG);
+const mSortTs=m=>m._st!==undefined?m._st:(m._st=m.kickoff?Date.parse(m.kickoff):Date.parse(m.dateFrom+"T23:59:00"));
+const sortM=(a,b)=>mSortTs(a)-mSortTs(b)||(a.homeName<b.homeName?-1:a.homeName>b.homeName?1:0);
 function rangeTxt(m){const a=new Date(m.dateFrom+"T12:00:00"),b=new Date(m.dateTo+"T12:00:00");if(m.dateFrom===m.dateTo)return`${a.getDate()} ${a.toLocaleDateString(LOC,{month:"short"}).replace(".","")}`;const mo=b.toLocaleDateString(LOC,{month:"short"}).replace(".","");return`${a.getDate()}–${b.getDate()} ${mo}`;}
 const addDays=(k,n)=>{const d=new Date(k+"T12:00:00");d.setDate(d.getDate()+n);return dayKey(d);};
 function presets(){const t=today();const d=new Date(t+"T12:00:00").getDay();
@@ -2112,7 +2113,9 @@ function renderMatchList(){
   const el=document.getElementById("matchList"),cn=document.getElementById("matchCount");
   if(dbState!=="ready"){cn.textContent="";
     el.innerHTML=`<div class="empty">${dbState==="loading"?$t("Hämtar matchschemat…"):dbState==="none"?$t("<b>Matchschemat kan inte visas här.</b><div>Öppna sidan inloggad på claude.ai för att se matcher. Klubbsöket fungerar ändå.</div>"):$t("<b>Matchschemat är tomt.</b><div>Inga matcher är inlagda ännu.</div>")}</div>`;return;}
-  const sel=[];MATCHES.forEach(m=>{if(!inDates(m))return;if(!gOkM(m))return;if(tiers.size&&!tiers.has(tierOf(m)))return;if(MQ&&!mqOk(m))return;if(MQK&&!mqkOk(m))return;if(favOnly&&favList().length){if(isFav(m.home)||isFav(m.away))sel.push([m,-1]);return;}if(MQ||MQK){sel.push([m,-1]);return;}const d=placeDist(m,place);if(d===null)return;sel.push([m,d]);});
+  // matcherna i datumintervallet sparas, så att snabbval och gruppering inte går igenom hela schemat varje gång
+  if(!DRC||DRC.m!==MATCHES||DRC.f!==dFrom||DRC.t!==dTo)DRC={m:MATCHES,f:dFrom,t:dTo,l:MATCHES.filter(inDates)};
+  const sel=[];DRC.l.forEach(m=>{if(!gOkM(m))return;if(tiers.size&&!tiers.has(tierOf(m)))return;if(MQ&&!mqOk(m))return;if(MQK&&!mqkOk(m))return;if(favOnly&&favList().length){if(isFav(m.home)||isFav(m.away))sel.push([m,-1]);return;}if(MQ||MQK){sel.push([m,-1]);return;}const d=placeDist(m,place);if(d===null)return;sel.push([m,d]);});
   const byDay=new Map(),tbd=[];
   sel.sort((a,b)=>sortM(a[0],b[0])).forEach(x=>{if(!x[0].kickoff){tbd.push(x);return;}const k=dayKey(new Date(x[0].kickoff));if(!byDay.has(k))byDay.set(k,[]);byDay.get(k).push(x);});
   const n=sel.length;const where=MQ?(MQ.t==="team"?$t(" med {0}",[esc(MQ.l)]):$t(" i {0}",[esc(MQ.l)])):favOnly&&favList().length?$t(" med {0}",[favList().length===1?esc(C[favList()[0]].n):$t("dina favoritlag")]):!hasQ?$t(" i hela världen"):radius===0?` i ${esc(cityQ)}`:$t(" inom {0} från {1}",[milU(radius),esc(place&&place.ll?place.name:cityQ)]);
@@ -2154,7 +2157,7 @@ function groupedHtml(sel,now,km){const fav=new Set(favLeagues());const tnum=m=>{
   const cs=[...byC.keys()].sort((a,b)=>(cf(b)-cf(a))||cn(b)-cn(a)||$t(a).localeCompare($t(b),LANG));
   return`<div class="mgroups">${cs.map(c=>{const key="c:"+c,open=MOPEN.has(key);const ls=byC.get(c).sort((a,b)=>(fav.has(b)-fav.has(a))||ltier(a)-ltier(b)||a.localeCompare(b,LANG));
     return`<div class="mgrp">${head(key,`${gFlag(c)}<span class="mgname">${esc($t(c))}</span>`,cn(c),open)}</div>${open?`<div class="mgbody">${ls.map(l=>`<div class="mgsub"><span>${esc($t(l))}</span>${star(l)}<span class="mgn">${byL.get(l).length}</span></div>${rows(byL.get(l))}`).join("")}</div>`:""}</div>`;}).join("")}</div>`;}
-let MLQ=null,mlIO=null;
+let MLQ=null,mlIO=null,DRC=null;
 function mlMore(n){const q=MLQ;if(!q||!q.el.isConnected)return;const old=document.getElementById("mlMore");if(old)old.remove();
   let h="",c=0;while(q.i<q.items.length&&c<n){const it=q.items[q.i++];if(typeof it==="string")h+=it;else{h+=matchRow(it[0],q.now,q.km?it[1]:-1);c++;q.left--;}}
   if(q.i<q.items.length)h+=`<div id="mlMore" class="mlmore"><button class="btn small" data-mlmore="1">${$t("Visa fler matcher ({0} till)",[q.left])}</button></div>`;
@@ -2169,8 +2172,11 @@ document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest
 // ---------- håll kvar det man tryckte på (inget hopp när listan ritas om) ----------
 // När ett klick ritar om en lista (gilla, betyg, spara, sortering …) ersätts knappen av en ny kopia. Vi letar upp kopian
 // matcher: får lagen inte plats på en rad ställs de under varandra utan streck (står de på samma rad är strecket kvar)
-{const chk=t=>{const b=t.querySelectorAll(":scope>button");if(b.length<2)return;t.classList.remove("stk");const wrap=b[1].offsetTop>b[0].offsetTop+4||b[0].offsetHeight>b[1].offsetHeight*1.5;t.classList.toggle("stk",wrap);};
- let q=0;const run=()=>{q=0;document.querySelectorAll(".teams:not(.scored)").forEach(t=>{if(!t.offsetParent||!t.offsetWidth)return;if(t.dataset.tw!==String(innerWidth)){t.dataset.tw=innerWidth;chk(t);}});};
+{let q=0;const run=()=>{q=0;const w=String(innerWidth);const root=(typeof mode!=="undefined"&&document.getElementById("v-"+mode))||document;
+   // i tre steg (nollställ, mät, sätt) så att sidan bara räknas om en gång i stället för en gång per match
+   const ts=[...root.querySelectorAll(".teams:not(.scored):not([data-tw=\""+w+"\"])")];if(!ts.length)return;ts.forEach(t=>t.classList.remove("stk"));
+   const res=ts.map(t=>{if(!t.offsetParent)return null;const b=t.querySelectorAll(":scope>button");if(b.length<2)return false;return b[1].offsetTop>b[0].offsetTop+4||b[0].offsetHeight>b[1].offsetHeight*1.5;});
+   ts.forEach((t,k)=>{if(res[k]===null)return;t.dataset.tw=w;if(res[k])t.classList.add("stk");});};
  new MutationObserver(()=>{if(!q)q=requestAnimationFrame(run);}).observe(document.documentElement,{childList:true,subtree:true});
  addEventListener("resize",()=>{document.querySelectorAll(".teams[data-tw]").forEach(t=>delete t.dataset.tw);if(!q)q=requestAnimationFrame(run);});
  try{document.fonts.ready.then(()=>{document.querySelectorAll(".teams[data-tw]").forEach(t=>delete t.dataset.tw);run();});}catch(e){}}
@@ -3139,7 +3145,8 @@ const F_T='"GL Shoulders","Arial Narrow",sans-serif';
 let _shF=null;function shouldersReady(){if(_shF)return _shF;try{const f=new FontFace("GL Shoulders","url(fonts/BigShoulders.woff)",{weight:"100 900"});document.fonts.add(f);_shF=f.load().catch(()=>null);}catch(e){_shF=Promise.resolve(null);}return _shF;}
 const imgOf=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src;});
 let flagsP=null;function flagsReady(){if(Object.keys(FLAGS).some(k=>k.startsWith("nt-")))return Promise.resolve();return flagsP||(flagsP=fetch("data/flags.json").then(r=>r.ok?r.json():{}).then(j=>{Object.assign(FLAGS,j||{});}).catch(()=>{}));}
-const ntIdOf=land=>{const c=Object.values(C).find(c=>c.l==="Landslag"&&c.c===land);return c?c.id:null;};
+// landslagets id per land (byggs en gång; förut letades alla klubbar igenom vid varje anrop)
+let NTIDX=null;const ntIdOf=land=>{if(!NTIDX){NTIDX=new Map();for(const c of Object.values(C))if(c.l==="Landslag"&&!NTIDX.has(c.c))NTIDX.set(c.c,c.id);}return NTIDX.get(land)||null;};
 const goalsOf=s=>{const m=String(s||"").match(/(\d+)\s*[–-]\s*(\d+)/);return m?[+m[1],+m[2]]:null;};
 function seasonStats(){const d=seasonData();const att=d.att;const yr=d.yr;
   const goals=att.reduce((n,a)=>{const g=goalsOf(a.score);return n+(g?g[0]+g[1]:0);},0);
