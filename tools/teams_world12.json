@@ -1,0 +1,311 @@
+{
+ "fetched": "2026-11-19T21:56:51.201Z",
+ "countries": [
+  {
+   "country": "Estonia",
+   "fetched": "2026-11-19T21:56:30.624Z",
+   "all": [
+    "328 | Esiliiga A | League",
+    "329 | Meistriliiga | League",
+    "657 | Cup | Cup",
+    "1126 | Esiliiga B | League"
+   ],
+   "leagues": [
+    {
+     "id": 328,
+     "name": "Esiliiga A",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-03-06",
+       "2011-11-06",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-03-11",
+       "2012-11-04",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-03-10",
+       "2013-11-10",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-03-02",
+       "2014-11-09",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-03-08",
+       "2015-11-08",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-02-25",
+       "2016-11-06",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-03-02",
+       "2017-11-05",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-03-01",
+       "2018-11-11",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-03-07",
+       "2019-11-10",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-03-05",
+       "2020-11-29",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-04",
+       "2021-11-21",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-03-03",
+       "2022-11-20",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-03-04",
+       "2023-11-29",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-03-02",
+       "2024-11-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-03-01",
+       "2025-11-22",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-03-05",
+       "2026-11-28",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 3516,
+       "name": "Elva",
+       "founded": 2000,
+       "venue": {
+        "name": "Elva linnastaadion",
+        "city": "Elva",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 36,
+       "ll": [
+        58.2233,
+        26.4131
+       ]
+      },
+      {
+       "id": 3517,
+       "name": "FCI Levadia II",
+       "founded": 1998,
+       "venue": {
+        "name": "Maarjamäe Staadion",
+        "city": "Tallinn",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 36,
+       "ll": [
+        59.4372,
+        24.7573
+       ]
+      },
+      {
+       "id": 3518,
+       "name": "Flora II",
+       "founded": 1990,
+       "venue": {
+        "name": "A. Le Coq Arena I muru",
+        "city": "Tallinn",
+        "capacity": 300,
+        "surface": "grass"
+       },
+       "matches": 36,
+       "ll": [
+        59.4372,
+        24.7573
+       ]
+      },
+      {
+       "id": 3524,
+       "name": "Tartu Welco",
+       "founded": null,
+       "venue": {
+        "name": "Annelinna Gümnaasium staadion",
+        "city": "Tartu",
+        "capacity": 500,
+        "surface": "artificial turf"
+       },
+       "matches": 36,
+       "ll": [
+        58.378,
+        26.729
+       ]
+      },
+      {
+       "id": 3527,
+       "name": "Maardu",
+       "founded": 1997,
+       "venue": {
+        "name": "Maardu linnastaadion",
+        "city": "Maardu",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 36,
+       "ll": [
+        59.4682,
+        24.9897
+       ]
+      },
+      {
+       "id": 3529,
+       "name": "Tallinna Kalev",
+       "founded": 1911,
+       "venue": {
+        "name": "Kalevi Keskstaadioni kunstmuru",
+        "city": "Tallinn",
+        "capacity": 1360,
+        "surface": "artificial turf"
+       },
+       "matches": 36,
+       "ll": [
+        59.4372,
+        24.7573
+       ]
+      },
+      {
+       "id": 3531,
+       "name": "Tulevik",
+       "founded": 1912,
+       "venue": {
+        "name": "Viljandi linnastaadion",
+        "city": "Viljandi",
+        "capacity": 2506,
+        "surface": "grass"
+       },
+       "matches": 2,
+       "ll": [
+        58.3612,
+        25.6068
+       ]
+      },
+      {
+       "id": 13826,
+       "name": "Nõmme Kalju II",
+       "founded": 1997,
+       "venue": {
+        "name": "Hiiu staadion",
+        "city": "Tallinn",
+        "capacity": 2730,
+        "surface": "artificial turf"
+       },
+       "matches": 36,
+       "ll": [
+        59.3855,
+        24.6595
+       ]
+      },
+      {
+       "id": 14287,
+       "name": "FC Tallinn",
+       "founded": null,
+       "venue": {
+        "name": "Lasnamäe SPK kunstmuruväljak",
+        "city": "Tallinn",
+        "capacity": 666,
+        "surface": "artificial turf"
+       },
+       "matches": 38,
+       "ll": [
+        59.4372,
+        24.7573
+       ]
+      },
+      {
+       "id": 14340,
+       "name": "Viimsi",
+       "founded": null,
+       "venue": {
+        "name": "Viimsi Staadion",
+        "city": "Haabneeme",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 36,
+       "ll": [
+        59.5098,
+        24.8348
+       ]
+      },
+      {
+       "id": 25755,
+       "name": "Nõmme United II",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 36
+      }
+     ],
+     "fixtures": 182
+    }
+   ]
+  }
+ ]
+}
