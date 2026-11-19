@@ -1437,6 +1437,7 @@ html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!importa
       <div class="chips wrapchips" role="group" aria-label="Typ av matcher" id="gMatch"></div>
       <div class="lbl">Serie eller cup</div>
       <div class="chips wrapchips" role="group" aria-label="Serie eller cup" id="tierChips"></div>
+      <div id="mRadBox" style="margin-top:14px" hidden><div class="lbl">Avstånd</div><div class="chips wrapchips" id="mRadCustom"></div></div>
       <div class="lbl">Egna datum</div>
       <div class="range">
         <label class="fld" for="dFrom">Från<input id="dFrom" type="date"></label>
@@ -2024,7 +2025,7 @@ function rangeTxt(m){const a=new Date(m.dateFrom+"T12:00:00"),b=new Date(m.dateT
 const addDays=(k,n)=>{const d=new Date(k+"T12:00:00");d.setDate(d.getDate()+n);return dayKey(d);};
 function presets(){const t=today();const d=new Date(t+"T12:00:00").getDay();
   const sat=d===6?t:d===0?addDays(t,-1):addDays(t,6-d);const sun=addDays(sat,1);
-  return[[$t("Idag"),t,t],[$t("Imorgon"),addDays(t,1),addDays(t,1)],[$t("I helgen"),sat<t?t:sat,sun],[$t("7 dagar"),t,addDays(t,6)],[$t("30 dagar"),t,addDays(t,29)]];}
+  return[[$t("Idag"),t,t],[$t("I helgen"),sat<t?t:sat,sun],[$t("7 dagar"),t,addDays(t,6)],[$t("30 dagar"),t,addDays(t,29)]];}
 let dFrom=today(),dTo=today();
 let radius=0;try{const r=+store.get("fk-radius");if(r>=0&&r<=500)radius=r;}catch(e){}
 const geoAi={}; // norm -> {state, name, ll, msg}
@@ -2083,8 +2084,8 @@ function mActiveSync(){const el=document.getElementById("mActive");if(!el)return
   const sh=document.getElementById("mSheetT");if(sh)sh.textContent=$t("Filter");}
 function mSheetHome(){const s=document.getElementById("mSheet"),tb=document.getElementById("matchTb");if(s&&tb&&s.parentElement===document.body&&innerWidth>=1024){s.hidden=true;document.documentElement.classList.remove("msopen");tb.parentElement.insertBefore(s,tb);}}addEventListener("resize",mSheetHome);
 function mSheetOpen(on){const s=document.getElementById("mSheet");if(!s)return;if(innerWidth>=1024){mSheetHome();return;}if(s.parentElement!==document.body)document.body.appendChild(s);s.hidden=!on;document.documentElement.classList.toggle("msopen",on);}
-document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("#mFiltBtn,[data-msclose],[data-msreset],[data-mrm]");if(!t)return;
-  if(t.id==="mFiltBtn"){mSheetOpen(true);return;}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("#mFiltBtn,[data-mopenf],[data-msclose],[data-msreset],[data-mrm]");if(!t)return;
+  if(t.id==="mFiltBtn"||t.dataset.mopenf){mSheetOpen(true);return;}
   if(t.dataset.msclose){mSheetOpen(false);return;}
   if(t.dataset.msreset){MQK="";matchView="list";store.set("fk-mview","list");mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}tiers.clear();favOnly=false;const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}renderMatches();return;}
   const k=t.dataset.mrm;if(k==="mqk"){MQK="";}else if(k==="q"){MQ=null;cityEl.value="";cityQ="";document.getElementById("cityClear").hidden=true;}else if(k==="view"){matchView="list";store.set("fk-mview","list");}else if(k==="kind"){mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}}else if(k.startsWith("tier:"))tiers.delete(k.slice(5));else if(k==="fav")favOnly=false;else if(k==="dates"){const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}}
@@ -2111,8 +2112,11 @@ function renderMatchList(){
   document.getElementById("radiusLbl").textContent=$t("Avstånd från {0} · uppskattad bilväg",[place&&place.ll?place.name:cityQ]);
   document.getElementById("radiusLbl").hidden=!hasQ;document.getElementById("radiusChips").hidden=!hasQ;
   const RADII=RADII_FOR();const isCustom=!RADII.some(r=>radEq(r,radius));
+  // högst upp bara de fasta avstånden (plus ett eget om det är valt); eget avstånd skrivs in under Filter
   document.getElementById("radiusChips").innerHTML=RADII.map(r=>`<button class="chip" data-radius="${r}" aria-pressed="${radEq(radius,r)}"${hasQ?"":" disabled"}>${r===0?$t("Bara orten"):milU(r)}</button>`).join("")
-    +`<label class="chip rin" for="rCustom" aria-pressed="${isCustom}">${$t("Eget")}<input id="rCustom" type="number" min="0.5" max="${UNIT==="mil"?500:5000}" step="${UNIT==="mil"?0.5:5}" inputmode="decimal" value="${isCustom?String(Math.round(radius*UNIT_PER_MIL[UNIT]*10)/10):""}" placeholder="–"${hasQ?"":" disabled"}>${UNIT==="mil"?$t("mil"):UNIT==="km"?"km":"miles"}</label>`;
+    +(isCustom?`<button class="chip" data-mopenf="1" aria-pressed="true">${milU(radius)}</button>`:"");
+  {const box=document.getElementById("mRadBox"),rc=document.getElementById("mRadCustom");box.hidden=!hasQ;
+   if(rc&&!rc.contains(document.activeElement))rc.innerHTML=`<label class="chip rin" for="rCustom" aria-pressed="${isCustom}">${$t("Eget")}<input id="rCustom" type="number" min="0.5" max="${UNIT==="mil"?500:5000}" step="${UNIT==="mil"?0.5:5}" inputmode="decimal" value="${isCustom?String(Math.round(radius*UNIT_PER_MIL[UNIT]*10)/10):""}" placeholder="–"${hasQ?"":" disabled"}>${UNIT==="mil"?$t("mil"):UNIT==="km"?"km":"miles"}</label>`;}
   const pr=document.getElementById("placeRow");
   if(hasQ&&radius>0&&place&&!place.ll){const st=geoAi[norm(cityQ)];pr.hidden=false;
     pr.innerHTML=`<span>${$t("Jag vet inte var")} <b>${esc(cityQ)}</b> ${$t("ligger.{0}",[st&&st.state==="err"?" "+esc(st.msg):""])}</span>${sampleFn===null?$t("<span>Prova en större ort i närheten.</span>"):`<button class="btn small primary" id="locate"${st&&st.state==="busy"?" disabled":""}>${st&&st.state==="busy"?"Letar…":$t("Hitta orten med Claude")}</button>`}`;}
