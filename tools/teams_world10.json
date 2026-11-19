@@ -1,0 +1,589 @@
+{
+ "fetched": "2026-11-19T21:38:39.453Z",
+ "countries": [
+  {
+   "country": "Denmark",
+   "fetched": "2026-11-19T21:37:51.976Z",
+   "all": [
+    "119 | Superliga | League",
+    "120 | 1. Division | League",
+    "124 | Denmark Series - Group 1 | League",
+    "125 | Denmark Series - Group 2 | League",
+    "126 | Denmark Series - Group 3 | League",
+    "121 | DBU Pokalen | Cup",
+    "122 | 2. Division | League",
+    "123 | 2nd Division - Group 2 | League",
+    "127 | Denmark Series - Group 4 | League",
+    "638 | Kvindeliga | League",
+    "862 | 3. Division | League",
+    "982 | Denmark Series - Promotion Round | League",
+    "983 | Denmark Series - Relegation Round | League",
+    "1244 | B-Liga Women | League"
+   ],
+   "leagues": [
+    {
+     "id": 122,
+     "name": "2. Division",
+     "season": 2026,
+     "seasons": [
+      [
+       2015,
+       "2015-08-08",
+       "2015-11-07",
+       false,
+       false
+      ],
+      [
+       2016,
+       "2016-08-06",
+       "2016-11-05",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-08-05",
+       "2017-11-04",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-08-04",
+       "2019-04-13",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-08-03",
+       "2020-04-09",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-29",
+       "2021-06-05",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-07",
+       "2022-04-09",
+       false,
+       true
+      ],
+      [
+       2022,
+       "2022-08-06",
+       "2023-06-17",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-04",
+       "2024-06-15",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-02",
+       "2025-06-14",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-01",
+       "2026-06-06",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-31",
+       "2027-04-03",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2064,
+       "name": "Nykobing FC",
+       "founded": 1994,
+       "venue": {
+        "name": "Lollands Bank Park",
+        "city": "Nykøbing Falster",
+        "capacity": 10000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        54.7646,
+        11.871
+       ]
+      },
+      {
+       "id": 2065,
+       "name": "Fremad Amager",
+       "founded": null,
+       "venue": {
+        "name": "Sundby Idrætspark",
+        "city": "København",
+        "capacity": 7200,
+        "surface": "artificial turf"
+       },
+       "matches": 22,
+       "ll": [
+        55.6483,
+        12.6013
+       ]
+      },
+      {
+       "id": 2066,
+       "name": "Naestved",
+       "founded": null,
+       "venue": {
+        "name": "MTM Service Park",
+        "city": "Næstved",
+        "capacity": 14300,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.2328,
+        11.7674
+       ]
+      },
+      {
+       "id": 2067,
+       "name": "Roskilde",
+       "founded": 2004,
+       "venue": {
+        "name": "Roskilde Idrætspark",
+        "city": "Roskilde",
+        "capacity": 6000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.637,
+        12.072
+       ]
+      },
+      {
+       "id": 2068,
+       "name": "Skive",
+       "founded": 1901,
+       "venue": {
+        "name": "Hancock Arena",
+        "city": "Skive",
+        "capacity": 6000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        56.6459,
+        8.9327
+       ]
+      },
+      {
+       "id": 2069,
+       "name": "Thisted FC",
+       "founded": 1989,
+       "venue": {
+        "name": "Sparekassen Thy Arena",
+        "city": "Thisted",
+        "capacity": 4000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        56.9562,
+        8.6849
+       ]
+      },
+      {
+       "id": 2071,
+       "name": "Brabrand",
+       "founded": 1934,
+       "venue": {
+        "name": "Brabrand IF's Idrætsanlæg",
+        "city": "Brabrand",
+        "capacity": 2900,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        56.1566,
+        10.1056
+       ]
+      },
+      {
+       "id": 6009,
+       "name": "B 93",
+       "founded": 1893,
+       "venue": {
+        "name": "Sundby Idrætspark",
+        "city": "København",
+        "capacity": 7200,
+        "surface": "artificial turf"
+       },
+       "matches": 22,
+       "ll": [
+        55.6483,
+        12.6013
+       ]
+      },
+      {
+       "id": 6021,
+       "name": "HIK",
+       "founded": 1900,
+       "venue": {
+        "name": "Gentofte Sportspark Vest",
+        "city": "Gentofte",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.7536,
+        12.5414
+       ]
+      },
+      {
+       "id": 6042,
+       "name": "Middelfart",
+       "founded": null,
+       "venue": {
+        "name": "Middelfart Stadion",
+        "city": "Middelfart",
+        "capacity": 4000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.5045,
+        9.7155
+       ]
+      },
+      {
+       "id": 6064,
+       "name": "VSK Århus",
+       "founded": null,
+       "venue": {
+        "name": "Ceres Park Vejlby",
+        "city": "Risskov",
+        "capacity": 12000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        56.2018,
+        10.242
+       ]
+      },
+      {
+       "id": 8634,
+       "name": "FA 2000",
+       "founded": null,
+       "venue": {
+        "name": "Frederiksberg IP",
+        "city": "Frederiksberg",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       },
+       "matches": 22,
+       "ll": [
+        56.5026,
+        9.7482
+       ]
+      }
+     ],
+     "fixtures": 132
+    },
+    {
+     "id": 123,
+     "name": "2nd Division - Group 2",
+     "season": 2020,
+     "seasons": [
+      [
+       2015,
+       "2015-08-07",
+       "2015-11-07",
+       false,
+       false
+      ],
+      [
+       2016,
+       "2016-08-05",
+       "2016-11-05",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-08-04",
+       "2017-11-04",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-08-04",
+       "2019-04-13",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-08-02",
+       "2020-04-09",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-28",
+       "2021-06-05",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2060,
+       "name": "AB Copenhagen",
+       "founded": 1889,
+       "venue": {
+        "name": "Gladsaxe Stadion",
+        "city": "Søborg",
+        "capacity": 13200,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.7328,
+        12.4967
+       ]
+      },
+      {
+       "id": 2064,
+       "name": "Nykobing FC",
+       "founded": 1994,
+       "venue": {
+        "name": "Lollands Bank Park",
+        "city": "Nykøbing Falster",
+        "capacity": 10000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        54.7646,
+        11.871
+       ]
+      },
+      {
+       "id": 2066,
+       "name": "Naestved",
+       "founded": null,
+       "venue": {
+        "name": "MTM Service Park",
+        "city": "Næstved",
+        "capacity": 14300,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.2328,
+        11.7674
+       ]
+      },
+      {
+       "id": 2067,
+       "name": "Roskilde",
+       "founded": 2004,
+       "venue": {
+        "name": "Roskilde Idrætspark",
+        "city": "Roskilde",
+        "capacity": 6000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.637,
+        12.072
+       ]
+      },
+      {
+       "id": 6006,
+       "name": "Avarta",
+       "founded": 1953,
+       "venue": {
+        "name": "Tømrermester Jim Jensens Park",
+        "city": "Rødovre",
+        "capacity": 6000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.6812,
+        12.4547
+       ]
+      },
+      {
+       "id": 6012,
+       "name": "Brønshøj",
+       "founded": 1919,
+       "venue": {
+        "name": "Tingbjerg Idrætspark",
+        "city": "Brønshøj",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.7193,
+        12.4932
+       ]
+      },
+      {
+       "id": 6021,
+       "name": "HIK",
+       "founded": 1900,
+       "venue": {
+        "name": "Gentofte Sportspark Vest",
+        "city": "Gentofte",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.7536,
+        12.5414
+       ]
+      },
+      {
+       "id": 6026,
+       "name": "Hillerød",
+       "founded": null,
+       "venue": {
+        "name": "Right to Dream Park",
+        "city": "Farum",
+        "capacity": 10300,
+        "surface": "artificial turf"
+       },
+       "matches": 26,
+       "ll": [
+        55.8162,
+        12.353
+       ]
+      },
+      {
+       "id": 6056,
+       "name": "Skovshoved",
+       "founded": 1909,
+       "venue": {
+        "name": "Skovshoved IP",
+        "city": "Klampenborg",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.7721,
+        12.5811
+       ]
+      },
+      {
+       "id": 6057,
+       "name": "Slagelse B&I",
+       "founded": 1887,
+       "venue": {
+        "name": "Harboe Arena Slagelse",
+        "city": "Slagelse",
+        "capacity": 9500,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.4004,
+        11.3643
+       ]
+      },
+      {
+       "id": 6065,
+       "name": "Vanløse",
+       "founded": 1921,
+       "venue": {
+        "name": "Vanløse IP",
+        "city": "Vanløse",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       },
+       "matches": 26,
+       "ll": [
+        55.6876,
+        12.4904
+       ]
+      },
+      {
+       "id": 6384,
+       "name": "KFUM Roskilde",
+       "founded": null,
+       "venue": {
+        "name": "Lillevang Idrætscenter",
+        "city": "Roskilde",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.6378,
+        12.1131
+       ]
+      },
+      {
+       "id": 8634,
+       "name": "FA 2000",
+       "founded": null,
+       "venue": {
+        "name": "Frederiksberg IP",
+        "city": "Frederiksberg",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       },
+       "matches": 26,
+       "ll": [
+        56.5026,
+        9.7482
+       ]
+      },
+      {
+       "id": 8641,
+       "name": "AB Tårnby",
+       "founded": null,
+       "venue": {
+        "name": "Tårnby Stadion",
+        "city": "Kastrup",
+        "capacity": 10000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        55.6378,
+        12.638
+       ]
+      }
+     ],
+     "fixtures": 182
+    }
+   ]
+  }
+ ]
+}
