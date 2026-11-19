@@ -2729,5 +2729,14 @@
  "dag kvar": "päivä jäljellä",
  "dagar kvar": "päivää jäljellä",
  "Topplistan": "Kärkilista",
- "Resan och dess matcher försvinner från ditt konto. Matcher du har biljett till ligger kvar i Min fotboll.": "Matka ja sen ottelut poistuvat tililtäsi. Ottelut, joihin sinulla on lippu, jäävät kohtaan Oma jalkapallo."
+ "Resan och dess matcher försvinner från ditt konto. Matcher du har biljett till ligger kvar i Min fotboll.": "Matka ja sen ottelut poistuvat tililtäsi. Ottelut, joihin sinulla on lippu, jäävät kohtaan Oma jalkapallo.",
+ "Asien och Oceanien": "Aasia ja Oseania",
+ "Gruppera matcherna": "Ryhmittele ottelut",
+ "Lägg till {0} i Mina serier": "Lisää {0} omiin sarjoihin",
+ "Mina serier": "Omat sarjat",
+ "Norden": "Pohjoismaat",
+ "Nära mig": "Lähellä",
+ "Snabbval": "Pikavalinnat",
+ "Ta bort {0} från Mina serier": "Poista {0} omista sarjoista",
+ "Tid": "Aika"
 }

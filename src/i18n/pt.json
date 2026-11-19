@@ -2729,5 +2729,14 @@
  "dag kvar": "dia",
  "dagar kvar": "dias",
  "Topplistan": "Top",
- "Resan och dess matcher försvinner från ditt konto. Matcher du har biljett till ligger kvar i Min fotboll.": "A viagem e os seus jogos serão removidos da sua conta. Os jogos com bilhete ficam em O meu futebol."
+ "Resan och dess matcher försvinner från ditt konto. Matcher du har biljett till ligger kvar i Min fotboll.": "A viagem e os seus jogos serão removidos da sua conta. Os jogos com bilhete ficam em O meu futebol.",
+ "Asien och Oceanien": "Ásia e Oceânia",
+ "Gruppera matcherna": "Agrupar jogos",
+ "Lägg till {0} i Mina serier": "Adicionar {0} a As minhas ligas",
+ "Mina serier": "As minhas ligas",
+ "Norden": "Países nórdicos",
+ "Nära mig": "Perto de mim",
+ "Snabbval": "Filtros rápidos",
+ "Ta bort {0} från Mina serier": "Remover {0} de As minhas ligas",
+ "Tid": "Hora"
 }
