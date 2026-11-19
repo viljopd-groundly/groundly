@@ -128,7 +128,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .teams{font-weight:600;font-size:calc(16px*var(--fs));line-height:1.3;min-width:0}
 .teams button{all:unset;cursor:pointer;border-bottom:1px dotted var(--muted)}
 .teams button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.teams .vs{color:var(--muted);font-weight:500;margin:0 6px}.teams.stk{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.teams.stk>.vs{display:none}
+.teams .vs{color:var(--muted);font-weight:500;margin:0 6px}.citem .cname:has(.crest){display:inline-flex;align-items:center;gap:10px}.citem .cname .crest{margin:0;flex:none}.teams.stk{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.teams.stk>.vs{display:none}
 .teams.scored{display:flex;flex-direction:column;gap:5px}.teams.scored .srow{display:flex;align-items:center;gap:10px;min-width:0}.teams.scored .sg{min-width:1.3em;text-align:center;font-size:1.1em;color:var(--muted)}.teams.scored .srow.win .sg{color:var(--text)}.teams.scored .sx{margin-left:calc(1.3em + 10px)}.teams.scored .srow button{display:inline-flex;align-items:center;gap:6px;min-width:0}.teams.scored .srow .crest{margin:0;flex:none}
 .venue{font-size:calc(13px*var(--fs));color:var(--muted);min-width:0}
 .mp{display:flex;gap:6px;flex-wrap:wrap}
@@ -2768,7 +2768,7 @@ function renderMine(){
      :`<div class="empty">${$t("Tryck")} <b>${$t("Vill gå")}</b> ${$t("på en kommande match under Matcher för att spara den här.")}</div>`;
     h+=`<h3 class="sec">${$t("Klubbar jag vill besöka")}</h3>`;
     const wc=MY.wishClubs.filter(id=>C[id]&&!isNat(C[id]));const wn=MY.wishClubs.filter(id=>C[id]&&isNat(C[id]));
-    h+=wc.length?`<div class="clist">${wc.slice(0,lim("wc",3)).map(id=>{const c=C[id];const up=dbState==="ready"?upcomingFor(id).find(m=>m.home===id):null;return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${esc(c.n)}</button>
+    h+=wc.length?`<div class="clist">${wc.slice(0,lim("wc",3)).map(id=>{const c=C[id];const up=dbState==="ready"?upcomingFor(id).find(m=>m.home===id):null;return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${crest(id,c.n,30)}<span>${esc(c.n)}</span></button>
       <div class="venue">${esc([c.s,cityLbl(c),$t(c.c)].filter(Boolean).join(" · "))}</div>
       <div class="venue">${up?$t("Nästa hemmamatch: {0} mot {1}",[esc(up.kickoff?dayLabel(dayKey(new Date(up.kickoff)))+" "+timeOf(up.kickoff):rangeTxt(up)),esc(tnm(up,"away"))]):$t("Ingen hemmamatch i det inlagda schemat")}</div>
       <div class="pactions">${nearBtn(c.city,"link")}${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>${limBtns("wc",wc.length,3)}`
