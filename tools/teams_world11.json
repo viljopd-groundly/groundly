@@ -1,0 +1,2247 @@
+{
+ "fetched": "2026-11-19T21:55:56.850Z",
+ "countries": [
+  {
+   "country": "Poland",
+   "fetched": "2026-11-19T21:52:20.866Z",
+   "all": [
+    "106 | Ekstraklasa | League",
+    "107 | I Liga | League",
+    "108 | Cup | Cup",
+    "109 | II Liga - East | League",
+    "676 | Central Youth League | League",
+    "727 | Super Cup | Cup",
+    "780 | III Liga - Group 1 | League",
+    "781 | III Liga - Group 2 | League",
+    "782 | III Liga - Group 3 | League",
+    "783 | III Liga - Group 4 | League",
+    "1033 | Ekstraliga Women | League"
+   ],
+   "leagues": [
+    {
+     "id": 109,
+     "name": "II Liga - East",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-07-27",
+       "2020-07-31",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-08-28",
+       "2021-06-19",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-30",
+       "2022-05-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-16",
+       "2023-06-11",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-21",
+       "2024-06-01",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-19",
+       "2025-06-18",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-25",
+       "2026-06-09",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-24",
+       "2027-05-29",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 3482,
+       "name": "Chojniczanka Chojnice",
+       "founded": 1930,
+       "venue": {
+        "name": "Stadion Miejski Chojnice",
+        "city": "Chojnice",
+        "capacity": 4500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        53.6999,
+        17.5703
+       ]
+      },
+      {
+       "id": 3492,
+       "name": "Sandecja Nowy Sącz",
+       "founded": 1910,
+       "venue": {
+        "name": "Stadion im. Ojca Władysława Augustynka",
+        "city": "Nowy Sącz",
+        "capacity": 7000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        49.6207,
+        20.7044
+       ]
+      },
+      {
+       "id": 3495,
+       "name": "Tychy 71",
+       "founded": 1971,
+       "venue": {
+        "name": "Stadion Miejski",
+        "city": "Tychy",
+        "capacity": 15300,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        50.124,
+        18.9906
+       ]
+      },
+      {
+       "id": 4247,
+       "name": "Olimpia Grudziądz",
+       "founded": 1923,
+       "venue": {
+        "name": "Stadion Miejski im. Bronisława Malinowskiego",
+        "city": "Grudziądz",
+        "capacity": 5323,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        53.4876,
+        18.7558
+       ]
+      },
+      {
+       "id": 6941,
+       "name": "Górnik Łęczna",
+       "founded": 1979,
+       "venue": {
+        "name": "Bogdanka Arena",
+        "city": "Łęczna",
+        "capacity": 7464,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        51.3003,
+        22.8868
+       ]
+      },
+      {
+       "id": 6942,
+       "name": "Hutnik Kraków",
+       "founded": 1950,
+       "venue": {
+        "name": "Stadion Suche Stawy",
+        "city": "Kraków",
+        "capacity": 12000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        50.0469,
+        19.9972
+       ]
+      },
+      {
+       "id": 6944,
+       "name": "Legia Warszawa II",
+       "founded": null,
+       "venue": {
+        "name": "Legia Training Center",
+        "city": "Książenice",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        52.0732,
+        20.7261
+       ]
+      },
+      {
+       "id": 6950,
+       "name": "Rekord Bielsko-Biała",
+       "founded": 1994,
+       "venue": {
+        "name": "Stadion BTS Rekord",
+        "city": "Bielsko-Biała",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        49.8221,
+        19.0449
+       ]
+      },
+      {
+       "id": 6951,
+       "name": "Resovia Rzeszów",
+       "founded": 1905,
+       "venue": {
+        "name": "Stadion Stal",
+        "city": "Rzeszów",
+        "capacity": 12700,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        50.0217,
+        21.997
+       ]
+      },
+      {
+       "id": 6958,
+       "name": "Stal Stalowa Wola",
+       "founded": 1938,
+       "venue": {
+        "name": "Podkarpackie Centrum Piłki Nożnej",
+        "city": "Stalowa Wola",
+        "capacity": 3764,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        50.5613,
+        22.0513
+       ]
+      },
+      {
+       "id": 6964,
+       "name": "Znicz Pruszków",
+       "founded": 1923,
+       "venue": {
+        "name": "Stadion Znicza (MZOS)",
+        "city": "Pruszków",
+        "capacity": 2500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        52.1626,
+        20.808
+       ]
+      },
+      {
+       "id": 12834,
+       "name": "Podhale Nowy Targ",
+       "founded": 2009,
+       "venue": {
+        "name": "Stadion Miejski im. Józefa Piłsudskiego",
+        "city": "Nowy Targ",
+        "capacity": 700,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        49.4755,
+        20.0152
+       ]
+      },
+      {
+       "id": 12900,
+       "name": "Śląsk Wrocław II",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Oporowska",
+        "city": "Wrocław",
+        "capacity": 8346,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        51.0962,
+        16.9968
+       ]
+      },
+      {
+       "id": 12902,
+       "name": "Świt Skolwin",
+       "founded": 1952,
+       "venue": {
+        "name": "Stadion Miejski Skolwin",
+        "city": "Szczecin",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        53.4302,
+        14.551
+       ]
+      },
+      {
+       "id": 13843,
+       "name": "Zawisza Bydgoszcz",
+       "founded": 1946,
+       "venue": {
+        "name": "Stadion im. Zdzisława Krzyszkowiaka",
+        "city": "Bydgoszcz",
+        "capacity": 20247,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        53.1458,
+        18.0205
+       ]
+      },
+      {
+       "id": 14143,
+       "name": "Lechia Zielona Góra",
+       "founded": 2015,
+       "venue": {
+        "name": "Stadion MOSiR",
+        "city": "Zielona Góra",
+        "capacity": 11000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        51.9547,
+        15.5236
+       ]
+      },
+      {
+       "id": 16255,
+       "name": "Sokół Kleczew",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Miejski",
+        "city": "Kleczew",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        52.3707,
+        18.178
+       ]
+      },
+      {
+       "id": 16264,
+       "name": "Avia Świdnik",
+       "founded": 1952,
+       "venue": {
+        "name": "Stadion Świdnik",
+        "city": "Świdnik",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        51.2249,
+        22.6954
+       ]
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 1033,
+     "name": "Ekstraliga Women",
+     "season": 2026,
+     "seasons": [
+      [
+       2023,
+       "2023-08-19",
+       "2024-06-16",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-08-10",
+       "2025-05-25",
+       false,
+       false
+      ],
+      [
+       2025,
+       "2025-08-09",
+       "2026-05-30",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-01",
+       "2026-11-14",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 10916,
+       "name": "Górnik Łęczna W",
+       "founded": null,
+       "venue": {
+        "name": "Bogdanka Arena",
+        "city": "Łęczna",
+        "capacity": 7464,
+        "surface": "grass"
+       },
+       "matches": 11,
+       "ll": [
+        51.3003,
+        22.8868
+       ]
+      },
+      {
+       "id": 16838,
+       "name": "Czarni Sosnowiec W",
+       "founded": null,
+       "venue": {
+        "name": "Stadion im. Jana Ciszewskiego",
+        "city": "Sosnowiec",
+        "capacity": 700,
+        "surface": "grass"
+       },
+       "matches": 11,
+       "ll": [
+        50.2712,
+        19.2156
+       ]
+      },
+      {
+       "id": 19053,
+       "name": "UKS Łódź W",
+       "founded": null,
+       "venue": {
+        "name": "Stadion UKS SMS",
+        "city": "Łódź",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       },
+       "matches": 11,
+       "ll": [
+        51.7728,
+        19.4785
+       ]
+      },
+      {
+       "id": 21584,
+       "name": "GKS Katowice W",
+       "founded": null,
+       "venue": {
+        "name": "Stadion ul. Bukowa",
+        "city": "Katowice",
+        "capacity": 10052,
+        "surface": "grass"
+       },
+       "matches": 11,
+       "ll": [
+        50.2599,
+        19.0216
+       ]
+      },
+      {
+       "id": 22257,
+       "name": "Akademia Piłkarska LG W",
+       "founded": 2010,
+       "venue": {
+        "name": "Boisko przy Zespole Szkół Morskich",
+        "city": "Gdańsk",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 11,
+       "ll": [
+        54.4288,
+        18.7983
+       ]
+      },
+      {
+       "id": 22259,
+       "name": "Pogon Szczecin W",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Floriana Krygiera boisko nr. 3",
+        "city": "Szczecin",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 11,
+       "ll": [
+        53.4302,
+        14.551
+       ]
+      },
+      {
+       "id": 22261,
+       "name": "Rekord Bielsko-Biala W",
+       "founded": null,
+       "venue": {
+        "name": "Stadion BTS Rekord",
+        "city": "Bielsko-Biała",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 11,
+       "ll": [
+        49.8221,
+        19.0449
+       ]
+      },
+      {
+       "id": 22262,
+       "name": "Slask Wroclaw W",
+       "founded": 2020,
+       "venue": {
+        "name": "Boisko Sportowe GEM",
+        "city": "Wrocław",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 11,
+       "ll": [
+        51.1263,
+        16.9782
+       ]
+      },
+      {
+       "id": 22264,
+       "name": "UJ Krakow W",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Miejski KS Prądniczanka",
+        "city": "Krakow",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       },
+       "matches": 11,
+       "ll": [
+        50.0875,
+        19.9583
+       ]
+      },
+      {
+       "id": 26149,
+       "name": "Lech Poznan W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 11
+      },
+      {
+       "id": 27936,
+       "name": "Legia W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 11
+      },
+      {
+       "id": 27937,
+       "name": "Sleza Wroclaw W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 11
+      }
+     ],
+     "fixtures": 66
+    }
+   ]
+  },
+  {
+   "country": "Turkey",
+   "fetched": "2026-11-19T21:53:19.360Z",
+   "all": [
+    "203 | Süper Lig | League",
+    "204 | 1. Lig | League",
+    "205 | 2. Lig | League",
+    "206 | Türkiye Kupası | Cup",
+    "552 | 3. Lig - Group 1 | League",
+    "553 | 3. Lig - Group 2 | League",
+    "554 | 3. Lig - Group 3 | League",
+    "551 | Super Cup | Cup",
+    "1007 | 3. Lig - Play-offs | League",
+    "1027 | 3. Lig - Group 4 | League",
+    "1240 | U19 league | League"
+   ],
+   "leagues": [
+    {
+     "id": 205,
+     "name": "2. Lig",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-09-11",
+       "2012-05-20",
+       false,
+       true
+      ],
+      [
+       2012,
+       "2012-09-09",
+       "2013-05-12",
+       false,
+       true
+      ],
+      [
+       2013,
+       "2013-09-08",
+       "2014-05-11",
+       false,
+       true
+      ],
+      [
+       2014,
+       "2014-08-31",
+       "2015-05-03",
+       false,
+       true
+      ],
+      [
+       2015,
+       "2015-09-05",
+       "2016-04-30",
+       false,
+       true
+      ],
+      [
+       2016,
+       "2016-09-03",
+       "2017-04-29",
+       false,
+       true
+      ],
+      [
+       2017,
+       "2017-08-26",
+       "2018-05-05",
+       false,
+       true
+      ],
+      [
+       2018,
+       "2018-09-01",
+       "2019-05-28",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-05-28",
+       "2020-07-28",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-20",
+       "2021-05-28",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-09-05",
+       "2022-05-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-27",
+       "2023-06-15",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-26",
+       "2024-06-02",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-31",
+       "2025-06-01",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-23",
+       "2026-05-10",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-06",
+       "2027-04-24",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 780,
+       "name": "Ankaraspor",
+       "founded": 1978,
+       "venue": {
+        "name": "15 Temmuz Milli Birlik Stadyumu",
+        "city": "Sincan",
+        "capacity": 2800,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        39.965,
+        32.5831
+       ]
+      },
+      {
+       "id": 1010,
+       "name": "Ankaragücü",
+       "founded": 1910,
+       "venue": {
+        "name": "Eryaman Stadyumu",
+        "city": "Ankara",
+        "capacity": 20560,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        39.98,
+        32.6132
+       ]
+      },
+      {
+       "id": 3563,
+       "name": "Adana Demirspor",
+       "founded": 1941,
+       "venue": {
+        "name": "Yeni Adana Stadyumu",
+        "city": "Adana",
+        "capacity": 33543,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        37.0635,
+        35.375
+       ]
+      },
+      {
+       "id": 3571,
+       "name": "Elazığspor",
+       "founded": 1967,
+       "venue": {
+        "name": "Elazığ Doğukent Stadyumu",
+        "city": "Elazığ",
+        "capacity": 2500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.5825,
+        39.3962
+       ]
+      },
+      {
+       "id": 3575,
+       "name": "Hatayspor",
+       "founded": 1967,
+       "venue": {
+        "name": "Mersin Stadyumu",
+        "city": "Mersin",
+        "capacity": 25534,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        36.819,
+        34.5418
+       ]
+      },
+      {
+       "id": 3581,
+       "name": "Ankara Demirspor",
+       "founded": 1932,
+       "venue": {
+        "name": "TCDD Ankara Demirspor Stadı",
+        "city": "Ankara",
+        "capacity": 1520,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        39.9208,
+        32.854
+       ]
+      },
+      {
+       "id": 3590,
+       "name": "Fethiyespor",
+       "founded": 1933,
+       "venue": {
+        "name": "Fethiye İlçe Stadyumu",
+        "city": "Fethiye",
+        "capacity": 8372,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        36.6221,
+        29.1153
+       ]
+      },
+      {
+       "id": 3594,
+       "name": "Kastamonuspor",
+       "founded": 1966,
+       "venue": {
+        "name": "Kastamonu Gazi Stadyumu",
+        "city": "Kastamonu",
+        "capacity": 4033,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        41.368,
+        33.7619
+       ]
+      },
+      {
+       "id": 3596,
+       "name": "Kırklarelispor",
+       "founded": 1968,
+       "venue": {
+        "name": "Kırklareli Atatürk Stadyumu",
+        "city": "Kırklareli",
+        "capacity": 8000,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        41.7312,
+        27.2157
+       ]
+      },
+      {
+       "id": 3599,
+       "name": "Menemen FK",
+       "founded": 1993,
+       "venue": {
+        "name": "Menemen Şehir Stadı",
+        "city": "Menemen",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.6034,
+        27.0764
+       ]
+      },
+      {
+       "id": 3602,
+       "name": "Sakaryaspor",
+       "founded": 1965,
+       "venue": {
+        "name": "Yeni Sakarya Atatürk Stadyumu",
+        "city": "Adapazarı",
+        "capacity": 28710,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        40.7755,
+        30.402
+       ]
+      },
+      {
+       "id": 3612,
+       "name": "İnegölspor",
+       "founded": 1954,
+       "venue": {
+        "name": "İnegöl İlçe Stadyumu",
+        "city": "İnegöl",
+        "capacity": 4975,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        40.0811,
+        29.5012
+       ]
+      },
+      {
+       "id": 3613,
+       "name": "Şanlıurfaspor",
+       "founded": 1969,
+       "venue": {
+        "name": "Şanlıurfa 11 Nisan Stadyumu",
+        "city": "Şanlıurfa",
+        "capacity": 28965,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        37.1477,
+        38.8059
+       ]
+      },
+      {
+       "id": 6340,
+       "name": "1461 Trabzon FK",
+       "founded": 1986,
+       "venue": {
+        "name": "Ortahisar Yavuz Selim Stadı",
+        "city": "Trabzon",
+        "capacity": 3500,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        40.9972,
+        39.6499
+       ]
+      },
+      {
+       "id": 6504,
+       "name": "12 Bingölspor",
+       "founded": 2012,
+       "venue": {
+        "name": "Bingöl Şehir Stadyumu",
+        "city": "Bingöl",
+        "capacity": 3500,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        39.0738,
+        40.7296
+       ]
+      },
+      {
+       "id": 6507,
+       "name": "68 Aksaray Belediyespor",
+       "founded": 2010,
+       "venue": {
+        "name": "Dağılgan Stadyumu",
+        "city": "Aksaray",
+        "capacity": 15000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.3529,
+        34.0388
+       ]
+      },
+      {
+       "id": 6511,
+       "name": "Güzide Gebzespor",
+       "founded": 1943,
+       "venue": {
+        "name": "Derince Belediyespor Doğal Çim Stadyumu",
+        "city": "Derince",
+        "capacity": 1650,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.7543,
+        29.8343
+       ]
+      },
+      {
+       "id": 6523,
+       "name": "Isparta 32 Spor",
+       "founded": 1976,
+       "venue": {
+        "name": "Isparta Atatürk Şehir Stadyumu",
+        "city": "Isparta",
+        "capacity": 10000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        37.9465,
+        30.9602
+       ]
+      },
+      {
+       "id": 6536,
+       "name": "Muş Sport Klübü",
+       "founded": 2015,
+       "venue": {
+        "name": "Muş Şehir Stadı",
+        "city": "Muş",
+        "capacity": 2250,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.9741,
+        41.959
+       ]
+      },
+      {
+       "id": 6538,
+       "name": "Somaspor",
+       "founded": 1985,
+       "venue": {
+        "name": "Soma Atatürk Stadyumu",
+        "city": "Soma",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        39.1987,
+        27.6242
+       ]
+      },
+      {
+       "id": 7392,
+       "name": "24 Erzincanspor",
+       "founded": 1984,
+       "venue": {
+        "name": "13 Şubat Şehir Stadyumu",
+        "city": "Erzincan",
+        "capacity": 12981,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        39.7505,
+        39.4967
+       ]
+      },
+      {
+       "id": 7401,
+       "name": "Erbaaspor",
+       "founded": null,
+       "venue": {
+        "name": "Erbaa İlçe Stadyumu",
+        "city": "Erbaa",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.6734,
+        36.5732
+       ]
+      },
+      {
+       "id": 7403,
+       "name": "İskenderunspor",
+       "founded": 1978,
+       "venue": {
+        "name": "Fuat Tosyalı Stadyumu",
+        "city": "Hatay",
+        "capacity": 9800,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        36.3451,
+        36.0748
+       ]
+      },
+      {
+       "id": 7406,
+       "name": "Beyoğlu Yeni Çarşı",
+       "founded": null,
+       "venue": {
+        "name": "Bayrampaşa Çetin Emeç Stadı",
+        "city": "İstanbul",
+        "capacity": 10500,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        41.038,
+        28.9059
+       ]
+      },
+      {
+       "id": 7407,
+       "name": "Karacabey Belediyespor",
+       "founded": 2008,
+       "venue": {
+        "name": "Mustafa Fehmi Gerçeker Stadyumu",
+        "city": "Karacabey",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        40.216,
+        28.3591
+       ]
+      },
+      {
+       "id": 7421,
+       "name": "Serik Spor",
+       "founded": null,
+       "venue": {
+        "name": "İsmail Ogan Stadyumu",
+        "city": "Serik",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        36.9169,
+        31.1047
+       ]
+      },
+      {
+       "id": 7426,
+       "name": "Yeni Orduspor",
+       "founded": 1973,
+       "venue": {
+        "name": "Yeni Ordu Stadyumu",
+        "city": "Ordu",
+        "capacity": 16768,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        40.9821,
+        37.9233
+       ]
+      },
+      {
+       "id": 11092,
+       "name": "Kütahyaspor",
+       "founded": 1966,
+       "venue": {
+        "name": "Kütahya Dumlupınar Stadyumu",
+        "city": "Kütahya",
+        "capacity": 11495,
+        "surface": "grass"
+       },
+       "matches": 32,
+       "ll": [
+        39.2523,
+        29.4938
+       ]
+      },
+      {
+       "id": 15101,
+       "name": "Arnavutköy Belediyespor",
+       "founded": null,
+       "venue": {
+        "name": "Bolluca Stadı",
+        "city": "Arnavutköy",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        41.1845,
+        28.7412
+       ]
+      },
+      {
+       "id": 21993,
+       "name": "Aliağa FAŞ",
+       "founded": 2014,
+       "venue": {
+        "name": "Aliağa Şehir Stadyumu",
+        "city": "Aliağa",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        38.8034,
+        26.9714
+       ]
+      },
+      {
+       "id": 21996,
+       "name": "İnegöl Kafkas Gençlik",
+       "founded": 1980,
+       "venue": {
+        "name": "İnegöl İlçe Stadyumu",
+        "city": "İnegöl",
+        "capacity": 4975,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.0811,
+        29.5012
+       ]
+      },
+      {
+       "id": 22009,
+       "name": "Adana 01 FK",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 32
+      },
+      {
+       "id": 22010,
+       "name": "Sebat Gençlikspor",
+       "founded": 2018,
+       "venue": {
+        "name": "Ortahisar Yavuz Selim Stadı",
+        "city": "Trabzon",
+        "capacity": 3500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        40.9972,
+        39.6499
+       ]
+      },
+      {
+       "id": 22451,
+       "name": "Çorluspor 1947",
+       "founded": 1991,
+       "venue": {
+        "name": "General Basri Saran Stadyumu",
+        "city": "Çorlu",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        41.1591,
+        27.8041
+       ]
+      },
+      {
+       "id": 24601,
+       "name": " Kahramanmaraş İstiklal Spor",
+       "founded": 1920,
+       "venue": {
+        "name": "Kahramanmaraş Batıpark Stadyumu",
+        "city": "Kahramanmaraş",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       },
+       "matches": 32,
+       "ll": [
+        37.783,
+        36.8307
+       ]
+      }
+     ],
+     "fixtures": 578
+    }
+   ]
+  },
+  {
+   "country": "Latvia",
+   "fetched": "2026-11-19T21:54:38.370Z",
+   "all": [
+    "364 | 1. Liga | League",
+    "365 | Virsliga | League",
+    "658 | Cup | Cup",
+    "1176 | Super Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 364,
+     "name": "1. Liga",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-04-23",
+       "2012-11-11",
+       false,
+       false
+      ],
+      [
+       2013,
+       "2013-04-06",
+       "2013-11-10",
+       false,
+       false
+      ],
+      [
+       2014,
+       "2014-03-30",
+       "2014-11-08",
+       false,
+       false
+      ],
+      [
+       2015,
+       "2015-03-29",
+       "2015-11-07",
+       false,
+       false
+      ],
+      [
+       2016,
+       "2016-04-02",
+       "2016-11-05",
+       false,
+       false
+      ],
+      [
+       2017,
+       "2017-04-14",
+       "2017-10-28",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-04-21",
+       "2018-11-11",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-04-06",
+       "2019-11-10",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-04-04",
+       "2020-11-08",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-03",
+       "2021-11-13",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-04-08",
+       "2022-11-13",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-04-07",
+       "2023-11-12",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-04-06",
+       "2024-11-10",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-03-28",
+       "2025-11-08",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-03-20",
+       "2026-11-07",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 4139,
+       "name": "JDFS Alberts",
+       "founded": null,
+       "venue": {
+        "name": "Upesciems pilsētas stadions",
+        "city": "Upesciems",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        56.9822,
+        24.3368
+       ]
+      },
+      {
+       "id": 4141,
+       "name": "Rēzekne FA",
+       "founded": null,
+       "venue": {
+        "name": "Sporta Aģentūras Stadions",
+        "city": "Rezekne",
+        "capacity": 978,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        56.5063,
+        27.3307
+       ]
+      },
+      {
+       "id": 4142,
+       "name": "Smiltene",
+       "founded": null,
+       "venue": {
+        "name": "Tepera stadions",
+        "city": "Smiltene",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 26,
+       "ll": [
+        57.4243,
+        25.9045
+       ]
+      },
+      {
+       "id": 4153,
+       "name": "Valmiera / BSS",
+       "founded": null,
+       "venue": {
+        "name": "Vidzemes Olimpiskais centrs",
+        "city": "Valmiera",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 26,
+       "ll": [
+        57.5281,
+        25.3879
+       ]
+      },
+      {
+       "id": 4159,
+       "name": "Metta / LU",
+       "founded": 2006,
+       "venue": {
+        "name": "Daugavas Stadionā",
+        "city": "Riga",
+        "capacity": 10461,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        56.9575,
+        24.1577
+       ]
+      },
+      {
+       "id": 14366,
+       "name": "Mārupe",
+       "founded": null,
+       "venue": {
+        "name": "Jaunmārupes stadions",
+        "city": "Jaunmārupe",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 26,
+       "ll": [
+        56.8783,
+        23.937
+       ]
+      },
+      {
+       "id": 16835,
+       "name": "Skanste",
+       "founded": null,
+       "venue": {
+        "name": "Hanzas vidusskolas laukums",
+        "city": "Riga",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       },
+       "matches": 26,
+       "ll": [
+        56.9664,
+        24.1184
+       ]
+      },
+      {
+       "id": 18835,
+       "name": "Riga FC II",
+       "founded": null,
+       "venue": {
+        "name": "Mežaparks Sports Village",
+        "city": "Riga",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        57.0027,
+        24.1717
+       ]
+      },
+      {
+       "id": 18836,
+       "name": "Rīgas FS II",
+       "founded": null,
+       "venue": {
+        "name": "LNK Sporta Parks (dabīgais)",
+        "city": "Riga",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        56.9494,
+        24.1052
+       ]
+      },
+      {
+       "id": 18837,
+       "name": "Tukums II",
+       "founded": null,
+       "venue": {
+        "name": "Tukuma mākslīgā laukumā stadions",
+        "city": "Tukums",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 26,
+       "ll": [
+        56.967,
+        23.1525
+       ]
+      },
+      {
+       "id": 21202,
+       "name": "JFK Ventspils",
+       "founded": 2021,
+       "venue": {
+        "name": "OC Ventspils rezerves laukums",
+        "city": "Ventspils",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 26,
+       "ll": [
+        57.3904,
+        21.5636
+       ]
+      },
+      {
+       "id": 23266,
+       "name": "Leevon / PPK",
+       "founded": 2024,
+       "venue": {
+        "name": "LNK Sporta Parks (mākslīgais)",
+        "city": "Riga",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 26,
+       "ll": [
+        56.9494,
+        24.1052
+       ]
+      },
+      {
+       "id": 25785,
+       "name": "Riga Mariners",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 26
+      },
+      {
+       "id": 27565,
+       "name": "Super Nova 2",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 26
+      }
+     ],
+     "fixtures": 182
+    }
+   ]
+  },
+  {
+   "country": "Estonia",
+   "fetched": "2026-11-19T21:55:04.552Z",
+   "all": [
+    "328 | Esiliiga A | League",
+    "329 | Meistriliiga | League",
+    "657 | Cup | Cup",
+    "1126 | Esiliiga B | League"
+   ],
+   "leagues": []
+  },
+  {
+   "country": "Lithuania",
+   "fetched": "2026-11-19T21:55:04.987Z",
+   "all": [
+    "361 | 1 Lyga | League",
+    "362 | A Lyga | League",
+    "661 | Cup | Cup",
+    "839 | Super Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 361,
+     "name": "1 Lyga",
+     "season": 2026,
+     "seasons": [
+      [
+       2012,
+       "2012-03-31",
+       "2012-10-27",
+       true,
+       false
+      ],
+      [
+       2013,
+       "2013-04-08",
+       "2013-10-27",
+       true,
+       false
+      ],
+      [
+       2014,
+       "2014-04-11",
+       "2014-11-02",
+       false,
+       false
+      ],
+      [
+       2015,
+       "2015-03-28",
+       "2015-10-31",
+       true,
+       false
+      ],
+      [
+       2016,
+       "2016-03-25",
+       "2016-10-23",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-03-24",
+       "2017-10-21",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-03-25",
+       "2018-10-20",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-03-22",
+       "2019-10-27",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-06-05",
+       "2020-10-31",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-03-20",
+       "2021-10-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-03-18",
+       "2022-11-12",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-03-10",
+       "2023-11-08",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-03-07",
+       "2024-11-08",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-03-07",
+       "2025-11-23",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-03-13",
+       "2026-11-22",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 3856,
+       "name": "Atmosfera",
+       "founded": 2012,
+       "venue": {
+        "name": "Mažeikių stadionas dirbtinė danga",
+        "city": "Mažeikiai",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        56.311,
+        22.3485
+       ]
+      },
+      {
+       "id": 3857,
+       "name": "BFA",
+       "founded": 2007,
+       "venue": {
+        "name": "BFA Maniežas",
+        "city": "Vilnius",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        54.687,
+        25.2829
+       ]
+      },
+      {
+       "id": 3859,
+       "name": "Dainava",
+       "founded": 1968,
+       "venue": {
+        "name": "Marijampolės futbolo arenos maniežas",
+        "city": "Marijampolė",
+        "capacity": 2680,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        54.5563,
+        23.3504
+       ]
+      },
+      {
+       "id": 3862,
+       "name": "Jonava",
+       "founded": 1991,
+       "venue": {
+        "name": "Jonavos dirbtinės dangos stadionas",
+        "city": "Jonava",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        55.0737,
+        24.2757
+       ]
+      },
+      {
+       "id": 3864,
+       "name": "Minija",
+       "founded": 1931,
+       "venue": {
+        "name": "Kretingos dirbtinės dangos aikštė",
+        "city": "Kretinga",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 31,
+       "ll": [
+        55.8901,
+        21.2424
+       ]
+      },
+      {
+       "id": 3871,
+       "name": "Žalgiris II",
+       "founded": null,
+       "venue": {
+        "name": "Vilniaus LFF stadionas",
+        "city": "Vilnius",
+        "capacity": 5422,
+        "surface": "grass"
+       },
+       "matches": 30,
+       "ll": [
+        54.687,
+        25.2829
+       ]
+      },
+      {
+       "id": 10696,
+       "name": "Ekranas",
+       "founded": 1964,
+       "venue": {
+        "name": "Žemynos progimnazijos stadionas",
+        "city": "Panevėžys",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        55.7345,
+        24.3578
+       ]
+      },
+      {
+       "id": 11885,
+       "name": "Tauras",
+       "founded": 1942,
+       "venue": {
+        "name": "FK Tauras dirbtinės dangos stadionas",
+        "city": "Tauragė",
+        "capacity": 2000,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        55.2534,
+        22.2903
+       ]
+      },
+      {
+       "id": 13971,
+       "name": "Kauno Žalgiris II",
+       "founded": null,
+       "venue": {
+        "name": "VDU Valdo Adamkaus stadionas",
+        "city": "Ringaudai",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        54.886,
+        23.803
+       ]
+      },
+      {
+       "id": 14382,
+       "name": "Babrungas",
+       "founded": 1942,
+       "venue": {
+        "name": "Plungės dirbtinės dangos stadionas",
+        "city": "Plungė",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 31,
+       "ll": [
+        55.9139,
+        21.8534
+       ]
+      },
+      {
+       "id": 14384,
+       "name": "Neptūną Klaipėda",
+       "founded": null,
+       "venue": {
+        "name": "Klaipėdos centrinio stadiono atsarginė aikštė",
+        "city": "Klaipėda",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        55.7128,
+        21.135
+       ]
+      },
+      {
+       "id": 14388,
+       "name": "Sveikata",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 2
+      },
+      {
+       "id": 16674,
+       "name": "Garliava",
+       "founded": null,
+       "venue": {
+        "name": "Garliavos Adomo Mitkaus mokyklos stadionas",
+        "city": "Garliava",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 30,
+       "ll": [
+        54.8279,
+        23.8747
+       ]
+      },
+      {
+       "id": 16747,
+       "name": "Be1 NFA",
+       "founded": null,
+       "venue": {
+        "name": "Jonavos dirbtinės dangos stadionas",
+        "city": "Jonava",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        55.0737,
+        24.2757
+       ]
+      },
+      {
+       "id": 18840,
+       "name": "FA Šiauliai II",
+       "founded": null,
+       "venue": {
+        "name": "Šiaulių Gytarių stadionas",
+        "city": "Šiauliai",
+        "capacity": 1500,
+        "surface": "artificial turf"
+       },
+       "matches": 30,
+       "ll": [
+        55.9341,
+        23.3158
+       ]
+      },
+      {
+       "id": 23156,
+       "name": "Hegelmann II",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 32
+      },
+      {
+       "id": 27557,
+       "name": "Transinvest 2",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 30
+      }
+     ],
+     "fixtures": 243
+    }
+   ]
+  },
+  {
+   "country": "Portugal",
+   "fetched": "2026-11-19T21:55:42.569Z",
+   "all": [
+    "94 | Primeira Liga | League",
+    "95 | Segunda Liga | League",
+    "96 | Taça de Portugal | Cup",
+    "550 | Super Cup | Cup",
+    "97 | Taça da Liga | Cup",
+    "457 | Campeonato de Portugal Prio - Group A | League",
+    "458 | Campeonato de Portugal Prio - Group B | League",
+    "459 | Campeonato de Portugal Prio - Group C | League",
+    "460 | Campeonato de Portugal Prio - Group D | League",
+    "681 | Campeonato de Portugal Prio - Group E | League",
+    "682 | Campeonato de Portugal Prio - Group F | League",
+    "683 | Campeonato de Portugal Prio - Group G | League",
+    "684 | Campeonato de Portugal Prio - Group H | League",
+    "701 | Liga Revelação U23 | League",
+    "840 | Taça Revelação U23 | Cup",
+    "865 | Liga 3 | League",
+    "948 | 1a Divisão - Women | League",
+    "991 | Campeonato de Portugal Prio - Promotion Round | League",
+    "1041 | Júniores U19 | League"
+   ],
+   "leagues": [
+    {
+     "id": 948,
+     "name": "1a Divisão - Women",
+     "season": 2026,
+     "seasons": [
+      [
+       2022,
+       "2022-09-10",
+       "2023-05-21",
+       false,
+       true
+      ],
+      [
+       2023,
+       "2023-09-16",
+       "2024-05-12",
+       false,
+       true
+      ],
+      [
+       2024,
+       "2024-09-01",
+       "2025-05-11",
+       false,
+       true
+      ],
+      [
+       2025,
+       "2025-09-14",
+       "2026-05-30",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-09-12",
+       "2027-05-23",
+       false,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 10905,
+       "name": "Sporting Braga W",
+       "founded": null,
+       "venue": {
+        "name": "Estádio 1º de Maio",
+        "city": "Braga",
+        "capacity": 28800,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        41.539,
+        -8.4206
+       ]
+      },
+      {
+       "id": 15495,
+       "name": "SL Benfica W",
+       "founded": null,
+       "venue": {
+        "name": "Caixa Futebol Campus",
+        "city": "Seixal",
+        "capacity": 2720,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        38.6408,
+        -9.0907
+       ]
+      },
+      {
+       "id": 20510,
+       "name": "Marítimo W",
+       "founded": null,
+       "venue": {
+        "name": "Campo do Adelino Rodrigues",
+        "city": "Funchal (Ilha da Madeira)",
+        "capacity": 3000,
+        "surface": "artificial turf"
+       },
+       "matches": 18,
+       "ll": null
+      },
+      {
+       "id": 20511,
+       "name": "Sporting CP W",
+       "founded": null,
+       "venue": {
+        "name": "CGD Stadium Aurélio Pereira",
+        "city": "Alcochete",
+        "capacity": 3000,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        38.756,
+        -8.9608
+       ]
+      },
+      {
+       "id": 20512,
+       "name": "Torreense W",
+       "founded": null,
+       "venue": {
+        "name": "Campo Manuel Marques",
+        "city": "Torres Vedras",
+        "capacity": 12000,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        39.0931,
+        -9.2607
+       ]
+      },
+      {
+       "id": 20513,
+       "name": "Valadares Gaia W",
+       "founded": null,
+       "venue": {
+        "name": "Complexo Desportivo de Valadares",
+        "city": "Valadares",
+        "capacity": 500,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        41.0978,
+        -8.6398
+       ]
+      },
+      {
+       "id": 26782,
+       "name": "Racing Power W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 18
+      },
+      {
+       "id": 26783,
+       "name": "Rio Ave W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 18
+      },
+      {
+       "id": 26784,
+       "name": "Vitoria Guimaraes W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 18
+      },
+      {
+       "id": 28057,
+       "name": "Porto W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 18
+      }
+     ],
+     "fixtures": 90
+    }
+   ]
+  }
+ ]
+}
