@@ -128,7 +128,7 @@ img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:
 .teams{font-weight:600;font-size:calc(16px*var(--fs));line-height:1.3;min-width:0}
 .teams button{all:unset;cursor:pointer;border-bottom:1px dotted var(--muted)}
 .teams button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.teams .vs{color:var(--muted);font-weight:500;margin:0 6px}.citem .cname:has(.crest){display:inline-flex;align-items:center;gap:10px}.citem .cname .crest{margin:0;flex:none}.mquick{margin-top:8px}.mseg{display:flex;background:color-mix(in srgb,var(--text) 6%,transparent);border-radius:12px;padding:3px;margin:10px 0 4px}.mseg button{all:unset;cursor:pointer;flex:1;text-align:center;padding:8px 6px;border-radius:9px;font-weight:700;font-size:14px;color:var(--muted)}.mseg button[aria-pressed="true"]{background:var(--surface);color:var(--text);box-shadow:0 0 0 1px var(--line)}.mseg button:focus-visible{outline:2px solid var(--accent)}
+.teams .vs{color:var(--muted);font-weight:500;margin:0 6px}.citem .cname:has(.crest){display:inline-flex;align-items:center;gap:10px}.citem .cname .crest{margin:0;flex:none}#city::-webkit-search-cancel-button{-webkit-appearance:none;display:none}.mquick{margin-top:8px}.mquick[hidden]{display:none}.mseg{display:flex;background:color-mix(in srgb,var(--text) 6%,transparent);border-radius:12px;padding:3px;margin:10px 0 4px}.mseg button{all:unset;cursor:pointer;flex:1;text-align:center;padding:6px;border-radius:9px;font-weight:700;font-size:13px;color:var(--muted)}.mseg button[aria-pressed="true"]{background:var(--surface);color:var(--text);box-shadow:0 0 0 1px var(--line)}.mseg button:focus-visible{outline:2px solid var(--accent)}
 .mgroups{display:flex;flex-direction:column;gap:8px}.mgrp{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}.mgh{display:flex;align-items:center}.mghb{all:unset;box-sizing:border-box;cursor:pointer;flex:1;display:flex;align-items:center;gap:10px;padding:12px 14px;font-weight:700;font-size:16px;min-width:0}.mghb:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .mgflag{width:28px;height:20px;border-radius:3px;object-fit:cover;flex:none;box-shadow:0 0 0 1px color-mix(in srgb,var(--text) 15%,transparent)}.mgglobe{box-shadow:none;font-size:18px;text-align:center;line-height:20px}.mgname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mgn{margin-left:auto;color:var(--muted);font-weight:600;font-size:14px;white-space:nowrap}.mgchev{width:16px;height:16px;color:var(--muted);transform:rotate(90deg);transition:transform .15s;flex:none}.mghb[aria-expanded="true"] .mgchev{transform:rotate(-90deg)}
 .mgstar{all:unset;cursor:pointer;padding:10px 14px 10px 4px;font-size:19px;color:var(--muted)}.mgstar[aria-pressed="true"]{color:#f2c94c}.mgstar:focus-visible{outline:2px solid var(--accent)}.mgsub .mgstar{padding:2px 6px;font-size:17px}
@@ -1418,12 +1418,13 @@ html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!importa
     <div class="chips" role="group" aria-label="Avstånd" id="radiusChips" hidden></div>
     <div class="place" id="placeRow" hidden></div>
     <div class="chips" role="group" aria-label="Snabbval datum" id="datePresets"></div>
-    <div class="chips mquick" role="group" aria-label="Snabbval" id="mQuick"></div>
     <div class="mseg" role="group" aria-label="Gruppera matcherna" id="mGroupSeg"></div>
     <div class="mactive" id="mActive" hidden></div>
     <div class="mfsheet" id="mSheet" hidden role="dialog" aria-modal="true" aria-labelledby="mSheetT"><div class="msdim" data-msclose="1"></div><div class="mspanel">
       <div class="msgrab" aria-hidden="true"></div>
       <div class="mshd"><h3 id="mSheetT">Filter</h3><span class="mshr"><button class="link strong" type="button" data-msreset="1">Rensa</button><button class="msx" type="button" data-msclose="1" aria-label="Stäng">×</button></span></div>
+      <div class="lbl">Visa bara</div>
+      <div class="chips wrapchips" role="group" aria-label="Visa bara" id="mQuick"></div>
       <div class="lbl">Visa</div>
       <div class="chips wrapchips" role="group" aria-label="Visa" id="matchViewChips"></div>
       <div class="lbl">Typ</div>
@@ -2063,7 +2064,7 @@ let citiesFor=null;
 function mActiveSync(){const el=document.getElementById("mActive");if(!el)return;const pre=presets().some(([l,a,b])=>dFrom===a&&dTo===b);const ch=[];
   if(matchView==="team")ch.push(["view",$t("Lag")]);if(matchView==="double")ch.push(["view",$t("Dubbelmatcher")]);if(matchView==="plan")ch.push(["view",$t("Planera med Claude")]);
   if(mKind&&mKind!=="alla")ch.push(["kind",{herr:$t("Herr"),dam:$t("Dam"),landslag:$t("Landslag")}[mKind]||mKind]);
-  if(MQ)ch.push(["q",MQ.l]);TIERS.forEach(([k,l])=>{if(tiers.has(k))ch.push(["tier:"+k,l]);});if(favOnly&&favList().length)ch.push(["fav",$t("Mina lag")]);
+  if(MQ)ch.push(["q",MQ.l]);TIERS.forEach(([k,l])=>{if(tiers.has(k))ch.push(["tier:"+k,l]);});if(favOnly&&favList().length)ch.push(["fav",$t("Mina lag")]);if(MQK)ch.push(["mqk",MQK_L()[MQK]||MQK]);
   if(!pre&&matchView!=="team"&&matchView!=="plan")ch.push(["dates",dFrom===dTo?dayLabel(dFrom):`${dayLabel(dFrom)} – ${dayLabel(dTo)}`]);
   el.hidden=!ch.length;el.innerHTML=ch.map(([k,l])=>`<button class="mchip" data-mrm="${esc(k)}">${esc(l)} <span aria-hidden="true">×</span><span class="sr">${$t("Ta bort")}</span></button>`).join("");
   const n=ch.length;const b=document.getElementById("mFiltN");if(b){b.hidden=!n;b.textContent=n;}
@@ -2074,8 +2075,8 @@ function mSheetOpen(on){const s=document.getElementById("mSheet");if(!s)return;i
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("#mFiltBtn,[data-msclose],[data-msreset],[data-mrm]");if(!t)return;
   if(t.id==="mFiltBtn"){mSheetOpen(true);return;}
   if(t.dataset.msclose){mSheetOpen(false);return;}
-  if(t.dataset.msreset){matchView="list";store.set("fk-mview","list");mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}tiers.clear();favOnly=false;const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}renderMatches();return;}
-  const k=t.dataset.mrm;if(k==="q"){MQ=null;cityEl.value="";cityQ="";document.getElementById("cityClear").hidden=true;}else if(k==="view"){matchView="list";store.set("fk-mview","list");}else if(k==="kind"){mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}}else if(k.startsWith("tier:"))tiers.delete(k.slice(5));else if(k==="fav")favOnly=false;else if(k==="dates"){const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}}
+  if(t.dataset.msreset){MQK="";matchView="list";store.set("fk-mview","list");mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}tiers.clear();favOnly=false;const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}renderMatches();return;}
+  const k=t.dataset.mrm;if(k==="mqk"){MQK="";}else if(k==="q"){MQ=null;cityEl.value="";cityQ="";document.getElementById("cityClear").hidden=true;}else if(k==="view"){matchView="list";store.set("fk-mview","list");}else if(k==="kind"){mKind="alla";try{store.set("fk-mkind","alla");}catch(x){}}else if(k.startsWith("tier:"))tiers.delete(k.slice(5));else if(k==="fav")favOnly=false;else if(k==="dates"){const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}}
   renderMatches();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("mSheet")?.hidden)mSheetOpen(false);});
 // dra rutan nedåt för att stänga (från greppet/rubriken, eller var som helst när rutan är scrollad högst upp)
@@ -2118,7 +2119,7 @@ function renderMatchList(){
   const sel=[];DRC.l.forEach(m=>{if(!gOkM(m))return;if(tiers.size&&!tiers.has(tierOf(m)))return;if(MQ&&!mqOk(m))return;if(MQK&&!mqkOk(m))return;if(favOnly&&favList().length){if(isFav(m.home)||isFav(m.away))sel.push([m,-1]);return;}if(MQ||MQK){sel.push([m,-1]);return;}const d=placeDist(m,place);if(d===null)return;sel.push([m,d]);});
   const byDay=new Map(),tbd=[];
   sel.sort((a,b)=>sortM(a[0],b[0])).forEach(x=>{if(!x[0].kickoff){tbd.push(x);return;}const k=dayKey(new Date(x[0].kickoff));if(!byDay.has(k))byDay.set(k,[]);byDay.get(k).push(x);});
-  const n=sel.length;const where=MQ?(MQ.t==="team"?$t(" med {0}",[esc(MQ.l)]):$t(" i {0}",[esc(MQ.l)])):favOnly&&favList().length?$t(" med {0}",[favList().length===1?esc(C[favList()[0]].n):$t("dina favoritlag")]):!hasQ?$t(" i hela världen"):radius===0?` i ${esc(cityQ)}`:$t(" inom {0} från {1}",[milU(radius),esc(place&&place.ll?place.name:cityQ)]);
+  const n=sel.length;const where=MQ?(MQ.t==="team"?$t(" med {0}",[esc(MQ.l)]):$t(" i {0}",[esc(MQ.l)])):favOnly&&favList().length?$t(" med {0}",[favList().length===1?esc(C[favList()[0]].n):$t("dina favoritlag")]):!hasQ?$t(" i hela världen"):radius===0?` i ${esc(place&&place.ll?place.name:cityQ)}`:$t(" inom {0} från {1}",[milU(radius),esc(place&&place.ll?place.name:cityQ)]);
   const dTxt=dFrom===dTo?dayLong(dFrom):`${dayLong(dFrom)} – ${dayLong(dTo)}`;
   cn.innerHTML=`<b>${n}</b> ${n===1?$t("match"):$t("matcher")}${where} · ${esc(dTxt)}`;
   // antalsraden behövs bara när den säger något mer än dagsrubrikerna (sökt ort eller Mina lag)
@@ -2134,6 +2135,7 @@ function renderMatchList(){
   if(tbd.length){items.push(`<div class="day">${$t("Datum ej spikat")}<span>${tbd.length} ${tbd.length===1?$t("match"):$t("matcher")}</span></div>`);tbd.forEach(x=>items.push(x));}
   if(MGROUP!=="tid"&&matchView!=="double"){el.innerHTML=groupedHtml(sel,now,showKm);MLQ=null;return;}
   el.innerHTML="";MLQ={items,i:0,now,km:showKm,el,left:sel.length};mlMore(30);}
+function MQK_L(){return{mylg:"★ "+$t("Mina serier"),near:$t("Nära mig"),nord:$t("Norden"),eu:$t("Europa"),sam:$t("Sydamerika"),nam:$t("Nord- och Centralamerika"),asia:$t("Asien och Oceanien"),afr:$t("Afrika")};}
 function mQuickHtml(){const q=[["mylg","★ "+$t("Mina serier")],...(favList().length?[["fav",$t("Mina lag")]]:[]),...(homeTown?[["near",$t("Nära mig")]]:[]),["nord",$t("Norden")],["eu",$t("Europa")],["sam",$t("Sydamerika")],["nam",$t("Nord- och Centralamerika")],["asia",$t("Asien och Oceanien")],["afr",$t("Afrika")]];
   return q.map(([k,l])=>k==="fav"?`<button class="chip" data-favonly="1" aria-pressed="${favOnly}">${l}</button>`:`<button class="chip" data-mqk="${k}" aria-pressed="${MQK===k}">${esc(l)}</button>`).join("");}
 function mGroupHtml(){return[["tid",$t("Tid")],["land",$t("Land")],["serie",$t("Serie")]].map(([k,l])=>`<button type="button" data-mgroup="${k}" aria-pressed="${MGROUP===k}">${l}</button>`).join("");}
@@ -4282,7 +4284,9 @@ function pickMQ(t,v,l){mWiden();MQ={t,v,l};cityEl.value=l;cityQ="";document.getE
 function mqExact(txt){const nq=norm(txt);if(!nq||CITY_LIST.some(c=>norm(c)===nq)||GEO[txt])return null;const h=mqHits(txt);
   for(const x of [...h.ctry,...h.comps,...h.teams])if(norm(x[2])===nq||norm(x[1])===nq)return{t:x[0],v:x[1],l:x[2]};return null;}
 function pickCity(c){mWiden();MQ=null;cityEl.value=c;cityQ=c;document.getElementById("cityClear").hidden=false;document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}
-cityEl.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(cT);MQ=mqExact(cityEl.value.trim());cityQ=MQ?"":cityEl.value.trim();document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}});
+cityEl.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(cT);if(cityEl.value.trim()&&!MQ&&!cityQ)mWiden();MQ=mqExact(cityEl.value.trim());cityQ=MQ?"":cityEl.value.trim();
+    // halvskrivet stadsnamn ("Lond") blir den stad appen hittade ("London")
+    if(cityQ){const pl=resolvePlace();if(pl&&pl.ll&&pl.name&&norm(pl.name)!==norm(cityQ)){cityQ=pl.name;cityEl.value=pl.name;}}document.getElementById("citySug").hidden=true;cityEl.blur();renderMatches();}});
 cityEl.addEventListener("blur",()=>setTimeout(()=>{document.getElementById("citySug").hidden=true;},200));
 cityEl.addEventListener("input",citySugg);
 document.getElementById("citySug").addEventListener("pointerdown",e=>e.preventDefault());
