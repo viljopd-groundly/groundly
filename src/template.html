@@ -1673,7 +1673,9 @@ const ctryIso=c=>{const id=c&&ntIdOf(c);return id?id.slice(3):"";};
 function favLeagues(){if(myState==="ready")return MY.favLeagues||[];try{return JSON.parse(store.get("fk-favlg")||"[]");}catch(e){return[];}}
 function toggleFavLeague(l){const a=favLeagues().slice();const i=a.indexOf(l);i<0?a.push(l):a.splice(i,1);
   if(myState==="ready"){mutate(d=>{d.favLeagues=a.slice(0,60);});saveMy();}else{try{store.set("fk-favlg",JSON.stringify(a.slice(0,60)));}catch(e){}}}
-function mqkOk(m){if(!MQK)return true;if(MQK==="mylg")return favLeagues().includes(m.comp);
+// söker man på en stad, ett lag, land eller en serie bestämmer sökningen platsen – då gäller inte Nära mig och världsdelarna
+const mSearching=()=>!!(MQ||(cityQ&&norm(cityQ)));const mqkGeo=k=>k&&k!=="mylg";
+function mqkOk(m){if(!MQK)return true;if(MQK==="mylg")return favLeagues().includes(m.comp);if(mSearching())return true;
   if(MQK==="near"){const h=homeLL();const g=GEO[m.city];return!!(h&&g&&roadKm(h.ll,g)<=50);}
   const iso=ctryIso(m.country||(C[m.home]||{}).c);const S=CONTS[MQK];return!!(S&&iso&&S.has(iso));}
 // söker man när bara Idag är valt visas de närmaste två veckorna (annars blir det ofta tomt)
@@ -2082,7 +2084,7 @@ let citiesFor=null;
 function mActiveSync(){const el=document.getElementById("mActive");if(!el)return;const pre=presets().some(([l,a,b])=>dFrom===a&&dTo===b);const ch=[];
   if(matchView==="team")ch.push(["view",$t("Lag")]);if(matchView==="double")ch.push(["view",$t("Dubbelmatcher")]);if(matchView==="plan")ch.push(["view",$t("Planera med Claude")]);
   if(mKind&&mKind!=="alla")ch.push(["kind",{herr:$t("Herr"),dam:$t("Dam"),landslag:$t("Landslag")}[mKind]||mKind]);
-  if(MQ)ch.push(["q",MQ.l]);TIERS.forEach(([k,l])=>{if(tiers.has(k))ch.push(["tier:"+k,l]);});if(favOnly&&favList().length)ch.push(["fav",$t("Mina lag")]);if(MQK)ch.push(["mqk",MQK_L()[MQK]||MQK]);
+  if(MQ)ch.push(["q",MQ.l]);TIERS.forEach(([k,l])=>{if(tiers.has(k))ch.push(["tier:"+k,l]);});if(favOnly&&favList().length)ch.push(["fav",$t("Mina lag")]);if(MQK&&!(mqkGeo(MQK)&&mSearching()))ch.push(["mqk",MQK_L()[MQK]||MQK]);
   if(!pre&&matchView!=="team"&&matchView!=="plan")ch.push(["dates",dFrom===dTo?dayLabel(dFrom):`${dayLabel(dFrom)} – ${dayLabel(dTo)}`]);
   el.hidden=!ch.length;el.innerHTML=ch.map(([k,l])=>`<button class="mchip" data-mrm="${esc(k)}">${esc(l)} <span aria-hidden="true">×</span><span class="sr">${$t("Ta bort")}</span></button>`).join("");
   const n=ch.length;const b=document.getElementById("mFiltN");if(b){b.hidden=!n;b.textContent=n;}
@@ -2157,8 +2159,8 @@ function renderMatchList(){
   if(MGROUP!=="tid"&&matchView!=="double"){el.innerHTML=groupedHtml(sel,now,showKm);MLQ=null;return;}
   el.innerHTML="";MLQ={items,i:0,now,km:showKm,el,left:sel.length};mlMore(30);}
 function MQK_L(){return{mylg:"★ "+$t("Mina serier"),near:$t("Nära mig"),nord:$t("Norden"),eu:$t("Europa"),sam:$t("Sydamerika"),nam:$t("Nord- och Centralamerika"),asia:$t("Asien och Oceanien"),afr:$t("Afrika")};}
-function mQuickHtml(){const q=[["mylg","★ "+$t("Mina serier")],...(favList().length?[["fav",$t("Mina lag")]]:[]),...(homeTown?[["near",$t("Nära mig")]]:[]),["nord",$t("Norden")],["eu",$t("Europa")],["sam",$t("Sydamerika")],["nam",$t("Nord- och Centralamerika")],["asia",$t("Asien och Oceanien")],["afr",$t("Afrika")]];
-  return q.map(([k,l])=>k==="fav"?`<button class="chip" data-favonly="1" aria-pressed="${favOnly}">${l}</button>`:`<button class="chip" data-mqk="${k}" aria-pressed="${MQK===k}">${esc(l)}</button>`).join("");}
+function mQuickHtml(){const srch=mSearching();const q=[["mylg","★ "+$t("Mina serier")],...(favList().length?[["fav",$t("Mina lag")]]:[]),...(homeTown?[["near",$t("Nära mig")]]:[]),["nord",$t("Norden")],["eu",$t("Europa")],["sam",$t("Sydamerika")],["nam",$t("Nord- och Centralamerika")],["asia",$t("Asien och Oceanien")],["afr",$t("Afrika")]];
+  return q.filter(([k])=>!srch||k==="mylg"||k==="fav").map(([k,l])=>k==="fav"?`<button class="chip" data-favonly="1" aria-pressed="${favOnly}">${l}</button>`:`<button class="chip" data-mqk="${k}" aria-pressed="${MQK===k}">${esc(l)}</button>`).join("");}
 function mGroupHtml(){return[["tid",$t("Tid")],["land",$t("Land")],["serie",$t("Serie")]].map(([k,l])=>`<button type="button" data-mgroup="${k}" aria-pressed="${MGROUP===k}">${l}</button>`).join("");}
 // alla serier per land i hela schemat (byggs en gång per schema) och deras nivå
 let CLG=null,CLT=new Map();function ctryLeagues(c){if(!CLG||CLG.m!==MATCHES){CLG={m:MATCHES,by:new Map()};CLT=new Map();
