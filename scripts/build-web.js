@@ -75,25 +75,26 @@ for (let [a, b] of swaps) {
 const AUTO_LANG = false;
 const I18NV = require("crypto").createHash("md5").update(fs.readdirSync(path.join(SRC, "i18n")).sort().map(f => fs.readFileSync(path.join(SRC, "i18n", f), "utf8")).join("|")).digest("hex").slice(0, 8);
 // ---- dokumenthuvud + runtime (claude.ai lade till skelettet automatiskt) ----
+const SITE_URL = String(process.env.SITE_URL || (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, "config", "site.json"), "utf8")).url; } catch (e) { return ""; } })() || "https://viljopd-groundly.github.io/groundly/").replace(/\/?$/, "/");
 const head = `<!doctype html>
 <html lang="sv">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="description" content="Groundly – planera och logga dina fotbollsresor. Matcher, arenor, serietabeller, forum och matchberättelser.">
+<meta name="description" content="Groundly – planera fotbollsresor och logga matcherna du sett. Matcher i 175 länder, arenor, serietabeller, forum och matchberättelser.">
 <meta name="theme-color" content="#1d6b3b">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Groundly">
 <meta property="og:locale" content="sv_SE">
-<meta property="og:title" content="Groundly – planera och logga dina fotbollsresor">
-<meta property="og:description" content="Matcher, arenor, serietabeller, forum och matchberättelser – för dig som åker på fotboll.">
-<meta property="og:url" content="https://viljopd-groundly.github.io/groundly/">
-<meta property="og:image" content="https://viljopd-groundly.github.io/groundly/og.png">
+<meta property="og:title" content="Groundly – planera fotbollsresor och logga matcherna du sett">
+<meta property="og:description" content="Matcher i 175 länder, resplanering, arenor och tabeller – för dig som åker på fotboll.">
+<meta property="og:url" content="${SITE_URL}">
+<meta property="og:image" content="${SITE_URL}og.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Groundly – planera och logga dina fotbollsresor">
+<meta property="og:image:alt" content="Groundly – planera fotbollsresor och logga matcherna du sett">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://viljopd-groundly.github.io/groundly/">
+<link rel="canonical" href="${SITE_URL}">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -133,6 +134,8 @@ fs.writeFileSync(path.join(SITE, ".nojekyll"), "");
 // syntaxkontroll av appens skript
 const js = html.split("<script>").slice(1).map(x => x.split("</script>")[0]).sort((a, b) => b.length - a.length)[0]; // appens stora skript
 new Function(js);
+// statiska sidor per klubb, arena, serie och land + sitemap.xml (site/klubb/… m.fl.)
+try { require("child_process").execFileSync(process.execPath, [path.join(__dirname, "build-pages.js")], { stdio: "inherit" }); } catch (e) { console.warn("klubb- och arenasidorna kunde inte byggas"); if (process.env.CI) throw e; }
 // kalenderflöden per lag (site/cal/*.ics)
 try { require("child_process").execFileSync(process.execPath, [path.join(__dirname, "build-cal.js")], { stdio: "inherit" }); } catch (e) { console.warn("kalenderflödena kunde inte byggas"); }
 console.log(`site/index.html ${html.length} byte, AI ${aiOn ? "på" : "av"}, skript ok`);

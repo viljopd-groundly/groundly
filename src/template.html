@@ -1772,8 +1772,8 @@ try{history.scrollRestoration="manual";}catch(e){}
 // ---------- Anonym användningsstatistik ----------
 // Bara antal per sak och dag (usage/{datum}). Inget användar-id, ingen enhet, inga kakor.
 // Nycklarna måste finnas i USAGE_KEYS här och i firebase/firestore.rules.
-const USAGE_KEYS=new Set(["s", "s_in", "s_new", "s_pwa", "dark", "look_std", "look_modern", "look_ticket", "look_atlas", "look_kit", "lang_sv", "lang_nb", "lang_da", "lang_fi", "lang_is", "lang_de", "lang_en", "lang_es", "lang_fr", "lang_it", "lang_nl", "lang_pl", "lang_pt", "v_hem", "v_matcher", "v_mine", "v_resa", "v_flode", "v_forum", "v_reportage", "v_klubbar", "v_landslag", "v_tabell", "v_arenor", "v_tips", "v_quiz", "v_profil", "m_open", "log", "wish", "trip_new", "cal", "fav", "login_click", "trip_search", "trip_share", "trip_leg", "trip_log", "trip_top", "top_city", "home_top", "plus", "plus_log", "plus_trip", "plus_rep", "plus_ask", "out_hotel", "out_travel", "out_tix", "out_ext", "c_SE", "c_NO", "c_DK", "c_FI", "c_IS", "c_DE", "c_GB", "c_IE", "c_NL", "c_BE", "c_FR", "c_ES", "c_PT", "c_IT", "c_CH", "c_AT", "c_PL", "c_CZ", "c_HU", "c_HR", "c_RS", "c_GR", "c_TR", "c_RO", "c_UA", "c_EE", "c_LV", "c_LT", "c_US", "c_CA", "c_MX", "c_BR", "c_AR", "c_AU", "c_JP", "c_TH", "c_AE", "c_ZA", "c_IN", "c_CN", "c_XX", "trip_ask", "out_tour", "tix", "out_do"]);
-let USE_Q={},USE_LAST=null;
+const USAGE_KEYS=new Set(["ref_direct", "ref_search", "ref_meta", "ref_reddit", "ref_x", "ref_sf", "ref_pages", "ref_other", "src_fb", "src_ig", "src_reddit", "src_sf", "src_tt", "src_mail", "src_press", "src_club", "src_other", "s", "s_in", "s_new", "s_pwa", "dark", "look_std", "look_modern", "look_ticket", "look_atlas", "look_kit", "lang_sv", "lang_nb", "lang_da", "lang_fi", "lang_is", "lang_de", "lang_en", "lang_es", "lang_fr", "lang_it", "lang_nl", "lang_pl", "lang_pt", "v_hem", "v_matcher", "v_mine", "v_resa", "v_flode", "v_forum", "v_reportage", "v_klubbar", "v_landslag", "v_tabell", "v_arenor", "v_tips", "v_quiz", "v_profil", "m_open", "log", "wish", "trip_new", "cal", "fav", "login_click", "trip_search", "trip_share", "trip_leg", "trip_log", "trip_top", "top_city", "home_top", "plus", "plus_log", "plus_trip", "plus_rep", "plus_ask", "out_hotel", "out_travel", "out_tix", "out_ext", "c_SE", "c_NO", "c_DK", "c_FI", "c_IS", "c_DE", "c_GB", "c_IE", "c_NL", "c_BE", "c_FR", "c_ES", "c_PT", "c_IT", "c_CH", "c_AT", "c_PL", "c_CZ", "c_HU", "c_HR", "c_RS", "c_GR", "c_TR", "c_RO", "c_UA", "c_EE", "c_LV", "c_LT", "c_US", "c_CA", "c_MX", "c_BR", "c_AR", "c_AU", "c_JP", "c_TH", "c_AE", "c_ZA", "c_IN", "c_CN", "c_XX", "trip_ask", "out_tour", "tix", "out_do"]);
+let USE_Q={},USE_LAST=null;const BOOT_QS=location.search;// länkparametrar tas bort ur adressen direkt, så de sparas här för statistiken
 function track(k,n){if(!USAGE_KEYS.has(k))return;USE_Q[k]=(USE_Q[k]||0)+(n||1);}
 function flushUsage(){const q=USE_Q;if(!Object.keys(q).length||typeof window.groundlyUsage!=="function")return;USE_Q={};try{window.groundlyUsage(q).catch(()=>{});}catch(e){}}
 setInterval(flushUsage,60000);
@@ -1798,7 +1798,19 @@ function usageCountry(){const byName={};USE_CC.forEach(([k,n])=>byName[n]=k);["E
   try{const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||"";if(TZ_CC[tz])return TZ_CC[tz];
     if(/^America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit|Indiana|Boise)|^Pacific\/Honolulu/.test(tz))return"US";if(/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|St_Johns|Regina)/.test(tz))return"CA";if(/^Australia\//.test(tz))return"AU";}catch(e){}
   return"XX";}
-function usageStart(){track("s");try{track("v_"+mode);}catch(e){}setTimeout(()=>{try{track("c_"+usageCountry());}catch(e){}},4000);try{if(!store.get("fk-seen")){track("s_new");store.set("fk-seen","1");}}catch(e){}
+// varifrån besöket kom (bara kategori, en gång per besök): länken ?src=fb|ig|reddit|sf|tt|mail|press|club för egna inlägg,
+// annars sidan man kom från (sökmotor, Facebook/Instagram, Reddit, X, Svenskafans, Groundlys egna klubbsidor …)
+function usageRef(){try{if(sessionStorage.getItem("fk-ref"))return;sessionStorage.setItem("fk-ref","1");}catch(e){}
+  const sp=new URLSearchParams(BOOT_QS);const src=(sp.get("src")||sp.get("utm_source")||"").toLowerCase().replace(/[^a-z]/g,"");
+  if(src){track(["fb","ig","reddit","sf","tt","mail","press","club"].includes(src)?"src_"+src:"src_other");}
+  let h="";try{h=document.referrer?new URL(document.referrer).hostname.replace(/^www\./,""):"";}catch(e){}
+  if(sp.get("klubb"))return track("ref_pages");
+  if(!h)return track("ref_direct");if(h===location.hostname)return; // inom sajten
+  if(/(^|\.)(google\.|bing\.com|duckduckgo\.com|ecosia\.org|yahoo\.|startpage\.com|qwant\.com|brave\.com)/.test(h))return track("ref_search");
+  if(/(^|\.)(facebook\.com|fb\.com|fb\.me|messenger\.com|instagram\.com|threads\.net|l\.facebook\.com|lm\.facebook\.com)$/.test(h))return track("ref_meta");
+  if(/(^|\.)(reddit\.com|redd\.it)$/.test(h))return track("ref_reddit");if(/(^|\.)(t\.co|twitter\.com|x\.com)$/.test(h))return track("ref_x");
+  if(/svenskafans\.com$/.test(h))return track("ref_sf");track("ref_other");}
+function usageStart(){try{usageRef();}catch(e){}track("s");try{track("v_"+mode);}catch(e){}setTimeout(()=>{try{track("c_"+usageCountry());}catch(e){}},4000);try{if(!store.get("fk-seen")){track("s_new");store.set("fk-seen","1");}}catch(e){}
   try{if(matchMedia("(display-mode: standalone)").matches||navigator.standalone)track("s_pwa");}catch(e){}
   try{track("look_"+(typeof look!=="undefined"&&look?look:"std"));track("lang_"+LANG);if(document.documentElement.dataset.theme==="dark"||(!document.documentElement.dataset.theme&&matchMedia("(prefers-color-scheme: dark)").matches))track("dark");}catch(e){}}
 function setMode(m){const prev=mode,y0=window.scrollY;if(prev==="resa"&&m!=="resa"&&typeof resaGuard==="function"){const pop=navPop;if(resaGuard(()=>setMode(m))){if(pop){try{history.pushState({m:"resa"},"");}catch(e){}}return;}}if(m!==prev)track("v_"+m);if(m!==prev)repPopOrder=null;
@@ -5990,6 +6002,7 @@ const UST_GROUPS=[["Besök",[["s","Besök (appen öppnad)"],["s_in","…varav in
   ["Sidor",[["v_hem","Hem"],["v_matcher","Matcher"],["v_mine","Min fotboll"],["v_resa","Planera resa"],["v_flode","Community"],["v_forum","Forum"],["v_reportage","Matchberättelser"],["v_arenor","Arenor"],["v_tabell","Tabeller"],["v_klubbar","Klubbar"],["v_landslag","Landslag"],["v_tips","Tips"],["v_quiz","Quiz"],["v_profil","Mitt konto"]]],
   ["Gjort",[["log","Loggade matcher"],["wish","Vill gå"],["tix","Markerat Har biljett"],["m_open","Öppnat en match"],["cal","Kalender"],["fav","Favoritknappen"],["plus","Öppnat Skapa"],["plus_log","Skapa → Logga"],["plus_trip","Skapa → Resa"],["plus_rep","Skapa → Berättelse"],["plus_ask","Skapa → Forum"],["login_click","Tryckt Logga in"]]],
   ["Resor",[["trip_search","Sökt resa"],["trip_new","Sparat resa"],["trip_leg","Lagt till stad"],["trip_share","Delat resa"],["trip_ask","Frågat i forumet om resa"],["trip_log","Loggat resa"],["trip_top","Öppnat topplistan"],["top_city","Valt stad i topplistan"],["home_top","Startsidans Mest fotboll"]]],
+  ["Varifrån",[["ref_direct","Direkt / app / okänd"],["ref_search","Sökmotor"],["ref_meta","Facebook / Instagram"],["ref_reddit","Reddit"],["ref_x","X / Twitter"],["ref_sf","Svenskafans"],["ref_pages","Groundlys klubb- och arenasidor"],["ref_other","Andra sajter"],["src_fb","Länk ?src=fb"],["src_ig","Länk ?src=ig"],["src_reddit","Länk ?src=reddit"],["src_sf","Länk ?src=sf"],["src_tt","Länk ?src=tt"],["src_mail","Länk ?src=mail"],["src_press","Länk ?src=press"],["src_club","Länk ?src=club"],["src_other","Annan ?src="]]],
   ["Klick ut",[["out_hotel","Hotell"],["out_travel","Resa (Omio)"],["out_tour","Arenaturer"],["out_do","Saker att göra"],["out_tix","Biljetter"],["out_ext","Andra länkar"]]],
   ["Länder",USE_CC.map(([k,n])=>["c_"+k,n]),1],
   ["Utseende och språk",[["dark","Mörkt läge"],["look_std","Standard"],["look_modern","Modern"],["look_ticket","Biljetten"],["look_atlas","Atlas"],["look_kit","Kit"],...["sv","en","nb","da","fi","is","de","es","fr","it","nl","pl","pt"].map(l=>["lang_"+l,"Språk: "+l])]]];
@@ -6312,6 +6325,9 @@ document.addEventListener("click",async e=>{const t=e.target.closest("[data-shar
   if(navigator.share){try{await navigator.share({title,text:title+" – Groundly",url});}catch(err){}return;}
   try{await navigator.clipboard.writeText(url);toast($t("Länken är kopierad."),"check");}catch(err){window.prompt($t("Kopiera länken:"),url);}},true);
 let deepJump=null;
+// länk från en klubb- eller arenasida (site/klubb/…): ?klubb=<id> öppnar klubbens kort i appen
+{const k=new URLSearchParams(location.search).get("klubb");if(k){setTimeout(()=>{try{const u=new URL(location.href);u.searchParams.delete("klubb");history.replaceState(null,"",u.toString());}catch(e){}
+  if(!C[k])return;const b=document.createElement("button");b.dataset.open=k;b.hidden=true;document.body.appendChild(b);b.click();b.remove();},300);}}
 // länk från en påminnelse: ?go=mine öppnar Min fotboll, ?go=hem startsidan (där "Var du där?" visas)
 {const g=new URLSearchParams(location.search).get("go");if(g==="mine"||g==="hem"||g==="resa"){try{const u=new URL(location.href);u.searchParams.delete("go");history.replaceState(null,"",u.toString());}catch(e){}setTimeout(()=>{try{setMode(g);window.scrollTo({top:0});}catch(e){}},0);}}
 // quizlänk från en kompis: ?q=KOD startar samma frågor, ?q=dagens öppnar quizet
@@ -6646,7 +6662,7 @@ function render(){
    :mode==="forum"?`<div class="forumrules"><b>${$t("Forumregler")}</b><br>${$t("Håll god ton och hjälp varandra. Spam, hat, olagligt innehåll och personuppgifter om andra tas bort. Ser du något som inte hör hemma här, tryck Anmäl.")}</div><div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; moderatorerna kan dölja inlägg.")}</div>`
    :`<div>${$t("Inläggen syns för alla som kan öppna sidan. Var och en kan bara ändra och ta bort sina egna inlägg; sidans ägare kan dölja inlägg.")}</div>`;
   if(CREST.on&&LOGO_IDS.length)document.getElementById("foot").insertAdjacentHTML("beforeend",`<div>${$t("Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.")}</div>`);
-  document.getElementById("foot").insertAdjacentHTML("beforeend",`<div><button class="link" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button> · <button class="link" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button></div>`);
+  document.getElementById("foot").insertAdjacentHTML("beforeend",`<div><button class="link" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button> · <button class="link" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button> · <a class="link" href="klubbar/">${$t("Alla klubbar och arenor")}</a></div>`);
   if(mode==="klubbar"||mode==="landslag")renderClubs();else if(mode==="arenor")renderArenas();else if(mode==="matcher")renderMatches();else if(mode==="tabell")renderTable();else if(mode==="tips"||mode==="quiz")rerenderQuizHost();else if(mode==="mine")renderMine();else if(mode==="reportage")renderReports();else if(mode==="flode")renderFlode();else if(mode==="hem")renderHome();else if(mode==="profil")renderProfil();else if(mode==="resa")renderResa();else renderForum();}
 document.body.insertAdjacentHTML("beforeend",`<datalist id="allNats">${Object.values(C).filter(c=>c.l==="Landslag").map(c=>`<option value="${esc(c.n)}">`).join("")}</datalist>`);
 document.getElementById("allClubs").innerHTML=Object.values(C).map(c=>`<option value="${esc(c.n)}">`).join("");

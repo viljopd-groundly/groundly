@@ -17,6 +17,10 @@ self.addEventListener("fetch", e => {
   const url = new URL(req.url);
   const same = url.origin === self.location.origin;
   // sidan: sparad kopia direkt (nätet bara första gången)
+  // klubb-, arena-, serie- och landsidorna (och sitemap m.m.) är vanliga sidor: hämtas från nätet, inte appens kopia
+  const scope = new URL(self.registration.scope).pathname;
+  const rest = url.pathname.startsWith(scope) ? url.pathname.slice(scope.length) : url.pathname;
+  if (req.mode === "navigate" && same && rest !== "" && rest !== "index.html") { e.respondWith(fetch(req).catch(() => caches.match(req))); return; }
   if (req.mode === "navigate") {
     e.respondWith(fromCache("index.html").then(hit => hit || fetch(req, { cache: "no-cache" }).then(r => put(new Request("index.html"), r))).catch(() => fetch(req)));
     return;
