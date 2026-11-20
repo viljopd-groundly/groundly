@@ -154,7 +154,9 @@ for c in W:
 
 # serier som API:et har som EN serie men som spelas i grupper: lagen delas efter gruppen i API:ets tabell
 # (site/data/standings.json från nattkörningen), och nattkörningen sätter matchernas serie efter lagens grupp
-SPLIT = {"2. Lig": [("White Group", "2. Lig Vita gruppen"), ("Red Group", "2. Lig Röda gruppen")]}
+# "*" = lagen som inte finns i någon av API:ets grupptabeller (Belgiens flamländska grupp saknar tabell i API:et)
+SPLIT = {"2. Lig": [("White Group", "2. Lig Vita gruppen"), ("Red Group", "2. Lig Röda gruppen")],
+         "First Amateur Division": [("National Division 1", "Division 1 ACFF"), ("*", "1e Afdeling VV")]}
 split_maps = {}
 try:
     ST = json.load(open(os.path.join(ROOT, "site", "data", "standings.json"), encoding="utf8"))["leagues"]
@@ -164,9 +166,13 @@ for lname, parts in SPLIT.items():
     m = {}
     for g in (ST.get(lname) or {}).get("groups", []):
         for key, new in parts:
-            if key.lower() in (g.get("name") or "").lower():
+            if key != "*" and key.lower() in (g.get("name") or "").lower():
                 for r in g["rows"]:
                     if r[0]: m[r[0]] = new
+    rest = [new for key, new in parts if key == "*"]
+    if m and rest:
+        for r in rows:
+            if r[6] == lname and r[0] not in m: m[r[0]] = rest[0]
     if m:
         split_maps[lname] = m
         for r in rows:
