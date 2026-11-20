@@ -1678,8 +1678,8 @@ const mSearching=()=>!!(MQ||(cityQ&&norm(cityQ)));const mqkGeo=k=>k&&k!=="mylg";
 function mqkOk(m){if(!MQK)return true;if(MQK==="mylg")return favLeagues().includes(m.comp);if(mSearching())return true;
   if(MQK==="near"){const h=homeLL();const g=GEO[m.city];return!!(h&&g&&roadKm(h.ll,g)<=50);}
   const iso=ctryIso(m.country||(C[m.home]||{}).c);const S=CONTS[MQK];return!!(S&&iso&&S.has(iso));}
-// söker man när bara Idag är valt visas de närmaste två veckorna (annars blir det ofta tomt)
-function mWiden(){const t=today();if(dFrom===t&&dTo===t)dTo=addDays(t,13);}
+// söker man när bara Idag är valt visas 30 dagar (knappen "30 dagar" blir markerad), annars blir det ofta tomt
+function mWiden(){const t=today();if(dFrom===t&&dTo===t)dTo=addDays(t,29);}
 const mqOk=m=>MQ.t==="team"?(m.home===MQ.v||m.away===MQ.v):MQ.t==="country"?m.country===MQ.v:m.comp===MQ.v;
 let MATCHES=[],dbState="loading",META=null;
 // säsongen 2026/27 i de stora ligorna, från öppen data (openfootball, CC0): [hemma, borta, avspark|null, datum, resultat, serie, nivå]

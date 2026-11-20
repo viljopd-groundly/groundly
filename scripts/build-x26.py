@@ -8,7 +8,7 @@ import json, os, re, unicodedata, subprocess
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 T = lambda f: os.path.join(ROOT, "tools", f)
 W = []
-for f in ["teams_world.json", "teams_world9.json", "teams_world10.json", "teams_world11.json", "teams_world12.json"]:
+for f in ["teams_world.json", "teams_world9.json", "teams_world10.json", "teams_world11.json", "teams_world12.json", "teams_world13.json", "teams_world14.json"]:
     if os.path.exists(T(f)): W += json.load(open(T(f), encoding="utf8"))["countries"]
 
 # (API-land, API-serie) -> (vårt land, vårt serienamn, nivå, id-prefix, kod, regex, dam)
@@ -30,6 +30,17 @@ LEAGUES = {
  ("Lithuania", "1 Lyga"): ("Litauen", "Pirma lyga", 2, "lt2", "lt.2", r"^1 lyga$", False),
  ("Poland", "Ekstraliga Women"): ("Polen", "Ekstraliga (damer)", 1, "plw", "pl.w1", r"^ekstraliga women$", True),
  ("Portugal", "1a Divisão - Women"): ("Portugal", "Liga BPI", 1, "ptw", "pt.w1", r"^1a divis[aã]o - women$", True),
+ ("USA", "USL Championship"): ("USA", "USL Championship", 2, "us2", "us.2", r"^usl championship$", False),
+ ("Argentina", "Primera Nacional"): ("Argentina", "Primera Nacional", 2, "ar2", "ar.2", r"^primera nacional$", False),
+ ("Japan", "J3 League"): ("Japan", "J3 League", 3, "jp3", "jp.3", r"^j3 league$", False),
+ ("Brazil", "Serie C"): ("Brasilien", "Série C (Brasilien)", 3, "br3", "br.3", r"^serie c$", False),
+ ("Belgium", "First Amateur Division"): ("Belgien", "First Amateur Division", 3, "be3", "be.3", r"^first amateur division$", False),
+ ("Switzerland", "1. Liga Promotion"): ("Schweiz", "Promotion League", 3, "ch3", "ch.3", r"^1\. liga promotion$", False),
+ ("Japan", "WE League"): ("Japan", "WE League", 1, "jpw", "jp.w1", r"^we league$", True),
+ ("Brazil", "Brasileiro Women"): ("Brasilien", "Brasileirão Feminino", 1, "brw", "br.w1", r"^brasileiro women$", True),
+ ("Belgium", "Super League Women"): ("Belgien", "Super League (damer, Belgien)", 1, "bew", "be.w1", r"^super league women$", True),
+ ("Switzerland", "AXA Women’s Super League"): ("Schweiz", "Women's Super League (Schweiz)", 1, "chw", "ch.w1", r"^axa women.s super league$", True),
+ ("Austria", "Frauenliga"): ("Österrike", "Frauenliga (Österrike)", 1, "atw", "at.w1", r"^frauenliga$", True),
  ("USA", "NWSL Women"): ("USA", "NWSL", 1, "usw", "us.w1", r"^nwsl women$", True),
  ("Netherlands", "Eredivisie Women"): ("Nederländerna", "Vrouwen Eredivisie", 1, "nlw", "nl.w1", r"^eredivisie women$", True),
 }
@@ -43,8 +54,12 @@ NAME_FIX = {"Nykobing FC": "Nykøbing FC", "Naestved": "Næstved BK", "Roskilde"
             "HIK": "Hellerup IK", "Middelfart": "Middelfart BK", "Neptūną Klaipėda": "Neptūnas Klaipėda", "Kahramanmaraş İstiklal Spor": "Kahramanmaraş İstiklal Spor",
             "Pogon Szczecin": "Pogoń Szczecin", "Rekord Bielsko-Biala": "Rekord Bielsko-Biała", "Slask Wroclaw": "Śląsk Wrocław", "UJ Krakow": "AZS UJ Kraków",
             "Lech Poznan": "Lech Poznań", "Legia": "Legia Warszawa", "Sleza Wroclaw": "Ślęza Wrocław", "Akademia Piłkarska LG": "AP LG Gdańsk",
-            "Sporting Braga": "SC Braga", "Vitoria Guimaraes": "Vitória Guimarães", "Porto": "FC Porto", "SL Benfica": "Benfica"}
-DAM_SUFFIX = {"Polen", "Portugal"}  # damlag i dessa länder får "(dam)" så de skiljs från herrlaget
+            "Sporting Braga": "SC Braga", "Standard Liege": "Standard Liège", "RAAL La Louviere": "RAAL La Louvière", "Ferroviaria": "Ferroviária", "Gremio": "Grêmio",
+            "America Mineiro": "América Mineiro", "Internacional RS": "Internacional", "Vitória BA": "Vitória", "Atletico DE Rafaela": "Atlético de Rafaela", "Colon Santa Fe": "Colón",
+            "Atletico Mitre": "Atlético Mitre", "Defensores De Belgrano": "Defensores de Belgrano", "Deportivo Maipu": "Deportivo Maipú", "Racing Cordoba": "Racing de Córdoba",
+            "San Martin S.J.": "San Martín de San Juan", "San Martin Tucuman": "San Martín de Tucumán", "Tristan Suarez": "Tristán Suárez", "Inter De Limeira": "Inter de Limeira",
+            "Deportivo Moron": "Deportivo Morón", "Atletico Mineiro": "Atlético Mineiro", "Vitoria Guimaraes": "Vitória Guimarães", "Porto": "FC Porto", "SL Benfica": "Benfica"}
+DAM_SUFFIX = {"Polen", "Portugal", "Japan", "Brasilien", "Belgien", "Schweiz", "Österrike"}  # damlag i dessa länder får "(dam)" så de skiljs från herrlaget
 def norm(s):
     return re.sub(r"[^a-z0-9]+", " ", unicodedata.normalize("NFD", s or "").encode("ascii", "ignore").decode().lower()).strip()
 def slug(s):
@@ -71,11 +86,18 @@ for ours, aid in LOGO.items(): known.setdefault(int(aid), ours)
 # handskrivna rättelser: stad för lag utan arena i API:t, och koordinater som OpenStreetMap inte hittade
 CITY_FIX = {"Biellese": "Biella", "Celle Varazze": "Celle Ligure", "Valenzana": "Valenza", "Lascaris": "Pianezza", "Millesimo": "Millesimo", "Leon Monza e Brianza": "Vimercate", "Milan II": "Solbiate Arno", "Rovato Vertovese": "Rovato", "Nibbiano & Valtidone": "Nibbiano", "Pavonese": "Pavone del Mella", "FC Obermais": "Merano", "Altavilla": "Altavilla Vicentina", "Conegliano": "Conegliano", "Sandona": "San Donà di Piave", "Schio": "Schio", "Oltrepò": "Broni", "Pavia": "Pavia", "Coriano": "Coriano", "Solbiatese": "Solbiate Arno", "Rondinella": "Florens", "Angelana": "Santa Maria degli Angeli", "Lanciano FC": "Lanciano", "Montecchio Gallo": "Vallefoglia", "Pietralunga": "Pietralunga", "Santegidiese": "Sant'Egidio alla Vibrata", "Atletico Lodigiani": "Rom", "Monastir": "Monastir", "Aranova": "Fiumicino", "Certosa V. Campagnano": "Campagnano di Roma", "Ossese": "Ossi", "Venafro": "Venafro", "Ebolitana": "Eboli", "Real Forio 2014": "Forio", "AC Palermo": "Palermo", "Calcio Avola": "Avola", "Digiesse PraiaTortora": "Praia a Mare", "Modica": "Modica",
             "Iğdır FK": "Iğdır", "WSPG Wels": "Wels", "Asteras Tripolis II": "Tripoli", "Pyrgos 1968": "Pyrgos", "Boston Legacy": "Boston",
-            "Denver Summit": "Denver", "Riga Mariners": "Riga", "Super Nova 2": "Riga", "Hegelmann II": "Kaunas", "Transinvest 2": "Vilnius",
+            "Denver Summit": "Denver", "Sporting JAX": "Jacksonville", "Brooklyn": "New York",
+            "Standard Liège II": "Liège", "Cercle Brugge II": "Brygge", "RWDM": "Bryssel", "Union Saint-Gilloise II": "Bryssel", "Tienen": "Tienen", "Roeselare Daisel": "Roeselare",
+            "Ferroviária (dam)": "Araraquara", "Internacional (dam)": "Porto Alegre", "Vitória (dam)": "Salvador", "Mixto (dam)": "Cuiabá",
+            "Elfen Saitama (dam)": "Saitama", "INAC Kobe Leonessa (dam)": "Kobe", "Nojima Stella (dam)": "Sagamihara", "Omiya Ardija Ventus (dam)": "Saitama",
+            "Tokyo Verdy Beleza (dam)": "Tokyo", "Parceiro Nagano (dam)": "Nagano", "Servette Chênois (dam)": "Genève", "Aarau (dam)": "Aarau",
+            "Yverdon (dam)": "Yverdon-les-Bains", "Rapperswil Jona (dam)": "Rapperswil-Jona", "Südburgenland (dam)": "Güssing",
+            "Colón": "Santa Fe (Argentina)", "Racing de Córdoba": "Córdoba (Argentina)",
+            "All Boys": "Buenos Aires", "Ferro Carril Oeste": "Buenos Aires", "Nueva Chicago": "Buenos Aires", "Defensores de Belgrano": "Buenos Aires", "Atlanta": "Buenos Aires", "Riga Mariners": "Riga", "Super Nova 2": "Riga", "Hegelmann II": "Kaunas", "Transinvest 2": "Vilnius",
             "Nõmme United II": "Tallinn", "Adana 01 FK": "Adana", "İskenderunspor": "İskenderun", "Kauno Žalgiris II": "Kaunas",
             "Lech Poznań (dam)": "Poznań", "Legia Warszawa (dam)": "Warszawa", "Ślęza Wrocław (dam)": "Wrocław", "Racing Power (dam)": "Seixal",
             "Rio Ave (dam)": "Vila do Conde", "Vitória Guimarães (dam)": "Guimarães", "FC Porto (dam)": "Porto", "Fremad Amager": "Köpenhamn", "B 93": "Köpenhamn", "VSK Århus": "Aarhus", "Brabrand IF": "Aarhus", "Hellerup IK": "Hellerup", "Heerenveen (dam)": "Heerenveen", "Utrecht (dam)": "Utrecht"}
-GEO_FIX = {"İskenderun": [36.59, 36.17], "Adana": [37.0, 35.32], "Frederiksberg": [55.68, 12.53], "Hellerup": [55.73, 12.57], "Biella": [45.57, 8.05], "Celle Ligure": [44.34, 8.55], "Valenza": [45.01, 8.64], "Pianezza": [45.1, 7.55], "Millesimo": [44.37, 8.2], "Vimercate": [45.61, 9.37], "Solbiate Arno": [45.72, 8.81], "Rovato": [45.56, 9.99], "Nibbiano": [44.9, 9.33], "Pavone del Mella": [45.3, 10.21], "Merano": [46.67, 11.16], "Altavilla Vicentina": [45.51, 11.47], "Conegliano": [45.89, 12.3], "San Donà di Piave": [45.63, 12.57], "Schio": [45.71, 11.36], "Broni": [45.06, 9.26], "Pavia": [45.19, 9.16], "Coriano": [43.96, 12.6], "Santa Maria degli Angeli": [43.06, 12.58], "Lanciano": [42.23, 14.39], "Vallefoglia": [43.83, 12.8], "Pietralunga": [43.44, 12.43], "Sant'Egidio alla Vibrata": [42.83, 13.72], "Monastir": [39.38, 9.05], "Fiumicino": [41.77, 12.24], "Campagnano di Roma": [42.14, 12.38], "Ossi": [40.68, 8.59], "Venafro": [41.48, 14.04], "Eboli": [40.62, 15.06], "Forio": [40.74, 13.86], "Avola": [36.91, 15.14], "Praia a Mare": [39.9, 15.78], "Modica": [36.86, 14.76],
+GEO_FIX = {"Rapperswil-Jona": [47.23, 8.82], "Güssing": [47.06, 16.32], "Tienen": [50.81, 4.94], "Roeselare": [50.95, 3.12], "Santiago del Estero": [-27.79, -64.26], "Jacksonville": [30.33, -81.66], "İskenderun": [36.59, 36.17], "Adana": [37.0, 35.32], "Frederiksberg": [55.68, 12.53], "Hellerup": [55.73, 12.57], "Biella": [45.57, 8.05], "Celle Ligure": [44.34, 8.55], "Valenza": [45.01, 8.64], "Pianezza": [45.1, 7.55], "Millesimo": [44.37, 8.2], "Vimercate": [45.61, 9.37], "Solbiate Arno": [45.72, 8.81], "Rovato": [45.56, 9.99], "Nibbiano": [44.9, 9.33], "Pavone del Mella": [45.3, 10.21], "Merano": [46.67, 11.16], "Altavilla Vicentina": [45.51, 11.47], "Conegliano": [45.89, 12.3], "San Donà di Piave": [45.63, 12.57], "Schio": [45.71, 11.36], "Broni": [45.06, 9.26], "Pavia": [45.19, 9.16], "Coriano": [43.96, 12.6], "Santa Maria degli Angeli": [43.06, 12.58], "Lanciano": [42.23, 14.39], "Vallefoglia": [43.83, 12.8], "Pietralunga": [43.44, 12.43], "Sant'Egidio alla Vibrata": [42.83, 13.72], "Monastir": [39.38, 9.05], "Fiumicino": [41.77, 12.24], "Campagnano di Roma": [42.14, 12.38], "Ossi": [40.68, 8.59], "Venafro": [41.48, 14.04], "Eboli": [40.62, 15.06], "Forio": [40.74, 13.86], "Avola": [36.91, 15.14], "Praia a Mare": [39.9, 15.78], "Modica": [36.86, 14.76],
            "Iğdır": [39.92, 44.04], "Wels": [48.16, 14.03], "Tripoli": [37.51, 22.37], "Pyrgos": [37.68, 21.44], "Boston": [42.36, -71.06], "Denver": [39.74, -104.99],
            "Heerenveen": [52.96, 5.92], "Utrecht": [52.09, 5.12], "Gleisdorf": [47.10, 15.71], "Welling": [51.46, 0.11], "Ashton-under-Lyne": [53.49, -2.10],
            "Workington": [54.64, -3.55], "Sandhurst": [51.35, -0.80], "Hanworth": [51.44, -0.39], "Bishop's Stortford": [51.87, 0.16], "Cardington": [52.11, -0.42],
@@ -109,7 +131,12 @@ for c in W:
             city = city_of(v); arena = (v.get("name") or "").replace("&apos;", "'").strip() or None; cap = v.get("capacity") or None
             if name in CITY_FIX: city = CITY_FIX[name]
             if women and not city:
-                P = by_name.get((land, norm(re.sub(r"\s*\(dam\)$", "", name).split("/")[0])))
+                base = norm(re.sub(r"\s*\(dam\)$", "", name).split("/")[0])
+                P = by_name.get((land, base))
+                if not P:  # "Genk" -> KRC Genk: herrlag i samma land där damlagets namn ingår som hela ord
+                    cand = [c for c in CL if c[3] == land and c[6] not in WL and (" " + base + " ") in (" " + norm(c[1]) + " " + (c[2] or "") + " ")]
+                    cand.sort(key=lambda c: (c[7] if isinstance(c[7], int) else 9, len(c[1])))
+                    P = cand[0] if cand else None
                 if P: city, arena, cap = P[4], P[8], P[9]
             if city:
                 g = geo_by_norm.get(norm(city))
@@ -125,6 +152,30 @@ for c in W:
             rows.append([cid, name, alias, land, city or None, founded, lname, tier, arena, cap, "", [], 1])
             (w_ids if women else men_ids)[str(aid)] = cid
 
+# serier som API:et har som EN serie men som spelas i grupper: lagen delas efter gruppen i API:ets tabell
+# (site/data/standings.json från nattkörningen), och nattkörningen sätter matchernas serie efter lagens grupp
+SPLIT = {"2. Lig": [("White Group", "2. Lig Vita gruppen"), ("Red Group", "2. Lig Röda gruppen")]}
+split_maps = {}
+try:
+    ST = json.load(open(os.path.join(ROOT, "site", "data", "standings.json"), encoding="utf8"))["leagues"]
+except Exception:
+    ST = {}
+for lname, parts in SPLIT.items():
+    m = {}
+    for g in (ST.get(lname) or {}).get("groups", []):
+        for key, new in parts:
+            if key.lower() in (g.get("name") or "").lower():
+                for r in g["rows"]:
+                    if r[0]: m[r[0]] = new
+    if m:
+        split_maps[lname] = m
+        for r in rows:
+            if r[6] == lname and r[0] in m: r[6] = m[r[0]]
+        miss = [r[1] for r in rows if r[6] == lname]
+        if miss: skipped.append(f"{lname}: utan grupp {miss}")
+    else:
+        skipped.append(f"{lname}: ingen grupptabell hittad – serien delas inte")
+rows.sort(key=lambda r: (r[3], r[7] if isinstance(r[7], int) else 9, r[6]))
 out = ["// Andraligor, Baltikum, Polen/Turkiet/Danmark nivå 3, damserier i Polen och Portugal, England nivå 7, Segunda Federación, Serie D och damserierna NWSL och Vrouwen Eredivisie (API-Football nov 2026, se scripts/build-x26.py).", "module.exports=["]
 last = None
 for r in rows:
@@ -140,6 +191,6 @@ have_wl = {l[0] for l in WI["leagues"]}
 for l in leagues:
     if l[6] and l[0] not in have_wl: WI["leagues"].append([l[0], l[1], l[2], l[3], l[4], l[5]])
 json.dump(WI, open(T("women_ids.json"), "w"), ensure_ascii=False)
-json.dump([l[:6] for l in leagues if not l[6]], open(T("x26_leagues.json"), "w", encoding="utf8"), ensure_ascii=False)
+json.dump([l[:6] + ([split_maps[l[0]]] if l[0] in split_maps else []) for l in leagues if not l[6]], open(T("x26_leagues.json"), "w", encoding="utf8"), ensure_ascii=False)
 print(len(rows), "nya klubbar,", len(men_ids) + len(w_ids), "lag-id kopplade,", len(geo), "nya orter,", len(leagues), "serier")
 for s in skipped: print("  OBS", s)
