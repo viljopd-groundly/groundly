@@ -847,6 +847,11 @@ footer{font-size:calc(12px*var(--fs));color:var(--muted);display:flex;flex-direc
 .legrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
 .legform{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:12px}.legform .fld input,.legform .fld select,.legform .fld textarea{background-color:var(--bg)}
 .arsel{margin:4px 0 10px}.arsel summary{cursor:pointer;font-weight:600;color:var(--accent)}.arsel .lbl{margin:8px 0 2px}
+.arcs{display:grid;gap:6px;margin-top:10px;text-align:left}.arc{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.arc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 12px;font-weight:600;color:var(--fg)}.arc>summary::-webkit-details-marker{display:none}
+.arc>summary:after{content:"";width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:-3px 4px 0 auto;transition:transform .15s}.arc[open]>summary:after{transform:rotate(225deg);margin-top:3px}
+.arcn{background:var(--accent);color:#0b1a12;border-radius:99px;font-size:calc(12px*var(--fs));padding:1px 8px;font-weight:700}.arcn[hidden]{display:none}.arcl{color:var(--muted);font-weight:500;font-size:calc(13px*var(--fs))}
+.arc .chips{padding:0 12px 12px;margin:0}
 .pdets{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:flex-start}.pdets{flex-wrap:nowrap}.pdets details{flex:1 1 0;min-width:0}.pdets .pseen summary{text-align:right}.pdets .pseen[open] summary{text-align:left}
 /* rita bara kort som syns på skärmen (snabbare långa listor) */
 #tipsList>.tip,#arenaList>.tip,#clubList>.card,#repList>.rep{content-visibility:auto;contain-intrinsic-size:auto 280px}
@@ -3124,7 +3129,7 @@ function renderDouble(){
 // ---------- utmaningar, karta och delningsbilder ----------
 const MAPS=/*MAPS*/{};
 const LEAGUES=["Allsvenskan","Superettan","Premier League","Championship","Scottish Premiership","Bundesliga","La Liga","Serie A","Ligue 1","Eliteserien","Superligaen","Veikkausliiga","Besta deild","Eredivisie","Pro League","Primeira Liga","Ekstraklasa","MLS"];
-let arSelOpen=false,arDraft=null,seasonYear=new Date().getFullYear(),dlNs,shareFmt="post",mapRegion=null,shareMatchId=null;
+const AR_OPEN=new Set();let arSelOpen=false,arDraft=null,seasonYear=new Date().getFullYear(),dlNs,shareFmt="post",mapRegion=null,shareMatchId=null;
 try{if(store.get("fk-fmt")==="story")shareFmt="story";const mr=store.get("fk-mapr");if(mr==="se"||mr==="eu"||mr==="world")mapRegion=mr;}catch(e){}
 (async()=>{try{dlNs=await window.claude?.use?.("downloads")??null;}catch(e){dlNs=null}if(mode==="mine")renderMine();})();
 function leagueArenas(l){const m=new Map();Object.values(C).forEach(c=>{if(c.l===l&&c.v&&c.s&&!m.has(c.s))m.set(c.s,c);});return m;}
@@ -3348,9 +3353,13 @@ function renderChallenges(){const vs=visitedStadiums();
   h+=card(nat,`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">${TR_ICO.n}</svg>`,$t("Europas landslag"),$t("landslag"),
     `<p class="hint" style="margin:0 0 8px">${$t("Ett landslag räknas när du har loggat en landskamp med laget, hemma eller borta.")}</p>${ns.size?`<div class="natflags">${[...ns].filter(id=>C[id].conf==="UEFA").map(id=>`<button class="link" data-open="${esc(id)}" title="${esc(C[id].n)}">${crest(id,C[id].n,26)}</button>`).join("")}</div>`:""}${natMiss.length?`<div class="clbl">${$t("Saknas")}</div>${list(natMiss,c=>`<button class="cchip" data-open="${esc(c.id)}">${esc(c.n)}</button>`)}`:""}`);
   h+=`<details class="arsel"${arSelOpen?" open":""}><summary>${$t("+ Lägg till eller ta bort serier ({0} valda)",[sel.length])}</summary>
-   ${(()=>{const dr=arDraft||sel;return[...new Set(allL.map(x=>x.c))].map(cn=>`<div class="lbl">${esc($t(cn))}</div><div class="chips wrapchips">${allL.filter(x=>x.c===cn).map(x=>`<button class="chip" data-arsel="${esc(x.l)}" aria-pressed="${dr.includes(x.l)}">${esc(x.l)}</button>`).join("")}</div>`).join("");})()}
+   ${(()=>{const dr=arDraft||sel;// ett land i taget: tryck på landet för att se dess serier (antal valda syns bredvid)
+     return`<div class="arcs">${[...new Set(allL.map(x=>x.c))].map(cn=>{const L=allL.filter(x=>x.c===cn),n=L.filter(x=>dr.includes(x.l)).length;
+       return`<details class="arc" data-arc="${esc(cn)}"${AR_OPEN.has(cn)?" open":""}><summary><span>${esc($t(cn))}</span><span class="arcn"${n?"":" hidden"}>${n}</span></summary><div class="chips wrapchips">${L.map(x=>`<button class="chip" data-arsel="${esc(x.l)}" aria-pressed="${dr.includes(x.l)}">${esc(x.l)}</button>`).join("")}</div></details>`;}).join("")}</div>`;})()}
    <div class="actions"><button class="btn small primary" data-arsel-save="1">${$t("Spara")}</button><button class="btn small" data-arsel-reset="1">${$t("Standardurval")}</button></div></details></div>`;
   return h;}
+function arCounts(){document.querySelectorAll(".arsel .arc").forEach(d=>{const n=d.querySelectorAll('[data-arsel][aria-pressed="true"]').length,b=d.querySelector(".arcn");if(b){b.textContent=n;b.hidden=!n;}});}
+document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.classList&&d.classList.contains("arc")){if(d.open)AR_OPEN.add(d.dataset.arc);else AR_OPEN.delete(d.dataset.arc);}},true);
 // fyll i resultat som saknas i loggen när resultatet finns i arkivet eller i matchschemat (t.ex. matcher sparade före avspark)
 let fillBusy=false,fillDone=false;
 async function fillScores(){if(fillBusy||fillDone||myState!=="ready"||!Array.isArray(MY.attended))return;const miss=MY.attended.filter(a=>!a.score&&a.date&&a.date<today());if(!miss.length){fillDone=true;return;}
@@ -3408,8 +3417,8 @@ function featClick(t){
   // fäll ut/ihop troféraden utan att rita om sidan
   if(t.dataset.trall){trAll=!trAll;const r=t.parentElement.querySelector(".seals");if(r){r.classList.toggle("grid",trAll);r.scrollLeft=0;}t.textContent=trAll?$t("Visa färre"):$t("Visa alla ({0})",[+t.dataset.n]);return;}
   if(t.dataset.arsel){const allL=tblLeagues().map(x=>x.l);if(!arDraft)arDraft=Array.isArray(MY.arSel)?MY.arSel.filter(l=>allL.includes(l)):defArLeagues();
-    const l=t.dataset.arsel;arDraft=arDraft.includes(l)?arDraft.filter(x=>x!==l):[...arDraft,l];t.setAttribute("aria-pressed",String(arDraft.includes(l)));return;}
-  if(t.dataset.arselReset){arDraft=defArLeagues();document.querySelectorAll(".arsel [data-arsel]").forEach(b=>b.setAttribute("aria-pressed",String(arDraft.includes(b.dataset.arsel))));return;}
+    const l=t.dataset.arsel;arDraft=arDraft.includes(l)?arDraft.filter(x=>x!==l):[...arDraft,l];t.setAttribute("aria-pressed",String(arDraft.includes(l)));arCounts();return;}
+  if(t.dataset.arselReset){arDraft=defArLeagues();document.querySelectorAll(".arsel [data-arsel]").forEach(b=>b.setAttribute("aria-pressed",String(arDraft.includes(b.dataset.arsel))));arCounts();return;}
   if(t.dataset.arselSave){const d=arDraft;arDraft=null;arSelOpen=false;if(d){const DL=defArLeagues();const same=d.length===DL.length&&d.every(l=>DL.includes(l));mutate(x=>{if(same)delete x.arSel;else x.arSel=d;});}else renderMine();toast($t("Urvalet är sparat."));return;}
   if(t.dataset.mapr){mapRegion=t.dataset.mapr;store.set("fk-mapr",mapRegion);renderMine();return;}
   if(t.dataset.sharematch){shareMatchId=shareMatchId===t.dataset.sharematch?null:t.dataset.sharematch;renderMine();return;}
