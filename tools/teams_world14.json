@@ -1,0 +1,1246 @@
+{
+ "fetched": "2026-11-20T17:22:14.349Z",
+ "countries": [
+  {
+   "country": "Switzerland",
+   "fetched": "2026-11-20T17:21:08.754Z",
+   "all": [
+    "207 | Super League | League",
+    "208 | Challenge League | League",
+    "510 | 1. Liga Promotion | League",
+    "209 | Schweizer Cup | Cup",
+    "599 | 1. Liga Classic - Group 1 | League",
+    "600 | 1. Liga Classic - Group 2 | League",
+    "601 | 1. Liga Classic - Group 3 | League",
+    "739 | AXA Women’s Super League | League",
+    "796 | 2. Liga Interregional - Group 1 | League",
+    "797 | 2. Liga Interregional - Group 2 | League",
+    "798 | 2. Liga Interregional - Group 3 | League",
+    "799 | 2. Liga Interregional - Group 4 | League",
+    "800 | 2. Liga Interregional - Group 5 | League",
+    "801 | 2. Liga Interregional - Group 6 | League",
+    "1005 | 1. Liga Classic - Play-offs | League",
+    "1044 | Erste Liga Cup | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 510,
+     "name": "1. Liga Promotion",
+     "season": 2026,
+     "seasons": [
+      [
+       2017,
+       "2017-08-02",
+       "2018-05-26",
+       false,
+       false
+      ],
+      [
+       2018,
+       "2018-08-04",
+       "2019-05-25",
+       false,
+       false
+      ],
+      [
+       2019,
+       "2019-08-02",
+       "2020-05-23",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-08-15",
+       "2021-06-12",
+       true,
+       false
+      ],
+      [
+       2021,
+       "2021-08-07",
+       "2022-06-11",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-06",
+       "2023-05-27",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-05",
+       "2024-05-25",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-03",
+       "2025-05-24",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-02",
+       "2026-05-30",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-31",
+       "2027-05-29",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 2182,
+       "name": "FC Schaffhausen",
+       "founded": 1896,
+       "venue": {
+        "name": "FCS Arena",
+        "city": "Schaffhausen",
+        "capacity": 8197,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        47.696,
+        8.6345
+       ]
+      },
+      {
+       "id": 6615,
+       "name": "Bavois",
+       "founded": null,
+       "venue": {
+        "name": "Stade des Peupliers",
+        "city": "Bavois",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        46.6853,
+        6.5652
+       ]
+      },
+      {
+       "id": 6616,
+       "name": "Bellinzona",
+       "founded": 1904,
+       "venue": {
+        "name": "Stadio Comunale Bellinzona",
+        "city": "Bellinzona",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        46.198,
+        9.0222
+       ]
+      },
+      {
+       "id": 6618,
+       "name": "Bulle",
+       "founded": 1910,
+       "venue": {
+        "name": "Stade de Bouleyres",
+        "city": "Bulle",
+        "capacity": 5150,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        46.615,
+        7.0669
+       ]
+      },
+      {
+       "id": 6621,
+       "name": "Cham",
+       "founded": null,
+       "venue": {
+        "name": "Stadion Eizmoos",
+        "city": "Cham",
+        "capacity": 1800,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        47.1824,
+        8.4611
+       ]
+      },
+      {
+       "id": 6652,
+       "name": "YF Juventus",
+       "founded": 1992,
+       "venue": {
+        "name": "Sportanlage Juchhof R4",
+        "city": "Zürich",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        47.3744,
+        8.541
+       ]
+      },
+      {
+       "id": 10585,
+       "name": "Basel II",
+       "founded": 1893,
+       "venue": {
+        "name": "Leichtathletik-Stadion St. Jakob",
+        "city": "Basel",
+        "capacity": 6000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        47.5581,
+        7.5878
+       ]
+      },
+      {
+       "id": 10586,
+       "name": "Breitenrain",
+       "founded": 1994,
+       "venue": {
+        "name": "Sportplatz Spitalacker",
+        "city": "Bern",
+        "capacity": 3500,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        46.9545,
+        7.4546
+       ]
+      },
+      {
+       "id": 10587,
+       "name": "Brühl",
+       "founded": 1901,
+       "venue": {
+        "name": "Paul-Grüninger-Stadion",
+        "city": "St. Gallen",
+        "capacity": 5500,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        47.4339,
+        9.4057
+       ]
+      },
+      {
+       "id": 10591,
+       "name": "Zürich II",
+       "founded": 1896,
+       "venue": {
+        "name": "Sportanlage Heerenschürli",
+        "city": "Zürich",
+        "capacity": 522,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        47.4046,
+        8.5956
+       ]
+      },
+      {
+       "id": 12698,
+       "name": "Young Boys II",
+       "founded": 1898,
+       "venue": {
+        "name": "Stadion Wankdorf",
+        "city": "Bern",
+        "capacity": 32000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        46.9631,
+        7.4649
+       ]
+      },
+      {
+       "id": 12700,
+       "name": "Biel-Bienne",
+       "founded": 1896,
+       "venue": {
+        "name": "Tissot Arena",
+        "city": "Biel/Bienne",
+        "capacity": 5200,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        47.1556,
+        7.2817
+       ]
+      },
+      {
+       "id": 12706,
+       "name": "Luzern II",
+       "founded": 1901,
+       "venue": {
+        "name": "Sportanlage Hubelmatt",
+        "city": "Luzern",
+        "capacity": 7000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        47.0521,
+        8.3058
+       ]
+      },
+      {
+       "id": 12717,
+       "name": "Paradiso",
+       "founded": 1917,
+       "venue": {
+        "name": "Campo Pian Scairolo",
+        "city": "Collina d’Oro",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        45.9791,
+        8.918
+       ]
+      },
+      {
+       "id": 14504,
+       "name": "Kreuzlingen",
+       "founded": null,
+       "venue": {
+        "name": "Sportplatz Hafenareal",
+        "city": "Kreuzlingen",
+        "capacity": 1100,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        47.6464,
+        9.1726
+       ]
+      },
+      {
+       "id": 16316,
+       "name": "Amical Saint-Prex",
+       "founded": null,
+       "venue": {
+        "name": "Stade de Marcy",
+        "city": "Saint-Prex",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        46.4809,
+        6.4586
+       ]
+      },
+      {
+       "id": 17415,
+       "name": "Grand-Saconnex",
+       "founded": 1978,
+       "venue": {
+        "name": "Stade du Blanché",
+        "city": "Le Grand-Saconnex",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 34,
+       "ll": [
+        46.2363,
+        6.1265
+       ]
+      },
+      {
+       "id": 17441,
+       "name": "Lugano II",
+       "founded": null,
+       "venue": {
+        "name": "Centro sportivo Cornaredo B2",
+        "city": "Lugano",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 34,
+       "ll": [
+        46.0038,
+        8.9512
+       ]
+      }
+     ],
+     "fixtures": 306
+    },
+    {
+     "id": 739,
+     "name": "AXA Women’s Super League",
+     "season": 2026,
+     "seasons": [
+      [
+       2020,
+       "2020-08-13",
+       "2021-05-29",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-08-12",
+       "2022-06-06",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-20",
+       "2023-06-02",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-26",
+       "2024-06-08",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-09",
+       "2025-05-17",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-23",
+       "2026-05-30",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-07",
+       "2026-11-20",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 10909,
+       "name": "Zürich W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 13
+      },
+      {
+       "id": 15548,
+       "name": "Servette Chênois W",
+       "founded": 1974,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 13
+      },
+      {
+       "id": 16038,
+       "name": "Basel W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 13
+      },
+      {
+       "id": 16039,
+       "name": "Grasshopper W",
+       "founded": null,
+       "venue": {
+        "name": "GC/Campus",
+        "city": "Niederhasli",
+        "capacity": 1300,
+        "surface": "grass"
+       },
+       "matches": 13,
+       "ll": [
+        47.4823,
+        8.4743
+       ]
+      },
+      {
+       "id": 16040,
+       "name": "Luzern W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 13
+      },
+      {
+       "id": 16041,
+       "name": "St. Gallen W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 13
+      },
+      {
+       "id": 17365,
+       "name": "Aarau W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 13
+      },
+      {
+       "id": 17366,
+       "name": "Yverdon W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 13
+      },
+      {
+       "id": 17367,
+       "name": "Young Boys W",
+       "founded": null,
+       "venue": {
+        "name": "Sportplatz Wyler Hauptplatz",
+        "city": "Bern",
+        "capacity": 3500,
+        "surface": "artificial turf"
+       },
+       "matches": 13,
+       "ll": [
+        46.9485,
+        7.4522
+       ]
+      },
+      {
+       "id": 19194,
+       "name": "Rapperswil Jona W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 13
+      }
+     ],
+     "fixtures": 65
+    }
+   ]
+  },
+  {
+   "country": "Austria",
+   "fetched": "2026-11-20T17:21:56.587Z",
+   "all": [
+    "220 | Cup | Cup",
+    "219 | 2. Liga | League",
+    "218 | Bundesliga | League",
+    "222 | Regionalliga - Mitte | League",
+    "221 | Regionalliga - Ost | League",
+    "223 | Regionalliga - West | League",
+    "224 | Landesliga - Burgenland | League",
+    "225 | Landesliga - Karnten | League",
+    "226 | Landesliga - Niederosterreich | League",
+    "227 | Landesliga - Oberosterreich | League",
+    "228 | Landesliga - Salzburg | League",
+    "229 | Landesliga - Steiermark | League",
+    "230 | Landesliga - Tirol | League",
+    "231 | Landesliga - Vorarlbergliga | League",
+    "232 | Landesliga - Wien | League",
+    "484 | Frauenliga | League",
+    "687 | Regionalliga - Tirol | League",
+    "688 | Regionalliga - Salzburg | League",
+    "1238 | Regionalliga - South | League",
+    "1239 | Regionalliga - North | League"
+   ],
+   "leagues": [
+    {
+     "id": 484,
+     "name": "Frauenliga",
+     "season": 2026,
+     "seasons": [
+      [
+       2019,
+       "2019-08-17",
+       "2020-05-30",
+       true,
+       false
+      ],
+      [
+       2020,
+       "2020-09-06",
+       "2021-05-30",
+       true,
+       false
+      ],
+      [
+       2021,
+       "2021-08-28",
+       "2022-05-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-08-28",
+       "2023-05-28",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-08-27",
+       "2024-06-02",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-08-10",
+       "2025-05-18",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-08-15",
+       "2026-05-30",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-08-02",
+       "2027-04-11",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 10227,
+       "name": "St. Pölten W",
+       "founded": null,
+       "venue": {
+        "name": "Sportzentrum Niederösterreich",
+        "city": "St. Pölten",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        48.2188,
+        15.6498
+       ]
+      },
+      {
+       "id": 10228,
+       "name": "Südburgenland W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 18
+      },
+      {
+       "id": 10232,
+       "name": "Sturm Graz W",
+       "founded": null,
+       "venue": {
+        "name": "Messendorf Trainingszentrum",
+        "city": "Graz",
+        "capacity": 1500,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        47.0709,
+        15.4383
+       ]
+      },
+      {
+       "id": 17575,
+       "name": "Austria Wien W",
+       "founded": null,
+       "venue": {
+        "name": "Generali Arena - Platz 2",
+        "city": "Wien",
+        "capacity": 2000,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        48.2084,
+        16.3725
+       ]
+      },
+      {
+       "id": 17576,
+       "name": "First Vienna W",
+       "founded": null,
+       "venue": {
+        "name": "Naturarena Hohe Warte",
+        "city": "Wien",
+        "capacity": 7260,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        48.2084,
+        16.3725
+       ]
+      },
+      {
+       "id": 19165,
+       "name": "Kleinmünchen / BW Linz W",
+       "founded": null,
+       "venue": {
+        "name": "ANDREA BINDER ARENA",
+        "city": "Linz",
+        "capacity": 1000,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        48.3059,
+        14.2862
+       ]
+      },
+      {
+       "id": 24440,
+       "name": "LASK W",
+       "founded": null,
+       "venue": {
+        "name": "voestalpine Stadion",
+        "city": "Pasching",
+        "capacity": 7870,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        48.2361,
+        14.2282
+       ]
+      },
+      {
+       "id": 24441,
+       "name": "Rheindorf Altach W",
+       "founded": null,
+       "venue": {
+        "name": "CASHPOINT Arena",
+        "city": "Altach",
+        "capacity": 8500,
+        "surface": "grass"
+       },
+       "matches": 18,
+       "ll": [
+        47.3545,
+        9.6519
+       ]
+      },
+      {
+       "id": 26239,
+       "name": "Salzburg W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 18
+      },
+      {
+       "id": 27906,
+       "name": "SK Rapid W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 18
+      }
+     ],
+     "fixtures": 90
+    }
+   ]
+  },
+  {
+   "country": "Brazil",
+   "fetched": "2026-11-20T17:22:13.548Z",
+   "all": [
+    "71 | Serie A | League",
+    "72 | Serie B | League",
+    "75 | Serie C | League",
+    "76 | Serie D | League",
+    "520 | Acreano | League",
+    "73 | Copa Do Brasil | Cup",
+    "74 | Brasileiro Women | League",
+    "521 | Amapaense | League",
+    "522 | Amazonense | League",
+    "77 | Alagoano | Cup",
+    "613 | Baiano - 2 | League",
+    "620 | Cearense - 2 | League",
+    "625 | Carioca - 2 | League",
+    "475 | Paulista - A1 | League",
+    "476 | Paulista - A2 | League",
+    "477 | Gaúcho - 1 | League",
+    "478 | Gaúcho - 2 | League",
+    "602 | Baiano - 1 | League",
+    "603 | Paraibano | League",
+    "604 | Catarinense - 1 | League",
+    "605 | Paulista - A3 | League",
+    "606 | Paranaense - 1 | League",
+    "607 | Roraimense | League",
+    "608 | Maranhense | League",
+    "609 | Cearense - 1 | League",
+    "610 | Brasiliense | League",
+    "611 | Capixaba | League",
+    "612 | Copa do Nordeste | Cup",
+    "614 | Paranaense - 2 | League",
+    "615 | Rondoniense | League",
+    "616 | Potiguar | League",
+    "617 | Copa do Brasil U20 | Cup",
+    "618 | São Paulo Youth Cup | Cup",
+    "619 | Mineiro - 2 | League",
+    "621 | Piauiense | League",
+    "622 | Pernambucano - 1 | League",
+    "623 | Sul-Matogrossense | League",
+    "624 | Carioca - 1 | League",
+    "626 | Sergipano | League",
+    "627 | Paraense | League",
+    "628 | Goiano - 1 | League",
+    "629 | Mineiro - 1 | League",
+    "630 | Matogrossense | League",
+    "631 | Tocantinense | League",
+    "632 | Supercopa do Brasil | Cup",
+    "740 | Brasileiro U20 A | Cup",
+    "741 | Brasileiro de Aspirantes | Cup",
+    "742 | Copa Paulista | Cup",
+    "843 | Copa Verde | Cup",
+    "851 | Carioca A2 | League",
+    "936 | Catarinense - 2 | League",
+    "1030 | Goiano - 2 | League",
+    "1035 | Copa Rio | Cup",
+    "1036 | Copa Santa Catarina | Cup",
+    "1037 | Paraibano 2 | League",
+    "1059 | Recopa Catarinense | Cup",
+    "1062 | Paulista - A4 | League",
+    "1063 | Copa Alagoas | Cup",
+    "1069 | Goiano U20 | League",
+    "1071 | Paranaense U20 | League",
+    "1073 | Baiano U20 | League",
+    "1076 | Catarinense U20 | League",
+    "1082 | Copa Rio U20 | Cup",
+    "1086 | Paulista - U20 | League",
+    "1088 | Pernambucano - U20 | League",
+    "1096 | Matogrossense 2 | League",
+    "1097 | Copa Espírito Santo | Cup",
+    "1098 | Paulista Série B | League",
+    "1100 | Brasiliense U20 | League",
+    "1106 | Carioca C | League",
+    "1107 | Mineiro U20 | League",
+    "1108 | Sergipano U20 | League",
+    "1110 | Alagoano U20 | League",
+    "1112 | Cearense U20 | League",
+    "1114 | Carioca U20 | League",
+    "1115 | Paraense A3 | League",
+    "1120 | Paraibano U20 | League",
+    "1124 | Cearense - 3 | League",
+    "1125 | Pernambucano - 2 | League",
+    "1128 | Brasileiro U17 | League",
+    "1133 | Goiano - 3 | League",
+    "1134 | Amazonense - 2 | League",
+    "1135 | Sergipano - 2 | League",
+    "1138 | Paranaense - 3 | League",
+    "1139 | Potiguar - U20 | League",
+    "1141 | Brasiliense B | League",
+    "1142 | Mineiro - 3 | League",
+    "1143 | Estadual Junior U20 | League",
+    "1145 | Paraense B1 | League",
+    "1146 | Alagoano - 2 | Cup",
+    "1148 | Maranhense - 2 | League",
+    "1149 | Potiguar - 2 | League",
+    "1150 | Gaúcho - 3 | League",
+    "1151 | Pernambucano - 3 | League",
+    "1154 | Catarinense - 3 | League",
+    "1155 | Carioca B2 | League",
+    "1157 | Paraense U20 | League",
+    "1158 | Copa Gaúcha | Cup",
+    "1165 | Copa Fares Lopes | Cup",
+    "1147 | Capixaba B | League",
+    "1179 | Copa do Brasil U17 | Cup",
+    "1183 | Brasileiro U20 B | Cup",
+    "1184 | Copa Grão Pará | Cup",
+    "1203 | Piauiense - 2 | League",
+    "1204 | Rondoniense - 2 | League",
+    "1205 | Kings Cup | Cup",
+    "1223 | Copa Norte | Cup",
+    "1224 | Copa Sul-Sudeste | Cup",
+    "1225 | Copa Centro-Oeste | Cup"
+   ],
+   "leagues": [
+    {
+     "id": 74,
+     "name": "Brasileiro Women",
+     "season": 2026,
+     "seasons": [
+      [
+       2016,
+       "2016-01-20",
+       "2016-05-20",
+       true,
+       false
+      ],
+      [
+       2017,
+       "2017-03-11",
+       "2017-07-20",
+       true,
+       false
+      ],
+      [
+       2018,
+       "2018-04-25",
+       "2018-08-22",
+       true,
+       false
+      ],
+      [
+       2019,
+       "2019-03-16",
+       "2019-08-04",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-02-08",
+       "2020-12-06",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-04-17",
+       "2021-09-26",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-03-05",
+       "2022-09-25",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-02-24",
+       "2023-09-10",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-03-14",
+       "2024-09-22",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-03-22",
+       "2025-09-14",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-02-13",
+       "2026-10-04",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 1794,
+       "name": "Flamengo W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 21
+      },
+      {
+       "id": 1795,
+       "name": "Ferroviaria W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 19
+      },
+      {
+       "id": 1798,
+       "name": "Corinthians W",
+       "founded": 1910,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 24
+      },
+      {
+       "id": 1802,
+       "name": "America Mineiro W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 17
+      },
+      {
+       "id": 1811,
+       "name": "Santos W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 17
+      },
+      {
+       "id": 1817,
+       "name": "Gremio W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 19
+      },
+      {
+       "id": 3826,
+       "name": "Internacional RS W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 17
+      },
+      {
+       "id": 3828,
+       "name": "Vitória BA W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 17
+      },
+      {
+       "id": 9980,
+       "name": "Cruzeiro W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 19
+      },
+      {
+       "id": 9981,
+       "name": "Palmeiras W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 19
+      },
+      {
+       "id": 9982,
+       "name": "São Paulo W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 23
+      },
+      {
+       "id": 16496,
+       "name": "Bahia W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 21
+      },
+      {
+       "id": 16497,
+       "name": "Botafogo W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 17
+      },
+      {
+       "id": 18727,
+       "name": "Atlético Mineiro W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 17
+      },
+      {
+       "id": 18728,
+       "name": "RB Bragantino W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 18
+      },
+      {
+       "id": 23157,
+       "name": "Fluminense W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 17
+      },
+      {
+       "id": 25825,
+       "name": "Juventude W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 17
+      },
+      {
+       "id": 27652,
+       "name": "Mixto W",
+       "founded": null,
+       "venue": {
+        "name": null,
+        "city": null,
+        "capacity": null,
+        "surface": null
+       },
+       "matches": 17
+      }
+     ],
+     "fixtures": 168
+    }
+   ]
+  }
+ ]
+}
