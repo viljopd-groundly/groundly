@@ -71,7 +71,8 @@ ${ld ? `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\
 <header class="top"><a class="brand" href="${up}"><img src="${up}icon-192.png" width="32" height="32" alt=""><span><b>Ground</b>ly</span></a><a class="btn" href="${up}">Öppna appen</a></header>
 <main>${cr}${body}</main>
 <footer><p><a href="${up}">Groundly</a> – planera fotbollsresor och logga matcherna du sett. Matchtider visas i svensk tid och kan ändras; kontrollera alltid hos klubben.</p>
-<p>Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.</p></footer></body></html>`;
+<p>Klubbmärken tillhör respektive klubb och visas bara för att identifiera lagen. Groundly har ingen koppling till klubbar, ligor eller förbund.</p></footer>
+<script>/* kom besökaren via en märkt länk (?src=club m.fl.) följer märkningen med in i appen, så att statistiken ser varifrån */(function(){var s=new URLSearchParams(location.search).get("src");if(!s||!/^[a-z]{1,12}$/.test(s))return;document.querySelectorAll('a[href*="?klubb="]').forEach(function(a){a.href+="&src="+s;});})();</script></body></html>`;
 };
 const out = [];
 const write = (dir, html, prio = 0.5) => { const d = path.join(SITE, dir); fs.mkdirSync(d, { recursive: true }); fs.writeFileSync(path.join(d, "index.html"), html); out.push([dir + "/", prio]); };
