@@ -2245,7 +2245,7 @@ document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest
  const SKIP=/^(bn|mode|open|teamview|tbl|near|mview|mysub|tips|editatt|mymore|limmore|homemore|amore|cmore|arcmore|hopall|mlmore|pubadd|favmore)$/;
  const selFor=el=>{if(el.id)return"#"+CSS.escape(el.id);for(const at of el.attributes){if(at.name.startsWith("data-")&&at.value!==""){const k=at.name.slice(5).replace(/-./g,x=>x[1].toUpperCase());if(SKIP.test(k))return null;return`[${at.name}="${CSS.escape(at.value)}"]`;}}return null;};
  const fix=()=>{if(!A)return;if(mode!==A.mode||Date.now()>A.until){A=null;return;}if(A.el.isConnected)return;
-   const n=document.querySelector(A.sel);if(!n){return;}const top=n.getBoundingClientRect().top;const d=top-A.top;if(Math.abs(d)>1)window.scrollBy(0,d);A.el=n;A.top=n.getBoundingClientRect().top;};
+   const n=document.querySelector(A.sel);if(!n){return;}const top=n.getBoundingClientRect().top;const d=top-A.top;if(Math.abs(d)>1)window.scrollTo({top:window.scrollY+d,behavior:"instant"});window.__anc.push(d,window.scrollY,el.getBoundingClientRect().top);A.el=n;A.top=n.getBoundingClientRect().top;};
  const mo=new MutationObserver(()=>{if(A)requestAnimationFrame(fix);});mo.observe(document.getElementById("app")||document.body,{childList:true,subtree:true});
  document.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("button,[role=button],a,label,.chip");if(!el||el.closest("nav,.bnav,#fkUndo,#fkToast,.msheet"))return;
    const sel=selFor(el);if(!sel)return;A={el,sel,top:el.getBoundingClientRect().top,mode,until:Date.now()+2500};},true);
@@ -2943,7 +2943,13 @@ function limBtns(k,total,base,more,less){const n=lim(k,base);if(total<=base)retu
   return`<div class="morerow">${n<total?`<button class="btn small" data-limmore="${esc(k)}" data-limbase="${base}">${$t("{0} ({1} till)",[more||$t("Visa fler"),total-n])}</button>`:""}${n>base?`<button class="btn small" data-limless="${esc(k)}">${less||$t("Visa färre")}</button>`:""}</div>`;}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-limmore],[data-limless]");if(!t)return;
   const k=t.dataset.limmore||t.dataset.limless;if(t.dataset.limmore){const b=+t.dataset.limbase||5;LIM[k]=lim(k,b)+Math.max(b,10);}else delete LIM[k];
+  // Visa fler: det man redan ser ska stå kvar på samma ställe (sidan ritas om och kunde annars hoppa) – vi håller fast
+  // vid kortet precis ovanför knappen och flyttar tillbaka sidan lika mycket som det kortet flyttade sig
+  let anc=null;if(t.dataset.limmore){const row=t.closest(".morerow"),prev=row&&row.previousElementSibling,par=row&&row.parentElement;
+    if(prev&&par&&par.id)anc={id:par.id,i:[...par.children].indexOf(prev),y:prev.getBoundingClientRect().top};}
   if(k.startsWith("leg"))legRender();else if(k.startsWith("com:"))renderReports(true);else render();
+  if(anc){const stop=()=>{anc=null;};addEventListener("touchstart",stop,{once:true,passive:true});addEventListener("wheel",stop,{once:true,passive:true});const fix=()=>{if(!anc)return;const np=document.getElementById(anc.id),el=np&&np.children[anc.i];if(!el)return;const d=el.getBoundingClientRect().top-anc.y;if(Math.abs(d)>1)window.scrollTo({top:window.scrollY+d,behavior:"instant"});};
+    fix();requestAnimationFrame(fix);setTimeout(fix,120);setTimeout(fix,400);}
   if(t.dataset.limless){const card=document.querySelector(`[data-limhead="${CSS.escape(k)}"]`);if(card)card.scrollIntoView({block:"start"});}});
 // ---------- min statistik (alla loggade matcher) ----------
 let myStatsOpen=false;
@@ -3904,7 +3910,7 @@ function favClick(t){
   if(t.dataset.favmore){const id=t.dataset.favmore;const sel=`[data-favcard="${CSS.escape(id)}"]`;const y0=document.querySelector(sel)?.getBoundingClientRect().top;
     favOpen.has(id)?favOpen.delete(id):favOpen.add(id);renderMine();
     // kortet står kvar där det var och fälls ut nedåt
-    const pin=()=>{const c=document.querySelector(sel);if(c&&y0!=null){const d=c.getBoundingClientRect().top-y0;if(Math.abs(d)>1)window.scrollBy(0,d);}};pin();requestAnimationFrame(pin);
+    const pin=()=>{const c=document.querySelector(sel);if(c&&y0!=null){const d=c.getBoundingClientRect().top-y0;if(Math.abs(d)>1)window.scrollTo({top:window.scrollY+d,behavior:"instant"});window.__anc.push(d,window.scrollY,el.getBoundingClientRect().top);}};pin();requestAnimationFrame(pin);
     document.querySelector(sel+" [data-favmore]")?.focus({preventScroll:true});return;}
   if(t.dataset.fav){const id=t.dataset.fav;if(myState!=="ready"){toast($t("Logga in för att spara favoriter."));return;}const nt=C[id]&&isNat(C[id]);
     if(!nt&&!isFav(id)&&favList().length>=MAXFAV){toast($t("Du kan ha högst {0} favoritlag. Ta bort ett under Min fotboll först.",[MAXFAV]));return;}
