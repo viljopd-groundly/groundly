@@ -1461,6 +1461,7 @@ html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!importa
   <!-- Tips -->
   <section id="v-tips" hidden style="display:contents">
     <label class="search" for="tipsQ"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="tipsQ" type="search" placeholder="Sök land, stad, arena, klubb eller världsdel" autocomplete="off" enterkeyhint="search"></label>
+    <div class="sugg" id="tipsSug" hidden></div>
     <div class="chips wrapchips" role="group" aria-label="Typ av tips" id="tipsChips"></div>
     <div class="list" id="tipsList"></div>
   </section>
@@ -2554,7 +2555,30 @@ function renderTips0(){
   else if(tipsTab==="top")el.innerHTML=renderTopRated();
   else el.innerHTML=TIPS.cult.slice(0,lim("tcu",10)).map(tipCultCard).join("")+limBtns("tcu",TIPS.cult.length,10);
 }
-let tipsQT=0;document.addEventListener("input",e=>{if(e.target.id!=="tipsQ")return;tipsQ=e.target.value;clearTimeout(tipsQT);tipsQT=setTimeout(()=>{if(mode==="tips")renderTips();},150);});
+let tipsQT=0;document.addEventListener("input",e=>{if(e.target.id!=="tipsQ")return;tipsQ=e.target.value;tipsSugg();clearTimeout(tipsQT);tipsQT=setTimeout(()=>{if(mode==="tips")renderTips();},150);});
+// förslag medan man skriver, som i Matcher: länder, städer, derbyn, klubbar och arenor som har tips
+let TIPS_IX=null;
+function tipsIndex(){if(TIPS_IX)return TIPS_IX;const ctry=new Map(),city=new Map(),items=[];const addC=c=>{if(!c)return;ctry.set(c.c,(ctry.get(c.c)||0)+1);if(c.city)city.set(c.city+"|"+c.c,(city.get(c.city+"|"+c.c)||0)+1);};
+  const seenClub=new Set(TIPS.cult.map(r=>r[0]));
+  TIPS.derbies.forEach(r=>{r[2].forEach(id=>{const c=C[id];addC(c);if(c&&!seenClub.has(id)){seenClub.add(id);items.push(["club",c.n,c.city||""]);}});items.push(["derby",$t(r[1]),$t(r[3])]);});
+  TIPS.cult.forEach(r=>{const c=C[r[0]];addC(c);items.push(["cult",c?c.n:$t(r[1]),c?$t(c.c):""]);});
+  (TIPS.arenas||[]).forEach(r=>{const c=C[r[0]];addC(c);items.push(["arena",c&&c.s?c.s:$t(r[1]),c?c.city:""]);});
+  return TIPS_IX={ctry:[...ctry].map(([c,n])=>[$t(c),n]),city:[...city].map(([k,n])=>[k.split("|")[0],n,$t(k.split("|")[1])]),items:items.map(x=>[...x,norm(x[1])])};}
+function tipsSugg(){const box=document.getElementById("tipsSug");if(!box)return;const q=tipsQ.trim(),nq=norm(q);if(nq.length<2){box.hidden=true;box.innerHTML="";return;}
+  const ix=tipsIndex(),st=(a,f)=>a.filter(x=>norm(f(x)).startsWith(nq)).concat(a.filter(x=>!norm(f(x)).startsWith(nq)&&norm(f(x)).includes(nq)));
+  const C1=st(ix.ctry,x=>x[0]).slice(0,3),C2=st(ix.city,x=>x[0]).slice(0,3),I=st(ix.items,x=>x[1]).slice(0,5);
+  const exact=[...C1.map(x=>x[0]),...C2.map(x=>x[0]),...I.map(x=>x[1])].filter(x=>norm(x)===nq).length;
+  const lab={derby:$t("Heta derbyn"),club:$t("Klubbar"),cult:$t("Kultklubbar"),arena:$t("Speciella arenor")};
+  let h="";if(C1.length)h+=`<span class="sgl">${$t("Land")}</span>`+C1.map(([c,n])=>`<button type="button" class="chip" data-tsug="${esc(c)}">${esc(c)}<small>${n}</small></button>`).join("");
+  if(C2.length)h+=`<span class="sgl">${$t("Stad")}</span>`+C2.map(([c,n,l])=>`<button type="button" class="chip" data-tsug="${esc(c)}">${esc(c)}<small>${esc(l)}</small></button>`).join("");
+  for(const k of ["derby","club","cult","arena"]){const a=I.filter(x=>x[0]===k);if(a.length)h+=`<span class="sgl">${lab[k]}</span>`+a.map(x=>`<button type="button" class="chip" data-tsug="${esc(x[1])}">${esc(x[1])}${x[2]?`<small>${esc(x[2])}</small>`:""}</button>`).join("");}
+  if(!h||(exact===1&&C1.length+C2.length+I.length===1)){box.hidden=true;box.innerHTML="";return;}
+  if(box.innerHTML!==h)box.innerHTML=h;box.hidden=false;}
+document.addEventListener("pointerdown",e=>{if(e.target.closest&&e.target.closest("#tipsSug [data-tsug]"))e.preventDefault();});
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-tsug]");if(!b)return;const qi=document.getElementById("tipsQ");tipsQ=b.dataset.tsug;if(qi){qi.value=tipsQ;qi.blur();}
+  const box=document.getElementById("tipsSug");if(box){box.hidden=true;box.innerHTML="";}clearTimeout(tipsQT);renderTips();});
+document.addEventListener("focusout",e=>{if(e.target&&e.target.id==="tipsQ")setTimeout(()=>{const b=document.getElementById("tipsSug");if(b&&!document.activeElement?.closest?.("#tipsSug")){b.hidden=true;}},200);});
+document.addEventListener("focusin",e=>{if(e.target&&e.target.id==="tipsQ")tipsSugg();});
 // ---------- forum ----------
 const KINDS=[["fraga",$t("Fråga")],["derby",$t("Derbytips")],["klubb",$t("Klubbtips")],["tillg",$t("Tillgänglighet")]];
 const KIND_L=Object.fromEntries(KINDS);
@@ -4412,7 +4436,7 @@ document.addEventListener("click",e=>{if(e.target.closest("a"))return;const t=e.
   if(t.id==="askAi"){askClaude();return;}
   if(t.dataset.city){e.stopPropagation();MQ=null;cityEl.value=t.dataset.city;cityQ=t.dataset.city;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),6);radius=0;setMode("matcher");window.scrollTo({top:0});return;}
   if(t.id==="locate"){locateWithClaude();return;}
-  if(t.dataset.tips){tipsQ="";{const qi=document.getElementById("tipsQ");if(qi)qi.value="";}tipsTab=t.dataset.tips;store.set("fk-tips",tipsTab);rerenderQuizHost();return;}
+  if(t.dataset.tips){tipsQ="";{const qi=document.getElementById("tipsQ");if(qi)qi.value="";const sb=document.getElementById("tipsSug");if(sb)sb.hidden=true;}tipsTab=t.dataset.tips;store.set("fk-tips",tipsTab);rerenderQuizHost();return;}
   if(t.dataset.near){MQ=null;cityEl.value=t.dataset.near;cityQ=t.dataset.near;document.getElementById("cityClear").hidden=false;dFrom=today();dTo=addDays(today(),29);radius=+t.dataset.nr||5;store.set("fk-radius",String(radius));
     // nollställ andra filter så att alla matcher i närheten syns (lagvy, Herr/Dam, serie och "bara mina lag" kunde ligga kvar)
     matchView="list";mKind="alla";if(typeof tiers!=="undefined")tiers.clear();favOnly=false;
