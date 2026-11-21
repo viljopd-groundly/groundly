@@ -1,0 +1,32 @@
+name: Liveresultat (Cloudflare)
+# Publicerar mellanhanden för liveresultat (cloudflare/live) till Cloudflare Workers.
+# Kräver GitHub-hemligheterna CLOUDFLARE_API_TOKEN och CLOUDFLARE_ACCOUNT_ID. API-nyckeln
+# (API_FOOTBALL_KEY, som redan finns här) skickas vidare som hemlighet till Cloudflare.
+on:
+  push:
+    branches: [main]
+    paths: ["cloudflare/live/**", ".github/workflows/live-worker.yml"]
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Finns Cloudflare-nycklarna?
+        id: chk
+        env:
+          T: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          A: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$T" ] && [ -n "$A" ]; then echo "ok=1" >> "$GITHUB_OUTPUT"; else echo "::warning::Lägg in CLOUDFLARE_API_TOKEN och CLOUDFLARE_ACCOUNT_ID under Settings → Secrets → Actions"; fi
+      - name: Publicera till Cloudflare
+        if: steps.chk.outputs.ok == '1'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: cloudflare/live
+          secrets: |
+            API_FOOTBALL_KEY
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}

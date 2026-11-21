@@ -557,6 +557,9 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .mtop{display:flex;gap:8px;align-items:stretch}.mtop .search{flex:1;min-width:0;margin:0}.mfbtn{all:unset;box-sizing:border-box;flex:none;display:flex;align-items:center;gap:6px;padding:0 14px;border-radius:14px;background:var(--soft);color:var(--fg);font-weight:700;font-size:15px;cursor:pointer}.mfbtn b{background:var(--accent);color:var(--chalk,#fff);border-radius:999px;font-size:12px;min-width:20px;height:20px;display:grid;place-items:center;padding:0 5px;box-sizing:border-box}
 .mactive{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 4px}.mchip{all:unset;cursor:pointer;padding:5px 11px;border-radius:999px;background:var(--accent-soft);color:var(--fg);font-size:13px;font-weight:700}.mchip span[aria-hidden]{margin-left:2px;opacity:.7}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .mfbtn b[hidden],#matchTb[hidden],.mactive[hidden]{display:none!important}.mfsheet{position:fixed;inset:0;z-index:10050;display:flex;flex-direction:column;justify-content:flex-end}.mfsheet[hidden]{display:none}.msdim{position:absolute;inset:0;background:rgba(0,0,0,.5)}.mspanel{position:relative;background:var(--surface);color:var(--fg);border-radius:20px 20px 0 0;padding:10px 18px calc(16px + env(safe-area-inset-bottom,0px));max-height:85dvh;overflow:auto;box-shadow:0 -10px 30px rgba(0,0,0,.35);animation:msup .2s ease-out}@keyframes msup{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}.msgrab{width:44px;height:5px;border-radius:9px;background:var(--muted);opacity:.5;margin:0 auto 10px;padding:0}.mspanel{touch-action:pan-y}.mshr{display:flex;align-items:center;gap:14px}.msx{all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:22px;line-height:1;color:var(--fg)}.mshd{display:flex;align-items:center;justify-content:space-between}.mshd h3{margin:0;font-size:20px}.mspanel>.lbl{display:block;margin:16px 0 8px}.mspanel .chips{margin:0}.mspanel>[hidden]{display:none!important}.toparea{display:grid;gap:10px;margin-top:10px}.tip.topform{overflow:visible!important;position:relative;z-index:3}.toparea .chips{margin:0}.toparea .selw{max-width:none}.toparea .fld{margin:0}
+.ko.live{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.ko.live small{color:#ffd9db!important;letter-spacing:.08em}
+.ko.live:before{content:"";display:block;width:8px;height:8px;border-radius:50%;background:#fff;margin:0 auto 3px;animation:livep 1.4s ease-in-out infinite}
+@keyframes livep{0%,100%{opacity:1}50%{opacity:.25}}@media (prefers-reduced-motion:reduce){.ko.live:before{animation:none}}
 .radin{display:flex;align-items:center;gap:10px;font-weight:600}.radin input{font:500 calc(15px*var(--fs)) var(--f-body);color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:10px;padding:0 12px;height:40px;box-sizing:border-box;width:130px;min-width:0}.radin input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}.msgo{width:100%;margin-top:18px;justify-content:center}html.msopen{overflow:hidden}
 .tripdelask{display:grid;gap:4px;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--soft);box-shadow:inset 0 0 0 2px #c0392b}.tripdelask .actions{margin-top:6px}.btn.danger{background:#c0392b!important;border-color:#c0392b!important;color:#fff!important}
 .recap{margin:6px 0 4px;padding:12px 14px;border-radius:12px;background:var(--soft)}.recapnums{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:4px}.recapnums span{display:grid;line-height:1.15;font-size:13px;color:var(--muted)}.tripok{color:var(--accent);font-weight:800}.recapnums b{font-size:22px;white-space:nowrap;color:var(--fg);font-family:var(--f-display,inherit)}
@@ -1601,7 +1604,7 @@ const COLORS=/*COLORS*/{};
 // Riktiga loggor läggs här när klubben gett tillstånd: id -> bildadress. Då ersätter loggan färgbrickan.
 const LOGOS={};
 // klubbmärken från API-Football (för identifiering). mod/crests={on:bool, off:[id]} styr av/på för alla och per klubb.
-const LOGO_IDS=/*LOGOIDS*/[];let CREST={on:true,off:[]};
+const LIVE_URL=/*LIVEURL*/"";const LOGO_IDS=/*LOGOIDS*/[];let CREST={on:true,off:[]};
 function applyCrests(){for(const k of Object.keys(LOGOS))delete LOGOS[k];if(!CREST.on)return;const off=new Set(CREST.off||[]);for(const id of LOGO_IDS)if(!off.has(id))LOGOS[id]="logos/c/"+encodeURIComponent(id)+".png";}
 applyCrests();
 const FLAGS={};
@@ -2280,7 +2283,7 @@ function renderTeamRes(){const el=document.getElementById("teamRes");if(!el)retu
   el.innerHTML=h;}
 function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36e5;
   return`<div class="match mrow"${m._id?` data-mrow="${esc(m._id)}"`:""}>
-   ${m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
+   ${m.live&&!m.live.done?`<div class="ko live" title="${$t("Pågår just nu")}">${esc(liveMin(m.live))}<small>live</small></div>`:m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
    ${scoredTeams(m)||`<div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>`}
    <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc($t(m.city))}, ${esc($t(m.country))}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>${commLine(m)}
    <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?$t("I orten"):$t("{0} bort",[milTxt(km)])}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
@@ -4778,6 +4781,25 @@ function hypeCandidates(){if(dbState!=="ready")return[];const now=Date.now(),end
     sc+=hypeCount(m._id)*(local||!ctry?15:5);if(String(m.tier)==="1")sc+=20;if(tierOf(m)==="CUP")sc+=/Champions/i.test(m.comp||"")?30:15;
     sc+=Math.min(30,((h&&h.cap)||0)/3000);return{m,sc};}).sort((x,y)=>y.sc-x.sc).map(x=>x.m);}
 // nedräkning: minuter de sista timmarna, avrundade timmar under ett dygn, sedan dagar (och timmar om det inte är jämnt)
+// ---------- liveresultat ----------
+// Mellanhanden (cloudflare/live) ger alla pågående matcher i världen; vi frågar en gång i minuten när någon av
+// våra matcher kan pågå och sidan syns. Ställningen läggs på matchen (m.live, m.score) tills nattens körning tar över.
+let LIVE_T=0,LIVE_API=null,LIVE_LAST=0;const LIVE_ST={HT:"Halvtid",BT:"Paus",P:"Straffar",SUSP:"Avbruten",INT:"Avbruten"};
+function liveMin(l){if(LIVE_ST[l.st])return $t(LIVE_ST[l.st]);return l.min!=null?`${l.min}${l.x?"+"+l.x:""}'`:"live";}
+function liveWanted(){const now=Date.now();return MATCHES.some(m=>m.kickoff&&!m.done&&(t=>t<now+5*6e4&&t>now-150*6e4)(Date.parse(m.kickoff)));}
+async function livePoll(){clearTimeout(LIVE_T);if(!LIVE_URL)return;if(document.hidden||!liveWanted()){LIVE_T=setTimeout(livePoll,120000);return;}
+  try{if(!LIVE_API)LIVE_API=await (await fetch("data/apiteams.json")).json();
+    const j=await (await fetch(LIVE_URL.replace(/\/$/,"")+"/live",{cache:"no-store"})).json();LIVE_LAST=j.t||Date.now();
+    const byPair=new Map();const d0=Date.now()-150*6e4,d1=Date.now()+30*6e4;
+    for(const m of MATCHES)if(m.kickoff){const t=Date.parse(m.kickoff);if(t>d0-6*36e5&&t<d1)byPair.set(m.home+"|"+m.away,m);}
+    let ch=false;for(const [fid,h,a,gh,ga,st,min,x] of (j.m||[])){const H=LIVE_API[h],A=LIVE_API[a];if(!H||!A)continue;const m=byPair.get(H+"|"+A);if(!m||gh==null||(!m.live&&m.score))continue;// har matchen redan slutresultat från natten rör vi den inte
+      const done=/^(FT|AET|PEN)$/.test(st),sc=`${gh}–${ga}`;const nl={st,min,x,done};
+      if(!m.live||m.live.min!==min||m.live.st!==st||m.score!==sc){ch=true;m.live=nl;m.score=sc;}}
+    if(ch)liveRefresh();}catch(e){}
+  LIVE_T=setTimeout(livePoll,60000);}
+function liveRefresh(){if(document.querySelector('[role="dialog"]:not([hidden])'))return;const a=document.activeElement;if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;
+  if(["matcher","hem","resa"].includes(mode)){const y=scrollY;try{render();}catch(e){}window.scrollTo({top:y,behavior:"instant"});}}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)livePoll();});setTimeout(livePoll,5000);
 function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return ms>-2*36e5?$t("Pågår"):$t("Spelad");const min=Math.round(ms/6e4);
   if(min<60)return $t("om {0} min",[Math.max(1,min)]);if(min<6*60){const h=Math.floor(min/60),m=min%60;return m?$t("om {0} tim {1} min",[h,m]):$t("om {0} tim",[h]);}
   const th=Math.round(ms/36e5);if(th<24)return $t("om {0} tim",[th]);const d=Math.floor(th/24),h=th%24;return h?$t("om {0} {1} och {2} tim",[d,d===1?$t("dag"):$t("dagar"),h]):$t("om {0} {1}",[d,d===1?$t("dag"):$t("dagar")]);}

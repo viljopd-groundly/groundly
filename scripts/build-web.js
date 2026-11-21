@@ -26,6 +26,7 @@ let html = fs.readFileSync(path.join(SRC, "template.html"), "utf8")
   .replace("/*SEASONS*/{}", JSON.stringify(R("seasons.js")))
   .replace("/*WEB*/{}", JSON.stringify(webAll()))
   .replace("/*WLEAGUES*/[]", JSON.stringify(R("clubs_women.js").leagues.concat(R("clubs_x26.js").wleagues||[])))
+  .replace('/*LIVEURL*/""', JSON.stringify((() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, "config", "site.json"), "utf8")).live || ""; } catch (e) { return ""; } })()))
   .replace("/*LOGOIDS*/[]", JSON.stringify((() => { try { return fs.readdirSync(path.join(SITE, "logos", "c")).filter(f => f.endsWith(".png")).map(f => f.slice(0, -4)).sort(); } catch (e) { return []; } })()));
 
 // ---- AI på/av: på bara om firebase-config.js har en aiEndpoint ----
@@ -136,6 +137,8 @@ const js = html.split("<script>").slice(1).map(x => x.split("</script>")[0]).sor
 new Function(js);
 // statiska sidor per klubb, arena, serie och land + sitemap.xml (site/klubb/… m.fl.)
 try { require("child_process").execFileSync(process.execPath, [path.join(__dirname, "build-pages.js")], { stdio: "inherit" }); } catch (e) { console.warn("klubb- och arenasidorna kunde inte byggas"); if (process.env.CI) throw e; }
+// API-lag-id -> vårt lag-id, för liveresultaten (site/data/apiteams.json)
+try { const L = JSON.parse(fs.readFileSync(path.join(ROOT, "tools", "logo_ids.json"), "utf8")); const inv = {}; for (const [our, api] of Object.entries(L)) inv[api] = our; fs.mkdirSync(path.join(SITE, "data"), { recursive: true }); fs.writeFileSync(path.join(SITE, "data", "apiteams.json"), JSON.stringify(inv)); } catch (e) { console.warn("apiteams.json kunde inte byggas"); }
 // kalenderflöden per lag (site/cal/*.ics)
 try { require("child_process").execFileSync(process.execPath, [path.join(__dirname, "build-cal.js")], { stdio: "inherit" }); } catch (e) { console.warn("kalenderflödena kunde inte byggas"); }
 console.log(`site/index.html ${html.length} byte, AI ${aiOn ? "på" : "av"}, skript ok`);
