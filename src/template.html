@@ -1459,8 +1459,7 @@ html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!importa
       <div class="chips wrapchips" role="group" aria-label="Typ av matcher" id="gMatch"></div>
       <div class="chips wrapchips" id="tierChips" hidden></div><!-- serie-filtret är borttaget: Land/Serie-vyn täcker det -->
       <div class="lbl" id="mRadLbl" hidden>Avstånd</div><div class="radin" id="mRadCustom" hidden></div>
-      <div class="lbl">Egna datum</div>
-      <div class="range">
+      <div class="range" hidden><!-- egna datum väljs i kalendern (månadsvyn); fälten finns kvar för koden -->
         <label class="fld" for="dFrom">Från<input id="dFrom" type="date"></label>
         <label class="fld" for="dTo">Till<input id="dTo" type="date"></label>
       </div>
@@ -1973,7 +1972,7 @@ function clubCard(c,isAi){const sel=openClub===c.id;const pr=isAi?null:pairOf(c.
       return`<div class="nextone"><span class="nd">${esc(m.kickoff?shortDate(m.kickoff):rangeTxt(m))}${m.kickoff?` · ${esc(timeOf(m.kickoff))}`:""}</span> <span class="nm">${home?$t("Hemma mot {0}",[esc(opp)]):$t("Borta mot {0}",[esc(opp)])}</span>${c.city?` <button class="link strong" data-teamview="${esc(c.id)}">${$t("Alla matcher →")}</button>`:""}</div>`;})(up[0]):dbState==="ready"?$t("Inga matcher i schemat"):$t("Laddar schema…")}</dd>`}
    </dl>
    ${isAi?`<div class="actions">${c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:""}</div>`:(()=>{const more=cardMore===c.id||fixOpen===c.id;const extra=(c.city?`<button class="btn small" data-city="${esc(c.city)}">${$t("Matcher i {0}",[esc(cityLbl(c))])}</button>`:"")+calSubBtn(c)+repBtn(c)+rateButton(c)+summaryButton(c)+fixButton(c);
-     return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">${$t("Lagets matcher")}</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>${favBtn(c)}${wishBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="${$t("Fler val")}">${more?$t("Färre"):$t("⋯ Mer")}</button>`:""}</div>${extra?`<div class="cmore"${more?"":" hidden"}>${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
+     return`<div class="actions">${logBtn(c)}${c.city?`<button class="btn small" data-teamview="${esc(c.id)}">${ic("calendar")} ${$t("Spelschema")}</button>`:""}${hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>${favBtn(c)}${wishBtn(c)}${extra?`<button class="btn small" data-cardmore="${esc(c.id)}" aria-expanded="${more}" aria-label="${$t("Fler val")}">${more?$t("Färre"):$t("⋯ Mer")}</button>`:""}</div>${extra?`<div class="cmore"${more?"":" hidden"}>${extra}</div>`:""}`;})()}${isAi?"":fixForm(c)+summaryBox(c)+rateEditor(c)+prepBlock(c)}`;}
   return h+`</div>`;}
 let ntQ="",ntView="a";
 function cupArenaClub(name){const k=arenaKey(name);return Object.values(C).find(c=>c.s&&arenaKey(c.s)===k)||null;}
@@ -2174,7 +2173,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElemen
  document.addEventListener("touchend",()=>{if(!pan)return;const p=pan;pan=null;const fast=dy>40&&dy/(Date.now()-t0)>0.5;p.style.transition="transform .18s ease-out";
    if(dy>110||fast){p.style.transform="translateY(100%)";setTimeout(()=>{mSheetOpen(false);p.style.transform="";p.style.transition="";},180);}else{p.style.transform="";setTimeout(()=>{p.style.transition="";},200);}},{passive:true});}
 function renderMatches(){mPend=false;matchKindChips();MLQ=null;
-  document.getElementById("matchViewChips").innerHTML=[["list",$t("Matcher")],["team",$t("Lag")],["double",$t("Dubbelmatcher")],...(AI_ON?[["plan",$t("Planera med Claude")]]:[])].map(([k,l])=>`<button class="chip" data-mview="${k}" aria-pressed="${matchView===k}">${l}</button>`).join("");
+  document.getElementById("matchViewChips").innerHTML=[["list",$t("Matcher")],["double",$t("Dubbelmatcher")],...(AI_ON?[["plan",$t("Planera med Claude")]]:[])].map(([k,l])=>`<button class="chip" data-mview="${k}" aria-pressed="${matchView===k}">${l}</button>`).join("");
   document.getElementById("doubleOpts").hidden=matchView!=="double";
   document.getElementById("v-matcher").classList.toggle("planmode",matchView==="plan"||matchView==="team");if(matchView==="plan"||matchView==="team"){mActiveSync();const g=document.getElementById("mSheetGo");if(g)g.textContent=$t("Klar");}if(matchView==="plan"){renderPlanner();return;}if(matchView==="team"){renderTeamView();return;}renderMatchList();if(matchView==="double"){MLQ=null;renderDouble();}}
 function renderMatchList(){
@@ -4671,7 +4670,7 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
         ${r.tip?`<div class="rtip"><b>${$t("Bästa tipset")}</b>${esc(r.tip)}</div>`:""}
         <div class="actions">${canWriteRep()?`<button class="btn small" data-replike="${esc(r.key)}" aria-pressed="${iLike(r.key)}">${likeInner(r.key)}</button>`:n?`<span class="meta">${ic("heart")} ${n}</span>`:""}
           ${c?`<button class="btn small" data-open="${esc(c.id)}">${$t("Visa {0}",[esc(c.n)])}</button>`:""}
-          ${c&&c.city&&!isNat(c)?`<button class="btn small" data-teamview="${esc(c.id)}">${$t("Lagets matcher")}</button>`:""}${c&&hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}${c?`<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>`:""}</div>
+          ${c&&c.city&&!isNat(c)?`<button class="btn small" data-teamview="${esc(c.id)}">${ic("calendar")} ${$t("Spelschema")}</button>`:""}${c&&hasTable(c.l)?`<button class="btn small" data-tbl="${esc(c.l)}" data-tblhl="${esc(c.id)}">${ic("table")} ${$t("Tabell")}</button>`:""}${c?`<button class="btn small" data-legends="${esc(c.id)}">${ic("star")} ${legLbl(c)}${legCount(c.id)?` (${legCount(c.id)})`:""}</button>`:""}</div>
         <div class="pactions">${mine?`<button class="link" data-repedit="${esc(r.id)}">${$t("Redigera")}</button><button class="link" data-repdel="${esc(r.id)}">${$t("Ta bort")}</button>`:""}${isMod&&!mine?`<button class="link" data-rephide="${esc(r.key)}">${$t("Dölj")}</button>`:""}${r.draft?"":shareLinkBtn("r",r.key,r.title)}${flagBtn("rep:"+r.key,r.uid,r.title+": "+r.body)}</div>
         ${commentsHtml(r)}
       </div>`:""}
