@@ -281,6 +281,11 @@ if(Object.keys(extra.standings).length||Object.keys(extra.players).length||Objec
   fs.writeFileSync(path.join(OUT,"data","players.json"),JSON.stringify({updated:up,leagues:extra.players}));
 if(Object.keys(extra.squads).length)fs.writeFileSync(path.join(OUT,"data","squads.json"),JSON.stringify({updated:up,clubs:extra.squads}));
   fs.writeFileSync(path.join(OUT,"data","events.json"),JSON.stringify({updated:up,m:extra.events}));}
+// API-Football gav inget i natt (t.ex. kontot har fallit tillbaka till gratisplanen): behåll gårdagens matcher för alla
+// serier som inte kommer från openfootball, i stället för att radera dem (sparade resor och Vill gå pekar på dem)
+if(apiStat.fel&&!(apiStat.anrop>5)){try{const have=new Set(rows.map(r=>r[5]));let kept=0;
+  for(const f of ["fixtures-next.json","fixtures-past.json"]){const old=JSON.parse(fs.readFileSync(path.join(OUT,"data",f),"utf8")).rows||[];for(const r of old)if(!have.has(r[5])){rows.push(r);kept++;}}
+  apiStat.behöll_gårdagens=kept;}catch(e){apiStat.behöll_gårdagens_fel=String(e.message).slice(0,120);}}
 fs.mkdirSync(path.join(OUT,"data"),{recursive:true});
 fs.writeFileSync(path.join(OUT,"data","fixtures.json"),JSON.stringify({updated:new Date().toISOString(),season:SEASON,source:process.env.API_FOOTBALL_KEY?"openfootball (CC0) och API-Football":"openfootball (CC0)",rows}));
 try{apiStat.fixtures_delning=require(path.join(TOOLS,"split-fixtures.js")).splitFixtures(OUT);}catch(e){apiStat.fixtures_delning_fel=String(e.message).slice(0,120);}
