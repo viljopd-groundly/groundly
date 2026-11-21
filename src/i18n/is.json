@@ -2769,5 +2769,11 @@
  "Halvtid": "Hálfleikur",
  "Paus": "Hlé",
  "Straffar": "Vító",
- "Avbruten": "Frestað"
+ "Avbruten": "Frestað",
+ "Välj sista dagen i perioden.": "Veldu síðasta dag tímabilsins.",
+ "Tryck på en dag – eller på två för att välja en period, t.ex. en helg.": "Ýttu á dag – eða tvo til að velja tímabil, t.d. helgi.",
+ "Föregående vecka": "Fyrri vika",
+ "Nästa vecka": "Næsta vika",
+ "v.": "vika",
+ "Välj dag": "Veldu dag"
 }

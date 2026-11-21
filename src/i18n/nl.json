@@ -2769,5 +2769,11 @@
  "Halvtid": "Rust",
  "Paus": "Pauze",
  "Straffar": "Penalty's",
- "Avbruten": "Gestaakt"
+ "Avbruten": "Gestaakt",
+ "Välj sista dagen i perioden.": "Kies de laatste dag van de periode.",
+ "Tryck på en dag – eller på två för att välja en period, t.ex. en helg.": "Tik op een dag – of op twee om een periode te kiezen, bijv. een weekend.",
+ "Föregående vecka": "Vorige week",
+ "Nästa vecka": "Volgende week",
+ "v.": "wk",
+ "Välj dag": "Kies een dag"
 }

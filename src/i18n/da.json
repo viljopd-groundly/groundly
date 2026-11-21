@@ -2770,5 +2770,11 @@
  "Halvtid": "Pause",
  "Paus": "Pause",
  "Straffar": "Straffe",
- "Avbruten": "Afbrudt"
+ "Avbruten": "Afbrudt",
+ "Välj sista dagen i perioden.": "Vælg periodens sidste dag.",
+ "Tryck på en dag – eller på två för att välja en period, t.ex. en helg.": "Tryk på en dag – eller på to for at vælge en periode, f.eks. en weekend.",
+ "Föregående vecka": "Forrige uge",
+ "Nästa vecka": "Næste uge",
+ "v.": "uge",
+ "Välj dag": "Vælg dag"
 }

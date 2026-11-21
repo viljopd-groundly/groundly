@@ -2769,5 +2769,11 @@
  "Halvtid": "Przerwa",
  "Paus": "Przerwa",
  "Straffar": "Karne",
- "Avbruten": "Przerwany"
+ "Avbruten": "Przerwany",
+ "Välj sista dagen i perioden.": "Wybierz ostatni dzień okresu.",
+ "Tryck på en dag – eller på två för att välja en period, t.ex. en helg.": "Stuknij dzień – albo dwa, aby wybrać okres, np. weekend.",
+ "Föregående vecka": "Poprzedni tydzień",
+ "Nästa vecka": "Następny tydzień",
+ "v.": "tydz.",
+ "Välj dag": "Wybierz dzień"
 }

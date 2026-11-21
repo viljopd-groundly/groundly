@@ -2770,5 +2770,11 @@
  "Halvtid": "Descanso",
  "Paus": "Pausa",
  "Straffar": "Penaltis",
- "Avbruten": "Suspendido"
+ "Avbruten": "Suspendido",
+ "Välj sista dagen i perioden.": "Elige el último día del periodo.",
+ "Tryck på en dag – eller på två för att välja en period, t.ex. en helg.": "Toca un día, o dos para elegir un periodo, p. ej. un fin de semana.",
+ "Föregående vecka": "Semana anterior",
+ "Nästa vecka": "Semana siguiente",
+ "v.": "sem.",
+ "Välj dag": "Elige un día"
 }

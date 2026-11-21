@@ -2769,5 +2769,11 @@
  "Halvtid": "Tauko",
  "Paus": "Tauko",
  "Straffar": "Rangaistukset",
- "Avbruten": "Keskeytetty"
+ "Avbruten": "Keskeytetty",
+ "Välj sista dagen i perioden.": "Valitse jakson viimeinen päivä.",
+ "Tryck på en dag – eller på två för att välja en period, t.ex. en helg.": "Napauta päivää – tai kahta valitaksesi jakson, esim. viikonlopun.",
+ "Föregående vecka": "Edellinen viikko",
+ "Nästa vecka": "Seuraava viikko",
+ "v.": "vk",
+ "Välj dag": "Valitse päivä"
 }

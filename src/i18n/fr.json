@@ -2769,5 +2769,11 @@
  "Halvtid": "Mi-temps",
  "Paus": "Pause",
  "Straffar": "Tirs au but",
- "Avbruten": "Interrompu"
+ "Avbruten": "Interrompu",
+ "Välj sista dagen i perioden.": "Choisis le dernier jour de la période.",
+ "Tryck på en dag – eller på två för att välja en period, t.ex. en helg.": "Touche un jour, ou deux pour choisir une période, p. ex. un week-end.",
+ "Föregående vecka": "Semaine précédente",
+ "Nästa vecka": "Semaine suivante",
+ "v.": "sem.",
+ "Välj dag": "Choisir un jour"
 }

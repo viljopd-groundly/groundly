@@ -2858,5 +2858,11 @@
  "Halvtid": "HT",
  "Paus": "Break",
  "Straffar": "Pens",
- "Avbruten": "Suspended"
+ "Avbruten": "Suspended",
+ "Välj sista dagen i perioden.": "Pick the last day of the period.",
+ "Tryck på en dag – eller på två för att välja en period, t.ex. en helg.": "Tap a day – or two to pick a period, e.g. a weekend.",
+ "Föregående vecka": "Previous week",
+ "Nästa vecka": "Next week",
+ "v.": "wk",
+ "Välj dag": "Pick a day"
 }
