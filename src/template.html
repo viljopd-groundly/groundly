@@ -565,10 +565,10 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .calt{all:unset;cursor:pointer;font:800 calc(22px*var(--fs)) var(--f-display,inherit);text-transform:uppercase;letter-spacing:.5px;color:var(--fg)}.calt small{font:600 calc(13px*var(--fs)) var(--f-body);color:var(--muted);text-transform:none;margin-left:6px;letter-spacing:0}
 .calnav{display:flex;gap:6px}.calnav button{all:unset;cursor:pointer;min-width:32px;height:32px;border-radius:99px;border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);font-weight:700}.calnav .ct{padding:0 12px;color:var(--fg);font-size:calc(13px*var(--fs))}
 .calg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}.calg i{font-style:normal;font-size:calc(12px*var(--fs));color:var(--muted);font-weight:600;padding-bottom:2px}
-.cd{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:3px 0 5px;border-radius:12px}.cd:focus-visible{outline:2px solid var(--accent)}
-.cd .n{width:calc(34px*var(--fs));height:calc(34px*var(--fs));border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:calc(15px*var(--fs));color:var(--fg)}.cd .n.t{box-shadow:inset 0 0 0 1.5px var(--accent)}
-.cd .c{font-size:calc(11px*var(--fs));color:var(--muted);font-weight:600}.cd.past .n{opacity:.55}.cd.dim{opacity:.35}
-.cd.on .n{background:var(--accent);color:#0b1a12;opacity:1}.cd.on .c{color:var(--accent)}.cd.r{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.cday{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:3px 0 5px;border-radius:12px}.cday:focus-visible{outline:2px solid var(--accent)}
+.cday .n{width:calc(34px*var(--fs));height:calc(34px*var(--fs));border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:calc(15px*var(--fs));color:var(--fg)}.cday .n.t{box-shadow:inset 0 0 0 1.5px var(--accent)}
+.cday .c{font-size:calc(11px*var(--fs));color:var(--muted);font-weight:600}.cday.past .n{opacity:.55}.cday.dim{opacity:.35}
+.cday.on .n{background:var(--accent);color:#0b1a12;opacity:1}.cday.on .c{color:var(--accent)}.cday.r{background:color-mix(in srgb,var(--accent) 16%,transparent)}
 .calhint{margin:6px 6px 2px;font-size:calc(13px*var(--fs));color:var(--muted)}
 .radin{display:flex;align-items:center;gap:10px;font-weight:600}.radin input{font:500 calc(15px*var(--fs)) var(--f-body);color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:10px;padding:0 12px;height:40px;box-sizing:border-box;width:130px;min-width:0}.radin input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}.msgo{width:100%;margin-top:18px;justify-content:center}html.msopen{overflow:hidden}
 .tripdelask{display:grid;gap:4px;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--soft);box-shadow:inset 0 0 0 2px #c0392b}.tripdelask .actions{margin-top:6px}.btn.danger{background:#c0392b!important;border-color:#c0392b!important;color:#fff!important}
@@ -1104,6 +1104,9 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .hsplit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 18px}.hsplit .hcol{display:flex;flex-direction:column;gap:8px;min-width:0}.hsplit .hcol>.lbl{display:flex;align-items:center;gap:6px}.hsplit .hcard{border:1px solid var(--line);border-radius:12px;padding:10px 14px}
 .hrow{align-items:stretch}.hrow>.hcard{align-items:center;padding:14px 18px}.hrow>.hcard .htxt b{font-size:calc(17px*var(--fs))}.hothome{border:1px solid var(--line)}.hotopen{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;min-width:0;flex:1}.hotopen:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}.hotopen b{text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 25%,transparent);text-underline-offset:3px}.hypemini{gap:4px;padding-left:12px;padding-right:12px}.hypemini .hcnt{margin-left:0}.hothome .hotlist{margin-top:6px}
 .heroswipe .wkrow>.heroslide{flex:0 0 100%;min-width:0;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always}.heroswipe .heroslide>.teams{margin-top:2px}
+/* Veckans match: samma stil som lagnamn i resten av appen, bara lite större (inte rubrikstil) */
+.heroswipe .teams.big,:root[data-look] .heroswipe .teams.big{font-family:var(--f-body)!important;font-weight:700!important;text-transform:none!important;letter-spacing:0!important;font-size:calc(19px*var(--fs))!important}
+.heroswipe .teams.big .crest{width:32px!important;height:32px!important}.heroswipe .heroslide>.cd{margin-top:6px}
 .wkdots{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}.wkdots i.on{background:var(--accent);width:18px;border-radius:4px}
 /* Tips för helgen ligger överst och ska synas mest: mörkare överkant */
 .tip.wkbox{border-top:2px solid var(--accent)!important}
@@ -1133,10 +1136,10 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
   -webkit-mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat;
   mask:radial-gradient(circle 9px at 0 48px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 48px,transparent 98%,#000) right/51% 100% no-repeat}
 :root[data-look="ticket"] .tip.hero>.lbl{padding-bottom:16px;border-bottom:2px dashed var(--line);margin:0 calc(-1*var(--tp)) 4px;padding-left:var(--tp)}
-:root[data-look="ticket"] .tip.hero .teams.big{font-size:calc(21px*var(--fs))}
+:root[data-look="ticket"] .tip.hero .teams.big{font-size:calc(19px*var(--fs))}
 /* Biljetten: Veckans match lite större – mer luft och större märken, men lagnamnen ett snäpp mindre */
 :root[data-look="ticket"] .tip.heroswipe{padding-top:20px;padding-bottom:20px}:root[data-look="ticket"] .heroswipe .heroslide{padding:8px 0 4px}
-:root[data-look="ticket"] .heroswipe .teams.big .crest{width:40px!important;height:40px!important}:root[data-look="ticket"] .tip.heroswipe>.lbl{font-size:calc(19px*var(--fs));font-weight:700;letter-spacing:0}:root[data-look="ticket"] .heroswipe .heroslide>.cd{font-size:calc(15px*var(--fs));margin-top:4px}.heroswipe .heroslide>.cd b{white-space:nowrap}:root[data-look="ticket"] .heroswipe .heroslide>.venue{margin-top:2px}:root[data-look="ticket"] .tip.hero.wkcard .teams.big{font-size:calc(20px*var(--fs))}
+:root[data-look="ticket"] .heroswipe .teams.big .crest{width:32px!important;height:32px!important}:root[data-look="ticket"] .tip.heroswipe>.lbl{font-size:calc(19px*var(--fs));font-weight:700;letter-spacing:0}:root[data-look="ticket"] .heroswipe .heroslide>.cd{font-size:calc(15px*var(--fs));margin-top:4px}.heroswipe .heroslide>.cd b{white-space:nowrap}:root[data-look="ticket"] .heroswipe .heroslide>.venue{margin-top:2px}:root[data-look="ticket"] .tip.hero.wkcard .teams.big{font-size:calc(20px*var(--fs))}
 :root[data-look="ticket"] .tip.howto{background:var(--fg)}
 :root[data-look="ticket"] .bnav{background:var(--fg);border-top:0;box-shadow:none}
 :root[data-look="ticket"] .bn{color:#C9D2DE}:root[data-look="ticket"] .bn[aria-current="true"]{color:#fff}
@@ -2115,7 +2118,7 @@ function mDayCounts(a,b,place){const key=[a,b,MATCHES.length,JSON.stringify(MQ),
   if(CALC&&CALC.k===key)return CALC.c;const c={};for(const m of MATCHES){if(!m.kickoff)continue;const k=koDay(m.kickoff);if(k<a||k>b)continue;if(mPass(m,place))c[k]=(c[k]||0)+1;}CALC={k:key,c};return c;}
 function mCalHtml(place){const t=today();if(!CALW)CALW=monOf(dFrom);
   const cell=(k,cnt,dim)=>{const single=dFrom===dTo&&k===dFrom,inR=dFrom!==dTo&&k>=dFrom&&k<=dTo,end=inR&&(k===dFrom||k===dTo);
-    return`<button type="button" class="cd${single||end?" on":inR?" r":""}${k<t?" past":""}${dim?" dim":""}" data-cday="${k}" aria-pressed="${single||inR}" aria-label="${esc(dayLong(k))}: ${cnt||0} ${$t("matcher")}"><span class="n${k===t?" t":""}">${+k.slice(8)}</span><span class="c">${cnt?nf0(cnt):"–"}</span></button>`;};
+    return`<button type="button" class="cday${single||end?" on":inR?" r":""}${k<t?" past":""}${dim?" dim":""}" data-cday="${k}" aria-pressed="${single||inR}" aria-label="${esc(dayLong(k))}: ${cnt||0} ${$t("matcher")}"><span class="n${k===t?" t":""}">${+k.slice(8)}</span><span class="c">${cnt?nf0(cnt):"–"}</span></button>`;};
   const wd=[0,1,2,3,4,5,6].map(i=>new Date(addDays("2026-11-16",i)+"T12:00:00").toLocaleDateString(LANG,{weekday:"narrow"}));
   if(CAL_MONTH){if(!CALM)CALM=dFrom.slice(0,7)+"-01";const first=CALM,start=monOf(first);const nm=new Date(first+"T12:00:00");nm.setMonth(nm.getMonth()+1);const last=addDays(dayKey(nm),-1);let end=addDays(monOf(last),6);
     const cnt=mDayCounts(start,end,place);let g="";for(let k=start;k<=end;k=addDays(k,1))g+=cell(k,cnt[k],k.slice(0,7)!==first.slice(0,7));
