@@ -30,3 +30,10 @@ jobs:
             API_FOOTBALL_KEY
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      - name: Svarar tjänsten?
+        if: steps.chk.outputs.ok == '1'
+        run: |
+          sleep 5
+          out=$(curl -s -m 30 https://groundly-live.viljo-pd.workers.dev/live)
+          echo "$out" | head -c 300; echo
+          echo "$out" | python3 -c "import json,sys;j=json.load(sys.stdin);print('::notice::Live-tjänsten svarar: %d pågående matcher' % len(j.get('m',[])) + (' (fel: %s)' % j['err'] if j.get('err') else ''))"
