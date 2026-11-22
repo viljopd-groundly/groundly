@@ -4331,7 +4331,7 @@ async function exportCsv(){const rows=[[$t("Datum"),$t("Hemmalag"),$t("Bortalag"
 let aq="",aCountry="alla",aSort="cap",aFilt=new Set(),aLimit=40;
 try{const s=store.get("fk-asort");if(["cap","rate","az"].includes(s))aSort=s;}catch(e){}
 // land och filter på Arenor sparas så att valen ligger kvar när man kommer tillbaka
-try{const c=store.get("fk-acountry");if(c)aCountry=c;const f=JSON.parse(store.get("fk-afilt")||"[]");if(Array.isArray(f))f.filter(k=>["up","acc","rated","vis","notv"].includes(k)).forEach(k=>aFilt.add(k));}catch(e){}
+try{const c=store.get("fk-acountry");if(c)aCountry=c;const f=JSON.parse(store.get("fk-afilt")||"[]");if(Array.isArray(f))f.filter(k=>["rated","vis","notv"].includes(k)).forEach(k=>aFilt.add(k));}catch(e){}
 const aSave=()=>{store.set("fk-acountry",aCountry);store.set("fk-afilt",JSON.stringify([...aFilt]));};
 let ARENAS=null;
 function arenas(){if(ARENAS)return ARENAS;const map=new Map();
@@ -4347,13 +4347,11 @@ function upIndex(){const now=Date.now()-2*36e5;const day=today();
 function arenaUpcoming(x){if(dbState!=="ready")return[];const I=upIndex();const out=[...(I.byKey.get(x.k)||[])];x.clubs.forEach(c=>{const h=I.byHome.get(c.id);if(h)out.push(...h);});return out.sort(sortM);}
 const arenaVisited=x=>myState==="ready"&&visitedStadiums().has(x.s);
 const arenaHasAcc=a=>ACC.some(([k])=>a.acc[k].y||a.acc[k].n);
-const AFILT=[["up",$t("Kommande matcher")],["acc",$t("Tillgänglighetsinfo")],["rated",$t("Har betyg")],["vis",$t("Besökta")],["notv",$t("Inte besökta")]];
+const AFILT=[["rated",$t("Har betyg")],["vis",$t("Besökta")],["notv",$t("Inte besökta")]];
 const ASORT=[["cap",$t("Störst först")],["rate",$t("Bäst betyg")],["az",$t("A–Ö")]];
 function arenaList(){const toks=norm(aq)?norm(aq).split(" "):[];
   let list=arenas().filter(x=>inCountry({c:x.c,l:x.clubs&&x.clubs[0]&&x.clubs[0].l})&&toks.every(t=>x.hay.includes(t)));
   list=list.map(x=>({...x,a:arenaAgg(x.s)}));
-  if(aFilt.has("up"))list=list.filter(x=>arenaUpcoming(x).length);
-  if(aFilt.has("acc"))list=list.filter(x=>arenaHasAcc(x.a));
   if(aFilt.has("rated"))list=list.filter(x=>x.a.n>0);
   if(aFilt.has("notv")&&myState==="ready")list=list.filter(x=>!arenaVisited(x));
   if(aFilt.has("vis")&&myState==="ready")list=list.filter(x=>arenaVisited(x));
