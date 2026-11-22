@@ -2860,5 +2860,6 @@
  "Tidigare resor": "Aiemmat matkat",
  "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "Et päässyt otteluihin tällä kertaa. Matka tallennetaan silti tänne.",
  "Visa 1 match som redan spelats i dag": "Näytä 1 tänään jo pelattu ottelu",
- "Visa {n} matcher som redan spelats i dag": "Näytä {n} tänään jo pelattua ottelua"
+ "Visa {n} matcher som redan spelats i dag": "Näytä {n} tänään jo pelattua ottelua",
+ "Dölj matcher som redan spelats": "Piilota jo pelatut ottelut"
 }

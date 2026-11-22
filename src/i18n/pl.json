@@ -2860,5 +2860,6 @@
  "Tidigare resor": "Poprzednie podróże",
  "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "Tym razem nie udało ci się dotrzeć na mecze. Podróż i tak zostaje tu zapisana.",
  "Visa 1 match som redan spelats i dag": "Pokaż 1 mecz rozegrany już dziś",
- "Visa {n} matcher som redan spelats i dag": "Pokaż {n} meczów rozegranych już dziś"
+ "Visa {n} matcher som redan spelats i dag": "Pokaż {n} meczów rozegranych już dziś",
+ "Dölj matcher som redan spelats": "Ukryj rozegrane mecze"
 }

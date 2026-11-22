@@ -560,7 +560,7 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .tip.topform{overflow:visible!important;position:relative;z-index:3}.toparea .chips{margin:0}.toparea .selw{max-width:none}.toparea .fld{margin:0}
 .ko.live{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.ko.live small{color:#ffd9db!important;letter-spacing:.08em}
 .ko.live:before{content:"";display:block;width:8px;height:8px;border-radius:50%;background:#fff;margin:0 auto 3px;animation:livep 1.4s ease-in-out infinite}
-.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:#ffb3b6;background:rgba(192,38,45,.14);font-weight:700}
+.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.mlearly .btn .ic.down{transform:rotate(90deg)}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:#ffb3b6;background:rgba(192,38,45,.14);font-weight:700}
 .chip.livechip:before{content:"";width:8px;height:8px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}
 .chip.livechip[aria-pressed="true"]{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.chip.livechip[aria-pressed="true"]:before{background:#fff}.chip.livechip b{background:#c0262d;color:#fff;border-radius:99px;padding:0 7px;font-size:12px}.chip.livechip[aria-pressed="true"] b{background:rgba(255,255,255,.25)}
 html:not(.dark) .chip.livechip{color:#a11d24}html:not(.dark) .chip.livechip[aria-pressed="true"]{color:#fff}
@@ -2241,7 +2241,7 @@ function renderMatchList(){
     // i dag: hoppa förbi matcher som redan är spelade, så att listan börjar där dagen är just nu
     const played=k===tdk&&!LIVE_ONLY&&!MEARLY.on?g.filter(x=>mPast(x[0])&&!(x[0].live&&!x[0].live.done)):[];
     if(played.length){const ps=new Set(played);items.push(`<div class="mlearly"><button class="btn small" type="button" data-mlearly="1">${ic("chev")} ${$tn(played.length,"Visa 1 match som redan spelats i dag","Visa {n} matcher som redan spelats i dag")}</button></div>`);g.forEach(x=>{if(!ps.has(x))items.push(x);});}
-    else g.forEach(x=>items.push(x));}
+    else{if(k===tdk&&!LIVE_ONLY&&MEARLY.on&&g.some(x=>mPast(x[0])&&!(x[0].live&&!x[0].live.done)))items.push(`<div class="mlearly"><button class="btn small" type="button" data-mlearly="0">${ic("chev","down")} ${$t("Dölj matcher som redan spelats")}</button></div>`);g.forEach(x=>items.push(x));}}
   if(tbd.length){items.push(`<div class="day">${$t("Datum ej spikat")}<span>${tbd.length} ${tbd.length===1?$t("match"):$t("matcher")}</span></div>`);tbd.forEach(x=>items.push(x));}
   if(MGROUP!=="tid"&&matchView!=="double"&&!LIVE_ONLY){el.innerHTML=groupedHtml(sel,now,showKm);MLQ=null;return;}
   el.innerHTML="";MLQ={items,i:0,now,km:showKm,el,left:sel.length};mlMore(30);}
@@ -2280,7 +2280,7 @@ function groupedHtml(sel,now,km){const fav=new Set(favLeagues());const tnum=m=>{
     return`<div class="mgrp">${head(key,`${gFlag(c)}<span class="mgname">${esc($t(c))}</span>`,cn(c),open)}</div>${open?`<div class="mgbody mgls">${ls.map(l=>{if(!byL.has(l))return`<div class="mgsub mgempty"><span class="mgsubb" aria-disabled="true"><span class="mgname">${esc($t(l))}</span><span class="mgn">${$t("inga matcher")}</span></span>${star(l)}</div>`;const lk="l:"+c+"|"+l,lo=MOPEN.has(lk);return`<div class="mgsub"><button class="mgsubb" data-mgrp="${esc(lk)}" aria-expanded="${lo}"><span class="mgname">${esc($t(l))}</span><span class="mgn">${byL.get(l).length} ${byL.get(l).length===1?$t("match"):$t("matcher")}</span><svg class="ic mgchev" aria-hidden="true"><use href="#i-chev"/></svg></button>${star(l)}</div>${lo?`<div class="mglist">${rows(byL.get(l))}</div>`:""}`;}).join("")}</div>`:""}</div>`;}).join("")}</div>`;}
 let MLQ=null,mlIO=null,DRC=null;
 let MEARLY={d:"",on:false};
-document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[data-mlearly]")){MEARLY={d:today(),on:true};const y=scrollY;renderMatches();scrollTo({top:y,behavior:"instant"});}});
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-mlearly]");if(b){MEARLY={d:today(),on:b.dataset.mlearly==="1"};const y=scrollY;renderMatches();scrollTo({top:y,behavior:"instant"});}});
 function mlMore(n){const q=MLQ;if(!q||!q.el.isConnected)return;const old=document.getElementById("mlMore");if(old)old.remove();
   let h="",c=0;while(q.i<q.items.length&&c<n){const it=q.items[q.i++];if(typeof it==="string")h+=it;else{h+=matchRow(it[0],q.now,q.km?it[1]:-1);c++;q.left--;}}
   if(q.i<q.items.length)h+=`<div id="mlMore" class="mlmore"><button class="btn small" data-mlmore="1">${$t("Visa fler matcher ({0} till)",[q.left])}</button></div>`;

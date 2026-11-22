@@ -2860,5 +2860,6 @@
  "Tidigare resor": "Viaggi passati",
  "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "Questa volta non sei riuscito ad andare alle partite. Il viaggio resta comunque salvato qui.",
  "Visa 1 match som redan spelats i dag": "Mostra 1 partita già giocata oggi",
- "Visa {n} matcher som redan spelats i dag": "Mostra {n} partite già giocate oggi"
+ "Visa {n} matcher som redan spelats i dag": "Mostra {n} partite già giocate oggi",
+ "Dölj matcher som redan spelats": "Nascondi le partite già giocate"
 }

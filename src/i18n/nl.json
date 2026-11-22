@@ -2860,5 +2860,6 @@
  "Tidigare resor": "Eerdere reizen",
  "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "Je bent deze keer niet bij de wedstrijden geweest. De reis blijft hier toch bewaard.",
  "Visa 1 match som redan spelats i dag": "Toon 1 wedstrijd die vandaag al gespeeld is",
- "Visa {n} matcher som redan spelats i dag": "Toon {n} wedstrijden die vandaag al gespeeld zijn"
+ "Visa {n} matcher som redan spelats i dag": "Toon {n} wedstrijden die vandaag al gespeeld zijn",
+ "Dölj matcher som redan spelats": "Verberg wedstrijden die al gespeeld zijn"
 }

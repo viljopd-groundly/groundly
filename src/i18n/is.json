@@ -2860,5 +2860,6 @@
  "Tidigare resor": "Fyrri ferðir",
  "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "Þú komst ekki á leikina í þetta sinn. Ferðin er samt vistuð hér.",
  "Visa 1 match som redan spelats i dag": "Sýna 1 leik sem þegar var spilaður í dag",
- "Visa {n} matcher som redan spelats i dag": "Sýna {n} leiki sem þegar voru spilaðir í dag"
+ "Visa {n} matcher som redan spelats i dag": "Sýna {n} leiki sem þegar voru spilaðir í dag",
+ "Dölj matcher som redan spelats": "Fela leiki sem þegar hafa verið spilaðir"
 }
