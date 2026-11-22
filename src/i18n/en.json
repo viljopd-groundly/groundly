@@ -2947,5 +2947,7 @@
  "Live nu": "Live now",
  "pågår just nu": "in progress now",
  "Tidigare resor": "Past trips",
- "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "You didn't make it to the matches this time. The trip is still saved here."
+ "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "You didn't make it to the matches this time. The trip is still saved here.",
+ "Visa 1 match som redan spelats i dag": "Show 1 match already played today",
+ "Visa {n} matcher som redan spelats i dag": "Show {n} matches already played today"
 }

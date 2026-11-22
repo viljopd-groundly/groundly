@@ -2859,5 +2859,7 @@
  "Live nu": "Live nå",
  "pågår just nu": "pågår nå",
  "Tidigare resor": "Tidligere turer",
- "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "Du kom deg ikke på kampene denne gangen. Turen lagres her likevel."
+ "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "Du kom deg ikke på kampene denne gangen. Turen lagres her likevel.",
+ "Visa 1 match som redan spelats i dag": "Vis 1 kamp som allerede er spilt i dag",
+ "Visa {n} matcher som redan spelats i dag": "Vis {n} kamper som allerede er spilt i dag"
 }
