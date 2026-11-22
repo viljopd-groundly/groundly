@@ -26,6 +26,18 @@ exports.derbies=[
 ["osaka", "Osakaderbyt", ["jp-gambaosaka", "jp-cerezoosak"], "Osaka, Japan", "Gamba mot Cerezo, Japans största stad utanför Tokyo delad i blått och rosa. Japansk läktarkultur när den är som bäst: sång hela matchen och städade läktare efteråt."],
 ["hyundai", "Hyundai-derbyt", ["kr-jeonbuk", "kr-ulsanhd"], "Jeonju och Ulsan, Sydkorea", "Jeonbuk mot Ulsan, de två lag som dominerat koreansk fotboll de senaste tio åren. Namnet kommer från att båda klubbarna har ägts av Hyundai-koncernen."],
 ["sydney", "Sydneyderbyt", ["au-sydney", "au-wsw"], "Sydney, Australien", "Sydney FC mot Western Sydney Wanderers, A-Leagues största derby sedan 2012. Wanderers klack ”The Red and Black Bloc” gör det till en av Australiens bästa fotbollsupplevelser."],
+["wien", "Wienderbyt", ["at-rapid", "at-austria"], "Wien, Österrike", "Rapid mot Austria, arbetarklubben i väst mot borgerliga Favoriten. Ett av världens mest spelade derbyn – första mötet var 1911."],
+["budapest", "Budapestderbyt", ["hu-ferencvaros", "hu-ujpest"], "Budapest, Ungern", "Ferencváros mot Újpest, grönt mot lila och Ungerns två mest framgångsrika klubbar. Rivaliteten har pågått sedan början av 1900-talet."],
+["dublin", "Dublinderbyt", ["ie-shamrock", "ie-bohemians"], "Dublin, Irland", "Shamrock Rovers mot Bohemians, Irlands största rivalitet. Billigt, nära och med fullsatta läktare på både Tallaght och Dalymount Park."],
+["belfast", "Belfasts Big Two", ["nir-linfield", "nir-glentoran"], "Belfast, Nordirland", "Linfield mot Glentoran, Nordirlands två storklubbar. Traditionsenligt spelas mötet på annandag jul, en klassiker för den som vill se fotboll i jul."],
+["torino", "Turinderbyt", ["juv", "tor"], "Turin, Italien", "Juventus mot Torino, Derby della Mole efter stadens landmärke. Italiens äldsta derby, spelat sedan 1907 – och Torino är stadens hjärta för många turinare."],
+["santiago", "Chiles superclásico", ["cl-colocolo", "cl-uchile"], "Santiago, Chile", "Colo-Colo mot Universidad de Chile, landets två största klubbar. Ett av Sydamerikas mest högljudda derbyn, ofta inför fullsatt Estadio Monumental eller Nacional."],
+["avellaneda", "Avellanedaderbyt", ["ar-racing", "ar-independie"], "Avellaneda, Argentina", "Racing mot Independiente, vars arenor ligger bara ett par hundra meter från varandra strax söder om Buenos Aires. Två av Argentinas största klubbar i samma kvarter."],
+["montevideo", "Uruguays klassiker", ["uy-penarol", "uy-nacional"], "Montevideo, Uruguay", "Peñarol mot Nacional, ett av världens äldsta derbyn utanför Storbritannien. I ett land med 3,5 miljoner invånare håller nästan alla på något av lagen."],
+["grenal", "Gre-Nal", ["br-gremio", "br-inter"], "Porto Alegre, Brasilien", "Grêmio mot Internacional, blått mot rött i södra Brasilien sedan 1909. Ett av landets hetaste derbyn, med två moderna arenor att välja mellan."],
+["mexiko", "Mexikos klassiker", ["mx-america", "mx-chivas"], "Mexico City och Guadalajara, Mexiko", "Club América mot Chivas, huvudstadens rika storklubb mot Guadalajara som bara spelar med mexikanska spelare. Mexikos mest följda match."],
+["rosario", "Rosarioderbyt", ["ar-rosario", "ar-newells"], "Rosario, Argentina", "Rosario Central mot Newell's Old Boys i Messis hemstad. Ett av Argentinas mest passionerade derbyn – staden delas bokstavligen i två färger."],
+["cascadia", "Cascadiaderbyt", ["sea", "ptim"], "Seattle och Portland, USA", "Seattle Sounders mot Portland Timbers, MLS hetaste rivalitet med rötter i 1970-talet. Läktarkultur som i Europa och några av USA:s största fotbollspubliker."],
 ["trafico","El Tráfico",["lafc","lag"],"Los Angeles, USA","LAFC mot LA Galaxy. Namnet syftar på stadens ökända trafik, och det är MLS mest besökta derby, med LAFC:s supporterläktare 3252 som en av ligans häftigaste."],
 ["southwales","South Wales-derbyt",["cdf","swa"],"Cardiff och Swansea, Wales","Cardiff City mot Swansea City, Wales två största klubbar. Båda spelar i Championship 2026/27, och rivaliteten mellan städerna är så stark att matcherna ofta spelas med hård polisbevakning och begränsade bortabiljetter."],
 ["cotedazur","Côte d'Azur-derbyt",["asm","nic"],"Monaco och Nice","AS Monaco mot OGC Nice, två städer bara 2 mil från varandra längs Rivieran. Ta tåget längs kusten mellan matcherna."],
@@ -67,6 +79,14 @@ exports.derbies=[
 ];
 // Kultklubbar: [klubb-id, varför]
 exports.cult=[
+["ptim", "Timbers Army sjunger hela matchen på Providence Park mitt i Portland, och efter varje mål sågar maskoten Timber Joey en skiva från en stock med motorsåg."],
+["us2-detroit", "Detroit City FC – ”Le Rouge” – började som ett supporterprojekt och spelar i Hamtramck på Keyworth Stadium från 1936. Klacken Northern Guard Supporters gör det till en av USA:s bästa fotbollskvällar."],
+["ar2-atlanta", "”Los Bohemios” från Villa Crespo i Buenos Aires, en kvarterklubb med starka band till stadens judiska historia. Billigt, nära och äkta argentinsk läktarkultur i andradivisionen."],
+["ar2-chacaritajun", "Chacarita Juniors kallas ”Funebreros” eftersom klubben grundades nära Buenos Aires stora begravningsplats. Kultklubb med en av Argentinas mest trogna klackar, oavsett division."],
+["br-vasco", "Vasco da Gama var en av de första brasilianska klubbarna som lät svarta och fattiga spelare spela, och vägrade 1924 att stänga ute dem. Spelar på anrika São Januário i Rio."],
+["jp-frontale", "Kawasaki Frontale är känt för Japans mest kreativa matchdagar – med teman, maskotar och evenemang runt arenan. Har vunnit J1 fyra gånger sedan 2017."],
+["pe-alianzalima", "Alianza Lima från arbetarstadsdelen La Victoria, med arenan ”Matute” mitt i kvarteren. Perus folkligaste klubb, med en klack som sjunger hela matchen."],
+["jp-urawa", "Urawa Reds har Japans största publik och en klack som fyller en hel kortsida på Saitama Stadium 2002. Asiatiska mästare flera gånger."],
 ["m60","Münchens andra storklubb och tysk mästare 1966. Spelar på klassiska Grünwalder Stadion i stadsdelen Giesing, med en av Tysklands mest trogna publik, oavsett vilken serie laget spelar i."],
 ["afcw","Startades av supportrarna 2002, när gamla Wimbledon flyttades till Milton Keynes. Började om i nionde divisionen och har tagit sig hela vägen tillbaka till ligafotbollen, i dag på nya Plough Lane nära den gamla arenan."],
 ["uds","Startades av supportrar 2013 när gamla UD Salamanca upplöstes. Supporterägd, med tusentals medlemmar, och har klättrat upp till Spaniens tredje nivå."],
@@ -116,6 +136,14 @@ exports.cult=[
 ];
 // Speciella arenor: [klubb-id, varför arenan är speciell]
 exports.arenas=[
+["ar-racing", "Racings ”El Cilindro” i Avellaneda från 1950 – en rund betongskål där läktarna går nästan lodrätt upp. Konkurrenten Independientes arena ligger ett par hundra meter bort."],
+["br-vasco", "São Januário i Rio de Janeiro invigdes 1927 och var Brasiliens största arena fram till 1940. Gammaldags, trång och med Vascos klack tätt inpå planen."],
+["mx-pumasunam", "Estadio Olímpico Universitario i Mexico City byggdes för OS 1968 och har en stor relief av Diego Rivera på fasaden. Hemmaarena för universitetsklubben Pumas."],
+["cl-uchile", "Estadio Nacional i Santiago från 1938 var platsen för VM-finalen 1962. En del av den gamla läktaren är bevarad som minnesplats över tiden efter militärkuppen 1973."],
+["jp-urawa", "Saitama Stadium 2002 är Japans största rena fotbollsarena och spelade VM-semifinal 2002. När Urawa Reds klack fyller hela kortsidan blir det en av Asiens mäktigaste läktare."],
+["sea", "Lumen Field i Seattle har tak över läktarna som studsar tillbaka ljudet – en av de mest högljudda arenorna i USA. Sounders drar några av MLS största publiksiffror."],
+["ar-velez", "Vélez Sarsfields Estadio José Amalfitani i Buenos Aires spelade VM-matcher 1978. En klassisk argentinsk arena med branta läktare, och ett bra alternativ när Boca och River är slutsålda."],
+["pe-universitari", "Estadio Monumental i Lima tar över 80 000 åskådare och är en av Sydamerikas största arenor. Universitarios hemmaplan, med läktare i flera våningar och utsikt mot Andernas utlöpare."],
 ["ful","Ligger vid Themsen i sydvästra London, med det lilla viktorianska huset The Cottage i ett hörn. En av få arenor där hemma- och bortafans kan sitta i samma sektion."],
 ["bvb","Hem för Die Gelbe Wand, Europas största ståplatsläktare med cirka 25 000 platser. När den gula väggen sjunger före avspark förstår man varför arenan är så omtalad."],
 ["scb","Inbyggd i ett gammalt stenbrott inför EM 2004. Läktare finns bara längs långsidorna, och bakom ena målet reser sig den bara bergväggen."],
