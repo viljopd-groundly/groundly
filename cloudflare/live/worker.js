@@ -17,13 +17,13 @@ export default {
     if (hit) return json(await hit.text(), { "Cache-Control": "public, max-age=30", "X-Cache": "HIT" });
     let body, ttl = CACHE_S;
     try {
-      const r = await fetch(API, { headers: { "x-apisports-key": env.API_FOOTBALL_KEY } });
+      const r = await fetch(API, { headers: { "x-apisports-key": String(env.API_FOOTBALL_KEY || "").trim() } });
       const j = await r.json();
       const err = j && j.errors && (Array.isArray(j.errors) ? j.errors.length : Object.keys(j.errors).length);
-      if (!r.ok || err) throw new Error("api " + r.status);
+      if (!r.ok || err) throw new Error("api " + r.status + " " + (err ? Object.keys(j.errors).join(",") : ""));
       body = JSON.stringify({ t: Date.now(), m: (j.response || []).map(f => [f.fixture.id, f.teams.home.id, f.teams.away.id, f.goals.home, f.goals.away, f.fixture.status.short, f.fixture.status.elapsed, f.fixture.status.extra || 0]) });
     } catch (e) {
-      body = JSON.stringify({ t: Date.now(), m: [], fel: true }); ttl = 30; // försök igen om en halv minut
+      body = JSON.stringify({ t: Date.now(), m: [], fel: true, orsak: String(e.message || e).slice(0, 80) }); ttl = 30; // försök igen om en halv minut
     }
     ctx.waitUntil(cache.put(key, new Response(body, { headers: { "Cache-Control": `public, max-age=${ttl}` } })));
     return json(body, { "Cache-Control": "public, max-age=30", "X-Cache": "MISS" });
