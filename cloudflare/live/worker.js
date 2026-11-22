@@ -4,7 +4,7 @@
 // aldrig i appen. Svar: {t: tid, m: [[fixture, hemmalag-id, bortalag-id, mål hemma, mål borta, status, minut, tillägg, händelser]]}
 const API = "https://v3.football.api-sports.io/fixtures?live=all";
 const CACHE_S = 60;
-let MEM = null;
+let MEM = null, GOOD = null;
 // mål och röda kort: [minut, tillägg, lag-id, spelare, typ] där typ är G (mål), P (straff), O (självmål), R (rött kort)
 const evs = f => (Array.isArray(f.events) ? f.events : []).map(e => {
   const d = String(e.detail || ""), t = e.type === "Goal" ? (/Own/i.test(d) ? "O" : /Penalty/i.test(d) && !/Missed/i.test(d) ? "P" : /Missed/i.test(d) ? "" : "G") : e.type === "Card" && /Red/i.test(d) ? "R" : "";
@@ -37,8 +37,10 @@ export default {
       const err = j && j.errors && (Array.isArray(j.errors) ? j.errors.length : Object.keys(j.errors).length);
       if (!r.ok || err) throw new Error("api " + r.status + " " + (err ? Object.keys(j.errors).join(",") : ""));
       body = JSON.stringify({ t: Date.now(), m: (j.response || []).map(f => [f.fixture.id, f.teams.home.id, f.teams.away.id, f.goals.home, f.goals.away, f.fixture.status.short, f.fixture.status.elapsed, f.fixture.status.extra || 0, evs(f)]) });
+      GOOD = { at: Date.now(), body };
     } catch (e) {
-      body = JSON.stringify({ t: Date.now(), m: [], fel: true, orsak: String(e.message || e).slice(0, 80) }); ttl = 30; // försök igen om en halv minut
+      // vid fel (t.ex. tillfällig spärr per minut): visa senaste lyckade svaret om det är färskt
+      body = GOOD && Date.now() - GOOD.at < 5 * 60e3 ? GOOD.body : JSON.stringify({ t: Date.now(), m: [], fel: true, orsak: String(e.message || e).slice(0, 80) }); ttl = 30; // försök igen om en halv minut
     }
     MEM = { at: Date.now(), ttl, body };
     ctx.waitUntil(cache.put(key, new Response(body, { headers: { "Cache-Control": `public, max-age=${ttl}` } })));
