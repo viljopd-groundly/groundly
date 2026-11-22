@@ -1335,7 +1335,8 @@ html:root[data-look="kit"][data-theme="dark"] :is(.tip,.card,.rep,.match,.combo,
 .ntbar{height:6px;border-radius:999px;background:var(--soft);margin-top:10px;overflow:hidden}.ntbar i{display:block;height:100%;background:var(--accent);border-radius:999px}
 :root[data-look="ticket"] .nexttrip .ntcity{text-transform:uppercase;font-weight:800}
 /* egen regel: ett id i :is()-listan ovan höjer hela regelns vikt och tar över t.ex. valda knappar */
-html:root[data-look="kit"] #updBar{--fg:#000000;--muted:#4A5260;--line:#D7DDE6;--bg:#E6EAF0;--accent:var(--acc-l,#1E5FA0);color:var(--fg)}
+/* uppdateringsrutan är alltid mörk med vit text, i alla utseenden och teman */
+html:root #updBar{background:#1b2540!important;border-color:#2e3b5c!important;color:#fff!important}html:root #updBar>span{color:#fff!important}html:root #updBar .x{color:#c3cad8!important}
 html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
 @media (min-width:1024px){#homeBody>.hmas{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch}
 /* spalterna slutar i samma höjd: sista rutan i varje spalt sträcks ut */
