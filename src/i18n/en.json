@@ -2950,5 +2950,7 @@
  "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "You didn't make it to the matches this time. The trip is still saved here.",
  "Visa 1 match som redan spelats i dag": "Show 1 match already played today",
  "Visa {n} matcher som redan spelats i dag": "Show {n} matches already played today",
- "Dölj matcher som redan spelats": "Hide matches already played"
+ "Dölj matcher som redan spelats": "Hide matches already played",
+ "Visa hela månaden": "Show whole month",
+ "Visa en vecka": "Show one week"
 }

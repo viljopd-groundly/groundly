@@ -2862,5 +2862,7 @@
  "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "Du kom ikke af sted til kampene denne gang. Rejsen gemmes her alligevel.",
  "Visa 1 match som redan spelats i dag": "Vis 1 kamp, der allerede er spillet i dag",
  "Visa {n} matcher som redan spelats i dag": "Vis {n} kampe, der allerede er spillet i dag",
- "Dölj matcher som redan spelats": "Skjul kampe, der allerede er spillet"
+ "Dölj matcher som redan spelats": "Skjul kampe, der allerede er spillet",
+ "Visa hela månaden": "Vis hele måneden",
+ "Visa en vecka": "Vis én uge"
 }
