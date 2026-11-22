@@ -2850,5 +2850,11 @@
  "Vi vet inte vilken arena {0} spelar på än.": "Non sappiamo ancora in quale stadio gioca {0}.",
  "Välj klubben i listan. Saknas den kan du först föreslå klubben.": "Scegli il club dall'elenco. Se manca, puoi prima suggerire il club.",
  "Välj två olika lag.": "Scegli due squadre diverse.",
- "Ditt tips": "Il tuo consiglio"
+ "Ditt tips": "Il tuo consiglio",
+ "Alla live ({0})": "Tutte live ({0})",
+ "Din match": "La tua partita",
+ "I din resa": "Nel tuo viaggio",
+ "Live": "Live",
+ "Live nu": "Live ora",
+ "pågår just nu": "in corso ora"
 }

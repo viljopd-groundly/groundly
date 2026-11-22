@@ -2850,5 +2850,11 @@
  "Vi vet inte vilken arena {0} spelar på än.": "Við vitum ekki enn á hvaða velli {0} spilar.",
  "Välj klubben i listan. Saknas den kan du först föreslå klubben.": "Veldu félagið af listanum. Ef það vantar geturðu fyrst stungið upp á félaginu.",
  "Välj två olika lag.": "Veldu tvö mismunandi lið.",
- "Ditt tips": "Þín ábending"
+ "Ditt tips": "Þín ábending",
+ "Alla live ({0})": "Allir í beinni ({0})",
+ "Din match": "Þinn leikur",
+ "I din resa": "Í ferðinni þinni",
+ "Live": "Í beinni",
+ "Live nu": "Í beinni núna",
+ "pågår just nu": "í gangi núna"
 }

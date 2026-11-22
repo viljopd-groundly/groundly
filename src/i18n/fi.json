@@ -2850,5 +2850,11 @@
  "Vi vet inte vilken arena {0} spelar på än.": "Emme vielä tiedä, millä stadionilla {0} pelaa.",
  "Välj klubben i listan. Saknas den kan du först föreslå klubben.": "Valitse seura listasta. Jos se puuttuu, voit ensin ehdottaa seuraa.",
  "Välj två olika lag.": "Valitse kaksi eri joukkuetta.",
- "Ditt tips": "Sinun vinkkisi"
+ "Ditt tips": "Sinun vinkkisi",
+ "Alla live ({0})": "Kaikki live ({0})",
+ "Din match": "Sinun ottelusi",
+ "I din resa": "Matkallasi",
+ "Live": "Live",
+ "Live nu": "Live nyt",
+ "pågår just nu": "käynnissä nyt"
 }

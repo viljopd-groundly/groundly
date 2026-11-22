@@ -560,6 +560,14 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .tip.topform{overflow:visible!important;position:relative;z-index:3}.toparea .chips{margin:0}.toparea .selw{max-width:none}.toparea .fld{margin:0}
 .ko.live{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.ko.live small{color:#ffd9db!important;letter-spacing:.08em}
 .ko.live:before{content:"";display:block;width:8px;height:8px;border-radius:50%;background:#fff;margin:0 auto 3px;animation:livep 1.4s ease-in-out infinite}
+.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:#ffb3b6;background:rgba(192,38,45,.14);font-weight:700}
+.chip.livechip:before{content:"";width:8px;height:8px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}
+.chip.livechip[aria-pressed="true"]{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.chip.livechip[aria-pressed="true"]:before{background:#fff}.chip.livechip b{background:#c0262d;color:#fff;border-radius:99px;padding:0 7px;font-size:12px}.chip.livechip[aria-pressed="true"] b{background:rgba(255,255,255,.25)}
+html:not(.dark) .chip.livechip{color:#a11d24}html:not(.dark) .chip.livechip[aria-pressed="true"]{color:#fff}
+.livecard{border:1.5px solid #c0262d!important}.livecard .lchead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}.livecard .lchead h3{margin:0;display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#e5484d}
+.livecard .lchead h3:before{content:"";width:9px;height:9px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}
+.lvrow{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;background:none;border:0;border-top:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer}.lvrow:first-of-type{border-top:0}
+.lvrow .ko{flex-shrink:0}.lvrow .lvt{flex-grow:1;min-width:0;display:flex;flex-direction:column;gap:3px}.lvrow .lvt div{display:flex;justify-content:space-between;gap:8px;font-weight:600}.lvrow .lvt div span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lvrow .lvt small{color:var(--muted);font-size:12px}
 @keyframes livep{0%,100%{opacity:1}50%{opacity:.25}}@media (prefers-reduced-motion:reduce){.ko.live:before{animation:none}}
 .mcal{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:8px 6px 6px;margin:2px 0 4px}
 .calh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 6px 6px}
@@ -1450,6 +1458,7 @@ html:root[data-look="kit"] #updBar .btn.primary{background:var(--accent)!importa
     <div class="lbl" id="radiusLbl" hidden>Avstånd</div>
     <div class="chips" role="group" aria-label="Avstånd" id="radiusChips" hidden></div>
     <div class="place" id="placeRow" hidden></div>
+    <div class="liverow" id="liveRow" hidden></div>
     <div class="mcal" role="group" aria-label="Välj dag" id="datePresets"></div>
     <div class="mseg" role="group" aria-label="Gruppera matcherna" id="mGroupSeg"></div>
     <div class="mactive" id="mActive" hidden></div>
@@ -2187,8 +2196,9 @@ function renderMatchList(){
   if(dTo<dFrom)dTo=dFrom;
   document.getElementById("dFrom").value=dFrom;document.getElementById("dTo").value=dTo;
   {const q=document.getElementById("mQuick");if(q)q.innerHTML=mQuickHtml();const g=document.getElementById("mGroupSeg");if(g){g.innerHTML=mGroupHtml();g.hidden=matchView==="double";}}
+  {const lv=liveList();if(!lv.length)LIVE_ONLY=false;const lr=document.getElementById("liveRow");if(lr){lr.hidden=!lv.length||matchView!=="list";lr.innerHTML=lv.length?`<button class="chip livechip" type="button" data-liveonly="1" aria-pressed="${LIVE_ONLY}">${$t("Live")} <b>${lv.length}</b></button>`:"";}}
   const place=resolvePlace();
-  document.getElementById("datePresets").innerHTML=mCalHtml(place);const hasQ=!!norm(cityQ);
+  document.getElementById("datePresets").innerHTML=mCalHtml(place);document.getElementById("datePresets").hidden=LIVE_ONLY;{const g=document.getElementById("mGroupSeg");if(g&&LIVE_ONLY)g.hidden=true;}const hasQ=!!norm(cityQ);
   document.getElementById("radiusLbl").textContent=$t("Avstånd från {0} · uppskattad bilväg",[place&&place.ll?place.name:cityQ]);
   document.getElementById("radiusLbl").hidden=!hasQ;document.getElementById("radiusChips").hidden=!hasQ;
   const RADII=RADII_FOR();const isCustom=!RADII.some(r=>radEq(r,radius));
@@ -2211,14 +2221,14 @@ function renderMatchList(){
     el.innerHTML=`<div class="empty">${dbState==="loading"?$t("Hämtar matchschemat…"):dbState==="none"?$t("<b>Matchschemat kan inte visas här.</b><div>Öppna sidan inloggad på claude.ai för att se matcher. Klubbsöket fungerar ändå.</div>"):$t("<b>Matchschemat är tomt.</b><div>Inga matcher är inlagda ännu.</div>")}</div>`;return;}
   // matcherna i datumintervallet sparas, så att snabbval och gruppering inte går igenom hela schemat varje gång
   if(!DRC||DRC.m!==MATCHES||DRC.f!==dFrom||DRC.t!==dTo)DRC={m:MATCHES,f:dFrom,t:dTo,l:MATCHES.filter(inDates)};
-  const sel=[];DRC.l.forEach(m=>{if(!gOkM(m))return;if(tiers.size&&!tiers.has(tierOf(m)))return;if(MQ&&!mqOk(m))return;if(MQK&&!mqkOk(m))return;if(favOnly&&favList().length){if(isFav(m.home)||isFav(m.away))sel.push([m,-1]);return;}if(MQ||MQK){sel.push([m,-1]);return;}const d=placeDist(m,place);if(d===null)return;sel.push([m,d]);});
+  const sel=[];if(LIVE_ONLY)liveList().map(m=>[m,liveMine(m)]).sort((a,b)=>(a[1]?0:1)-(b[1]?0:1)||String(a[0].comp).localeCompare(String(b[0].comp))).forEach(x=>sel.push([x[0],-1]));else DRC.l.forEach(m=>{if(!gOkM(m))return;if(tiers.size&&!tiers.has(tierOf(m)))return;if(MQ&&!mqOk(m))return;if(MQK&&!mqkOk(m))return;if(favOnly&&favList().length){if(isFav(m.home)||isFav(m.away))sel.push([m,-1]);return;}if(MQ||MQK){sel.push([m,-1]);return;}const d=placeDist(m,place);if(d===null)return;sel.push([m,d]);});
   const byDay=new Map(),tbd=[];
-  sel.sort((a,b)=>sortM(a[0],b[0])).forEach(x=>{if(!x[0].kickoff){tbd.push(x);return;}const k=dayKey(new Date(x[0].kickoff));if(!byDay.has(k))byDay.set(k,[]);byDay.get(k).push(x);});
-  const n=sel.length;const where=MQ?(MQ.t==="team"?$t(" med {0}",[esc(MQ.l)]):$t(" i {0}",[esc(MQ.l)])):favOnly&&favList().length?$t(" med {0}",[favList().length===1?esc(C[favList()[0]].n):$t("dina favoritlag")]):!hasQ?$t(" i hela världen"):radius===0?` i ${esc(place&&place.ll?place.name:cityQ)}`:$t(" inom {0} från {1}",[milU(radius),esc(place&&place.ll?place.name:cityQ)]);
+  (LIVE_ONLY?sel:sel.sort((a,b)=>sortM(a[0],b[0]))).forEach(x=>{if(!x[0].kickoff){tbd.push(x);return;}const k=dayKey(new Date(x[0].kickoff));if(!byDay.has(k))byDay.set(k,[]);byDay.get(k).push(x);});
+  const n=sel.length;const where=LIVE_ONLY?" "+$t("pågår just nu"):MQ?(MQ.t==="team"?$t(" med {0}",[esc(MQ.l)]):$t(" i {0}",[esc(MQ.l)])):favOnly&&favList().length?$t(" med {0}",[favList().length===1?esc(C[favList()[0]].n):$t("dina favoritlag")]):!hasQ?$t(" i hela världen"):radius===0?` i ${esc(place&&place.ll?place.name:cityQ)}`:$t(" inom {0} från {1}",[milU(radius),esc(place&&place.ll?place.name:cityQ)]);
   const dTxt=dFrom===dTo?dayLong(dFrom):`${dayLong(dFrom)} – ${dayLong(dTo)}`;
-  cn.innerHTML=`<b>${n}</b> ${n===1?$t("match"):$t("matcher")}${where} · ${esc(dTxt)}`;
+  cn.innerHTML=`<b>${n}</b> ${n===1?$t("match"):$t("matcher")}${where}${LIVE_ONLY?"":" · "+esc(dTxt)}`;
   // antalsraden behövs bara när den säger något mer än dagsrubrikerna (sökt ort eller Mina lag)
-  {const tb=document.getElementById("matchTb");if(tb)tb.hidden=!(hasQ||MQ||(favOnly&&favList().length)||matchView==="double");const g=document.getElementById("mSheetGo");if(g)g.textContent=matchView==="double"?$t("Klar"):n===1?$t("Visa 1 match"):$t("Visa {0} matcher",[n]);}
+  {const tb=document.getElementById("matchTb");if(tb)tb.hidden=!(LIVE_ONLY||hasQ||MQ||(favOnly&&favList().length)||matchView==="double");const g=document.getElementById("mSheetGo");if(g)g.textContent=matchView==="double"?$t("Klar"):n===1?$t("Visa 1 match"):$t("Visa {0} matcher",[n]);}
   if(!n){const maxDay=MATCHES.reduce((mx,m)=>{const k=m.kickoff?koDay(m.kickoff):m.dateTo;return k>mx?k:mx;},"");let why=$t("Prova fler dagar, ett större avstånd eller en annan serienivå.");
     if(dFrom>maxDay)why=$t("Schemat sträcker sig just nu till och med {0}, så det finns inga matcher inlagda för de här datumen än.",[esc(dayLong(maxDay))]);
     else if(hasQ&&radius>0&&place&&!place.ll)why=$t("Hitta orten först, så kan avståndet räknas ut.");
@@ -2228,7 +2238,7 @@ function renderMatchList(){
   const items=[];
   for(const[k,g]of byDay){items.push(`<div class="day">${esc(dayLong(k).replace(/^./,s=>s.toUpperCase()))}<span>${g.length} ${g.length===1?$t("match"):$t("matcher")}</span></div>`);g.forEach(x=>items.push(x));}
   if(tbd.length){items.push(`<div class="day">${$t("Datum ej spikat")}<span>${tbd.length} ${tbd.length===1?$t("match"):$t("matcher")}</span></div>`);tbd.forEach(x=>items.push(x));}
-  if(MGROUP!=="tid"&&matchView!=="double"){el.innerHTML=groupedHtml(sel,now,showKm);MLQ=null;return;}
+  if(MGROUP!=="tid"&&matchView!=="double"&&!LIVE_ONLY){el.innerHTML=groupedHtml(sel,now,showKm);MLQ=null;return;}
   el.innerHTML="";MLQ={items,i:0,now,km:showKm,el,left:sel.length};mlMore(30);}
 function MQK_L(){return{mylg:"★ "+$t("Mina serier"),near:$t("Nära mig"),nord:$t("Norden"),eu:$t("Europa"),sam:$t("Sydamerika"),nam:$t("Nord- och Centralamerika"),asia:$t("Asien och Oceanien"),afr:$t("Afrika")};}
 function mQuickHtml(){const srch=mSearching();const q=[["mylg","★ "+$t("Mina serier")],...(favList().length?[["fav",$t("Mina lag")]]:[]),...(homeTown?[["near",$t("Nära mig")]]:[]),["nord",$t("Norden")],["eu",$t("Europa")],["sam",$t("Sydamerika")],["nam",$t("Nord- och Centralamerika")],["asia",$t("Asien och Oceanien")],["afr",$t("Afrika")]];
@@ -4839,6 +4849,20 @@ async function livePoll(){clearTimeout(LIVE_T);if(!LIVE_URL)return;if(document.h
       if(!m.live||m.live.min!==min||m.live.st!==st||m.score!==sc){ch=true;m.live=nl;m.score=sc;}}
     if(ch)liveRefresh();}catch(e){}
   LIVE_T=setTimeout(livePoll,60000);}
+// pågående matcher (bara om senaste svaret är färskt, annars visas inget live)
+let LIVE_ONLY=false;
+function liveList(){if(!LIVE_URL||Date.now()-LIVE_LAST>5*6e4)return[];const now=Date.now();return MATCHES.filter(m=>m.live&&!m.live.done&&m.kickoff&&Date.parse(m.kickoff)>now-4*36e5);}
+// mina: favoritlag, markerade matcher och matcher i en resa som pågår i dag
+function liveMine(m){if(isFav(m.home)||isFav(m.away))return"fav";if(isWishM(m._id)||isAtt(m._id))return"wish";
+  const d=koDay(m.kickoff);const t=myTrips().find(t=>t.from<=d&&t.to>=d&&norm(t.city||"")===norm(m.city||""));return t?"trip":"";}
+function liveRowHtml(m,why){const sc=(m.score||"0–0").split("–");const W={fav:$t("Ditt lag"),wish:$t("Din match"),trip:$t("I din resa")};
+  return`<button class="lvrow" type="button" data-mopen="${esc(m._id)}"><div class="ko live">${esc(liveMin(m.live))}<small>live</small></div><div class="lvt"><div><span>${esc((C[m.home]||{}).n||m.home)}</span><span>${esc(sc[0]||"")}</span></div><div><span>${esc((C[m.away]||{}).n||m.away)}</span><span>${esc(sc[1]||"")}</span></div><small>${why?esc(W[why]||"")+" · ":""}${esc(m.comp||"")}</small></div></button>`;}
+function liveHomeHtml(){if(myState!=="ready")return"";const all=liveList();if(!all.length)return"";const mine=all.map(m=>[m,liveMine(m)]).filter(x=>x[1]);if(!mine.length)return"";
+  mine.sort((a,b)=>(a[1]==="fav"?0:1)-(b[1]==="fav"?0:1));
+  return`<section class="tip livecard wide"><div class="lchead"><h3>${$t("Live nu")}</h3><button class="btn small" type="button" data-golive="1">${$t("Alla live ({0})",[all.length])} →</button></div>${mine.slice(0,4).map(([m,w])=>liveRowHtml(m,w)).join("")}</section>`;}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-golive],[data-liveonly]");if(!t)return;e.preventDefault();
+  if(t.dataset.golive){LIVE_ONLY=true;setMode("matcher");if(matchView!=="list"){matchView="list";}renderMatches();scrollTo({top:0,behavior:"instant"});return;}
+  LIVE_ONLY=!LIVE_ONLY;renderMatches();});
 function liveRefresh(){if(document.querySelector('[role="dialog"]:not([hidden])'))return;const a=document.activeElement;if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;
   if(["matcher","hem","resa"].includes(mode)){const y=scrollY;try{render();}catch(e){}window.scrollTo({top:y,behavior:"instant"});}}
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)livePoll();});setTimeout(livePoll,5000);
@@ -5058,9 +5082,9 @@ function renderHome0(){const el=document.getElementById("homeBody");if(!el)retur
   // eller tills de loggat 3 matcher. Sedan försvinner rutan.
   if(myState==="ready"&&!MY.since&&dbNs)setTimeout(()=>{if(!MY.since)mutate(d=>{d.since=today();});},0);
   const fresh=isNewbie();
-  if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
+  if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=liveHomeHtml()+carouselHome(ob);return;}
   {const it=document.getElementById("intro");if(it)it.style.display="";}
-  const html=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();
+  const html=(fresh?introHtml(true):"")+liveHomeHtml()+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();
   // ritas bara om när innehållet faktiskt ändrats (under laddningen anropas detta många gånger med samma innehåll; varje omritning fick sidan att hacka)
   const wide=innerWidth>=1024;if(el._html===html&&el._wide===wide&&el.childElementCount)return;el._html=html;el._wide=wide;
   const sx=[...el.querySelectorAll(".wkrow,.hscroll")].map(r=>r.scrollLeft);
