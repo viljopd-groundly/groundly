@@ -5548,10 +5548,10 @@ function renderResa0(){const el=document.getElementById("resaList");if(!el)retur
   const tabs=`<div class="seg resatabs" role="tablist">${[["plan",$t("Planera resa")+(myTrips().length&&RESA_TAB!=="plan"?` <span class="tabn">${myTrips().length}</span>`:"")],["top",$t("Vart ska jag åka?")]].map(([k,l])=>`<button role="tab" data-resatab="${k}" aria-selected="${RESA_TAB===k}">${l}</button>`).join("")}</div>`;
   if(RESA_TAB==="top"){el.innerHTML=tabs+topHtml();return;}
   const act=document.activeElement,fid=act&&["rCity","rFrom","rTo"].includes(act.id)?act.id:null,sel=fid==="rCity"?[act.selectionStart,act.selectionEnd]:null;
-  // kommande resor utan valda matcher visas inte (utom den man just planerar); de finns kvar och dyker upp när man väljer en match
+  // alla sparade resor visas; en resa utan valda matcher får en uppmaning att välja matcher
   const planning=t=>RESA&&RESA.city&&norm(t.city)===norm(RESA.city)&&t.from===RESA.from&&t.to===RESA.to;
   const tDone=t=>{const L=tripML(t,true);return tripDone(t,L?tripPicked(t,L):null);};
-  const trips0=myTrips().filter(t=>{if(t.to<today()||planning(t)||resaOpen===t.id||RESA_ADDTO===t.id)return true;const L=tripML(t,true);return !L||tripPicked(t,L).length>0;});
+  const trips0=myTrips().slice();
   const tripsUp=trips0.filter(t=>!tDone(t)).sort((a,b)=>a.from.localeCompare(b.from)),tripsOld=trips0.filter(tDone).sort((a,b)=>b.from.localeCompare(a.from));const trips=[...tripsUp,...tripsOld];
   let h="",shH="";
   if(TRIP_FROMHOME&&mode==="resa")RESA_BACK={a:"backhome",l:$t("Tillbaka till startsidan")};
