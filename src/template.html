@@ -558,17 +558,19 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .mactive{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 4px}.mchip{all:unset;cursor:pointer;padding:5px 11px;border-radius:999px;background:var(--accent-soft);color:var(--fg);font-size:13px;font-weight:700}.mchip span[aria-hidden]{margin-left:2px;opacity:.7}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .mfbtn b[hidden],#matchTb[hidden],.mactive[hidden]{display:none!important}.mfsheet{position:fixed;inset:0;z-index:10050;display:flex;flex-direction:column;justify-content:flex-end}.mfsheet[hidden]{display:none}.msdim{position:absolute;inset:0;background:rgba(0,0,0,.5)}.mspanel{position:relative;background:var(--surface);color:var(--fg);border-radius:20px 20px 0 0;padding:10px 18px calc(16px + env(safe-area-inset-bottom,0px));max-height:85dvh;overflow:auto;box-shadow:0 -10px 30px rgba(0,0,0,.35);animation:msup .2s ease-out}@keyframes msup{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}.msgrab{width:44px;height:5px;border-radius:9px;background:var(--muted);opacity:.5;margin:0 auto 10px;padding:0}.mspanel{touch-action:pan-y}.mshr{display:flex;align-items:center;gap:14px}.msx{all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:22px;line-height:1;color:var(--fg)}.mshd{display:flex;align-items:center;justify-content:space-between}.mshd h3{margin:0;font-size:20px}.mspanel>.lbl{display:block;margin:16px 0 8px}.mspanel .chips{margin:0}.mspanel>[hidden]{display:none!important}.toparea{display:grid;gap:10px;margin-top:10px}.tipsug{text-align:center;padding:18px 0 6px}.tipsug .meta{margin:0 0 8px}
 .tip.topform{overflow:visible!important;position:relative;z-index:3}.toparea .chips{margin:0}.toparea .selw{max-width:none}.toparea .fld{margin:0}
-.ko.live{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.ko.live small{color:#ffd9db!important;letter-spacing:.08em}
-.ko.live:before{content:"";display:block;width:8px;height:8px;border-radius:50%;background:#fff;margin:0 auto 3px;animation:livep 1.4s ease-in-out infinite}
-.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.mlearly .btn .ic.down{transform:rotate(90deg)}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:#ffb3b6;background:rgba(192,38,45,.14);font-weight:700}
+:root{--live-fg:#a11d24}:root[data-theme="dark"]{--live-fg:#ffb3b6}
+.lvrow .ko{width:62px;padding:7px 0 6px}
+.ko.live{font-family:var(--f-body)!important;font-weight:700;background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1.5px solid #c0262d!important;box-shadow:none!important}
+.ko.live small{display:flex;align-items:center;justify-content:center;gap:4px;color:var(--live-fg)!important;opacity:1;letter-spacing:.06em}
+.ko.live small:before{content:"";width:6px;height:6px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}
+.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.mlearly .btn .ic.down{transform:rotate(90deg)}.pill.livepill{background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1px solid #c0262d}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:var(--live-fg);background:rgba(192,38,45,.14);font-weight:700}
 .chip.livechip:before{content:"";width:8px;height:8px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}
 .chip.livechip[aria-pressed="true"]{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.chip.livechip[aria-pressed="true"]:before{background:#fff}.chip.livechip b{background:#c0262d;color:#fff;border-radius:99px;padding:0 7px;font-size:12px}.chip.livechip[aria-pressed="true"] b{background:rgba(255,255,255,.25)}
-html:not(.dark) .chip.livechip{color:#a11d24}html:not(.dark) .chip.livechip[aria-pressed="true"]{color:#fff}
 .livecard{border:1.5px solid #c0262d!important}.livecard .lchead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}.livecard .lchead h3{margin:0;display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#e5484d}
 .livecard .lchead h3:before{content:"";width:9px;height:9px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}
 .lvrow{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;background:none;border:0;border-top:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer}.lvrow:first-of-type{border-top:0}
 .lvrow .ko{flex-shrink:0}.lvrow .lvt{flex-grow:1;min-width:0;display:flex;flex-direction:column;gap:3px}.lvrow .lvt div{display:flex;justify-content:space-between;gap:8px;font-weight:600}.lvrow .lvt div span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lvrow .lvt small{color:var(--muted);font-size:12px}
-@keyframes livep{0%,100%{opacity:1}50%{opacity:.25}}@media (prefers-reduced-motion:reduce){.ko.live:before{animation:none}}
+@keyframes livep{0%,100%{opacity:1}50%{opacity:.25}}@media (prefers-reduced-motion:reduce){.ko.live small:before{animation:none}}
 .mcal{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:8px 6px 6px;margin:2px 0 4px}
 .calh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 6px 6px}
 .calt{all:unset;cursor:pointer;font:800 calc(22px*var(--fs)) var(--f-display,inherit);text-transform:uppercase;letter-spacing:.5px;color:var(--fg)}.calt small{font:600 calc(13px*var(--fs)) var(--f-body);color:var(--muted);text-transform:none;margin-left:6px;letter-spacing:0}
@@ -2344,7 +2346,7 @@ function renderTeamRes(){const el=document.getElementById("teamRes");if(!el)retu
   el.innerHTML=h;}
 function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36e5;
   return`<div class="match mrow"${m._id?` data-mrow="${esc(m._id)}"`:""}>
-   ${m.live&&!m.live.done?`<div class="ko live" title="${$t("Pågår just nu")}">${esc(liveMin(m.live))}<small>live</small></div>`:m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
+   ${m.live&&!m.live.done?liveKo(m.live):m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
    ${scoredTeams(m)||`<div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>`}
    <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc($t(m.city))}, ${esc($t(m.country))}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>${commLine(m)}
    <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?$t("I orten"):$t("{0} bort",[milTxt(km)])}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
@@ -2503,7 +2505,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-squad],#sq
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){const o=document.getElementById("sqOv");if(o)o.remove();}});
 // målskyttar i spelade matcher
 const evKey=m=>m.home+"|"+m.away+"|"+(m.kickoff?String(m.kickoff).slice(0,10):m.dateFrom);
-function goalsHtml(m){const E=XD.events&&XD.events.m&&XD.events.m[evKey(m)];if(!E||!E.length)return"";const lbl={G:"",P:" (straff)",OG:$t(" (självmål)"),R:""};
+function goalsHtml(m){const X=XD.events&&XD.events.m&&XD.events.m[evKey(m)];const E=X&&X.length?X:m.live&&m.live.ev&&m.live.ev.length?m.live.ev:null;if(!E||!E.length)return"";const lbl={G:"",P:" (straff)",OG:$t(" (självmål)"),R:""};
   const side=s=>s==="h"?m.homeName:m.awayName;
   return`<h3>${$t("Mål och utvisningar")}</h3><ul class="goals">${E.map(([min,t,pl,s])=>`<li><span class="gmin num">${esc(String(min))}′</span> ${t==="R"?`<span class="rc" title="${$t("Rött kort")}"></span>`:ic("ball")} <b>${esc(pl)}</b>${lbl[t]||""} <span class="meta">${esc(side(s))}</span></li>`).join("")}</ul>`;}
 
@@ -2529,10 +2531,10 @@ function matchSheetHtml(m){const H=C[m.home],A=C[m.away];const now=Date.now();co
   const det=H&&!past?`<dl class="detail">${tp.tr}${webRow(H)}</dl>`:"";
   const cap=H&&H.s===m.venue&&H.cap&&!smallM(m)?$t(" · {0} platser",[fmtCap(H.cap)]):"";const facts=past?"":factsList(m);
   return`<div id="msOv" class="phview on askov" role="dialog" aria-modal="true" aria-labelledby="msT"><div class="compose askbox pvbox msbox">
-    <div class="mshead"><div class="mp">${comp}${past?`<span class="pill">${$t("Spelad")}</span>`:""}</div><button class="btn small" id="msClose">${$t("Stäng")}</button></div>
+    <div class="mshead"><div class="mp">${comp}${m.live&&!m.live.done?`<span class="pill livepill">${$t("Live")} ${esc(liveMin(m.live))}</span>`:past?`<span class="pill">${$t("Spelad")}</span>`:""}</div><button class="btn small" id="msClose">${$t("Stäng")}</button></div>
     <h2 id="msT" class="msteams">${team(m.home,m.homeName)}<span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span>${team(m.away,m.awayName)}</h2>
     <p class="msmeta"><b>${when}</b><br>${esc(m.venue||$t("Arena ej angiven"))}${cap} · ${esc(m.city||"")}${m.country?", "+esc($t(m.country)):""}</p>
-    ${past?goalsHtml(m):""}
+    ${past||m.live?goalsHtml(m):""}
     ${facts?`<h3>${$t("Om matchen")}</h3>${facts}`:""}
     ${past?"":`<h3>${$t("Biljetter")}</h3>${tix||`<p class="meta">${$t("Vi har ingen biljettlänk för den här matchen.")}</p>`}${awayTix}`}
     ${det}
@@ -4846,6 +4848,7 @@ function hypeCandidates(){if(dbState!=="ready")return[];const now=Date.now(),end
 // Mellanhanden (cloudflare/live) ger alla pågående matcher i världen; vi frågar en gång i minuten när någon av
 // våra matcher kan pågå och sidan syns. Ställningen läggs på matchen (m.live, m.score) tills nattens körning tar över.
 let LIVE_T=0,LIVE_API=null,LIVE_LAST=0;const LIVE_ST={HT:"Halvtid",BT:"Paus",P:"Straffar",SUSP:"Avbruten",INT:"Avbruten"};
+function liveKo(l){const main=l.min!=null?`${l.min}${l.x?"+"+l.x:""}'`:"–";const lab=LIVE_ST[l.st]?$t(LIVE_ST[l.st]):"live";return`<div class="ko live" title="${$t("Pågår just nu")}">${esc(main)}<small>${esc(lab)}</small></div>`;}
 function liveMin(l){if(LIVE_ST[l.st])return $t(LIVE_ST[l.st]);return l.min!=null?`${l.min}${l.x?"+"+l.x:""}'`:"live";}
 function liveWanted(){const now=Date.now();return MATCHES.some(m=>m.kickoff&&!m.done&&(t=>t<now+5*6e4&&t>now-150*6e4)(Date.parse(m.kickoff)));}
 async function livePoll(){clearTimeout(LIVE_T);if(!LIVE_URL)return;if(document.hidden||!liveWanted()){LIVE_T=setTimeout(livePoll,120000);return;}
@@ -4853,9 +4856,10 @@ async function livePoll(){clearTimeout(LIVE_T);if(!LIVE_URL)return;if(document.h
     const j=await (await fetch(LIVE_URL.replace(/\/$/,"")+"/live",{cache:"no-store"})).json();LIVE_LAST=j.t||Date.now();
     const byPair=new Map();const d0=Date.now()-150*6e4,d1=Date.now()+30*6e4;
     for(const m of MATCHES)if(m.kickoff){const t=Date.parse(m.kickoff);if(t>d0-6*36e5&&t<d1)byPair.set(m.home+"|"+m.away,m);}
-    let ch=false;for(const [fid,h,a,gh,ga,st,min,x] of (j.m||[])){const H=LIVE_API[h],A=LIVE_API[a];if(!H||!A)continue;const m=byPair.get(H+"|"+A);if(!m||gh==null||(!m.live&&m.score))continue;// har matchen redan slutresultat från natten rör vi den inte
-      const done=/^(FT|AET|PEN)$/.test(st),sc=`${gh}–${ga}`;const nl={st,min,x,done};
-      if(!m.live||m.live.min!==min||m.live.st!==st||m.score!==sc){ch=true;m.live=nl;m.score=sc;}}
+    let ch=false;let shCh=false;for(const [fid,h,a,gh,ga,st,min,x,ev0] of (j.m||[])){const H=LIVE_API[h],A=LIVE_API[a];if(!H||!A)continue;const m=byPair.get(H+"|"+A);if(!m||gh==null||(!m.live&&m.score))continue;// har matchen redan slutresultat från natten rör vi den inte
+      const done=/^(FT|AET|PEN)$/.test(st),sc=`${gh}–${ga}`;const ev=(Array.isArray(ev0)?ev0:[]).map(([mi,ex,tid,pl,t])=>[ex?mi+"+"+ex:mi,t==="O"?"OG":t,pl||"",tid===h?"h":"a"]);const nl={st,min,x,done,ev};
+      if(!m.live||m.live.min!==min||m.live.st!==st||m.score!==sc||JSON.stringify(m.live.ev||[])!==JSON.stringify(ev)){ch=true;if(m._id===msId)shCh=true;m.live=nl;m.score=sc;}}
+    if(shCh)try{refreshMatchSheet();}catch(e){}
     if(ch)liveRefresh();}catch(e){}
   LIVE_T=setTimeout(livePoll,60000);}
 // pågående matcher (bara om senaste svaret är färskt, annars visas inget live)
@@ -4865,7 +4869,7 @@ function liveList(){if(!LIVE_URL||Date.now()-LIVE_LAST>5*6e4)return[];const now=
 function liveMine(m){if(isFav(m.home)||isFav(m.away))return"fav";if(isWishM(m._id)||isAtt(m._id))return"wish";
   const d=koDay(m.kickoff);const t=myTrips().find(t=>t.from<=d&&t.to>=d&&norm(t.city||"")===norm(m.city||""));return t?"trip":"";}
 function liveRowHtml(m,why){const sc=(m.score||"0–0").split("–");const W={fav:$t("Ditt lag"),wish:$t("Din match"),trip:$t("I din resa")};
-  return`<button class="lvrow" type="button" data-mopen="${esc(m._id)}"><div class="ko live">${esc(liveMin(m.live))}<small>live</small></div><div class="lvt"><div><span>${esc((C[m.home]||{}).n||m.home)}</span><span>${esc(sc[0]||"")}</span></div><div><span>${esc((C[m.away]||{}).n||m.away)}</span><span>${esc(sc[1]||"")}</span></div><small>${why?esc(W[why]||"")+" · ":""}${esc(m.comp||"")}</small></div></button>`;}
+  return`<button class="lvrow" type="button" data-mopen="${esc(m._id)}">${liveKo(m.live)}<div class="lvt"><div><span>${esc((C[m.home]||{}).n||m.home)}</span><span>${esc(sc[0]||"")}</span></div><div><span>${esc((C[m.away]||{}).n||m.away)}</span><span>${esc(sc[1]||"")}</span></div><small>${(()=>{const g=(m.live.ev||[]).filter(e=>e[1]!=="R"&&e[2]).pop();return g?`⚽ ${esc(g[2])} ${esc(String(g[0]))}′ · `:"";})()}${why?esc(W[why]||"")+" · ":""}${esc(m.comp||"")}</small></div></button>`;}
 function liveHomeHtml(){if(myState!=="ready")return"";const all=liveList();if(!all.length)return"";const mine=all.map(m=>[m,liveMine(m)]).filter(x=>x[1]);if(!mine.length)return"";
   mine.sort((a,b)=>(a[1]==="fav"?0:1)-(b[1]==="fav"?0:1));
   return`<section class="tip livecard wide"><div class="lchead"><h3>${$t("Live nu")}</h3><button class="btn small" type="button" data-golive="1">${$t("Alla live ({0})",[all.length])} →</button></div>${mine.slice(0,4).map(([m,w])=>liveRowHtml(m,w)).join("")}</section>`;}
