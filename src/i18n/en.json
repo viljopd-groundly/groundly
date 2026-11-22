@@ -2945,5 +2945,7 @@
  "I din resa": "On your trip",
  "Live": "Live",
  "Live nu": "Live now",
- "pågår just nu": "in progress now"
+ "pågår just nu": "in progress now",
+ "Tidigare resor": "Past trips",
+ "Du kom inte iväg på matcherna den här gången. Resan sparas här ändå.": "You didn't make it to the matches this time. The trip is still saved here."
 }
