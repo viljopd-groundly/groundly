@@ -20,8 +20,8 @@ export default {
     const key0 = String(env.API_FOOTBALL_KEY || "").trim();
     // förbrukning i dag (räknas inte som anrop hos API-Football); bara siffror, inga kontouppgifter
     if (url.pathname === "/status") {
-      try { const j = await (await fetch("https://v3.football.api-sports.io/status", { headers: { "x-apisports-key": key0 } })).json();
-        const q = (j.response && j.response.requests) || {}; return json(JSON.stringify({ idag: q.current, max: q.limit_day, fel: j.errors && Object.keys(j.errors).length ? Object.values(j.errors).map(v => String(v).slice(0, 120)) : undefined }));
+      try { const rs = await fetch("https://v3.football.api-sports.io/status", { headers: { "x-apisports-key": key0 } }); const j = await rs.json(); const hd = { perMin: rs.headers.get("x-ratelimit-limit"), kvarMin: rs.headers.get("x-ratelimit-remaining"), perDag: rs.headers.get("x-ratelimit-requests-limit"), kvarDag: rs.headers.get("x-ratelimit-requests-remaining") };
+        const q = (j.response && j.response.requests) || {}; return json(JSON.stringify({ idag: q.current, max: q.limit_day, plan: j.response && j.response.subscription && j.response.subscription.plan, ...hd, fel: j.errors && Object.keys(j.errors).length ? Object.values(j.errors).map(v => String(v).slice(0, 120)) : undefined }));
       } catch (e) { return json(JSON.stringify({ fel: String(e.message || e).slice(0, 80) })); }
     }
     if (url.pathname !== "/live") return new Response("Groundly live", { headers: cors });

@@ -33,7 +33,8 @@ jobs:
       - name: Svarar tjänsten?
         if: steps.chk.outputs.ok == '1'
         run: |
-          sleep 5
+          sleep 65
+          curl -s -m 30 https://groundly-live.viljo-pd.workers.dev/status; echo
           out=$(curl -s -m 30 https://groundly-live.viljo-pd.workers.dev/live)
           echo "$out" | head -c 300; echo
           echo "$out" | python3 -c 'import json,sys; j=json.load(sys.stdin); m=j.get("m",[]); print("::notice::Live-tjänsten svarar: %d pågående matcher, %d med händelser%s" % (len(m), sum(1 for x in m if len(x)>8 and x[8]), (" (fel: %s)" % j.get("orsak","")) if j.get("fel") else ""))'
