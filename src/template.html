@@ -2152,16 +2152,17 @@ const calPreview=(a,b)=>{const[lo,hi]=a<=b?[a,b]:[b,a];document.querySelectorAll
 document.addEventListener("pointerdown",e=>{const c=e.target.closest&&e.target.closest("#datePresets [data-cday]");if(!c||e.button>0)return;CAL_DRAG={a:c.dataset.cday,b:c.dataset.cday,id:e.pointerId};});
 document.addEventListener("pointermove",e=>{if(!CAL_DRAG||e.pointerId!==CAL_DRAG.id)return;const d=calDayAt(e.clientX,e.clientY);if(d&&d!==CAL_DRAG.b){CAL_DRAG.b=d;calPreview(CAL_DRAG.a,d);}});
 document.addEventListener("pointerup",e=>{if(!CAL_DRAG||e.pointerId!==CAL_DRAG.id)return;const{a,b}=CAL_DRAG;CAL_DRAG=null;if(a===b)return;
-  const[lo,hi]=a<=b?[a,b]:[b,a];dFrom=lo;dTo=hi;RANGE_PICK=null;CALW=monOf(dFrom);CAL_NOCLICK=Date.now();renderMatches();});
+  const[lo,hi]=a<=b?[a,b]:[b,a];dFrom=lo;dTo=hi;RANGE_PICK=null;CALW=monOf(dFrom);CAL_NOCLICK=Date.now();{const y=scrollY;renderMatches();scrollTo({top:y,behavior:"instant"});}});
 document.addEventListener("pointercancel",()=>{if(CAL_DRAG){CAL_DRAG=null;calPreview("","");}});
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-cday],[data-calnav],[data-caltoday],[data-calm]");if(!t||!t.closest("#datePresets"))return;
   if(t.dataset.cday&&Date.now()-CAL_NOCLICK<400)return;
-  if(t.dataset.cday&&e.shiftKey&&dFrom){const d=t.dataset.cday;const[lo,hi]=d<dFrom?[d,dTo]:[dFrom,d];dFrom=lo;dTo=hi;RANGE_PICK=null;CALW=monOf(dFrom);renderMatches();return;}
+  if(t.dataset.cday&&e.shiftKey&&dFrom){const d=t.dataset.cday;const[lo,hi]=d<dFrom?[d,dTo]:[dFrom,d];dFrom=lo;dTo=hi;RANGE_PICK=null;CALW=monOf(dFrom);{const y=scrollY;renderMatches();scrollTo({top:y,behavior:"instant"});}return;}
   if(t.dataset.cday){const d=t.dataset.cday;if(CAL_MONTH){if(RANGE_PICK&&d>=RANGE_PICK){dFrom=RANGE_PICK;dTo=d;RANGE_PICK=null;CALW=monOf(dFrom);}else{RANGE_PICK=d;dFrom=dTo=d;}}else{dFrom=dTo=d;RANGE_PICK=null;}}
   else if(t.dataset.calnav){const n=+t.dataset.calnav;if(CAL_MONTH){const d=new Date((CALM||dFrom.slice(0,7)+"-01")+"T12:00:00");d.setMonth(d.getMonth()+n);CALM=dayKey(d).slice(0,7)+"-01";renderMatches();return;}CALW=addDays(CALW||monOf(dFrom),7*n);renderMatches();return;}
   else if(t.dataset.caltoday){dFrom=dTo=today();CALW=monOf(dFrom);CAL_MONTH=false;RANGE_PICK=null;CALM=null;}
   else if(t.dataset.calm){CAL_MONTH=t.dataset.calm==="1";RANGE_PICK=null;CALM=dFrom.slice(0,7)+"-01";if(!CAL_MONTH)CALW=monOf(dFrom);renderMatches();return;}
-  renderMatches();});
+  // kalendern ska stå kvar där den är när man väljer dagar
+  {const y=scrollY;renderMatches();scrollTo({top:y,behavior:"instant"});}});
 function inDates(m){if(m.kickoff){const k=koDay(m.kickoff);return k>=dFrom&&k<=dTo;}return m.dateFrom<=dTo&&m.dateTo>=dFrom;}
 // returnerar null om matchen inte är med, annars avstånd i km (eller -1 när avstånd inte används)
 function placeDist(m,place){const nq=norm(cityQ);if(!nq)return -1;
