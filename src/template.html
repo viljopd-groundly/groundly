@@ -1728,7 +1728,7 @@ let MATCHES=[],dbState="loading",META=null;
 // säsongen 2026/27 i de stora ligorna, från öppen data (openfootball, CC0): [hemma, borta, avspark|null, datum, resultat, serie, nivå]
 let FIXTURES=[],FX_UPDATED=null,DBM=null,dbFailed=false;
 // säsongsdatan ligger i en egen fil som uppdateras varje natt
-function remergeMatches(){setTimeout(()=>{try{(window.requestIdleCallback||(f=>f()))(()=>{try{upIndex();}catch(e){}try{MATCHES.forEach(m=>{mTs(m);if(m.kickoff)koDay(m.kickoff);});}catch(e){}});}catch(e){}},50);if(DBM===null&&!dbFailed&&!FIXTURES.length)return;MATCHES=mergeFixtures(DBM||[]);dbState=MATCHES.length?"ready":(dbFailed?"none":"empty");render();}
+function remergeMatches(){setTimeout(()=>{try{(window.requestIdleCallback||(f=>f()))(()=>{try{upIndex();}catch(e){}try{MATCHES.forEach(m=>{mTs(m);if(m.kickoff)koDay(m.kickoff);});}catch(e){}});}catch(e){}},50);if(DBM===null&&!dbFailed&&!FIXTURES.length)return;MATCHES=mergeFixtures(DBM||[]);if(MATCHES.length)setTimeout(()=>{try{if(Date.now()-LIVE_LAST>90e3)livePoll();}catch(e){}},0);dbState=MATCHES.length?"ready":(dbFailed?"none":"empty");render();}
 (window.requestIdleCallback||(f=>setTimeout(f,300)))(()=>fetch("data/flags.json").then(r=>r.ok?r.json():null).then(j=>{if(!j)return;Object.assign(FLAGS,j);Object.keys(j).forEach(k=>{if(k.startsWith("nt-")){FLAGS["u21-"+k.slice(3)]=j[k];FLAGS["w"+k]=j[k];}});try{render();}catch(e){}}).catch(()=>{}));
 let mapsP=null;function loadMaps(){return mapsP||(mapsP=fetch("data/maps.json").then(r=>r.json()).then(j=>{for(const k in j)if(MAPS[k]){MAPS[k].path=j[k].path;if(j[k].path2)MAPS[k].path2=j[k].path2;}}).catch(()=>{mapsP=null;}));}
 // kommande matcher först (mindre fil), äldre resultat när appen är igång. Faller tillbaka på hela fixtures.json.
@@ -4853,7 +4853,7 @@ const noLive=m=>{try{return!!LIVE_URL&&!m.live&&!m.score&&Date.now()-LIVE_LAST<5
 function liveKo(l){const main=l.min!=null?`${l.min}${l.x?"+"+l.x:""}'`:"–";const lab=LIVE_ST[l.st]?$t(LIVE_ST[l.st]):"live";return`<div class="ko live" title="${$t("Pågår just nu")}">${esc(main)}<small>${esc(lab)}</small></div>`;}
 function liveMin(l){if(LIVE_ST[l.st])return $t(LIVE_ST[l.st]);return l.min!=null?`${l.min}${l.x?"+"+l.x:""}'`:"live";}
 function liveWanted(){const now=Date.now();return MATCHES.some(m=>m.kickoff&&!m.done&&(t=>t<now+5*6e4&&t>now-150*6e4)(Date.parse(m.kickoff)));}
-async function livePoll(){clearTimeout(LIVE_T);if(!LIVE_URL)return;if(document.hidden||!liveWanted()){LIVE_T=setTimeout(livePoll,120000);return;}
+async function livePoll(){clearTimeout(LIVE_T);if(!LIVE_URL)return;if(document.hidden||!liveWanted()){LIVE_T=setTimeout(livePoll,MATCHES.length?120000:3000);return;}
   try{if(!LIVE_API)LIVE_API=await (await fetch("data/apiteams.json")).json();
     const j=await (await fetch(LIVE_URL.replace(/\/$/,"")+"/live",{cache:"no-store"})).json();LIVE_LAST=j.t||Date.now();
     const byPair=new Map();const d0=Date.now()-150*6e4,d1=Date.now()+30*6e4;
@@ -4880,7 +4880,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-golive],[d
   LIVE_ONLY=!LIVE_ONLY;renderMatches();});
 function liveRefresh(){if(document.querySelector('[role="dialog"]:not([hidden])'))return;const a=document.activeElement;if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;
   if(["matcher","hem","resa"].includes(mode)){const y=scrollY;try{render();}catch(e){}window.scrollTo({top:y,behavior:"instant"});}}
-document.addEventListener("visibilitychange",()=>{if(!document.hidden)livePoll();});setTimeout(livePoll,5000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)livePoll();});setTimeout(livePoll,1500);
 function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return ms>-2*36e5?$t("Pågår"):$t("Spelad");const min=Math.round(ms/6e4);
   if(min<60)return $t("om {0} min",[Math.max(1,min)]);if(min<6*60){const h=Math.floor(min/60),m=min%60;return m?$t("om {0} tim {1} min",[h,m]):$t("om {0} tim",[h]);}
   const th=Math.round(ms/36e5);if(th<24)return $t("om {0} tim",[th]);const d=Math.floor(th/24),h=th%24;return h?$t("om {0} {1} och {2} tim",[d,d===1?$t("dag"):$t("dagar"),h]):$t("om {0} {1}",[d,d===1?$t("dag"):$t("dagar")]);}
