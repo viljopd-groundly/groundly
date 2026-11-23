@@ -2867,5 +2867,6 @@
  "ingen live": "brak na żywo",
  "Spelar just nu": "Gra teraz",
  "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Na żywo: tabela uwzględnia {0} trwających i właśnie zakończonych meczów",
- "Inklusive {0} matcher spelade efter senaste uppdateringen": "Wliczając {0} meczów rozegranych od ostatniej aktualizacji"
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Wliczając {0} meczów rozegranych od ostatniej aktualizacji",
+ "Dra över flera dagar för att välja en period.": "Przeciągnij przez kilka dni, aby wybrać okres."
 }

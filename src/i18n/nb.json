@@ -2868,5 +2868,6 @@
  "ingen live": "ingen live",
  "Spelar just nu": "Spiller nå",
  "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Live: tabellen regner med {0} pågående og nettopp spilte kamper",
- "Inklusive {0} matcher spelade efter senaste uppdateringen": "Inkludert {0} kamper spilt etter siste oppdatering"
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Inkludert {0} kamper spilt etter siste oppdatering",
+ "Dra över flera dagar för att välja en period.": "Dra over flere dager for å velge en periode."
 }

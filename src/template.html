@@ -580,7 +580,7 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .cday{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:3px 0 5px;border-radius:12px}.cday:focus-visible{outline:2px solid var(--accent)}
 .cday .n{width:calc(34px*var(--fs));height:calc(34px*var(--fs));border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:calc(15px*var(--fs));color:var(--fg)}.cday .n.t{box-shadow:inset 0 0 0 1.5px var(--accent)}
 .cday .c{font-size:calc(10.5px*var(--fs));color:var(--muted);font-weight:600;background:var(--soft);border-radius:99px;padding:1px 7px;min-width:14px;text-align:center}.cday.past .n{opacity:.55}.cday.dim{opacity:.35}
-.cday.on .n{background:var(--accent);color:#0b1a12;opacity:1}.cday.on .c{color:var(--accent)}.cday.r{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.cday.on .n{background:var(--accent);color:#0b1a12;opacity:1}.cday.on .c{color:var(--accent)}.cday.r,.cday.drag{background:color-mix(in srgb,var(--accent) 16%,transparent)}.calg .cday{touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .calt{white-space:nowrap}.calmode{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin:6px 0 0;padding:8px;background:none;border:0;border-top:1px solid var(--line);color:var(--accent);font:600 calc(14px*var(--fs)) var(--f-body);cursor:pointer}.calmode .ic{width:16px;height:16px}.calmode .ic.down{transform:rotate(90deg)}.calmode .ic.up{transform:rotate(-90deg)}
 .calhint{margin:6px 6px 2px;font-size:calc(13px*var(--fs));color:var(--muted)}
 .radin{display:flex;align-items:center;gap:10px;font-weight:600}.radin input{font:500 calc(15px*var(--fs)) var(--f-body);color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:10px;padding:0 12px;height:40px;box-sizing:border-box;width:130px;min-width:0}.radin input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}.msgo{width:100%;margin-top:18px;justify-content:center}html.msopen{overflow:hidden}
@@ -2143,9 +2143,20 @@ function mCalHtml(place){const t=today();if(!CALW)CALW=monOf(dFrom);
   const end=addDays(CALW,6),cnt=mDayCounts(CALW,end,place);let g="";for(let k=CALW;k<=end;k=addDays(k,1))g+=cell(k,cnt[k],false);
   const title=new Date(addDays(CALW,3)+"T12:00:00").toLocaleDateString(LANG,{month:"long"});
   return`<div class="calh"><span class="calt">${esc(title)}<small>${$t("v.")} ${calWeek(CALW)}</small></span><div class="calnav"><button type="button" data-calnav="-1" aria-label="${$t("Föregående vecka")}">‹</button><button type="button" class="ct" data-caltoday="1">${$t("Idag")}</button><button type="button" data-calnav="1" aria-label="${$t("Nästa vecka")}">›</button></div></div>
-    <div class="calg">${wd.map((x,i)=>`<i${i>4?' class="we"':""}>${esc(x)}</i>`).join("")}${g}</div><button type="button" class="calmode" data-calm="1" aria-expanded="false">${ic("chev","down")} ${$t("Visa hela månaden")}</button>`;}
+    <div class="calg">${wd.map((x,i)=>`<i${i>4?' class="we"':""}>${esc(x)}</i>`).join("")}${g}</div><button type="button" class="calmode" data-calm="1" aria-expanded="false">${ic("chev","down")} ${$t("Visa hela månaden")}</button><p class="calhint">${$t("Dra över flera dagar för att välja en period.")}</p>`;}
 const nf0=n=>n>=1000?(Math.round(n/100)/10).toLocaleString(LANG)+"k":String(n);
+// flera dagar: dra över dagarna (mus eller finger), eller skift-klicka på datorn
+let CAL_DRAG=null,CAL_NOCLICK=0;
+const calDayAt=(x,y)=>{const el=document.elementFromPoint(x,y);const c=el&&el.closest&&el.closest("#datePresets [data-cday]");return c?c.dataset.cday:null;};
+const calPreview=(a,b)=>{const[lo,hi]=a<=b?[a,b]:[b,a];document.querySelectorAll("#datePresets [data-cday]").forEach(c=>{const k=c.dataset.cday;c.classList.toggle("drag",a!==b&&k>=lo&&k<=hi);});};
+document.addEventListener("pointerdown",e=>{const c=e.target.closest&&e.target.closest("#datePresets [data-cday]");if(!c||e.button>0)return;CAL_DRAG={a:c.dataset.cday,b:c.dataset.cday,id:e.pointerId};});
+document.addEventListener("pointermove",e=>{if(!CAL_DRAG||e.pointerId!==CAL_DRAG.id)return;const d=calDayAt(e.clientX,e.clientY);if(d&&d!==CAL_DRAG.b){CAL_DRAG.b=d;calPreview(CAL_DRAG.a,d);}});
+document.addEventListener("pointerup",e=>{if(!CAL_DRAG||e.pointerId!==CAL_DRAG.id)return;const{a,b}=CAL_DRAG;CAL_DRAG=null;if(a===b)return;
+  const[lo,hi]=a<=b?[a,b]:[b,a];dFrom=lo;dTo=hi;RANGE_PICK=null;CAL_MONTH=false;CALW=monOf(dFrom);CAL_NOCLICK=Date.now();renderMatches();});
+document.addEventListener("pointercancel",()=>{if(CAL_DRAG){CAL_DRAG=null;calPreview("","");}});
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-cday],[data-calnav],[data-caltoday],[data-calm]");if(!t||!t.closest("#datePresets"))return;
+  if(t.dataset.cday&&Date.now()-CAL_NOCLICK<400)return;
+  if(t.dataset.cday&&e.shiftKey&&dFrom){const d=t.dataset.cday;const[lo,hi]=d<dFrom?[d,dTo]:[dFrom,d];dFrom=lo;dTo=hi;RANGE_PICK=null;CAL_MONTH=false;CALW=monOf(dFrom);renderMatches();return;}
   if(t.dataset.cday){const d=t.dataset.cday;if(CAL_MONTH){if(RANGE_PICK&&d>=RANGE_PICK){dFrom=RANGE_PICK;dTo=d;RANGE_PICK=null;CAL_MONTH=false;CALW=monOf(dFrom);}else{RANGE_PICK=d;dFrom=dTo=d;}}else{dFrom=dTo=d;RANGE_PICK=null;}}
   else if(t.dataset.calnav){const n=+t.dataset.calnav;if(CAL_MONTH){const d=new Date((CALM||dFrom.slice(0,7)+"-01")+"T12:00:00");d.setMonth(d.getMonth()+n);CALM=dayKey(d).slice(0,7)+"-01";renderMatches();return;}CALW=addDays(CALW||monOf(dFrom),7*n);renderMatches();return;}
   else if(t.dataset.caltoday){dFrom=dTo=today();CALW=monOf(dFrom);CAL_MONTH=false;RANGE_PICK=null;CALM=null;}

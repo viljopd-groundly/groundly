@@ -2867,5 +2867,6 @@
  "ingen live": "ekki í beinni",
  "Spelar just nu": "Spilar núna",
  "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Í beinni: taflan telur með {0} leiki í gangi og nýlokna",
- "Inklusive {0} matcher spelade efter senaste uppdateringen": "Að meðtöldum {0} leikjum frá síðustu uppfærslu"
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Að meðtöldum {0} leikjum frá síðustu uppfærslu",
+ "Dra över flera dagar för att välja en period.": "Dragðu yfir nokkra daga til að velja tímabil."
 }

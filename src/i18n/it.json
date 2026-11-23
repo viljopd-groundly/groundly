@@ -2867,5 +2867,6 @@
  "ingen live": "no live",
  "Spelar just nu": "Sta giocando",
  "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Live: la classifica include {0} partite in corso e appena finite",
- "Inklusive {0} matcher spelade efter senaste uppdateringen": "Incluse {0} partite giocate dopo l'ultimo aggiornamento"
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Incluse {0} partite giocate dopo l'ultimo aggiornamento",
+ "Dra över flera dagar för att välja en period.": "Trascina su più giorni per scegliere un periodo."
 }
