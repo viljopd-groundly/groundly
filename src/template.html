@@ -2361,7 +2361,7 @@ function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36
    ${m.live&&!m.live.done?liveKo(m.live):m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":noLive(m)?$t("ingen live"):"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
    ${scoredTeams(m)||`<div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>`}
    <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc($t(m.city))}, ${esc($t(m.country))}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>${commLine(m)}
-   <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?$t("I orten"):$t("{0} bort",[milTxt(km)])}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
+   <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?$t("I orten"):$t("{0} bort",[milTxt(km)])}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past||m.live||(m.kickoff&&Date.parse(m.kickoff)<Date.now())?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
   </div>`;}
 // ---------- serietabeller ----------
 let tblLeague=null,tblHL=null,tblHLJump=false,tblSeason="",TBLIDX=null;
@@ -2529,9 +2529,11 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-squad],#sq
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){const o=document.getElementById("sqOv");if(o)o.remove();}});
 // målskyttar i spelade matcher
 const evKey=m=>m.home+"|"+m.away+"|"+(m.kickoff?String(m.kickoff).slice(0,10):m.dateFrom);
+// spelarnamn med stor begynnelsebokstav även när källan skickar "vilmer tyren" eller "VILMER TYREN"
+const nameCase=n=>{n=String(n||"");return n&&(n===n.toLowerCase()||n.length>3&&n===n.toUpperCase())?n.toLowerCase().replace(/(^|[\s\-'’.])(\p{L})/gu,(a,b,c)=>b+c.toUpperCase()):n;};
 function goalsHtml(m){const X=XD.events&&XD.events.m&&XD.events.m[evKey(m)];const E=X&&X.length?X:m.live&&m.live.ev&&m.live.ev.length?m.live.ev:null;if(!E||!E.length)return"";const lbl={G:"",P:" (straff)",OG:$t(" (självmål)"),R:""};
   const side=s=>s==="h"?m.homeName:m.awayName;
-  return`<h3>${$t("Mål och utvisningar")}</h3><ul class="goals">${E.map(([min,t,pl,s])=>`<li><span class="gmin num">${esc(String(min))}′</span> ${t==="R"?`<span class="rc" title="${$t("Rött kort")}"></span>`:ic("ball")} <b>${esc(pl)}</b>${lbl[t]||""} <span class="meta">${esc(side(s))}</span></li>`).join("")}</ul>`;}
+  return`<h3>${$t("Mål och utvisningar")}</h3><ul class="goals">${E.map(([min,t,pl,s])=>`<li><span class="gmin num">${esc(String(min))}′</span> ${t==="R"?`<span class="rc" title="${$t("Rött kort")}"></span>`:ic("ball")} <b>${esc(nameCase(pl))}</b>${lbl[t]||""} <span class="meta">${esc(side(s))}</span></li>`).join("")}</ul>`;}
 
 
 // ---------- matchsida: biljetter, resa och arena för en match ----------
@@ -4909,7 +4911,7 @@ function liveList(){if(!LIVE_URL||Date.now()-LIVE_LAST>5*6e4)return[];const now=
 function liveMine(m){if(isFav(m.home)||isFav(m.away))return"fav";if(isWishM(m._id)||isAtt(m._id))return"wish";
   const d=koDay(m.kickoff);const t=myTrips().find(t=>t.from<=d&&t.to>=d&&norm(t.city||"")===norm(m.city||""));return t?"trip":"";}
 function liveRowHtml(m,why){const sc=(m.score||"0–0").split("–");const W={fav:$t("Ditt lag"),wish:$t("Din match"),trip:$t("I din resa")};
-  return`<button class="lvrow" type="button" data-mopen="${esc(m._id)}">${liveKo(m.live)}<div class="lvt"><div><span>${esc((C[m.home]||{}).n||m.home)}</span><span>${esc(sc[0]||"")}</span></div><div><span>${esc((C[m.away]||{}).n||m.away)}</span><span>${esc(sc[1]||"")}</span></div><small>${(()=>{const g=(m.live.ev||[]).filter(e=>e[1]!=="R"&&e[2]).pop();return g?`⚽ ${esc(g[2])} ${esc(String(g[0]))}′ · `:"";})()}${why?esc(W[why]||"")+" · ":""}${esc(m.comp||"")}</small></div></button>`;}
+  return`<button class="lvrow" type="button" data-mopen="${esc(m._id)}">${liveKo(m.live)}<div class="lvt"><div><span>${esc((C[m.home]||{}).n||m.home)}</span><span>${esc(sc[0]||"")}</span></div><div><span>${esc((C[m.away]||{}).n||m.away)}</span><span>${esc(sc[1]||"")}</span></div><small>${(()=>{const g=(m.live.ev||[]).filter(e=>e[1]!=="R"&&e[2]).pop();return g?`⚽ ${esc(nameCase(g[2]))} ${esc(String(g[0]))}′ · `:"";})()}${why?esc(W[why]||"")+" · ":""}${esc(m.comp||"")}</small></div></button>`;}
 function liveHomeHtml(){if(myState!=="ready")return"";const all=liveList();if(!all.length)return"";const mine=all.map(m=>[m,liveMine(m)]).filter(x=>x[1]);if(!mine.length)return"";
   mine.sort((a,b)=>(a[1]==="fav"?0:1)-(b[1]==="fav"?0:1));
   return`<section class="tip livecard wide"><div class="lchead"><h3>${$t("Live nu")}</h3><button class="btn small" type="button" data-golive="1">${$t("Alla live ({0})",[all.length])} →</button></div>${mine.slice(0,4).map(([m,w])=>liveRowHtml(m,w)).join("")}</section>`;}
