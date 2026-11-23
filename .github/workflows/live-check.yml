@@ -15,7 +15,8 @@ jobs:
         env:
           TEAMS: ${{ github.event.inputs.teams }}
         run: |
-          curl -s -m 30 https://groundly-live.viljo-pd.workers.dev/live > live.json
+          curl -s -m 30 https://groundly-live.viljo-pd.workers.dev/status; echo
+          curl -s -m 30 -D - -o live.json https://groundly-live.viljo-pd.workers.dev/live | grep -i x-cache
           python3 - <<'PY'
           import json,os
           j=json.load(open("live.json"));m=j.get("m",[])
