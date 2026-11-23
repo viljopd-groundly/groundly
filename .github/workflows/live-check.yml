@@ -25,3 +25,12 @@ jobs:
           for r in m:
               if r[1] in ids or r[2] in ids: print(r[:8])
           PY
+      - name: Lagens senaste matcher hos API-Football
+        if: github.event.inputs.teams != ''
+        env:
+          KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          TEAMS: ${{ github.event.inputs.teams }}
+        run: |
+          for t in $(echo "$TEAMS" | tr ',' ' '); do
+            curl -s -m 30 -H "x-apisports-key: $(echo "$KEY" | tr -d '[:space:]')" "https://v3.football.api-sports.io/fixtures?team=$t&last=1" | python3 -c 'import json,sys; j=json.load(sys.stdin); [print(f["fixture"]["id"], f["fixture"]["date"], f["fixture"]["status"]["short"], f["fixture"]["status"]["elapsed"], f["teams"]["home"]["name"], f["goals"]["home"], "-", f["goals"]["away"], f["teams"]["away"]["name"], f["league"]["name"]) for f in j.get("response",[])]; print("fel:", j.get("errors")) if j.get("errors") else None'
+          done
