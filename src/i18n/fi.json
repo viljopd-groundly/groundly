@@ -2863,5 +2863,6 @@
  "Visa {n} matcher som redan spelats i dag": "Näytä {n} tänään jo pelattua ottelua",
  "Dölj matcher som redan spelats": "Piilota jo pelatut ottelut",
  "Visa hela månaden": "Näytä koko kuukausi",
- "Visa en vecka": "Näytä yksi viikko"
+ "Visa en vecka": "Näytä yksi viikko",
+ "ingen live": "ei livenä"
 }

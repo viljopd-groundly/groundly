@@ -2346,7 +2346,7 @@ function renderTeamRes(){const el=document.getElementById("teamRes");if(!el)retu
   el.innerHTML=h;}
 function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36e5;
   return`<div class="match mrow"${m._id?` data-mrow="${esc(m._id)}"`:""}>
-   ${m.live&&!m.live.done?liveKo(m.live):m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
+   ${m.live&&!m.live.done?liveKo(m.live):m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":noLive(m)?$t("ingen live"):"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
    ${scoredTeams(m)||`<div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>`}
    <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc($t(m.city))}, ${esc($t(m.country))}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>${commLine(m)}
    <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?$t("I orten"):$t("{0} bort",[milTxt(km)])}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
@@ -4848,6 +4848,8 @@ function hypeCandidates(){if(dbState!=="ready")return[];const now=Date.now(),end
 // Mellanhanden (cloudflare/live) ger alla pågående matcher i världen; vi frågar en gång i minuten när någon av
 // våra matcher kan pågå och sidan syns. Ställningen läggs på matchen (m.live, m.score) tills nattens körning tar över.
 let LIVE_T=0,LIVE_API=null,LIVE_LAST=0;const LIVE_ST={HT:"Halvtid",BT:"Paus",P:"Straffar",SUSP:"Avbruten",INT:"Avbruten"};
+// matchen borde ha börjat men API-Football har ingen livedata för den (vanligt i mindre ligor)
+const noLive=m=>{try{return!!LIVE_URL&&!m.live&&!m.score&&Date.now()-LIVE_LAST<5*6e4&&Date.parse(m.kickoff)<Date.now()-5*6e4;}catch(e){return false;}};
 function liveKo(l){const main=l.min!=null?`${l.min}${l.x?"+"+l.x:""}'`:"–";const lab=LIVE_ST[l.st]?$t(LIVE_ST[l.st]):"live";return`<div class="ko live" title="${$t("Pågår just nu")}">${esc(main)}<small>${esc(lab)}</small></div>`;}
 function liveMin(l){if(LIVE_ST[l.st])return $t(LIVE_ST[l.st]);return l.min!=null?`${l.min}${l.x?"+"+l.x:""}'`:"live";}
 function liveWanted(){const now=Date.now();return MATCHES.some(m=>m.kickoff&&!m.done&&(t=>t<now+5*6e4&&t>now-150*6e4)(Date.parse(m.kickoff)));}
