@@ -560,6 +560,7 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .tip.topform{overflow:visible!important;position:relative;z-index:3}.toparea .chips{margin:0}.toparea .selw{max-width:none}.toparea .fld{margin:0}
 :root{--live-fg:#a11d24}:root[data-theme="dark"]{--live-fg:#ffb3b6}
 .lvrow .ko{width:62px;padding:7px 0 6px}
+@media (min-width:900px){.livecard{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}.livecard .lchead{grid-column:1/-1}.livecard .lvrow:nth-of-type(2){border-top:0}}
 .ko.live{font-family:var(--f-body)!important;font-weight:700;background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1.5px solid #c0262d!important;box-shadow:none!important}
 .ko.live small{display:flex;align-items:center;justify-content:center;gap:4px;color:var(--live-fg)!important;opacity:1;letter-spacing:.06em}
 .ko.live small:before{content:"";width:6px;height:6px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}
