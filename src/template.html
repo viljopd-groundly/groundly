@@ -2778,6 +2778,11 @@ async function forumClick(t){
 let MY={attended:[],visited:{},wishClubs:[],wishMatches:[]},myState="loading",myRef=null,myQ=Promise.resolve(),myPending=0,myErr="",mySub="home",addingMatch=false;
 let arView="list",bkupOpen=false;document.addEventListener("toggle",e=>{if(e.target&&e.target.id==="bkupBox")bkupOpen=e.target.open;},true);window.groundlyOpenMod=()=>{mySub="mod";if(mode==="mine")renderMine();else setMode("mine");window.scrollTo({top:0});};let mySubAuto=true;try{let ms=store.get("fk-mysub");if(ms==="pass"){ms="arenas";arView="pass";}if(["home","been","teams","arenas","wish","challenges"].includes(ms)){mySub=ms;mySubAuto=ms==="home";};}catch(e){}
 const myConfirm={};
+// Min fotboll visas direkt från en kopia på enheten medan inloggning och databas startar (kan ta ett par sekunder).
+// Ändringar under tiden läggs ovanpå det färska när databasen svarat.
+const MY_SNAP_KEY="fk-my-snap";let MY_LS=null,myLsDirty=false;
+setTimeout(()=>{try{if(myState!=="loading")return;const sn=JSON.parse(store.get(MY_SNAP_KEY)||"null");if(!sn||!sn.uid||!sn.d)return;MY_LS=sn;MY=normMy(sn.d);myState="ready";render();}catch(e){}},0);
+function saveMySnap(){try{if(myId&&myState==="ready"&&!MY_LS)store.set(MY_SNAP_KEY,JSON.stringify({uid:myId,d:MY}));}catch(e){}}
 // lag som skrivits in med namn (utan klubbkoppling) kopplas till rätt klubb när namnet är entydigt, så att märke och
 // klubbsida kommer med. Gamla namn på klubbar som bytt namn finns i OLD_NAMES.
 const OLD_NAMES={"ariana fc":"afcm","fc ariana":"afcm","ariana":"afcm","ariana fc malmo":"afcm"};
@@ -2832,11 +2837,12 @@ function merge3(base,mine,srv){const out={...srv};const keys=new Set([...Object.
   return out;}
 function bigLoss(body){if(!MY_SRV)return false;const n=(o,k)=>Array.isArray(o&&o[k])?o[k].length:0;
   return n(MY_SRV,"attended")-n(body,"attended")>=3||n(MY_SRV,"trips")-n(body,"trips")>=2;}
-function saveMy(){if(!myRef){myErr=$t("Logga in på claude.ai för att spara.");render();return;}
+function saveMy(){if(MY_LS){myLsDirty=true;return;}
+  if(!myRef){myErr=$t("Logga in på claude.ai för att spara.");render();return;}
   if(myStale){myDirty=true;return;}
   if(bigLoss(MY)&&!window.__allowBigDelete){console.warn("[Groundly] sparning stoppad: skulle ta bort många matcher/resor");MY=normMy(JSON.parse(JSON.stringify(MY_SRV)));toast($t("Din logg har uppdaterats från ett annat ställe. Gör ändringen igen."));render();return;}
   try{usageDelta();}catch(e){}
-  MY.savedAt=new Date().toISOString();const body=JSON.parse(JSON.stringify(MY));myPending++;store.set(PENDING_KEY,JSON.stringify(body));
+  MY.savedAt=new Date().toISOString();const body=JSON.parse(JSON.stringify(MY));myPending++;store.set(PENDING_KEY,JSON.stringify(body));saveMySnap();
   myQ=myQ.then(()=>myRef.set(body)).then(()=>{MY_SRV=body;const now=pendingLogg();if(now&&now.savedAt===body.savedAt)store.del(PENDING_KEY);})
     .catch(e=>{if(e&&(e.code==="invalid_argument"||e.code==="quota_exceeded")){store.del(PENDING_KEY);myErr=e.code==="invalid_argument"?$t("Du har inte behörighet att spara på den här sidan. Be ägaren bjuda in dig så att du kan använda sidan."):$t("Det finns inte plats för fler sparade saker just nu.");toast(myErr);}
       else toast($t("Ingen kontakt just nu. Ändringen är sparad i telefonen och skickas när du har nät."));render();})
@@ -3107,9 +3113,10 @@ document.addEventListener("submit",e=>{
 
 let myNewDone=false;
 async function startMine(db,uid){
-  if(!db||!uid){myState="none";if(mode==="mine")renderMine();return;}
-  try{myRef=db.doc("data/users/"+uid+"/logg");}catch(e){myState="none";return;}
-  myRef.onSnapshot(s=>{if(myPending>0)return;const server=s.exists?s.data():{};const pend=pendingLogg();
+  if(!db||!uid||(MY_LS&&MY_LS.uid!==uid)){if(MY_LS){MY_LS=null;myLsDirty=false;MY=normMy({});}if(!uid)store.del(MY_SNAP_KEY);}
+  if(!db||!uid){myState="none";render();return;}
+  try{myRef=db.doc("data/users/"+uid+"/logg");}catch(e){myState="none";render();return;}
+  myRef.onSnapshot(s=>{if(myPending>0)return;const server=s.exists?s.data():{};const pend=pendingLogg();const myBefore=MY_LS&&myLsDirty?JSON.parse(JSON.stringify(MY)):null;
     const fromCache=!!(s.metadata&&s.metadata.fromCache);
     if(fromCache&&!MY_SRV){if(!myStale){myStale=true;MY_BASE=JSON.parse(JSON.stringify(server));}}
     else if(!fromCache){const wasStale=myStale;myStale=false;MY_SRV=JSON.parse(JSON.stringify(server));
@@ -3120,8 +3127,10 @@ async function startMine(db,uid){
     // alla konton syns i topplistor och för vänner från start (en gång per konto, flaggan vis2); går att välja bort efteråt
     const fresh=!s.exists&&!pend;const data=s.exists?s.data():null;
     if(!myNewDone&&navigator.onLine!==false&&!(s.metadata&&s.metadata.fromCache)&&(fresh||(data&&data.vis2!==true&&!pend))){myNewDone=true;setTimeout(()=>{try{const was=MY.pub&&MY.share;mutate(d=>{d.pub=true;d.share=true;d.vis2=true;});if(!fresh&&!was)toast($t("Du syns nu i topplistorna och för vänner. Du kan välja bort det under Min fotboll."));}catch(e){}},400);}
-    if(pend&&(!server||!server.savedAt||String(pend.savedAt)>String(server.savedAt))){MY=normMy(pend);setTimeout(retryPending,500);}else{MY=normMy(server);if(pend)store.del(PENDING_KEY);}myState="ready";if(!USE_LAST){USE_LAST={a:(MY.attended||[]).length,w:(MY.wishMatches||[]).length,t:(MY.trips||[]).length};track("s_in");}render();setTimeout(()=>{try{syncStats();}catch(e){}},800);},
-    ()=>{myState="none";render();});}
+    if(pend&&(!server||!server.savedAt||String(pend.savedAt)>String(server.savedAt))){MY=normMy(pend);setTimeout(retryPending,500);}else{MY=normMy(server);if(pend)store.del(PENDING_KEY);}
+    if(MY_LS){const base=MY_LS.d;MY_LS=null;myLsDirty=false;if(myBefore){MY=normMy(merge3(base,myBefore,JSON.parse(JSON.stringify(MY))));if(myStale)myDirty=true;else setTimeout(saveMy,0);}}
+    myState="ready";saveMySnap();if(!USE_LAST){USE_LAST={a:(MY.attended||[]).length,w:(MY.wishMatches||[]).length,t:(MY.trips||[]).length};track("s_in");}render();setTimeout(()=>{try{syncStats();}catch(e){}},800);},
+    ()=>{if(MY_LS){MY_LS=null;MY=normMy({});}myState="none";render();});}
 
 // ---------- arenabetyg och tillgänglighet ----------
 // "m" ersatte "v" (Utsikt) i okt 2026; gamla utsiktsbetyg ligger kvar i databasen men visas och räknas inte
