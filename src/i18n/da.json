@@ -2869,5 +2869,8 @@
  "Spelar just nu": "Spiller lige nu",
  "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Live: tabellen medregner {0} igangværende og netop spillede kampe",
  "Inklusive {0} matcher spelade efter senaste uppdateringen": "Inklusive {0} kampe spillet efter seneste opdatering",
- "Dra över flera dagar för att välja en period.": "Træk hen over flere dage for at vælge en periode."
+ "Dra över flera dagar för att välja en period.": "Træk hen over flere dage for at vælge en periode.",
+ "Tidigare resor ({0})": "Tidligere rejser ({0})",
+ "1 resa": "1 rejse",
+ "{n} resor": "{n} rejser"
 }

@@ -2957,5 +2957,8 @@
  "Spelar just nu": "Playing now",
  "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Live: the table includes {0} ongoing and just-finished matches",
  "Inklusive {0} matcher spelade efter senaste uppdateringen": "Including {0} matches played since the last update",
- "Dra över flera dagar för att välja en period.": "Drag across several days to pick a period."
+ "Dra över flera dagar för att välja en period.": "Drag across several days to pick a period.",
+ "Tidigare resor ({0})": "Past trips ({0})",
+ "1 resa": "1 trip",
+ "{n} resor": "{n} trips"
 }
