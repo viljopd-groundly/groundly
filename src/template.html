@@ -4863,15 +4863,20 @@ let LIVE_T=0,LIVE_API=null,LIVE_LAST=0;const LIVE_ST={HT:"Halvtid",BT:"Paus",P:"
 const noLive=m=>{try{return!!LIVE_URL&&!m.live&&!m.score&&Date.now()-LIVE_LAST<5*6e4&&Date.parse(m.kickoff)<Date.now()-5*6e4;}catch(e){return false;}};
 function liveKo(l){const main=l.min!=null?`${l.min}${l.x?"+"+l.x:""}'`:"–";const lab=LIVE_ST[l.st]?$t(LIVE_ST[l.st]):"live";return`<div class="ko live" title="${$t("Pågår just nu")}">${esc(main)}<small>${esc(lab)}</small></div>`;}
 function liveMin(l){if(LIVE_ST[l.st])return $t(LIVE_ST[l.st]);return l.min!=null?`${l.min}${l.x?"+"+l.x:""}'`:"live";}
-function liveWanted(){const now=Date.now();return MATCHES.some(m=>m.kickoff&&!m.done&&(t=>t<now+5*6e4&&t>now-150*6e4)(Date.parse(m.kickoff)));}
+function liveWanted(){const now=Date.now();if(MATCHES.some(m=>m.kickoff&&!m.done&&(t=>t<now+5*6e4&&t>now-150*6e4)(Date.parse(m.kickoff))))return true;
+  // annars: hämta dagens färdiga resultat då och då om det finns matcher från senaste dygnet utan resultat
+  return now-LIVE_LAST>10*6e4&&MATCHES.some(m=>m.kickoff&&!m.score&&(t=>t<now&&t>now-24*36e5)(Date.parse(m.kickoff)));}
 async function livePoll(){clearTimeout(LIVE_T);if(!LIVE_URL)return;if(document.hidden||!liveWanted()){LIVE_T=setTimeout(livePoll,MATCHES.length?120000:3000);return;}
   try{if(!LIVE_API)LIVE_API=await (await fetch("data/apiteams.json")).json();
     const j=await (await fetch(LIVE_URL.replace(/\/$/,"")+"/live",{cache:"no-store"})).json();LIVE_LAST=j.t||Date.now();
     const byPair=new Map();const d0=Date.now()-150*6e4,d1=Date.now()+30*6e4;
-    for(const m of MATCHES)if(m.kickoff){const t=Date.parse(m.kickoff);if(t>d0-6*36e5&&t<d1)byPair.set(m.home+"|"+m.away,m);}
+    for(const m of MATCHES)if(m.kickoff){const t=Date.parse(m.kickoff);if(t>Date.now()-24*36e5&&t<d1)byPair.set(m.home+"|"+m.away,m);}
     let ch=false;let shCh=false;for(const [fid,h,a,gh,ga,st,min,x,ev0] of (j.m||[])){const H=LIVE_API[h],A=LIVE_API[a];if(!H||!A)continue;const m=byPair.get(H+"|"+A);if(!m||gh==null||(!m.live&&m.score))continue;// har matchen redan slutresultat från natten rör vi den inte
       const done=/^(FT|AET|PEN)$/.test(st),sc=`${gh}–${ga}`;const ev=(Array.isArray(ev0)?ev0:[]).map(([mi,ex,tid,pl,t])=>[ex?mi+"+"+ex:mi,t==="O"?"OG":t,pl||"",tid===h?"h":"a"]);const nl={st,min,x,done,ev};
       if(!m.live||m.live.min!==min||m.live.st!==st||m.score!==sc||JSON.stringify(m.live.ev||[])!==JSON.stringify(ev)){ch=true;if(m._id===msId)shCh=true;m.live=nl;m.score=sc;}}
+    // dagens färdigspelade matcher som inte längre finns i livelistan (t.ex. efter omladdning av appen)
+    for(const [fid,h,a,gh,ga] of (j.d||[])){const H=LIVE_API[h],A=LIVE_API[a];if(!H||!A||gh==null)continue;const m=byPair.get(H+"|"+A);if(!m||m.score&&!m.live)continue;
+      const sc=`${gh}–${ga}`;if(!m.live||!m.live.done||m.score!==sc){ch=true;m.live={st:"FT",min:90,x:0,done:true,ev:(m.live&&m.live.ev)||[]};m.score=sc;}}
     if(shCh)try{refreshMatchSheet();}catch(e){}
     if(ch)liveRefresh();}catch(e){}
   LIVE_T=setTimeout(livePoll,60000);}

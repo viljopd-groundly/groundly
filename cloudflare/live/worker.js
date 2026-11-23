@@ -1,10 +1,24 @@
 // Groundly – liveresultat.
 // Liten mellanhand på Cloudflare: frågar API-Football efter ALLA pågående matcher (ett anrop) högst en gång per
 // minut och delar ut svaret till alla användare. API-nyckeln ligger bara här som hemlighet (API_FOOTBALL_KEY),
-// aldrig i appen. Svar: {t: tid, m: [[fixture, hemmalag-id, bortalag-id, mål hemma, mål borta, status, minut, tillägg, händelser]]}
+// aldrig i appen. Svar: {t: tid, m: [[fixture, hemmalag-id, bortalag-id, mål hemma, mål borta, status, minut, tillägg, händelser]],
+// d: [[fixture, hemmalag-id, bortalag-id, mål hemma, mål borta]] (dagens färdigspelade)}
 const API = "https://v3.football.api-sports.io/fixtures?live=all";
 const CACHE_S = 60;
-let MEM = null, GOOD = null;
+let MEM = null, GOOD = null, DAY = null;
+// dagens färdigspelade matcher (en hämtning var tionde minut), så att resultat finns kvar även när de lämnat livelistan
+async function dayDone(key0) {
+  if (DAY && Date.now() - DAY.at < 10 * 60e3) return DAY.list;
+  try {
+    const d = new Date().toISOString().slice(0, 10);
+    const r = await fetch("https://v3.football.api-sports.io/fixtures?date=" + d, { headers: { "x-apisports-key": key0 } });
+    const j = await r.json();
+    if (j.errors && Object.keys(j.errors).length) throw new Error("api");
+    const list = (j.response || []).filter(f => /^(FT|AET|PEN)$/.test(f.fixture.status.short)).map(f => [f.fixture.id, f.teams.home.id, f.teams.away.id, f.goals.home, f.goals.away]);
+    DAY = { at: Date.now(), list };
+  } catch (e) { if (!DAY) DAY = { at: Date.now() - 8 * 60e3, list: [] }; else DAY.at = Date.now() - 8 * 60e3; } // nytt försök om två minuter
+  return DAY.list;
+}
 // mål och röda kort: [minut, tillägg, lag-id, spelare, typ] där typ är G (mål), P (straff), O (självmål), R (rött kort)
 const evs = f => (Array.isArray(f.events) ? f.events : []).map(e => {
   const d = String(e.detail || ""), t = e.type === "Goal" ? (/Own/i.test(d) ? "O" : /Penalty/i.test(d) && !/Missed/i.test(d) ? "P" : /Missed/i.test(d) ? "" : "G") : e.type === "Card" && /Red/i.test(d) ? "R" : "";
@@ -44,7 +58,8 @@ export default {
         await new Promise(res => setTimeout(res, 1200 * tries));
       }
       if (!r.ok || err) throw new Error("api " + r.status + " " + (err ? Object.entries(j.errors).map(([k, v]) => k + ": " + String(v).slice(0, 90)).join("; ") : "") + " (" + tries + " försök)");
-      body = JSON.stringify({ t: Date.now(), f: tries, m: (j.response || []).map(f => [f.fixture.id, f.teams.home.id, f.teams.away.id, f.goals.home, f.goals.away, f.fixture.status.short, f.fixture.status.elapsed, f.fixture.status.extra || 0, evs(f)]) });
+      const done = await dayDone(key0);
+      body = JSON.stringify({ t: Date.now(), f: tries, d: done, m: (j.response || []).map(f => [f.fixture.id, f.teams.home.id, f.teams.away.id, f.goals.home, f.goals.away, f.fixture.status.short, f.fixture.status.elapsed, f.fixture.status.extra || 0, evs(f)]) });
       GOOD = { at: Date.now(), body };
     } catch (e) {
       // vid fel (t.ex. tillfällig spärr per minut): visa senaste lyckade svaret om det är färskt
