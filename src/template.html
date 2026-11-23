@@ -564,7 +564,7 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .ko.live{font-family:var(--f-body)!important;font-weight:700;background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1.5px solid #c0262d!important;box-shadow:none!important}
 .ko.live small{display:flex;align-items:center;justify-content:center;gap:4px;color:var(--live-fg)!important;opacity:1;letter-spacing:.06em}
 .ko.live small:before{content:"";width:6px;height:6px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}
-.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.mlearly .btn .ic.down{transform:rotate(90deg)}.pill.livepill{background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1px solid #c0262d}.tbllive{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:calc(13px*var(--fs));font-weight:600;color:var(--live-fg)}.tbllive:before,.tlive{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}.tlive{margin-left:6px;width:7px;height:7px}.pastlink{margin:8px 2px 14px}#pastTrips{margin-top:18px}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:var(--live-fg);background:rgba(192,38,45,.14);font-weight:700}
+.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.mlearly .btn .ic.down{transform:rotate(90deg)}.pill.livepill{background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1px solid #c0262d}.tbllive{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:calc(13px*var(--fs));font-weight:600;color:var(--live-fg)}.tbllive:before,.tlive{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}.tlive{margin-left:6px;width:7px;height:7px}.ntlive{margin-top:10px;border-top:1px solid var(--line)}.ntlive .lvrow:first-child{border-top:0}.pastlink{margin:8px 2px 14px}#pastTrips{margin-top:18px}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:var(--live-fg);background:rgba(192,38,45,.14);font-weight:700}
 .chip.livechip:before{content:"";width:8px;height:8px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}
 .chip.livechip[aria-pressed="true"]{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.chip.livechip[aria-pressed="true"]:before{background:#fff}.chip.livechip b{background:#c0262d;color:#fff;border-radius:99px;padding:0 7px;font-size:12px}.chip.livechip[aria-pressed="true"] b{background:rgba(255,255,255,.25)}
 .livecard .ntic.livic{background:rgba(192,38,45,.18)!important;border:1.5px solid #c0262d}.livic i{width:10px;height:10px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}.livecard .sechead{margin-bottom:2px}.livecard .lchead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}.livecard .lchead h3{margin:0;display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#e5484d}
@@ -5144,9 +5144,9 @@ function renderHome0(){const el=document.getElementById("homeBody");if(!el)retur
   // eller tills de loggat 3 matcher. Sedan försvinner rutan.
   if(myState==="ready"&&!MY.since&&dbNs)setTimeout(()=>{if(!MY.since)mutate(d=>{d.since=today();});},0);
   const fresh=isNewbie();
-  if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=liveHomeHtml()+carouselHome(ob);return;}
+  if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
   {const it=document.getElementById("intro");if(it)it.style.display="";}
-  const html=(fresh?introHtml(true):"")+liveHomeHtml()+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();
+  const html=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();
   // ritas bara om när innehållet faktiskt ändrats (under laddningen anropas detta många gånger med samma innehåll; varje omritning fick sidan att hacka)
   const wide=innerWidth>=1024;if(el._html===html&&el._wide===wide&&el.childElementCount)return;el._html=html;el._wide=wide;
   const sx=[...el.querySelectorAll(".wkrow,.hscroll")].map(r=>r.scrollLeft);
@@ -5192,18 +5192,20 @@ function nextTripHtml0(){const td=today();if(myState!=="ready")return noTripHtml
   const head=`<div class="sechead"><div class="lbl">${$t("Din nästa resa")}</div><button class="link" data-nexttrip="${esc(t.id)}">${$t("Visa resan")}</button></div>`;
   const city=`<span class="ntcity">${esc(tripName(t))}${flags?`<span class="ntflags">${flags}</span>`:""}</span>`;
   const range=esc(resaRange(sp.from,sp.to))+(L&&!pk.length?" · "+$t("Inga matcher valda än"):"");
+  // resans matcher som pågår just nu: ställning och minut direkt i kortet
+  const lvM=pkA.filter(x=>x.m.live&&!x.m.live.done);const lvH=lvM.length?`<div class="ntlive">${lvM.map(x=>liveRowHtml(x.m,"")).join("")}</div>`:"";
   const lay=(()=>{try{return store.get("fk-ntl")||"a";}catch(e){return"a";}})();
   if(lay==="a"){ // biljett: stad till vänster, nedräkning i en avriven stub till höger, siffror som en textrad
     const big=days<=0?"✓":String(days),lab=days<=0?$t("Pågår nu"):days===1?$t("dag kvar"):$t("dagar kvar");
     return`<article class="tip nexttrip ntlay-a">${head}<button class="ntmain ntstub" data-nexttrip="${esc(t.id)}"><span class="ntl">${city}<span class="meta">${range}</span></span><span class="ntr"><b>${big}</b><span>${esc(lab)}</span></span></button>
-      ${pk.length?`<div class="stats ntstats">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${chips}${bar}</article>`;}
+      ${pk.length?`<div class="stats ntstats">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${lvH}${chips}${bar}</article>`;}
   if(lay==="c"){ // kalender: datumblock till vänster, stad och nedräkning till höger, siffror i två kolumner
     const d0=new Date(sp.from+"T12:00:00");const mon=d0.toLocaleDateString(LANG,{month:"short"}).replace(".","");
     return`<article class="tip nexttrip ntlay-c">${head}<button class="ntmain ntcal" data-nexttrip="${esc(t.id)}"><span class="ntdate"><span>${esc(mon)}</span><b>${d0.getDate()}</b></span><span class="ntl">${city}<span class="meta">${range} · <b class="ntsoon">${esc(when)}</b></span></span></button>
-      ${pk.length?`<div class="ntgrid">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${chips}${bar}</article>`;}
+      ${pk.length?`<div class="ntgrid">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${lvH}${chips}${bar}</article>`;}
   // b (standard): rutor
   return`<article class="tip nexttrip ntlay-b">${head}<button class="ntmain" data-nexttrip="${esc(t.id)}">${city}<span class="ntwhen">${ic("clock")} ${esc(when)}</span></button>
-    <p class="meta">${range}</p>${pk.length?`<div class="stats ntstats">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${chips}${bar}</article>`;}
+    <p class="meta">${range}</p>${pk.length?`<div class="stats ntstats">${S.map(([n,l])=>`<div><b>${n}</b><span>${esc(l)}</span></div>`).join("")}</div>`:""}${lvH}${chips}${bar}</article>`;}
 // flaggor för resans länder: från valda matcher, annars från resans städer (högst tre)
 function flagImgs(ctrys){return ctrys.map(c=>[c,ntIdOf(c)]).filter(x=>x[1]&&FLAGS[x[1]]).slice(0,3).map(([c,id])=>`<img class="ntflag" src="${FLAGS[id]}" alt="${esc($t(c))}" title="${esc($t(c))}">`).join("");}
 // länder: resans städer först (i ordning), sedan matchernas städer; landet tas från staden, inte från lagen
