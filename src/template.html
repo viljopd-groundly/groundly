@@ -2160,7 +2160,10 @@ document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest
   if(t.dataset.cday){const d=t.dataset.cday;if(CAL_MONTH){if(RANGE_PICK&&d>=RANGE_PICK){dFrom=RANGE_PICK;dTo=d;RANGE_PICK=null;CALW=monOf(dFrom);}else{RANGE_PICK=d;dFrom=dTo=d;}}else{dFrom=dTo=d;RANGE_PICK=null;}}
   else if(t.dataset.calnav){const n=+t.dataset.calnav;if(CAL_MONTH){const d=new Date((CALM||dFrom.slice(0,7)+"-01")+"T12:00:00");d.setMonth(d.getMonth()+n);CALM=dayKey(d).slice(0,7)+"-01";renderMatches();return;}CALW=addDays(CALW||monOf(dFrom),7*n);renderMatches();return;}
   else if(t.dataset.caltoday){dFrom=dTo=today();CALW=monOf(dFrom);CAL_MONTH=false;RANGE_PICK=null;CALM=null;}
-  else if(t.dataset.calm){CAL_MONTH=t.dataset.calm==="1";RANGE_PICK=null;CALM=dFrom.slice(0,7)+"-01";if(!CAL_MONTH)CALW=monOf(dFrom);renderMatches();return;}
+  else if(t.dataset.calm){CAL_MONTH=t.dataset.calm==="1";RANGE_PICK=null;CALM=dFrom.slice(0,7)+"-01";if(!CAL_MONTH)CALW=monOf(dFrom);renderMatches();
+    // när kalendern krymper eller växer: se till att hela kalendern syns
+    requestAnimationFrame(()=>{const c=document.getElementById("datePresets");if(!c)return;const tb=document.querySelector(".topbar");const off=(tb&&getComputedStyle(tb).position!=="static"?tb.getBoundingClientRect().bottom:0)+10;const r=c.getBoundingClientRect();
+      if(r.top<off||r.bottom>innerHeight)scrollTo({top:Math.max(0,scrollY+r.top-off),behavior:"smooth"});});return;}
   // kalendern ska stå kvar där den är när man väljer dagar
   {const y=scrollY;renderMatches();scrollTo({top:y,behavior:"instant"});}});
 function inDates(m){if(m.kickoff){const k=koDay(m.kickoff);return k>=dFrom&&k<=dTo;}return m.dateFrom<=dTo&&m.dateTo>=dFrom;}
