@@ -32,15 +32,23 @@ export default {
     if (hit) return json(await hit.text(), { "Cache-Control": "public, max-age=30", "X-Cache": "HIT" });
     let body, ttl = CACHE_S;
     try {
-      const r = await fetch(API, { headers: { "x-apisports-key": key0 } });
-      const j = await r.json();
-      const err = j && j.errors && (Array.isArray(j.errors) ? j.errors.length : Object.keys(j.errors).length);
-      if (!r.ok || err) throw new Error("api " + r.status + " " + (err ? Object.keys(j.errors).join(",") : ""));
-      body = JSON.stringify({ t: Date.now(), m: (j.response || []).map(f => [f.fixture.id, f.teams.home.id, f.teams.away.id, f.goals.home, f.goals.away, f.fixture.status.short, f.fixture.status.elapsed, f.fixture.status.extra || 0, evs(f)]) });
+      // API-Football spärrar ibland tillfälligt ("rateLimit") trots att vi har kvot kvar; då försöker vi igen några gånger
+      let r, j, err, tries = 0;
+      for (;;) {
+        tries++;
+        r = await fetch(API, { headers: { "x-apisports-key": key0 } });
+        j = await r.json().catch(() => ({}));
+        err = j && j.errors && (Array.isArray(j.errors) ? j.errors.length : Object.keys(j.errors).length);
+        const limited = r.status === 429 || (err && j.errors.rateLimit);
+        if (!limited || tries >= 4) break;
+        await new Promise(res => setTimeout(res, 1200 * tries));
+      }
+      if (!r.ok || err) throw new Error("api " + r.status + " " + (err ? Object.entries(j.errors).map(([k, v]) => k + ": " + String(v).slice(0, 90)).join("; ") : "") + " (" + tries + " försök)");
+      body = JSON.stringify({ t: Date.now(), f: tries, m: (j.response || []).map(f => [f.fixture.id, f.teams.home.id, f.teams.away.id, f.goals.home, f.goals.away, f.fixture.status.short, f.fixture.status.elapsed, f.fixture.status.extra || 0, evs(f)]) });
       GOOD = { at: Date.now(), body };
     } catch (e) {
       // vid fel (t.ex. tillfällig spärr per minut): visa senaste lyckade svaret om det är färskt
-      body = GOOD && Date.now() - GOOD.at < 5 * 60e3 ? GOOD.body : JSON.stringify({ t: Date.now(), m: [], fel: true, orsak: String(e.message || e).slice(0, 80) }); ttl = 30; // försök igen om en halv minut
+      body = GOOD && Date.now() - GOOD.at < 5 * 60e3 ? GOOD.body : JSON.stringify({ t: Date.now(), m: [], fel: true, orsak: String(e.message || e).slice(0, 200) }); ttl = 30; // försök igen om en halv minut
     }
     MEM = { at: Date.now(), ttl, body };
     ctx.waitUntil(cache.put(key, new Response(body, { headers: { "Cache-Control": `public, max-age=${ttl}` } })));

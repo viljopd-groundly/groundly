@@ -20,7 +20,7 @@ jobs:
           python3 - <<'PY'
           import json,os
           j=json.load(open("live.json"));m=j.get("m",[])
-          print("antal:",len(m),"fel:",j.get("fel"),j.get("orsak",""))
+          print("antal:",len(m),"försök:",j.get("f"),"fel:",j.get("fel"),j.get("orsak",""))
           ids={int(x) for x in os.environ.get("TEAMS","").split(",") if x.strip()}
           for r in m:
               if r[1] in ids or r[2] in ids: print(r[:8])
