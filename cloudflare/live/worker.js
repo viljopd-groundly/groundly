@@ -37,9 +37,9 @@ async function nightly(env, dry) {
   const today = new Date().toISOString().slice(0, 10);
   let upd = "";
   try { upd = String((await (await fetch(SITE + "data/standings.json?t=" + Date.now(), { cf: { cacheTtl: 0 } })).json()).updated || ""); } catch (e) {}
-  if (upd.slice(0, 10) === today) return { gjort: false, orsak: "redan uppdaterad " + upd };
   const rr = await fetch(GH + "/workflows/deploy.yml/runs?per_page=10", { headers: h });
   if (!rr.ok) return { gjort: false, orsak: "GitHub svarade " + rr.status };
+  if (upd.slice(0, 10) === today) return { gjort: false, orsak: "redan uppdaterad " + upd + " (GitHub-nyckeln fungerar)" };
   const runs = (await rr.json()).workflow_runs || [];
   const busy = runs.find(r => /queued|in_progress|waiting|pending/.test(r.status) && /schedule|workflow_dispatch/.test(r.event));
   if (busy) return { gjort: false, orsak: "en körning pågår redan (" + busy.event + ")" };
