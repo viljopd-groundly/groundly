@@ -1963,7 +1963,7 @@ function scoredTeams(m){const r=m&&m.score&&/^\s*(\d+)\s*[-–]\s*(\d+)\s*(.*)$/
   return`<div class="teams scored">${row(m.home,m.homeName,"home",a,a>b)}${row(m.away,m.awayName,"away",b,b>a)}${ex?`<span class="sx meta">${esc(ex.slice(0,24))}</span>`:""}</div>`;}
 function crestInitials(n){const w=String(n||"").replace(/[^\p{L}\p{N} ]/gu," ").split(/\s+/).filter(x=>x&&!/^(fc|if|ik|fk|sk|bk|ac|as|cf|sc|cd|afc|the|de|of|1)$/i.test(x));return(w.length>=2?w.slice(0,3).map(x=>x[0]).join(""):(w[0]||"?").slice(0,3)).toUpperCase();}
 function crest(id,name,size){size=size||40;const lg=LOGOS[id];const cls=`crest${size<30?" sm":""}`;const st=`width:${size}px;height:${size}px`;
-  if(lg)return`<img class="${cls} logo" src="${esc(lg)}" alt="" style="${st}" loading="lazy">`;
+  if(lg)return`<img class="${cls} logo" src="${esc(lg)}" alt="" style="${st}"${size>=40?"":" loading=\"lazy\""} decoding="async">`;
   if(FLAGS[id])return`<img class="${cls} flag" src="${FLAGS[id]}" alt="" style="${st}" loading="lazy">`;
   const k=COLORS[id];const lbl=k?k[2]:crestInitials(name||(C[id]&&C[id].n));const c1=k?k[0]:"#d9e1dc",c2=k?k[1]:"#8a9a90";
   const fg=contrast(c1,c2)>=2.6?c2:(lum(c1)>.4?"#111111":"#ffffff");const fs=Math.round(size*(lbl.length<=2?.38:lbl.length===3?.31:.25));
@@ -2943,8 +2943,8 @@ const fmtDate=k=>{if(!k)return"";const[y,m,d]=String(k).split("-").map(Number);r
 let myYear="all";
 function renderMine(){
   const el=document.getElementById("mineBody");
-  if(myState==="loading"){el.innerHTML=`<div class="empty">${$t("Hämtar dina sparade matcher…")}</div>`;return;}
-  if(myState==="none"){el.innerHTML=`<div class="empty"><b>${$t("Logga in för att spara.")}</b><div>${$t("Dina matcher och klubbar sparas på ditt claude.ai-konto, så du behöver öppna sidan inloggad.")}</div></div>`;return;}
+  if(myState==="loading"){el.__h=null;el.innerHTML=`<div class="empty">${$t("Hämtar dina sparade matcher…")}</div>`;return;}
+  if(myState==="none"){el.__h=null;el.innerHTML=`<div class="empty"><b>${$t("Logga in för att spara.")}</b><div>${$t("Dina matcher och klubbar sparas på ditt claude.ai-konto, så du behöver öppna sidan inloggad.")}</div></div>`;return;}
   // har man loggat matcher men inte valt favoritlag öppnar Min fotboll på Matcher i stället för ett tomt formulär
   const noFav=!favList().length&&!(MY.favNat&&C[MY.favNat]);if(mySubAuto&&mySub==="home"&&noFav&&MY.attended.length)mySub="been";
   const vm=visitedMap();const countries=new Set([...vm.keys()].map(id=>C[id]&&C[id].c).filter(Boolean));
@@ -3034,7 +3034,8 @@ function renderMine(){
     h+=`<h3 class="sec">${$t("Landslag jag vill se")}</h3>`+(wn.length?`<div class="clist">${wn.slice(0,lim("wn",3)).map(id=>{const c=C[id];return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${crest(id,c.n,22)}<span class="cnt">${esc(c.n)}${favStar(id)}</span></button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}</div><div class="pactions">${delBtn("wc",id)}</div></div></div>`;}).join("")}</div>${limBtns("wn",wn.length,3)}`:`<div class="empty">${$t("Tryck")} <b>${$t("Vill besöka")}</b> ${$t("på ett landslag under fliken Landslag.")}</div>`);
     h+=addClubRow("wishClubAdd",$t("Lägg till på önskelistan"));
   }else{h+=renderChallenges();}
-  el.innerHTML=h;afterMine();}
+  // samma innehåll som redan visas: rör inte sidan (annars laddas klubbmärken och kartor om och blinkar till)
+  if(el.__h===h&&el.isConnected&&el.innerHTML)return;el.innerHTML=h;el.__h=h;afterMine();}
 function addClubRow(id,label){return`<form class="addclub" data-addclub="${id}"><label class="fld" for="${id}-in">${$t("Lägg till klubb eller landslag")}<input id="${id}-in" list="allClubs" maxlength="80" placeholder="${$t("Sök klubb eller landslag")}"></label><button class="btn small" type="submit">${label}</button></form>`;}
 
 function myClick(t){
@@ -3133,7 +3134,7 @@ async function startMine(db,uid){
   if(!db||!uid||(MY_LS&&MY_LS.uid!==uid)){if(MY_LS){MY_LS=null;myLsDirty=false;MY=normMy({});}if(!uid)store.del(MY_SNAP_KEY);}
   if(!db||!uid){myState="none";render();return;}
   try{myRef=db.doc("data/users/"+uid+"/logg");}catch(e){myState="none";render();return;}
-  myRef.onSnapshot(s=>{if(myPending>0)return;const server=s.exists?s.data():{};const pend=pendingLogg();const myBefore=MY_LS&&myLsDirty?JSON.parse(JSON.stringify(MY)):null;
+  myRef.onSnapshot(s=>{if(myPending>0)return;const server=s.exists?s.data():{};const pend=pendingLogg();const prevKey=myState==="ready"?JSON.stringify(MY):null;const myBefore=MY_LS&&myLsDirty?JSON.parse(JSON.stringify(MY)):null;
     const fromCache=!!(s.metadata&&s.metadata.fromCache);
     if(fromCache&&!MY_SRV){if(!myStale){myStale=true;MY_BASE=JSON.parse(JSON.stringify(server));}}
     else if(!fromCache){const wasStale=myStale;myStale=false;MY_SRV=JSON.parse(JSON.stringify(server));
@@ -3146,7 +3147,9 @@ async function startMine(db,uid){
     if(!myNewDone&&navigator.onLine!==false&&!(s.metadata&&s.metadata.fromCache)&&(fresh||(data&&data.vis2!==true&&!pend))){myNewDone=true;setTimeout(()=>{try{const was=MY.pub&&MY.share;mutate(d=>{d.pub=true;d.share=true;d.vis2=true;});if(!fresh&&!was)toast($t("Du syns nu i topplistorna och för vänner. Du kan välja bort det under Min fotboll."));}catch(e){}},400);}
     if(pend&&(!server||!server.savedAt||String(pend.savedAt)>String(server.savedAt))){MY=normMy(pend);setTimeout(retryPending,500);}else{MY=normMy(server);if(pend)store.del(PENDING_KEY);}
     if(MY_LS){const base=MY_LS.d;MY_LS=null;myLsDirty=false;if(myBefore){MY=normMy(merge3(base,myBefore,JSON.parse(JSON.stringify(MY))));if(myStale)myDirty=true;else setTimeout(saveMy,0);}}
-    myState="ready";saveMySnap();if(!USE_LAST){USE_LAST={a:(MY.attended||[]).length,w:(MY.wishMatches||[]).length,t:(MY.trips||[]).length};track("s_in");}render();setTimeout(()=>{try{syncStats();}catch(e){}},800);},
+    myState="ready";saveMySnap();if(!USE_LAST){USE_LAST={a:(MY.attended||[]).length,w:(MY.wishMatches||[]).length,t:(MY.trips||[]).length};track("s_in");}
+    // rita bara om när något faktiskt ändrats – annars blinkar klubbmärkena till när samma sida ritas om
+    if(prevKey===null||prevKey!==JSON.stringify(MY))render();setTimeout(()=>{try{syncStats();}catch(e){}},800);},
     ()=>{if(MY_LS){MY_LS=null;MY=normMy({});}myState="none";render();});}
 
 // ---------- arenabetyg och tillgänglighet ----------
