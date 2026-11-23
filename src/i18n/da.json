@@ -2865,5 +2865,8 @@
  "Dölj matcher som redan spelats": "Skjul kampe, der allerede er spillet",
  "Visa hela månaden": "Vis hele måneden",
  "Visa en vecka": "Vis én uge",
- "ingen live": "intet live"
+ "ingen live": "intet live",
+ "Spelar just nu": "Spiller lige nu",
+ "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Live: tabellen medregner {0} igangværende og netop spillede kampe",
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Inklusive {0} kampe spillet efter seneste opdatering"
 }

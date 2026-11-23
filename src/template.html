@@ -563,7 +563,7 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .ko.live{font-family:var(--f-body)!important;font-weight:700;background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1.5px solid #c0262d!important;box-shadow:none!important}
 .ko.live small{display:flex;align-items:center;justify-content:center;gap:4px;color:var(--live-fg)!important;opacity:1;letter-spacing:.06em}
 .ko.live small:before{content:"";width:6px;height:6px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}
-.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.mlearly .btn .ic.down{transform:rotate(90deg)}.pill.livepill{background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1px solid #c0262d}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:var(--live-fg);background:rgba(192,38,45,.14);font-weight:700}
+.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.mlearly .btn .ic.down{transform:rotate(90deg)}.pill.livepill{background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1px solid #c0262d}.tbllive{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:calc(13px*var(--fs));font-weight:600;color:var(--live-fg)}.tbllive:before,.tlive{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}.tlive{margin-left:6px;width:7px;height:7px}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:var(--live-fg);background:rgba(192,38,45,.14);font-weight:700}
 .chip.livechip:before{content:"";width:8px;height:8px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}
 .chip.livechip[aria-pressed="true"]{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.chip.livechip[aria-pressed="true"]:before{background:#fff}.chip.livechip b{background:#c0262d;color:#fff;border-radius:99px;padding:0 7px;font-size:12px}.chip.livechip[aria-pressed="true"] b{background:rgba(255,255,255,.25)}
 .livecard{border:1.5px solid #c0262d!important}.livecard .lchead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}.livecard .lchead h3{margin:0;display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#e5484d}
@@ -2379,9 +2379,20 @@ const XD={};const xdP={};
 function loadXD(name){if(xdP[name])return xdP[name];return xdP[name]=fetch("data/"+name+".json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(j=>{XD[name]=j||{};return XD[name];}).catch(()=>{XD[name]={};return XD[name];});}
 let tblStat="goals";
 const FORM_SV={W:"V",D:"O",L:"F"};
-function officialRowsHtml(g,fav){return g.rows.map(r=>{const[id,name,rank,s,v,o,f,gm,im,p,form,desc]=r;const c=id&&C[id];const gd=gm-im;
+// tabellen räknas om med resultat som kommit in via liveresultaten efter nattens officiella tabell
+function liveGroups(league,off){const up=Date.parse(XD.standings&&XD.standings.updated||"");if(!up||!LIVE_URL)return{groups:off.groups,n:0,lv:new Set()};
+  const ms=MATCHES.filter(m=>m.comp===league&&m.live&&m.score&&Date.parse(m.kickoff)>up);if(!ms.length)return{groups:off.groups,n:0,lv:new Set()};
+  const groups=off.groups.map(g=>({...g,rows:g.rows.map(r=>r.slice())}));const lv=new Set();let n=0;
+  for(const m of ms){const[gh,ga]=String(m.score).split("–").map(Number);if(!Number.isFinite(gh)||!Number.isFinite(ga))continue;
+    const g=groups.find(g=>g.rows.some(r=>r[0]===m.home)&&g.rows.some(r=>r[0]===m.away));if(!g)continue;n++;
+    for(const[id,a,b]of[[m.home,gh,ga],[m.away,ga,gh]]){const r=g.rows.find(x=>x[0]===id);r[3]++;r[7]+=a;r[8]+=b;
+      if(a>b){r[4]++;r[9]+=3;}else if(a===b){r[5]++;r[9]+=1;}else r[6]++;
+      if(m.live.done)r[10]=String(r[10]||"")+(a>b?"W":a===b?"D":"L");else lv.add(id);}}
+  groups.forEach(g=>{g.rows.sort((x,y)=>y[9]-x[9]||(y[7]-y[8])-(x[7]-x[8])||y[7]-x[7]);g.rows.forEach((r,i)=>r[2]=i+1);});
+  return{groups,n,lv};}
+function officialRowsHtml(g,fav,lv){return g.rows.map(r=>{const[id,name,rank,s,v,o,f,gm,im,p,form,desc]=r;const c=id&&C[id];const gd=gm-im;
   const fm=String(form||"").slice(-5).split("").filter(x=>FORM_SV[x]).map(x=>{const y=FORM_SV[x];return`<i class="fm ${y==="V"?"w":y==="F"?"l":"d"}" title="${y==="V"?$t("Vinst"):y==="F"?$t("Förlust"):$t("Oavgjort")}">${y}</i>`;}).join("");
-  return`<tr class="${id&&id===tblHL?"hl":""}${id&&fav.has(id)?" fav":""}"${desc?` title="${esc(desc)}"`:""}><td class="n">${rank}</td><td class="tl">${c?`<button class="tteam" data-open="${esc(id)}">${crest(id,c.n,20)}<span>${esc(c.n)}</span></button>`:`<span class="tteam">${esc(name)}</span>`}</td><td class="n">${s}</td><td class="n">${v}</td><td class="n">${o}</td><td class="n">${f}</td><td class="n">${gd>0?"+":""}${gd}</td><td class="n"><b>${p}</b></td><td class="fcol">${fm}</td></tr>`;}).join("");}
+  return`<tr class="${id&&id===tblHL?"hl":""}${id&&fav.has(id)?" fav":""}"${desc?` title="${esc(desc)}"`:""}><td class="n">${rank}</td><td class="tl">${c?`<button class="tteam" data-open="${esc(id)}">${crest(id,c.n,20)}<span>${esc(c.n)}</span>${lv&&lv.has(id)?`<i class="tlive" title="${$t("Spelar just nu")}"></i>`:""}</button>`:`<span class="tteam">${esc(name)}</span>`}</td><td class="n">${s}</td><td class="n">${v}</td><td class="n">${o}</td><td class="n">${f}</td><td class="n">${gd>0?"+":""}${gd}</td><td class="n"><b>${p}</b></td><td class="fcol">${fm}</td></tr>`;}).join("");}
 const TBL_HEAD=`<thead><tr><th>#</th><th class="tl">${$t("Lag")}</th><th title="${$t("Spelade")}">S</th><th title="${$t("Vinster")}">V</th><th title="${$t("Oavgjorda")}">O</th><th title="${$t("Förluster")}">F</th><th title="${$t("Målskillnad")}">+/−</th><th title="${$t("Poäng")}">P</th><th class="fcol">${$t("Form")}</th></tr></thead>`;
 // assist visas bara där serien registrerar assist ordentligt: minst 10 spelare på listan och
 // minst 0,45 assist per mål bland topplistorna (bra serier ligger på 0,5–0,75). Räknas om på varje natts data.
@@ -2420,9 +2431,9 @@ function renderTable(){const ls=tblLeagues(true);if(!ls.length)return;
       ${A.rows.length?`<div class="tblwrap"><table class="ltbl">${TBL_HEAD}<tbody>${officialRowsHtml({rows:A.rows},fav)}</tbody></table></div>`:`<p class="hint">${$t("Inga resultat finns för den här säsongen.")}</p>`}
       <p class="hint">${$t("Räknat med 3 poäng för vinst. Poängavdrag, slutspel och kval kan göra att den officiella tabellen skiljer sig något.")}</p></article>`;return;}
   const off=XD.standings&&XD.standings.leagues&&XD.standings.leagues[tblLeague];
-  if(off&&off.groups&&off.groups.some(g=>g.rows.length)){const up=XD.standings.updated;
-    box.innerHTML=`<article class="tip tblcard"><div class="tblhead"><h2 class="name">${esc(lgT(tblLeague))}</h2><span class="meta">${$t("{0} · nivå {1} · officiell tabell",[esc($t(cur.c)),cur.t])}${up?$t(", uppdaterad {0}",[esc(fmtDate(up.slice(0,10)))]):""}</span></div>
-      ${off.groups.map(g=>`${off.groups.length>1&&g.name?`<h3 class="sec">${esc(g.name)}</h3>`:""}<div class="tblwrap"><table class="ltbl">${TBL_HEAD}<tbody>${officialRowsHtml(g,fav)}</tbody></table></div>`).join("")}</article>${statBoardHtml(tblLeague)}`;}
+  if(off&&off.groups&&off.groups.some(g=>g.rows.length)){const up=XD.standings.updated;const LG=liveGroups(tblLeague,off);
+    box.innerHTML=`<article class="tip tblcard"><div class="tblhead"><h2 class="name">${esc(lgT(tblLeague))}</h2><span class="meta">${$t("{0} · nivå {1} · officiell tabell",[esc($t(cur.c)),cur.t])}${up?$t(", uppdaterad {0}",[esc(fmtDate(up.slice(0,10)))]):""}</span>${LG.n?`<span class="tbllive">${LG.lv.size?$t("Live: tabellen räknar med {0} pågående och nyss spelade matcher",[LG.n]):$t("Inklusive {0} matcher spelade efter senaste uppdateringen",[LG.n])}</span>`:""}</div>
+      ${LG.groups.map(g=>`${LG.groups.length>1&&g.name?`<h3 class="sec">${esc(g.name)}</h3>`:""}<div class="tblwrap"><table class="ltbl">${TBL_HEAD}<tbody>${officialRowsHtml(g,fav,LG.lv)}</tbody></table></div>`).join("")}</article>${statBoardHtml(tblLeague)}`;}
   else{if(dbState==="loading"){box.innerHTML=`<div class="empty">${$t("Hämtar resultaten…")}</div>`;return;}
   const T=leagueTable(tblLeague);
   const head=`<div class="tblhead"><h2 class="name">${esc(lgT(tblLeague))}</h2><span class="meta">${$t("{0} · nivå {1}",[esc($t(cur.c)),cur.t])}${T.played?$t(" · {0} spelade matcher{1}",[T.played,T.last?$t(", senast {0}",[esc(fmtDate(T.last))]):""]):""} ${$t("· uträknad")}</span></div>`;
@@ -4879,7 +4890,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-golive],[d
   if(t.dataset.golive){LIVE_ONLY=true;setMode("matcher");if(matchView!=="list"){matchView="list";}renderMatches();scrollTo({top:0,behavior:"instant"});return;}
   LIVE_ONLY=!LIVE_ONLY;renderMatches();});
 function liveRefresh(){if(document.querySelector('[role="dialog"]:not([hidden])'))return;const a=document.activeElement;if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;
-  if(["matcher","hem","resa"].includes(mode)){const y=scrollY;try{render();}catch(e){}window.scrollTo({top:y,behavior:"instant"});}}
+  if(["matcher","hem","resa","tabell"].includes(mode)){const y=scrollY;try{render();}catch(e){}window.scrollTo({top:y,behavior:"instant"});}}
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)livePoll();});setTimeout(livePoll,1500);
 function countdown(iso){const ms=Date.parse(iso)-Date.now();if(ms<=0)return ms>-2*36e5?$t("Pågår"):$t("Spelad");const min=Math.round(ms/6e4);
   if(min<60)return $t("om {0} min",[Math.max(1,min)]);if(min<6*60){const h=Math.floor(min/60),m=min%60;return m?$t("om {0} tim {1} min",[h,m]):$t("om {0} tim",[h]);}

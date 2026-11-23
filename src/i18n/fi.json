@@ -2864,5 +2864,8 @@
  "Dölj matcher som redan spelats": "Piilota jo pelatut ottelut",
  "Visa hela månaden": "Näytä koko kuukausi",
  "Visa en vecka": "Näytä yksi viikko",
- "ingen live": "ei livenä"
+ "ingen live": "ei livenä",
+ "Spelar just nu": "Pelaa nyt",
+ "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Live: taulukossa on mukana {0} käynnissä olevaa ja juuri päättynyttä ottelua",
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Mukana {0} viimeisimmän päivityksen jälkeen pelattua ottelua"
 }

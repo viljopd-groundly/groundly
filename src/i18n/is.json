@@ -2864,5 +2864,8 @@
  "Dölj matcher som redan spelats": "Fela leiki sem þegar hafa verið spilaðir",
  "Visa hela månaden": "Sýna allan mánuðinn",
  "Visa en vecka": "Sýna eina viku",
- "ingen live": "ekki í beinni"
+ "ingen live": "ekki í beinni",
+ "Spelar just nu": "Spilar núna",
+ "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Í beinni: taflan telur með {0} leiki í gangi og nýlokna",
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Að meðtöldum {0} leikjum frá síðustu uppfærslu"
 }

@@ -2865,5 +2865,8 @@
  "Dölj matcher som redan spelats": "Ocultar partidos ya jugados",
  "Visa hela månaden": "Ver todo el mes",
  "Visa en vecka": "Ver una semana",
- "ingen live": "sin directo"
+ "ingen live": "sin directo",
+ "Spelar just nu": "Jugando ahora",
+ "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "En directo: la tabla incluye {0} partidos en juego y recién terminados",
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Incluye {0} partidos jugados desde la última actualización"
 }

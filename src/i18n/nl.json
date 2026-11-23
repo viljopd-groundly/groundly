@@ -2864,5 +2864,8 @@
  "Dölj matcher som redan spelats": "Verberg wedstrijden die al gespeeld zijn",
  "Visa hela månaden": "Hele maand tonen",
  "Visa en vecka": "Eén week tonen",
- "ingen live": "geen live"
+ "ingen live": "geen live",
+ "Spelar just nu": "Speelt nu",
+ "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Live: de stand telt {0} lopende en net gespeelde wedstrijden mee",
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Inclusief {0} wedstrijden gespeeld na de laatste update"
 }

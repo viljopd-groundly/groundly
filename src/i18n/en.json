@@ -2953,5 +2953,8 @@
  "Dölj matcher som redan spelats": "Hide matches already played",
  "Visa hela månaden": "Show whole month",
  "Visa en vecka": "Show one week",
- "ingen live": "no live"
+ "ingen live": "no live",
+ "Spelar just nu": "Playing now",
+ "Live: tabellen räknar med {0} pågående och nyss spelade matcher": "Live: the table includes {0} ongoing and just-finished matches",
+ "Inklusive {0} matcher spelade efter senaste uppdateringen": "Including {0} matches played since the last update"
 }
