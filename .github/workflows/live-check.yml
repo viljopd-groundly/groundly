@@ -1,0 +1,26 @@
+name: Live-kontroll
+# Kör för hand för att se vad live-tjänsten skickar för vissa lag (API-lag-id, kommaseparerade)
+on:
+  workflow_dispatch:
+    inputs:
+      teams:
+        description: "API-lag-id, t.ex. 4648,17135"
+        required: false
+        default: ""
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hämta
+        env:
+          TEAMS: ${{ github.event.inputs.teams }}
+        run: |
+          curl -s -m 30 https://groundly-live.viljo-pd.workers.dev/live > live.json
+          python3 - <<'PY'
+          import json,os
+          j=json.load(open("live.json"));m=j.get("m",[])
+          print("antal:",len(m),"fel:",j.get("fel"),j.get("orsak",""))
+          ids={int(x) for x in os.environ.get("TEAMS","").split(",") if x.strip()}
+          for r in m:
+              if r[1] in ids or r[2] in ids: print(r[:8])
+          PY
