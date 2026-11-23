@@ -2381,7 +2381,8 @@ let tblStat="goals";
 const FORM_SV={W:"V",D:"O",L:"F"};
 // tabellen räknas om med resultat som kommit in via liveresultaten efter nattens officiella tabell
 function liveGroups(league,off){const up=Date.parse(XD.standings&&XD.standings.updated||"");if(!up||!LIVE_URL)return{groups:off.groups,n:0,lv:new Set()};
-  const ms=MATCHES.filter(m=>m.comp===league&&m.live&&m.score&&Date.parse(m.kickoff)>up);if(!ms.length)return{groups:off.groups,n:0,lv:new Set()};
+  // matcher som inte hade slutresultat när nattens tabell hämtades (de som hade det får aldrig m.live), även om de började före hämtningen
+  const ms=MATCHES.filter(m=>m.comp===league&&m.live&&m.score&&Date.parse(m.kickoff)>up-4*36e5);if(!ms.length)return{groups:off.groups,n:0,lv:new Set()};
   const groups=off.groups.map(g=>({...g,rows:g.rows.map(r=>r.slice())}));const lv=new Set();let n=0;
   for(const m of ms){const[gh,ga]=String(m.score).split("–").map(Number);if(!Number.isFinite(gh)||!Number.isFinite(ga))continue;
     const g=groups.find(g=>g.rows.some(r=>r[0]===m.home)&&g.rows.some(r=>r[0]===m.away));if(!g)continue;n++;
