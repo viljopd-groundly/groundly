@@ -27,7 +27,29 @@ const evs = f => (Array.isArray(f.events) ? f.events : []).map(e => {
 const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET, OPTIONS" };
 const json = (body, extra = {}) => new Response(body, { headers: { ...cors, "Content-Type": "application/json; charset=utf-8", ...extra } });
 
+// ---- nattuppdateringen: Cloudflare startar den på utsatt tid (GitHubs egen schemaläggare kan dröja i timmar) ----
+const GH = "https://api.github.com/repos/viljopd-groundly/groundly/actions";
+const SITE = "https://viljopd-groundly.github.io/groundly/";
+async function nightly(env, dry) {
+  const tok = String(env.GH_DISPATCH_TOKEN || "").trim();
+  if (!tok) return { gjort: false, orsak: "GH_DISPATCH_TOKEN saknas" };
+  const h = { Authorization: "Bearer " + tok, Accept: "application/vnd.github+json", "User-Agent": "groundly-live", "X-GitHub-Api-Version": "2022-11-28" };
+  const today = new Date().toISOString().slice(0, 10);
+  let upd = "";
+  try { upd = String((await (await fetch(SITE + "data/standings.json?t=" + Date.now(), { cf: { cacheTtl: 0 } })).json()).updated || ""); } catch (e) {}
+  if (upd.slice(0, 10) === today) return { gjort: false, orsak: "redan uppdaterad " + upd };
+  const rr = await fetch(GH + "/workflows/deploy.yml/runs?per_page=10", { headers: h });
+  if (!rr.ok) return { gjort: false, orsak: "GitHub svarade " + rr.status };
+  const runs = (await rr.json()).workflow_runs || [];
+  const busy = runs.find(r => /queued|in_progress|waiting|pending/.test(r.status) && /schedule|workflow_dispatch/.test(r.event));
+  if (busy) return { gjort: false, orsak: "en körning pågår redan (" + busy.event + ")" };
+  if (dry) return { gjort: false, orsak: "provkörning: skulle ha startat (senast uppdaterad " + (upd || "okänt") + ")" };
+  const d = await fetch(GH + "/workflows/deploy.yml/dispatches", { method: "POST", headers: { ...h, "Content-Type": "application/json" }, body: JSON.stringify({ ref: "main", inputs: { nightly: true } }) });
+  return { gjort: d.status === 204, orsak: d.status === 204 ? "startad" : "GitHub svarade " + d.status };
+}
+
 export default {
+  async scheduled(event, env, ctx) { ctx.waitUntil(nightly(env, false)); },
   async fetch(req, env, ctx) {
     if (req.method === "OPTIONS") return new Response(null, { headers: cors });
     const url = new URL(req.url);
@@ -38,6 +60,7 @@ export default {
         const q = (j.response && j.response.requests) || {}; return json(JSON.stringify({ idag: q.current, max: q.limit_day, plan: j.response && j.response.subscription && j.response.subscription.plan, ...hd, fel: j.errors && Object.keys(j.errors).length ? Object.values(j.errors).map(v => String(v).slice(0, 120)) : undefined }));
       } catch (e) { return json(JSON.stringify({ fel: String(e.message || e).slice(0, 80) })); }
     }
+    if (url.pathname === "/natt") return json(JSON.stringify(await nightly(env, true))); // bara provkörning, startar inget
     if (url.pathname !== "/live") return new Response("Groundly live", { headers: cors });
     // workers.dev har ingen delad cache, så svaret sparas också i minnet (en hämtning per minut och server)
     if (MEM && Date.now() - MEM.at < MEM.ttl * 1000) return json(MEM.body, { "Cache-Control": "public, max-age=30", "X-Cache": "MEM" });
