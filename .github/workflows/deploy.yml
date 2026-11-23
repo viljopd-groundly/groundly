@@ -8,6 +8,9 @@ on:
     branches: [main]
   schedule:
     - cron: "49 1 * * *"   # 03:49 svensk sommartid, 02:49 vintertid
+    # GitHub skjuter ibland upp eller hoppar över schemalagda körningar; reservtider körs bara om natten inte redan är gjord
+    - cron: "23 3 * * *"
+    - cron: "37 4 * * *"
   workflow_dispatch:
     inputs:
       nightly:
@@ -38,8 +41,15 @@ jobs:
         with:
           node-version: 20
 
+      - name: Redan gjord i dag?
+        id: done
+        if: github.event_name == 'schedule'
+        run: |
+          d=$(python3 -c 'import json;print(json.load(open("site/data/standings.json")).get("updated","")[:10])' 2>/dev/null || echo "")
+          if [ "$d" = "$(date -u +%F)" ]; then echo "run=0" >> "$GITHUB_OUTPUT"; echo "Nattuppdateringen är redan gjord i dag ($d)."; else echo "run=1" >> "$GITHUB_OUTPUT"; fi
+
       - name: Nattuppdatering
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.nightly)
+        if: (github.event_name == 'schedule' && steps.done.outputs.run == '1') || (github.event_name == 'workflow_dispatch' && inputs.nightly)
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           BACKFILL: ${{ inputs.backfill }}
@@ -56,7 +66,7 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Hämta nya klubbmärken
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.nightly)
+        if: (github.event_name == 'schedule' && steps.done.outputs.run == '1') || (github.event_name == 'workflow_dispatch' && inputs.nightly)
         continue-on-error: true
         run: |
           [ -f tools/logo_ids.json ] && node tools/fetch-logos.js | tee -a "$GITHUB_STEP_SUMMARY" || echo "inga klubbmärken att hämta"
