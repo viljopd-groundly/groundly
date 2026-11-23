@@ -25,6 +25,11 @@ jobs:
           for r in m:
               if r[1] in ids or r[2] in ids: print(r[:8])
           PY
+      - name: Förbrukning i dag (direkt från GitHub)
+        env:
+          KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: |
+          curl -s -m 30 -H "x-apisports-key: $(echo "$KEY" | tr -d '[:space:]')" https://v3.football.api-sports.io/status | python3 -c 'import json,sys; j=json.load(sys.stdin); r=(j.get("response") or {}); q=r.get("requests",{}) if isinstance(r,dict) else {}; print("FÖRBRUKNING", q.get("current"), "av", q.get("limit_day"), "plan", (r.get("subscription") or {}).get("plan") if isinstance(r,dict) else None, j.get("errors") or "")'
       - name: Lagens senaste matcher hos API-Football
         if: github.event.inputs.teams != ''
         env:
