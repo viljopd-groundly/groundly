@@ -11,6 +11,8 @@ const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const SA = (() => { try { return JSON.parse(process.env.FIREBASE_SA || ""); } catch (e) { return null; } })();
 if (!SA || !SA.private_key) { console.log("FIREBASE_SA saknas – inga påminnelser skickas."); process.exit(0); }
 const DRY = process.env.PUSH_DRY === "1";
+// provnotis: PUSH_TEST=1 skickar en testnotis bara till enheter som slagit på påminnelser de senaste två timmarna
+const TEST = process.env.PUSH_TEST === "1";
 const PROJECT = SA.project_id;
 const ROOT = path.resolve(__dirname, "..");
 const LOC = { sv: "sv-SE", nb: "nb-NO", da: "da-DK", fi: "fi-FI", is: "is-IS", de: "de-DE", en: "en-GB", es: "es-ES", fr: "fr-FR", it: "it-IT", nl: "nl-NL", pl: "pl-PL", pt: "pt-BR" };
@@ -64,6 +66,19 @@ const enc = x => x === null || x === undefined ? { nullValue: null } : typeof x 
     const P = Object.fromEntries(Object.entries(r.document.fields || {}).map(([k, v]) => [k, dec(v)]));
     if (!P.on) { skip("avstängd"); continue; }
     const tokens = (P.tokens || []).filter(t => t && t.t); if (!tokens.length) { skip("utan token"); continue; }
+    if (TEST) {
+      const fresh = tokens.filter(t => Date.now() - Date.parse(t.at || 0) < 2 * 36e5);
+      for (const t of fresh) {
+        const lg = LOC[P.lang] ? P.lang : "sv";
+        const res = await fetch(`https://fcm.googleapis.com/v1/projects/${PROJECT}/messages:send`, { method: "POST", headers: H,
+          body: JSON.stringify({ message: { token: t.t, webpush: { headers: { TTL: "3600", Urgency: "high" }, data: { title: tr(lg, "Påminnelserna fungerar"), body: tr(lg, "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå."), url: "./?go=mine", tag: "test" }, fcm_options: { link: "./?go=mine" } } } }) });
+        const j = res.ok ? {} : await res.json().catch(() => ({}));
+        console.log("provnotis", uid.slice(0, 6), (t.ua || "").slice(0, 40), res.status, res.ok ? "skickad" : JSON.stringify(j.error || j).slice(0, 200));
+        if (res.ok) stat.sent++;
+      }
+      if (!fresh.length) skip("ingen ny enhet");
+      continue;
+    }
     const lang = LOC[P.lang] ? P.lang : "sv", tz = P.tz || "Europe/Stockholm", pr = Object.assign({ wish: true, log: true }, P.prefs || {});
     const hour = +new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: tz }).format(new Date());
     if (hour < 8 || hour >= 21) { skip("natt"); continue; }

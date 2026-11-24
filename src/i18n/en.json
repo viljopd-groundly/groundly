@@ -2960,5 +2960,7 @@
  "Dra över flera dagar för att välja en period.": "Drag across several days to pick a period.",
  "Tidigare resor ({0})": "Past trips ({0})",
  "1 resa": "1 trip",
- "{n} resor": "{n} trips"
+ "{n} resor": "{n} trips",
+ "Påminnelserna fungerar": "Reminders are working",
+ "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "This is a test notification from Groundly. You'll get reminders about the matches in Want to go."
 }

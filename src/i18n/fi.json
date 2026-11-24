@@ -2871,5 +2871,7 @@
  "Dra över flera dagar för att välja en period.": "Valitse jakso vetämällä useamman päivän yli.",
  "Tidigare resor ({0})": "Aiemmat matkat ({0})",
  "1 resa": "1 matka",
- "{n} resor": "{n} matkaa"
+ "{n} resor": "{n} matkaa",
+ "Påminnelserna fungerar": "Muistutukset toimivat",
+ "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "Tämä on Groundlyn testi-ilmoitus. Saat muistutuksia Haluan mennä -otteluista."
 }
