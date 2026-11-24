@@ -1061,7 +1061,7 @@ button.wchip{font-family:inherit;cursor:pointer;color:var(--fg)}
 /* --- Biljetten: matchbiljett och matchprogram --- */
 html:root[data-look="ticket"]:not(#_){--bg:#C5D3E4;--surface:#FFFFFF;--fg:#18213D;--muted:#5B6683;--line:#C2CEDD;--chalk:#FFFFFF;
   --accent:#1D4E9E;--accent-soft:#DCE6F4;--pitch:#1F5E43;--pitch-soft:#D6E9DF;--soft:color-mix(in srgb,#18213D 6%,transparent);--soft2:color-mix(in srgb,#18213D 11%,transparent);
-  --f-display:"GL Shoulders","Arial Narrow",sans-serif;--f-body:"GL Public",system-ui,sans-serif;--r:6px;--shadow:0 1px 0 #A9B9CE;color-scheme:light}
+  --f-display:"GL Shoulders","Arial Narrow",sans-serif;--f-body:"GL Public",system-ui,sans-serif;--r:18px;--shadow:0 1px 0 #A9B9CE;color-scheme:light}
 /* biljettmönstret ligger i ett eget fast lager som ritas en gång, i stället för fast bakgrund som målades om vid varje scroll (laggade på iPhone) */
 html:root[data-look="ticket"] body{background:var(--bg)}
 html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;transform:translateZ(0);background-image:repeating-radial-gradient(circle at 120% -10%,transparent 0 9px,var(--guil,rgba(24,33,61,.035)) 9px 10px)}
@@ -1073,7 +1073,7 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 :root[data-look="ticket"] .lbl{text-transform:none;letter-spacing:0;color:var(--accent);font-weight:700}
 :root[data-look="ticket"] .intro .kicker{text-transform:none;letter-spacing:0;font-family:var(--f-body);color:var(--accent)}
 :root[data-look="ticket"] .btn.primary{background:var(--fg);border-color:var(--fg);color:#fff}
-:root[data-look="ticket"] .btn{border-radius:4px}
+:root[data-look="ticket"] .btn{border-radius:10px}
 :root[data-look="ticket"] .chip[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:#fff}
 
 
@@ -6641,7 +6641,7 @@ const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["kit",$t("Kväll
 // textfärg i alla utseenden; tidigare val (röd, blå, vit, lila) faller tillbaka på standard
 const ACCS=[["std",$t("Standard"),""],["gold",$t("Gul"),"#F2C14E"],["green",$t("Grön"),"#2E9A57"],["orange",$t("Orange"),"#F07F2A"],["white",$t("Vit"),"#FFFFFF"]];let acc="green";try{let t=store.get("fk-acc");if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
 const LOOK_THEMES=THEMES;let lookTheme="dark";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
-const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let edge=store.get("fk-edge")||"";let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
+const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let edge=store.get("fk-edge")||"none";if(edge==="std")edge="";let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
 let uiStyle="frame";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 // Halvmörkt (dusk) är borttaget; den som hade valt det får Mörkt
 // Halvmörkt och Dämpat blir Mörkt, Varmt blir Ljust
@@ -6709,7 +6709,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
 `}
      <div class="lbl">${$t("Textfärg")}</div><div class="chips wrapchips">${ACCS.map(([k,l,c])=>`<button class="chip" data-acc-pick="${k}" aria-pressed="${acc===k}">${c?`<span class="accdot" style="background:${c}"></span>`:""}${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.filter(([k])=>!(look==="kit"&&k==="flat")).map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k||(look==="kit"&&uiStyle==="flat"&&k==="soft")}">${l}</button>`).join("")}</div>
-     <div class="lbl">${$t("Rutornas kant")}</div><div class="chips wrapchips">${[["",$t("Streck överst")],["none",$t("Ingen kant")],["side",$t("Kant till vänster")],["head",$t("Streck under rubriken")]].map(([k,l])=>`<button class="chip" data-edge-pick="${k||"std"}" aria-pressed="${edge===k}">${l}</button>`).join("")}</div>
+     <div class="lbl">${$t("Rutornas kant")}</div><div class="chips wrapchips">${[["none",$t("Ingen kant")],["",$t("Streck överst")],["side",$t("Kant till vänster")],["head",$t("Streck under rubriken")]].map(([k,l])=>`<button class="chip" data-edge-pick="${k||"std"}" aria-pressed="${edge===k}">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Textstorlek")}</div><div class="chips wrapchips">${FSIZES.map(([k,l],i)=>`<button class="chip" data-fs-pick="${k}" aria-pressed="${fsize===k}" style="font-size:${[14,16,18][i]}px">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Logga|bild")}</div><div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
@@ -6733,7 +6733,7 @@ function openSettings(){setOpen=true;setTimeout(fillPushBox,0);const ov=document
   document.body.insertAdjacentHTML("beforeend",settingsHtml());}
 function closeSettings(){setOpen=false;document.getElementById("setOv")?.remove();}
 document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-edge-pick],[data-look-pick],[data-looktheme-pick],[data-acc-pick]");if(!b)return;
-  if(b.dataset.edgePick){edge=b.dataset.edgePick==="std"?"":b.dataset.edgePick;if(edge)store.set("fk-edge",edge);else store.del("fk-edge");applyTheme();if(setOpen)openSettings();return;}
+  if(b.dataset.edgePick){edge=b.dataset.edgePick==="std"?"":b.dataset.edgePick;if(edge==="none")store.del("fk-edge");else store.set("fk-edge",edge||"std");applyTheme();if(setOpen)openSettings();return;}
   if(b.dataset.fsPick){fsize=b.dataset.fsPick;store.set("fk-fs",fsize);applyTheme();if(setOpen)openSettings();return;}
   if(b.id==="themeBtn"){openSettings();return;}
   if(b.id==="setClose"||(b.id==="setOv"&&e.target===b)){closeSettings();return;}
