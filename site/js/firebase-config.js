@@ -18,7 +18,7 @@ export default {
 
   // Påminnelser i telefonen (webbpush). Klistra in den publika nyckeln från Firebase-konsolen:
   // Projektinställningar → Cloud Messaging → Web Push certificates → Key pair. Tomt = påminnelserna döljs.
-  vapidKey: "",
+  vapidKey: "BEVy6PmUEjcS44fJRlyKy-t2t-9VwPhVY1gnag9c5vlMVkr9zOsP7dnE8hKgOQA4WnvFmoe_w-c4_UJxQeaxi0E",
 
   // Valfritt: adress till en egen AI-funktion. Tomt = AI-funktionerna döljs.
   aiEndpoint: ""
