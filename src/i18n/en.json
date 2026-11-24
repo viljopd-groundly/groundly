@@ -2973,5 +2973,10 @@
  "Nästa: {0} {1} mot {2}": "Next: {0} {1} vs {2}",
  "Ingen match inlagd just nu": "No match scheduled right now",
  "Testa ny design": "Try new design",
- "Ny startsida, lugnare matchrader och ny meny": "New home page, calmer match rows and new menu"
+ "Ny startsida, lugnare matchrader och ny meny": "New home page, calmer match rows and new menu",
+ "Rutornas kant": "Card edge",
+ "Streck överst": "Line on top",
+ "Ingen kant": "No edge",
+ "Kant till vänster": "Edge on the left",
+ "Streck under rubriken": "Line under the heading"
 }

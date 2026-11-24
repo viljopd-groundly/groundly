@@ -2884,5 +2884,10 @@
  "Nästa: {0} {1} mot {2}": "Volgende: {0} {1} tegen {2}",
  "Ingen match inlagd just nu": "Nu geen wedstrijd gepland",
  "Testa ny design": "Nieuw ontwerp proberen",
- "Ny startsida, lugnare matchrader och ny meny": "Nieuwe startpagina, rustigere wedstrijdrijen en nieuw menu"
+ "Ny startsida, lugnare matchrader och ny meny": "Nieuwe startpagina, rustigere wedstrijdrijen en nieuw menu",
+ "Rutornas kant": "Rand van kaarten",
+ "Streck överst": "Lijn bovenaan",
+ "Ingen kant": "Geen rand",
+ "Kant till vänster": "Rand links",
+ "Streck under rubriken": "Lijn onder de kop"
 }

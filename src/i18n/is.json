@@ -2884,5 +2884,10 @@
  "Nästa: {0} {1} mot {2}": "Næst: {0} {1} gegn {2}",
  "Ingen match inlagd just nu": "Enginn leikur skráður núna",
  "Testa ny design": "Prófa nýja hönnun",
- "Ny startsida, lugnare matchrader och ny meny": "Ný forsíða, rólegri leikjaraðir og nýr valmynd"
+ "Ny startsida, lugnare matchrader och ny meny": "Ný forsíða, rólegri leikjaraðir og nýr valmynd",
+ "Rutornas kant": "Brún á reitum",
+ "Streck överst": "Lína efst",
+ "Ingen kant": "Engin brún",
+ "Kant till vänster": "Brún til vinstri",
+ "Streck under rubriken": "Lína undir fyrirsögn"
 }

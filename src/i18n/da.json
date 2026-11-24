@@ -2885,5 +2885,10 @@
  "Nästa: {0} {1} mot {2}": "Næste: {0} {1} mod {2}",
  "Ingen match inlagd just nu": "Ingen kamp lagt ind lige nu",
  "Testa ny design": "Prøv nyt design",
- "Ny startsida, lugnare matchrader och ny meny": "Ny forside, roligere kamprækker og ny menu"
+ "Ny startsida, lugnare matchrader och ny meny": "Ny forside, roligere kamprækker og ny menu",
+ "Rutornas kant": "Kant på kort",
+ "Streck överst": "Streg øverst",
+ "Ingen kant": "Ingen kant",
+ "Kant till vänster": "Kant til venstre",
+ "Streck under rubriken": "Streg under overskriften"
 }

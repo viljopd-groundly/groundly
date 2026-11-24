@@ -2885,5 +2885,10 @@
  "Nästa: {0} {1} mot {2}": "Nächstes: {0} {1} gegen {2}",
  "Ingen match inlagd just nu": "Gerade kein Spiel eingetragen",
  "Testa ny design": "Neues Design testen",
- "Ny startsida, lugnare matchrader och ny meny": "Neue Startseite, ruhigere Spielzeilen und neues Menü"
+ "Ny startsida, lugnare matchrader och ny meny": "Neue Startseite, ruhigere Spielzeilen und neues Menü",
+ "Rutornas kant": "Kartenrand",
+ "Streck överst": "Linie oben",
+ "Ingen kant": "Kein Rand",
+ "Kant till vänster": "Rand links",
+ "Streck under rubriken": "Linie unter der Überschrift"
 }

@@ -2884,5 +2884,10 @@
  "Nästa: {0} {1} mot {2}": "Próximo: {0} {1} contra {2}",
  "Ingen match inlagd just nu": "Nenhum jogo marcado agora",
  "Testa ny design": "Experimentar novo design",
- "Ny startsida, lugnare matchrader och ny meny": "Nova página inicial, linhas de jogos mais limpas e novo menu"
+ "Ny startsida, lugnare matchrader och ny meny": "Nova página inicial, linhas de jogos mais limpas e novo menu",
+ "Rutornas kant": "Borda dos cartões",
+ "Streck överst": "Linha em cima",
+ "Ingen kant": "Sem borda",
+ "Kant till vänster": "Borda à esquerda",
+ "Streck under rubriken": "Linha sob o título"
 }

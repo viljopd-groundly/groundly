@@ -2884,5 +2884,10 @@
  "Nästa: {0} {1} mot {2}": "Seuraava: {0} {1} vs {2}",
  "Ingen match inlagd just nu": "Ei otteluita juuri nyt",
  "Testa ny design": "Kokeile uutta ulkoasua",
- "Ny startsida, lugnare matchrader och ny meny": "Uusi etusivu, rauhallisemmat ottelurivit ja uusi valikko"
+ "Ny startsida, lugnare matchrader och ny meny": "Uusi etusivu, rauhallisemmat ottelurivit ja uusi valikko",
+ "Rutornas kant": "Korttien reuna",
+ "Streck överst": "Viiva ylhäällä",
+ "Ingen kant": "Ei reunaa",
+ "Kant till vänster": "Reuna vasemmalla",
+ "Streck under rubriken": "Viiva otsikon alla"
 }

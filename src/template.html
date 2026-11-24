@@ -1132,6 +1132,12 @@ html:root[data-look="ticket"] body::before{content:"";position:fixed;inset:0;z-i
 .wkdots{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}.wkdots i.on{background:var(--accent);width:18px;border-radius:4px}
 /* Tips för helgen ligger överst och ska synas mest: mörkare överkant */
 .tip.wkbox{border-top:2px solid var(--accent)!important}
+/* Inställningar → Utseende → Rutornas kant (data-edge). Standard = streck i överkant. */
+:root[data-edge] .tip.wkbox,:root[data-edge] .tip.nexttrip,:root[data-edge] #homeBody>.tip.nexttrip,:root[data-edge] #homeBody>.hmas>div>.tip.nexttrip{border-top:1px solid var(--line)!important}
+:root[data-edge] .tip:not(.hero):not(.onboard)::before,:root[data-edge] .tip:not(.hero):not(.onboard):before,:root[data-edge] .card:before,:root[data-edge] .rep:before,:root[data-edge] .combo:before,:root[data-edge] .match:before{display:none!important}
+:root[data-edge="none"] .tip:not(.hero):not(.onboard),:root[data-edge="none"] .card{box-shadow:0 1px 2px rgba(10,20,40,.06),0 6px 18px rgba(10,20,40,.06)}
+:root[data-edge="side"] .tip:not(.hero):not(.onboard),:root[data-edge="side"] .card,:root[data-edge="side"] .match{border-left:4px solid var(--accent)!important}
+:root[data-edge="head"] .tip:not(.hero):not(.onboard)>.sechead:first-child{position:relative;padding-bottom:11px}:root[data-edge="head"] .tip:not(.hero):not(.onboard)>.sechead:first-child:after{content:"";position:absolute;left:0;bottom:0;width:34px;height:3px;border-radius:2px;background:var(--accent)}
 .wkcard .teams.big{flex-direction:column;align-items:flex-start;gap:4px;font-size:calc(18px*var(--fs))}.wkcard .teams.big .vs{display:none}
 .wkcard .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .wkview{display:flex;gap:14px;margin-top:8px}.wkview .link{color:var(--muted)}.wkview .link.on{color:var(--fg);font-weight:700;text-decoration:none}
@@ -6635,14 +6641,14 @@ const LOOKS=[["std",$t("Groundly")],["ticket",$t("Biljetten")],["kit",$t("Kväll
 // textfärg i alla utseenden; tidigare val (röd, blå, vit, lila) faller tillbaka på standard
 const ACCS=[["std",$t("Standard"),""],["gold",$t("Gul"),"#F2C14E"],["green",$t("Grön"),"#2E9A57"],["orange",$t("Orange"),"#F07F2A"],["white",$t("Vit"),"#FFFFFF"]];let acc="green";try{let t=store.get("fk-acc");if(ACCS.some(x=>x[0]===t))acc=t;}catch(e){}
 const LOOK_THEMES=THEMES;let lookTheme="dark";try{const t=store.get("fk-looktheme");if(LOOK_THEMES.some(x=>x[0]===t))lookTheme=t;}catch(e){}
-const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
+const FSIZES=[["m",$t("Normal")],["l",$t("Större")],["xl",$t("Störst")]];let edge=store.get("fk-edge")||"";let fsize="m";try{const t=store.get("fk-fs");if(FSIZES.some(x=>x[0]===t))fsize=t;}catch(e){}
 let uiStyle="frame";try{const t=store.get("fk-style");if(STYLES.some(x=>x[0]===t))uiStyle=t;}catch(e){}
 // Halvmörkt (dusk) är borttaget; den som hade valt det får Mörkt
 // Halvmörkt och Dämpat blir Mörkt, Varmt blir Ljust
 let theme="auto";try{let t=store.get("fk-theme");if(t==="dusk"||t==="dim")t="dark";if(t==="warm")t="light";if(THEMES.some(x=>x[0]===t))theme=t;}catch(e){}
 const effTheme=()=>theme==="auto"?(sysDark()?"dark":"light"):theme;
 const effLookTheme=()=>DARKLOOK[look]?(lookTheme==="dark"?"dark":"light"):lookTheme==="auto"?(sysDark()?"dark":"light"):lookTheme;
-function applyTheme(){const r=document.documentElement;requestAnimationFrame(()=>{if(typeof fitTagline==="function")fitTagline();});if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
+function applyTheme(){const r=document.documentElement;if(edge)r.setAttribute("data-edge",edge);else r.removeAttribute("data-edge");requestAnimationFrame(()=>{if(typeof fitTagline==="function")fitTagline();});if(fsize==="m")r.removeAttribute("data-fs");else r.setAttribute("data-fs",fsize);
   if(acc!=="std")r.setAttribute("data-acc",acc);else r.removeAttribute("data-acc");
   if(look==="modern"){r.removeAttribute("data-look");r.setAttribute("data-theme",effLookTheme());}else if(look!=="std"){r.setAttribute("data-look",look);r.setAttribute("data-theme",effLookTheme());}else{r.removeAttribute("data-look");if(theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",theme);}
   // fokuslägets karusellförslag: mörk variant använder appens mörka tema
@@ -6703,6 +6709,7 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
 `}
      <div class="lbl">${$t("Textfärg")}</div><div class="chips wrapchips">${ACCS.map(([k,l,c])=>`<button class="chip" data-acc-pick="${k}" aria-pressed="${acc===k}">${c?`<span class="accdot" style="background:${c}"></span>`:""}${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Stil")}</div><div class="chips wrapchips">${STYLES.filter(([k])=>!(look==="kit"&&k==="flat")).map(([k,l])=>`<button class="chip" data-style-pick="${k}" aria-pressed="${uiStyle===k||(look==="kit"&&uiStyle==="flat"&&k==="soft")}">${l}</button>`).join("")}</div>
+     <div class="lbl">${$t("Rutornas kant")}</div><div class="chips wrapchips">${[["",$t("Streck överst")],["none",$t("Ingen kant")],["side",$t("Kant till vänster")],["head",$t("Streck under rubriken")]].map(([k,l])=>`<button class="chip" data-edge-pick="${k||"std"}" aria-pressed="${edge===k}">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Textstorlek")}</div><div class="chips wrapchips">${FSIZES.map(([k,l],i)=>`<button class="chip" data-fs-pick="${k}" aria-pressed="${fsize===k}" style="font-size:${[14,16,18][i]}px">${l}</button>`).join("")}</div>
      <div class="lbl">${$t("Logga|bild")}</div><div class="logogrid">${BRAND_LOGOS.map(([k,l])=>`<button class="logopick" data-logo-pick="${k}" aria-pressed="${logoPick===k}" title="${esc(l)}"><img src="logos/${k}.png" alt="" width="64" height="64" loading="lazy"><span>${esc(l)}</span></button>`).join("")}</div>
      <p class="hint">${$t("Loggan syns uppe till vänster och på fliken i webbläsaren. Ikonen på hemskärmen bestäms när appen läggs till och ändras inte.")}</p>`)}
@@ -6725,7 +6732,8 @@ function openSettings(){setOpen=true;setTimeout(fillPushBox,0);const ov=document
   if(ov){const box=ov.querySelector(".setbox");const y=box.scrollTop;const t=document.createElement("div");t.innerHTML=settingsHtml();const nb=t.querySelector(".setbox");box.innerHTML=nb.innerHTML;box.scrollTop=y;requestAnimationFrame(()=>{if(Math.abs(box.scrollTop-y)>1)box.scrollTop=y;});return;}
   document.body.insertAdjacentHTML("beforeend",settingsHtml());}
 function closeSettings(){setOpen=false;document.getElementById("setOv")?.remove();}
-document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-look-pick],[data-looktheme-pick],[data-acc-pick]");if(!b)return;
+document.addEventListener("click",e=>{const b=e.target.closest("#themeBtn,#setClose,#setOv,[data-theme-pick],[data-style-pick],[data-logo-pick],[data-fs-pick],[data-edge-pick],[data-look-pick],[data-looktheme-pick],[data-acc-pick]");if(!b)return;
+  if(b.dataset.edgePick){edge=b.dataset.edgePick==="std"?"":b.dataset.edgePick;if(edge)store.set("fk-edge",edge);else store.del("fk-edge");applyTheme();if(setOpen)openSettings();return;}
   if(b.dataset.fsPick){fsize=b.dataset.fsPick;store.set("fk-fs",fsize);applyTheme();if(setOpen)openSettings();return;}
   if(b.id==="themeBtn"){openSettings();return;}
   if(b.id==="setClose"||(b.id==="setOv"&&e.target===b)){closeSettings();return;}
