@@ -37,7 +37,7 @@ async function boot() {
     if (CONFIG.storageBucket && CONFIG.photos !== false) { try { S = await import(`${FB}/firebase-storage.js`); } catch (e) { S = null; } }
   } catch (e) { console.warn("[groundly] kunde inte ladda Firebase", e); done(NONE); return; }
 
-  const fbApp = app.initializeApp(CONFIG);
+  const fbApp = app.initializeApp(CONFIG); window.__groundlyApp = fbApp; // behövs av påminnelserna längre ner (annat kodblock)
   const auth = A.getAuth(fbApp);
   try { auth.languageCode = LANGC; } catch (e) {}
   // lokal cache i webbläsaren: sparad data visas direkt vid återbesök, ändringar hämtas sedan
@@ -442,7 +442,7 @@ function installAccountUi({ A, F, fs, auth, getUser, ensureProfile, profileName,
   const canPush = !!(CONFIG.vapidKey && "serviceWorker" in navigator && "PushManager" in window && "Notification" in window);
   const pushRef = () => F.doc(fs, "users", getUser().uid, "data", "push");
   let M = null;
-  const msg = async () => { if (!M) { const m = await import(`${FB}/firebase-messaging.js`); M = { m, inst: m.getMessaging(fbApp) }; } return M; };
+  const msg = async () => { if (!M) { const m = await import(`${FB}/firebase-messaging.js`); M = { m, inst: m.getMessaging(window.__groundlyApp) }; } return M; };
   window.groundlyPush = {
     // "on" = påslaget här, "off", "ios-home" = iPhone utan hemskärmsapp, "blocked" = nekat i webbläsaren, "none" = stöds inte
     state: async () => {

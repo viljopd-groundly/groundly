@@ -5176,7 +5176,7 @@ function nextTripHtml(){const td=today();const loading=myState==="loading"||(myS
   if(loading){try{const c=JSON.parse(localStorage.getItem("gl-nexttrip")||"null");if(c&&c.d===td&&c.l===LANG&&c.h)return c.h;}catch(e){}if(myState!=="ready")return"";}
   const h=nextTripHtml0();if(!loading){try{localStorage.setItem("gl-nexttrip",JSON.stringify({d:td,l:LANG,h:myState==="ready"?h:""}));}catch(e){}}return h;}
 function nextTripHtml0(){const td=today();if(myState!=="ready")return noTripHtml(null);const cand=myTrips().filter(t=>t.to>=td).map(t=>{const L=tripML(t,true);return{t,L,pkA:L?tripPicked(t,L):[]};}).filter(x=>x.pkA.length&&!tripDone(x.t,x.pkA)).sort((a,b)=>tripSpan(a.t,a.pkA).from.localeCompare(tripSpan(b.t,b.pkA).from));if(!cand.length)return noTripHtml(myTrips().filter(t=>t.from>=td&&!tripPicked(t,tripML(t,true)||[]).length).sort((a,b)=>a.from.localeCompare(b.from))[0]||null);
-  const{t,L,pkA}=cand[0];const pk=pkA.filter(x=>!mPast(x.m));const sp=tripSpan(t,pkA);const days=Math.round((new Date(sp.from+"T12:00:00")-new Date(td+"T12:00:00"))/864e5);
+  const{t,L,pkA}=cand[0];const pk=pkA.filter(x=>!mPast(x.m)||(x.m.live&&!x.m.live.done));const sp=tripSpan(t,pkA);const days=Math.round((new Date(sp.from+"T12:00:00")-new Date(td+"T12:00:00"))/864e5);
   const when=days<=0?$t("Pågår nu"):days===1?$t("I morgon"):$t("Om {0} dagar",[days]);
   const I=pk.length?tripItems(t,pk):null;const nx=pk[0]&&pk[0].m;
   const bits=[esc(resaRange(sp.from,sp.to))];if(L&&!pk.length)bits.push($t("Inga matcher valda än"));if(I)bits.push($t("Att boka: {0} av {1} klart",[I.done,I.total]));
