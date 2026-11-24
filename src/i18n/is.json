@@ -2873,5 +2873,14 @@
  "1 resa": "1 ferð",
  "{n} resor": "{n} ferðir",
  "Påminnelserna fungerar": "Áminningarnar virka",
- "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "Þetta er prufutilkynning frá Groundly. Þú færð áminningar um leikina í Vil fara."
+ "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "Þetta er prufutilkynning frá Groundly. Þú færð áminningar um leikina í Vil fara.",
+ "Resor": "Ferðir",
+ "Meny": "Valmynd",
+ "Logga en match eller skriv en matchberättelse": "Skráðu leik eða skrifaðu leiksögu",
+ "Sparad i Vill gå": "Vistað í Vil fara",
+ "Hej {0}": "Hæ {0}",
+ "Testversion – tillbaka till nuvarande": "Prufuútgáfa – aftur í núverandi",
+ "Dina lag": "Liðin þín",
+ "Nästa: {0} {1} mot {2}": "Næst: {0} {1} gegn {2}",
+ "Ingen match inlagd just nu": "Enginn leikur skráður núna"
 }

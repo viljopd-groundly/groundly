@@ -2873,5 +2873,14 @@
  "1 resa": "1 podróż",
  "{n} resor": "{n} podróży",
  "Påminnelserna fungerar": "Przypomnienia działają",
- "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "To jest powiadomienie testowe z Groundly. Dostaniesz przypomnienia o meczach z listy Chcę iść."
+ "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "To jest powiadomienie testowe z Groundly. Dostaniesz przypomnienia o meczach z listy Chcę iść.",
+ "Resor": "Podróże",
+ "Meny": "Menu",
+ "Logga en match eller skriv en matchberättelse": "Zapisz mecz lub napisz relację",
+ "Sparad i Vill gå": "Zapisano w Chcę iść",
+ "Hej {0}": "Cześć {0}",
+ "Testversion – tillbaka till nuvarande": "Wersja testowa – wróć do obecnej",
+ "Dina lag": "Twoje drużyny",
+ "Nästa: {0} {1} mot {2}": "Następny: {0} {1} z {2}",
+ "Ingen match inlagd just nu": "Brak zaplanowanego meczu"
 }

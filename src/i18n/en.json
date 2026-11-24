@@ -2962,5 +2962,14 @@
  "1 resa": "1 trip",
  "{n} resor": "{n} trips",
  "Påminnelserna fungerar": "Reminders are working",
- "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "This is a test notification from Groundly. You'll get reminders about the matches in Want to go."
+ "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "This is a test notification from Groundly. You'll get reminders about the matches in Want to go.",
+ "Resor": "Trips",
+ "Meny": "Menu",
+ "Logga en match eller skriv en matchberättelse": "Log a match or write a match story",
+ "Sparad i Vill gå": "Saved in Want to go",
+ "Hej {0}": "Hi {0}",
+ "Testversion – tillbaka till nuvarande": "Test version – back to current",
+ "Dina lag": "Your teams",
+ "Nästa: {0} {1} mot {2}": "Next: {0} {1} vs {2}",
+ "Ingen match inlagd just nu": "No match scheduled right now"
 }

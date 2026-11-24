@@ -2873,5 +2873,14 @@
  "1 resa": "1 reis",
  "{n} resor": "{n} reizen",
  "Påminnelserna fungerar": "Herinneringen werken",
- "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "Dit is een testmelding van Groundly. Je krijgt herinneringen voor de wedstrijden in Wil heen."
+ "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "Dit is een testmelding van Groundly. Je krijgt herinneringen voor de wedstrijden in Wil heen.",
+ "Resor": "Reizen",
+ "Meny": "Menu",
+ "Logga en match eller skriv en matchberättelse": "Log een wedstrijd of schrijf een wedstrijdverhaal",
+ "Sparad i Vill gå": "Bewaard in Wil heen",
+ "Hej {0}": "Hoi {0}",
+ "Testversion – tillbaka till nuvarande": "Testversie – terug naar huidige",
+ "Dina lag": "Jouw teams",
+ "Nästa: {0} {1} mot {2}": "Volgende: {0} {1} tegen {2}",
+ "Ingen match inlagd just nu": "Nu geen wedstrijd gepland"
 }

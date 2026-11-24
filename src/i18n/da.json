@@ -2874,5 +2874,14 @@
  "1 resa": "1 rejse",
  "{n} resor": "{n} rejser",
  "Påminnelserna fungerar": "Påmindelserne virker",
- "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "Dette er en testnotifikation fra Groundly. Du får påmindelser om kampene i Vil gerne."
+ "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "Dette er en testnotifikation fra Groundly. Du får påmindelser om kampene i Vil gerne.",
+ "Resor": "Rejser",
+ "Meny": "Menu",
+ "Logga en match eller skriv en matchberättelse": "Log en kamp eller skriv en kampberetning",
+ "Sparad i Vill gå": "Gemt i Vil gerne",
+ "Hej {0}": "Hej {0}",
+ "Testversion – tillbaka till nuvarande": "Testversion – tilbage til den nuværende",
+ "Dina lag": "Dine hold",
+ "Nästa: {0} {1} mot {2}": "Næste: {0} {1} mod {2}",
+ "Ingen match inlagd just nu": "Ingen kamp lagt ind lige nu"
 }

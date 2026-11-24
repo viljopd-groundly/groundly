@@ -564,7 +564,16 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .ko.live{font-family:var(--f-body)!important;font-weight:700;background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1.5px solid #c0262d!important;box-shadow:none!important}
 .ko.live small{display:flex;align-items:center;justify-content:center;gap:4px;color:var(--live-fg)!important;opacity:1;letter-spacing:.06em}
 .ko.live small:before{content:"";width:6px;height:6px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}
-.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.mlearly .btn .ic.down{transform:rotate(90deg)}.pill.livepill{background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1px solid #c0262d}.tbllive{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:calc(13px*var(--fs));font-weight:600;color:var(--live-fg)}.tbllive:before,.tlive{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}.tlive{margin-left:6px;width:7px;height:7px}.ntlive{margin-top:10px;border-top:1px solid var(--line)}.ntlive .lvrow:first-child{border-top:0}.pastlink{margin:8px 2px 14px}#pastTrips{margin-top:18px}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:var(--live-fg);background:rgba(192,38,45,.14);font-weight:700}
+.mlearly{margin:4px 0 10px}.mlearly .btn .ic{transform:rotate(-90deg)}.mlearly .btn .ic.down{transform:rotate(90deg)}.pill.livepill{background:rgba(192,38,45,.14)!important;color:var(--live-fg)!important;border:1px solid #c0262d}.tbllive{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:calc(13px*var(--fs));font-weight:600;color:var(--live-fg)}.tbllive:before,.tlive{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#e5484d;flex-shrink:0;animation:livep 1.4s ease-in-out infinite}.tlive{margin-left:6px;width:7px;height:7px}.ntlive{margin-top:10px;border-top:1px solid var(--line)}.ntlive .lvrow:first-child{border-top:0}.ny .nyhide{display:none!important}.ny #moreSheet .msi[data-bn="resa"]{display:none!important}
+.nymenu{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;flex:none;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;margin-right:8px}
+@media (min-width:761px){.nymenu{display:none}}
+.ny.nyin #intro{display:none!important}
+.nyhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:2px 2px 10px;font-size:calc(14px*var(--fs));color:var(--muted)}.nyhead b{color:var(--fg)}.nyhead a{color:var(--muted);font-size:12px}
+.nyteams .nyt{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;background:none;border:0;border-top:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer}.nyteams .nyt:first-of-type{border-top:0}.nyteams .nyt div{min-width:0}.nyteams .nyt b{display:block}.nyteams .nyt small{color:var(--muted);font-size:calc(13px*var(--fs))}
+.ny .mrow{position:relative}.ny .mrow .teams{padding-right:50px}
+.nyheart{position:absolute;right:12px;top:12px;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.nyheart[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 15%,transparent)}.nyheart svg{width:20px;height:20px}
+.pastlink{margin:8px 2px 14px}#pastTrips{margin-top:18px}.liverow{margin:2px 0 10px}.mseg[hidden],.mcal[hidden],.liverow[hidden]{display:none!important}.chip.livechip{display:inline-flex;align-items:center;gap:7px;border-color:#c0262d;color:var(--live-fg);background:rgba(192,38,45,.14);font-weight:700}
 .chip.livechip:before{content:"";width:8px;height:8px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}
 .chip.livechip[aria-pressed="true"]{background:#c0262d!important;color:#fff!important;border-color:#c0262d!important}.chip.livechip[aria-pressed="true"]:before{background:#fff}.chip.livechip b{background:#c0262d;color:#fff;border-radius:99px;padding:0 7px;font-size:12px}.chip.livechip[aria-pressed="true"] b{background:rgba(255,255,255,.25)}
 .livecard .ntic.livic{background:rgba(192,38,45,.18)!important;border:1.5px solid #c0262d}.livic i{width:10px;height:10px;border-radius:50%;background:#e5484d;animation:livep 1.4s ease-in-out infinite}.livecard .sechead{margin-bottom:2px}.livecard .lchead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}.livecard .lchead h3{margin:0;display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#e5484d}
@@ -1871,6 +1880,14 @@ try{localStorage.removeItem("fk-fokus");localStorage.removeItem("fk-fkstyle");}c
   // ordning i Mer: det unika och det dagliga först, sedan uppslag, sist det lättsamma
   {const g=document.querySelector("#moreSheet .msgrid");if(g)["resa","community","arenor","tabell","klubbar","landslag","tips","quiz"].forEach(k=>{const e=g.querySelector(`[data-bn="${k}"]`);if(e)g.appendChild(e);});}
 }
+// ---------- testversion: ny startsida, lugnare matchrader och ny meny. ?ny=1 slår på, ?ny=0 stänger av ----------
+let NY=false;try{const q=new URLSearchParams(location.search).get("ny");if(q==="1")store.set("fk-ny","1");if(q==="0")store.del("fk-ny");NY=store.get("fk-ny")==="1";}catch(e){}
+if(NY){document.documentElement.classList.add("ny");
+  const mine=document.querySelector('.bnav [data-bn="mine"]');if(mine)mine.insertAdjacentHTML("beforebegin",`<button class="bn" data-bn="resa" aria-current="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>${$t("Resor")}</span></button>`);
+  document.getElementById("bnMore")?.classList.add("nyhide");
+  const lg=document.getElementById("bnLog");if(lg){const sp=lg.querySelector("span");if(sp)sp.textContent=$t("Logga");lg.setAttribute("aria-label",$t("Logga en match eller skriv en matchberättelse"));}
+  document.querySelectorAll('#plusSheet [data-plus="trip"],#plusSheet [data-plus="ask"]').forEach(x=>x.remove());
+  const br=document.querySelector(".topbar .brand");if(br)br.insertAdjacentHTML("beforebegin",`<button class="nymenu" id="nyMenu" aria-label="${$t("Meny")}" aria-controls="moreSheet" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>`);}
 // Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
 const isComm=m=>m==="flode"||m==="forum"||m==="reportage";
 const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"flode";}catch(e){return"flode";}};
@@ -1887,9 +1904,9 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-plus],#plu
 function ddPos(sh,btn){const r=btn.getBoundingClientRect();const w=Math.min(440,innerWidth-32);const x=btn.id==="dPlus"?r.right-w:r.left;sh.style.setProperty("--ddx",Math.max(16,Math.min(x,innerWidth-w-16))+"px");sh.style.setProperty("--ddy",(r.bottom+8)+"px");}
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-dd]");if(!b)return;e.stopPropagation();const plus=b.dataset.dd==="plus";const sh=document.getElementById(plus?"plusSheet":"moreSheet");const open=sh.hidden;closeMore();if(open){ddPos(sh,b);sh.hidden=false;b.setAttribute("aria-expanded","true");}},true);
 function closeMore(){closePlus();document.getElementById("dMore")?.setAttribute("aria-expanded","false");document.getElementById("dPlus")?.setAttribute("aria-expanded","false");const sh=document.getElementById("moreSheet");if(sh)sh.hidden=true;document.getElementById("bnMore")?.setAttribute("aria-expanded","false");}
-document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMore,#bnLog,#moreBack");if(!b)return;
+document.addEventListener("click",e=>{const b=e.target.closest("[data-bn],#bnMore,#nyMenu,#bnLog,#moreBack");if(!b)return;
   if(b.id==="moreBack"){closeMore();return;}
-  if(b.id==="bnMore"){const sh=document.getElementById("moreSheet");const open=sh.hidden;sh.hidden=!open;b.setAttribute("aria-expanded",String(open));return;}
+  if(b.id==="bnMore"||b.id==="nyMenu"){const sh=document.getElementById("moreSheet");const open=sh.hidden;sh.hidden=!open;b.setAttribute("aria-expanded",String(open));return;}
   if(b.id==="bnLog"){const sh=document.getElementById("plusSheet");const open=sh.hidden;closeMore();if(open){sh.hidden=false;b.setAttribute("aria-expanded","true");}return;}
   const to=b.dataset.bn==="community"?(isComm(mode)?mode:commLast()):b.dataset.bn;
   closeMore();if(to!==mode||to==="mine")goTop(to);window.scrollTo({top:0});},true);
@@ -2365,7 +2382,7 @@ function matchRow(m,now,km){const past=m.kickoff&&Date.parse(m.kickoff)<now-2*36
    ${m.live&&!m.live.done?liveKo(m.live):m.kickoff?`<div class="ko${past?" past":""}">${timeOf(m.kickoff)}<small>${past?"spelad":noLive(m)?$t("ingen live"):"avspark"}</small></div>`:`<div class="ko tbd">${esc(rangeTxt(m))}<small>${m.dateFrom&&m.dateFrom===m.dateTo?"tid ej klar":"dag ej klar"}</small></div>`}
    ${scoredTeams(m)||`<div class="teams"><button data-open="${esc(m.home)}">${crest(m.home,m.homeName,24)}${esc(tnm(m,"home"))}${favStar(m.home)}</button><span class="vs">${m.score?`<b class="num">${esc(String(m.score).slice(0,9))}</b>`:"–"}</span><button data-open="${esc(m.away)}">${crest(m.away,m.awayName,24)}${esc(tnm(m,"away"))}${favStar(m.away)}</button></div>`}
    <div class="venue">${esc(m.venue||$t("Arena ej angiven"))} · ${esc($t(m.city))}, ${esc($t(m.country))}${localTimeTxt(m)?` · <b>${localTimeTxt(m)}</b>`:""}</div>${commLine(m)}
-   <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?$t("I orten"):$t("{0} bort",[milTxt(km)])}</span>`:""}${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past||m.live||(m.kickoff&&Date.parse(m.kickoff)<Date.now())?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}</div>
+   <div class="mp">${isW(C[m.home])?`<span class="pill dam">${$t("Dam")}</span>`:""}${tierOf(m)==="CUP"?`<span class="pill ec">${esc(m.comp||$t("Cup"))}</span>`:tierPill(m.tier,m.comp)}${km>=0?`<span class="pill km">${km<5?$t("I orten"):$t("{0} bort",[milTxt(km)])}</span>`:""}${NY&&MYBTN_CTX!=="resa"?nyRowBtn(m):`${m._id?`<button class="mini mopen" data-mopen="${esc(m._id)}">${past||m.live||(m.kickoff&&Date.parse(m.kickoff)<Date.now())?$t("Matchinfo"):$t("{0} Biljetter och info",[ic("ticket")])}</button>`:""}${myBtns(m)}${hotelLink(m)}${tripLink(m)}${calLink(m)}`}</div>
   </div>`;}
 // ---------- serietabeller ----------
 let tblLeague=null,tblHL=null,tblHLJump=false,tblSeason="",TBLIDX=null;
@@ -2919,6 +2936,9 @@ const slim=m=>({id:m._id,home:m.home||null,away:m.away||null,homeName:m.homeName
 function attendFromMatch(m){return{id:newId(),mid:m._id,home:m.home||null,away:m.away||null,homeName:m.homeName,awayName:m.awayName,date:m.kickoff?dayKey(new Date(m.kickoff)):(m.dateFrom||today()),score:m.score?String(m.score).slice(0,12):null,note:"",venue:m.venue||null,city:m.city||null,country:m.country||null,comp:m.comp||null};}
 // i reseplaneraren heter Vill gå-knappen "Lägg till i resan" (matchen sparas ändå som Vill gå)
 let MYBTN_CTX="";
+// testversionen: matchraden har bara en knapp (hjärtat = Vill gå; efter avspark Jag var där). Allt annat finns i matchinfo när man trycker på raden.
+function nyRowBtn(m){if(!m._id||myState!=="ready")return"";if(m.kickoff&&Date.parse(m.kickoff)<Date.now())return myBtns(m);const on=isWishM(m._id);
+  return`<button class="nyheart" data-wishm="${esc(m._id)}" aria-pressed="${on}" aria-label="${on?$t("Sparad i Vill gå"):$t("Vill gå")}"><svg viewBox="0 0 24 24" fill="${on?"currentColor":"none"}" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg></button>`;}
 function myBtns(m){if(!m._id||myState!=="ready")return"";const past=m.kickoff&&Date.parse(m.kickoff)<Date.now();
   // under matchen (ca 2 timmar från avspark) heter knappen "Jag är där", efteråt "Jag var där"
   const live=past&&Date.now()-Date.parse(m.kickoff)<2*36e5;
@@ -4967,6 +4987,13 @@ function heroHtml(){const list=hypeCandidates();if(!list.length)return dbState==
   requestAnimationFrame(()=>{const r=document.querySelector(".heroswipe .wkrow");if(r&&heroIdx)r.scrollLeft=heroIdx*(r.clientWidth+12);});
   return`<article class="tip hero heroswipe"><div class="lbl">${$t("Veckans match")}</div>
     <div class="wkrow">${show.map(heroSlide).join("")}</div>${show.length>1?`<div class="wkdots" aria-hidden="true">${show.map((_,i)=>`<i${i===heroIdx?' class="on"':""}></i>`).join("")}</div>`:""}</article>`;}
+function nyHeadHtml(){let mn="";try{if(MYNAME===null&&!nyHeadHtml.p&&myId){nyHeadHtml.p=1;loadMyName().then(()=>{if(MYNAME)renderHome();});}mn=MYNAME||"";}catch(e){}const nm=String(mn||NAMES[myId]||"").split(" ")[0];const d=new Date().toLocaleDateString(LANG,{weekday:"long",day:"numeric",month:"long"});
+  return`<div class="nyhead"><span>${nm?`<b>${esc($t("Hej {0}",[nm]))}</b> · `:""}${esc(d)}</span><a href="?ny=0">${$t("Testversion – tillbaka till nuvarande")}</a></div>`;}
+// testversionen: dina lag med nästa match
+function myTeamsHtml(){if(myState!=="ready")return"";const fl=favList();if(!fl.length)return"";const now=Date.now();
+  const rows=fl.slice(0,4).map(id=>{const nx=dbState==="ready"?MATCHES.filter(m=>(m.home===id||m.away===id)&&m.kickoff&&Date.parse(m.kickoff)>now-2*36e5).sort(sortM)[0]:null;const opp=nx?(nx.home===id?tnm(nx,"away"):tnm(nx,"home")):"";
+    return`<button class="nyt" ${nx&&nx._id?`data-mopen="${esc(nx._id)}"`:`data-open="${esc(id)}"`}>${crest(id,C[id].n,36)}<div><b>${esc(C[id].n)}</b><small>${nx?esc($t("Nästa: {0} {1} mot {2}",[dayLabel(dayKey(new Date(nx.kickoff))),timeOf(nx.kickoff),opp])):esc($t("Ingen match inlagd just nu"))}</small></div></button>`;}).join("");
+  return`<article class="tip nyteams"><div class="sechead"><h2 class="name">${$t("Dina lag")}</h2><button class="link strong" data-gomine="1">${$t("Min fotboll")}</button></div>${rows}</article>`;}
 function mineSnap(){if(myState!=="ready")return"";const s=myYearStats();const fl=favList();
   const nx=dbState==="ready"&&fl.length?MATCHES.filter(m=>(fl.includes(m.home)||fl.includes(m.away))&&m.kickoff&&Date.parse(m.kickoff)>Date.now()).sort(sortM)[0]:null;
   return`<article class="tip season"><div class="sechead"><h2 class="name">${$t("Din säsong {0}",[YEAR])}</h2><button class="link strong" data-gomine="1">${$t("Min fotboll")}</button></div>
@@ -5146,7 +5173,10 @@ function renderHome0(){const el=document.getElementById("homeBody");if(!el)retur
   const fresh=isNewbie();
   if(look==="modern"){const it=document.getElementById("intro");if(it)it.style.display="none";el.innerHTML=carouselHome(ob);return;}
   {const it=document.getElementById("intro");if(it)it.style.display="";}
-  const html=(fresh?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+homeOrder().filter(k=>!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();
+  const nyIn=NY&&myState==="ready";document.documentElement.classList.toggle("nyin",nyIn);
+  // testversionen: inloggade får ingen välkomsttext; överst nästa resa, dina lag och helgens tips
+  const ord=nyIn?["nexttrip","myteams","weekend",...homeOrder().filter(k=>!["nexttrip","weekend","intro"].includes(k))]:homeOrder();
+  const html=(nyIn?nyHeadHtml():"")+(fresh&&!nyIn?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+ord.filter(k=>k==="myteams"||!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();
   // ritas bara om när innehållet faktiskt ändrats (under laddningen anropas detta många gånger med samma innehåll; varje omritning fick sidan att hacka)
   const wide=innerWidth>=1024;if(el._html===html&&el._wide===wide&&el.childElementCount)return;el._html=html;el._wide=wide;
   const sx=[...el.querySelectorAll(".wkrow,.hscroll")].map(r=>r.scrollLeft);
@@ -5231,7 +5261,7 @@ const HOME_BLOCKS=[["nexttrip","Din nästa resa",true],["weekend","Tips för hel
 function isNewbie(){let r;if(myState==="loading"){try{const v=localStorage.getItem("gl-newbie");return v===null?false:v==="1";}catch(e){return false;}}
   if(myState!=="ready")r=true;else if((MY.attended||[]).length>=3)r=false;else{const s=MY.since||today();r=(Date.parse(today())-Date.parse(s))/864e5<14;}
   try{localStorage.setItem("gl-newbie",r?"1":"0");}catch(e){}return r;}
-const HOME_FN={nexttrip:()=>nextTripHtml(),intro:()=>isNewbie()?introHtml():"",hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),writers:()=>writersHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
+const HOME_FN={myteams:()=>NY?myTeamsHtml():"",nexttrip:()=>nextTripHtml(),intro:()=>isNewbie()?introHtml():"",hero:()=>heroHtml(),mine:()=>mineSnap(),weekend:()=>weekendHtml(),latest:()=>latestHtml(),news:()=>newsHtml(),friends:()=>friendsHtml(),derby:()=>derbyHtml(),poll:()=>pollHtml(),board:()=>boardHtml(),hopper:()=>hopperHtml(),writers:()=>writersHtml(),toparena:()=>topArenaHtml(),quiz:()=>quizLeadHtml(),invite:()=>inviteHomeHtml()};
 function normHomeCfg(c){const keys=HOME_BLOCKS.map(x=>x[0]);if(!c||typeof c!=="object")return null;const order=Array.isArray(c.order)?c.order.filter((k,i,a)=>keys.includes(k)&&a.indexOf(k)===i):[];
   const on={};if(c.on&&typeof c.on==="object")keys.forEach(k=>{if(typeof c.on[k]==="boolean")on[k]=c.on[k];});
   // Nytt i appen flyttades sist (nov 2026): äldre sparade ordningar släpper den så att den hamnar längst ner

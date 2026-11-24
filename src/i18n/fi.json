@@ -2873,5 +2873,14 @@
  "1 resa": "1 matka",
  "{n} resor": "{n} matkaa",
  "Påminnelserna fungerar": "Muistutukset toimivat",
- "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "Tämä on Groundlyn testi-ilmoitus. Saat muistutuksia Haluan mennä -otteluista."
+ "Det här är en provnotis från Groundly. Du får påminnelser om matcherna i Vill gå.": "Tämä on Groundlyn testi-ilmoitus. Saat muistutuksia Haluan mennä -otteluista.",
+ "Resor": "Matkat",
+ "Meny": "Valikko",
+ "Logga en match eller skriv en matchberättelse": "Kirjaa ottelu tai kirjoita otteluraportti",
+ "Sparad i Vill gå": "Tallennettu: Haluan mennä",
+ "Hej {0}": "Hei {0}",
+ "Testversion – tillbaka till nuvarande": "Testiversio – takaisin nykyiseen",
+ "Dina lag": "Joukkueesi",
+ "Nästa: {0} {1} mot {2}": "Seuraava: {0} {1} vs {2}",
+ "Ingen match inlagd just nu": "Ei otteluita juuri nyt"
 }
