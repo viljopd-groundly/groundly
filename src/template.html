@@ -6710,9 +6710,11 @@ function settingsHtml(){const sec=(t,b)=>`<section class="setsec"><h3>${t}</h3>$
    ${grp("notif",`${ic("calendar")} ${$t("Påminnelser och notiser")}`,"",remindSecHtml()+`<div class="lbl" style="margin-top:12px">${$t("I appen")}</div>`+NOTIF.map(([k,l,d])=>`<label class="setsw"><input type="checkbox" data-notif="${k}"${notifOn(k)?" checked":""}><span><b>${l}</b><small>${d}</small></span></label>`).join(""))}
    ${grp("inv",`${ic("share")} ${$t("Tipsa en kompis")}`,"",inviteBody())}
    ${nb?grp("blk",`${ic("shield")} ${$t("Blockerade användare")}`,String(nb),blockedHtml()):""}
+   <label class="setsw"><input type="checkbox" data-nytoggle="1"${NY?" checked":""}><span><b>${$t("Testa ny design")}</b><small>${$t("Ny startsida, lugnare matchrader och ny meny")}</small></span></label>
    <div class="actions setlinks"><button class="btn small" data-homecust="1">${ic("pencil")} ${$t("Anpassa startsidan")}</button><button class="btn small" data-privacy="1">${ic("shield")} ${$t("Integritet och villkor")}</button><button class="btn small" data-feedback="1">${ic("chat")} ${$t("Tyck till")}</button></div>
    <p class="hint">${$t("Konto, inloggning och Radera mitt konto finns under knappen med din bokstav uppe till höger.")}</p>
   </div></div>`;}
+document.addEventListener("change",e=>{const t=e.target;if(!t.matches||!t.matches("[data-nytoggle]"))return;if(t.checked)store.set("fk-ny","1");else store.del("fk-ny");location.replace(location.pathname);});
 // fäll ut/ihop själva (i stället för webbläsarens standard) och håll rubriken på exakt samma plats i rutan
 document.addEventListener("click",e=>{const sm=e.target.closest&&e.target.closest(".setgrp>summary");if(!sm)return;e.preventDefault();const d=sm.parentElement;const box=d.closest(".setbox");
   const y0=sm.getBoundingClientRect().top;d.open=!d.open;if(d.open)SET_X.add(d.dataset.sk);else SET_X.delete(d.dataset.sk);
