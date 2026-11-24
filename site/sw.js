@@ -25,6 +25,8 @@ self.addEventListener("fetch", e => {
     e.respondWith(fromCache("index.html").then(hit => hit || fetch(req, { cache: "no-cache" }).then(r => put(new Request("index.html"), r))).catch(() => fetch(req)));
     return;
   }
+  // inställningsfilen (nycklar för påminnelser, inloggning m.m.): alltid färsk från nätet, sparad kopia bara utan täckning
+  if (same && rest === "js/firebase-config.js") { e.respondWith(fetch(req, { cache: "no-cache" }).then(r => put(req, r)).catch(() => fromCache(req))); return; }
   // finns det en ny version av sidan? hämta, jämför med den sparade och spara den nya
   if (same && url.searchParams.has("__check")) {
     e.respondWith((async () => {
