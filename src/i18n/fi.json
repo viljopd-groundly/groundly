@@ -2918,5 +2918,15 @@
  "Dela kartan som bild": "Jaa kartta kuvana",
  "Samma karta som ovan – välj Sverige, Europa eller Världen ovanför kartan.": "Sama kartta kuin yllä – valitse Ruotsi, Eurooppa tai Maailma kartan yläpuolelta.",
  "Fyrkantig (för flöden)": "Neliö (syötteisiin)",
- "Hög (för stories)": "Korkea (tarinoihin)"
+ "Hög (för stories)": "Korkea (tarinoihin)",
+ " och {0} i Vill gå": " ja {0} toivelistalla",
+ "Anteckningar, sällskap, bilder, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Muistiinpanot, seura, kuvat, toivelista, seuraamasi ja asetukset tallennetaan Groundly-tilillesi. Muut käyttäjät eivät näe niitä.",
+ "Anteckningar, sällskap, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Muistiinpanot, seura, toivelista, seuraamasi ja asetukset tallennetaan Groundly-tilillesi. Muut käyttäjät eivät näe niitä.",
+ "Borttaget från Vill gå": "Poistettu toivelistalta",
+ "Lägg till i Vill gå": "Lisää toivelistalle",
+ "I Vill gå {0}": "Toivelistalla {0}",
+ "Spara alla i Vill gå": "Tallenna kaikki toivelistalle",
+ "Spara planens matcher i Vill gå": "Tallenna suunnitelman ottelut toivelistalle",
+ "Sparade i Vill gå {0}": "Tallennettu toivelistalle {0}",
+ "i Vill gå": "toivelistalla"
 }

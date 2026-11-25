@@ -2918,5 +2918,15 @@
  "Dela kartan som bild": "Condividi la mappa come immagine",
  "Samma karta som ovan – välj Sverige, Europa eller Världen ovanför kartan.": "La stessa mappa di sopra: scegli Svezia, Europa o Mondo sopra la mappa.",
  "Fyrkantig (för flöden)": "Quadrata (per i feed)",
- "Hög (för stories)": "Verticale (per le storie)"
+ "Hög (för stories)": "Verticale (per le storie)",
+ " och {0} i Vill gå": " e {0} nella lista dei desideri",
+ "Anteckningar, sällskap, bilder, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Note, compagnia, foto, lista dei desideri, chi segui e impostazioni sono salvati nel tuo account Groundly. Gli altri utenti non possono vederli.",
+ "Anteckningar, sällskap, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Note, compagnia, lista dei desideri, chi segui e impostazioni sono salvati nel tuo account Groundly. Gli altri utenti non possono vederli.",
+ "Borttaget från Vill gå": "Rimosso dalla lista dei desideri",
+ "Lägg till i Vill gå": "Aggiungi alla lista dei desideri",
+ "I Vill gå {0}": "Nella lista dei desideri {0}",
+ "Spara alla i Vill gå": "Salva tutte nella lista dei desideri",
+ "Spara planens matcher i Vill gå": "Salva le partite del piano nella lista dei desideri",
+ "Sparade i Vill gå {0}": "Salvate nella lista dei desideri {0}",
+ "i Vill gå": "nella lista dei desideri"
 }

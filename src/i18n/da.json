@@ -2919,5 +2919,15 @@
  "Dela kartan som bild": "Del kortet som billede",
  "Samma karta som ovan – välj Sverige, Europa eller Världen ovanför kartan.": "Samme kort som ovenfor – vælg Sverige, Europa eller Verden over kortet.",
  "Fyrkantig (för flöden)": "Kvadratisk (til feeds)",
- "Hög (för stories)": "Høj (til stories)"
+ "Hög (för stories)": "Høj (til stories)",
+ " och {0} i Vill gå": " og {0} på ønskelisten",
+ "Anteckningar, sällskap, bilder, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Noter, selskab, billeder, ønskeliste, hvem du følger og indstillinger gemmes på din Groundly-konto. Andre brugere kan ikke se dem.",
+ "Anteckningar, sällskap, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Noter, selskab, ønskeliste, hvem du følger og indstillinger gemmes på din Groundly-konto. Andre brugere kan ikke se dem.",
+ "Borttaget från Vill gå": "Fjernet fra ønskelisten",
+ "Lägg till i Vill gå": "Føj til ønskelisten",
+ "I Vill gå {0}": "På ønskelisten {0}",
+ "Spara alla i Vill gå": "Gem alle på ønskelisten",
+ "Spara planens matcher i Vill gå": "Gem planens kampe på ønskelisten",
+ "Sparade i Vill gå {0}": "Gemt på ønskelisten {0}",
+ "i Vill gå": "på ønskelisten"
 }

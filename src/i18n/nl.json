@@ -2918,5 +2918,15 @@
  "Dela kartan som bild": "Deel de kaart als afbeelding",
  "Samma karta som ovan – välj Sverige, Europa eller Världen ovanför kartan.": "Dezelfde kaart als hierboven – kies Zweden, Europa of Wereld boven de kaart.",
  "Fyrkantig (för flöden)": "Vierkant (voor feeds)",
- "Hög (för stories)": "Hoog (voor stories)"
+ "Hög (för stories)": "Hoog (voor stories)",
+ " och {0} i Vill gå": " en {0} op de verlanglijst",
+ "Anteckningar, sällskap, bilder, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Notities, gezelschap, foto's, verlanglijst, wie je volgt en instellingen worden in je Groundly-account opgeslagen. Andere gebruikers kunnen ze niet zien.",
+ "Anteckningar, sällskap, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Notities, gezelschap, verlanglijst, wie je volgt en instellingen worden in je Groundly-account opgeslagen. Andere gebruikers kunnen ze niet zien.",
+ "Borttaget från Vill gå": "Verwijderd van de verlanglijst",
+ "Lägg till i Vill gå": "Toevoegen aan verlanglijst",
+ "I Vill gå {0}": "Op de verlanglijst {0}",
+ "Spara alla i Vill gå": "Alles op de verlanglijst zetten",
+ "Spara planens matcher i Vill gå": "Wedstrijden van het plan op de verlanglijst zetten",
+ "Sparade i Vill gå {0}": "Op de verlanglijst gezet {0}",
+ "i Vill gå": "op de verlanglijst"
 }

@@ -2918,5 +2918,15 @@
  "Dela kartan som bild": "Deila kortinu sem mynd",
  "Samma karta som ovan – välj Sverige, Europa eller Världen ovanför kartan.": "Sama kort og að ofan – veldu Svíþjóð, Evrópu eða Heiminn fyrir ofan kortið.",
  "Fyrkantig (för flöden)": "Ferköntuð (fyrir strauma)",
- "Hög (för stories)": "Há (fyrir sögur)"
+ "Hög (för stories)": "Há (fyrir sögur)",
+ " och {0} i Vill gå": " og {0} á óskalistanum",
+ "Anteckningar, sällskap, bilder, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Athugasemdir, félagsskapur, myndir, óskalisti, hverjum þú fylgir og stillingar eru vistaðar á Groundly-reikningnum þínum. Aðrir notendur sjá þær ekki.",
+ "Anteckningar, sällskap, Vill gå, vilka du följer och inställningar sparas på ditt Groundly-konto. Andra användare kan inte se dem.": "Athugasemdir, félagsskapur, óskalisti, hverjum þú fylgir og stillingar eru vistaðar á Groundly-reikningnum þínum. Aðrir notendur sjá þær ekki.",
+ "Borttaget från Vill gå": "Fjarlægt af óskalistanum",
+ "Lägg till i Vill gå": "Bæta á óskalistann",
+ "I Vill gå {0}": "Á óskalistanum {0}",
+ "Spara alla i Vill gå": "Vista alla á óskalistann",
+ "Spara planens matcher i Vill gå": "Vista leiki áætlunarinnar á óskalistann",
+ "Sparade i Vill gå {0}": "Vistað á óskalistann {0}",
+ "i Vill gå": "á óskalistanum"
 }
