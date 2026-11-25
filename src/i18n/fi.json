@@ -2928,5 +2928,7 @@
  "Spara alla i Vill gå": "Tallenna kaikki Haluan mennä -listalle",
  "Spara planens matcher i Vill gå": "Tallenna suunnitelman ottelut Haluan mennä -listalle",
  "Sparade i Vill gå {0}": "Tallennettu Haluan mennä -listalle {0}",
- "i Vill gå": "Haluan mennä -listalla"
+ "i Vill gå": "Haluan mennä -listalla",
+ "Typsnitt för loggan": "Logon fontti",
+ "Nuvarande": "Nykyinen"
 }
