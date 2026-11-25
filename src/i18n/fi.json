@@ -2906,5 +2906,11 @@
  "{n} trådar": "{n} keskustelua",
  "Inget nytt från dem du följer": "Ei uutta seuraamiltasi",
  "Du följer ingen än": "Et seuraa vielä ketään",
- "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Napauta nimeä foorumilla tai otteluraporteissa ja valitse Seuraa."
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Napauta nimeä foorumilla tai otteluraporteissa ja valitse Seuraa.",
+ "Du fick {0} av 5 på dagens quiz.": "Sait {0}/5 päivän visassa.",
+ "Veckans ledare: {0} med {1}/10": "Viikon kärjessä: {0}, {1}/10",
+ "Ingen har spelat den här veckan än – bli först!": "Kukaan ei ole pelannut tällä viikolla – ole ensimmäinen!",
+ "Dagens quiz med fem flaggor – samma för alla. Eller tio frågor om flaggor, VM och EM. Tävla mot andra i topplistan.": "Päivän visa viidellä lipulla – sama kaikille. Tai kymmenen kysymystä lipuista, MM- ja EM-kisoista. Kilpaile muita vastaan tulostaululla.",
+ "Till quizet": "Visaan",
+ "Spela nu": "Pelaa nyt"
 }

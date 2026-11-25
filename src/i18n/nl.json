@@ -2906,5 +2906,11 @@
  "{n} trådar": "{n} topics",
  "Inget nytt från dem du följer": "Niets nieuws van wie je volgt",
  "Du följer ingen än": "Je volgt nog niemand",
- "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Tik op een naam in het forum of bij de wedstrijdverhalen en kies Volgen."
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Tik op een naam in het forum of bij de wedstrijdverhalen en kies Volgen.",
+ "Du fick {0} av 5 på dagens quiz.": "Je had {0} van 5 in de quiz van vandaag.",
+ "Veckans ledare: {0} med {1}/10": "Leider van de week: {0} met {1}/10",
+ "Ingen har spelat den här veckan än – bli först!": "Nog niemand heeft deze week gespeeld – wees de eerste!",
+ "Dagens quiz med fem flaggor – samma för alla. Eller tio frågor om flaggor, VM och EM. Tävla mot andra i topplistan.": "De quiz van de dag met vijf vlaggen – voor iedereen hetzelfde. Of tien vragen over vlaggen, WK en EK. Strijd tegen anderen op de ranglijst.",
+ "Till quizet": "Naar de quiz",
+ "Spela nu": "Nu spelen"
 }

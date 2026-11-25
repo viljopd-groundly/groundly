@@ -2906,5 +2906,11 @@
  "{n} trådar": "{n} þræðir",
  "Inget nytt från dem du följer": "Ekkert nýtt frá þeim sem þú fylgir",
  "Du följer ingen än": "Þú fylgir engum enn",
- "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Ýttu á nafn á spjallinu eða í leikjasögunum og veldu Fylgja."
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Ýttu á nafn á spjallinu eða í leikjasögunum og veldu Fylgja.",
+ "Du fick {0} av 5 på dagens quiz.": "Þú fékkst {0} af 5 í dagsins spurningum.",
+ "Veckans ledare: {0} med {1}/10": "Efst í vikunni: {0} með {1}/10",
+ "Ingen har spelat den här veckan än – bli först!": "Enginn hefur spilað í vikunni – vertu fyrst/ur!",
+ "Dagens quiz med fem flaggor – samma för alla. Eller tio frågor om flaggor, VM och EM. Tävla mot andra i topplistan.": "Dagsins spurningar með fimm fánum – eins fyrir alla. Eða tíu spurningar um fána, HM og EM. Kepptu við aðra á stigatöflunni.",
+ "Till quizet": "Í spurningakeppnina",
+ "Spela nu": "Spila núna"
 }

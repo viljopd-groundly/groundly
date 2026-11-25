@@ -2995,5 +2995,11 @@
  "{n} trådar": "{n} threads",
  "Inget nytt från dem du följer": "Nothing new from people you follow",
  "Du följer ingen än": "You don't follow anyone yet",
- "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Tap a name in the forum or among the match stories and choose Follow."
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Tap a name in the forum or among the match stories and choose Follow.",
+ "Du fick {0} av 5 på dagens quiz.": "You got {0} of 5 in today's quiz.",
+ "Veckans ledare: {0} med {1}/10": "This week's leader: {0} with {1}/10",
+ "Ingen har spelat den här veckan än – bli först!": "No one has played this week – be the first!",
+ "Dagens quiz med fem flaggor – samma för alla. Eller tio frågor om flaggor, VM och EM. Tävla mot andra i topplistan.": "Today's quiz with five flags – the same for everyone. Or ten questions about flags, World Cups and Euros. Compete with others on the leaderboard.",
+ "Till quizet": "Go to the quiz",
+ "Spela nu": "Play now"
 }

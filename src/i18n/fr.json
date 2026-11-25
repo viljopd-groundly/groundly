@@ -2906,5 +2906,11 @@
  "{n} trådar": "{n} sujets",
  "Inget nytt från dem du följer": "Rien de neuf de ceux que tu suis",
  "Du följer ingen än": "Tu ne suis personne pour l'instant",
- "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Touche un nom dans le forum ou les récits de match et choisis Suivre."
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Touche un nom dans le forum ou les récits de match et choisis Suivre.",
+ "Du fick {0} av 5 på dagens quiz.": "Tu as eu {0} sur 5 au quiz du jour.",
+ "Veckans ledare: {0} med {1}/10": "En tête cette semaine : {0} avec {1}/10",
+ "Ingen har spelat den här veckan än – bli först!": "Personne n'a joué cette semaine – sois le premier !",
+ "Dagens quiz med fem flaggor – samma för alla. Eller tio frågor om flaggor, VM och EM. Tävla mot andra i topplistan.": "Le quiz du jour avec cinq drapeaux, le même pour tous. Ou dix questions sur les drapeaux, la Coupe du monde et l'Euro. Affronte les autres au classement.",
+ "Till quizet": "Aller au quiz",
+ "Spela nu": "Jouer maintenant"
 }
