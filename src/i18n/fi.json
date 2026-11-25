@@ -2899,5 +2899,9 @@
  "Testa dig i quizet": "Testaa tietosi visassa",
  "Hur mycket kan du om fotboll?": "Kuinka paljon tiedät jalkapallosta?",
  "Spela": "Pelaa",
- "Röd siffra på menyn uppe till vänster och en ruta på Hem när någon svarar i dina forumtrådar eller kommenterar och gillar dina matchberättelser": "Punainen numero valikossa vasemmalla ylhäällä ja ruutu etusivulla, kun joku vastaa keskusteluihisi tai kommentoi ja tykkää otteluraporteistasi"
+ "Röd siffra på menyn uppe till vänster och en ruta på Hem när någon svarar i dina forumtrådar eller kommenterar och gillar dina matchberättelser": "Punainen numero valikossa vasemmalla ylhäällä ja ruutu etusivulla, kun joku vastaa keskusteluihisi tai kommentoi ja tykkää otteluraporteistasi",
+ "Du i communityn": "Sinä yhteisössä",
+ "Följer {0} · {1} följer dig": "Seuraat {0} · {1} seuraa sinua",
+ "{n} tråd": "{n} keskustelu",
+ "{n} trådar": "{n} keskustelua"
 }
