@@ -2930,5 +2930,11 @@
  "Sparade i Vill gå {0}": "Salvate in Voglio andare {0}",
  "i Vill gå": "in Voglio andare",
  "Typsnitt för loggan": "Carattere del logo",
- "Nuvarande": "Attuale"
+ "Nuvarande": "Attuale",
+ "Dina serier": "I tuoi campionati",
+ "Ditt lags serie – syns alltid bland dina serier": "Il campionato della tua squadra: sempre tra i tuoi campionati",
+ "Ta bort från dina serier": "Rimuovi dai tuoi campionati",
+ "Lägg till i dina serier": "Aggiungi ai tuoi campionati",
+ "{0} borttagen från dina serier": "{0} rimosso dai tuoi campionati",
+ "{0} tillagd i dina serier": "{0} aggiunto ai tuoi campionati"
 }

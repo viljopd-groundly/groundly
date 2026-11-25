@@ -2930,5 +2930,11 @@
  "Sparade i Vill gå {0}": "Opgeslagen in Wil ik heen {0}",
  "i Vill gå": "in Wil ik heen",
  "Typsnitt för loggan": "Lettertype van het logo",
- "Nuvarande": "Huidig"
+ "Nuvarande": "Huidig",
+ "Dina serier": "Jouw competities",
+ "Ditt lags serie – syns alltid bland dina serier": "Competitie van je team – staat altijd bij jouw competities",
+ "Ta bort från dina serier": "Verwijderen uit jouw competities",
+ "Lägg till i dina serier": "Toevoegen aan jouw competities",
+ "{0} borttagen från dina serier": "{0} verwijderd uit jouw competities",
+ "{0} tillagd i dina serier": "{0} toegevoegd aan jouw competities"
 }

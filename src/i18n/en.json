@@ -3019,5 +3019,11 @@
  "Sparade i Vill gå {0}": "Saved to Want to go {0}",
  "i Vill gå": "in Want to go",
  "Typsnitt för loggan": "Logo font",
- "Nuvarande": "Current"
+ "Nuvarande": "Current",
+ "Dina serier": "Your leagues",
+ "Ditt lags serie – syns alltid bland dina serier": "Your team's league – always shown in your leagues",
+ "Ta bort från dina serier": "Remove from your leagues",
+ "Lägg till i dina serier": "Add to your leagues",
+ "{0} borttagen från dina serier": "{0} removed from your leagues",
+ "{0} tillagd i dina serier": "{0} added to your leagues"
 }

@@ -2930,5 +2930,11 @@
  "Sparade i Vill gå {0}": "Vistað í Langar að fara {0}",
  "i Vill gå": "í Langar að fara",
  "Typsnitt för loggan": "Letur á merkinu",
- "Nuvarande": "Núverandi"
+ "Nuvarande": "Núverandi",
+ "Dina serier": "Deildirnar þínar",
+ "Ditt lags serie – syns alltid bland dina serier": "Deild liðsins þíns – birtist alltaf í deildunum þínum",
+ "Ta bort från dina serier": "Fjarlægja úr deildunum þínum",
+ "Lägg till i dina serier": "Bæta við deildirnar þínar",
+ "{0} borttagen från dina serier": "{0} fjarlægð úr deildunum þínum",
+ "{0} tillagd i dina serier": "{0} bætt við deildirnar þínar"
 }

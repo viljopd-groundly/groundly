@@ -2930,5 +2930,11 @@
  "Sparade i Vill gå {0}": "Ajoutés à « J'ai envie d'y aller » {0}",
  "i Vill gå": "dans « J'ai envie d'y aller »",
  "Typsnitt för loggan": "Police du logo",
- "Nuvarande": "Actuelle"
+ "Nuvarande": "Actuelle",
+ "Dina serier": "Tes championnats",
+ "Ditt lags serie – syns alltid bland dina serier": "Le championnat de ton équipe – toujours dans tes championnats",
+ "Ta bort från dina serier": "Retirer de tes championnats",
+ "Lägg till i dina serier": "Ajouter à tes championnats",
+ "{0} borttagen från dina serier": "{0} retiré de tes championnats",
+ "{0} tillagd i dina serier": "{0} ajouté à tes championnats"
 }

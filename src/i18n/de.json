@@ -2931,5 +2931,11 @@
  "Sparade i Vill gå {0}": "In „Will hin“ gespeichert {0}",
  "i Vill gå": "in „Will hin“",
  "Typsnitt för loggan": "Schrift für das Logo",
- "Nuvarande": "Aktuell"
+ "Nuvarande": "Aktuell",
+ "Dina serier": "Deine Ligen",
+ "Ditt lags serie – syns alltid bland dina serier": "Liga deines Teams – erscheint immer bei deinen Ligen",
+ "Ta bort från dina serier": "Aus deinen Ligen entfernen",
+ "Lägg till i dina serier": "Zu deinen Ligen hinzufügen",
+ "{0} borttagen från dina serier": "{0} aus deinen Ligen entfernt",
+ "{0} tillagd i dina serier": "{0} zu deinen Ligen hinzugefügt"
 }

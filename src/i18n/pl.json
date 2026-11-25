@@ -2930,5 +2930,11 @@
  "Sparade i Vill gå {0}": "Zapisano w „Chcę iść” {0}",
  "i Vill gå": "w „Chcę iść”",
  "Typsnitt för loggan": "Krój pisma logo",
- "Nuvarande": "Obecny"
+ "Nuvarande": "Obecny",
+ "Dina serier": "Twoje ligi",
+ "Ditt lags serie – syns alltid bland dina serier": "Liga twojej drużyny – zawsze w twoich ligach",
+ "Ta bort från dina serier": "Usuń z twoich lig",
+ "Lägg till i dina serier": "Dodaj do twoich lig",
+ "{0} borttagen från dina serier": "{0} usunięta z twoich lig",
+ "{0} tillagd i dina serier": "{0} dodana do twoich lig"
 }

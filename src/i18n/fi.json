@@ -2930,5 +2930,11 @@
  "Sparade i Vill gå {0}": "Tallennettu Haluan mennä -listalle {0}",
  "i Vill gå": "Haluan mennä -listalla",
  "Typsnitt för loggan": "Logon fontti",
- "Nuvarande": "Nykyinen"
+ "Nuvarande": "Nykyinen",
+ "Dina serier": "Sinun sarjasi",
+ "Ditt lags serie – syns alltid bland dina serier": "Joukkueesi sarja – näkyy aina sarjoissasi",
+ "Ta bort från dina serier": "Poista sarjoistasi",
+ "Lägg till i dina serier": "Lisää sarjoihisi",
+ "{0} borttagen från dina serier": "{0} poistettu sarjoistasi",
+ "{0} tillagd i dina serier": "{0} lisätty sarjoihisi"
 }
