@@ -1908,7 +1908,7 @@ if(NY){document.documentElement.classList.add("ny");
   const KL=[["klubbar",$t("Klubbar")],["landslag",$t("Landslag")]],MT=[["matcher",$t("Matcher")],["tabell",$t("Tabeller")]];
   for(const[v,p,on]of[["v-klubbar",KL,"klubbar"],["v-landslag",KL,"landslag"],["v-matcher",MT,"matcher"],["v-tabell",MT,"tabell"]])document.getElementById(v)?.insertAdjacentHTML("afterbegin",seg(p[0],p[1],on));}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-nyseg]");if(t)goTop(t.dataset.nyseg);});
-document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-nyprof]");if(!t)return;if(!myId){window.groundlyLogin?.("in");return;}goTop("profil");window.scrollTo({top:0});});
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-nyprof]");if(!t)return;if(!myId){window.groundlyLogin?.("in");return;}setMode("profil");window.scrollTo({top:0});});
 // Community i menyraden = forum och reportage; knappen öppnar den av dem man senast var i
 const isComm=m=>m==="flode"||m==="forum"||m==="reportage";
 const commLast=()=>{try{const v=store.get("fk-comm");return isComm(v)?v:"flode";}catch(e){return"flode";}};
