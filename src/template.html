@@ -6304,7 +6304,7 @@ function pubRows(uid){const d=PUBLIC[uid];return d&&Array.isArray(d.recent)?d.re
 // testversionen: profilen överst i Min fotboll (namn och lag), vänner och profilsidan en rad under
 function nyProfHtml(){let nm="";try{nm=MYNAME||"";}catch(e){}const fav=favList()[0]&&C[favList()[0]];const n=follows().length;const weak=weakName(nm);
   return`<article class="tip nyprof">${avatar(myId,48)}<div style="min-width:0"><h2 class="name">${esc(weak?$t("Inget namn valt"):nm)}</h2>${fav?`<div class="meta">${crest(fav.id,fav.n,16)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}
-    <div class="nypl">${weak?`<button class="link strong" data-myname="1">${$t("Välj namn")}</button>`:""}<button class="link" data-nyprof="1">${$t("Vänner ({0})",[n])}</button><button class="link" data-user="${esc(myId)}">${$t("Visa som andra ser den")}</button>${isMod?`<button class="link" data-gomod="1">${$t("Moderering")}</button>`:""}</div></div></article>`;}
+    <div class="nypl">${weak?`<button class="link strong" data-myname="1">${$t("Välj namn")}</button>`:""}<button class="link" data-nyprof="1">${$t("Vänner ({0})",[n])}</button>${isMod?`<button class="link" data-gomod="1">${$t("Moderering")}</button>`:""}</div></div></article>`;}
 function friendsHtml(){if(myState!=="ready"||!dbNs||!myId)return"";
   const fl=follows().filter(u=>PUBLIC[u]);const feed=fl.flatMap(u=>pubRows(u).map(r=>({...r,uid:u}))).sort((a,b)=>b.d.localeCompare(a.d)).slice(0,8);
   const others=Object.entries(PUBLIC).filter(([u,d])=>u!==myId&&d&&+d.n>0).sort((a,b)=>(+b[1].n)-(+a[1].n));
@@ -6610,7 +6610,7 @@ function renderProfil(){const el=document.getElementById("profilBody");if(!el)re
 // community- och kontoinställningar (i testversionen under kugghjulet)
 function profSetHtml(){if(!dbNs||!myId||myState!=="ready")return"";return`<article class="tip"><div class="lbl">${$t("Inställningar för communityn")}</div>
       <label class="fld" for="ccSel">${$t("Land (flagga vid ditt namn)")}<select id="ccSel"><option value="none"${MY.cc==="none"?" selected":""}>${$t("Visa ingen flagga")}</option>${Object.values(C).filter(c=>c.l==="Landslag").map(c=>[c.id,$t(c.n)]).sort((a,b)=>a[1].localeCompare(b[1],LANG)).map(([id,n])=>`<option value="${id}"${myCc()===id?" selected":""}>${esc(n)}</option>`).join("")}</select></label>
-      <p class="hint">${$t("Din profilbild är märket för ditt första favoritlag. Byt favoritlag under Min fotboll.")}</p>
+      <p class="hint">${$t("Din profilbild är märket för ditt första favoritlag. Byt favoritlag under Min fotboll.")}</p>${NY?`<button class="btn small" data-user="${esc(myId)}">${$t("Visa som andra ser den")}</button>`:""}
       ${profSw(`data-profset="pub"`,!!MY.pub,$t("Synas i topplistorna"),$t("Bara antal i år: matcher, arenor, länder, landskamper och matcher med ditt favoritlag. Aldrig vilka matcher. Gäller topplistorna på Hem och Groundhoppers i Aktivitet."))}
       ${profSw(`data-profset="share"`,!!MY.share,$t("Visa mina senaste matcher för andra"),(PH()?$t("Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar och bilder delas aldrig.",[PUB_N]):$t("Dina {0} senaste matcher (lag, resultat, arena och datum). Anteckningar delas aldrig.",[PUB_N])))}
       ${profSw(`data-profset="showFo"`,!!MY.showFo,$t("Visa vilka jag följer"),$t("Då syns du som följare hos dem du följer, och du ser vilka som följer dig."))}
