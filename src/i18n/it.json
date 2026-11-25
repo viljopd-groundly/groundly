@@ -2912,5 +2912,11 @@
  "Ingen har spelat den här veckan än – bli först!": "Nessuno ha giocato questa settimana: sii il primo!",
  "Dagens quiz med fem flaggor – samma för alla. Eller tio frågor om flaggor, VM och EM. Tävla mot andra i topplistan.": "Il quiz del giorno con cinque bandiere, uguale per tutti. Oppure dieci domande su bandiere, Mondiali ed Europei. Sfida gli altri in classifica.",
  "Till quizet": "Vai al quiz",
- "Spela nu": "Gioca ora"
+ "Spela nu": "Gioca ora",
+ "av {0} svenska arenor": "su {0} stadi svedesi",
+ "{n} utomlands": "{n} all'estero",
+ "Dela kartan som bild": "Condividi la mappa come immagine",
+ "Samma karta som ovan – välj Sverige, Europa eller Världen ovanför kartan.": "La stessa mappa di sopra: scegli Svezia, Europa o Mondo sopra la mappa.",
+ "Fyrkantig (för flöden)": "Quadrata (per i feed)",
+ "Hög (för stories)": "Verticale (per le storie)"
 }

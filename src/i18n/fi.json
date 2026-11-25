@@ -2912,5 +2912,11 @@
  "Ingen har spelat den här veckan än – bli först!": "Kukaan ei ole pelannut tällä viikolla – ole ensimmäinen!",
  "Dagens quiz med fem flaggor – samma för alla. Eller tio frågor om flaggor, VM och EM. Tävla mot andra i topplistan.": "Päivän visa viidellä lipulla – sama kaikille. Tai kymmenen kysymystä lipuista, MM- ja EM-kisoista. Kilpaile muita vastaan tulostaululla.",
  "Till quizet": "Visaan",
- "Spela nu": "Pelaa nyt"
+ "Spela nu": "Pelaa nyt",
+ "av {0} svenska arenor": "/ {0} ruotsalaista stadionia",
+ "{n} utomlands": "{n} ulkomailla",
+ "Dela kartan som bild": "Jaa kartta kuvana",
+ "Samma karta som ovan – välj Sverige, Europa eller Världen ovanför kartan.": "Sama kartta kuin yllä – valitse Ruotsi, Eurooppa tai Maailma kartan yläpuolelta.",
+ "Fyrkantig (för flöden)": "Neliö (syötteisiin)",
+ "Hög (för stories)": "Korkea (tarinoihin)"
 }

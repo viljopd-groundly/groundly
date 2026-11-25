@@ -2912,5 +2912,11 @@
  "Ingen har spelat den här veckan än – bli först!": "Enginn hefur spilað í vikunni – vertu fyrst/ur!",
  "Dagens quiz med fem flaggor – samma för alla. Eller tio frågor om flaggor, VM och EM. Tävla mot andra i topplistan.": "Dagsins spurningar með fimm fánum – eins fyrir alla. Eða tíu spurningar um fána, HM og EM. Kepptu við aðra á stigatöflunni.",
  "Till quizet": "Í spurningakeppnina",
- "Spela nu": "Spila núna"
+ "Spela nu": "Spila núna",
+ "av {0} svenska arenor": "af {0} sænskum leikvöngum",
+ "{n} utomlands": "{n} erlendis",
+ "Dela kartan som bild": "Deila kortinu sem mynd",
+ "Samma karta som ovan – välj Sverige, Europa eller Världen ovanför kartan.": "Sama kort og að ofan – veldu Svíþjóð, Evrópu eða Heiminn fyrir ofan kortið.",
+ "Fyrkantig (för flöden)": "Ferköntuð (fyrir strauma)",
+ "Hög (för stories)": "Há (fyrir sögur)"
 }
