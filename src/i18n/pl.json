@@ -2903,5 +2903,8 @@
  "Du i communityn": "Ty w społeczności",
  "Följer {0} · {1} följer dig": "Obserwujesz {0} · {1} obserwuje cię",
  "{n} tråd": "{n} wątek",
- "{n} trådar": "{n} wątków"
+ "{n} trådar": "{n} wątków",
+ "Inget nytt från dem du följer": "Nic nowego od obserwowanych",
+ "Du följer ingen än": "Jeszcze nikogo nie obserwujesz",
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Dotknij nazwy na forum lub w relacjach i wybierz Obserwuj."
 }

@@ -2904,5 +2904,8 @@
  "Du i communityn": "Tú en la comunidad",
  "Följer {0} · {1} följer dig": "Sigues a {0} · {1} te siguen",
  "{n} tråd": "{n} hilo",
- "{n} trådar": "{n} hilos"
+ "{n} trådar": "{n} hilos",
+ "Inget nytt från dem du följer": "Nada nuevo de quienes sigues",
+ "Du följer ingen än": "Aún no sigues a nadie",
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Toca un nombre en el foro o en las crónicas y elige Seguir."
 }

@@ -2903,5 +2903,8 @@
  "Du i communityn": "Jij in de community",
  "Följer {0} · {1} följer dig": "Volgt {0} · {1} volgen jou",
  "{n} tråd": "{n} topic",
- "{n} trådar": "{n} topics"
+ "{n} trådar": "{n} topics",
+ "Inget nytt från dem du följer": "Niets nieuws van wie je volgt",
+ "Du följer ingen än": "Je volgt nog niemand",
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Tik op een naam in het forum of bij de wedstrijdverhalen en kies Volgen."
 }

@@ -2903,5 +2903,8 @@
  "Du i communityn": "Þú í samfélaginu",
  "Följer {0} · {1} följer dig": "Fylgir {0} · {1} fylgja þér",
  "{n} tråd": "{n} þráður",
- "{n} trådar": "{n} þræðir"
+ "{n} trådar": "{n} þræðir",
+ "Inget nytt från dem du följer": "Ekkert nýtt frá þeim sem þú fylgir",
+ "Du följer ingen än": "Þú fylgir engum enn",
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Ýttu á nafn á spjallinu eða í leikjasögunum og veldu Fylgja."
 }

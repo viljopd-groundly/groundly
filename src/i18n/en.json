@@ -2992,5 +2992,8 @@
  "Du i communityn": "You in the community",
  "Följer {0} · {1} följer dig": "Following {0} · {1} follow you",
  "{n} tråd": "{n} thread",
- "{n} trådar": "{n} threads"
+ "{n} trådar": "{n} threads",
+ "Inget nytt från dem du följer": "Nothing new from people you follow",
+ "Du följer ingen än": "You don't follow anyone yet",
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Tap a name in the forum or among the match stories and choose Follow."
 }

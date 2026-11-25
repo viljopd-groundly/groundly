@@ -2904,5 +2904,8 @@
  "Du i communityn": "Du in der Community",
  "Följer {0} · {1} följer dig": "Folgst {0} · {1} folgen dir",
  "{n} tråd": "{n} Thema",
- "{n} trådar": "{n} Themen"
+ "{n} trådar": "{n} Themen",
+ "Inget nytt från dem du följer": "Nichts Neues von denen, denen du folgst",
+ "Du följer ingen än": "Du folgst noch niemandem",
+ "Tryck på ett namn i forumet eller bland matchberättelserna och välj Följ.": "Tippe auf einen Namen im Forum oder bei den Spielberichten und wähle Folgen."
 }
