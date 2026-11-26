@@ -2936,5 +2936,19 @@
  "Ta bort från dina serier": "Usuń z twoich lig",
  "Lägg till i dina serier": "Dodaj do twoich lig",
  "{0} borttagen från dina serier": "{0} usunięta z twoich lig",
- "{0} tillagd i dina serier": "{0} dodana do twoich lig"
+ "{0} tillagd i dina serier": "{0} dodana do twoich lig",
+ "Sett på tv {0}": "Obejrzany w TV {0}",
+ "På tv": "W TV",
+ "Borttagen från tv-matcher": "Usunięto z meczów w TV",
+ "Sparad som tv-match – räknas inte som arenabesök": "Zapisano jako mecz w TV – nie liczy się jako wizyta na stadionie",
+ "Logga en match du sett": "Zapisz mecz, który oglądałeś",
+ "På tv/stream": "TV/stream",
+ "Tv-matcher räknas i Matcher sett och ditt lags facit, men aldrig som arenabesök, på kartan eller i topplistorna.": "Mecze w TV liczą się do obejrzanych meczów i bilansu drużyny, ale nigdy jako wizyty, na mapie ani w rankingach.",
+ "Ditt fotbollsår {0}": "Twój piłkarski rok {0}",
+ "matcher sett": "obejrzanych meczów",
+ "på plats": "na stadionie",
+ "på tv": "w TV",
+ "Senast på tv": "Ostatnio w TV",
+ "Logga tv-matcher med På tv på matchraden eller via Logga. De räknas aldrig som arenabesök.": "Zapisuj mecze w TV przyciskiem W TV w wierszu meczu lub przez Zapisz. Nigdy nie liczą się jako wizyty.",
+ "På plats eller på tv – med resultat": "Na stadionie lub w TV – z wynikiem"
 }

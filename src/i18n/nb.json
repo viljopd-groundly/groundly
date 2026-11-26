@@ -2937,5 +2937,19 @@
  "Ta bort från dina serier": "Fjern fra dine serier",
  "Lägg till i dina serier": "Legg til i dine serier",
  "{0} borttagen från dina serier": "{0} fjernet fra dine serier",
- "{0} tillagd i dina serier": "{0} lagt til i dine serier"
+ "{0} tillagd i dina serier": "{0} lagt til i dine serier",
+ "Sett på tv {0}": "Sett på tv {0}",
+ "På tv": "På tv",
+ "Borttagen från tv-matcher": "Fjernet fra tv-kamper",
+ "Sparad som tv-match – räknas inte som arenabesök": "Lagret som tv-kamp – teller ikke som arenabesøk",
+ "Logga en match du sett": "Logg en kamp du har sett",
+ "På tv/stream": "På tv/strømming",
+ "Tv-matcher räknas i Matcher sett och ditt lags facit, men aldrig som arenabesök, på kartan eller i topplistorna.": "Tv-kamper teller i Kamper sett og lagets resultater, men aldri som arenabesøk, på kartet eller i topplistene.",
+ "Ditt fotbollsår {0}": "Ditt fotballår {0}",
+ "matcher sett": "kamper sett",
+ "på plats": "på stedet",
+ "på tv": "på tv",
+ "Senast på tv": "Sist på tv",
+ "Logga tv-matcher med På tv på matchraden eller via Logga. De räknas aldrig som arenabesök.": "Logg tv-kamper med På tv på kampraden eller via Logg. De teller aldri som arenabesøk.",
+ "På plats eller på tv – med resultat": "På stedet eller på tv – med resultat"
 }
