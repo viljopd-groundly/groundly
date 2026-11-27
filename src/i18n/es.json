@@ -2967,5 +2967,6 @@
  "Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.": "Toca el corazón en un partido próximo o Quiero visitar en una ficha de club o selección. También puedes buscar un club abajo.",
  "{n} match": "{n} partido",
  "{n} arena": "{n} estadio",
- "{n} lag": "{n} equipos"
+ "{n} lag": "{n} equipos",
+ "Arenafakta": "Datos del estadio"
 }
