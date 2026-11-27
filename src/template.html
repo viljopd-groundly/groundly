@@ -2984,6 +2984,10 @@ function attendFromMatch(m){return{id:newId(),mid:m._id,home:m.home||null,away:m
 // i reseplaneraren heter Vill gå-knappen "Lägg till i resan" (matchen sparas ändå som Vill gå)
 let MYBTN_CTX="";
 // testversionen: matchraden har bara en knapp (hjärtat = Vill gå; efter avspark Jag var där). Allt annat finns i matchinfo när man trycker på raden.
+// håll kvar den rad man tryckte på på samma ställe på skärmen när listan ritas om (även när servern svarar en stund senare)
+function keepRowInPlace(btn,sel){const row=btn.closest(".mrow,.mrowx,article")||btn;const y0=row.getBoundingClientRect().top;
+  const fix=()=>{const el=[...document.querySelectorAll(sel)].find(x=>x.offsetParent);if(!el)return;const r=el.closest(".mrow,.mrowx,article")||el;const d=r.getBoundingClientRect().top-y0;if(Math.abs(d)>1)window.scrollBy(0,d);};
+  requestAnimationFrame(()=>requestAnimationFrame(fix));[250,700,1500].forEach(ms=>setTimeout(fix,ms));}
 function nyRowBtn(m){if(!m._id||myState!=="ready")return"";if(m.kickoff&&Date.parse(m.kickoff)<Date.now())return myBtns(m);const on=isWishM(m._id);
   return`<button class="nyheart" data-wishm="${esc(m._id)}" aria-pressed="${on}" aria-label="${on?$t("Sparad i Vill gå"):$t("Vill gå")}"><svg viewBox="0 0 24 24" fill="${on?"currentColor":"none"}" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg></button>`;}
 // testversionen: matcher sedda på tv/stream sparas för sig (MY.tv) och räknas aldrig som arenabesök
@@ -3124,7 +3128,7 @@ function myClick(t){
   if(t.id==="amOpen"){addingMatch=true;fillVenueList();renderMine();setTimeout(()=>document.getElementById("amHome")?.focus(),0);return;}
   if(t.id==="amCancel"){addingMatch=false;renderMine();return;}
   if(t.dataset.tixm){const id=t.dataset.tixm;const on=!hasTix(id);mutate(d=>{d.wishMatches=d.wishMatches.map(w=>w.id===id?(on?{...w,tix:true}:(({tix,...r})=>r)(w)):w);});if(on)toast($t("Snyggt! Glöm inte hotell och resa."),"check");track("tix");return;}
-  if(t.dataset.wishm){const m=matchById(t.dataset.wishm);if(!m)return;const adding=!isWishM(m._id);if(adding&&mode==="resa"&&typeof RESA_PICKED!=="undefined"){RESA_PICKED.add(m._id);if(RESA_ADDTO&&RESA_TAB==="plan")addLegToTrip(true);}mutate(d=>{d.wishMatches=isWishM(m._id)?d.wishMatches.filter(w=>w.id!==m._id):[...d.wishMatches,slim(m)];});if(adding)setTimeout(maybeAskPush,600);return;}
+  if(t.dataset.wishm){const m=matchById(t.dataset.wishm);if(!m)return;const adding=!isWishM(m._id);keepRowInPlace(t,`[data-wishm="${CSS.escape(m._id)}"]`);if(adding&&mode==="resa"&&typeof RESA_PICKED!=="undefined"){RESA_PICKED.add(m._id);if(RESA_ADDTO&&RESA_TAB==="plan")addLegToTrip(true);}mutate(d=>{d.wishMatches=isWishM(m._id)?d.wishMatches.filter(w=>w.id!==m._id):[...d.wishMatches,slim(m)];});if(adding)setTimeout(maybeAskPush,600);return;}
   if(t.dataset.tvm){const m=matchById(t.dataset.tvm);if(!m)return;const on=isTv(m._id);let added=null;mutate(d=>{d.tv=(d.tv||[]).filter(a=>a.mid!==m._id);if(!on){const a=attendFromMatch(m);added={id:a.id,mid:a.mid,home:a.home,away:a.away,homeName:a.homeName,awayName:a.awayName,date:a.date,score:a.score,comp:a.comp,country:a.country};d.tv.push(added);}});toast(on?$t("Borttagen från tv-matcher"):$t("Sparad som tv-match – räknas inte som arenabesök"),"check");return;}
   if(t.dataset.tvdel){const id=t.dataset.tvdel;mutate(d=>{d.tv=(d.tv||[]).filter(a=>a.id!==id);});return;}
   if(t.dataset.attend){const m=matchById(t.dataset.attend);if(!m)return;let added=null;mutate(d=>{if(isAtt(m._id))d.attended=d.attended.filter(a=>a.mid!==m._id);else{added=attendFromMatch(m);d.attended=[...d.attended,added];}d.wishMatches=d.wishMatches.filter(w=>w.id!==m._id);});if(added&&!added.score)askScore(added.id);return;}
