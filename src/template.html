@@ -3114,7 +3114,10 @@ function renderMine(){
     h+=addClubRow("wishClubAdd",$t("Lägg till i Vill gå"));
   }else{h+=renderChallenges();}
   // samma innehåll som redan visas: rör inte sidan (annars laddas klubbmärken och kartor om och blinkar till)
-  if(el.__h===h&&el.isConnected&&el.innerHTML)return;el.innerHTML=h;el.__h=h;afterMine();}
+  if(el.__h===h&&el.isConnected&&el.innerHTML)return;const tx0=el.querySelector(".nymtabs");if(tx0)NY_TABS_X=tx0.scrollLeft;el.innerHTML=h;el.__h=h;
+  {const tx=el.querySelector(".nymtabs");if(tx){tx.scrollLeft=NY_TABS_X;const on=tx.querySelector('[aria-pressed="true"]');if(on){const a=on.offsetLeft,b=a+on.offsetWidth;if(a<tx.scrollLeft||b>tx.scrollLeft+tx.clientWidth)tx.scrollLeft=Math.max(0,a-(tx.clientWidth-on.offsetWidth)/2);}tx.addEventListener("scroll",()=>{NY_TABS_X=tx.scrollLeft;},{passive:true});}}
+  afterMine();}
+var NY_TABS_X=0;
 function addClubRow(id,label){return`<form class="addclub" data-addclub="${id}"><label class="fld" for="${id}-in">${$t("Lägg till klubb eller landslag")}<input id="${id}-in" list="allClubs" maxlength="80" placeholder="${$t("Sök klubb eller landslag")}"></label><button class="btn small" type="submit">${label}</button></form>`;}
 
 function myClick(t){
