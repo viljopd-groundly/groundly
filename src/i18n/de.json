@@ -2964,5 +2964,8 @@
  "Dela säsongskort": "Saisonkarte teilen",
  "+ Välj landslag": "+ Nationalteam wählen",
  "Inget sparat i Vill gå än": "Noch nichts in „Will hin“",
- "Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.": "Tippe auf das Herz bei einem kommenden Spiel oder auf Will hin bei einem Vereins- oder Nationalteam. Du kannst auch unten einen Verein suchen."
+ "Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.": "Tippe auf das Herz bei einem kommenden Spiel oder auf Will hin bei einem Vereins- oder Nationalteam. Du kannst auch unten einen Verein suchen.",
+ "{n} match": "{n} Spiel",
+ "{n} arena": "{n} Stadion",
+ "{n} lag": "{n} Teams"
 }

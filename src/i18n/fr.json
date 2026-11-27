@@ -2963,5 +2963,8 @@
  "Dela säsongskort": "Partager la carte de saison",
  "+ Välj landslag": "+ Choisir une sélection",
  "Inget sparat i Vill gå än": "Rien dans « J'ai envie d'y aller » pour l'instant",
- "Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.": "Touche le cœur sur un match à venir, ou J'ai envie d'y aller sur une fiche de club ou de sélection. Tu peux aussi chercher un club ci-dessous."
+ "Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.": "Touche le cœur sur un match à venir, ou J'ai envie d'y aller sur une fiche de club ou de sélection. Tu peux aussi chercher un club ci-dessous.",
+ "{n} match": "{n} match",
+ "{n} arena": "{n} stade",
+ "{n} lag": "{n} équipes"
 }

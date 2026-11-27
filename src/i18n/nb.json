@@ -2964,5 +2964,8 @@
  "Dela säsongskort": "Del sesongkort",
  "+ Välj landslag": "+ Velg landslag",
  "Inget sparat i Vill gå än": "Ingenting i Vil gå ennå",
- "Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.": "Trykk på hjertet på en kommende kamp, eller Vil besøke på et klubb- eller landslagskort. Du kan også søke opp en klubb nedenfor."
+ "Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.": "Trykk på hjertet på en kommende kamp, eller Vil besøke på et klubb- eller landslagskort. Du kan også søke opp en klubb nedenfor.",
+ "{n} match": "{n} kamp",
+ "{n} arena": "{n} arena",
+ "{n} lag": "{n} lag"
 }

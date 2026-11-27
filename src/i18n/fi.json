@@ -2963,5 +2963,8 @@
  "Dela säsongskort": "Jaa kausikortti",
  "+ Välj landslag": "+ Valitse maajoukkue",
  "Inget sparat i Vill gå än": "Haluan mennä -lista on vielä tyhjä",
- "Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.": "Napauta sydäntä tulevassa ottelussa tai Haluan vierailla seura- tai maajoukkuekortissa. Voit myös hakea seuraa alta."
+ "Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.": "Napauta sydäntä tulevassa ottelussa tai Haluan vierailla seura- tai maajoukkuekortissa. Voit myös hakea seuraa alta.",
+ "{n} match": "{n} ottelu",
+ "{n} arena": "{n} stadion",
+ "{n} lag": "{n} joukkuetta"
 }
