@@ -2952,5 +2952,8 @@
  "Logga tv-matcher med På tv på matchraden eller via Logga. De räknas aldrig som arenabesök.": "Kirjaa tv-ottelut ottelurivin Tv:stä-painikkeella tai Kirjaa-valikosta. Niitä ei lasketa stadionkäynneiksi.",
  "På plats eller på tv – med resultat": "Paikan päällä tai tv:stä – tuloksen kanssa",
  "Planera resan": "Suunnittele matka",
- "Såg på tv": "Katsoin tv:stä"
+ "Såg på tv": "Katsoin tv:stä",
+ "Matcher jag sett": "Näkemäni ottelut",
+ "{0} på plats · {1} på tv": "{0} paikan päällä · {1} tv:stä",
+ "Visa alla tv-matcher": "Näytä kaikki tv-ottelut"
 }

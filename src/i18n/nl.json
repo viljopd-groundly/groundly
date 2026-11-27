@@ -2952,5 +2952,8 @@
  "Logga tv-matcher med På tv på matchraden eller via Logga. De räknas aldrig som arenabesök.": "Log tv-wedstrijden met Op tv op de wedstrijdrij of via Loggen. Ze tellen nooit als stadionbezoek.",
  "På plats eller på tv – med resultat": "In het stadion of op tv – met uitslag",
  "Planera resan": "Plan de reis",
- "Såg på tv": "Op tv gezien"
+ "Såg på tv": "Op tv gezien",
+ "Matcher jag sett": "Wedstrijden die ik zag",
+ "{0} på plats · {1} på tv": "{0} in het stadion · {1} op tv",
+ "Visa alla tv-matcher": "Toon alle tv-wedstrijden"
 }

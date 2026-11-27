@@ -2953,5 +2953,8 @@
  "Logga tv-matcher med På tv på matchraden eller via Logga. De räknas aldrig som arenabesök.": "Registra partidos en la tele con En la tele en la fila del partido o desde Registrar. Nunca cuentan como visitas.",
  "På plats eller på tv – med resultat": "En el estadio o en la tele, con resultado",
  "Planera resan": "Planear el viaje",
- "Såg på tv": "Lo vi en la tele"
+ "Såg på tv": "Lo vi en la tele",
+ "Matcher jag sett": "Partidos que he visto",
+ "{0} på plats · {1} på tv": "{0} en el estadio · {1} en la tele",
+ "Visa alla tv-matcher": "Ver todos los partidos en la tele"
 }

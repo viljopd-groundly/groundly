@@ -2953,5 +2953,8 @@
  "Logga tv-matcher med På tv på matchraden eller via Logga. De räknas aldrig som arenabesök.": "Log tv-kampe med På tv på kamprækken eller via Log. De tæller aldrig som stadionbesøg.",
  "På plats eller på tv – med resultat": "På stadion eller på tv – med resultat",
  "Planera resan": "Planlæg rejsen",
- "Såg på tv": "Så på tv"
+ "Såg på tv": "Så på tv",
+ "Matcher jag sett": "Kampe jeg har set",
+ "{0} på plats · {1} på tv": "{0} på stadion · {1} på tv",
+ "Visa alla tv-matcher": "Vis alle tv-kampe"
 }

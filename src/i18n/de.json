@@ -2953,5 +2953,8 @@
  "Logga tv-matcher med På tv på matchraden eller via Logga. De räknas aldrig som arenabesök.": "Trage TV-Spiele mit Im TV in der Spielzeile oder über Eintragen ein. Sie zählen nie als Stadionbesuch.",
  "På plats eller på tv – med resultat": "Im Stadion oder im TV – mit Ergebnis",
  "Planera resan": "Reise planen",
- "Såg på tv": "Im TV gesehen"
+ "Såg på tv": "Im TV gesehen",
+ "Matcher jag sett": "Gesehene Spiele",
+ "{0} på plats · {1} på tv": "{0} im Stadion · {1} im TV",
+ "Visa alla tv-matcher": "Alle TV-Spiele anzeigen"
 }
