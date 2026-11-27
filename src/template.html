@@ -3032,7 +3032,7 @@ function renderMine(){
   const visNT=[...vm.entries()].filter(([id])=>C[id]&&isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
   const vis=[...vm.entries()].filter(([id])=>C[id]&&!isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
   if(mySub==="home"){
-    h+=NY?nyLastHtml()+nyChalHtml()+favCards()+favAddRow()+natCard():favCards()+natCard()+favAddRow();const st=myStatsHtml()+pastTripsHtml();h+=st||(MY.attended.length?"":`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><div class="actions"><button class="btn primary" data-mysub="been">${$t("+ Lägg till match")}</button></div>`);
+    h+=NY?nyLastHtml()+nyChalHtml()+favCards()+favAddRow()+natCard():favCards()+natCard()+favAddRow();const st=myStatsHtml()+(NY?"":pastTripsHtml());h+=st||(MY.attended.length?"":`<div class="empty">${$t("Inga matcher sparade än. Lägg till en match du varit på, sök ditt lag i arkivet, eller tryck")} <b>${$t("Jag var där")}</b> ${$t("på en spelad match under Matcher.")}</div><div class="actions"><button class="btn primary" data-mysub="been">${$t("+ Lägg till match")}</button></div>`);
   }else if(mySub==="mod"){
     const r=fixReviewHtml()+clubSugReviewHtml()+tipSugReviewHtml()+feedbackReviewHtml();const cm=crestModHtml();
     h+=`<div class="sechead"><h3 class="sec">${ic("shield")} ${$t("Moderering")}</h3></div>`+(isMod?(r||`<div class="empty">${$t("Inga nya rättelser eller meddelanden.")}</div>`)+cm:`<div class="empty">${$t("Bara moderatorer ser det här.")}</div>`);
@@ -3102,7 +3102,7 @@ function renderMine(){
       return`<div class="mrow"><div class="mdate">${esc(w.kickoff?fmtDate(dayKey(new Date(w.kickoff))):w.dateFrom?rangeTxt(w):"")}</div><div class="mmain">
       ${attTeams({...w,score:""})}
       <div class="venue">${mv?`<span class="newtime">${$t("Ny tid")}</span> `:""}${esc(when)} · ${esc([w.venue,$t(w.city)].filter(Boolean).join(", "))}</div>${mv?`<div class="venue">${moveNote(mv)} <button class="link strong" data-wmok="${esc(w0.id)}">${$t("OK")}</button></div>`:""}
-      <div class="pactions">${past?`<button class="link strong" data-wmdone="${esc(w.id)}">${$t("Matchen är spelad. Var du där?")}</button>`:calLinks(w)+(w.home&&C[w.home]&&C[w.home].tix?`<a class="link strong" href="${esc(C[w.home].tix)}" target="_blank" rel="noopener">${$t("Biljetter")}</a>`:"")+hotelLink(w,"link")+(w.city?extLink(omioUrl(homeTown,w.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"link"):"")}${delBtn("wm",w.id)}</div></div></div>`;}).join("")+limBtns("wm",wm.length,3)
+      <div class="pactions">${past?`<button class="link strong" data-wmdone="${esc(w.id)}">${$t("Matchen är spelad. Var du där?")}</button>`:(NY&&w.city&&!(typeof wishNoTrip==="function"&&!wishNoTrip().some(x=>x.id===w.id))?`<button class="link strong" data-nyplan="${esc(w.id)}">${$t("Lägg i resa")}</button>`:"")+calLinks(w)+(w.home&&C[w.home]&&C[w.home].tix?`<a class="link strong" href="${esc(C[w.home].tix)}" target="_blank" rel="noopener">${$t("Biljetter")}</a>`:"")+hotelLink(w,"link")+(w.city?extLink(omioUrl(homeTown,w.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"link"):"")}${delBtn("wm",w.id)}</div></div></div>`;}).join("")+limBtns("wm",wm.length,3)
      :`<div class="empty">${$t("Tryck")} <b>${$t("Vill gå")}</b> ${$t("på en kommande match under Matcher för att spara den här.")}</div>`;
     const wc=MY.wishClubs.filter(id=>C[id]&&!isNat(C[id]));const wn=MY.wishClubs.filter(id=>C[id]&&isNat(C[id]));
     if(!allEmpty&&(!NY||wc.length))h+=`<h3 class="sec">${$t("Klubbar jag vill besöka")}</h3>`;
@@ -5590,7 +5590,7 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
   else{city=b.dataset.nyplancity;from=today();to=addDays(today(),13);}
   RESA_DRAFT={city:$t(city),from,to};RESA_TAB="plan";setMode("resa");window.scrollTo({top:0});setTimeout(()=>{const f=document.getElementById("resaForm");if(f)f.requestSubmit();},60);},true);document.addEventListener("input",e=>{const id=e.target&&e.target.id;if(id!=="rCity"&&id!=="rFrom"&&id!=="rTo")return;RESA_DRAFT={city:document.getElementById("rCity").value,from:document.getElementById("rFrom").value,to:document.getElementById("rTo").value};});
 // ---------- Vart ska jag åka? Städer med mest fotboll under en period ----------
-let RESA_TAB="plan",RESA_FROMTOP=null,TOPQ={p:"helg",s:"world",f:"",t:"",c:"",city:"",km:300},TOP_C=null,TOP_K="",topMore=false;
+var NY_RT_SET=false,NY_RT_MINE=false;let RESA_TAB="plan",RESA_FROMTOP=null,TOPQ={p:"helg",s:"world",f:"",t:"",c:"",city:"",km:300},TOP_C=null,TOP_K="",topMore=false;
 function topRange(p){if(p==="helg")return weekendRange();if(p==="egen"){const t0=today();let f=TOPQ.f&&TOPQ.f>=t0?TOPQ.f:t0,t=TOPQ.t||addDays(f,6);if(t<f)t=f;return[f,t];}const t=today();return[t,addDays(t,p==="30"?29:6)];}
 const TOP_CACHE={};
 // hur lockande en match är för en fotbollsresa: serienivå × fotbollsland, damfotboll och landslag
@@ -5637,7 +5637,7 @@ function topHtml(){if(dbState!=="ready")return`<p class="meta">${$t("Hämtar mat
   if(R.list.length>10)h+=`<button class="link strong more topmorebtn" data-topmore="1">${topMore?$t("Visa färre"):$t("Visa fler")}</button></article>`;
   return h;}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-resatab],[data-topq],[data-topcity],[data-topmore],[data-backtop],[data-gotop]");if(!t)return;
-  if(t.dataset.resatab){const go=()=>{RESA_TAB=t.dataset.resatab;renderResa();};if(t.dataset.resatab!=="plan"&&resaGuard(go))return;go();return;}
+  if(t.dataset.resatab){NY_RT_SET=true;const go=()=>{RESA_TAB=t.dataset.resatab==="mine"?"plan":t.dataset.resatab;NY_RT_MINE=t.dataset.resatab==="mine";renderResa();};if(t.dataset.resatab!=="plan"&&resaGuard(go))return;go();return;}
   if(t.dataset.gotop){TOPQ={...TOPQ,p:"helg",s:"world"};topMore=false;goTop("resa");RESA_TAB="top";window.scrollTo({top:0});renderResa();return;}
   if(t.dataset.topq){const[k,v]=t.dataset.topq.split(":");TOPQ={...TOPQ,[k]:k==="km"?+v:v};topMore=false;renderResa();return;}
   if(t.dataset.topmore){topMore=!topMore;const ol=document.querySelector(".toplist");if(ol)ol.classList.toggle("more",topMore);t.textContent=topMore?$t("Visa färre"):$t("Visa fler");return;}
@@ -5724,6 +5724,13 @@ addEventListener("resize",()=>{if(typeof mode!=="undefined"&&mode==="resa")align
 // tillbaka från resan (till startsidan eller topplistan) visas med den vanliga tillbakapilen längst ner, som överallt annars
 // en resa är gjord när slutdatumet passerat, eller när alla valda matcher är spelade och deras sista dag är slut
 const tripIsDone=t=>{const L=tripML(t,true);return tripDone(t,L?tripPicked(t,L):null);};
+// testversionen: fliken Mina resor – kommande och tidigare resor samt Vill gå-matcher som saknar resa
+function wishNoTrip(){const now=Date.now();const tr=myTrips();return MY.wishMatches.filter(w=>{const d=w.kickoff?dayKey(new Date(w.kickoff)):w.dateFrom;if(!d||(w.kickoff&&Date.parse(w.kickoff)<now))return false;return!tr.some(t=>t.from<=d&&d<=t.to&&tripLegs(t).some(l=>norm(l.city)===norm(w.city||"")));}).sort((a,b)=>String(a.kickoff||a.dateFrom).localeCompare(String(b.kickoff||b.dateFrom)));}
+function nyMyTripsHtml(){const tr=myTrips();const up=tr.filter(t=>!tripIsDone(t)).sort((a,b)=>a.from.localeCompare(b.from)),old=tr.filter(tripIsDone).sort((a,b)=>b.from.localeCompare(a.from));const wn=myState==="ready"?wishNoTrip():[];let h="";
+  if(wn.length)h+=`<article class="tip nywishtrip"><div class="lbl">${ic("heart")} ${$tn(wn.length,"1 match i Vill gå saknar resa","{n} matcher i Vill gå saknar resa")}</div>${wn.slice(0,4).map(w=>`<div class="nylr" style="margin-top:8px"><div style="flex:1;min-width:0"><b>${esc(w.homeName||"")} – ${esc(w.awayName||"")}</b><div class="meta">${esc([w.kickoff?dayLabel(dayKey(new Date(w.kickoff))):"",w.city].filter(Boolean).join(" · "))}</div></div>${w.city?`<button class="btn small" data-nyplan="${esc(w.id)}">${ic("trip")} ${$t("Planera resan")}</button>`:""}</div>`).join("")}</article>`;
+  h+=up.length?`<div class="triplist">${up.map(tripCardHtml).join("")}</div>`:`<div class="empty"><b>${$t("Ingen resa planerad än")}</b><div>${$t("Välj stad och datum under Planera, eller hitta en idé under Inspiration.")}</div><div class="actions" style="justify-content:center"><button class="btn primary small" data-resatab="plan">${$t("Planera en resa")}</button></div></div>`;
+  if(old.length)h+=`<h3 class="sec">${$t("Tidigare resor")}</h3><div class="triplist">${old.map(tripCardHtml).join("")}</div>`;
+  return h;}
 function tripCardHtml(t){const c=cityLL(t.city);const past=tripIsDone(t);const L=tripML(t,past);const pk=L?tripPicked(t,L):[];const legs=tripLegs(t);const on=resaOpen===t.id;const exp=TRIP_X.has(t.id)||on||TRIP_DEL===t.id||pk.some(x=>WISH_DEL===x.m._id);
     let sum;if(past){const R=myState==="ready"?tripRecap(t):null;sum=R&&R.seen.length?$tn(R.seen.length,"1 match","{n} matcher")+" · "+$tn(R.ar,"1 arena","{n} arenor"):R&&R.toLog.length?$t("Resan är slut – logga matcherna"):$t("Avslutad");}
     else if(!L)sum=$t("Hämtar matchschemat…");else if(!pk.length)sum=$t("Inga matcher valda än");else{const I=tripItems(t,pk);sum=$tn(pk.length,"1 match","{n} matcher")+" · "+$t("Att boka: {0} av {1} klart",[I.done,I.total]);}
@@ -5739,11 +5746,15 @@ function tripCardHtml(t){const c=cityLL(t.city);const past=tripIsDone(t);const L
 // Tidigare resor visas i Min fotboll (översikten)
 function pastTripsHtml(){const old=myTrips().filter(tripIsDone).sort((a,b)=>b.from.localeCompare(a.from));if(!old.length)return"";
   return`<section id="pastTrips"><div class="sechead"><h3 class="sec">${ic("trip")} ${$t("Mina resor")}</h3><span class="meta">${$tn(old.length,"1 resa","{n} resor")}</span></div><div class="triplist">${old.map(tripCardHtml).join("")}</div></section>`;}
-document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-gopasttrips]");if(!b)return;mySub="home";setMode("mine");requestAnimationFrame(()=>document.getElementById("pastTrips")?.scrollIntoView({block:"start",behavior:"smooth"}));});
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-gopasttrips]");if(!b)return;if(NY){NY_RT_SET=true;NY_RT_MINE=true;RESA_TAB="plan";setMode("resa");return;}mySub="home";setMode("mine");requestAnimationFrame(()=>document.getElementById("pastTrips")?.scrollIntoView({block:"start",behavior:"smooth"}));});
 function renderResa(){if(mode==="mine"){renderMine();return;}RESA_BACK=null;try{renderResa0();}finally{syncBack();}}
 function renderResa0(){const el=document.getElementById("resaList");if(!el)return;if(!RESA)RESA=resaDefault();const q=RESA;const D=RESA_DRAFT||q;
   const tabs=`<div class="seg resatabs" role="tablist">${[["plan",$t("Planera resa")+(myTrips().length&&RESA_TAB!=="plan"?` <span class="tabn">${myTrips().length}</span>`:"")],["top",$t("Vart ska jag åka?")]].map(([k,l])=>`<button role="tab" data-resatab="${k}" aria-selected="${RESA_TAB===k}">${l}</button>`).join("")}</div>`;
-  if(RESA_TAB==="top"){el.innerHTML=tabs+topHtml();return;}
+  let NYRT=NY_RT_MINE&&RESA_TAB==="plan"?"mine":RESA_TAB;if(NY){if(!NY_RT_SET&&RESA_TAB==="plan"&&!RESA_DRAFT&&!RESA_ADDTO&&!(RESA&&RESA.city)&&myTrips().length)NYRT="mine";}
+  const tabsNY=`<div class="seg resatabs" role="tablist">${[["mine",$t("Mina resor")+(myTrips().length?` <span class="tabn">${myTrips().length}</span>`:"")],["plan",$t("Planera")],["top",$t("Inspiration")]].map(([k,l])=>`<button role="tab" data-resatab="${k}" aria-selected="${NYRT===k}">${l}</button>`).join("")}</div>`;
+  if(NY&&NYRT==="mine"){el.innerHTML=tabsNY+nyMyTripsHtml();return;}
+  if(NY&&RESA_TAB==="top"){el.innerHTML=tabsNY+topHtml();return;}
+  if(RESA_TAB==="top"){el.innerHTML=(NY?tabsNY:tabs)+topHtml();return;}
   const act=document.activeElement,fid=act&&["rCity","rFrom","rTo"].includes(act.id)?act.id:null,sel=fid==="rCity"?[act.selectionStart,act.selectionEnd]:null;
   // alla sparade resor visas; en resa utan valda matcher får en uppmaning att välja matcher
   const planning=t=>RESA&&RESA.city&&norm(t.city)===norm(RESA.city)&&t.from===RESA.from&&t.to===RESA.to;
@@ -5752,7 +5763,7 @@ function renderResa0(){const el=document.getElementById("resaList");if(!el)retur
   const tripsUp=trips0.filter(t=>!tDone(t)).sort((a,b)=>a.from.localeCompare(b.from)),tripsOld=trips0.filter(tDone).sort((a,b)=>b.from.localeCompare(a.from));const trips=[...tripsUp,...tripsOld];
   let h="",shH="";
   if(TRIP_FROMHOME&&mode==="resa")RESA_BACK={a:"backhome",l:$t("Tillbaka till startsidan")};
-  if(tripsUp.length||tripsOld.length){h+=`<div class="tripcol">${tripsUp.length?`<h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${tripsUp.map(tripCardHtml).join("")}</div>`:""}${tripsOld.length?`<p class="pastlink"><button class="link strong" type="button" data-gopasttrips="1">${$t("Tidigare resor ({0})",[tripsOld.length])} →</button></p>`:""}</div>`;}
+  if(!NY&&(tripsUp.length||tripsOld.length)){h+=`<div class="tripcol">${tripsUp.length?`<h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${tripsUp.map(tripCardHtml).join("")}</div>`:""}${tripsOld.length?`<p class="pastlink"><button class="link strong" type="button" data-gopasttrips="1">${$t("Tidigare resor ({0})",[tripsOld.length])} →</button></p>`:""}</div>`;}
   const addT=RESA_ADDTO&&myTrips().find(x=>x.id===RESA_ADDTO);if(RESA_ADDTO&&!addT)RESA_ADDTO=null;
   h+=`<div class="rescol"><article class="tip resaform${addT?" adding":""}">${addT?`<div class="addhead"><h2 class="rftitle">${ic("plus")} ${$t("Lägg till en stad i resan {0}",[esc(tripName(addT))])}</h2><button type="button" class="addx" data-addcancel aria-label="${$t("Stäng")}">×</button></div>`:`<h2 class="rftitle">${ic("trip")} ${$t("Planera en fotbollsresa")}</h2>`}
     <form id="resaForm" class="rform"><label class="fld">${$t("Stad")}<span class="rsugw"><input id="rCity" maxlength="60" value="${esc(D.city)}" placeholder="${$t("t.ex. Barcelona")}" autocomplete="off" autocapitalize="words" spellcheck="false" role="combobox" aria-autocomplete="list" aria-controls="rSug" aria-expanded="false"><div id="rSug" class="rsug" role="listbox" hidden></div></span></label>
@@ -5776,7 +5787,7 @@ function renderResa0(){const el=document.getElementById("resaList");if(!el)retur
       else{h+=`<p class="hint rfirst">${myState==="ready"?$t("Tryck Lägg till i resan på de matcher du vill se."):$t("Tryck Lägg till i resan på de matcher du vill se.")}</p>`;let last="";const now=Date.now();
         MYBTN_CTX="resa";try{L.forEach(x=>{const k=koDay(x.m.kickoff);if(k!==last){h+=`<h3 class="sec">${esc(dayLong(k))}</h3>`;last=k;}h+=matchRow(x.m,now,x.km);});}finally{MYBTN_CTX="";}}}}
   else h=h.replace("<!--RHINT-->",`<p class="hint">${$t("Skriv en stad, välj datum och tryck Visa matcher. Tryck sedan Lägg till i resan på de matcher du vill se. Resan sparas på ditt konto.")}</p>`);
-  el.innerHTML=tabs+shH+h;alignResaForm();requestAnimationFrame(alignResaForm);if(fid){const f=document.getElementById(fid);if(f){f.focus({preventScroll:true});if(sel)try{f.setSelectionRange(sel[0],sel[1]);}catch(e){}}}}
+  el.innerHTML=(NY?tabsNY:tabs)+shH+h;alignResaForm();requestAnimationFrame(alignResaForm);if(fid){const f=document.getElementById(fid);if(f){f.focus({preventScroll:true});if(sel)try{f.setSelectionRange(sel[0],sel[1]);}catch(e){}}}}
 // flera matcher i en kalenderfil (.ics)
 function calMany(ms){const ds=ms.map(m=>calData({...m,city:m.city&&$t(m.city)})).filter(Boolean);if(!ds.length)return;
   if(ds.length===1){const k="cm"+Date.now();CALREG[k]=ds[0];const b=document.createElement("button");b.dataset.cal=k;b.hidden=true;document.body.appendChild(b);b.click();b.remove();return;}

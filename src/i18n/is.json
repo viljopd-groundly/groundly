@@ -2968,5 +2968,13 @@
  "{n} arena": "{n} völlur",
  "{n} lag": "{n} lið",
  "Arenafakta": "Um völlinn",
- "Betyg från besökare": "Einkunnir gesta"
+ "Betyg från besökare": "Einkunnir gesta",
+ "Planera": "Skipuleggja",
+ "Inspiration": "Innblástur",
+ "1 match i Vill gå saknar resa": "1 leikur í Langar að fara vantar ferð",
+ "{n} matcher i Vill gå saknar resa": "{n} leikir í Langar að fara vantar ferð",
+ "Ingen resa planerad än": "Engin ferð skipulögð enn",
+ "Välj stad och datum under Planera, eller hitta en idé under Inspiration.": "Veldu borg og dagsetningar undir Skipuleggja eða finndu hugmynd undir Innblástur.",
+ "Planera en resa": "Skipuleggja ferð",
+ "Lägg i resa": "Bæta í ferð"
 }

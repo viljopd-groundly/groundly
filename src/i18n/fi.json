@@ -2968,5 +2968,13 @@
  "{n} arena": "{n} stadion",
  "{n} lag": "{n} joukkuetta",
  "Arenafakta": "Stadionin tiedot",
- "Betyg från besökare": "Kävijöiden arviot"
+ "Betyg från besökare": "Kävijöiden arviot",
+ "Planera": "Suunnittele",
+ "Inspiration": "Inspiraatio",
+ "1 match i Vill gå saknar resa": "1 Haluan mennä -ottelulla ei ole matkaa",
+ "{n} matcher i Vill gå saknar resa": "{n} Haluan mennä -ottelulla ei ole matkaa",
+ "Ingen resa planerad än": "Ei vielä suunniteltuja matkoja",
+ "Välj stad och datum under Planera, eller hitta en idé under Inspiration.": "Valitse kaupunki ja päivät kohdassa Suunnittele tai etsi idea Inspiraatiosta.",
+ "Planera en resa": "Suunnittele matka",
+ "Lägg i resa": "Lisää matkaan"
 }

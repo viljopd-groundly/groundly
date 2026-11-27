@@ -2969,5 +2969,13 @@
  "{n} arena": "{n} estadio",
  "{n} lag": "{n} equipos",
  "Arenafakta": "Datos del estadio",
- "Betyg från besökare": "Valoraciones de visitantes"
+ "Betyg från besökare": "Valoraciones de visitantes",
+ "Planera": "Planear",
+ "Inspiration": "Inspiración",
+ "1 match i Vill gå saknar resa": "1 partido en Quiero ir no tiene viaje",
+ "{n} matcher i Vill gå saknar resa": "{n} partidos en Quiero ir no tienen viaje",
+ "Ingen resa planerad än": "Aún no hay viajes",
+ "Välj stad och datum under Planera, eller hitta en idé under Inspiration.": "Elige ciudad y fechas en Planear o busca una idea en Inspiración.",
+ "Planera en resa": "Planear un viaje",
+ "Lägg i resa": "Añadir al viaje"
 }
