@@ -4801,7 +4801,7 @@ function renderReports(namesOnly){try{renderWriters();}catch(e){}
     return`<article class="rep${open?" open":""}">${cornerFlag(r.uid)}
       <button class="rhead" data-rep="${esc(r.key)}" aria-expanded="${open}">
         ${r.photos.length&&!open?`<span class="rcover">${phImg(r.photos[0])}${r.photos.length>1?`<span class="rcount">${$t("{0} bilder",[r.photos.length])}</span>`:""}</span>`:""}
-        <span class="rtxt">${r.draft?`<span class="pill ec draftpill">${$t("Utkast · syns bara för dig")}</span>`:""}${r.visit?`<span class="pill t3 draftpill">${$t("Arenabesök")}</span>`:""}<span class="rtitle">${esc(r.title)}</span>
+        <span class="rtxt">${r.draft?`<span class="pill ec draftpill">${$t("Utkast · syns bara för dig")}</span>`:""}${r.visit?`<span class="pill t3 draftpill">${$t("Arenabesök")}</span>`:""}<span class="rtitle">${esc(dashSp(r.title))}</span>
         ${meta?`<span class="rmeta">${c?crest(c.id,c.n,20):""}${esc(meta)}</span>`:""}
         <span class="rmeta">${esc(who(r.uid))} · ${esc(ago(r.at))}<span class="lkn" data-lk="${esc(r.key)}">${n?`\u00a0·\u00a0${ic("heart")} ${n}`:""}</span>${(()=>{const k=commentsFor(r.key).length;return k?`\u00a0·\u00a0${k} ${k===1?$t("kommentar"):$t("kommentarer")}`:"";})()}</span>
         ${open?"":`<span class="rex">${esc(String(r.body).slice(0,160))}${String(r.body).length>160?"…":""}</span>`}</span>
@@ -4857,7 +4857,7 @@ function startRepDraft(o){
   repDraft=newDraft(o);repMsg="";repTopSig="";repClub=null;repSort="nya";if(mode!=="reportage")setMode("reportage");else renderReports();
   window.scrollTo({top:0});setTimeout(()=>document.getElementById("rTitle")?.focus(),0);}
 function draftFromAtt(id){const a=MY.attended.find(x=>x.id===id);if(!a)return;const c=a.home&&C[a.home];
-  startRepDraft({match:`${a.homeName} – ${a.awayName}`,result:a.score||"",title:`${a.homeName}–${a.awayName}`,club:c?c.n:"",city:a.city||(c?c.city:""),date:a.date||"",body:a.note||""});}
+  startRepDraft({match:`${a.homeName} – ${a.awayName}`,result:a.score||"",title:`${a.homeName} – ${a.awayName}`,club:c?c.n:"",city:a.city||(c?c.city:""),date:a.date||"",body:a.note||""});}
 
 const confirmRepDel={};
 const isRepBtn=t=>t.id==="repNew"||t.id==="repCancel"||t.dataset.repsort||t.dataset.repclubclear||t.dataset.rep||t.dataset.replike||t.dataset.repedit||t.dataset.repdel||t.dataset.rephide||t.dataset.phdel!==undefined||t.dataset.phview||t.dataset.repclub||t.dataset.forumclub||t.dataset.repnewclub||t.dataset.repfrom||t.id==="phClose";
@@ -5161,7 +5161,7 @@ document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest
 function latestHtml(){const parts=[];let nRep=0;
   if(repState==="ready"){const reps=allReps().filter(r=>!r.draft);const last=reps.slice().sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0];
     const ym=new Date().toISOString().slice(0,7);const pop=reps.filter(r=>String(r.at).startsWith(ym)).map(r=>({r,n:likeCount(r.key)})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n)[0];
-    const card=(r,lbl,extra)=>`<button class="hcard" data-homerep="${esc(r.key)}">${r.photos.length?phImg(r.photos[0],"hthumb"):""}<span class="htxt"><span class="lbl">${lbl}</span><b>${esc(r.title)}</b><span class="meta">${esc(who(r.uid))} · ${esc(ago(r.at))}${extra||""}</span></span></button>`;
+    const card=(r,lbl,extra)=>`<button class="hcard" data-homerep="${esc(r.key)}">${r.photos.length?phImg(r.photos[0],"hthumb"):""}<span class="htxt"><span class="lbl">${lbl}</span><b>${esc(dashSp(r.title))}</b><span class="meta">${esc(who(r.uid))} · ${esc(ago(r.at))}${extra||""}</span></span></button>`;
     if(last)parts.push(card(last,$t("Senaste matchberättelsen")));if(pop&&(!last||pop.r.key!==last.key))parts.push(card(pop.r,$t("Månadens populäraste"),` · ${ic("heart")} ${pop.n}`));
     if(!reps.length)parts.push(`<button class="hcard" data-gorep="1"><span class="htxt"><span class="lbl">${$t("Matchberättelser")}</span><b>${$t("Inga matchberättelser än")}</b><span class="meta">${$t("Bli först att berätta om en resa")}</span></span></button>`);}
   nRep=parts.length;
@@ -6363,6 +6363,8 @@ function nyLastHtml(){const a=MY.attended.slice().sort((x,y)=>String(y.date).loc
 function nyChalHtml(){let best=null;try{for(const d of trophyDefs(visitedStadiums())){const nx=d.st.find(x=>x>d.v);if(!nx)continue;const r=d.v/nx;if(!best||r>best.r)best={d,nx,r};}}catch(e){return"";}
   if(!best)return"";const left=best.nx-best.d.v;
   return`<article class="tip nychal"><div class="lbl">${$t("Nästa utmaning")}</div><div class="nylr"><div style="flex:1;min-width:0"><b>${esc(best.nx===1&&best.d.first?best.d.first:best.d.nm(best.nx))}</b><div class="meta">${$t("{0} kvar · du har {1}",[left,best.d.v])}</div><div class="nymbar"><i style="width:${Math.round(best.r*100)}%"></i></div></div><button class="link strong" data-mysub="challenges">${$t("Alla")}</button></div></article>`;}
+// "Lag A–Lag B" visas som "Lag A – Lag B" (inte siffror som 2–1)
+function dashSp(t){return String(t||"").replace(/([^\d\s])–(?=[^\d\s])/g,"$1 – ");}
 function nyTvRow(a){return`<div class="mrow nytvrow"><div class="mdate">${esc(fmtDate(a.date))}</div><div class="mmain"><div class="nytvtag">${ic("image")} ${$t("På tv")}</div>${attTeams(a)}${a.comp?`<div class="venue">${esc(a.comp)}</div>`:""}<div class="pactions"><button class="link" data-tvdel="${esc(a.id)}">${$t("Ta bort")}</button></div></div></div>`;}
 function nyYearHtml(){const y=String(new Date().getFullYear());const pl=MY.attended.filter(a=>String(a.date||"").startsWith(y)).length,tv=tvYear(y).length;if(!pl&&!tv&&!(MY.tv||[]).length)return"";
   return`<article class="tip nyyear"><div class="lbl">${$t("Ditt fotbollsår {0}",[y])}</div><div class="nyyr"><div><b>${pl+tv}</b><span>${$t("matcher sett")}</span></div><div><b>${pl}</b><span>${$t("på plats")}</span></div><div><b>${tv}</b><span>${$t("på tv")}</span></div></div>
@@ -6620,7 +6622,7 @@ function profileHtml(uid){const me=uid===myId;const name=me?(MYNAME||$t("Du")):(
   const stats=[reps.length?$tn(reps.length,"{n} matchberättelse","{n} matchberättelser|pl"):"",ths.length+nrep?$tn(ths.length+nrep,"{n} inlägg","{n} inlägg|pl"):"",pd&&+pd.n>0?$t("{0} {1} · {2} arenor",[+pd.n,+pd.n===1?$t("match"):$t("matcher"),+pd.ar||0]):""].filter(Boolean).join(" · ");
   return`<div class="compose askbox profbox"><div class="profhead">${avatar(uid,52)}<div><h2 id="prT">${esc(name)}</h2>${me?`<span class="meta">${$t("Det här är du")}</span>`:""}${fav?`<div class="meta">${crest(fav.id,fav.n,18)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}</div></div>
     ${stats?`<p class="meta">${stats}</p>`:""}
-    ${reps.length?`<h3 class="sec">${$t("Matchberättelser")}</h3><div class="proflist">${reps.slice(0,5).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${esc(ago(r.at))}</span></button>`).join("")}</div>`:""}
+    ${reps.length?`<h3 class="sec">${$t("Matchberättelser")}</h3><div class="proflist">${reps.slice(0,5).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(dashSp(r.title))}</b><span class="meta">${esc(ago(r.at))}</span></button>`).join("")}</div>`:""}
     ${ths.length?`<h3 class="sec">${$t("Forumtrådar")}</h3><div class="proflist">${ths.slice(0,5).map(t=>`<button class="plink" data-upthread="${esc(t.key)}"><b>${esc(t.title)}</b><span class="meta">${esc(ago(t.at))}</span></button>`).join("")}</div>`:""}
     ${recent.length?`<h3 class="sec">${$t("Senaste matcherna")}</h3><div class="proflist">${recent.map(r=>`<div class="plink static"><b>${esc(r.h)}${r.sc?` ${esc(r.sc)} `:" – "}${esc(r.a)}</b><span class="meta">${esc([r.v,fmtDate(r.d)].filter(Boolean).join(" · "))}</span></div>`).join("")}</div>`:""}
     ${!reps.length&&!ths.length&&!recent.length?`<p class="meta">${me?$t("Du har inte skrivit något än."):$t("Har inte skrivit något än.")}</p>`:""}
@@ -6669,7 +6671,7 @@ function renderProfil(){const el=document.getElementById("profilBody");if(!el)re
       <h3 class="sec">${$t("Följer dig")} <span class="meta">(${fw.length})</span></h3>${ppl(fw,MY.showFo?$t("Ingen följer dig än."):$t("Syns bara för dem som valt att visa vilka de följer."),true)}</article>
     ${NY?"":friendsHtml()}
     <article class="tip"><div class="lbl">${$t("Det du skrivit")}</div>
-      <h3 class="sec">${$t("Matchberättelser")} <span class="meta">(${reps.length})</span></h3>${reps.length?profFold("rep",reps.slice(0,50).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(r.title)}</b><span class="meta">${r.draft?$t("Utkast · syns bara för dig"):esc(ago(r.at))}</span></button>`)):`<p class="meta">${$t("Inga matchberättelser än.")} <button class="link strong" data-gomode="reportage">${$t("Skriv matchberättelse")}</button></p>`}
+      <h3 class="sec">${$t("Matchberättelser")} <span class="meta">(${reps.length})</span></h3>${reps.length?profFold("rep",reps.slice(0,50).map(r=>`<button class="plink" data-uprep="${esc(r.key)}"><b>${esc(dashSp(r.title))}</b><span class="meta">${r.draft?$t("Utkast · syns bara för dig"):esc(ago(r.at))}</span></button>`)):`<p class="meta">${$t("Inga matchberättelser än.")} <button class="link strong" data-gomode="reportage">${$t("Skriv matchberättelse")}</button></p>`}
       <h3 class="sec">${$t("Forumtrådar")} <span class="meta">(${ths.length})</span></h3>${ths.length?profFold("th",ths.slice(0,50).map(t=>`<button class="plink" data-upthread="${esc(t.key)}"><b>${esc(t.title)}</b><span class="meta">${esc(ago(t.at))}</span></button>`)):`<p class="meta">${$t("Inga trådar än.")} <button class="link strong" data-gomode="forum">${$t("Till forumet")}</button></p>`}</article>
     ${NY?"":profSetHtml()}`;}
 // community- och kontoinställningar (i testversionen under kugghjulet)
