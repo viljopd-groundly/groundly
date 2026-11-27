@@ -3557,7 +3557,8 @@ async function drawMap(){if(!document.getElementById("img-map"))return;await fon
 function seasonCardHtml(){let h="";
   const years=[...new Set([new Date().getFullYear(),...MY.attended.map(a=>+a.date.slice(0,4))])].filter(Boolean).sort((a,b)=>b-a);
   if(seasonYear!=="all"&&!years.includes(seasonYear))seasonYear=years[0];
-  if(NY)h+=`<details class="nyshare nyseason"${NY_SEASON_OPEN?" open":""}><summary>${ic("share")} ${$t("Dela säsongskort")}</summary><p class="hint">${$t("Årets matcher i en bild att dela.")}</p>`;else h+=`<h3 class="sec">${$t("Säsongskort")}</h3><p class="hint">${$t("Årets matcher i en bild att dela.")}</p>
+  h+=NY?`<details class="nyshare nyseason"${NY_SEASON_OPEN?" open":""}><summary>${ic("share")} ${$t("Dela säsongskort")}</summary><p class="hint">${$t("Årets matcher i en bild att dela.")}</p>`:`<h3 class="sec">${$t("Säsongskort")}</h3><p class="hint">${$t("Årets matcher i en bild att dela.")}</p>`;
+  h+=`
    <div class="chips" role="group" aria-label="${$t("År")}">${years.length>1?`<button class="chip" data-year="all" aria-pressed="${seasonYear==="all"}">${$t("Alla")}</button>`:""}${years.map(y=>`<button class="chip" data-year="${y}" aria-pressed="${seasonYear===y}">${y}</button>`).join("")}</div>${fmtChips()}${studioHtml("season",seasonYear==="all"?$t("Säsongskort för alla säsonger"):$t("Säsongskort för ")+seasonYear)}`;
   if(NY)h+=`</details>`;
   return h;}
