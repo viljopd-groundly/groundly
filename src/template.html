@@ -3022,7 +3022,7 @@ function renderMine(){
   const teamsN=new Set(MY.attended.flatMap(a=>[a.home||a.homeName,a.away||a.awayName]).filter(Boolean)).size;
   const tiles=[["home",ic("heart","on"),$t("Favoritlag"),""],["been",MY.attended.length,$t("Matcher"),""],["teams",teamsN,$tn(teamsN,"Lag","Lag|pl"),""],
     ["arenas",visitedStadiums().size,$t("Arenor"),""],["wish",MY.wishMatches.length+MY.wishClubs.length,$t("Vill gå"),""],["challenges",ic("shield"),$t("Utmaningar"),""]];
-  let h=NY&&myId&&dbNs?nyProfHtml()+(mySub==="home"||!mySub?nyYearHtml():""):"";h+=`<nav class="mymenu" aria-label="${$t("Min fotboll")}">${tiles.map(([k,n,l,s])=>`<button class="mtile" data-mysub="${k}" aria-pressed="${mySub===k}"><b>${n}</b><span>${l}</span>${s?`<small>${s}</small>`:""}</button>`).join("")}</nav>
+  let h=NY&&myId&&dbNs?nyProfHtml():"";h+=`<nav class="mymenu" aria-label="${$t("Min fotboll")}">${tiles.map(([k,n,l,s])=>`<button class="mtile" data-mysub="${k}" aria-pressed="${mySub===k}"><b>${n}</b><span>${l}</span>${s?`<small>${s}</small>`:""}</button>`).join("")}</nav>
    ${myErr?`<p class="err">${esc(myErr)}</p>`:""}`;
   const visNT=[...vm.entries()].filter(([id])=>C[id]&&isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
   const vis=[...vm.entries()].filter(([id])=>C[id]&&!isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
@@ -3060,7 +3060,7 @@ function renderMine(){
     if(myYear!=="all"&&myYear!=="old"&&!yCount[myYear])myYear="all";if(myYear==="old"&&!oldN)myYear="all";
     const att=myYear==="all"?attAll:myYear==="old"?attAll.filter(a=>!yTop.includes((a.date||"").slice(0,4))):attAll.filter(a=>(a.date||"").startsWith(myYear));
     const yearChips=attAll.length?`<div class="chips" role="group" aria-label="${$t("Visa år")}">${[["all",$t("Alla"),attAll.length],...yTop.map(y=>[y,y,yCount[y]]),...(oldN?[["old",$t("Tidigare"),oldN]]:[])].map(([k,l,n])=>`<button class="chip" data-myyear="${k}" aria-pressed="${myYear===k}">${l}<small>${n}</small></button>`).join("")}</div>`:"";
-    h+=NY?`<div class="sechead"><h3 class="sec">${$t("Matcher jag sett")}</h3></div><p class="meta" style="margin:-4px 0 8px">${$t("{0} på plats · {1} på tv",[MY.attended.length,tvItems.length])}</p><div class="chips" role="group" aria-label="${$t("Visa")}">${[["all",$t("Alla")],["site",$t("På plats")],["tv",$t("På tv")]].map(([k,l])=>`<button class="chip" data-mywhere="${k}" aria-pressed="${MYWHERE===k}">${l}</button>`).join("")}</div>`+yearChips:`<div class="sechead"><h3 class="sec">${$t("Matcher jag varit på")}</h3></div>`+yearChips;
+    h+=NY?`${nyYearHtml()}<div class="sechead"><h3 class="sec">${$t("Matcher jag sett")}</h3></div><div class="chips" role="group" aria-label="${$t("Visa")}">${[["all",$t("Alla")],["site",$t("På plats")],["tv",$t("På tv")]].map(([k,l])=>`<button class="chip" data-mywhere="${k}" aria-pressed="${MYWHERE===k}">${l}</button>`).join("")}</div>`+yearChips:`<div class="sechead"><h3 class="sec">${$t("Matcher jag varit på")}</h3></div>`+yearChips;
     const attShow=att.filter((a,i)=>i<MYMORE.att||a.id===editAtt||a.id===shareMatchId);
     h+=att.length?attShow.map(a=>a._tv?nyTvRow(a):`<div class="mrow">
       <div class="mdate">${esc(fmtDate(a.date))}</div>
@@ -6359,7 +6359,7 @@ function pubRows(uid){const d=PUBLIC[uid];return d&&Array.isArray(d.recent)?d.re
 function nyTvRow(a){return`<div class="mrow nytvrow"><div class="mdate">${esc(fmtDate(a.date))}</div><div class="mmain"><div class="nytvtag">${ic("image")} ${$t("På tv")}</div>${attTeams(a)}${a.comp?`<div class="venue">${esc(a.comp)}</div>`:""}<div class="pactions"><button class="link" data-tvdel="${esc(a.id)}">${$t("Ta bort")}</button></div></div></div>`;}
 function nyYearHtml(){const y=String(new Date().getFullYear());const pl=MY.attended.filter(a=>String(a.date||"").startsWith(y)).length,tv=tvYear(y).length;if(!pl&&!tv&&!(MY.tv||[]).length)return"";
   return`<article class="tip nyyear"><div class="lbl">${$t("Ditt fotbollsår {0}",[y])}</div><div class="nyyr"><div><b>${pl+tv}</b><span>${$t("matcher sett")}</span></div><div><b>${pl}</b><span>${$t("på plats")}</span></div><div><b>${tv}</b><span>${$t("på tv")}</span></div></div>
-    ${(MY.tv||[]).length?`<button class="link strong" data-nytvall="1">${$t("Visa alla tv-matcher")} (${(MY.tv||[]).length})</button>`:""}<p class="hint" style="margin:10px 0 0">${$t("Logga tv-matcher med På tv på matchraden eller via Logga. De räknas aldrig som arenabesök.")}</p></article>`;}
+<p class="hint" style="margin:10px 0 0">${$t("Logga tv-matcher med På tv på matchraden eller via Logga. De räknas aldrig som arenabesök.")}</p></article>`;}
 function nyProfHtml(){let nm="";try{nm=MYNAME||"";}catch(e){}const fav=favList()[0]&&C[favList()[0]];const n=follows().length;const weak=weakName(nm);
   return`<article class="tip nyprof">${avatar(myId,48)}<div style="min-width:0"><h2 class="name">${esc(weak?$t("Inget namn valt"):nm)}</h2>${fav?`<div class="meta">${crest(fav.id,fav.n,16)} ${$t("Håller på {0}",[esc(fav.n)])}</div>`:""}
     <div class="nypl">${weak?`<button class="link strong" data-myname="1">${$t("Välj namn")}</button>`:""}${isMod?`<button class="link" data-gomod="1">${$t("Moderering")}</button>`:""}</div></div></article>`;}
