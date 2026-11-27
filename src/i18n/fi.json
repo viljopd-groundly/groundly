@@ -2956,5 +2956,7 @@
  "Matcher jag sett": "Näkemäni ottelut",
  "{0} på plats · {1} på tv": "{0} paikan päällä · {1} tv:stä",
  "Visa alla tv-matcher": "Näytä kaikki tv-ottelut",
- "Översikt": "Yleiskatsaus"
+ "Översikt": "Yleiskatsaus",
+ "Nästa utmaning": "Seuraava haaste",
+ "{0} kvar · du har {1}": "{0} jäljellä · sinulla {1}"
 }

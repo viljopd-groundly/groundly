@@ -2957,5 +2957,7 @@
  "Matcher jag sett": "Partidos que he visto",
  "{0} på plats · {1} på tv": "{0} en el estadio · {1} en la tele",
  "Visa alla tv-matcher": "Ver todos los partidos en la tele",
- "Översikt": "Resumen"
+ "Översikt": "Resumen",
+ "Nästa utmaning": "Próximo reto",
+ "{0} kvar · du har {1}": "faltan {0} · tienes {1}"
 }

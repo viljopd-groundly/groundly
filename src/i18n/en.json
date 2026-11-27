@@ -3044,5 +3044,7 @@
  "Såg på tv": "Watched on TV",
  "Matcher jag sett": "Matches I've watched",
  "{0} på plats · {1} på tv": "{0} at the ground · {1} on TV",
- "Visa alla tv-matcher": "Show all TV matches"
+ "Visa alla tv-matcher": "Show all TV matches",
+ "Nästa utmaning": "Next challenge",
+ "{0} kvar · du har {1}": "{0} to go · you have {1}"
 }

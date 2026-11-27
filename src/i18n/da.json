@@ -2957,5 +2957,7 @@
  "Matcher jag sett": "Kampe jeg har set",
  "{0} på plats · {1} på tv": "{0} på stadion · {1} på tv",
  "Visa alla tv-matcher": "Vis alle tv-kampe",
- "Översikt": "Oversigt"
+ "Översikt": "Oversigt",
+ "Nästa utmaning": "Næste udfordring",
+ "{0} kvar · du har {1}": "{0} tilbage · du har {1}"
 }

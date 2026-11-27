@@ -2956,5 +2956,7 @@
  "Matcher jag sett": "Leikir sem ég hef séð",
  "{0} på plats · {1} på tv": "{0} á vellinum · {1} í sjónvarpi",
  "Visa alla tv-matcher": "Sýna alla sjónvarpsleiki",
- "Översikt": "Yfirlit"
+ "Översikt": "Yfirlit",
+ "Nästa utmaning": "Næsta áskorun",
+ "{0} kvar · du har {1}": "{0} eftir · þú ert með {1}"
 }
