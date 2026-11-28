@@ -581,7 +581,10 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 /* mobil: menyraden ska ligga kant i kant upptill redan från start (annars syns en remsa från body-marginalen som försvinner när raden fastnar vid scroll) */
 @media (max-width:760px){.ny .topbar{margin-top:-24px!important}}
 /* mobil: flikraderna ska ligga direkt under toppraden redan från start, så att de inte hoppar upp 14 px när de fastnar vid scroll */
-@media (max-width:760px){.ny .nymtabs,.ny .nyseg:not(.nywhere),.ny .commtabs,.ny .resatabs{margin-top:-14px!important}}}.nyplanrow{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;padding:14px 16px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);font-weight:700}
+@media (max-width:760px){.ny .nymtabs,.ny .nyseg:not(.nywhere),.ny .commtabs,.ny .resatabs{margin-top:-14px!important}}
+/* samma textstorlek på alla flikrader (Resor var förebilden) */
+.ny .nymtabs .chip,.ny .nyseg:not(.nywhere) button,.ny .commtabs button,.ny .resatabs button{font-size:15px!important}
+.ny .nymtabs .chip small{font-size:13px}.ny .nymtabs .chip,.ny .nyseg:not(.nywhere) button,.ny .commtabs button,.ny .resatabs button{line-height:1.45!important}}.nyplanrow{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;padding:14px 16px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);font-weight:700}
 :root[data-edge="none"] .nyplanrow{box-shadow:0 1px 2px rgba(10,20,40,.06),0 6px 18px rgba(10,20,40,.06)}.nyplanrow span{flex:1}.nyplanrow b:not(.nytgo){color:var(--accent)}.nyplanrow .ic{width:20px;height:20px;color:var(--accent)}.ny button.link,.ny a.link,.ny label.link{text-decoration:none;color:var(--accent);font-weight:600}.ny button.link:hover,.ny a.link:hover{text-decoration:underline}
 .ny .pill.t2,.ny .pill.t3,.ny .pill.t4,.ny .pill.t5{background:var(--pitch-soft);color:var(--pitch)}.ny .pill.ec,.ny .pill.ai,.ny .pill.cultp{background:var(--soft2);color:var(--fg)}
 .nydots{position:relative;display:inline-block}.nydots>summary{list-style:none;cursor:pointer;font-weight:800;font-size:20px;line-height:1;padding:0 10px;border-radius:8px;color:var(--muted)}.nydots>summary::-webkit-details-marker{display:none}
