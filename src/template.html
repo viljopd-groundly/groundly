@@ -2084,10 +2084,10 @@ let ntQ="",ntView="a";
 function cupArenaClub(name){const k=arenaKey(name);return Object.values(C).find(c=>c.s&&arenaKey(c.s)===k)||null;}
 function renderCups(toks){const list=CUPS.filter(x=>toks.every(t=>norm([x[1],x[3],...x[5].map(a=>a[0]+" "+a[1])].join(" ")).includes(t)));
   document.getElementById("ntCount").innerHTML=`<b>${list.length}</b> ${$t("kommande mästerskap")}`;
-  document.getElementById("ntList").innerHTML=list.map(([id,n,d,hosts,desc,ar,src])=>`<article class="tip"><div class="tip-head"><h2 class="name">${esc($t(n))}</h2><span class="meta">${esc($t(d))}</span></div>
+  document.getElementById("ntList").innerHTML=list.map(([id,n,d,hosts,desc,ar,src,off])=>`<article class="tip"><div class="tip-head"><h2 class="name">${esc($t(n))}</h2><span class="meta">${esc($t(d))}</span></div>
     <div class="meta">${$t("{0} · {1} arenor",[esc($t(hosts)),ar.length])}</div><p>${esc($t(desc))}</p>
     <details><summary>${$t("Arenor")}</summary><div class="cuparenas">${ar.map(([a,city,cap])=>{const c=cupArenaClub(a);return`<div>${c?`<button class="link" data-open="${esc(c.id)}">${esc(a)}</button>`:esc(a)} <span class="meta">${esc($t(city))}${cap?$t(" · {0} platser",[fmtCap(cap)]):""}</span></div>`;}).join("")}</div></details>
-    <div class="actions">${extLink(src,$t("Läs mer"),"btn small")}</div></article>`).join("")||`<div class="empty"><b>${$t("Inget mästerskap matchar.")}</b></div>`;}
+    <div class="actions">${off?extLink(off,$t("Officiell sida"),"btn small"):""}${extLink(src,$t("Läs mer"),"btn small")}</div></article>`).join("")||`<div class="empty"><b>${$t("Inget mästerskap matchar.")}</b></div>`;}
 let ntConf="UEFA";try{const v=store.get("fk-ntconf");if(v==="alla"||["UEFA","CONMEBOL","CONCACAF","CAF","AFC","OFC"].includes(v))ntConf=v;}catch(e){}
 function renderNat(){const nq=norm(ntQ);const toks=nq?nq.split(" "):[];
   document.getElementById("ntChips").innerHTML=[["a",$t("A-landslag")],["w",$t("Damlandslag")],["u21","U21"],["cups",$t("Mästerskap")]].map(([k,l])=>`<button class="chip" data-ntview="${k}" aria-pressed="${ntView===k}">${l}</button>`).join("");
