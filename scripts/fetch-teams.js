@@ -10,6 +10,10 @@ const GEOC = {};
 function geocode(q) { if (q in GEOC) return GEOC[q]; let r = null;
   try { const j = JSON.parse(execSync(`curl -sS -m 30 -H "User-Agent: groundly-bot (github.com/viljopd-groundly/groundly)" "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}"`, { encoding: "utf8" })); if (j && j[0]) r = [+(+j[0].lat).toFixed(4), +(+j[0].lon).toFixed(4)]; } catch (e) {}
   sleep(1100); GEOC[q] = r; return r; }
+// Sök lag på namn: SEARCH="Clapton;Altona" skriver tools/team_search.json (id, namn, land, märke)
+const searches = (process.env.SEARCH || "").split(";").map(x => x.trim()).filter(Boolean);
+if (searches.length) { const res = {}; for (const q of searches) { try { res[q] = get(`teams?search=${encodeURIComponent(q)}`).map(x => [x.team.id, x.team.name, x.team.country, x.team.logo]); } catch (e) { res[q] = String(e.message).slice(0, 200); } }
+  fs.writeFileSync(path.join(__dirname, "..", "tools", "team_search.json"), JSON.stringify(res, null, 1)); console.log(JSON.stringify(res, null, 1)); process.exit(0); }
 // Flera länder på en gång: JOBS="Argentina=^liga profesional;Brazil=^serie (a|b)$" skriver tools/teams_world.json
 const jobs = (process.env.JOBS || "").split(";").map(x => x.trim()).filter(Boolean).map(x => { const i = x.indexOf("="); return [x.slice(0, i).trim(), x.slice(i + 1).trim()]; });
 if (jobs.length) { const res = []; for (const [c, m] of jobs) { try { res.push(fetchCountry(c, new RegExp(m, "i"), true)); } catch (e) { res.push({ country: c, error: String(e.message).slice(0, 200) }); } }
