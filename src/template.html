@@ -1840,6 +1840,13 @@ const VIEW_SV={hem:$t("Hem"),klubbar:$t("Klubbar"),landslag:$t("Landslag"),areno
 let navPop=false,pendingJump=null,jumpFrom=null,topNav=false,RESA_BACK=null;
 // menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
 function goTop(m){if(typeof TRIP_FROMHOME!=="undefined")TRIP_FROMHOME=null;if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";mySubAuto=true;arView="list";}if(m==="resa"&&typeof RESA_TAB!=="undefined")RESA_TAB="plan";topNav=true;try{setMode(m);}finally{topNav=false;}}
+// mobil: lägg flikraden direkt under toppraden. Avståndet mäts i stället för att gissas, eftersom det skiljer mellan enheter (t.ex. tomma rader som ändå får mellanrum).
+let _tgRaf=0;function fixTabGap(){if(_tgRaf)return;_tgRaf=requestAnimationFrame(()=>{_tgRaf=0;try{if(!NY||innerWidth>760||scrollY>2)return;const tb=document.querySelector(".topbar");if(!tb)return;
+  const t=[...document.querySelectorAll(".nymtabs,.nyseg:not(.nywhere),.commtabs,.resatabs")].find(x=>x.offsetParent);if(!t)return;
+  const gap=t.getBoundingClientRect().top-tb.getBoundingClientRect().bottom;if(Math.abs(gap)<0.5||gap>80)return;
+  t.style.setProperty("margin-top",(parseFloat(getComputedStyle(t).marginTop)-gap)+"px","important");}catch(e){}});}
+addEventListener("scroll",()=>{if(scrollY<=2)fixTabGap();},{passive:true});addEventListener("resize",fixTabGap);
+try{new MutationObserver(fixTabGap).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
 function syncBack(){let b=document.getElementById("backPill");
   if(!b){document.body.insertAdjacentHTML("beforeend",`<button id="backPill" class="backpill" hidden></button>`);b=document.getElementById("backPill");b.onclick=()=>{if(b.dataset.backny!==undefined){const f=NY_PLAN_BACK;NY_PLAN_BACK=null;if(f)f.fn();return;}if(b.dataset.backtop!==undefined||b.dataset.backhome!==undefined)return;/* sköts av resans klickhanterare */if(clubStack.length){if(history.state&&history.state.cjump)history.back();else clubBack();return;}if(history.state&&history.state.jump)history.back();else if(jumpFrom)setMode(jumpFrom);};}
   const rb=mode==="resa"&&RESA_BACK;delete b.dataset.backtop;delete b.dataset.backhome;delete b.dataset.backny;
