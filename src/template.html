@@ -2739,7 +2739,7 @@ let tipsQT=0;document.addEventListener("input",e=>{if(e.target.id!=="tipsQ")retu
 let TIPS_IX=null;
 function tipsIndex(){if(TIPS_IX)return TIPS_IX;const ctry=new Map(),city=new Map(),items=[];const addC=c=>{if(!c)return;ctry.set(c.c,(ctry.get(c.c)||0)+1);if(c.city)city.set(c.city+"|"+c.c,(city.get(c.city+"|"+c.c)||0)+1);};
   const seenClub=new Set(TIPS.cult.map(r=>r[0]));
-  TIPS.derbies.forEach(r=>{r[2].forEach(id=>{const c=C[id];addC(c);if(c&&!seenClub.has(id)){seenClub.add(id);items.push(["club",c.n,c.city||""]);}});items.push(["derby",$t(r[1]),$t(r[3])]);});
+  TIPS.derbies.forEach(r=>{const dc=new Map();r[2].forEach(id=>{const c=C[id];if(c)dc.set(c.c+"|"+(c.city||""),c);if(c&&!seenClub.has(id)){seenClub.add(id);items.push(["club",c.n,c.city||""]);}});const dl=new Set();dc.forEach(c=>{if(!dl.has(c.c)){dl.add(c.c);ctry.set(c.c,(ctry.get(c.c)||0)+1);}if(c.city)city.set(c.city+"|"+c.c,(city.get(c.city+"|"+c.c)||0)+1);});items.push(["derby",$t(r[1]),$t(r[3])]);});
   TIPS.cult.forEach(r=>{const c=C[r[0]];addC(c);items.push(["cult",c?c.n:$t(r[1]),c?$t(c.c):""]);});
   (TIPS.arenas||[]).forEach(r=>{const c=C[r[0]];addC(c);items.push(["arena",c&&c.s?c.s:$t(r[1]),c?c.city:""]);});
   return TIPS_IX={ctry:[...ctry].map(([c,n])=>[$t(c),n]),city:[...city].map(([k,n])=>[k.split("|")[0],n,$t(k.split("|")[1])]),items:items.map(x=>[...x,norm(x[1])])};}
