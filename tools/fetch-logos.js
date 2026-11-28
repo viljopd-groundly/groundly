@@ -14,12 +14,14 @@ for (const [id, aid] of Object.entries(ids)) {
   if (fs.existsSync(f)) continue;
   if (bad[id] && now - bad[id] < 30 * 864e5) continue;
   if (tried >= MAX) break; tried++;
+  // bildservern begränsar snabba anrop – försök upp till tre gånger med paus innan märket räknas som saknat
+  const dl = () => execFileSync("curl", ["-sSfL", "-m", "30", `https://media.api-sports.io/football/teams/${aid}.png`], { maxBuffer: 8 << 20 });
   try {
-    const buf = execFileSync("curl", ["-sSfL", "-m", "30", `https://media.api-sports.io/football/teams/${aid}.png`], { maxBuffer: 8 << 20 });
+    let buf = null; for (let k = 0; k < 3 && !buf; k++) { try { buf = dl(); } catch (e) { if (k === 2) throw e; execFileSync("sleep", [String(2 + 3 * k)]); } }
     if (buf.length > 200 && buf[0] === 0x89 && buf[1] === 0x50) { fs.writeFileSync(f, buf); got++; delete bad[id]; }
     else { bad[id] = now; fail++; }
   } catch (e) { bad[id] = now; fail++; }
-  execFileSync("sleep", ["0.05"]);
+  execFileSync("sleep", ["0.25"]);
 }
 // platshållare ("image not available", "official logo soon", tom sköld): samma bild hos många olika klubbar tas bort
 const crypto = require("crypto"), byHash = {};
