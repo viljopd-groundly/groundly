@@ -1,58 +1,21 @@
 {
- "Dundee United": [
+ "Dundee Utd": [
   [
-   16852,
-   "Dundee United II",
+   1386,
+   "Dundee Utd",
    "Scotland",
-   "https://media.api-sports.io/football/teams/16852.png"
-  ],
-  [
-   23292,
-   "Dundee United W",
-   "Scotland",
-   "https://media.api-sports.io/football/teams/23292.png"
+   "https://media.api-sports.io/football/teams/1386.png"
   ]
  ],
- "Clapton": [
+ "Wiener SC": [
   [
-   8744,
-   "Clapton",
-   "England",
-   "https://media.api-sports.io/football/teams/8744.png"
-  ],
-  [
-   18195,
-   "Clapton Community W",
-   "England",
-   "https://media.api-sports.io/football/teams/18195.png"
+   4965,
+   "Wiener SC",
+   "Austria",
+   "https://media.api-sports.io/football/teams/4965.png"
   ]
  ],
- "Altona": [
-  [
-   3797,
-   "Altona Magic",
-   "Australia",
-   "https://media.api-sports.io/football/teams/3797.png"
-  ],
-  [
-   9338,
-   "Altona 93",
-   "Germany",
-   "https://media.api-sports.io/football/teams/9338.png"
-  ],
-  [
-   27693,
-   "Altona City",
-   "Australia",
-   "https://media.api-sports.io/football/teams/27693.png"
-  ],
-  [
-   27938,
-   "Altona U19",
-   "Germany",
-   "https://media.api-sports.io/football/teams/27938.png"
-  ]
- ],
- "Wiener Sport": [],
- "Lebowski": []
+ "Sportklub": [],
+ "Wiener Sportklub": [],
+ "Storico": []
 }
