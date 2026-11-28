@@ -589,7 +589,7 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 @media (max-width:760px){.ny .nymtabs,.ny .nyseg:not(.nywhere),.ny .commtabs,.ny .resatabs{margin-top:-14px!important}}
 /* samma textstorlek på alla flikrader (Resor var förebilden) */
 .ny .nymtabs .chip,.ny .nyseg:not(.nywhere) button,.ny .commtabs button,.ny .resatabs button{font-size:15px!important}
-.ny .nymtabs .chip small{font-size:13px}.ny .nymtabs .chip,.ny .nyseg:not(.nywhere) button,.ny .commtabs button,.ny .resatabs button{line-height:1.45!important}}.nyplanrow{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;padding:14px 16px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);font-weight:700}
+.ny .nymtabs .chip small{font-size:13px}.ny .nymtabs .chip,.ny .nyseg:not(.nywhere) button,.ny .commtabs button,.ny .resatabs button{line-height:1.45!important}}.nyplanrow{all:unset;box-sizing:border-box;cursor:pointer;display:flex;max-width:none!important;align-items:center;gap:10px;width:100%;padding:14px 16px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);font-weight:700}
 :root[data-edge="none"] .nyplanrow{box-shadow:0 1px 2px rgba(10,20,40,.06),0 6px 18px rgba(10,20,40,.06)}.nyplanrow span{flex:1}.nyplanrow b:not(.nytgo){color:var(--accent)}.nyplanrow .ic{width:20px;height:20px;color:var(--accent)}.ny button.link,.ny a.link,.ny label.link{text-decoration:none;color:var(--accent);font-weight:600}.ny button.link:hover,.ny a.link:hover{text-decoration:underline}
 .ny .pill.t2,.ny .pill.t3,.ny .pill.t4,.ny .pill.t5{background:var(--pitch-soft);color:var(--pitch)}.ny .pill.ec,.ny .pill.ai,.ny .pill.cultp{background:var(--soft2);color:var(--fg)}
 .nydots{position:relative;display:inline-block}.nydots>summary{list-style:none;cursor:pointer;font-weight:800;font-size:20px;line-height:1;padding:0 10px;border-radius:8px;color:var(--muted)}.nydots>summary::-webkit-details-marker{display:none}
@@ -1378,7 +1378,7 @@ html:root[data-look="kit"][data-kitbg]:not([data-theme="dark"]) .bnav{box-shadow
 @media (min-width:1024px){
   #homeBody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;gap:14px;align-items:start}
   #homeBody>*{margin:0!important;min-width:0}
-  #homeBody>.howto,#homeBody>.community,#homeBody>.homecust,#homeBody>.wide{grid-column:1/-1}
+  #homeBody>.howto,#homeBody>.community,#homeBody>.homecust,#homeBody>.wide,#homeBody>.nyplanrow{grid-column:1/-1}
 }
 .mfacts{margin:6px 0 4px;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px;line-height:1.45}.mfacts li::marker{color:var(--accent)}
 /* Tips för helgen: kompaktare kort */
@@ -5317,12 +5317,12 @@ function renderHome0(){const el=document.getElementById("homeBody");if(!el)retur
   const rs=[...el.querySelectorAll(".wkrow,.hscroll")];if(rs.length===sx.length)rs.forEach((r,i)=>{if(sx[i])r.scrollLeft=sx[i];});}
 // bred skärm: rutorna läggs i två spalter, varje ruta i den spalt som är kortast just då (inga luckor)
 const HOME_WIDE=e=>e.matches(".howto,.community,.homecust,.wide,.intro,.hometag")||!e.matches(".tip,article");
-function homeMasonry(el){if(innerWidth<1024)return;const kids=[...el.children];el.textContent="";let cols=null;
+function homeMasonry(el){if(innerWidth<1024)return;const kids=[...el.children];el.textContent="";let cols=null;let heroPend=kids.some(k=>k.matches&&k.matches(".hero"));
   for(const k of kids){if(HOME_WIDE(k)){el.appendChild(k);cols=null;continue;}
     if(!cols){const w=document.createElement("div");w.className="hmas hbuild";cols=[document.createElement("div"),document.createElement("div")];cols.forEach(c=>w.appendChild(c));el.appendChild(w);}
     // fast plats: Veckans match till vänster, Din säsong till höger
-    if(k.matches(".hero")){cols[0].appendChild(k);continue;}if(k.matches(".season")){cols[1].appendChild(k);continue;}
-    const h0=cols[0].offsetHeight,h1=cols[1].offsetHeight;(h0||h1?(h0<=h1?cols[0]:cols[1]):(cols[0].children.length<=cols[1].children.length?cols[0]:cols[1])).appendChild(k);}
+    if(k.matches(".hero")){heroPend=false;cols[0].appendChild(k);continue;}if(k.matches(".season")){cols[1].appendChild(k);continue;}
+    const h0=cols[0].offsetHeight,h1=cols[1].offsetHeight;(h0||h1?(h0<=h1?cols[0]:cols[1]):heroPend&&!cols[1].children.length?cols[1]:(cols[0].children.length<=cols[1].children.length?cols[0]:cols[1])).appendChild(k);}
   el.querySelectorAll(".hbuild").forEach(w=>w.classList.remove("hbuild"));}
 {let wide=innerWidth>=1024;addEventListener("resize",()=>{const w=innerWidth>=1024;if(w!==wide){wide=w;if(typeof mode!=="undefined"&&mode==="hem")renderHome();}});}
 // resans datum som visas: från första till sista valda matchen (sökperioden används bara för att hitta matcher)
