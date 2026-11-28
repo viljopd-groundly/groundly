@@ -371,7 +371,7 @@ module.exports=[
 ["hu-zalaegersz", "Zalaegerszegi TE", "zalaegerszeg", "Ungern", "Zalaegerszeg", 1920, "NB I", 1, "ZTE-Aréna", 11200, "ZTE", [], 1],
 // ---- Irland, Premier Division (Irland)
 ["ie-dundalk", "Dundalk", "dundalk fc", "Irland", "Dundalk", 1903, "Premier Division (Irland)", 1, "Oriel Park", 4500, "The Lilywhites", [], 1],
-["ie-shamrock", "Shamrock Rovers", "", "Irland", "Dublin", 1899, "Premier Division (Irland)", 1, "Tallaght Stadium", 10500, "The Hoops", [], 1],
+["ie-shamrock", "Shamrock Rovers", "", "Irland", "Dublin", 1899, "Premier Division (Irland)", 1, "Tallaght Stadium", 10500, "The Hoops", ["22 ligatitlar (senast 2025)", "26 irländska cuptitlar"], 1],
 ["ie-derry", "Derry City", "", "Nordirland", "Derry", 1928, "Premier Division (Irland)", 1, "The Ryan McBride Brandywell Stadium", 7000, "The Candystripes", [], 1],
 ["ie-bohemians", "Bohemians", "bohemian fc", "Irland", "Dublin", 1890, "Premier Division (Irland)", 1, "Dalymount Park", 4443, "The Gypsies", [], 1],
 ["ie-sligorover", "Sligo Rovers", "", "Irland", "Sligo", 1928, "Premier Division (Irland)", 1, "The Showgrounds", 6100, "The Bit o' Red", [], 1],

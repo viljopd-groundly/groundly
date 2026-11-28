@@ -97,7 +97,7 @@ module.exports=[
 // ---- Estland, Meistriliiga
 ["ee-nommekalju", "Nõmme Kalju", "nomme kalju kalju nomme", "Estland", "Tallinn", 1997, "Meistriliiga", 1, "Hiiu staadion", 2730, "", [], 1],
 ["ee-floratallinn", "Flora Tallinn", "flora tallinn", "Estland", "Tallinn", 1990, "Meistriliiga", 1, "A. Le Coq Arena", 14405, "", [], 1],
-["ee-levadiatalli", "Levadia Tallinn", "levadia tallinn fc levadia tallinn", "Estland", "Tallinn", 1998, "Meistriliiga", 1, "A. Le Coq Arena", 14405, "", [], 1],
+["ee-levadiatalli", "Levadia Tallinn", "levadia tallinn fc levadia tallinn", "Estland", "Tallinn", 1998, "Meistriliiga", 1, "A. Le Coq Arena", 14405, "", ["11 ligatitlar (senast 2024)", "11 estniska cuptitlar"], 1],
 ["ee-narvatrans", "Narva Trans", "narva trans trans narva", "Estland", "Narva", 1979, "Meistriliiga", 1, "Kalevi Staadion", 1000, "", [], 1],
 ["ee-vaprusparnu", "Vaprus Pärnu", "vaprus parnu vaprus", "Estland", "Pärnu", 1922, "Meistriliiga", 1, "Pärnu Rannastaadion", 2495, "", [], 1],
 ["ee-kuressaare", "FC Kuressaare", "fc kuressaare kuressaare", "Estland", "Kuressaare", 1997, "Meistriliiga", 1, "Kuressaare linnastaadion", 1600, "", [], 1],
@@ -108,7 +108,7 @@ module.exports=[
 // ---- Färöarna, Betri deildin
 ["fo-vikingurgta", "Víkingur Gøta", "vikingur gta vikingur gota", "Färöarna", "Gøta", 2008, "Betri deildin", 1, "Sarpugerði", 3000, "", [], 1],
 ["fo-b36torshavn", "B36 Tórshavn", "b36 torshavn", "Färöarna", "Tórshavn", 1936, "Betri deildin", 1, "Gundadalur", 5000, "", [], 1],
-["fo-nsirunavik", "NSÍ Runavík", "nsi runavik", "Färöarna", "Runavík", 1957, "Betri deildin", 1, "við Løkin", 2000, "", [], 1],
+["fo-nsirunavik", "NSÍ Runavík", "nsi runavik", "Färöarna", "Runavík", 1957, "Betri deildin", 1, "við Løkin", 2000, "", ["Ligatitel 2007", "3 färöiska cuptitlar"], 1],
 ["fo-kiklaksvik", "KÍ Klaksvík", "ki klaksvik", "Färöarna", "Klaksvík", 1905, "Betri deildin", 1, "Injector Arena", 4000, "", [], 1],
 ["fo-hbtorshavn", "HB Tórshavn", "hb torshavn", "Färöarna", "Tórshavn", 1904, "Betri deildin", 1, "Gundadalur", 5000, "", [], 1],
 ["fo-07vestur", "07 Vestur", "07 vestur", "Färöarna", "Sørvágur", 2004, "Betri deildin", 1, "á Dungasandi", 500, "", [], 1],
@@ -157,7 +157,7 @@ module.exports=[
 // ---- Kazakstan, Premier League (Kazakstan)
 ["kz-astana", "FK Astana", "fk astana fc astana", "Kazakstan", "Astana", 2009, "Premier League (Kazakstan)", 1, "Astana Arena", 30000, "", [], 1],
 ["kz-kairatalmaty", "Kairat Almaty", "kairat almaty", "Kazakstan", "Almaty", 1952, "Premier League (Kazakstan)", 1, "Ortalyq stadıon", 26242, "", [], 1],
-["kz-ordabasy", "Ordabasy", "ordabasy", "Kazakstan", "Sjymkent", 1998, "Premier League (Kazakstan)", 1, "Stadion Qajimuqan Muñaytpasov", 37000, "", [], 1],
+["kz-ordabasy", "Ordabasy", "ordabasy", "Kazakstan", "Sjymkent", 1998, "Premier League (Kazakstan)", 1, "Stadion Qajimuqan Muñaytpasov", 37000, "", ["Ligatitel 2023", "2 kazakiska cuptitlar"], 1],
 ["kz-tobolkostana", "Tobol Kostanaj", "tobol kostanaj fk tobol kostanay", "Kazakstan", "Kostanaj", 1967, "Premier League (Kazakstan)", 1, "Ortalyq stadıon", 8432, "", [], 1],
 ["kz-altajsemej", "Altaj Semej", "altaj semej altay", "Kazakstan", "Semej", 2016, "Premier League (Kazakstan)", 1, "Stadion Spartak", 11000, "", [], 1],
 ["kz-kaspijaktau", "Kaspij Aktau", "kaspij aktau kaspiy", "Kazakstan", "Aktau", 1962, "Premier League (Kazakstan)", 1, "Stadion Jas kanat", 5000, "", [], 1],
@@ -201,7 +201,7 @@ module.exports=[
 ["lt-dziugastelsi", "Džiugas Telšiai", "dziugas telsiai", "Litauen", "Telšiai", 2014, "A lyga", 1, "Telšių centrinis stadionas", 2000, "", [], 1],
 ["lt-hegelmann", "Hegelmann", "hegelmann hegelmann litauen", "Litauen", "Kaunas", 2009, "A lyga", 1, "LFF Kauno treniruočių centras", 1500, "", [], 1],
 ["lt-fasiauliai", "FA Šiauliai", "fa siauliai siauliai", "Litauen", "Šiauliai", 2007, "A lyga", 1, "Šiaulių Gytarių stadionas", 1500, "", [], 1],
-["lt-kaunozalgiri", "Kauno Žalgiris", "kauno zalgiris", "Litauen", "Kaunas", 2005, "A lyga", 1, "S. Dariaus ir S. Girėno stadionas", 15315, "", [], 1],
+["lt-kaunozalgiri", "Kauno Žalgiris", "kauno zalgiris", "Litauen", "Kaunas", 2005, "A lyga", 1, "S. Dariaus ir S. Girėno stadionas", 15315, "", ["Ligatitel 2025"], 1],
 ["lt-panevezys", "FK Panevėžys", "fk panevezys panevezys", "Litauen", "Panevėžys", 2015, "A lyga", 1, "Žemynos progimnazijos stadionas", 1000, "", [], 1],
 ["lt-transinvest", "TransINVEST", "transinvest transinvest vilnius", "Litauen", "Širvintos", 2022, "A lyga", 1, "Širvintų stadionas", 1500, "", [], 1],
 // ---- Luxemburg, BGL Ligue
