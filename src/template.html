@@ -3052,8 +3052,9 @@ function renderMine(){
   const teamsN=new Set(MY.attended.flatMap(a=>[a.home||a.homeName,a.away||a.awayName]).filter(Boolean)).size;
   const tiles=[["home",NY?ic("user"):ic("heart","on"),NY?$t("Översikt"):$t("Favoritlag"),""],["been",MY.attended.length,$t("Matcher"),""],["teams",teamsN,$tn(teamsN,"Lag","Lag|pl"),""],
     ["arenas",visitedStadiums().size,$t("Arenor"),""],["wish",MY.wishMatches.length+MY.wishClubs.length,$t("Vill gå"),""],["challenges",ic("shield"),$t("Utmaningar"),""]];
-  let h=NY&&myId&&dbNs&&mySub==="home"?nyProfHtml(tiles):"";h+=NY?`<nav class="nymtabs" aria-label="${$t("Min fotboll")}">${tiles.map(([k,n,l])=>`<button class="chip" data-mysub="${k}" aria-pressed="${mySub===k}">${l}${typeof n==="number"?` <small>${n}</small>`:""}</button>`).join("")}</nav>`:`<nav class="mymenu" aria-label="${$t("Min fotboll")}">${tiles.map(([k,n,l,s])=>`<button class="mtile" data-mysub="${k}" aria-pressed="${mySub===k}"><b>${n}</b><span>${l}</span>${s?`<small>${s}</small>`:""}</button>`).join("")}</nav>
+  let h="";h+=NY?`<nav class="nymtabs" aria-label="${$t("Min fotboll")}">${tiles.map(([k,n,l])=>`<button class="chip" data-mysub="${k}" aria-pressed="${mySub===k}">${l}${typeof n==="number"?` <small>${n}</small>`:""}</button>`).join("")}</nav>`:`<nav class="mymenu" aria-label="${$t("Min fotboll")}">${tiles.map(([k,n,l,s])=>`<button class="mtile" data-mysub="${k}" aria-pressed="${mySub===k}"><b>${n}</b><span>${l}</span>${s?`<small>${s}</small>`:""}</button>`).join("")}</nav>
    ${myErr?`<p class="err">${esc(myErr)}</p>`:""}`;
+  if(NY&&myId&&dbNs&&mySub==="home")h+=nyProfHtml(tiles);
   const visNT=[...vm.entries()].filter(([id])=>C[id]&&isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
   const vis=[...vm.entries()].filter(([id])=>C[id]&&!isNat(C[id])).sort((a,b)=>(b[1].date||"").localeCompare(a[1].date||""));
   if(mySub==="home"){
