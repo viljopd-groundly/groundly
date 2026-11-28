@@ -15,8 +15,28 @@ function webAll() {
   for (const r of R("clubs.js")) if (r[6] === "U21-landslag" && !W[r[0]]) { const a = "nt-" + r[0].replace(/^u21-/, ""); if (W[a]) W[r[0]] = W[a]; }
   return W;
 }
+// meriter: ligatitlar efter 2025/26 läggs till automatiskt ur arkivet (scripts/champions.js)
+function clubsWithTitles() {
+  const clubs = R("clubs.js");
+  let champ = {};
+  try { champ = require("./champions.js").champions(SITE, 2026); } catch (e) { console.log("Ligamästare: " + e.message); return clubs; }
+  const { applyTitles } = require("./champions.js");
+  let en = {}; try { en = JSON.parse(fs.readFileSync(path.join(SRC, "i18n", "en.json"), "utf8")); } catch (e) {}
+  const hasKey = k => !!en[k];
+  const added = [];
+  const out = clubs.map(r => {
+    const t = champ[r[0]];
+    if (!t || !Array.isArray(r)) return r;
+    const h = applyTitles(r[11], t, r[3], hasKey);
+    if (JSON.stringify(h) === JSON.stringify(r[11] || [])) return r;
+    added.push(`${r[1]} ${t.map(x => x.year).join(", ")}`);
+    const c = r.slice(); while (c.length < 12) c.push(c.length === 10 ? "" : null); c[11] = h; return c;
+  });
+  if (added.length) console.log("Ligamästare tillagda i meriterna: " + added.join("; "));
+  return out;
+}
 let html = fs.readFileSync(path.join(SRC, "template.html"), "utf8")
-  .replace("/*CLUBS*/[]", JSON.stringify(R("clubs.js")))
+  .replace("/*CLUBS*/[]", JSON.stringify(clubsWithTitles()))
   .replace("/*GEO*/{}", JSON.stringify(R("geo.js")))
   .replace("/*TIPS*/{derbies:[],cult:[]}", JSON.stringify(R("tips.js")))
   .replace("/*MAPS*/{}", JSON.stringify(Object.fromEntries(Object.entries(maps).map(([k, v]) => [k, { lon0: v.lon0, lon1: v.lon1, lat0: v.lat0, lat1: v.lat1, w: v.w, h: v.h, pts: v.pts }]))))
