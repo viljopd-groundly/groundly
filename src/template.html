@@ -91,6 +91,7 @@ img.crest.flag{object-fit:cover;background:var(--surface);box-shadow:0 0 0 1px v
 img.crest.logo{object-fit:contain;background:none;box-shadow:none;border-radius:0}
 /* mörka utseenden: tunn ljus kontur runt klubbmärken så att mörka loggor (t.ex. Dinamo Tbilisi) inte försvinner mot bakgrunden */
 :root[data-theme="dark"] img.crest.logo,:root[data-theme="dusk"] img.crest.logo{filter:drop-shadow(0 0 .8px rgba(255,255,255,.95)) drop-shadow(0 0 .8px rgba(255,255,255,.6))}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]):not([data-theme="dim"]):not([data-theme="warm"]) img.crest.logo{filter:drop-shadow(0 0 .8px rgba(255,255,255,.95)) drop-shadow(0 0 .8px rgba(255,255,255,.6))}}
 .name{font-family:var(--f-display);font-weight:600;font-size:calc(19px*var(--fs));line-height:1.15;margin:0}
 .meta{color:var(--muted);font-size:calc(13px*var(--fs));margin-top:2px}
 .yr{text-align:right;font-family:var(--f-mono)}
