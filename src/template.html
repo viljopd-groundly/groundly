@@ -2682,7 +2682,7 @@ function tipBand(ids){return"";const cs=ids.map(id=>COLORS[id]&&COLORS[id][0]).f
   return` style="--band:linear-gradient(90deg,${cs.map((c,i)=>`${c} ${i*100/n}%,${c} ${(i+1)*100/n}%`).join(",")})"`;}
 function nextBox(lbl,m,teams){const when=m.kickoff?dayLong(dayKey(new Date(m.kickoff))).replace(/^./,x=>x.toUpperCase())+" · "+timeOf(m.kickoff):"Spelas "+rangeTxt(m);
   return`<div class="nextbox mrowx"${mrowAttr(m)}><div class="nbt"><span class="nbl">${lbl}</span><b>${esc(when)}</b><span>${teams}${m.venue||m.city?` · ${esc(m.venue||m.city)}`:""}</span></div>${NY&&mode==="tips"?`<div class="nyacts">${tixMini(m,"btn small")}${m.city?`<button class="btn small" data-nyplan="${esc(m._id)}">${ic("trip")} ${$t("Planera resan")}</button>`:""}</div>`:tixMini(m,"btn small")}</div>`;}
-function renderTips(){TIPC=tipCache();try{renderTips0();}finally{TIPC=null;}}
+function renderTips(){tipsLastQ=tipsQ;TIPC=tipCache();try{renderTips0();}finally{TIPC=null;}}
 // korten för de tre sorternas tips (används både i flikarna och i sökningen)
 const tipDerbyCard=([id,name,ids,where,why])=>{const nm=dbState==="ready"?nextMeeting(ids):null;
       const sep=ids.length===2?`<span class="vs">${$t("mot")}</span>`:`<span class="vs">·</span>`;
@@ -2709,7 +2709,7 @@ const tipCultCard=([id,why])=>{const c=C[id];if(!c)return"";const up=dbState==="
         ${tipFeedback("cult",id,id)}
       </article>`;};
 // sökning i tips: land, stad, arena, klubb, världsdel, namn och beskrivning. Alla ord måste finnas med.
-let tipsQ="";
+let tipsQ="",tipsLastQ="";
 function tipHay(kind,row){const k=kind+":"+row[0];if(tipHay.c[k])return tipHay.c[k];let ids=[],extra=[];
   if(kind==="derby"){ids=row[2];extra=[row[1],$t(row[1]),row[3],$t(row[3]),row[4],$t(row[4])];}
   else{ids=[row[0]];extra=[row[1],$t(row[1])];}
@@ -2737,7 +2737,7 @@ function renderTips0(){
   else if(tipsTab==="top")el.innerHTML=renderTopRated();
   else el.innerHTML=TIPS.cult.slice(0,lim("tcu",10)).map(tipCultCard).join("")+limBtns("tcu",TIPS.cult.length,10)+sugBtn("cult");
 }
-let tipsQT=0;document.addEventListener("input",e=>{if(e.target.id!=="tipsQ")return;tipsQ=e.target.value;tipsSugg();clearTimeout(tipsQT);tipsQT=setTimeout(()=>{if(mode==="tips")renderTips();},150);});
+let tipsQT=0;document.addEventListener("input",e=>{if(e.target.id!=="tipsQ")return;tipsQ=e.target.value;tipsSugg();clearTimeout(tipsQT);tipsQT=setTimeout(()=>{if(mode==="tips"&&tipsQ!==tipsLastQ)renderTips();},400);});
 // förslag medan man skriver, som i Matcher: länder, städer, derbyn, klubbar och arenor som har tips
 let TIPS_IX=null;
 function tipsIndex(){if(TIPS_IX)return TIPS_IX;const ctry=new Map(),city=new Map(),items=[];const addC=c=>{if(!c)return;ctry.set(c.c,(ctry.get(c.c)||0)+1);if(c.city)city.set(c.city+"|"+c.c,(city.get(c.city+"|"+c.c)||0)+1);};
@@ -2756,9 +2756,11 @@ function tipsSugg(){const box=document.getElementById("tipsSug");if(!box)return;
   for(const k of ["derby","club","cult","arena"]){const a=I.filter(x=>x[0]===k);if(a.length)h+=`<span class="sgl">${lab[k]}</span>`+a.map(x=>`<button type="button" class="chip" data-tsug="${esc(x[1])}">${esc(x[1])}${x[2]?`<small>${esc(x[2])}</small>`:""}</button>`).join("");}
   if(!h||(exact===1&&C1.length+C2.length+I.length===1)){box.hidden=true;box.innerHTML="";return;}
   if(box.innerHTML!==h)box.innerHTML=h;box.hidden=false;}
-document.addEventListener("pointerdown",e=>{if(e.target.closest&&e.target.closest("#tipsSug [data-tsug]"))e.preventDefault();});
-document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-tsug]");if(!b)return;const qi=document.getElementById("tipsQ");tipsQ=b.dataset.tsug;if(qi){qi.value=tipsQ;qi.blur();}
-  const box=document.getElementById("tipsSug");if(box){box.hidden=true;box.innerHTML="";}clearTimeout(tipsQT);renderTips();});
+// välj förslaget direkt vid beröring – annars hinner tangentbordet stänga och flytta knappen innan klicket kommer
+function pickTipSug(b){const qi=document.getElementById("tipsQ");tipsQ=b.dataset.tsug;if(qi){qi.value=tipsQ;qi.blur();}
+  const box=document.getElementById("tipsSug");if(box){box.hidden=true;box.innerHTML="";}clearTimeout(tipsQT);renderTips();}
+document.addEventListener("pointerdown",e=>{const b=e.target.closest&&e.target.closest("#tipsSug [data-tsug]");if(!b)return;e.preventDefault();pickTipSug(b);});
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-tsug]");if(b)pickTipSug(b);});
 document.addEventListener("focusout",e=>{if(e.target&&e.target.id==="tipsQ")setTimeout(()=>{const b=document.getElementById("tipsSug");if(b&&!document.activeElement?.closest?.("#tipsSug")){b.hidden=true;}},200);});
 document.addEventListener("focusin",e=>{if(e.target&&e.target.id==="tipsQ")tipsSugg();});
 // ---------- forum ----------
