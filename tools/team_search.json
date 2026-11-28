@@ -1,21 +1,45 @@
 {
- "Dundee Utd": [
+ "Akademisk": [
   [
-   1386,
-   "Dundee Utd",
-   "Scotland",
-   "https://media.api-sports.io/football/teams/1386.png"
+   28542,
+   "Akademisk Boll Club",
+   "Finland",
+   "https://media.api-sports.io/football/teams/28542.png"
   ]
  ],
- "Wiener SC": [
+ "KTP": [
   [
-   4965,
-   "Wiener SC",
-   "Austria",
-   "https://media.api-sports.io/football/teams/4965.png"
+   27396,
+   "KTP W",
+   "Finland",
+   "https://media.api-sports.io/football/teams/27396.png"
   ]
  ],
- "Sportklub": [],
- "Wiener Sportklub": [],
- "Storico": []
+ "Kotkan": [],
+ "Leiknir": [
+  [
+   2114,
+   "Leiknir R.",
+   "Iceland",
+   "https://media.api-sports.io/football/teams/2114.png"
+  ],
+  [
+   2120,
+   "Leiknir F.",
+   "Iceland",
+   "https://media.api-sports.io/football/teams/2120.png"
+  ],
+  [
+   18366,
+   "Fjardabyggd / Leiknir",
+   "Iceland",
+   "https://media.api-sports.io/football/teams/18366.png"
+  ],
+  [
+   25517,
+   "Fjard / Hött / Leiknir W",
+   "Iceland",
+   "https://media.api-sports.io/football/teams/25517.png"
+  ]
+ ]
 }
