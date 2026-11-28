@@ -3007,5 +3007,7 @@
  "Officiell sida": "Virallinen sivu",
  "Sök lag, stad eller serie": "Hae joukkue, kaupunki tai sarja",
  "Sök land, klubb eller arena": "Hae maa, seura tai stadion",
- "{0} SM-guld (senast {1})": "{0} Ruotsin mestaruutta (viimeksi {1})"
+ "{0} SM-guld (senast {1})": "{0} Ruotsin mestaruutta (viimeksi {1})",
+ "Ny design": "Uusi ulkoasu",
+ "Stäng av för att använda den gamla designen": "Poista käytöstä käyttääksesi vanhaa ulkoasua"
 }
