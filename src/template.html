@@ -2716,8 +2716,11 @@ function tipHay(kind,row){const k=kind+":"+row[0];if(tipHay.c[k])return tipHay.c
   ids.forEach(id=>{const c=C[id];if(!c)return;const kt=kontOf(c.c);extra.push(c.n,c.a,c.nick,c.city,c.s,c.c,$t(c.c),c.l,kt,kt&&$t(kt));if(kind==="arena"){const k2=arenaKey(c.s);const ax=arenas().find(x=>x.k===k2);if(ax)ax.clubs.forEach(o=>extra.push(o.n));}});
   return tipHay.c[k]=norm(extra.filter(Boolean).join(" "));}
 tipHay.c={};
-function tipsSearchHtml(q){const toks=norm(q).split(" ").filter(Boolean);const hit=(kind,row)=>toks.every(t=>tipHay(kind,row).includes(t));
-  const D=TIPS.derbies.filter(r=>hit("derby",r)),K=TIPS.cult.filter(r=>hit("cult",r)),A=(TIPS.arenas||[]).filter(r=>hit("arena",r));
+function tipsSearchHtml(q){const toks=norm(q).split(" ").filter(Boolean);
+  // matcha i början av ord först (så att "Estland" inte hittar "Vestlandsderbyet"); delord bara om inget träffar
+  const run=ws=>{const hit=(kind,row)=>{const h=" "+tipHay(kind,row);return toks.every(t=>h.includes(ws?" "+t:t));};
+    return[TIPS.derbies.filter(r=>hit("derby",r)),TIPS.cult.filter(r=>hit("cult",r)),(TIPS.arenas||[]).filter(r=>hit("arena",r))];};
+  let [D,K,A]=run(true);if(!D.length&&!K.length&&!A.length)[D,K,A]=run(false);
   const n=D.length+K.length+A.length;if(!n)return`<p class="empty">${$t("Inga tips matchar ”{0}”. Sök på ett land, en stad, en arena, en klubb eller en världsdel.",[q])}</p>`;
   const grp=(t,arr,f,lk)=>arr.length?`<h3 class="sec">${t} <span class="meta">${arr.length}</span></h3>`+arr.slice(0,lim(lk,10)).map(f).join("")+limBtns(lk,arr.length,10):"";
   return`<p class="hint">${$tn(n,"Ett tips matchar","{n} tips matchar")}</p>`+grp($t("Heta derbyn"),D,tipDerbyCard,"tsd")+grp($t("Kultklubbar"),K,tipCultCard,"tsk")+grp($t("Speciella arenor"),A,tipArenaCard,"tsa");}
