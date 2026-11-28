@@ -1,45 +1,25 @@
 {
- "Akademisk": [
+ "Gladsaxe": [
   [
-   28542,
-   "Akademisk Boll Club",
-   "Finland",
-   "https://media.api-sports.io/football/teams/28542.png"
+   24213,
+   "Gladsaxe",
+   "Denmark",
+   "https://media.api-sports.io/football/teams/24213.png"
   ]
  ],
- "KTP": [
+ "Kotka": [
   [
-   27396,
-   "KTP W",
+   18524,
+   "Jäntevä Kotka",
    "Finland",
-   "https://media.api-sports.io/football/teams/27396.png"
+   "https://media.api-sports.io/football/teams/18524.png"
+  ],
+  [
+   20914,
+   "Jäntevä Kotka II",
+   "Finland",
+   "https://media.api-sports.io/football/teams/20914.png"
   ]
  ],
- "Kotkan": [],
- "Leiknir": [
-  [
-   2114,
-   "Leiknir R.",
-   "Iceland",
-   "https://media.api-sports.io/football/teams/2114.png"
-  ],
-  [
-   2120,
-   "Leiknir F.",
-   "Iceland",
-   "https://media.api-sports.io/football/teams/2120.png"
-  ],
-  [
-   18366,
-   "Fjardabyggd / Leiknir",
-   "Iceland",
-   "https://media.api-sports.io/football/teams/18366.png"
-  ],
-  [
-   25517,
-   "Fjard / Hött / Leiknir W",
-   "Iceland",
-   "https://media.api-sports.io/football/teams/25517.png"
-  ]
- ]
+ "Akademisk Boldklub": []
 }
