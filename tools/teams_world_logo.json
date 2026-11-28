@@ -1,0 +1,564 @@
+{
+ "fetched": "2026-11-28T12:28:31.083Z",
+ "countries": [
+  {
+   "country": "Denmark",
+   "fetched": "2026-11-28T12:27:42.030Z",
+   "all": [
+    "119 | Superliga | League",
+    "120 | 1. Division | League",
+    "124 | Denmark Series - Group 1 | League",
+    "125 | Denmark Series - Group 2 | League",
+    "126 | Denmark Series - Group 3 | League",
+    "121 | DBU Pokalen | Cup",
+    "122 | 2. Division | League",
+    "123 | 2nd Division - Group 2 | League",
+    "127 | Denmark Series - Group 4 | League",
+    "638 | Kvindeliga | League",
+    "862 | 3. Division | League",
+    "982 | Denmark Series - Promotion Round | League",
+    "983 | Denmark Series - Relegation Round | League",
+    "1244 | B-Liga Women | League"
+   ],
+   "leagues": [
+    {
+     "id": 120,
+     "name": "1. Division",
+     "season": 2026,
+     "seasons": [
+      [
+       2011,
+       "2011-08-12",
+       "2012-06-10",
+       true,
+       true
+      ],
+      [
+       2012,
+       "2012-07-28",
+       "2013-05-20",
+       true,
+       true
+      ],
+      [
+       2013,
+       "2013-07-25",
+       "2014-06-09",
+       true,
+       true
+      ],
+      [
+       2014,
+       "2014-07-25",
+       "2015-06-06",
+       true,
+       true
+      ],
+      [
+       2015,
+       "2015-07-23",
+       "2016-05-28",
+       true,
+       true
+      ],
+      [
+       2016,
+       "2016-07-21",
+       "2017-05-27",
+       true,
+       true
+      ],
+      [
+       2017,
+       "2017-07-27",
+       "2018-05-20",
+       true,
+       true
+      ],
+      [
+       2018,
+       "2018-07-29",
+       "2019-05-25",
+       true,
+       true
+      ],
+      [
+       2019,
+       "2019-07-26",
+       "2020-07-25",
+       true,
+       true
+      ],
+      [
+       2020,
+       "2020-09-10",
+       "2021-05-27",
+       true,
+       true
+      ],
+      [
+       2021,
+       "2021-07-23",
+       "2022-05-29",
+       true,
+       true
+      ],
+      [
+       2022,
+       "2022-07-22",
+       "2023-06-03",
+       true,
+       true
+      ],
+      [
+       2023,
+       "2023-07-21",
+       "2024-06-02",
+       true,
+       true
+      ],
+      [
+       2024,
+       "2024-07-19",
+       "2025-05-23",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-07-18",
+       "2026-05-31",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-07-24",
+       "2027-03-20",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 395,
+       "name": "Vejle",
+       "founded": 1891,
+       "venue": {
+        "name": "Vejle Stadion",
+        "city": "Vejle",
+        "capacity": 10418,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.7137,
+        9.5562
+       ]
+      },
+      {
+       "id": 399,
+       "name": "Vendsyssel FF",
+       "founded": 1886,
+       "venue": {
+        "name": "Nord Energi Arena",
+        "city": "Hjørring",
+        "capacity": 7500,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        57.4572,
+        9.9856
+       ]
+      },
+      {
+       "id": 402,
+       "name": "Aalborg",
+       "founded": 1885,
+       "venue": {
+        "name": "Aalborg Portland Park",
+        "city": "Aalborg",
+        "capacity": 13797,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        57.052,
+        9.8986
+       ]
+      },
+      {
+       "id": 403,
+       "name": "Esbjerg",
+       "founded": 1924,
+       "venue": {
+        "name": "Blue Water Arena",
+        "city": "Esbjerg",
+        "capacity": 18000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.4819,
+        8.4384
+       ]
+      },
+      {
+       "id": 408,
+       "name": "Hobro",
+       "founded": 1913,
+       "venue": {
+        "name": "DS Arena",
+        "city": "Hobro",
+        "capacity": 6600,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        56.6372,
+        9.794
+       ]
+      },
+      {
+       "id": 2060,
+       "name": "AB Copenhagen",
+       "founded": 1889,
+       "venue": {
+        "name": "Gladsaxe Stadion",
+        "city": "Søborg",
+        "capacity": 13200,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.7328,
+        12.4967
+       ]
+      },
+      {
+       "id": 2061,
+       "name": "FC Fredericia",
+       "founded": 1991,
+       "venue": {
+        "name": "Monjasa Park",
+        "city": "Fredericia",
+        "capacity": 4000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.5653,
+        9.7562
+       ]
+      },
+      {
+       "id": 2063,
+       "name": "HB Koge",
+       "founded": 2009,
+       "venue": {
+        "name": "Capelli Sport Stadion",
+        "city": "Køge",
+        "capacity": 10000,
+        "surface": "artificial turf"
+       },
+       "matches": 22,
+       "ll": [
+        55.4682,
+        12.1783
+       ]
+      },
+      {
+       "id": 2072,
+       "name": "Hvidovre",
+       "founded": 1925,
+       "venue": {
+        "name": "Pro Ventilation Arena",
+        "city": "Hvidovre",
+        "capacity": 15600,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.6318,
+        12.4829
+       ]
+      },
+      {
+       "id": 4676,
+       "name": "Kolding IF",
+       "founded": 1895,
+       "venue": {
+        "name": "Autocentralen Park",
+        "city": "Kolding",
+        "capacity": 10000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        55.4939,
+        9.459
+       ]
+      },
+      {
+       "id": 6004,
+       "name": "Aarhus Fremad",
+       "founded": 1887,
+       "venue": {
+        "name": "Riisvangen Stadion",
+        "city": "Århus",
+        "capacity": 5000,
+        "surface": "grass"
+       },
+       "matches": 22,
+       "ll": [
+        56.1788,
+        10.2111
+       ]
+      },
+      {
+       "id": 6026,
+       "name": "Hillerød",
+       "founded": null,
+       "venue": {
+        "name": "Right to Dream Park",
+        "city": "Farum",
+        "capacity": 10300,
+        "surface": "artificial turf"
+       },
+       "matches": 22,
+       "ll": [
+        55.8162,
+        12.353
+       ]
+      }
+     ],
+     "fixtures": 132
+    }
+   ]
+  },
+  {
+   "country": "Finland",
+   "fetched": "2026-11-28T12:28:07.551Z",
+   "all": [
+    "245 | Ykkönen | League",
+    "244 | Veikkausliiga | League",
+    "246 | Suomen Cup | Cup",
+    "247 | Kakkonen - Lohko A | League",
+    "248 | Kakkonen - Lohko B | League",
+    "249 | Kakkonen - Lohko C | League",
+    "640 | Kansallinen Liiga | League",
+    "700 | Kakkosen Cup | Cup",
+    "899 | League Cup | Cup",
+    "901 | Ykköscup | Cup",
+    "1052 | Kakkonen - Play-offs | League",
+    "1087 | Ykkösliiga | League"
+   ],
+   "leagues": [
+    {
+     "id": 1087,
+     "name": "Ykkösliiga",
+     "season": 2026,
+     "seasons": [
+      [
+       2024,
+       "2024-04-13",
+       "2024-10-26",
+       true,
+       true
+      ],
+      [
+       2025,
+       "2025-04-21",
+       "2025-10-26",
+       true,
+       true
+      ],
+      [
+       2026,
+       "2026-04-03",
+       "2026-10-25",
+       true,
+       true
+      ]
+     ],
+     "teams": [
+      {
+       "id": 1167,
+       "name": "Rops",
+       "founded": 1950,
+       "venue": {
+        "name": "Rovaniemen Keskuskenttä",
+        "city": "Rovaniemi",
+        "capacity": 4768,
+        "surface": "artificial turf"
+       },
+       "matches": 2,
+       "ll": [
+        66.4999,
+        25.7217
+       ]
+      },
+      {
+       "id": 2076,
+       "name": "Kooteepee",
+       "founded": 1927,
+       "venue": {
+        "name": "Arto Tolsa Areena",
+        "city": null,
+        "capacity": 4780,
+        "surface": "grass"
+       },
+       "matches": 27
+      },
+      {
+       "id": 2078,
+       "name": "EIF",
+       "founded": 1905,
+       "venue": {
+        "name": "Ekenäs Sparbank Arena TN",
+        "city": "Raseborg",
+        "capacity": 2500,
+        "surface": "artificial turf"
+       },
+       "matches": 27,
+       "ll": [
+        59.9285,
+        23.5219
+       ]
+      },
+      {
+       "id": 2080,
+       "name": "Haka",
+       "founded": 1934,
+       "venue": {
+        "name": "Tehtaan kenttä",
+        "city": "Valkeakoski",
+        "capacity": 5000,
+        "surface": "artificial turf"
+       },
+       "matches": 27,
+       "ll": [
+        61.2679,
+        24.0204
+       ]
+      },
+      {
+       "id": 2085,
+       "name": "Klubi-04",
+       "founded": 2004,
+       "venue": {
+        "name": "Bolt Arena",
+        "city": "Helsinki",
+        "capacity": 10770,
+        "surface": "artificial turf"
+       },
+       "matches": 27,
+       "ll": [
+        60.1876,
+        24.9227
+       ]
+      },
+      {
+       "id": 9172,
+       "name": "JIPPO",
+       "founded": 2001,
+       "venue": {
+        "name": "Mehtimäki tekonurmi",
+        "city": "Joensuu",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 27,
+       "ll": [
+        62.6006,
+        29.762
+       ]
+      },
+      {
+       "id": 9173,
+       "name": "JäPS",
+       "founded": 1947,
+       "venue": {
+        "name": "Järvenpään keskuskenttä",
+        "city": "Järvenpää",
+        "capacity": 1227,
+        "surface": "grass"
+       },
+       "matches": 27,
+       "ll": [
+        60.4711,
+        25.0876
+       ]
+      },
+      {
+       "id": 9175,
+       "name": "MP",
+       "founded": 1929,
+       "venue": {
+        "name": "Mikkelin Urheilupuisto",
+        "city": "Mikkeli",
+        "capacity": 7000,
+        "surface": "grass"
+       },
+       "matches": 27,
+       "ll": [
+        61.6871,
+        27.2666
+       ]
+      },
+      {
+       "id": 9187,
+       "name": "KäPa",
+       "founded": 1956,
+       "venue": {
+        "name": "Kumpulanlaakson tekonurmi",
+        "city": "Helsinki",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 29,
+       "ll": [
+        60.1666,
+        24.9435
+       ]
+      },
+      {
+       "id": 9198,
+       "name": "SJK Akatemia",
+       "founded": 2012,
+       "venue": {
+        "name": "OmaSP Stadion",
+        "city": "Seinäjoki",
+        "capacity": 6000,
+        "surface": "artificial turf"
+       },
+       "matches": 27,
+       "ll": [
+        62.7788,
+        22.8148
+       ]
+      },
+      {
+       "id": 10669,
+       "name": "PK-35",
+       "founded": 1935,
+       "venue": {
+        "name": "Algeco Areena TN",
+        "city": "Helsinki",
+        "capacity": 1000,
+        "surface": "artificial turf"
+       },
+       "matches": 27,
+       "ll": [
+        60.1666,
+        24.9435
+       ]
+      }
+     ],
+     "fixtures": 137
+    }
+   ]
+  }
+ ]
+}
