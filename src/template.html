@@ -252,6 +252,7 @@ dd{overflow-wrap:anywhere}
 @media (max-width:359px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stats span{font-size:calc(12px*var(--fs))}}
 .sec{font-family:var(--f-display);font-weight:600;font-size:calc(17px*var(--fs));margin:10px 0 -2px}
 .mrow{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;grid-template-columns:84px minmax(0,1fr);gap:4px 12px}
+.mrow.nodate{grid-template-columns:minmax(0,1fr)!important}
 .mdate{font-family:var(--f-mono);font-size:calc(12px*var(--fs));color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
 .mmain{display:flex;flex-direction:column;gap:3px;min-width:0}
 .mnote{font-size:calc(14px*var(--fs));white-space:pre-wrap;overflow-wrap:anywhere;color:var(--fg);border-left:2px solid var(--line);padding-left:8px;margin-top:2px}
@@ -3144,7 +3145,7 @@ function renderMine(){
     if(allEmpty)h+=`<div class="empty"><b>${$t("Inget sparat i Vill gå än")}</b><div>${$t("Tryck på hjärtat på en kommande match, eller Vill besöka på ett klubb- eller landslagskort. Du kan också söka fram en klubb här nedanför.")}</div></div>`;
     if(!allEmpty&&(!NY||wm.length))h+=`<h3 class="sec">${$t("Matcher jag vill gå på")}</h3>`;
     if(!allEmpty&&(!NY||wm.length))h+=wm.length?wm.slice(0,lim("wm",3)).map(w0=>{const mv=wishMoves().find(x=>x.w.id===w0.id);const w=mv?{...w0,kickoff:mv.m.kickoff,dateFrom:null,dateTo:null}:w0;const past=w.kickoff&&Date.parse(w.kickoff)<now;const when=w.kickoff?$t("{0} kl {1}",[dayLong(dayKey(new Date(w.kickoff))),timeOf(w.kickoff)]):w.dateFrom?$t("spelas {0}",[rangeTxt(w)]):"";
-      return`<div class="mrow"><div class="mdate">${esc(w.kickoff?fmtDate(dayKey(new Date(w.kickoff))):w.dateFrom?rangeTxt(w):"")}</div><div class="mmain">
+      return`<div class="mrow${NY?" nodate":""}">${NY?"":`<div class="mdate">${esc(w.kickoff?fmtDate(dayKey(new Date(w.kickoff))):w.dateFrom?rangeTxt(w):"")}</div>`}<div class="mmain">
       ${attTeams({...w,score:""})}
       <div class="venue">${mv?`<span class="newtime">${$t("Ny tid")}</span> `:""}${esc(when)} · ${esc([w.venue,$t(w.city)].filter(Boolean).join(", "))}</div>${mv?`<div class="venue">${moveNote(mv)} <button class="link strong" data-wmok="${esc(w0.id)}">${$t("OK")}</button></div>`:""}
       <div class="pactions">${past?`<button class="link strong" data-wmdone="${esc(w.id)}">${$t("Matchen är spelad. Var du där?")}</button>`:(NY&&w.city&&!(typeof wishNoTrip==="function"&&!wishNoTrip().some(x=>x.id===w.id))?`<button class="link strong" data-nyplan="${esc(w.id)}">${$t("Lägg i resa")}</button>`:"")+calLinks(w)+(w.home&&C[w.home]&&C[w.home].tix?`<a class="link strong" href="${esc(C[w.home].tix)}" target="_blank" rel="noopener">${$t("Biljetter")}</a>`:"")+hotelLink(w,"link")+(w.city?extLink(omioUrl(homeTown,w.city),OMIO_ON?adLabel($t("Resa")):$t("Resa"),"link"):"")}${delBtn("wm",w.id)}</div></div></div>`;}).join("")+limBtns("wm",wm.length,3)
