@@ -75,7 +75,8 @@ exports.derbies=[
 ["sarajevo","Sarajevoderbyt",["ba-sarajevo","ba-zeljeznicar"],"Sarajevo, Bosnien och Hercegovina","FK Sarajevo mot Željezničar, Bosniens största derby. Želja spelar på Grbavica, som låg vid frontlinjen under belägringen på 1990-talet, och Sarajevo på Koševo, där vinter-OS 1984 öppnades. Båda spelar i Premijer liga 2026/27, och staden är lätt att utforska till fots."],
 ["slovenija","Sloveniens eviga derby",["si-olimpijaljub","si-maribor"],"Ljubljana och Maribor, Slovenien","Olimpija från huvudstaden mot Maribor från östra Slovenien, landets två största städer och klubbar. Maribor har spelat gruppspel i Champions League flera gånger, och Ljudski vrt med sin bågformade läktare är värd ett besök. Båda spelar i PrvaLiga 2026/27, och tåget mellan städerna tar runt två timmar."],
 ["tallinn","Tallinnderbyt",["ee-floratallinn","ee-levadiatalli"],"Tallinn, Estland","Flora mot Levadia, Estlands två mest framgångsrika klubbar, som slåss om guldet nästan varje år. Publiken är mindre än på Balkan, men det är en av Baltikums mest laddade matcher, och Tallinn ligger bara en båtresa från Stockholm och Helsingfors. Båda spelade i Meistriliiga 2026."],
-["riga","Rigaderbyt",["lv-rfs","lv-riga"],"Riga, Lettland","RFS mot Riga FC, två unga klubbar som på kort tid har blivit Lettlands bästa. Under 2026 har de legat etta och tvåa i Virslīga, så det stora Rigaderbyt avgör ofta guldet. Gamla stan i Riga är dessutom väl värd en helg."]
+["riga","Rigaderbyt",["lv-rfs","lv-riga"],"Riga, Lettland","RFS mot Riga FC, två unga klubbar som på kort tid har blivit Lettlands bästa. Under 2026 har de legat etta och tvåa i Virslīga, så det stora Rigaderbyt avgör ofta guldet. Gamla stan i Riga är dessutom väl värd en helg."],
+["malta","Maltaderbyt",["mt-valletta","mt-floriana"],"Valletta och Floriana, Malta","Huvudstaden mot grannen precis utanför stadsmurarna – Maltas största rivalitet. De flesta ligamatcher spelas på gemensamma arenor som nationalarenan i Ta' Qali, så stämningen hänger på klackarna, och i det här derbyt är de högljudda från första minuten."],
 ];
 // Kultklubbar: [klubb-id, varför]
 exports.cult=[
@@ -132,7 +133,9 @@ exports.cult=[
 ["fcum","Grundades 2005 av Manchester United-supportrar i protest mot familjen Glazers övertagande. Klubben ägs av sina medlemmar."],
 ["bab","Kultklubben från Potsdam strax utanför Berlin, med en stark antifascistisk supporterkultur. Spelar i Regionalliga men har ett trofast och högljutt följe."],
 ["fgr","Kallar sig världens första veganska fotbollsklubb, med vegansk mat på arenan och miljö som en del av identiteten."],
-["fcu","Supportrarna byggde själva om arenan som ideellt arbete 2008–09. Julsången på arenan, när tiotusentals sjunger med levande ljus, brukar hållas den 23 december."]
+["fcu","Supportrarna byggde själva om arenan som ideellt arbete 2008–09. Julsången på arenan, när tiotusentals sjunger med levande ljus, brukar hållas den 23 december."],
+["mt-floriana","Grönvita Floriana bildades 1894 och är en av Maltas äldsta klubbar. Klacken är bland öns mest högljudda, och klubben är djupt rotad i staden strax utanför Vallettas murar."],
+["mt-amrunspartan","Ħamrun Spartans är arbetarstadens klubb med egen arena, Victor Tedesco, och en lojal lokal publik. Klubben har varit Maltas bästa på senare år – ett bra val om du vill se maltesisk fotboll med hemmakänsla."],
 ];
 // Speciella arenor: [klubb-id, varför arenan är speciell]
 exports.arenas=[
