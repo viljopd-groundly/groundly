@@ -3101,7 +3101,7 @@ function renderMine(){
      :`<div class="empty">${$t("Klubbar och arenor fylls på automatiskt när du loggar matcher, med rätt datum för varje besök.")}</div>`;
     if(NY&&MY.attended.length)h+=`<details class="nyshare"${NY_SHARE_OPEN?" open":""}><summary>${ic("share")} ${$t("Dela kartan som bild")}</summary><p class="hint">${$t("Samma karta som ovan – välj Sverige, Europa eller Världen ovanför kartan.")}</p>${fmtChips()}${studioHtml("map",$t("Karta över besökta arenor"))}</details>`;
     }
-  }else if(mySub==="teams"){h+=renderSeenTeams();if(stKind!=="klubb"&&visNT.length)
+  }else if(mySub==="teams"){h+=renderSeenTeams();if(!NY&&stKind!=="klubb"&&visNT.length)
   h+=`<h3 class="sec">${$t("Landslag jag sett")}</h3>`+(visNT.length?`<div class="clist">${visNT.slice(0,MYMORE.nt).map(([id,d])=>{const c=C[id];return`<div class="citem"><div class="mmain"><button class="cname" data-open="${esc(id)}">${crest(id,c.n,22)}<span class="cnt">${esc(c.n)}${favStar(id)}</span></button><div class="venue">${esc([c.s,c.city].filter(Boolean).join(" · "))}${d.date?" · "+esc(fmtDate(d.date)):""}</div><div class="pactions">${d.via?"":delBtn("vis",id)}</div></div></div>`;}).join("")}</div>${moreBtns("nt",visNT.length)}`:`<div class="empty">${$t("Logga en landskamp du sett med")} <b>${$t("+ Logga")}</b>${$t(", så hamnar landslagen här.")}</div>`);
   }else if(mySub==="wish"){
     const wm=MY.wishMatches.slice().sort((a,b)=>(a.kickoff||a.dateFrom||"").localeCompare(b.kickoff||b.dateFrom||""));const now=Date.now();
