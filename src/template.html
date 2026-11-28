@@ -579,6 +579,10 @@ html:root article.tip.resaform{border:2px solid color-mix(in srgb,var(--accent) 
 .nydots{position:relative;display:inline-block}.nydots>summary{list-style:none;cursor:pointer;font-weight:800;font-size:20px;line-height:1;padding:0 10px;border-radius:8px;color:var(--muted)}.nydots>summary::-webkit-details-marker{display:none}
 .nydots[open]>summary{background:var(--soft2)}.nydotm{position:absolute;z-index:20;right:0;top:calc(100% + 4px);min-width:200px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 28px -12px rgba(0,0,0,.4);padding:6px;display:flex;flex-direction:column}
 .nydotm>*{padding:10px 12px!important;border-radius:8px;font-size:calc(14px*var(--fs))!important;text-align:left}.nydotm>*:hover{background:var(--soft)}.nydotm [data-mydel]{color:var(--bad,#c0262d)!important}.ny #foot .link,.ny #foot a.link{color:var(--muted);font-weight:500}
+.nymgroup{margin:10px 0 4px}
+.ny .nymtabs{gap:0!important;margin:0 0 14px!important;padding:0!important;border-bottom:1.5px solid var(--line)}
+.ny .nymtabs .chip{background:transparent!important;border:0!important;border-bottom:3px solid transparent!important;border-radius:0!important;margin-bottom:-1.5px;color:var(--muted)!important;padding:10px 12px 9px!important;box-shadow:none!important;font-weight:600}
+.ny .nymtabs .chip[aria-pressed="true"]{color:var(--fg)!important;border-bottom-color:var(--accent)!important;font-weight:700}
 .nymenu{position:relative}.nyqtags{display:flex;flex-wrap:wrap;gap:6px}.nyquiz .name{font-size:calc(22px*var(--fs))}.nycmer{display:flex;align-items:center;gap:12px}.nymenu .actdot{top:-6px;right:-6px}#moreSheet .msi{position:relative}#moreSheet .msi .actdot{top:6px;right:8px}.nysetcomm>.tip>.lbl:first-child{display:none}.nysetcomm>.tip{background:transparent;border:0;box-shadow:none;padding:0;margin:0;border-top:0;padding-top:0;border-radius:0}.nysetcomm>.tip:before{display:none}.setme{display:flex;align-items:center;gap:10px;margin:4px 0 12px}.nymore{display:flex;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}.nyseg{display:none}@media all{.ny .nyseg{display:flex;margin:0 0 14px;padding:0;gap:0;border:0;border-bottom:1.5px solid var(--line);border-radius:0;background:transparent}.ny .nyseg button{flex:1;background:transparent!important;color:var(--muted)!important;border:0;border-radius:0;border-bottom:3px solid transparent;margin-bottom:-1.5px;padding:10px 4px 9px;font-weight:600;box-shadow:none}.ny .nyseg button[aria-pressed="true"]{color:var(--fg)!important;border-bottom-color:var(--accent);font-weight:700}}
 .tip.nyprof{display:flex!important;flex-direction:row!important;align-items:center;gap:14px}.nyprof .name{margin:0}.nyprof .nypl{display:flex;gap:6px 14px;flex-wrap:wrap;margin-top:4px}
 .ny .nyhide{display:none!important}.ny #moreSheet .msi[data-bn="resa"]{display:none!important}
@@ -1823,8 +1827,8 @@ let navPop=false,pendingJump=null,jumpFrom=null,topNav=false,RESA_BACK=null;
 // menyknappar (bottenmenyn och vyflikarna) är toppnivå och ger ingen tillbakapil; alla andra vybyten gör det
 function goTop(m){if(typeof TRIP_FROMHOME!=="undefined")TRIP_FROMHOME=null;if(m==="mine"&&typeof mySub!=="undefined"){mySub="home";mySubAuto=true;arView="list";}if(m==="resa"&&typeof RESA_TAB!=="undefined")RESA_TAB="plan";topNav=true;try{setMode(m);}finally{topNav=false;}}
 function syncBack(){let b=document.getElementById("backPill");
-  if(!b){document.body.insertAdjacentHTML("beforeend",`<button id="backPill" class="backpill" hidden></button>`);b=document.getElementById("backPill");b.onclick=()=>{if(b.dataset.backtop!==undefined||b.dataset.backhome!==undefined)return;/* sköts av resans klickhanterare */if(clubStack.length){if(history.state&&history.state.cjump)history.back();else clubBack();return;}if(history.state&&history.state.jump)history.back();else if(jumpFrom)setMode(jumpFrom);};}
-  const rb=mode==="resa"&&RESA_BACK;delete b.dataset.backtop;delete b.dataset.backhome;
+  if(!b){document.body.insertAdjacentHTML("beforeend",`<button id="backPill" class="backpill" hidden></button>`);b=document.getElementById("backPill");b.onclick=()=>{if(b.dataset.backny!==undefined){const f=NY_PLAN_BACK;NY_PLAN_BACK=null;if(f)f.fn();return;}if(b.dataset.backtop!==undefined||b.dataset.backhome!==undefined)return;/* sköts av resans klickhanterare */if(clubStack.length){if(history.state&&history.state.cjump)history.back();else clubBack();return;}if(history.state&&history.state.jump)history.back();else if(jumpFrom)setMode(jumpFrom);};}
+  const rb=mode==="resa"&&RESA_BACK;delete b.dataset.backtop;delete b.dataset.backhome;delete b.dataset.backny;
   if(rb){b.dataset[rb.a]="";b.hidden=false;b.innerHTML=`<span aria-hidden="true">←</span> ${esc(rb.l)}`;return;}
   const top=clubStack.length?clubStack[clubStack.length-1]:null;const on=!!top||!!(jumpFrom&&jumpFrom!==mode);b.hidden=!on;
   if(on)b.innerHTML=`<span aria-hidden="true">←</span> ${$t("Tillbaka till {0}",[esc(top?(C[top.openClub]?C[top.openClub].n:$t("förra klubben")):(VIEW_SV[jumpFrom]||$t("förra sidan")))])}`;}
@@ -2272,7 +2276,7 @@ function renderMatchList(){
   if(dTo<today()){const p0=presets()[0];if(p0){dFrom=p0[1];dTo=p0[2];}}
   if(dTo<dFrom)dTo=dFrom;
   document.getElementById("dFrom").value=dFrom;document.getElementById("dTo").value=dTo;
-  {const q=document.getElementById("mQuick");if(q)q.innerHTML=mQuickHtml();const g=document.getElementById("mGroupSeg");if(g){g.innerHTML=mGroupHtml();g.hidden=matchView==="double";}}
+  {const q=document.getElementById("mQuick");if(q)q.innerHTML=mQuickHtml();const g=document.getElementById("mGroupSeg");if(g){if(NY)g.className="chips nymgroup";g.innerHTML=mGroupHtml();g.hidden=matchView==="double";}}
   {const lv=liveList();if(!lv.length)LIVE_ONLY=false;const lr=document.getElementById("liveRow");if(lr){lr.hidden=!lv.length||matchView!=="list";lr.innerHTML=lv.length?`<button class="chip livechip" type="button" data-liveonly="1" aria-pressed="${LIVE_ONLY}">${$t("Live")} <b>${lv.length}</b></button>`:"";}}
   const place=resolvePlace();
   document.getElementById("datePresets").innerHTML=mCalHtml(place);document.getElementById("datePresets").hidden=LIVE_ONLY;{const g=document.getElementById("mGroupSeg");if(g&&LIVE_ONLY)g.hidden=true;}const hasQ=!!norm(cityQ);
@@ -2325,7 +2329,7 @@ function renderMatchList(){
 function MQK_L(){return{mylg:"★ "+$t("Mina serier"),near:$t("Nära mig"),nord:$t("Norden"),eu:$t("Europa"),sam:$t("Sydamerika"),nam:$t("Nord- och Centralamerika"),asia:$t("Asien och Oceanien"),afr:$t("Afrika")};}
 function mQuickHtml(){const srch=mSearching();const q=[["mylg","★ "+$t("Mina serier")],...(favList().length?[["fav",$t("Mina lag")]]:[]),...(homeTown?[["near",$t("Nära mig")]]:[]),["nord",$t("Norden")],["eu",$t("Europa")],["sam",$t("Sydamerika")],["nam",$t("Nord- och Centralamerika")],["asia",$t("Asien och Oceanien")],["afr",$t("Afrika")]];
   return q.filter(([k])=>!srch||k==="mylg"||k==="fav").map(([k,l])=>k==="fav"?`<button class="chip" data-favonly="1" aria-pressed="${favOnly}">${l}</button>`:`<button class="chip" data-mqk="${k}" aria-pressed="${MQK===k}">${esc(l)}</button>`).join("");}
-function mGroupHtml(){return[["tid",$t("Tid")],["land",$t("Land")],["serie",$t("Serie")]].map(([k,l])=>`<button type="button" data-mgroup="${k}" aria-pressed="${MGROUP===k}">${l}</button>`).join("");}
+function mGroupHtml(){return[["tid",$t("Tid")],["land",$t("Land")],["serie",$t("Serie")]].map(([k,l])=>`<button type="button"${NY?' class="chip"':""} data-mgroup="${k}" aria-pressed="${MGROUP===k}">${l}</button>`).join("");}
 // alla serier per land i hela schemat (byggs en gång per schema) och deras nivå
 let CLG=null,CLT=new Map();function ctryLeagues(c){if(!CLG||CLG.m!==MATCHES){CLG={m:MATCHES,by:new Map()};CLT=new Map();
   // en serie hör till ett land om minst hälften av dess matcher spelas där (då hamnar inte landskamper och internationella cuper under värdlandet)
@@ -5262,7 +5266,7 @@ function renderHome0(){const el=document.getElementById("homeBody");if(!el)retur
   const nyIn=NY&&myState==="ready";document.documentElement.classList.toggle("nyin",nyIn);
   // testversionen: inloggade får ingen välkomsttext; överst nästa resa, dina lag och helgens tips
   const hasTrip=myTrips().some(t=>!tripIsDone(t));const ord=nyIn?(hasTrip?["nexttrip","myteams","weekend"]:["myteams","weekend","nexttrip"]).concat(homeOrder().filter(k=>!["nexttrip","weekend","intro"].includes(k))):homeOrder();
-  const html=(nyIn?nyHeadHtml():"")+(fresh&&!nyIn?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+ord.filter(k=>k==="myteams"||!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();
+  const html=(fresh&&!nyIn?introHtml(true):"")+modAlertHtml()+moveHtml()+ob+tlAskHtml()+remindHtml()+activityHtml()+ord.filter(k=>k==="myteams"||!(fresh&&k==="intro")&&homeOn(k,!!ob)).map(k=>{try{return HOME_FN[k]();}catch(e){return"";}}).join("")+homeCustBar();
   // ritas bara om när innehållet faktiskt ändrats (under laddningen anropas detta många gånger med samma innehåll; varje omritning fick sidan att hacka)
   const wide=innerWidth>=1024;if(el._html===html&&el._wide===wide&&el.childElementCount)return;el._html=html;el._wide=wide;
   const sx=[...el.querySelectorAll(".wkrow,.hscroll")].map(r=>r.scrollLeft);
@@ -5594,9 +5598,11 @@ let RESA_DRAFT=null;
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-nyplan],[data-nyplancity]");if(!b)return;e.preventDefault();e.stopPropagation();
   let city,from,to;if(b.dataset.nyplan){const m=matchById(b.dataset.nyplan)||(MY.wishMatches||[]).find(w=>w.id===b.dataset.nyplan&&w.city&&(w._id=w.id,true));if(!m)return;city=m.city;const d=m.kickoff?dayKey(new Date(m.kickoff)):(m.dateFrom||today());from=addDays(d,-1)<today()?today():addDays(d,-1);to=addDays(d,1);try{RESA_PICKED.add(m._id);}catch(x){}}
   else{city=b.dataset.nyplancity;from=today();to=addDays(today(),13);}
+  {const from0=mode,mine0=mode==="resa",y0=scrollY;const NM={tips:"Tips",arenor:"Arenor",mine:"Min fotboll",hem:"startsidan",matcher:"Matcher",klubbar:"Klubbar"};
+   NY_PLAN_BACK=mine0?{l:$t("Tillbaka till Mina resor"),fn:()=>{NY_RT_MINE=true;RESA_DRAFT=null;renderResa();window.scrollTo({top:0});}}:from0!=="resa"?{l:NM[from0]?$t("Tillbaka till {0}",[$t(NM[from0])]):$t("Tillbaka"),fn:()=>{setMode(from0);setTimeout(()=>window.scrollTo({top:y0}),50);}}:null;}
   RESA_DRAFT={city:$t(city),from,to};RESA_TAB="plan";NY_RT_SET=true;NY_RT_MINE=false;if(mode==="resa")renderResa();else setMode("resa");window.scrollTo({top:0});setTimeout(()=>{const f=document.getElementById("resaForm");if(f)f.requestSubmit();},60);},true);document.addEventListener("input",e=>{const id=e.target&&e.target.id;if(id!=="rCity"&&id!=="rFrom"&&id!=="rTo")return;RESA_DRAFT={city:document.getElementById("rCity").value,from:document.getElementById("rFrom").value,to:document.getElementById("rTo").value};});
 // ---------- Vart ska jag åka? Städer med mest fotboll under en period ----------
-var NY_RT_SET=false,NY_RT_MINE=false;let RESA_TAB="plan",RESA_FROMTOP=null,TOPQ={p:"helg",s:"world",f:"",t:"",c:"",city:"",km:300},TOP_C=null,TOP_K="",topMore=false;
+var NY_RT_SET=false,NY_RT_MINE=false,NY_PLAN_BACK=null;let RESA_TAB="plan",RESA_FROMTOP=null,TOPQ={p:"helg",s:"world",f:"",t:"",c:"",city:"",km:300},TOP_C=null,TOP_K="",topMore=false;
 function topRange(p){if(p==="helg")return weekendRange();if(p==="egen"){const t0=today();let f=TOPQ.f&&TOPQ.f>=t0?TOPQ.f:t0,t=TOPQ.t||addDays(f,6);if(t<f)t=f;return[f,t];}const t=today();return[t,addDays(t,p==="30"?29:6)];}
 const TOP_CACHE={};
 // hur lockande en match är för en fotbollsresa: serienivå × fotbollsland, damfotboll och landslag
@@ -5643,7 +5649,7 @@ function topHtml(){if(dbState!=="ready")return`<p class="meta">${$t("Hämtar mat
   if(R.list.length>10)h+=`<button class="link strong more topmorebtn" data-topmore="1">${topMore?$t("Visa färre"):$t("Visa fler")}</button></article>`;
   return h;}
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-resatab],[data-topq],[data-topcity],[data-topmore],[data-backtop],[data-gotop]");if(!t)return;
-  if(t.dataset.resatab){NY_RT_SET=true;const go=()=>{RESA_TAB=t.dataset.resatab==="mine"?"plan":t.dataset.resatab;NY_RT_MINE=t.dataset.resatab==="mine";renderResa();};if(t.dataset.resatab!=="plan"&&resaGuard(go))return;go();return;}
+  if(t.dataset.resatab){NY_RT_SET=true;NY_PLAN_BACK=null;const go=()=>{RESA_TAB=t.dataset.resatab==="mine"?"plan":t.dataset.resatab;NY_RT_MINE=t.dataset.resatab==="mine";renderResa();};if(t.dataset.resatab!=="plan"&&resaGuard(go))return;go();return;}
   if(t.dataset.gotop){TOPQ={...TOPQ,p:"helg",s:"world"};topMore=false;goTop("resa");RESA_TAB="top";window.scrollTo({top:0});renderResa();return;}
   if(t.dataset.topq){const[k,v]=t.dataset.topq.split(":");TOPQ={...TOPQ,[k]:k==="km"?+v:v};topMore=false;renderResa();return;}
   if(t.dataset.topmore){topMore=!topMore;const ol=document.querySelector(".toplist");if(ol)ol.classList.toggle("more",topMore);t.textContent=topMore?$t("Visa färre"):$t("Visa fler");return;}
@@ -5768,7 +5774,7 @@ function renderResa0(){const el=document.getElementById("resaList");if(!el)retur
   const trips0=myTrips().slice();
   const tripsUp=trips0.filter(t=>!tDone(t)).sort((a,b)=>a.from.localeCompare(b.from)),tripsOld=trips0.filter(tDone).sort((a,b)=>b.from.localeCompare(a.from));const trips=[...tripsUp,...tripsOld];
   let h="",shH="";
-  if(TRIP_FROMHOME&&mode==="resa")RESA_BACK={a:"backhome",l:$t("Tillbaka till startsidan")};
+  if(TRIP_FROMHOME&&mode==="resa")RESA_BACK={a:"backhome",l:$t("Tillbaka till startsidan")};if(NY&&NY_PLAN_BACK&&RESA_TAB==="plan"&&!NY_RT_MINE)RESA_BACK={a:"backny",l:NY_PLAN_BACK.l};
   if(!NY&&(tripsUp.length||tripsOld.length)){h+=`<div class="tripcol">${tripsUp.length?`<h3 class="sec">${$t("Mina resor")}</h3><div class="triplist">${tripsUp.map(tripCardHtml).join("")}</div>`:""}${tripsOld.length?`<p class="pastlink"><button class="link strong" type="button" data-gopasttrips="1">${$t("Tidigare resor ({0})",[tripsOld.length])} →</button></p>`:""}</div>`;}
   const addT=RESA_ADDTO&&myTrips().find(x=>x.id===RESA_ADDTO);if(RESA_ADDTO&&!addT)RESA_ADDTO=null;
   h+=`<div class="rescol"><article class="tip resaform${addT?" adding":""}">${addT?`<div class="addhead"><h2 class="rftitle">${ic("plus")} ${$t("Lägg till en stad i resan {0}",[esc(tripName(addT))])}</h2><button type="button" class="addx" data-addcancel aria-label="${$t("Stäng")}">×</button></div>`:`<h2 class="rftitle">${ic("trip")} ${$t("Planera en fotbollsresa")}</h2>`}
